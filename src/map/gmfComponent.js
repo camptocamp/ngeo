@@ -92,7 +92,7 @@ myModule.directive('gmfMap', gmfMapComponent);
  * @ngdoc controller
  * @ngname GmfMapController
  */
-export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $injector) {
+export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $injector, $element) {
   // Scope properties
 
   /**
@@ -131,6 +131,11 @@ export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $in
    * @type {?boolean}
    */
   this.fileDropEnabled = $injector.has('gmfFileDropEnabled') ? $injector.get('gmfFileDropEnabled') : false;
+
+  /**
+   * @type {HTMLElement}
+   */
+  this.$element_ = $element;
 }
 
 /**
@@ -143,6 +148,7 @@ Controller.prototype.$onInit = function () {
   this.ngeoFeatureOverlayMgr_.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
+  this.map.setTarget(this.$element_[0])
 };
 
 myModule.controller('GmfMapController', Controller);
