@@ -50,9 +50,12 @@ describe('gmf.layertree.TreeManager', () => {
    * @param {object} object
    */
   const cleanObject = (object) => {
+    // @ts-ignore
     delete object.$$hashKey;
     Object.keys(object).forEach((key) => {
+      // @ts-ignore
       if (object.hasOwnProperty(key) && Array.isArray(object[key])) {
+        // @ts-ignore
         object[key].forEach((child) => cleanObject(child));
       }
     });
