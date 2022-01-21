@@ -21,7 +21,7 @@
 
 import './simple.css';
 import angular from 'angular';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 import ngeoMapModule from 'ngeo/map/module';
 
 import olMap from 'ol/Map';

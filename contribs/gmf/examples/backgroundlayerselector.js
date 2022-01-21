@@ -23,7 +23,7 @@ import angular from 'angular';
 import './backgroundlayerselector.css';
 import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module';
 
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfThemeThemes from 'gmf/theme/Themes';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';

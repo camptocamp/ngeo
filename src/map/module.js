@@ -27,7 +27,7 @@ import ngeoMapRecenter from 'ngeo/map/recenter';
 import ngeoMapResizemap from 'ngeo/map/resizemap';
 import ngeoMapScaleselector from 'ngeo/map/scaleselector';
 import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 /**
  * Also related to the map but not included in the module:

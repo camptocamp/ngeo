@@ -23,7 +23,7 @@ import angular from 'angular';
 import './featurestyle.css';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent';
 
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';

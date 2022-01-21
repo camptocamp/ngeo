@@ -22,7 +22,7 @@
 import angular from 'angular';
 import './drawfeature.css';
 import 'bootstrap/js/src/tooltip';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfDrawingModule from 'gmf/drawing/module';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';

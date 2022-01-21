@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './mobilemeasure.css';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
 

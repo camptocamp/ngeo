@@ -26,7 +26,7 @@ import gmfDisclaimerModule from 'gmf/disclaimer/module';
 import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfThemeThemes from 'gmf/theme/Themes';
 

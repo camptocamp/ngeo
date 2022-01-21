@@ -24,7 +24,7 @@ import 'angular-dynamic-locale';
 import gmfContextualdataComponent from 'gmf/contextualdata/component';
 
 import gmfLayertreeModule from 'gmf/layertree/module';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 import gmfPermalinkModule from 'gmf/permalink/module';
 import gmfPrintComponent from 'gmf/print/component';
 import gmfProfileModule from 'gmf/profile/module';

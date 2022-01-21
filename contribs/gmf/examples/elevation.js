@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './elevation.css';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfRasterModule from 'gmf/raster/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';

@@ -43,7 +43,7 @@ import ngeoQueryComponent from 'ngeo/query/component';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
 import ngeoGeolocation from 'ngeo/geolocation/component';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 import * as olArray from 'ol/array';
 import {ThemeEventType} from 'gmf/theme/Manager';
 import {getBrowserLanguage} from 'ngeo/utils';

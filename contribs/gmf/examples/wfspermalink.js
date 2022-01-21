@@ -22,7 +22,7 @@
 import angular from 'angular';
 import './wfspermalink.css';
 import gmfMapModule from 'gmf/map/module';
-import gmfMapComponent from 'gmf/map/gmfComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
