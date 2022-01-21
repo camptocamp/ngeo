@@ -12,12 +12,13 @@ body {
   height: 600px;
   border: 1px solid red;
 }
-app-map > div {
+gmf-map {
   width: auto;
   height: 100%;
   background-color: #dfdfdf;
   position: relative;
   overflow: hidden;
+  display: block;
 }
 #sidebar {
   display: block;

@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
-    <div id="map" ngeo-map="ctrl.map"></div>
+    <gmf-map id="map" gmf-map-map="ctrl.map"></gmf-map>
     <button class="btn btn-primary" ng-click="ctrl.print()">Print</button>
     <span ng-bind="ctrl.printState"></span>
     <p id="desc">

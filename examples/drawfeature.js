@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,7 +23,8 @@ import './drawfeature.css';
 import angular from 'angular';
 import ngeoDrawModule from 'ngeo/draw/module';
 
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import olMap from 'ol/Map';
@@ -37,7 +38,7 @@ import olSourceVector from 'ol/source/Vector';
 const myModule = angular.module('app', [
   'gettext',
   ngeoDrawModule.name,
-  ngeoMapModule.name,
+  gmfMapComponent.name,
   ngeoMiscToolActivateMgr.name,
 ]);
 
@@ -97,5 +98,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
 }
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;

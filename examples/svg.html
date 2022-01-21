@@ -27,8 +27,8 @@
     <p>With <code>?viewbox&height=3em</code>: <%=require("./inline.svg?viewbox&height=3em")%>.</p>
     <p>As URL with <code>?url</code>: <img src="<%=require("./url.svg?url")%>" /></p>
     <p>Note: in font, and in inline mode, CSS rules can be used to style the SVG.</p>
-    <h5>In an OpenLayers symboles</h5>
-    <div id="map" ngeo-map="ctrl.map"></div>
+    <h5>In OpenLayers symbols</h5>
+    <gmf-map id="map" gmf-map-map="ctrl.map"></gmf-map>
     <p>Using src (left to right):</p>
     <ul>
       <li><code>'data:image/svg+xml;base64,' + btoa(require('./inline.svg'))</code></li>

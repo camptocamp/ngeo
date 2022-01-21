@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -27,7 +27,8 @@ import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
 import olSourceOSM from 'ol/source/OSM';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 import ngeoOfflineModule from 'ngeo/offline/module';
 import ngeoOfflineConfiguration from 'ngeo/offline/Configuration';
 import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager';
@@ -82,7 +83,7 @@ class MainController {
 /** @type {!angular.IModule} **/
 const myModule = angular.module('app', [
   'gettext',
-  ngeoMapModule.name,
+  gmfMapComponent.name,
   ngeoOfflineModule.name,
   NgeoOfflineServiceManager.module.name,
 ]);
@@ -95,5 +96,7 @@ myModule.service('ngeoOfflineConfiguration', ngeoOfflineConfiguration);
 myModule.controller('MainController', MainController);
 
 myModule.constant('ngeoTilesPreloadingLimit', 0);
+
+options(myModule);
 
 export default MainController;

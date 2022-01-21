@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -25,7 +25,8 @@ import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';
 
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
@@ -46,7 +47,7 @@ import Measure from 'ngeo/interaction/Measure';
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
   'gettext',
-  ngeoMapModule.name,
+  gmfMapComponent.name,
   ngeoMiscBtnComponent.name,
   ngeoMiscFilters.name,
   'ngSanitize',
@@ -295,5 +296,6 @@ function MainController() {
 }
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;

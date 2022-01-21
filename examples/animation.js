@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,14 +22,14 @@
 import './animation.css';
 import angular from 'angular';
 import olMap from 'ol/Map';
-
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
 import olSourceOSM from 'ol/source/OSM';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 
 /** @type {angular.IModule} */
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
+const myModule = angular.module('app', ['gettext', gmfMapComponent.name]);
 
 /**
  * App-specific component wrapping the ngeo map component. The component's
@@ -43,7 +43,7 @@ const mapComponent = {
     'map': '=appMap',
     'class': '=appMapClass',
   },
-  template: '<div ngeo-map="$ctrl.map"></div>',
+  template: '<gmf-map gmf-map-map="$ctrl.map"></gmf-map>',
 };
 
 myModule.component('appMap', mapComponent);
@@ -89,5 +89,6 @@ function MainController($timeout) {
 }
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;

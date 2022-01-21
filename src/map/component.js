@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -36,17 +36,6 @@ const myModule = angular.module('gmfMapComponent', [
   ngeoMapFeatureOverlayMgr.name,
 ]);
 
-myModule.run(
-  /**
-   * @ngInject
-   * @param {angular.ITemplateCacheService} $templateCache
-   */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/map', require('gmf/map/component.html'));
-  }
-);
-
 /**
  * A "map" directive for a GeoMapFish application.
  *
@@ -75,7 +64,6 @@ function gmfMapComponent() {
     },
     controller: 'GmfMapController as ctrl',
     bindToController: true,
-    templateUrl: 'gmf/map',
   };
 }
 

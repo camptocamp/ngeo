@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
-    <div id="map" ngeo-map="::ctrl.map"></div>
+    <gmf-map id="map" gmf-map-map="::ctrl.map"></gmf-map>
     <app-measuretools app-measuretools-map="::ctrl.map" app-measuretools-lang="ctrl.lang"></app-measuretools>
     <p>Use the following selector to change the language used for the measure tooltips.</p>
     <label>Select language:</label>

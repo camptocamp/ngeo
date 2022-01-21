@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -33,11 +33,12 @@ import olLayerImage from 'ol/layer/Image';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceImageWMS from 'ol/source/ImageWMS';
 import olSourceVector from 'ol/source/Vector';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoProfileElevationComponent.name]);
+const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoProfileElevationComponent.name]);
 
 /**
  * Factory for creating simple getter functions for extractors.
@@ -279,5 +280,7 @@ myModule.constant('ngeoProfileOptions', {
     },
   },
 });
+
+options(myModule);
 
 export default myModule;

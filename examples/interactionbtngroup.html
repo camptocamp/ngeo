@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
-    <div id="map" ngeo-map="ctrl.map"></div>
+    <gmf-map id="map" gmf-map-map="ctrl.map"></gmf-map>
 
     <div ngeo-btn-group ngeo-btn-group-active="ctrl.drawToolActive">
       <button ngeo-btn class="btn btn-success" ng-model="ctrl.drawPoint.active">Point</button>

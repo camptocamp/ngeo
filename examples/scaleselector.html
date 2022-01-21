@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as mainCtrl">
-    <div id="map" ngeo-map="mainCtrl.map"></div>
+    <gmf-map id="map" gmf-map-map="mainCtrl.map"></gmf-map>
     <label>
       Select scale:
       <div class="scaleselector" ngeo-scaleselector ngeo-scaleselector-map="::mainCtrl.map"></div>

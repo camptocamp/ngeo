@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -31,14 +31,15 @@ import olStyleStroke from 'ol/style/Stroke';
 import olStyleStyle from 'ol/style/Style';
 import olStyleText from 'ol/style/Text';
 import ngeoStreetviewModule from 'ngeo/streetview/module';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
   'gettext',
-  ngeoMapModule.name,
+  gmfMapComponent.name,
   ngeoStreetviewModule.name,
   ngeoMiscToolActivateMgr.name,
 ]);
@@ -109,5 +110,7 @@ myModule.controller('MainController', MainController);
 myModule.constant('ngeoGoogleStreetviewOptions', {
   'viewer': 'google',
 });
+
+options(myModule);
 
 export default myModule;

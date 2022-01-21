@@ -3,10 +3,6 @@
   height: 400px;
   display: block;
 }
-#map > div {
-  width: 100%;
-  height: 100%;
-}
 
 .btn.btn-default {
   background-color: white;

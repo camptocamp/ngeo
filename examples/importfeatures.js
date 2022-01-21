@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 
 import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent';
 
@@ -34,7 +35,7 @@ import olSourceOSM from 'ol/source/OSM';
 import olSourceVector from 'ol/source/Vector';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilereaderComponent.name]);
+const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMiscFilereaderComponent.name]);
 
 /**
  * @class
@@ -104,5 +105,6 @@ MainController.prototype.importKml_ = function (kml) {
 };
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;
