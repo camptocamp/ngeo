@@ -107,6 +107,8 @@ describe('gmf.layertree.TreeManager', () => {
     $timeout.flush();
 
     expect(spy.calls.count()).toBe(1);
+    cleanObject(group0);
+    cleanObject(group1);
     expect(gmfTreeManager.root.children[0]).toEqual(group1);
     expect(gmfTreeManager.root.children[1]).toEqual(group0);
   });
