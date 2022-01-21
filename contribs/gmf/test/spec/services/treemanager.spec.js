@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -44,6 +44,22 @@ describe('gmf.layertree.TreeManager', () => {
       $httpBackend.when('GET', treeUrl).respond(gmfTestDataThemes);
     });
   });
+
+  /**
+   * Delete unwanted randomly added property "$$hashKey".
+   * @param {object} object
+   */
+  const cleanObject = (object) => {
+    // @ts-ignore
+    delete object.$$hashKey;
+    Object.keys(object).forEach((key) => {
+      // @ts-ignore
+      if (object.hasOwnProperty(key) && Array.isArray(object[key])) {
+        // @ts-ignore
+        object[key].forEach((child) => cleanObject(child));
+      }
+    });
+  };
 
   it('Add some groups', () => {
     const group0 = /** @type {import('gmf/themes.js').GmfGroup} */ (
@@ -91,6 +107,8 @@ describe('gmf.layertree.TreeManager', () => {
     $timeout.flush();
 
     expect(spy.calls.count()).toBe(1);
+    cleanObject(group0);
+    cleanObject(group1);
     expect(gmfTreeManager.root.children[0]).toEqual(group1);
     expect(gmfTreeManager.root.children[1]).toEqual(group0);
   });
@@ -113,6 +131,8 @@ describe('gmf.layertree.TreeManager', () => {
     $timeout.flush();
 
     expect(spy.calls.count()).toBe(1);
+    cleanObject(group0);
+    cleanObject(group1);
     expect(gmfTreeManager.root.children[0]).toEqual(group1);
     expect(gmfTreeManager.root.children[1]).toEqual(group0);
   });
