@@ -27,4 +27,5 @@ audit:
     package_ignore:
       - webpack-dev-server
       - typedoc
+      - jsdoc
       - npm
