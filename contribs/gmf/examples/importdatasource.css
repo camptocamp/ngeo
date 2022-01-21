@@ -68,9 +68,10 @@ body {
   display: block;
   width: 60rem;
 }
-gmf-map > div {
+gmf-map {
   width: 71rem;
   height: 40rem;
+  display: inline-block;
 }
 gmf-map > div,
 .panel {

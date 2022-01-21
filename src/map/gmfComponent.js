@@ -148,7 +148,7 @@ Controller.prototype.$onInit = function () {
   this.ngeoFeatureOverlayMgr_.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
-  this.map.setTarget(this.$element_[0])
+  this.map.setTarget(this.$element_[0]);
 };
 
 myModule.controller('GmfMapController', Controller);

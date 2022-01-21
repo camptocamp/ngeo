@@ -1,6 +1,7 @@
-gmf-map > div {
+gmf-map {
   width: 60rem;
   height: 30rem;
+  display: inline-block;
 }
 #gmf-lidarprofile-container {
   position: relative;
