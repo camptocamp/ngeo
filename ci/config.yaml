@@ -29,3 +29,4 @@ audit:
       - typedoc
       - jsdoc
       - npm
+      - karma
