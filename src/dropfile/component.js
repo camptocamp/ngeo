@@ -56,13 +56,12 @@ const fileDrop = function (gmfExternalDataSourcesManager, gettextCatalog) {
     /**
      * @param {angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
-     * @param {angular.IAttributes} attrs Attributes.
      */
-    link: function ($scope, element, attrs) {
-      // @ts-ignore: scope ......
-      if ($scope.ctrl.fileDropEnabled !== true) {
-        return;
-      }
+    link: function ($scope, element) {
+      // // @ts-ignore: scope ......
+      // if ($scope.ctrl.fileDropEnabled !== true) {
+      //   return;
+      // }
 
       element.bind('dragover', processDrag_);
       element.bind('dragenter', processDrag_);

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -38,6 +38,7 @@ import ngeoDrawFeatures from 'ngeo/draw/features';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoQueryPanelComponent from 'ngeo/query/panelComponent';
 import gmfImportModule from 'gmf/import/module';
+import gmfFileDropZoneModule from 'gmf/dropfile/module';
 import 'ngeo/canvas/DesktopElement';
 import 'ngeo/canvas/ToolButtonsImplElements';
 import olCollection from 'ol/Collection';
@@ -632,6 +633,7 @@ const myModule = angular.module('GmfAbstractDesktopControllerModule', [
   ngeoPrintModule.name,
   ngeoProfileModule.name,
   gmfRasterComponent.name,
+  gmfFileDropZoneModule.name,
   ngeoDrawFeatures.name,
   ngeoMapswipeModule.name,
   ngeoQueryPanelComponent.name,
