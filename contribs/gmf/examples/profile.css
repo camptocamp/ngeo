@@ -1,7 +1,7 @@
 gmf-map {
   width: 60rem;
   height: 30rem;
-  display: inline-block;
+  display: block;
 }
 div.panel.gmf-profile-container {
   height: 20rem;

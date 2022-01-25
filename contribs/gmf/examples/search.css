@@ -50,7 +50,7 @@
 gmf-map {
   width: 600px;
   height: 400px;
-  display: inline-block;
+  display: block;
 }
 span.twitter-typeahead {
   width: 300px;

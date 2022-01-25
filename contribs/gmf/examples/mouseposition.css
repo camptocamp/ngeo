@@ -1,7 +1,7 @@
 gmf-map {
   width: 600px;
   height: 400px;
-  display: inline-block;
+  display: block;
 }
 gmf-mouseposition > div {
   min-width: 260px;

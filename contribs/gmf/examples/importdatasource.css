@@ -71,9 +71,9 @@ body {
 gmf-map {
   width: 71rem;
   height: 40rem;
-  display: inline-block;
+  display: block;
+  margin: 0.5rem;
 }
-gmf-map > div,
 .panel {
   float: left;
   margin: 0.5rem;
