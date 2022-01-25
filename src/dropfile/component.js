@@ -27,12 +27,9 @@ import ngeoMessageNotification from 'ngeo/message/Notification';
 /**
  * This function handles drag and drop on the element. It is used on the map
  *
- * <div
- *   ngeo-map="ctrl.map"
- *   ngeo-map-manage-resize="ctrl.manageResize"
- *   ngeo-map-resize-transition="ctrl.resizeTransition"
+ * <gmf-map
  *   gmf-file-drop-zone>
- * </div>
+ * </gmf-map>
  *
  * Displays a 'drop here' div on dragover/dragenter and removes it on dragleave/drop
  * On drop the file is added to the external datasources if it is valid
