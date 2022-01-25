@@ -42,12 +42,6 @@ const myModule = angular.module('gmfMapComponent', [
  *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
  * @htmlAttribute {import('ol/Map').default} gmf-map-map The map.
- * @htmlAttribute {boolean|undefined} gmf-map-manage-resize Whether to update
- *     the size of the map on browser window resize.
- * @htmlAttribute {boolean|undefined} gmf-map-resize-transition The duration
- *     (milliseconds) of the animation that may occur on the div containing
- *     the map. Used to smoothly resize the map while the animation is in
- *     progress.
  * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
@@ -57,8 +51,6 @@ function gmfMapComponent() {
   return {
     scope: {
       'map': '<gmfMapMap',
-      'manageResize': '<gmfMapManageResize',
-      'resizeTransition': '<gmfMapResizeTransition',
     },
     controller: 'GmfMapController as ctrl',
     bindToController: true,
@@ -85,16 +77,6 @@ export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $in
    * @type {?import('ol/Map').default}
    */
   this.map = null;
-
-  /**
-   * @type {?boolean}
-   */
-  this.manageResize = null;
-
-  /**
-   * @type {?boolean}
-   */
-  this.resizeTransition = null;
 
   // Injected properties
 
