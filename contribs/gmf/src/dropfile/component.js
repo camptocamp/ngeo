@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2021 Camptocamp SA
+// Copyright (c) 2020-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -121,6 +121,9 @@ function processDrop_(element, gmfExternalDataSourcesManager, ngeoNotification, 
   const dropZone = document.getElementById('drop-zone');
   dropZone.classList.remove('drop-zone');
   dropZone.classList.add('drop-zone-off');
+  if (event.originalEvent.dataTransfer.files.length != 1) {
+    return;
+  }
   const file = event.originalEvent.dataTransfer.files[0];
   gmfExternalDataSourcesManager.createAndAddDataSourceFromFile(file, (success) => {
     if (!success) {
