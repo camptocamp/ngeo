@@ -30,3 +30,4 @@ audit:
       - jsdoc
       - npm
       - karma
+      - angular-gettext-tools
