@@ -927,7 +927,11 @@ Controller.prototype.toggleNodeMenu = function (menuNodeId) {
  * @param {import('gmf/datasource/gmfOGC').default} ds Data source to filter.
  */
 Controller.prototype.toggleFiltrableDataSource = function (ds) {
-  this.gmfDataSourceBeingFiltered.dataSource = ds;
+  // Set it first to null to be sure to trigger the changes on this watched property.
+  this.gmfDataSourceBeingFiltered.dataSource = null;
+  this.$timeout_(() => {
+    this.gmfDataSourceBeingFiltered.dataSource = ds;
+  }, 0);
 };
 
 /**
