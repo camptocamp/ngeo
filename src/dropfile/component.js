@@ -34,10 +34,6 @@ import ngeoMessageNotification from 'ngeo/message/Notification';
  * Displays a 'drop here' div on dragover/dragenter and removes it on dragleave/drop
  * On drop the file is added to the external datasources if it is valid
  * Otherwise an alert message is shown
- * This function is enabled for desktop only in AbstractDesktopController.js with
- *
- *     module.value('gmfFileDropEnabled', true);
- *
  *
  * @ngInject
  * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
@@ -55,11 +51,6 @@ const fileDrop = function (gmfExternalDataSourcesManager, gettextCatalog) {
      * @param {JQuery} element Element.
      */
     link: function ($scope, element) {
-      // // @ts-ignore: scope ......
-      // if ($scope.ctrl.fileDropEnabled !== true) {
-      //   return;
-      // }
-
       element.bind('dragover', processDrag_);
       element.bind('dragenter', processDrag_);
       element.bind('dragleave', processDrag_);

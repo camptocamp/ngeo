@@ -96,11 +96,6 @@ export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $in
   this.gmfSnapping_ = gmfSnapping;
 
   /**
-   * @type {?boolean}
-   */
-  this.fileDropEnabled = $injector.has('gmfFileDropEnabled') ? $injector.get('gmfFileDropEnabled') : false;
-
-  /**
    * @type {HTMLElement}
    */
   this.$element_ = $element;
