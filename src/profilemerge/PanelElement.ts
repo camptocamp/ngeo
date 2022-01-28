@@ -25,6 +25,7 @@ import i18next from 'i18next';
 
 import {Configuration} from 'gmfapi/store/config';
 import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
+import './FooterElement';
 
 @customElement('gmf-profilemerge-panel')
 export default class GmfProfilemergePanel extends ToolPanelElement {
@@ -43,6 +44,27 @@ export default class GmfProfilemergePanel extends ToolPanelElement {
         ${unsafeCSS(this.customCSS_)}
       </style>
       ${this.getTitle(i18next.t('Profile merge with LIDAR'))}
+
+      <div
+        gmf-drawprofileline
+        gmf-drawprofileline-active="mainCtrl.drawProfilePanelActive"
+        gmf-drawprofileline-map="::mainCtrl.map"
+        gmf-drawprofileline-line="mainCtrl.profileLine"
+        class="pointer-events-auto"
+      >
+        <p>
+          <button class="btn prime" ngeo-btn ng-model="ctrl.interaction.active" translate>
+            Draw profile line
+          </button>
+        </p>
+        <p>
+          <em translate ng-if="ctrl.interaction.active" class="text-muted small">
+            ${i18next.t(
+              'Draw a line on the map to display the corresponding elevation profile. Use double-click to finish the drawing.'
+            )}
+          </em>
+        </p>
+      </div>
     `;
   }
 }
