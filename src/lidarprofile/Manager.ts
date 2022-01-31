@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,11 +19,25 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
-import gmfLidarprofileMeasure from 'gmf/lidarprofile/Measure';
-import gmfLidarprofilePlot from 'gmf/lidarprofile/Plot';
-import gmfLidarprofileUtils from 'gmf/lidarprofile/Utils';
-import ngeoMiscDebounce from 'ngeo/misc/debounce';
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
+import gmfLidarprofileMeasure from 'ngeo/lidarprofile/Measure';
+import gmfLidarprofilePlot from 'ngeo/lidarprofile/Plot';
+import gmfLidarprofileUtils from 'ngeo/lidarprofile/Utils';
+
+import {LidarprofileConfigService as GmfLidarprofileConfigLidarprofileConfigService} from 'ngeo/lidarprofile/Config';
+import {LidarprofilePoints as GmfLidarprofileUtilsLidarprofilePoints} from 'ngeo/lidarprofile/Utils';
+import GmfLidarprofileUtils from 'ngeo/lidarprofile/Utils';
+import GmfLidarprofilePlot from 'ngeo/lidarprofile/Plot';
+import GmfLidarprofileMeasure from 'ngeo/lidarprofile/Measure';
+
+import {debounce} from 'ngeo/misc/debounce2';
+import {miscDebounce as ngeoMiscDebounceMiscDebounce} from 'ngeo/misc/debounce';
+import i18next from 'i18next';
+
 import olLayerVector from 'ol/layer/Vector';
 import olOverlay from 'ol/Overlay';
 import olSourceVector from 'ol/source/Vector';
@@ -32,76 +46,99 @@ import olStyleCircle from 'ol/style/Circle';
 import olStyleStyle from 'ol/style/Style';
 import {select as d3select} from 'd3';
 
-/**
- * @hidden
- */
+import OlMap from 'ol/Map';
+import OlOverlay from 'ol/Overlay';
+import OlLayerVector from 'ol/layer/Vector';
+import OlSourceVector from 'ol/source/Vector';
+import OlGeomGeometry from 'ol/geom/Geometry';
+import OlGeomLineString from 'ol/geom/LineString';
+import {Coordinate as OlCoordinateCoordinate} from 'ol/coordinate';
+
+type DebounceFunction = {
+  (): void;
+};
+
 export class LidarprofileManager {
+  /**
+   * @private
+   */
+  ngeoDebounce_: ngeoMiscDebounceMiscDebounce<DebounceFunction>;
+
+  /**
+   * @private
+   */
+  promise_: undefined | Promise<never>;
+
+  plot: undefined | GmfLidarprofilePlot;
+
+  measure: undefined | GmfLidarprofileMeasure;
+
+  config: undefined | GmfLidarprofileConfigLidarprofileConfigService;
+
+  /**
+   * @private
+   */
+  map_: undefined | OlMap;
+
+  /**
+   * The hovered point attributes in D3 profile highlighted on the 2D map
+   */
+  cartoHighlight: OlOverlay;
+
+  /**
+   * The hovered point geometry (point) in D3 profile highlighted on the 2D map
+   */
+  lidarPointHighlight: OlLayerVector<OlSourceVector<OlGeomGeometry>>;
+
+  /**
+   * The profile footpring represented as a LineString represented
+   * with real mapunites stroke width
+   */
+  lidarBuffer: OlLayerVector<OlSourceVector<OlGeomGeometry>>;
+
+  /**
+   * The variable where all points of the profile are stored
+   */
+  profilePoints: GmfLidarprofileUtilsLidarprofilePoints;
+
+  /**
+   * @private
+   */
+  isPlotSetup_: boolean;
+
+  /**
+   * @private
+   */
+  line_: undefined | OlGeomLineString;
+
+  utils: GmfLidarprofileUtils;
+
+  pointSum: number;
+
+  debouncer = debounce(this.updateData_.bind(this), 200);
   /**
    * Provides a service to manage a D3js component to be used to draw an lidar point cloud profile chart.
    * Requires access to a Pytree webservice: https://github.com/sitn/pytree
-   *
-   * @param {angular.IHttpService} $http Angular http service.
-   * @param {angular.IFilterService} $filter Angular filter.
-   * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
-   * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo debounce
-   *    service.
-   * @ngInject
-   * @ngdoc service
-   * @ngname gmflidarprofileManager
    */
-  constructor($http, $filter, gettextCatalog, ngeoDebounce) {
+  constructor() {
     /**
-     * @type {angular.IHttpService}
-     */
-    this.$http = $http;
-
-    /**
-     * @type {angular.IFilterService}
-     */
-    this.$filter = $filter;
-
-    /**
-     * @type {angular.gettext.gettextCatalog}
-     */
-    this.gettextCatalog = gettextCatalog;
-
-    /**
-     * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
      * @private
      */
-    this.ngeoDebounce_ = ngeoDebounce;
+    this.promise_ = null;
 
-    /**
-     * @type {?angular.IPromise<never>}
-     * @private
-     */
-    this.promise = null;
-
-    /**
-     * @type {?import('gmf/lidarprofile/Plot').default}
-     */
     this.plot = null;
 
-    /**
-     * @type {?import('gmf/lidarprofile/Measure').default}
-     */
     this.measure = null;
 
-    /**
-     * @type {?import('gmf/lidarprofile/Config').LidarprofileConfigService}
-     */
     this.config = null;
 
     /**
-     * @type {?import('ol/Map').default}
      * @private
      */
     this.map_ = null;
 
     /**
      * The hovered point attributes in D3 profile highlighted on the 2D map
-     *
-     * @type {import('ol/Overlay').default}
      */
     this.cartoHighlight = new olOverlay({
       offset: [0, -15],
@@ -126,8 +163,6 @@ export class LidarprofileManager {
     /**
      * The profile footpring represented as a LineString represented
      * with real mapunites stroke width
-     *
-     * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      */
     this.lidarBuffer = new olLayerVector({
       source: new olSourceVector({}),
@@ -135,34 +170,27 @@ export class LidarprofileManager {
 
     /**
      * The variable where all points of the profile are stored
-     *
-     * @type {import('gmf/lidarprofile/Utils').LidarprofilePoints}
      */
     this.profilePoints = this.getEmptyProfilePoints_();
 
     /**
-     * @type {boolean}
      * @private
      */
     this.isPlotSetup_ = false;
 
     /**
-     * @type {?import('ol/geom/LineString').default}
      * @private
      */
     this.line_ = null;
 
-    /**
-     * @type {import('gmf/lidarprofile/Utils').default}
-     */
     this.utils = new gmfLidarprofileUtils();
   }
 
   /**
-   * @param {import('gmf/lidarprofile/Config').LidarprofileConfigService} config Config
-   * @param {import('ol/Map').default} map The map.
+   * @param config Config
+   * @param map The map.
    */
-  init(config, map) {
+  init(config: GmfLidarprofileConfigLidarprofileConfigService, map: OlMap): void {
     this.config = config;
     this.plot = new gmfLidarprofilePlot(this);
     this.measure = new gmfLidarprofileMeasure(this);
@@ -172,29 +200,29 @@ export class LidarprofileManager {
   /**
    * Clears the profile footprint
    */
-  clearBuffer() {
+  clearBuffer(): void {
     if (this.lidarBuffer) {
-      /** @type {olSourceVector<import('ol/geom/LineString').default>} */ (
-        this.lidarBuffer.getSource()
-      ).clear();
+      /**
+       * @type {olSourceVector<OlGeomLineString>}
+       */ this.lidarBuffer.getSource().clear();
     }
   }
 
   /**
    * Set the line for the profile
    *
-   * @param {?import('ol/geom/LineString').default} line that defines the profile
+   * @param line that defines the profile
    */
-  setLine(line) {
+  setLine(line: undefined | OlGeomLineString): void {
     this.line_ = line;
   }
 
   /**
    * Set the map used by the profile
    *
-   * @param {import('ol/Map').default} map The map.
+   * @param map The map.
    */
-  setMap(map) {
+  setMap(map: OlMap): void {
     this.map_ = map;
     this.cartoHighlight.setMap(map);
     this.lidarPointHighlight.setMap(map);
@@ -202,10 +230,10 @@ export class LidarprofileManager {
   }
 
   /**
-   * @returns {import('gmf/lidarprofile/Utils').LidarprofilePoints} An empty lidarprofile points object.
+   * @returns An empty lidarprofile points object.
    * @private
    */
-  getEmptyProfilePoints_() {
+  getEmptyProfilePoints_(): GmfLidarprofileUtilsLidarprofilePoints {
     return {
       distance: [],
       altitude: [],
@@ -219,12 +247,17 @@ export class LidarprofileManager {
   /**
    * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests
    *
-   * @param {import('ol/coordinate').Coordinate[]} clippedLine an array of the clipped line coordinates
-   * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
-   * @param {boolean} resetPlot whether to reset D3 plot or not
-   * @param {number} minLOD minimum Level Of Detail
+   * @param clippedLine an array of the clipped line coordinates
+   * @param distanceOffset the left side of D3 profile domain at current zoom and pan configuration
+   * @param resetPlot whether to reset D3 plot or not
+   * @param minLOD minimum Level Of Detail
    */
-  getProfileByLOD(clippedLine, distanceOffset, resetPlot, minLOD) {
+  getProfileByLOD(
+    clippedLine: OlCoordinateCoordinate[],
+    distanceOffset: number,
+    resetPlot: boolean,
+    minLOD: number
+  ): void {
     if (!this.config) {
       throw new Error('Missing config');
     }
@@ -238,7 +271,6 @@ export class LidarprofileManager {
       throw new Error('Missing config.serverConfig');
     }
 
-    const gettextCatalog = this.gettextCatalog;
     this.profilePoints = this.getEmptyProfilePoints_();
 
     if (resetPlot) {
@@ -274,7 +306,7 @@ export class LidarprofileManager {
       profileWidth = this.config.serverConfig.width;
     }
 
-    const profileWidthTxt = gettextCatalog.getString('Profile width: ');
+    const profileWidthTxt = i18next.t('Profile width: ');
     d3select('#gmf-lidarprofile-container .width-info').html(`${profileWidthTxt} ${profileWidth}m`);
 
     for (let i = 0; i < maxLODWith.maxLOD; i++) {
@@ -320,77 +352,89 @@ export class LidarprofileManager {
   /**
    * Request to Pytree service for a range of Level Of Detail (LOD)
    *
-   * @param {number} minLOD minimum Level Of Detail of the request
-   * @param {number} maxLOD maximum Level Of Detail of the request
-   * @param {number} iter the iteration in profile requests cycle
-   * @param {string} coordinates linestring in cPotree format
-   * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
-   * @param {boolean} lastLOD the deepest level to retrieve for this profile
-   * @param {number} width the width of the profile
-   * @param {boolean} resetPlot whether to reset D3 plot or not, used for first LOD
+   * @param minLOD minimum Level Of Detail of the request
+   * @param maxLOD maximum Level Of Detail of the request
+   * @param iter the iteration in profile requests cycle
+   * @param coordinates linestring in cPotree format
+   * @param distanceOffset the left side of D3 profile domain at current zoom and pan configuration
+   * @param lastLOD the deepest level to retrieve for this profile
+   * @param width the width of the profile
+   * @param resetPlot whether to reset D3 plot or not, used for first LOD
    * @private
    */
-  queryPytree_(minLOD, maxLOD, iter, coordinates, distanceOffset, lastLOD, width, resetPlot) {
+  queryPytree_(
+    minLOD: number,
+    maxLOD: number,
+    iter: number,
+    coordinates: string,
+    distanceOffset: number,
+    lastLOD: boolean,
+    width: number,
+    resetPlot: boolean
+  ): void {
     if (!this.config) {
       throw new Error('Missing config');
     }
     if (!this.config.serverConfig) {
       throw new Error('Missing config.serverConfig');
     }
-    const gettextCatalog = this.gettextCatalog;
     const lodInfo = d3select('#gmf-lidarprofile-container .lod-info');
     if (this.config.serverConfig.debug) {
       let html = lodInfo.html();
-      const loadingLodTxt = gettextCatalog.getString('Loading LOD: ');
+      const loadingLodTxt = i18next.t('Loading LOD: ');
       html += `${loadingLodTxt} ${minLOD}-${maxLOD}..<br>`;
       lodInfo.html(html);
     }
 
     const pointCloudName = this.config.serverConfig.default_point_cloud;
-    const hurl = `${this.config.pytreeLidarprofileJsonUrl}/profile/get?minLOD=${minLOD}
-      &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes=`;
+    const hurl = `${this.config.pytreeLidarprofileJsonUrl}/profile/get?minLOD=${minLOD}&maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes=`;
 
-    this.$http
-      .get(hurl, {
-        headers: {
-          'Content-Type': 'text/plain; charset=x-user-defined',
-        },
-        responseType: 'arraybuffer',
-      })
-      .then(
-        (response) => {
-          if (!this.config) {
-            throw new Error('Missing config');
-          }
-          if (!this.config.serverConfig) {
-            throw new Error('Missing config.serverConfig');
-          }
-          if (this.config.serverConfig.debug) {
-            let html = lodInfo.html();
-            const lodTxt = gettextCatalog.getString('LOD: ');
-            const loadedTxt = gettextCatalog.getString('loaded');
-            html += `${lodTxt} ${minLOD}-${maxLOD} ${loadedTxt}<br>`;
-            lodInfo.html(html);
-          }
-          this.processBuffer_(response.data, iter, distanceOffset, lastLOD, resetPlot);
-        },
-        (response) => {
-          console.error(response);
+    const options = {
+      method: 'GET',
+      headers: {'Content-Type': 'text/plain; charset=x-user-defined'},
+      responseType: 'arraybuffer',
+    };
+
+    fetch(hurl, options)
+      .then((resp: Response) => resp.arrayBuffer())
+      .then((data: ArrayBuffer) => {
+        if (!this.config) {
+          throw new Error('Missing config');
         }
-      );
+        if (!this.config.serverConfig) {
+          throw new Error('Missing config.serverConfig');
+        }
+        if (this.config.serverConfig.debug) {
+          let html = lodInfo.html();
+          const lodTxt = i18next.t('LOD: ');
+          const loadedTxt = i18next.t('loaded');
+          html += `${lodTxt} ${minLOD}-${maxLOD} ${loadedTxt}<br>`;
+          lodInfo.html(html);
+        }
+        this.processBuffer_(data, iter, distanceOffset, lastLOD, resetPlot);
+      })
+      .catch((err: Error) => {
+        throw `Error on pytree query: ${err.message}`;
+      });
   }
 
   /**
    * Process the binary array return by Pytree (cPotree)
    *
-   * @param {ArrayBuffer} profile binary array returned by cPotree executable called by Pytree
-   * @param {number} iter the iteration in profile requests cycle
-   * @param {number} distanceOffset the left side of D3 profile domain at current zoom and pan configuration
-   * @param {boolean} lastLOD the deepest level to retrieve for this profile
-   * @param {boolean} resetPlot whether to reset D3 plot or not
+   * @param profile binary array returned by cPotree executable called by Pytree
+   * @param iter the iteration in profile requests cycle
+   * @param distanceOffset the left side of D3 profile domain at current zoom and pan configuration
+   * @param lastLOD the deepest level to retrieve for this profile
+   * @param resetPlot whether to reset D3 plot or not
    * @private
    */
-  processBuffer_(profile, iter, distanceOffset, lastLOD, resetPlot) {
+  processBuffer_(
+    profile: ArrayBuffer,
+    iter: number,
+    distanceOffset: number,
+    lastLOD: boolean,
+    resetPlot: boolean
+  ): void {
     if (!this.config) {
       throw new Error('Missing config');
     }
@@ -418,8 +462,8 @@ export class LidarprofileManager {
       JSON.parse(strHeaderLocal);
     } catch (e) {
       if (!this.isPlotSetup_) {
-        const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
-        const canvasEl = /** @type {HTMLCanvasElement} */ (canvas.node());
+        const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+        const canvasEl: HTMLCanvasElement = canvas.node();
         const ctx = canvasEl.getContext('2d');
         if (ctx === null) {
           throw new Error('Missing ctx');
@@ -451,10 +495,7 @@ export class LidarprofileManager {
         attributes.push(this.config.serverConfig.point_attributes[att]);
       }
     }
-    /**
-     * @type {number}
-     */
-    const scale = jHeader.scale;
+    const scale: number = jHeader.scale;
 
     if (jHeader.points < 3) {
       return;
@@ -525,17 +566,14 @@ export class LidarprofileManager {
   }
 
   /**
-   * @returns {string} The html for errors.
+   * @returns The html for errors.
    * @private
    */
-  getHTMLError_() {
-    const gettextCatalog = this.gettextCatalog;
-    const errorInfoTxt = gettextCatalog.getString('Lidar profile service error');
-    const errorOfflineTxt = gettextCatalog.getString('It might be offline');
-    const errorOutsideTxt = gettextCatalog.getString(
-      'Or did you attempt to draw a profile outside data extent?'
-    );
-    const errorNoPointError = gettextCatalog.getString(
+  getHTMLError_(): string {
+    const errorInfoTxt = i18next.t('Lidar profile service error');
+    const errorOfflineTxt = i18next.t('It might be offline');
+    const errorOutsideTxt = i18next.t('Or did you attempt to draw a profile outside data extent?');
+    const errorNoPointError = i18next.t(
       'Or did you attempt to draw such a small profile that no point was returned?'
     );
     return `
@@ -551,14 +589,16 @@ export class LidarprofileManager {
    * Update the profile data according to D3 chart zoom and pan level
    * The update will wait on a 200ms pause on the actions of users before to do the update.
    */
-  updateData() {
-    this.ngeoDebounce_(this.updateData_.bind(this), 200, true)();
+  updateData(): void {
+    this.debouncer();
   }
 
   /**
+   * Callback method used by the debouncer to update the profile data
+   *
    * @private
    */
-  updateData_() {
+  updateData_(): void {
     if (!this.config) {
       throw new Error('Missing config');
     }
@@ -583,10 +623,7 @@ export class LidarprofileManager {
       domainX[1]
     );
 
-    /**
-     * @type {olSourceVector<import('ol/geom/Geometry').default>}
-     */
-    const source = this.lidarBuffer.getSource();
+    const source: olSourceVector<OlGeomGeometry> = this.lidarBuffer.getSource();
     source.clear();
     source.addFeature(clip.bufferGeom);
     this.lidarBuffer.setStyle(clip.bufferStyle);
@@ -612,11 +649,5 @@ export class LidarprofileManager {
   }
 }
 
-/**
- * @type {angular.IModule}
- * @hidden
- */
-const myModule = angular.module('gmfLidarprofileManager', [ngeoMiscDebounce.name]);
-myModule.service('gmfLidarprofileManager', LidarprofileManager);
-
-export default myModule;
+const gmfLidarprofileManager = new LidarprofileManager();
+export default gmfLidarprofileManager;

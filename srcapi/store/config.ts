@@ -1361,6 +1361,11 @@ export type gmfCustomCSS = {
 };
 
 /**
+ * URL to LIDAR profile pytree service.
+ */
+export type pytreeLidarprofileJsonUrl = string;
+
+/**
  * The full configuration
  */
 export type Configuration = {
@@ -1428,6 +1433,7 @@ export type Configuration = {
   gmfTwoFactorAuth: gmfTwoFactorAuth;
   gmfCustomCSS: gmfCustomCSS;
   gmfI18nextConfiguration: InitOptions;
+  pytreeLidarprofileJsonUrl: pytreeLidarprofileJsonUrl;
 };
 
 export type APIConfig = {

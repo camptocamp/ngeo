@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,7 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable jsdoc/no-undefined-types */
+
+import d3, {
   area as d3area,
   bisector as d3bisector,
   extent as d3extent,
@@ -28,8 +33,31 @@ import {
   axisBottom as d3axisBottom,
   axisLeft as d3axisLeft,
   line as d3line,
-  mouse as d3mouse,
+  pointer as d3pointer,
+  ScaleLinear,
+  NumberValue,
 } from 'd3';
+
+import {ProfileFormatter as NgeoProfileElevationComponentProfileFormatter} from 'ngeo/profile/elevationComponent';
+import {Selection as D3SelectionSelection} from 'd3-selection';
+import {BaseType as D3SelectionBaseType} from 'd3-selection';
+import {ContainerElement as D3SelectionContainerElement} from 'd3-selection';
+import {ScaleLinear as D3ScaleLinear} from 'd3';
+import {ngeoProfileOptions as ngeoOptionsNgeoProfileOptions} from 'ngeo/options';
+import {ProfileOptions as NgeoProfileElevationComponentProfileOptions} from 'ngeo/profile/elevationComponent';
+
+type HoverCbFunction = {
+  (arg1: any, arg2: number, arg3: string, arg4: Record<any, any>, arg5: string): void;
+};
+
+type scaleModifierFunction = {
+  (
+    args1: ScaleLinear<number, number, never>,
+    args2: ScaleLinear<number, number, never>,
+    args3: number,
+    args4: number
+  ): void;
+};
 
 /**
  * Provides a D3js component to be used to draw an elevation
@@ -79,18 +107,19 @@ import {
  *         }, ...
  *     ]
  *
- * @returns {unknown} D3js component.
- * @param {import('ngeo/options').ngeoProfileOptions} options Profile options.
- * @param {import('ngeo/profile/elevationComponent').ProfileOptions<unknown>} functions Profile options.
+ * @param {ngeoOptionsNgeoProfileOptions} options Profile options.
+ * @param {NgeoProfileElevationComponentProfileOptions<unknown>} functions Profile options.
+ * @returns D3js component.
  * @private
  */
-function d3Elevation(options, functions) {
+function d3Elevation(
+  options: ngeoOptionsNgeoProfileOptions,
+  functions: NgeoProfileElevationComponentProfileOptions<unknown>
+): unknown {
   /**
    * Whether the simplified profile should be shown.
-   *
-   * @type {boolean}
    */
-  const light = options.light !== undefined ? options.light : false;
+  const light: boolean = options.light !== undefined ? options.light : false;
 
   /**
    * The values for margins around the chart defined in pixels.
@@ -99,17 +128,14 @@ function d3Elevation(options, functions) {
 
   /**
    * Hover callback function.
-   *
-   * @type {function(Object, number, string, Object<string, number>, string): void}
    */
-  const hoverCallback = functions.hoverCallback !== undefined ? functions.hoverCallback : () => {};
+  const hoverCallback: HoverCbFunction =
+    functions.hoverCallback !== undefined ? functions.hoverCallback : () => {};
 
   /**
    * Out callback function.
-   *
-   * @type {Function}
    */
-  const outCallback = functions.outCallback !== undefined ? functions.outCallback : () => {};
+  const outCallback: () => unknown = functions.outCallback !== undefined ? functions.outCallback : () => {};
 
   /**
    * Distance data extractor used to get the dist values.
@@ -129,7 +155,7 @@ function d3Elevation(options, functions) {
   /**
    * Method to get the coordinate in pixels from a distance.
    */
-  const bisectDistance = d3bisector((d) => distanceExtractor(d)).left;
+  const bisectDistance = d3bisector((d) => distanceExtractor(d)).left; // eslint-disable-line @typescript-eslint/unbound-method
 
   /**
    * POI data extractor.
@@ -141,60 +167,42 @@ function d3Elevation(options, functions) {
    */
   const styleDefs = options.styleDefs;
 
-  /**
-   * @type {number}
-   */
-  const poiLabelAngle = options.poiLabelAngle !== undefined ? options.poiLabelAngle : -60;
+  const poiLabelAngle: number = options.poiLabelAngle !== undefined ? options.poiLabelAngle : -60;
 
-  /**
-   * @type {Object<string, string>}
-   */
-  const i18n = functions.i18n || {};
+  const i18n: Record<string, unknown> = functions.i18n || {};
 
-  /**
-   * @type {string}
-   */
-  const xAxisLabel = i18n.xAxis || 'Distance';
+  const xAxisLabel: unknown = i18n.xAxis || 'Distance';
 
-  /**
-   * @type {string}
-   */
-  const yAxisLabel = i18n.yAxis || 'Elevation';
+  const yAxisLabel: unknown = i18n.yAxis || 'Elevation';
 
-  /**
-   * @type {import('ngeo/profile/elevationComponent').ProfileFormatter}
-   */
-  const formatter = {
+  const formatter: NgeoProfileElevationComponentProfileFormatter = {
     /**
      * @param {number} dist Distance.
      * @param {string} units Units.
      * @returns {string} Distance.
      */
-    xhover(dist, units) {
+    xhover(dist: number, units: string): string {
       return `${parseFloat(dist.toPrecision(3))} ${units}`;
     },
     /**
      * @param {number} ele Elevation.
-     * @param {string} units Units.
      * @returns {string} Elevation.
      */
-    yhover(ele, units) {
+    yhover(ele: number): string {
       return ele !== null ? `${Math.round(ele)} m` : '';
     },
     /**
      * @param {number} dist Distance.
-     * @param {string} units Units.
      * @returns {string|number} Distance.
      */
-    xtick(dist, units) {
+    xtick(dist: number): string | number {
       return dist;
     },
     /**
      * @param {number} ele Elevation.
-     * @param {string} units Units.
      * @returns {string|number} Elevation.
      */
-    ytick(ele, units) {
+    ytick(ele: number): string | number {
       return ele;
     },
   };
@@ -203,104 +211,81 @@ function d3Elevation(options, functions) {
     Object.assign(formatter, functions.formatter);
   }
 
-  /**
-   * @type {boolean}
-   */
-  const lightXAxis = options.lightXAxis !== undefined ? options.lightXAxis : false;
+  const lightXAxis: boolean = options.lightXAxis !== undefined ? options.lightXAxis : false;
 
-  /**
-   * @type {import('d3-selection').Selection<import('d3-selection').BaseType, ?, import('d3-selection').ContainerElement, ?>}
-   */
-  let svg;
+  let svg: D3SelectionSelection<D3SelectionBaseType, any, D3SelectionContainerElement, any>;
 
   /**
    * D3 x scale.
-   *
-   * @type {import('d3').ScaleLinear<number, number>}
    */
-  let x;
+  let x: D3ScaleLinear<number, number>;
 
   /**
    * D3 y scale.
-   *
-   * @type {import('d3').ScaleLinear<number, number>}
    */
-  let y;
+  let y: D3ScaleLinear<number, number>;
 
   /**
    * Scale modifier to allow customizing the x and y scales.
-   *
-   * @type {function(Function, Function, number, number): void}
    */
-  const scaleModifier = functions.scaleModifier;
+  const scaleModifier: scaleModifierFunction = functions.scaleModifier;
 
-  /**
-   * @type {import('d3-selection').Selection<import('d3-selection').BaseType, ?, import('d3-selection').ContainerElement, ?>}
-   */
-  let g;
+  let g: D3SelectionSelection<D3SelectionBaseType, any, D3SelectionContainerElement, any>;
 
   /**
    * Height of the chart in pixels
-   *
-   * @type {number}
    */
-  let height;
+  let height: number;
 
   /**
    * Width of the chart in pixels
-   *
-   * @type {number}
    */
-  let width;
+  let width: number;
 
   /**
    * Factor to determine whether to use 'm' or 'km'.
-   *
-   * @type {number}
    */
-  let xFactor;
+  let xFactor: number;
 
   /**
    * Distance units. Either 'm' or 'km'.
-   *
-   * @type {string}
    */
-  let xUnits;
+  let xUnits: string;
 
   /**
    * D3 extent of the distance.
-   *
-   * @type {[number, number]}
    */
-  let xDomain;
+  let xDomain: [number, number];
 
   /**
    * @param {d3.Selection<d3.BaseType, number[][], d3.BaseType, unknown>} selection The selection
    */
-  const profile = function (selection) {
+  const profile = function (selection: d3.Selection<d3.BaseType, number[][], d3.BaseType, unknown>) {
     /**
      * @this {d3.ContainerElement}
      * @param {number[][]} data The selected data
-     * @param {number} index
-     * @param {d3.BaseType[] | ArrayLike<d3.BaseType>} groups
+     * @param {number} index .
+     * @param {d3.BaseType[] | ArrayLike<d3.BaseType>} groups .
      */
-    const func = function (data, index, groups) {
-      d3select(this).selectAll('svg').remove();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const func = function (data: number[][], index: number, groups: d3.BaseType[] | ArrayLike<d3.BaseType>) {
+      // @ts-ignore
+      const element: ContainerElement = this; // eslint-disable-line  @typescript-eslint/no-this-alias,  @typescript-eslint/no-explicit-any
+      d3select(element).selectAll('svg').remove();
       if (data === undefined) {
         return;
       }
 
-      width = Math.max(this.clientWidth - margin.right - margin.left, 0);
+      width = Math.max(element.clientWidth - margin.right - margin.left, 0);
       x = d3scaleLinear().range([0, width]);
 
-      height = Math.max(this.clientHeight - margin.top - margin.bottom, 0);
+      height = Math.max(element.clientHeight - margin.top - margin.bottom, 0);
       y = d3scaleLinear().range([height, 0]);
 
       const xAxis = d3axisBottom(x);
       const yAxis = d3axisLeft(y);
 
-      /** @type {?d3.Area<[number, number]>} */
-      let area = null;
+      let area: undefined | d3.Area<[number, number]> = null;
       if (numberOfLines === 1) {
         area = d3area()
           .x((d) => x(distanceExtractor(d)))
@@ -312,11 +297,11 @@ function d3Elevation(options, functions) {
       }
 
       // Select the svg element, if it exists.
-      svg = d3select(this).selectAll('svg').data([data]);
+      svg = d3select(element).selectAll('svg').data([data]);
       // Otherwise, create the skeletal chart.
       const svgEnter = svg.enter().append('svg');
       // Then select it again to get the complete object.
-      svg = d3select(this).selectAll('svg').data([data]);
+      svg = d3select(element).selectAll('svg').data([data]);
 
       if (styleDefs !== undefined) {
         svgEnter.append('defs').append('style').attr('type', 'text/css').text(styleDefs);
@@ -353,7 +338,7 @@ function d3Elevation(options, functions) {
           .attr('dy', '.75em')
           .attr('transform', 'rotate(-90)')
           .style('fill', 'grey')
-          .text(`${yAxisLabel} [m]`);
+          .text(`${yAxisLabel} [m]`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
 
         gEnter
           .append('g')
@@ -389,8 +374,7 @@ function d3Elevation(options, functions) {
       // Return an array with the min and max value of the min/max values of
       // each lines.
       const yDomain = (function () {
-        /** @type {number[]} */
-        let elevationsValues = [];
+        let elevationsValues: number[] = [];
         // Get min/max values (extent) of each lines.
         for (const name in linesConfiguration) {
           const extent = d3extent(data, (d) => linesConfiguration[name].zExtractor(d));
@@ -451,23 +435,20 @@ function d3Elevation(options, functions) {
 
       if (!light) {
         xAxis.tickFormat(
-          (domainValue) =>
-            /** @type {string} */ (formatter.xtick(/** @type {number} */ (domainValue) / xFactor, xUnits))
+          (domainValue: NumberValue) => `${formatter.xtick((domainValue as number) / xFactor, xUnits)}`
         );
+
         if (lightXAxis) {
           xAxis.tickValues([0, x.domain()[1]]);
         }
 
-        yAxis.tickFormat(
-          (dommainValue) => /** @type {string} */ (formatter.ytick(/** @type {number} */ (dommainValue), 'm'))
-        );
+        yAxis.tickFormat((domainValue: NumberValue) => `${formatter.ytick(domainValue as number, 'm')}`);
 
-        g.select('.x.axis')
-          .transition()
-          .call(/** @type {any} */ (xAxis));
+        // @ts-ignore
+        g.select('.x.axis').transition().call(xAxis);
 
         g.select('.x.label')
-          .text(`${xAxisLabel} [${xUnits}]`)
+          .text(`${xAxisLabel} [${xUnits}]`) // eslint-disable-line @typescript-eslint/restrict-template-expressions
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 
@@ -476,14 +457,14 @@ function d3Elevation(options, functions) {
           yAxis.ticks(height / 15);
         }
 
-        g.select('.y.axis')
-          .transition()
-          .call(/** @type {any} */ (yAxis));
+        // @ts-ignore
+        g.select('.y.axis').transition().call(yAxis);
       }
 
       g.select('.grid-y')
         .transition()
-        .call(/** @type {any} */ (yAxis.tickSize(-width).tickFormat(null)))
+        // @ts-ignore
+        .call(yAxis.tickSize(-width).tickFormat(null))
         .selectAll('.tick line')
         .style('stroke', '#ccc')
         .style('opacity', 0.7);
@@ -504,19 +485,21 @@ function d3Elevation(options, functions) {
       g.select('.overlay').on('mouseout', mouseout).on('mousemove', mousemove);
 
       /**
-       * @this {d3.ContainerElement}
+       * Generate the highlight from the mouse position
+       *
+       * @param event Event
        */
-      function mousemove() {
-        const mouseX = d3mouse(this)[0];
+      function mousemove(event: Event): void {
+        const mouseX = d3pointer(event)[0];
         const x0 = x.invert(mouseX);
 
         profile.highlight(x0);
       }
 
       /**
-       *
+       * Clear the highlight
        */
-      function mouseout() {
+      function mouseout(): void {
         profile.clearHighlight();
       }
     };
@@ -538,7 +521,7 @@ function d3Elevation(options, functions) {
    *
    * @param {number} distance Distance.
    */
-  profile.highlight = function (distance) {
+  profile.highlight = function (distance: number) {
     const data = svg.datum();
     const i = bisectDistance(data, distance);
     if (i >= data.length) {
@@ -549,8 +532,7 @@ function d3Elevation(options, functions) {
     const dist = distanceExtractor(point);
     let elevation;
     const elevations = [];
-    /** @type {Object<string, number>} */
-    const elevationsRef = {};
+    const elevationsRef: Record<string, unknown> = {};
     let lineName;
 
     for (lineName in linesConfiguration) {
@@ -601,9 +583,9 @@ function d3Elevation(options, functions) {
   };
 
   /**
-   * @param {unknown[]} pois
+   * @param {any} pois .
    */
-  profile.showPois = function (pois) {
+  profile.showPois = function (pois: any[]) {
     if (!svg) {
       return;
     }
@@ -657,7 +639,7 @@ function d3Elevation(options, functions) {
       .selectAll('line')
       .style('stroke', 'grey')
       .attr('x1', (d) => x(pe.dist(d)))
-      .attr('y1', (d) => y(y.domain()[0]))
+      .attr('y1', () => y(y.domain()[0]))
       .attr('x2', (d) => x(pe.dist(d)))
       .attr('y2', (d) => y(pe.z(d)));
 
@@ -666,9 +648,9 @@ function d3Elevation(options, functions) {
   };
 
   /**
-   *
+   * Clear POIs
    */
-  function clearPois() {
+  function clearPois(): void {
     profile.showPois([]);
   }
 
