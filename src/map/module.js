@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,12 +21,12 @@
 
 import angular from 'angular';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr';
-import ngeoMapComponent from 'ngeo/map/component';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import ngeoMapRecenter from 'ngeo/map/recenter';
 import ngeoMapResizemap from 'ngeo/map/resizemap';
 import ngeoMapScaleselector from 'ngeo/map/scaleselector';
 import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent';
+import gmfMapComponent from 'gmf/map/component';
 
 /**
  * Also related to the map but not included in the module:
@@ -36,10 +36,10 @@ import gmfMapMousepositionComponent from 'gmf/map/mousepositionComponent';
  */
 export default angular.module('ngeoMapModule', [
   ngeoMapBackgroundLayerMgr.name,
-  ngeoMapComponent.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoMapRecenter.name,
   ngeoMapResizemap.name,
   ngeoMapScaleselector.name,
   gmfMapMousepositionComponent.name,
+  gmfMapComponent.name,
 ]);

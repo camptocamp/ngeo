@@ -26,7 +26,7 @@ import gmfDatasourceManager from 'gmf/datasource/Manager';
 
 import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 

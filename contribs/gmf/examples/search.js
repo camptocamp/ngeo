@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './search.css';
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfSearchModule from 'gmf/search/module';
 import gmfThemeThemes from 'gmf/theme/Themes';

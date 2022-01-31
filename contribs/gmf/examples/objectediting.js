@@ -25,7 +25,7 @@ import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfObjecteditingComponent from 'gmf/objectediting/component';
 
@@ -34,6 +34,7 @@ import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import ngeoMapModule from 'ngeo/map/module';
 import * as olProj from 'ol/proj';
 import olCollection from 'ol/Collection';
 import olMap from 'ol/Map';
@@ -57,6 +58,7 @@ const myModule = angular.module('gmfapp', [
   gmfObjecteditingManager.name,
   gmfThemeThemes.name,
   ngeoMiscToolActivateMgr.name,
+  ngeoMapModule.name,
 ]);
 
 /**

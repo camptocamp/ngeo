@@ -1,6 +1,7 @@
-gmf-map > div {
+gmf-map {
   width: 600px;
   height: 400px;
+  display: block;
 }
 gmf-objectediting {
   border: 1px solid #ddd;

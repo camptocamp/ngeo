@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,14 +22,15 @@
 import './mapswipe.css';
 import angular from 'angular';
 import ngeoMapswipeModule from 'ngeo/map/swipe';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 import olLayerTile from 'ol/layer/Tile';
 import olMap from 'ol/Map';
 import olSourceOSM, {ATTRIBUTION} from 'ol/source/OSM';
 import olView from 'ol/View';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMapswipeModule.name]);
+const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMapswipeModule.name]);
 
 /**
  * @class
@@ -64,5 +65,6 @@ function MainController() {
 }
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;

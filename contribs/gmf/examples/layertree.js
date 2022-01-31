@@ -26,13 +26,14 @@ import gmfDisclaimerModule from 'gmf/disclaimer/module';
 import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfThemeManager from 'gmf/theme/Manager';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
 import ngeoLayertreeModule from 'ngeo/layertree/module';
+import ngeoMapModule from 'ngeo/map/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
@@ -52,6 +53,7 @@ const myModule = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoStatemanagerLocation.name,
   ngeoLayertreeModule.name,
+  ngeoMapModule.name,
   gmfDisclaimerModule.name,
 ]);
 

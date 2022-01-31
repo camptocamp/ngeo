@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +22,7 @@
 import angular from 'angular';
 import './wfspermalink.css';
 import gmfMapModule from 'gmf/map/module';
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';

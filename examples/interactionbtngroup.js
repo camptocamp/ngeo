@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,7 +21,8 @@
 
 import './interactionbtngroup.css';
 import angular from 'angular';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 
@@ -38,7 +39,7 @@ import olStyleStroke from 'ol/style/Stroke';
 import olStyleStyle from 'ol/style/Style';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscBtnComponent.name]);
+const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMiscBtnComponent.name]);
 
 /**
  * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
@@ -143,5 +144,6 @@ function MainController(ngeoFeatureOverlayMgr) {
 }
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;

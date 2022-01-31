@@ -68,11 +68,12 @@ body {
   display: block;
   width: 60rem;
 }
-gmf-map > div {
+gmf-map {
   width: 71rem;
   height: 40rem;
+  display: block;
+  margin: 0.5rem;
 }
-gmf-map > div,
 .panel {
   float: left;
   margin: 0.5rem;

@@ -1,7 +1,8 @@
-gmf-map > div {
+gmf-map {
   width: 800px;
   height: 400px;
   max-width: 100%;
+  display: block;
 }
 [ngeo-btn-group] {
   padding: 5px;

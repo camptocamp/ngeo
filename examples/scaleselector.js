@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,16 +21,17 @@
 
 import './scaleselector.css';
 import angular from 'angular';
-import ngeoMiscFilters from 'ngeo/misc/filters';
+import ngeoScaleSelector from 'ngeo/map/scaleselector';
 
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
 import olSourceOSM from 'ol/source/OSM';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscFilters.name]);
+const myModule = angular.module('app', ['gettext', ngeoScaleSelector.name, gmfMapComponent.name]);
 
 /**
  * @class
@@ -60,5 +61,6 @@ myModule.constant('ngeoScaleSelectorOptions', {
   values: [600000000, 300000000, 150000000, 70000000, 40000000],
   dropup: true,
 });
+options(myModule);
 
 export default myModule;

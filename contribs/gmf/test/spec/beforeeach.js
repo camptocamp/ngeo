@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@ import 'angular-dynamic-locale';
 import gmfContextualdataComponent from 'gmf/contextualdata/component';
 
 import gmfLayertreeModule from 'gmf/layertree/module';
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 import gmfPermalinkModule from 'gmf/permalink/module';
 import gmfPrintComponent from 'gmf/print/component';
 import gmfProfileModule from 'gmf/profile/module';

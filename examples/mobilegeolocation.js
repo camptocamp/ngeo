@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -26,11 +26,12 @@ import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
 import olSourceOSM from 'ol/source/OSM';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 import ngeoGeolocation from 'ngeo/geolocation/component';
 
 /** @type {angular.IModule} **/
-const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, ngeoMapModule.name]);
+const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, gmfMapComponent.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -76,4 +77,6 @@ appmodule.constant('ngeoGeolocationOptions', {
   autoRotate: true,
 });
 
-export default module;
+options(appmodule);
+
+export default appmodule;

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -26,10 +26,11 @@ import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/Tile';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 
 /** @type {angular.IModule} */
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
+const myModule = angular.module('app', ['gettext', gmfMapComponent.name]);
 
 /**
  * @class
@@ -57,5 +58,6 @@ function MainController() {
 }
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;

@@ -29,12 +29,13 @@ import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceCompo
 import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 
 import ngeoQueryComponent from 'ngeo/query/component';
+import ngeoMapModule from 'ngeo/map/module';
 
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
@@ -57,6 +58,7 @@ const myModule = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoDatasourceDataSources.name,
   ngeoQueryComponent.name,
+  ngeoMapModule.name,
 ]);
 
 /**

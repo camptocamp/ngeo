@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import './mobilemeasure.css';
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
 
@@ -30,6 +30,7 @@ import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent'
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
+import ngeoMapModule from 'ngeo/map/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olControlScaleLine from 'ol/control/ScaleLine';
@@ -49,6 +50,7 @@ const myModule = angular.module('gmfapp', [
   gmfMobileMeasureLengthComponent.name,
   gmfMobileMeasurePointComponent.name,
   ngeoMiscBtnComponent.name,
+  ngeoMapModule.name,
 ]);
 
 /**

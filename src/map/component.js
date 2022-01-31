@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,109 +20,100 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {listen} from 'ol/events';
-import olMap from 'ol/Map';
+import gmfPermalinkModule from 'gmf/permalink/module';
+import gmfEditingSnapping from 'gmf/editing/Snapping';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoMap', []);
+const myModule = angular.module('gmfMapComponent', [
+  gmfPermalinkModule.name,
+  gmfEditingSnapping.name,
+  ngeoMapFeatureOverlayMgr.name,
+]);
 
 /**
- * Provides a directive used to insert a user-defined OpenLayers
- * map in the DOM. The directive does not create an isolate scope.
+ * A "map" directive for a GeoMapFish application.
  *
- * Examples:
+ * Example:
  *
- *   Simple:
+ *      <gmf-map gmf-map-map="mainCtrl.map"></gmf-map>
  *
- *      <div ngeo-map="ctrl.map"></div>
- *
- *   Manage window resizing:
- *
- *      <div
- *        ngeo-map="ctrl.map"
- *        ngeo-map-manage-resize="ctrl.manageResize"
- *        ngeo-map-resize-transition="ctrl.resizeTransition">
- *      </div>
- *
- * See our live examples:
- * [../examples/permalink.html](../examples/permalink.html)
- * [../examples/simple.html](../examples/simple.html)
- *
- * @htmlAttribute {import('ol/Map').default} ngeo-map The map.
- * @param {angular.IWindowService} $window The Angular $window service.
- * @returns {angular.IDirective} Directive Definition Object.
- * @ngdoc directive
- * @ngname ngeoMap
+ * @htmlAttribute {import('ol/Map').default} gmf-map-map The map.
+ * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
+ * @ngdoc directive
+ * @ngname gmfMap
  */
-function mapComponent($window) {
+function gmfMapComponent() {
   return {
-    restrict: 'A',
-    /**
-     * @param {angular.IScope} scope Scope.
-     * @param {JQuery} element Element.
-     * @param {angular.IAttributes} attrs Attributes.
-     */
-    link: (scope, element, attrs) => {
-      // Get the 'import('ol/Map').default' object from attributes and manage it accordingly
-      const attr = 'ngeoMap';
-      const prop = attrs[attr];
-
-      const map = scope.$eval(prop);
-      console.assert(map instanceof olMap);
-
-      map.setTarget(element[0]);
-
-      // Get the 'window resize' attributes, which are optional. If defined,
-      // the browser window 'resize' event is listened to update the size of
-      // the map when fired. A transition option is also available to let any
-      // animation that may occur on the div of the map to smootly resize the
-      // map while in progress.
-      const manageResizeAttr = 'ngeoMapManageResize';
-      const manageResizeProp = attrs[manageResizeAttr];
-      const manageResize = scope.$eval(manageResizeProp);
-
-      if (manageResize) {
-        const resizeTransitionAttr = 'ngeoMapResizeTransition';
-        const resizeTransitionProp = attrs[resizeTransitionAttr];
-
-        const resizeTransition = /** @type {number|undefined} */ (scope.$eval(resizeTransitionProp));
-
-        listen(
-          $window,
-          'resize',
-          /** @type {import('ol/events').ListenerFunction} */
-          (evt) => {
-            if (resizeTransition) {
-              // Resize with transition
-              const start = Date.now();
-              let loop = true;
-              const adjustSize = function () {
-                map.updateSize();
-                map.renderSync();
-                if (loop) {
-                  $window.requestAnimationFrame(adjustSize);
-                }
-                if (Date.now() - start > resizeTransition) {
-                  loop = false;
-                }
-              };
-              adjustSize();
-            } else {
-              // A single plain resize
-              map.updateSize();
-            }
-          }
-        );
-      }
+    scope: {
+      'map': '<gmfMapMap',
     },
+    controller: 'GmfMapController as ctrl',
+    bindToController: true,
   };
 }
 
-// Register the directive in the module
-myModule.directive('ngeoMap', mapComponent);
+myModule.directive('gmfMap', gmfMapComponent);
+
+/**
+ * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
+ * @param {import('gmf/permalink/Permalink').PermalinkService} gmfPermalink The gmf permalink service.
+ * @param {import('gmf/editing/Snapping').EditingSnappingService} gmfSnapping The gmf snapping service.
+ * @param {angular.auto.IInjectorService} $injector Main injector.
+ * @class
+ * @hidden
+ * @ngInject
+ * @ngdoc controller
+ * @ngname GmfMapController
+ */
+export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $injector, $element) {
+  // Scope properties
+
+  /**
+   * @type {?import('ol/Map').default}
+   */
+  this.map = null;
+
+  // Injected properties
+
+  /**
+   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
+   */
+  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
+
+  /**
+   * @type {import('gmf/permalink/Permalink').PermalinkService}
+   */
+  this.gmfPermalink_ = gmfPermalink;
+
+  /**
+   * @type {import('gmf/editing/Snapping').EditingSnappingService}
+   */
+  this.gmfSnapping_ = gmfSnapping;
+
+  /**
+   * @type {HTMLElement}
+   */
+  this.$element_ = $element;
+}
+
+/**
+ * Called on initialization of the controller.
+ */
+Controller.prototype.$onInit = function () {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  this.ngeoFeatureOverlayMgr_.init(this.map);
+  this.gmfPermalink_.setMap(this.map);
+  this.gmfSnapping_.setMap(this.map);
+  this.map.setTarget(this.$element_[0]);
+};
+
+myModule.controller('GmfMapController', Controller);
 
 export default myModule;

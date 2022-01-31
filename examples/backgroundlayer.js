@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -32,10 +32,11 @@ import olLayerTile from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import olSourceImageWMS from 'ol/source/ImageWMS';
-import ngeoMapModule from 'ngeo/map/module';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('app', ['gettext', ngeoMapModule.name]);
+const myModule = angular.module('app', ['gettext', gmfMapComponent.name]);
 
 myModule.run(
   /**
@@ -181,5 +182,6 @@ function MainController($scope) {
 
 myModule.controller('MainController', MainController);
 myModule.constant('ngeoTilesPreloadingLimit', 0);
+options(myModule);
 
 export default myModule;

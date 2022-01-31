@@ -27,20 +27,13 @@ import ngeoMessageNotification from 'ngeo/message/Notification';
 /**
  * This function handles drag and drop on the element. It is used on the map
  *
- * <div
- *   ngeo-map="ctrl.map"
- *   ngeo-map-manage-resize="ctrl.manageResize"
- *   ngeo-map-resize-transition="ctrl.resizeTransition"
+ * <gmf-map
  *   gmf-file-drop-zone>
- * </div>
+ * </gmf-map>
  *
  * Displays a 'drop here' div on dragover/dragenter and removes it on dragleave/drop
  * On drop the file is added to the external datasources if it is valid
  * Otherwise an alert message is shown
- * This function is enabled for desktop only in AbstractDesktopController.js with
- *
- *     module.value('gmfFileDropEnabled', true);
- *
  *
  * @ngInject
  * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
@@ -56,14 +49,8 @@ const fileDrop = function (gmfExternalDataSourcesManager, gettextCatalog) {
     /**
      * @param {angular.IScope} $scope Scope.
      * @param {JQuery} element Element.
-     * @param {angular.IAttributes} attrs Attributes.
      */
-    link: function ($scope, element, attrs) {
-      // @ts-ignore: scope ......
-      if ($scope.ctrl.fileDropEnabled !== true) {
-        return;
-      }
-
+    link: function ($scope, element) {
       element.bind('dragover', processDrag_);
       element.bind('dragenter', processDrag_);
       element.bind('dragleave', processDrag_);

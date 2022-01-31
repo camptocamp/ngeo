@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,8 +21,9 @@
 
 import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
-
-import ngeoMapModule from 'ngeo/map/module';
+import './permalink.css';
+import gmfMapComponent from 'gmf/map/component';
+import options from './options';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import {interactionDecoration} from 'ngeo/misc/decorate';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module';
@@ -38,7 +39,7 @@ import olStyleStyle from 'ol/style/Style';
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
   'gettext',
-  ngeoMapModule.name,
+  gmfMapComponent.name,
   ngeoMiscDebounce.name,
   ngeoStatemanagerModule.name,
 ]);
@@ -58,7 +59,7 @@ const mapComponent = {
   bindings: {
     'map': '=appMap',
   },
-  template: '<div ngeo-map=ctrl.map></div>',
+  template: '<gmf-map gmf-map-map=ctrl.map></gmf-map>',
 };
 
 myModule.component('appMap', mapComponent);
@@ -320,5 +321,6 @@ function MainController() {
 }
 
 myModule.controller('MainController', MainController);
+options(myModule);
 
 export default myModule;

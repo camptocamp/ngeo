@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,13 +23,14 @@ import angular from 'angular';
 import './backgroundlayerselector.css';
 import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module';
 
-import gmfMapComponent from 'gmfold/map/component';
+import gmfMapComponent from 'gmf/map/component';
 
 import gmfThemeThemes from 'gmf/theme/Themes';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import options from './options';
+import ngeoMapModule from 'ngeo/map/module';
 
 /**
  * @type {angular.IModule}
@@ -40,6 +41,7 @@ const myModule = angular.module('gmfapp', [
   gmfBackgroundlayerselectorModule.name,
   gmfMapComponent.name,
   gmfThemeThemes.name,
+  ngeoMapModule.name,
 ]);
 
 /**
