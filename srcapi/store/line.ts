@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2021 Camptocamp SA
+// Copyright (c) 2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,26 +19,49 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import BaseElement from 'gmfapi/elements/BaseElement';
-import ToolButtonElement from 'gmfapi/elements/ToolButtonElement';
-import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
-import config from 'gmfapi/store/config';
-import user from 'gmfapi/store/user';
-import map from 'gmfapi/store/map';
-import panels from 'gmfapi/store/panels';
-import line from 'gmfapi/store/line';
+import {BehaviorSubject} from 'rxjs';
+import OlGeomLineString from 'ol/geom/LineString';
 
-export default {
-  elements: {
-    BaseElement: BaseElement,
-    ToolButtonElement: ToolButtonElement,
-    ToolPanelElement: ToolPanelElement,
-  },
-  store: {
-    config: config,
-    user: user,
-    map: map,
-    panels: panels,
-    line: line,
-  },
-};
+/**
+ * Object used to expose the OpenLayer map.
+ *
+ * Example of usage:
+ * ```js
+ *    (window as any).gmfapi.store.line.getLine().subscribe({
+ *      next: (line: OlGeomLineString) => {
+ *        if (line) {
+ *          ...
+ *        }
+ *      },
+ *    })
+ * ```
+ */
+export class LineModel {
+  /**
+   * The observable line's properties.
+   *
+   * @private
+   */
+  line_: BehaviorSubject<OlGeomLineString> = new BehaviorSubject<OlGeomLineString>(null);
+
+  /**
+   * Get the lines
+   *
+   * @returns
+   */
+  getLine(): BehaviorSubject<OlGeomLineString> {
+    return this.line_;
+  }
+
+  /**
+   * Set the line.
+   *
+   * @param line The line
+   */
+  setLine(line: OlGeomLineString): void {
+    this.line_.next(line);
+  }
+}
+
+const line = new LineModel();
+export default line;

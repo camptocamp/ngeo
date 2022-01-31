@@ -26,6 +26,7 @@ import 'regenerator-runtime/runtime';
 import {setupI18n} from 'ngeo/localize/i18n';
 import config from 'gmfapi/store/config';
 import 'ngeo/auth/index';
+import 'ngeo/lidar2/index';
 
 // eslint-disable-next-line no-undef
 __webpack_public_path__ = new URL('./', document.currentScript.src).toString();

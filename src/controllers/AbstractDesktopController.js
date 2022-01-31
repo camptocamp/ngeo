@@ -165,6 +165,11 @@ export class AbstractDesktopController extends AbstractAPIController {
     /**
      * @type {boolean}
      */
+    this.lidarPanelActive = false;
+
+    /**
+     * @type {boolean}
+     */
     this.routingPanelActive = false;
 
     const $timeout = $injector.get('$timeout');
