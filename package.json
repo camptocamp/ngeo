@@ -187,7 +187,7 @@
     "sass": "1.49.0",
     "sass-loader": "10.2.0",
     "simple-html-tokenizer": "0.5.11",
-    "sinon": "13.0.0",
+    "sinon": "13.0.1",
     "start-server-and-test": "1.14.0",
     "style-loader": "2.0.0",
     "svg-inline-loader": "0.8.2",
