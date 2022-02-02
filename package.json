@@ -68,7 +68,7 @@
     "@babel/preset-typescript": "7.16.7",
     "@fortawesome/fontawesome-free": "5.15.4",
     "@lit/reactive-element": "1.2.1",
-    "@sentry/browser": "6.17.3",
+    "@sentry/browser": "6.17.4",
     "@sentry/integrations": "6.17.3",
     "@sentry/tracing": "6.17.3",
     "@sentry/types": "6.17.3",
