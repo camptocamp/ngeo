@@ -56,4 +56,7 @@ $notification-width: 12.5rem !default;
   --panel-separator-width: #{$panel-separator-width};
   --current-left-panel-separator-width: #{$panel-separator-width};
   --current-left-panel-border-width: #{$border};
+  --footer-panel-height: 12.5rem;
+  --footer-panel-height-lidarresult: 21.88rem;
+  --current-footer-panel-height: 0;
 }
