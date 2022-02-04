@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {html, TemplateResult, unsafeCSS, CSSResult, css} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
-import i18next from 'i18next';
+import {Subscription} from 'rxjs';
 
 import olCollection from 'ol/Collection';
 import olInteractionDraw from 'ol/interaction/Draw';
@@ -40,61 +38,55 @@ import OlGeomGeometry from 'ol/geom/Geometry';
 import OlInteractionDraw from 'ol/interaction/Draw';
 import {DrawEvent} from 'ol/interaction/Draw';
 
-import GmfBaseElement from 'gmfapi/elements/BaseElement';
-import {Configuration} from 'gmfapi/store/config';
 import line from 'gmfapi/store/line';
 import map from 'gmfapi/store/map';
 import panels from 'gmfapi/store/panels';
 
-type Function1 = {
-  (arg1: any): any;
-};
+export class GmfDrawLine {
+  /**
+   * @private
+   */
+  map_: OlMap | undefined;
 
-@customElement('gmf-drawline-lidar')
-export default class GmfDrawLine extends GmfBaseElement {
-  @state() private active = false;
-  @state() private map_: undefined | OlMap = null;
+  active: boolean;
 
-  // The OpenLayers LineString geometry of the profle
-  @state() private line: undefined | OlGeomLineString = null;
+  line: OlGeomGeometry | undefined;
 
-  @state() private features_: OlCollection<OlFeature<OlGeomGeometry>> = new olCollection();
-  //@state() private getMapFn: () => olMap = null;
-  //@state() private getStyleFn: () => olStyleStyle = null;
+  /**
+   * @private
+   */
+  features_: OlCollection<OlFeature<OlGeomGeometry>>;
 
-  @state() private interaction: OlInteractionDraw = new olInteractionDraw({
-    type: 'LineString',
-    features: this.features_,
-  });
+  interaction: OlInteractionDraw;
 
-  // const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-  // overlay.setFeatures(this.features_: OlCollection<OlFeature<OlGeomGeometry>>);
-  // const style_ = new olStyleStyle({
-  //   stroke: new olStyleStroke({
-  //     color: '#ffcc33',
-  //     width: 2,
-  //   }),
-  // });
-  // overlay.setStyle(style_);
+  subscriptions: Subscription[];
 
-  initConfig(configuration: Configuration): void {
-    super.connectedCallback();
+  constructor() {
+    /**
+     * @private
+     */
+    this.map_ = null;
 
-    interactionDecoration(this.interaction);
+    this.line = null;
 
-    // Clear the line as soon as a new drawing is started.
-    this.interaction.on('drawstart', () => {
-      this.features_.clear();
+    this.features_ = new olCollection();
+
+    this.interaction = new olInteractionDraw({
+      type: 'LineString',
+      features: this.features_,
     });
 
-    // Update the profile with the new geometry.
-    this.interaction.on('drawend', (event: DrawEvent) => {
-      this.line = event.feature.getGeometry();
-      // using timeout to prevent double click to zoom the map
-      setTimeout(() => {
-        this.interaction.setActive(false);
-      }, 0);
-    });
+    this.subscriptions = [];
+
+    // const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    // overlay.setFeatures(this.features_: OlCollection<OlFeature<OlGeomGeometry>>);
+    // const style_ = new olStyleStyle({
+    //   stroke: new olStyleStroke({
+    //     color: '#ffcc33',
+    //     width: 2,
+    //   }),
+    // });
+    // overlay.setStyle(style_);
 
     this.subscriptions.push(
       line.getLine().subscribe({
@@ -133,8 +125,26 @@ export default class GmfDrawLine extends GmfBaseElement {
     );
   }
 
-  // No style needed, so empty array doesn't import default styles
-  static styles: CSSResult[] = [];
+  /**
+   * Init the draw interaction
+   */
+  initInteraction(): void {
+    interactionDecoration(this.interaction);
+
+    // Clear the line as soon as a new drawing is started.
+    this.interaction.on('drawstart', () => {
+      this.features_.clear();
+    });
+
+    // Update the profile with the new geometry.
+    this.interaction.on('drawend', (event: DrawEvent) => {
+      this.line = event.feature.getGeometry();
+      // using timeout to prevent double click to zoom the map
+      setTimeout(() => {
+        this.interaction.setActive(false);
+      }, 0);
+    });
+  }
 
   /**
    * Clear the overlay and profile line.
@@ -144,3 +154,6 @@ export default class GmfDrawLine extends GmfBaseElement {
     this.line = null;
   }
 }
+
+const gmfDrawLine = new GmfDrawLine();
+export default gmfDrawLine;
