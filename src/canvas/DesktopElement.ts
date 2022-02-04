@@ -64,6 +64,25 @@ export interface PanelResize {
    */
   rightWidth: number;
 }
+
+/**
+ * Component used for the desktop layout.
+ *
+ * Available slots:
+ * - `header`: Header of the component.
+ * - `data`: for the left panel
+ * - `tool-button`: for the right panel tools button
+ * - `tool-button-separate`: for the right panel tools button like the shared button
+ * - `tool-panel-<name>`: for the right panels
+ * - `infobar-left`: for the left components of the infobar
+ * - `infobar-right`: for the right components of the infobar
+ * - `infobar-footer`: for the footer of the infobar
+ * - `footer-<name>`: for the footer components.
+ *
+ * CSS variable to configure the panel sizes:
+ * - `--right-panel-width-<name>`: width of the tool panel
+ * - `--footer-panel-height-<name>`: height of the footer panel
+ */
 @customElement('gmf-desktop-canvas')
 export default class GmfDesktopCanvas extends BaseElement {
   @state() private toolPanel_: string = null;
@@ -358,10 +377,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         height: calc(100% - var(--header-height));
       }
       main.gmf-footer-active {
-        height: calc(100% - var(--header-height) - 12.5rem);
-      }
-      main.lidar-footer-active {
-        height: calc(100% - var(--header-height) - 21.88rem);
+        height: calc(100% - var(--header-height) - var(--current-footer-panel-height));
       }
       footer {
         height: 12.5rem;
@@ -400,6 +416,19 @@ export default class GmfDesktopCanvas extends BaseElement {
     this.subscriptions.push(
       panels.getActiveFooterPanel().subscribe({
         next: (panel: string) => {
+          let height = '0';
+          if (panel) {
+            const styles = getComputedStyle(document.documentElement);
+            height = styles.getPropertyValue(`--footer-panel-height-${panel}`);
+            if (!height) {
+              height = styles.getPropertyValue(`--footer-panel-height`);
+            }
+            if (!height) {
+              height = '12.5rem';
+            }
+          }
+          document.documentElement.style.setProperty('--current-footer-panel-height', height);
+
           this.footerPanel_ = panel;
         },
       })
@@ -613,9 +642,7 @@ export default class GmfDesktopCanvas extends BaseElement {
 
       <main
         class="${classMap({
-          'gmf-tool-active': !!this.toolPanel_,
-          'gmf-footer-active': this.footerPanel_ === 'profileresult',
-          'lidar-footer-active': this.footerPanel_ === 'lidarresult',
+          'gmf-footer-active': !!this.footerPanel_,
         })}"
       >
         <div class="gmf-app-desktop-splitter">
