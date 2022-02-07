@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import ngeoDatasourceModule from 'ngeo/datasource/module';
-import ngeoDownloadModule from 'ngeo/download/module';
 import ngeoDrawModule from 'ngeo/draw/module';
 import ngeoEditingModule from 'ngeo/editing/module';
 import ngeoFilterModule from 'ngeo/filter/module';
@@ -53,7 +52,6 @@ import gmfThemeModule from 'gmf/theme/module';
 
 export default angular.module('ngeo', [
   ngeoDatasourceModule.name,
-  ngeoDownloadModule.name,
   ngeoDrawModule.name,
   ngeoEditingModule.name,
   ngeoFilterModule.name,

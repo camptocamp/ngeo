@@ -20,8 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDownloadCsv from 'ngeo/download/Csv';
-import ngeoDownloadService from 'ngeo/download/service';
+import downloadCsvService from 'ngeo/download/Csv';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper';
 
@@ -45,8 +44,6 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfQueryWindowComponent', [
-  ngeoDownloadCsv.name,
-  ngeoDownloadService.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscSwipe.name,
@@ -142,7 +139,6 @@ myModule.component('gmfDisplayquerywindow', queryWindowComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {import('gmf/options').gmfCsvFilename} gmfCsvFilename The CSV file name.
@@ -158,7 +154,6 @@ export function QueryWindowController(
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
-  ngeoCsvDownload,
   ngeoFeatureOverlayMgr,
   gmfCsvFilename,
   gmfDisplayQueryWindowOptions
@@ -203,7 +198,7 @@ export function QueryWindowController(
   /**
    * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
-  this.ngeoCsvDownload_ = ngeoCsvDownload;
+  this.ngeoCsvDownload_ = downloadCsvService;
 
   /**
    * Filename

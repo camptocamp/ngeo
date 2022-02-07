@@ -21,9 +21,7 @@
 
 import angular from 'angular';
 
-import ngeoDownloadCsv from 'ngeo/download/Csv';
-
-import ngeoDownloadService from 'ngeo/download/service';
+import downloadCsvService from 'ngeo/download/Csv';
 
 import ngeoGridComponent from 'ngeo/grid/component';
 
@@ -54,8 +52,6 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfQueryGridComponent', [
-  ngeoDownloadCsv.name,
-  ngeoDownloadService.name,
   ngeoGridComponent.name,
   ngeoMapFeatureOverlayMgr.name,
   ngeoQueryMapQuerent.name,
@@ -145,7 +141,6 @@ myModule.component('gmfDisplayquerygrid', queryGridComponent);
  * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  *     overlay manager service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
  * @param {import('gmf/options').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {JQuery} $element Element.
@@ -162,7 +157,6 @@ export function QueryGridController(
   ngeoMapQuerent,
   ngeoFeatureOverlayMgr,
   $timeout,
-  ngeoCsvDownload,
   ngeoQueryOptions,
   gmfCsvFilename,
   $element,
@@ -196,7 +190,7 @@ export function QueryGridController(
   /**
    * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
-  this.ngeoCsvDownload_ = ngeoCsvDownload;
+  this.ngeoCsvDownload_ = downloadCsvService;
 
   /**
    * @type {JQuery}

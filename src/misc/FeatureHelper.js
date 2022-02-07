@@ -129,7 +129,6 @@ export const ArrowPositions = {
  * @param {import('ngeo/options').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
  * @param {import('ngeo/options').ngeoMeasureSpherical} ngeoMeasureSpherical Spherical measure.
  * @param {import('ngeo/options').ngeoPointfilter} ngeoPointfilter the point filter.
- * @param {import('ngeo/download/service').Download} ngeoDownload The donload service
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
@@ -140,8 +139,7 @@ export function FeatureHelper(
   ngeoMeasurePrecision,
   ngeoMeasureDecimals,
   ngeoMeasureSpherical,
-  ngeoPointfilter,
-  ngeoDownload
+  ngeoPointfilter
 ) {
   /**
    * @type {angular.IFilterService}
@@ -213,9 +211,9 @@ export function FeatureHelper(
   /**
    * Download service.
    *
-   * @type {import('ngeo/download/service').Download}
+   * @type {import('ngeo/download/service').DownloadFactory}
    */
-  this.download_ = ngeoDownload;
+  this.downloadService_ = ngeoDownloadService;
 }
 
 /**
@@ -1331,7 +1329,7 @@ FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mime
 
   const data = format.writeFeatures(clones, writeOptions);
   if (typeof data == 'string') {
-    this.download_(data, fileName, `${mimeType};charset=utf-8`);
+    this.downloadService_.download(data, fileName, `${mimeType};charset=utf-8`);
   } else {
     console.error(`Unsupported type: ${typeof data}`);
   }
@@ -1672,7 +1670,7 @@ FeatureHelper.prototype.findFeatureIndexByFid = function (features, fid) {
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoFeatureHelper', [ngeoDownloadService.name, ngeoMiscFilters.name]);
+const myModule = angular.module('ngeoFeatureHelper', [ngeoMiscFilters.name]);
 myModule.service('ngeoFeatureHelper', FeatureHelper);
 
 export default myModule;
