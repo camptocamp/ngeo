@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
+import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import * as olFormatFilter from 'ol/format/filter';
@@ -39,8 +39,8 @@ import olSourceImageWMS from 'ol/source/ImageWMS';
  * `wfs` list.
  *
  * @typedef {Object} QueryableDataSources
- * @property {ngeoDatasourceOGC[]} wms List of queryable data sources that support WMS.
- * @property {ngeoDatasourceOGC[]} wfs List of queryable data sources that support WFS.
+ * @property {gmfDatasourceOGC[]} wms List of queryable data sources that support WMS.
+ * @property {gmfDatasourceOGC[]} wfs List of queryable data sources that support WFS.
  */
 
 /**
@@ -232,8 +232,8 @@ export class Querent {
    */
   getQueryableDataSources(dataSources, map) {
     const queryableDataSources = {
-      wfs: /** @type {ngeoDatasourceOGC[]} */ ([]),
-      wms: /** @type {ngeoDatasourceOGC[]} */ ([]),
+      wfs: /** @type {gmfDatasourceOGC[]} */ ([]),
+      wms: /** @type {gmfDatasourceOGC[]} */ ([]),
     };
     const resolution = map.getView().getResolution();
     if (resolution === undefined) {
@@ -246,7 +246,7 @@ export class Querent {
         continue;
       }
 
-      if (dataSource instanceof ngeoDatasourceOGC) {
+      if (dataSource instanceof gmfDatasourceOGC) {
         // (2) Split data sources
         if (dataSource.supportsWFS) {
           queryableDataSources.wfs.push(dataSource);
@@ -259,7 +259,7 @@ export class Querent {
   }
 
   /**
-   * @param {ngeoDatasourceOGC} dataSource Data source.
+   * @param {gmfDatasourceOGC} dataSource Data source.
    * @returns {angular.IPromise<Document|Element|string>} Promise.
    */
   wfsDescribeFeatureType(dataSource) {
@@ -402,7 +402,7 @@ export class Querent {
    * Handles the result of a single WFS GetFeature
    * request. Read features from the response and return them.
    *
-   * @param {ngeoDatasourceOGC[]} dataSources List of
+   * @param {gmfDatasourceOGC[]} dataSources List of
    *     queryable data sources that were used to do the query.
    * @param {number} maxFeatures The maximum number of features to get with the query.
    * @param {number} totalFeatureCount Count of features of the query.
@@ -429,7 +429,7 @@ export class Querent {
       datasourceNames.push(dataSource.name);
       /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
       const features =
-        dataSource instanceof ngeoDatasourceOGC
+        dataSource instanceof gmfDatasourceOGC
           ? this.readAndTypeFeatures_(dataSource, response.data, wfs)
           : [];
       this.setUniqueIds_(features, dataSource.id);
@@ -453,7 +453,7 @@ export class Querent {
    * Handles the result of a single WMS GetFeatureInfo or WFS GetFeature
    * request. Read features from the response and return them.
    *
-   * @param {ngeoDatasourceOGC[]} dataSources List of
+   * @param {gmfDatasourceOGC[]} dataSources List of
    *     queryable data sources that were used to do the query.
    * @param {number} limit The maximum number of features to get with the query.
    * @param {boolean} wfs Whether the query was WFS or WMS.
@@ -482,7 +482,7 @@ export class Querent {
         };
       } else {
         const features =
-          dataSource instanceof ngeoDatasourceOGC
+          dataSource instanceof gmfDatasourceOGC
             ? this.readAndTypeFeatures_(dataSource, response.data, wfs)
             : [];
         this.setUniqueIds_(features, dataSource.id);
@@ -501,7 +501,7 @@ export class Querent {
    * The type will be stocked in the properties of the features as
    * "ngeo_feature_type_".
    *
-   * @param {ngeoDatasourceOGC} dataSource used to read the features.
+   * @param {gmfDatasourceOGC} dataSource used to read the features.
    * @param {Document|Element|string} data the response data.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @returns {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} returned features with a type in each features.
@@ -549,7 +549,7 @@ export class Querent {
    * Return the types defined in the format of the datasource. Can set the
    * types if one is given.
    *
-   * @param {ngeoDatasourceOGC} dataSource that contains the format object.
+   * @param {gmfDatasourceOGC} dataSource that contains the format object.
    * @param {boolean} wfs Whether the query was WFS or WMS.
    * @param {string[]} [opt_types] An array of type if you want to set the
    *     type of the format object.
@@ -1025,7 +1025,7 @@ export class Querent {
   }
 
   /**
-   * @param {ngeoDatasourceOGC[]} dataSources List of
+   * @param {gmfDatasourceOGC[]} dataSources List of
    *     queryable data sources that supports WFS.
    * @returns {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -1057,7 +1057,7 @@ export class Querent {
   }
 
   /**
-   * @param {ngeoDatasourceOGC[]} dataSources List of
+   * @param {gmfDatasourceOGC[]} dataSources List of
    *     queryable data sources that supports WMS.
    * @returns {CombinedDataSources} Combined lists of data sources.
    * @private
@@ -1104,9 +1104,9 @@ export class Querent {
     let queryable = ds.visible && ds.inRange && ds.queryable;
     // If the data source supports WFS, do one last extra check: see
     // of any of the inner OGC layer is in range.
-    if (queryable && ds instanceof ngeoDatasourceOGC && ds.supportsWFS) {
+    if (queryable && ds instanceof gmfDatasourceOGC && ds.supportsWFS) {
       /**
-       * @type {ngeoDatasourceOGC}
+       * @type {gmfDatasourceOGC}
        */
       const ogcDS = ds;
       queryable = ogcDS.isAnyOGCLayerInRange(res, true);
@@ -1181,7 +1181,7 @@ function handleCombinedQueryResult_(response) {
 }
 
 /**
- * @typedef {ngeoDatasourceOGC[][]} CombinedDataSources
+ * @typedef {gmfDatasourceOGC[][]} CombinedDataSources
  */
 
 /**

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
+import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import {remove as removeFromArray} from 'ol/array';
 
 /**
@@ -96,7 +96,7 @@ export default class extends ngeoDatasourceOGCGroup {
     }
 
     for (const dataSource of this.dataSources) {
-      if (dataSource instanceof ngeoDatasourceOGC) {
+      if (dataSource instanceof gmfDatasourceOGC) {
         this.registerDataSource_(dataSource);
       }
     }
@@ -107,7 +107,7 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   destroy() {
     for (const dataSource of this.dataSources) {
-      if (dataSource instanceof ngeoDatasourceOGC) {
+      if (dataSource instanceof gmfDatasourceOGC) {
         this.unregisterDataSource_(dataSource);
       }
     }
@@ -137,14 +137,14 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   addDataSource(dataSource) {
     super.addDataSource(dataSource);
-    if (!(dataSource instanceof ngeoDatasourceOGC)) {
+    if (!(dataSource instanceof gmfDatasourceOGC)) {
       throw new Error('Wrong datasource type');
     }
     this.registerDataSource_(dataSource);
   }
 
   /**
-   * @param {ngeoDatasourceOGC} dataSource OGC data source to register.
+   * @param {gmfDatasourceOGC} dataSource OGC data source to register.
    * @private
    */
   registerDataSource_(dataSource) {
@@ -184,7 +184,7 @@ export default class extends ngeoDatasourceOGCGroup {
 
     // (1) Collect layer names from data sources in the group
     for (const dataSource of this.dataSources) {
-      if (dataSource instanceof ngeoDatasourceOGC && dataSource.visible) {
+      if (dataSource instanceof gmfDatasourceOGC && dataSource.visible) {
         layerNames = layerNames.concat(dataSource.getWMSLayerNames());
       }
     }
@@ -198,7 +198,7 @@ export default class extends ngeoDatasourceOGCGroup {
    */
   removeDataSource(dataSource) {
     super.removeDataSource(dataSource);
-    if (dataSource instanceof ngeoDatasourceOGC) {
+    if (dataSource instanceof gmfDatasourceOGC) {
       this.unregisterDataSource_(dataSource);
     }
   }

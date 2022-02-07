@@ -71,7 +71,7 @@ export class DatasourceHelper {
     this.collection_ = null;
 
     /**
-     * @type {Object<number, import('gmf/datasource/gmfOGC').default>}
+     * @type {Object<number, import('gmf/datasource/OGC').default>}
      * @protected
      */
     this.cache_ = {};
@@ -88,17 +88,15 @@ export class DatasourceHelper {
    * Return a data source using its id.
    *
    * @param {number} id Data source id.
-   * @returns {?import('gmf/datasource/gmfOGC').default} Data source.
+   * @returns {?import('gmf/datasource/OGC').default} Data source.
    */
   getDataSource(id) {
-    return /** @type {?import('gmf/datasource/gmfOGC').default} */ this.ngeoDataSourcesHelper_.getDataSource(
-      id
-    );
+    return /** @type {?import('gmf/datasource/OGC').default} */ this.ngeoDataSourcesHelper_.getDataSource(id);
   }
 
   /**
-   * @param {import('gmf/datasource/gmfOGC').default} dataSource Filtrable data source.
-   * @returns {angular.IPromise<import('gmf/datasource/gmfOGC').default>} Promise.
+   * @param {import('gmf/datasource/OGC').default} dataSource Filtrable data source.
+   * @returns {angular.IPromise<import('gmf/datasource/OGC').default>} Promise.
    */
   prepareFiltrableDataSource(dataSource) {
     const prepareFiltrableDataSourceDefer = this.q_.defer();

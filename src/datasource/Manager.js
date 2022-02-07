@@ -20,14 +20,13 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import GmfDatasourceOGC from 'gmf/datasource/gmfOGC';
+import GmfDatasourceOGC from 'gmf/datasource/OGC';
 import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases';
 import gmfLayertreeSyncLayertreeMap, {getLayer} from 'gmf/layertree/SyncLayertreeMap';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes';
-import gmfOGC from 'gmf/datasource/gmfOGC';
 
-import OGC, {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC';
+import {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
@@ -44,7 +43,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS';
 import olSourceTileWMS from 'ol/source/TileWMS';
 
 /**
- * @typedef {import('ol/Collection').default<import('gmf/datasource/gmfOGC').default>} DataSources
+ * @typedef {import('ol/Collection').default<import('gmf/datasource/OGC').default>} DataSources
  */
 
 /**
@@ -193,7 +192,7 @@ export class DatasourceManager {
      * While loading a new theme, this is where all of the created data sources
      * are put using the id as key for easier find in the future.
      *
-     * @type {Object<string, import('gmf/datasource/gmfOGC').default>}
+     * @type {Object<string, import('gmf/datasource/OGC').default>}
      * @private
      */
     this.dataSourcesCache_ = {};
@@ -299,7 +298,7 @@ export class DatasourceManager {
 
     const dataSources = this.dataSources_.getArray();
     for (const dataSource of dataSources) {
-      if (dataSource instanceof gmfOGC && dataSource.dimensionsFiltersConfig) {
+      if (dataSource instanceof GmfDatasourceOGC && dataSource.dimensionsFiltersConfig) {
         for (const key in dataSource.dimensionsFiltersConfig) {
           if (dataSource.dimensionsFiltersConfig[key].value === null) {
             const layer = this.getDataSourceLayer_(dataSource);
@@ -664,7 +663,7 @@ export class DatasourceManager {
     const visible = meta.isChecked === true;
     const ogcAttributes = ogcServer ? ogcServer.attributes : null;
 
-    /** @type {import('gmf/datasource/gmfOGC').OGCOptions} */
+    /** @type {import('gmf/datasource/OGC').OGCOptions} */
     const options = {
       copyable,
       dimensionsConfig,
@@ -900,7 +899,7 @@ export class DatasourceManager {
    * @hidden
    */
   getDataSourceLayer_(dataSource) {
-    if (!(dataSource instanceof gmfOGC) || dataSource.gmfLayer == undefined) {
+    if (!(dataSource instanceof GmfDatasourceOGC) || dataSource.gmfLayer == undefined) {
       return;
     }
     const id = olUtilGetUid(dataSource.gmfLayer);
@@ -951,7 +950,7 @@ export class DatasourceManager {
         if (dsLayer == undefined) {
           continue;
         }
-        if (!(dataSource instanceof gmfOGC)) {
+        if (!(dataSource instanceof GmfDatasourceOGC)) {
           throw new Error('Wrong dataSource type');
         }
         const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (
@@ -970,7 +969,7 @@ export class DatasourceManager {
           const treeCtrl = item.treeCtrl;
           const projCode = treeCtrl.map.getView().getProjection().getCode();
 
-          if (!(dataSource instanceof OGC)) {
+          if (!(dataSource instanceof GmfDatasourceOGC)) {
             throw new Error('Wrong datasource');
           }
           const filterString = dataSource.visible
@@ -1003,7 +1002,7 @@ export class DatasourceManager {
    * set to apply them as OGC filters to the OpenLayers layer, more precisely
    * as a `FILTER` parameter in the layer's source parameters.
    *
-   * @param {import('gmf/datasource/gmfOGC').default} dataSource Data source.
+   * @param {import('gmf/datasource/OGC').default} dataSource Data source.
    * @private
    * @hidden
    */
@@ -1029,7 +1028,7 @@ export class DatasourceManager {
    * Get the range value from the data source, then update the WMS layer
    * thereafter.
    *
-   * @param {import('gmf/datasource/gmfOGC').default} dataSource Data source.
+   * @param {import('gmf/datasource/OGC').default} dataSource Data source.
    * @private
    * @hidden
    */
