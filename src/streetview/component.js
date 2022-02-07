@@ -33,7 +33,7 @@ import MapillaryService from './MapillaryService';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoStreetview', [ngeoMapFeatureOverlayMgr.name]);
+const myModule = angular.module('ngeoStreetview', []);
 
 myModule.value(
   'ngeoStreetviewTemplateUrl',
@@ -99,7 +99,6 @@ class StreetviewController {
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $scope Scope.
    * @param {angular.IHttpService} $http Angular $http service.
-   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.ITimeoutService} $timeout
    *    FeatureOverlay manager.
@@ -107,7 +106,7 @@ class StreetviewController {
    * @ngdoc controller
    * @ngname NgeoStreetviewController
    */
-  constructor($element, $scope, $http, ngeoFeatureOverlayMgr, $injector, $timeout) {
+  constructor($element, $scope, $http, $injector, $timeout) {
     // Binding properties
 
     /**
@@ -187,7 +186,7 @@ class StreetviewController {
      * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      * @private
      */
-    this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    this.featureOverlay_ = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
 
     /**
      * @type {import('ol/events').EventsKey[]}

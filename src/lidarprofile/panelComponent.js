@@ -29,7 +29,7 @@ import panels from 'gmfapi/store/panels';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfLidarprofilePanel', [ngeoDownloadCsv.name]);
+const myModule = angular.module('gmfLidarprofilePanel', []);
 
 myModule.value(
   'gmfLidarprofilePanelTemplateUrl',
@@ -105,12 +105,11 @@ myModule.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
 export class Controller {
   /**
    * @param {angular.IScope} $scope Angular scope.
-   * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV Download service.
    * @ngInject
    * @ngdoc controller
    * @ngname gmfLidarprofilePanelController
    */
-  constructor($scope, ngeoCsvDownload) {
+  constructor($scope) {
     /**
      * @type {boolean}
      */
@@ -155,7 +154,7 @@ export class Controller {
      * @type {import('ngeo/download/Csv').DownloadCsvService}
      * @private
      */
-    this.ngeoCsvDownload_ = ngeoCsvDownload;
+    this.ngeoCsvDownload_ = ngeoDownloadCsv;
 
     // Activate the controls inside the panel.
     $scope.$watch(

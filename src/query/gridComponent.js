@@ -51,11 +51,7 @@ import 'bootstrap/js/src/dropdown';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfQueryGridComponent', [
-  ngeoGridComponent.name,
-  ngeoMapFeatureOverlayMgr.name,
-  ngeoQueryMapQuerent.name,
-]);
+const myModule = angular.module('gmfQueryGridComponent', [ngeoGridComponent.name, ngeoQueryMapQuerent.name]);
 
 myModule.value(
   'gmfDisplayquerygridTemplateUrl',
@@ -138,8 +134,6 @@ myModule.component('gmfDisplayquerygrid', queryGridComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
  * @param {import('gmf/options').gmfCsvFilename} gmfCsvFilename The CSV file name.
@@ -155,7 +149,6 @@ export function QueryGridController(
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
-  ngeoFeatureOverlayMgr,
   $timeout,
   ngeoQueryOptions,
   gmfCsvFilename,
@@ -247,11 +240,6 @@ export function QueryGridController(
   this.features_ = new olCollection();
 
   /**
-   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
-   */
-  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
-
-  /**
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.highlightFeatures_ = new olCollection();
@@ -321,12 +309,12 @@ QueryGridController.prototype.$onInit = function () {
     throw new Error('Missing getMapFn');
   }
 
-  const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  const featuresOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
 
   featuresOverlay.setStyle(buildStyle(this.options.featuresStyle));
 
-  const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  const highlightFeaturesOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   const highlightFeatureStyle = buildStyle(this.options.selectedFeatureStyle);
   highlightFeaturesOverlay.setStyle(highlightFeatureStyle);

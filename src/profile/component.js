@@ -68,11 +68,7 @@ import panels from 'gmfapi/store/panels';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfProfile', [
-  ngeoDownloadCsv.name,
-  ngeoMapFeatureOverlayMgr.name,
-  ngeoProfileElevationComponent.name,
-]);
+const myModule = angular.module('gmfProfile', [ngeoProfileElevationComponent.name]);
 
 myModule.value(
   'gmfProfileTemplateUrl',
@@ -162,10 +158,7 @@ myModule.component('gmfProfile', profileComponent);
  * @param {JQuery} $element Element.
  * @param {angular.IFilterService} $filter Angular filter
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
- *     manager.
  * @param {string} gmfProfileJsonUrl URL of GMF service JSON profile.
- * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV Download service.
  * @param {import('gmf/options').gmfProfileOptions} gmfProfileOptions The options.
  * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
  * @class
@@ -180,9 +173,7 @@ export function ProfileController(
   $element,
   $filter,
   gettextCatalog,
-  ngeoFeatureOverlayMgr,
   gmfProfileJsonUrl,
-  ngeoCsvDownload,
   gmfProfileOptions,
   ngeoProfileOptions
 ) {
@@ -217,7 +208,7 @@ export function ProfileController(
   /**
    * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
-  this.pointHoverOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  this.pointHoverOverlay_ = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
 
   /**
    * @type {string}
@@ -227,7 +218,7 @@ export function ProfileController(
   /**
    * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
-  this.ngeoCsvDownload_ = ngeoCsvDownload;
+  this.ngeoCsvDownload_ = ngeoDownloadCsv;
 
   /**
    * @type {?import('ol/Map').default}

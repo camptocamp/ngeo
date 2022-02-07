@@ -61,6 +61,7 @@ import olInteractionDragPan from 'ol/interaction/DragPan';
 import {noModifierKeys} from 'ol/events/condition';
 
 import gmfAuthenticationService from 'ngeo/auth/service';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import storeMap from 'gmfapi/store/map';
 import user, {UserState} from 'gmfapi/store/user';
@@ -177,7 +178,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   /**
    * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
-  this.drawFeatureLayer = $injector.get('ngeoFeatureOverlayMgr').getFeatureOverlay();
+  this.drawFeatureLayer = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   this.drawFeatureLayer.setFeatures(ngeoFeatures);
 
   /**
@@ -455,7 +456,7 @@ export function AbstractAppController($scope, $injector, mobile) {
    *
    * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
    */
-  const ngeoFeatureOverlayMgr = $injector.get('ngeoFeatureOverlayMgr');
+  const ngeoFeatureOverlayMgr = ngeoMapFeatureOverlayMgr;
   ngeoFeatureOverlayMgr.init(this.map);
 
   /**

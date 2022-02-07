@@ -53,7 +53,6 @@ import user from 'gmfapi/store/user';
 const myModule = angular.module('gmfFilterselector', [
   gmfDatasourceDataSourceBeingFiltered.name,
   gmfDatasourceHelper.name,
-  ngeoMapFeatureOverlayMgr.name,
   ngeoMessageModalComponent.name,
   ngeoFilterRuleHelper.name,
   ngeoFilterComponent.name,
@@ -120,8 +119,6 @@ export class FilterSelectorController {
    * @param {import('gmf/datasource/gmfHelper').DatasourceHelper} gmfDataSourcesHelper Gmf data
    *     sources helper service.
    * @param {import('gmf/filters/SavedFilters').SavedFilter} gmfSavedFilters Gmf saved filters service.
-   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
-   *    FeatureOverlay manager
    * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @ngInject
    * @ngdoc controller
@@ -134,7 +131,6 @@ export class FilterSelectorController {
     gmfDataSourceBeingFiltered,
     gmfDataSourcesHelper,
     gmfSavedFilters,
-    ngeoFeatureOverlayMgr,
     ngeoRuleHelper
   ) {
     // Binding properties
@@ -227,7 +223,7 @@ export class FilterSelectorController {
     /**
      * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      */
-    this.featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    this.featureOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
 
     /**
      * @type {import('ngeo/filter/RuleHelper').RuleHelper}
