@@ -113,11 +113,11 @@ export class DownloadCsvService {
   /**
    * Generate a CSV and start a download with the generated file.
    *
-   * @param {Object[]} data Entries/objects to include in the CSV.
+   * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
    * @param {GridColumnDef[]} columnDefs Column definitions.
    * @param {string} fileName The CSV file name, without the extension.
    */
-  startDownload(data: Object[], columnDefs: GridColumnDef[], fileName: string): void {
+  startDownload(data: {[x: string]: any}[], columnDefs: GridColumnDef[], fileName: string): void {
     const fileContent = this.generateCsv(data, columnDefs);
     download(fileContent, fileName, `text/csv;charset=${this.encoding_}`);
   }

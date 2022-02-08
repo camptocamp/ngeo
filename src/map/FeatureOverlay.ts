@@ -107,8 +107,12 @@ export class FeatureOverlay {
         this.addFeature(feature);
       });
       // Listen collection to sync features in the manager.
-      this.listenerKeys_.push(listen(features, 'add', this.handleFeatureAdd_, this));
-      this.listenerKeys_.push(listen(features, 'remove', this.handleFeatureRemove_, this));
+      this.listenerKeys_.push(
+        listen(features, 'add', (evt: OlEventsEvent | Event) => this.handleFeatureAdd_(evt))
+      );
+      this.listenerKeys_.push(
+        listen(features, 'remove', (evt: OlEventsEvent | Event) => this.handleFeatureRemove_(evt))
+      );
     }
   }
 

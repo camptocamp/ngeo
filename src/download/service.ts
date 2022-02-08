@@ -24,8 +24,12 @@ import {saveAs} from 'file-saver';
 
 /**
  * A function to start a download for a file.
+ *
+ * @param {string} content The content of the file to download.
+ * @param {string} fileName The name of the file to download.
+ * @param {string | undefined} opt_fileType The type of the file to download.
  */
-export function download(content: string, fileName: string, opt_fileType: string | undefined) {
+export function download(content: string, fileName: string, opt_fileType: string | undefined): void {
   // Safari does not properly work with FileSaver. Using the the type 'text/plain'
   // makes it a least possible to show the file content so that users can
   // do a manual download with "Save as".
