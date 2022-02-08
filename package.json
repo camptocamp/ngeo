@@ -183,7 +183,7 @@
     "react-dom": "16.14.0",
     "regenerator-runtime": "0.13.9",
     "resize-observer-polyfill": "1.5.1",
-    "rxjs": "7.5.2",
+    "rxjs": "7.5.3",
     "sass": "1.49.7",
     "sass-loader": "10.2.0",
     "simple-html-tokenizer": "0.5.11",
