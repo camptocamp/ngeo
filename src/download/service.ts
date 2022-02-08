@@ -22,31 +22,23 @@
 import {isSafari} from 'ngeo/utils';
 import {saveAs} from 'file-saver';
 
-//export type Download = (arg1: string, arg2: string, arg3: string | undefined) => void;
-export type Download = any;
-
 /**
- * A service to start a download for a file.
+ * A function to start a download for a file.
  */
-export class DownloadFactory {
-  static download(content: string, fileName: string, opt_fileType: string | undefined) {
-    // Safari does not properly work with FileSaver. Using the the type 'text/plain'
-    // makes it a least possible to show the file content so that users can
-    // do a manual download with "Save as".
-    // See also: https://github.com/eligrey/FileSaver.js/issues/12
-    const fileType: string =
-      opt_fileType !== undefined && !isSafari() ? opt_fileType : 'text/plain;charset=utf-8';
+export function download(content: string, fileName: string, opt_fileType: string | undefined) {
+  // Safari does not properly work with FileSaver. Using the the type 'text/plain'
+  // makes it a least possible to show the file content so that users can
+  // do a manual download with "Save as".
+  // See also: https://github.com/eligrey/FileSaver.js/issues/12
+  const fileType: string =
+    opt_fileType !== undefined && !isSafari() ? opt_fileType : 'text/plain;charset=utf-8';
 
-    const blob = new Blob(
-      [
-        new Uint8Array([0xef, 0xbb, 0xbf]), // UTF-8 BOM
-        content,
-      ],
-      {type: fileType}
-    );
-    saveAs(blob, fileName);
-  }
+  const blob = new Blob(
+    [
+      new Uint8Array([0xef, 0xbb, 0xbf]), // UTF-8 BOM
+      content,
+    ],
+    {type: fileType}
+  );
+  saveAs(blob, fileName);
 }
-
-const downloadFactory = new DownloadFactory();
-export default downloadFactory;

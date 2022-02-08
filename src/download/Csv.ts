@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -29,7 +29,7 @@ import configuration, {
   ngeoCsvQuote,
   ngeoCsvSeparator,
 } from 'gmfapi/store/config';
-import ngeoDownloadService, {Download} from 'ngeo/download/service';
+import {download} from 'ngeo/download/service';
 
 /**
  * *
@@ -44,21 +44,13 @@ type GridColumnDef = {
 
 export class DownloadCsvService {
   encoding_: ngeoCsvEncoding;
-
   extension_: ngeoCsvExtension;
-
   includeHeader_: ngeoCsvIncludeHeader;
-
   quote_: ngeoCsvQuote;
-
   separator_: ngeoCsvSeparator;
-
-  download_: Download;
-
   subscriptions: Subscription[] = [];
 
   constructor() {
-    this.download_ = ngeoDownloadService;
     this.subscriptions.push(
       configuration.getConfig().subscribe({
         next: (configuration: Configuration) => {
@@ -127,7 +119,7 @@ export class DownloadCsvService {
    */
   startDownload(data: Object[], columnDefs: GridColumnDef[], fileName: string): void {
     const fileContent = this.generateCsv(data, columnDefs);
-    this.download_(fileContent, fileName, `text/csv;charset=${this.encoding_}`);
+    download(fileContent, fileName, `text/csv;charset=${this.encoding_}`);
   }
 }
 

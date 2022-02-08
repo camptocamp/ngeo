@@ -22,7 +22,7 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 
-import ngeoDownloadService from 'ngeo/download/service';
+import {download} from 'ngeo/download/service';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoGeometryType from 'ngeo/GeometryType';
@@ -207,13 +207,6 @@ export function FeatureHelper(
    * @type {?import('ol/proj/Projection').default}
    */
   this.projection_ = null;
-
-  /**
-   * Download service.
-   *
-   * @type {import('ngeo/download/service').DownloadFactory}
-   */
-  this.downloadService_ = ngeoDownloadService;
 }
 
 /**
@@ -1329,7 +1322,7 @@ FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mime
 
   const data = format.writeFeatures(clones, writeOptions);
   if (typeof data == 'string') {
-    this.downloadService_.download(data, fileName, `${mimeType};charset=utf-8`);
+    download(data, fileName, `${mimeType};charset=utf-8`);
   } else {
     console.error(`Unsupported type: ${typeof data}`);
   }
