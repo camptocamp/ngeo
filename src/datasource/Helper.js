@@ -25,6 +25,8 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import {setGeometryType as ngeoAttributeSetGeometryType} from 'ngeo/format/Attribute';
 import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute';
 import ngeoQueryQuerent from 'ngeo/query/Querent';
+import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
+import gmfEditingEnumerateAttribute from 'gmf/editing/EnumerateAttribute.js';
 import {listen} from 'ol/events';
 import {CollectionEvent} from 'ol/Collection';
 
@@ -41,9 +43,11 @@ export class DatasourceHelper {
    * @param {import('ngeo/query/Querent').Querent} ngeoQuerent Ngeo querent service.
    * @ngdoc service
    * @ngname ngeoDataSourcesHelper
+   * @param {import('gmf/editing/EnumerateAttribute').EditingEnumerateAttributeService} gmfEnumerateAttribute
+   *    The Gmf enumerate attribute service.
    * @ngInject
    */
-  constructor($q, ngeoDataSources, ngeoQuerent) {
+  constructor($q, ngeoDataSources, ngeoQuerent, gmfEnumerateAttribute) {
     // === Injected properties ===
 
     /**
@@ -63,6 +67,12 @@ export class DatasourceHelper {
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
+
+    /**
+     * @type {import('gmf/editing/EnumerateAttribute').EditingEnumerateAttributeService}
+     * @private
+     */
+    this.gmfEnumerateAttribute_ = gmfEnumerateAttribute;
 
     // === Other properties ===
 
@@ -105,7 +115,7 @@ export class DatasourceHelper {
    * Please, note that in order to be dynamically set, the data source must
    * only have 1 ogcLayer set and be queryable.
    *
-   * @param {import('ngeo/datasource/OGC').default} dataSource Filtrable data source.
+   * @param {import('gmf/datasource/OGC').default} dataSource Filtrable data source.
    * @returns {angular.IPromise<import('ngeo/format/Attribute').Attribute[]>} Promise.
    */
   getDataSourceAttributes(dataSource) {
@@ -254,16 +264,61 @@ export class DatasourceHelper {
 
     return attributes;
   }
+
+  /**
+   * @param {import('gmf/datasource/OGC').default} dataSource Filtrable data source.
+   * @returns {angular.IPromise<import('gmf/datasource/OGC').default>} Promise.
+   */
+  prepareFiltrableDataSource(dataSource) {
+    const prepareFiltrableDataSourceDefer = this.q_.defer();
+
+    // (1) Get the attributes. The first time, they will be asynchronously
+    //     obtained using a WFS DescribeFeatureType request.
+    this.getDataSourceAttributes(dataSource).then((attributes) => {
+      // (2) The attribute names that are in the `enumeratedAttributes`
+      //     metadata are the ones that need to have their values fetched.
+      //     Do that once then set the type to SELECT and the choices.
+      const enumAttributes = dataSource.gmfLayer.metadata
+        ? dataSource.gmfLayer.metadata.enumeratedAttributes
+        : undefined;
+      if (enumAttributes && enumAttributes.length) {
+        const promises = [];
+        for (const attribute of attributes) {
+          if (
+            enumAttributes.includes(attribute.name) &&
+            attribute.type !== ngeoFormatAttributeType.SELECT &&
+            (!attribute.choices || !attribute.choices.length)
+          ) {
+            promises.push(
+              this.gmfEnumerateAttribute_.getAttributeValues(dataSource, attribute.name).then((values) => {
+                const choices = values.map((choice) => choice.value);
+                attribute.type = ngeoFormatAttributeType.SELECT;
+                attribute.choices = choices;
+              })
+            );
+          }
+        }
+        return this.q_.all(promises).then(() => {
+          prepareFiltrableDataSourceDefer.resolve(dataSource);
+        });
+      } else {
+        prepareFiltrableDataSourceDefer.resolve(dataSource);
+      }
+    });
+
+    return prepareFiltrableDataSourceDefer.promise;
+  }
 }
 
 /**
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoDataSourcesHelper', [
+const myModule = angular.module('gmfDataSourcesHelper', [
   ngeoDatasourceDataSources.name,
   ngeoQueryQuerent.name,
+  gmfEditingEnumerateAttribute.name,
 ]);
-myModule.service('ngeoDataSourcesHelper', DatasourceHelper);
+myModule.service('gmfDataSourcesHelper', DatasourceHelper);
 
 export default myModule;

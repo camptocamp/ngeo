@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
+import gmfDatasourceHelper from 'gmf/datasource/Helper';
 import {ServerType} from 'ngeo/datasource/OGC';
 
 /**
@@ -31,24 +31,24 @@ export class DatasourceWFSAlias {
    * Service that provides methods to get additional information and actions
    * when performing WFS requests.
    *
-   * @param {import('ngeo/datasource/Helper').DatasourceHelper} ngeoDataSourcesHelper Ngeo data
+   * @param {import('gmf/datasource/Helper').DatasourceHelper} gmfDataSourcesHelper GMF data
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
    * @ngInject
    */
-  constructor(ngeoDataSourcesHelper) {
+  constructor(gmfDataSourcesHelper) {
     // === Injected properties ===
 
     /**
-     * @type {import('ngeo/datasource/Helper').DatasourceHelper}
+     * @type {import('gmf/datasource/Helper').DatasourceHelper}
      * @private
      */
-    this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
+    this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
   }
 
   /**
-   * @param {import('ngeo/datasource/OGC').default} dataSource Data source.
+   * @param {import('gmf/datasource/OGC').default} dataSource Data source.
    */
   describe(dataSource) {
     // Only QGIS Server supports WFS aliases
@@ -60,7 +60,7 @@ export class DatasourceWFSAlias {
     ) {
       // Trigger an additional WFS DescribeFeatureType request to get
       // datasource attributes, including aliases.
-      this.ngeoDataSourcesHelper_.getDataSourceAttributes(dataSource);
+      this.gmfDataSourcesHelper_.getDataSourceAttributes(dataSource);
     }
   }
 }
@@ -69,7 +69,7 @@ export class DatasourceWFSAlias {
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfDatasourceWFSAliases', [ngeoDatasourceHelper.name]);
+const myModule = angular.module('gmfDatasourceWFSAliases', [gmfDatasourceHelper.name]);
 myModule.service('gmfWFSAliases', DatasourceWFSAlias);
 
 export default myModule;

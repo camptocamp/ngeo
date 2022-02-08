@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@ import {hasCoarsePointingDevice} from 'ngeo/utils';
 import ngeoQueryAction from 'ngeo/query/Action';
 import ngeoQueryQuerent from 'ngeo/query/Querent';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
-import ngeoDatasourceHelper from 'ngeo/datasource/Helper';
+import gmfDatasourceHelper from 'gmf/datasource/Helper';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
 
 /**
@@ -47,7 +47,7 @@ export class MapQuerent {
    * service.
    *
    * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
-   * @param {import('ngeo/datasource/Helper').DatasourceHelper} ngeoDataSourcesHelper Ngeo data
+   * @param {import('gmf/datasource/Helper').DatasourceHelper} gmfDataSourcesHelper GMF data
    *     sources helper service.
    * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature
    *     helper service.
@@ -60,7 +60,7 @@ export class MapQuerent {
    */
   constructor(
     ngeoDataSources,
-    ngeoDataSourcesHelper,
+    gmfDataSourcesHelper,
     ngeoFeatureHelper,
     ngeoQuerent,
     ngeoQueryResult,
@@ -84,7 +84,7 @@ export class MapQuerent {
      * @type {import('ngeo/datasource/Helper').DatasourceHelper}
      * @private
      */
-    this.ngeoDataSourcesHelper_ = ngeoDataSourcesHelper;
+    this.gmfDataSourcesHelper_ = gmfDataSourcesHelper;
 
     /**
      * @type {import('ngeo/query/Querent').Querent}
@@ -213,7 +213,7 @@ export class MapQuerent {
     // (1) Update result sources, i.e. add them
     for (const idStr in response) {
       const id = Number(idStr);
-      const dataSource = this.ngeoDataSourcesHelper_.getDataSource(id);
+      const dataSource = this.gmfDataSourcesHelper_.getDataSource(id);
       if (!dataSource) {
         throw new Error('Missing dataSource');
       }
@@ -325,7 +325,7 @@ export class MapQuerent {
  */
 const myModule = angular.module('ngeoMapQuerent', [
   ngeoDatasourceDataSources.name,
-  ngeoDatasourceHelper.name,
+  gmfDatasourceHelper.name,
   ngeoQueryQuerent.name,
   ngeoMiscFeatureHelper.name,
 ]);

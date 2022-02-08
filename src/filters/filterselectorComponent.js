@@ -24,7 +24,7 @@ import {CollectionEvent} from 'ol/Collection';
 
 import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeingFiltered';
 
-import gmfDatasourceHelper from 'gmf/datasource/gmfHelper';
+import gmfDatasourceHelper from 'gmf/datasource/Helper';
 
 import GmfDatasourceOGC from 'gmf/datasource/OGC';
 import gmfFiltersSavedFilters from 'gmf/filters/SavedFilters';
