@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {html, TemplateResult, unsafeCSS, CSSResult, css} from 'lit';
-import {customElement, state} from 'lit/decorators.js';
+import {customElement, property, state} from 'lit/decorators.js';
 import i18next from 'i18next';
 
 import gmfLidarprofileConfig from 'ngeo/lidarprofile/Config';
@@ -38,9 +38,8 @@ import {
 import OlMap from 'ol/Map';
 import OlGeomLineString from 'ol/geom/LineString';
 
-import {DownloadCsvService as NgeoDownloadCsvDownloadCsvService} from 'ngeo/download/Csv';
-
-import './DrawLineComponent';
+import DownloadCsvService from 'ngeo/download/Csv';
+import GmfDrawLine from './DrawLineComponent';
 
 import {Configuration} from 'gmfapi/store/config';
 import line from 'gmfapi/store/line';
@@ -56,7 +55,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   @state() private ready = false;
   @state() private active = false;
   @state() private map: undefined | OlMap = null;
-  @state() private ngeoCsvDownload_: NgeoDownloadCsvDownloadCsvService = null; // FIXME: import ngeoCsvDownload
+  @property({type: String}) drawlineClass = '';
 
   // The OpenLayers LineString geometry of the profle
   @state() private line: undefined | OlGeomLineString = null;
@@ -64,20 +63,13 @@ export default class GmfLidarPanel extends ToolPanelElement {
   // State of the measure tool
   @state() private measureActive = false;
 
-  @state() private interaction: any = null; // FIXME: interaction map OL
-
   @state() private classifications: LidarprofileServerConfigClassifications = [];
 
   // override default initConfig
   initConfig(configuration: Configuration): void {
-    super.connectedCallback();
     if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.lidarPanel !== undefined) {
       this.customCSS_ = configuration.gmfCustomCSS.lidarPanel;
     }
-
-    // FIXME: Debug
-    this.ready = true;
-    this.interaction = {active: true};
 
     this.profile = gmfLidarprofileManager;
     this.profileConfig_ = gmfLidarprofileConfig;
@@ -104,9 +96,14 @@ export default class GmfLidarPanel extends ToolPanelElement {
     );
     this.subscriptions.push(
       panels.getActiveToolPanel().subscribe({
-        next: (panel) => {
-          this.active = panel === 'lidarprofile';
-          this.updateEventsListening_(this.active);
+        next: (panel: string) => {
+          this.active = panel === 'lidar';
+          if (this.active) {
+            // Set the drawline button class to active
+            this.drawlineClass = 'active';
+
+            this.updateEventsListening_(this.active);
+          }
         },
       })
     );
@@ -121,7 +118,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
         color: var(--map-tools-color);
       }
       .btn.btn-default.active {
-        box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
+        box-shadow: inset 0 0.37rem 0.75rem var(--light-box-shadow-color);
       }
       .btn.btn-default:hover,
       .btn.btn-default.active {
@@ -132,29 +129,19 @@ export default class GmfLidarPanel extends ToolPanelElement {
   ];
 
   protected render(): TemplateResult {
-    // FIXME: Debug
-    //console.log(this.ready);
-    //console.log(this.interaction);
-
     return html`
       <style>
         ${unsafeCSS(this.customCSS_)}
       </style>
       ${this.getTitle(i18next.t('Lidar profile (only on the canton of Neuchâtel)'))}
-      <div
-        class="lidar-panel"
-        gmf-drawprofileline
-        gmf-drawprofileline-active="$ctrl.active"
-        gmf-drawprofileline-map="::$ctrl.map"
-        gmf-drawprofileline-line="$ctrl.line"
-      >
+      <div class="lidar-panel" gmf-drawprofileline>
         <p>
-          <button class="btn btn-default" ngeo-btn ng-model="ctrl.interaction.active">
+          <button class="btn btn-default ${this.drawlineClass}" @click=${() => this.toggleDrawLine()}>
             ${i18next.t('Draw LIDAR profile line')}
           </button>
         </p>
         <p>
-          ${this.interaction.active
+          ${GmfDrawLine.interaction.getActive()
             ? html`
                 <em class="text-muted small">
                   ${i18next.t(
@@ -167,7 +154,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
 
         ${this.ready
           ? html`
-              ${!!this.line
+              ${this.line
                 ? html`
               <div>
                 <button class="btn btn-default" @click=${() => this.csvExport()}">
@@ -235,6 +222,19 @@ export default class GmfLidarPanel extends ToolPanelElement {
           : html` <p>${i18next.t('Initializing, please wait...')}</p> `}
       </div>
     `;
+  }
+
+  /**
+   * Toggle the drawLine component status and
+   * set the correct class for the toggle button.
+   */
+  toggleDrawLine(): void {
+    this.drawlineClass = '';
+    const active = GmfDrawLine.interaction.getActive();
+    if (!active) {
+      this.drawlineClass = 'active';
+    }
+    GmfDrawLine.interaction.setActive(!active);
   }
 
   /**
@@ -320,7 +320,9 @@ export default class GmfLidarPanel extends ToolPanelElement {
    */
   clearMeasure(): void {
     if (!this.profile.measure) {
-      throw new Error('Missing profile.measure');
+      // FIXME: error
+      //throw new Error('Missing profile.measure');
+      return;
     }
     this.measureActive = false;
     this.profile.measure.clearMeasure();
@@ -409,7 +411,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
       const headerColumns = headerColumnNames.map((columnName) => {
         return {'name': columnName};
       });
-      this.ngeoCsvDownload_.startDownload(csvData, headerColumns, 'LIDAR_profile.csv');
+      DownloadCsvService.startDownload(csvData, headerColumns, 'LIDAR_profile.csv');
     }
   }
 

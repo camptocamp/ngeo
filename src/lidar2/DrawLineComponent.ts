@@ -23,7 +23,6 @@ import {Subscription} from 'rxjs';
 
 import olCollection from 'ol/Collection';
 import olInteractionDraw from 'ol/interaction/Draw';
-import olMap from 'ol/Map';
 import olStyleStyle from 'ol/style/Style';
 import olStyleStroke from 'ol/style/Stroke';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
@@ -31,7 +30,6 @@ import {interactionDecoration} from 'ngeo/misc/decorate';
 
 import OlMap from 'ol/Map';
 import OlGeomLineString from 'ol/geom/LineString';
-import OlStyleStyle from 'ol/style/Style';
 import OlCollection from 'ol/Collection';
 import OlFeature from 'ol/Feature';
 import OlGeomGeometry from 'ol/geom/Geometry';
@@ -50,7 +48,7 @@ export class GmfDrawLine {
 
   active: boolean;
 
-  line: OlGeomGeometry | undefined;
+  line: OlGeomLineString | undefined;
 
   /**
    * @private
@@ -71,22 +69,24 @@ export class GmfDrawLine {
 
     this.features_ = new olCollection();
 
+    const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
+    overlay.setFeatures(this.features_);
+    const style_ = new olStyleStyle({
+      stroke: new olStyleStroke({
+        color: '#ffcc33',
+        width: 2,
+      }),
+    });
+    overlay.setStyle(style_);
+
     this.interaction = new olInteractionDraw({
       type: 'LineString',
       features: this.features_,
     });
 
-    this.subscriptions = [];
+    interactionDecoration(this.interaction);
 
-    // const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
-    // overlay.setFeatures(this.features_: OlCollection<OlFeature<OlGeomGeometry>>);
-    // const style_ = new olStyleStyle({
-    //   stroke: new olStyleStroke({
-    //     color: '#ffcc33',
-    //     width: 2,
-    //   }),
-    // });
-    // overlay.setStyle(style_);
+    this.subscriptions = [];
 
     this.subscriptions.push(
       line.getLine().subscribe({
@@ -106,20 +106,25 @@ export class GmfDrawLine {
         next: (map: OlMap) => {
           if (map) {
             this.map_ = map;
-            this.map_.addInteraction(this.interaction);
           }
         },
       })
     );
     this.subscriptions.push(
       panels.getActiveToolPanel().subscribe({
-        next: (panel) => {
-          this.active = panel === 'lidarprofile';
-          if (!this.active) {
+        next: (panel: string) => {
+          this.active = panel === 'lidar';
+          if (this.active) {
+            this.map_.addInteraction(this.interaction);
+            this.initInteraction();
+            // Will activate the interaction automatically the first time
+            this.interaction.setActive(this.active);
+          } else {
+            if (this.map_) {
+              this.map_.removeInteraction(this.interaction);
+            }
             this.clear_();
           }
-          // Will activate the interaction automatically the first time
-          this.interaction.setActive(this.active);
         },
       })
     );
@@ -129,8 +134,6 @@ export class GmfDrawLine {
    * Init the draw interaction
    */
   initInteraction(): void {
-    interactionDecoration(this.interaction);
-
     // Clear the line as soon as a new drawing is started.
     this.interaction.on('drawstart', () => {
       this.features_.clear();
@@ -142,6 +145,7 @@ export class GmfDrawLine {
       // using timeout to prevent double click to zoom the map
       setTimeout(() => {
         this.interaction.setActive(false);
+        line.setLine(this.line);
       }, 0);
     });
   }
