@@ -21,3 +21,4 @@
 
 import './ButtonElement';
 import './PanelElement';
+import './FooterElement';

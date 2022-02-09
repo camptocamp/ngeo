@@ -22,6 +22,7 @@
 import {html, TemplateResult, unsafeCSS, CSSResult, css} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
 import i18next from 'i18next';
+import 'bootstrap/js/src/tooltip';
 
 import gmfLidarprofileConfig from 'ngeo/lidarprofile/Config';
 import gmfLidarprofileManager from 'ngeo/lidarprofile/Manager';
@@ -77,8 +78,9 @@ export default class GmfLidarPanel extends ToolPanelElement {
     this.subscriptions.push(
       line.getLine().subscribe({
         next: (line: OlGeomLineString) => {
+          this.line = line;
           if (line) {
-            this.line = line;
+            this.drawlineClass = '';
             this.update_();
           }
         },
@@ -103,6 +105,8 @@ export default class GmfLidarPanel extends ToolPanelElement {
             this.drawlineClass = 'active';
 
             this.updateEventsListening_(this.active);
+          } else {
+            line.setLine(null);
           }
         },
       })
@@ -289,7 +293,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
       const panelOptions = {
         state: true,
       };
-      panels.openFooterPanel('lidarresult', panelOptions);
+      panels.openFooterPanel('lidar', panelOptions);
       this.profile.setLine(this.line);
       this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
     } else {
