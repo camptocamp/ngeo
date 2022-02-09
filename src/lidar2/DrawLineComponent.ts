@@ -141,7 +141,7 @@ export class GmfDrawLine {
 
     // Update the profile with the new geometry.
     this.interaction.on('drawend', (event: DrawEvent) => {
-      this.line = event.feature.getGeometry();
+      this.line = (event.feature as OlFeature<OlGeomLineString>).getGeometry();
       // using timeout to prevent double click to zoom the map
       setTimeout(() => {
         this.interaction.setActive(false);

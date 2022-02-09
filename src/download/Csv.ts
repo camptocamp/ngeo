@@ -32,7 +32,6 @@ import configuration, {
 import {download} from 'ngeo/download/service';
 
 /**
- * *
  * Definition for grid columns.
  */
 type GridColumnDef = {
@@ -78,11 +77,15 @@ export class DownloadCsvService {
       return '';
     }
 
-    const translatedColumnHeaders: any[] = columnDefs.map((columnHeader) => i18next.t(columnHeader.name));
+    const translatedColumnHeaders: any[] = columnDefs.map((columnHeader: GridColumnDef) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      i18next.t(columnHeader.name)
+    );
 
     const header = this.getRow_(translatedColumnHeaders);
     const dataRows = data.map((values) => {
-      const rowValues: any[] = columnDefs.map((columnHeader) => values[columnHeader.name]);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      const rowValues: any[] = columnDefs.map((columnHeader: GridColumnDef) => values[columnHeader.name]);
       return this.getRow_(rowValues);
     });
 
@@ -99,6 +102,7 @@ export class DownloadCsvService {
 
     const rowValues = values.map((value) => {
       if (value !== undefined && value !== null) {
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         const strValue = `${value}`;
         // wrap each value into quotes and escape quotes with double quotes
         return `${this.quote_}${strValue.replace(matchAllQuotesRegex, doubleQuote)}${this.quote_}`;

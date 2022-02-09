@@ -130,7 +130,7 @@ export class FeatureOverlay {
    */
   handleFeatureAdd_(evt: Event | OlEventsEvent): void {
     if (evt instanceof CollectionEvent) {
-      const feature = evt.element;
+      const feature = evt.element as OlFeature<OlGeomGeometry>;
       this.addFeature(feature);
     }
   }
@@ -140,7 +140,7 @@ export class FeatureOverlay {
    */
   handleFeatureRemove_(evt: Event | OlEventsEvent): void {
     if (evt instanceof CollectionEvent) {
-      const feature = evt.element;
+      const feature = evt.element as OlFeature<OlGeomGeometry>;
       this.removeFeature(feature);
     }
   }

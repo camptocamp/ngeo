@@ -240,11 +240,11 @@ export default class GmfLidarPanel extends ToolPanelElement {
   /**
    * Toggle visibility of the selected classification object.
    *
-   * @param classification The classification.
+   * @param classification The classification to change visibility.
+   * @param key The key string of the toggled classification.
    */
   toggleVisibility(classification: LidarprofileServerConfigClassification, key: string): void {
     classification.visible === 0 ? 1 : 0;
-    console.log(`${key}, ${classification}`);
     this.setClassification(classification, parseInt(key));
   }
 
@@ -252,10 +252,15 @@ export default class GmfLidarPanel extends ToolPanelElement {
    * @private
    */
   initConfigAndActivateTool_(): void {
-    this.profileConfig_.initProfileConfig().then(() => {
-      this.ready = true;
-      this.classifications = this.getClassification();
-    });
+    this.profileConfig_
+      .initProfileConfig()
+      .then(() => {
+        this.ready = true;
+        this.classifications = this.getClassification();
+      })
+      .catch((error: string) => {
+        throw new Error(`Error getting profile config: ${error}`);
+      });
   }
 
   /**
