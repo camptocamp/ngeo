@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -34,7 +34,8 @@ import ngeoDrawFeatures from 'ngeo/draw/features';
 import gmfDataSourcesManager from 'gmf/datasource/Manager';
 
 import ngeoDatasourceGroup from 'ngeo/datasource/Group';
-import ngeoDatasourceOGC, {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
+import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
+import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import {Permalink3dParam} from 'ngeo/olcs/constants';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
@@ -1815,7 +1816,7 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
       // (1b) layer names
       const wmsGroupLayerNames = [];
       for (const wmsDataSource of wmsGroup.dataSources) {
-        if (wmsDataSource instanceof ngeoDatasourceOGC) {
+        if (wmsDataSource instanceof gmfDatasourceOGC) {
           // External WMS data sources always have only one OGC layer name,
           // as they are created using a single Capability Layer object that
           // has only 1 layer name
@@ -1924,7 +1925,7 @@ PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
     const dataSource = this.gmfDataSourcesManager_.getDatasource(olUtilGetUid(treeCtrl.node));
 
     if (dataSource) {
-      if (!(dataSource instanceof ngeoDatasourceOGC)) {
+      if (!(dataSource instanceof gmfDatasourceOGC)) {
         throw new Error('Wrong dataSource type');
       }
       dataSource.timeLowerValue = new Date(bounds[0]).getTime();

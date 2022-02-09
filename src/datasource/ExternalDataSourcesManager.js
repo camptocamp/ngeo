@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -29,7 +29,8 @@ import ngeoMiscFile from 'ngeo/misc/File';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import ngeoDatasourceFile from 'ngeo/datasource/File';
 import ngeoDatasourceFileGroup from 'ngeo/datasource/FileGroup';
-import ngeoDatasourceOGC, {Type, WMSInfoFormat} from 'ngeo/datasource/OGC';
+import {Type, WMSInfoFormat} from 'ngeo/datasource/OGC';
+import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import gmfDatasourceFileGroup from 'gmf/datasource/fileGroupModule';
 import gmfExternalDatasourceOGC from 'gmf/datasource/ExternalOGC';
 import ngeoDatasourceOGCGroup from 'ngeo/datasource/OGCGroup';
@@ -446,7 +447,7 @@ export class ExternalDatSourcesManager {
       return;
     }
 
-    /** @type {ngeoDatasourceOGC|ngeoDatasourceFile} */
+    /** @type {gmfDatasourceOGC|ngeoDatasourceFile} */
     let dataSource;
 
     // (2) Get data source from cache if it exists, otherwise create it
@@ -458,7 +459,7 @@ export class ExternalDatSourcesManager {
 
       // TODO - MaxScaleDenominator
       // TODO - MinScaleDenominator
-      dataSource = new ngeoDatasourceOGC({
+      dataSource = new gmfDatasourceOGC({
         id: id,
         name: name,
         ogcType: Type.WMTS,
@@ -635,7 +636,7 @@ export class ExternalDatSourcesManager {
       if (this.extDataSources_[dataSource.id] === dataSource) {
         if (dataSource instanceof ngeoDatasourceFile) {
           this.removeFileDataSource_(dataSource);
-        } else if (dataSource instanceof ngeoDatasourceOGC) {
+        } else if (dataSource instanceof gmfDatasourceOGC) {
           this.removeOGCDataSource_(dataSource);
         }
       }
@@ -734,7 +735,7 @@ export class ExternalDatSourcesManager {
       if (this.extDataSources_[dataSource.id] === dataSource) {
         if (dataSource instanceof ngeoDatasourceFile) {
           this.removeFileDataSource_(dataSource);
-        } else if (dataSource instanceof ngeoDatasourceOGC) {
+        } else if (dataSource instanceof gmfDatasourceOGC) {
           this.removeOGCDataSource_(dataSource);
         }
       }

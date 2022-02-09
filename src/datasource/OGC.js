@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -229,7 +229,7 @@ export const DEFAULT_GEOMETRY_NAME = 'geom';
  * @private
  * @hidden
  */
-export class OGC extends ngeoDatasourceDataSource {
+export class GmfDatasourceOGC extends ngeoDatasourceDataSource {
   /**
    * A data source contains information of a single source of data that can
    * show or fetch the data using an OGC server. Several OGC service types are
@@ -524,6 +524,12 @@ export class OGC extends ngeoDatasourceDataSource {
      * @private
      */
     this.wmtsUrl_ = options.wmtsUrl;
+
+    /**
+     * @type {import('gmf/themes').GmfLayer}
+     * @private
+     */
+    this.gmfLayer_ = options.gmfLayer;
 
     // === Calculated properties ===
 
@@ -839,6 +845,13 @@ export class OGC extends ngeoDatasourceDataSource {
    */
   get wmtsUrl() {
     return this.wmtsUrl_;
+  }
+
+  /**
+   * @returns {import('gmf/themes').GmfLayer} GMF layer
+   */
+  get gmfLayer() {
+    return this.gmfLayer_;
   }
 
   // ===================================
@@ -1381,4 +1394,4 @@ export const TimePropertyResolutionEnum = {
   SECOND: 'second',
 };
 
-export default OGC;
+export default GmfDatasourceOGC;

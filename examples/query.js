@@ -26,7 +26,7 @@ import './query.css';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
+import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 
@@ -166,7 +166,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
   ngeoDataSources.map = this.map;
 
   ngeoDataSources.collection.push(
-    new ngeoDatasourceOGC({
+    new gmfDatasourceOGC({
       id: 1,
       name: 'bus_stop',
       visible: true,
@@ -189,7 +189,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
   );
 
   ngeoDataSources.collection.push(
-    new ngeoDatasourceOGC({
+    new gmfDatasourceOGC({
       id: 2,
       name: 'information',
       visible: true,

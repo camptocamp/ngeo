@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
+import gmfDatasourceOGC from 'gmf/datasource/OGC';
 
 /**
  * Legend for external layers
@@ -30,12 +30,12 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC';
  * @property {string} title
  */
 
-class GmfExternalDatasourceOGC extends ngeoDatasourceOGC {
+class GmfExternalDatasourceOGC extends gmfDatasourceOGC {
   /**
-   * A `gmf.externalDatasource.OGC` extends a `ngeo.datasource.OGC` and
+   * A `gmf.externalDatasource.OGC` extends a `gmf.datasource.OGC` and
    * adds some properties that are proper to GMF and external dataSource only.
    *
-   * @param {import('ngeo/datasource/OGC').OGCOptions} options Options.
+   * @param {import('gmf/datasource/OGC').OGCOptions} options Options.
    * @param {Legend} legend The legend object.
    */
   constructor(options, legend) {

@@ -58,7 +58,7 @@ export class EditingEnumerateAttributeService {
   }
 
   /**
-   * @param {import('gmf/datasource/gmfOGC').default} dataSource Data source.
+   * @param {import('gmf/datasource/OGC').default} dataSource Data source.
    * @param {string} attribute Attribute name.
    * @returns {angular.IPromise<import('gmf/themes').GmfLayerAttributeValue[]>} Promise.
    */

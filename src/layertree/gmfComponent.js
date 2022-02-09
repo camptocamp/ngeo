@@ -35,7 +35,8 @@ import gmfThemeThemes, {
   getNodeMaxResolution,
   getSnappingConfig,
 } from 'gmf/theme/Themes';
-import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC';
+import gmfDatasourceOGC from 'gmf/datasource/OGC';
+import {ServerType} from 'ngeo/datasource/OGC';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
@@ -557,7 +558,7 @@ Controller.prototype.updateWMSTimeLayerState = function (layertreeCtrl, time) {
   }
   const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ (layertreeCtrl.getDataSource());
   if (dataSource) {
-    if (!(dataSource instanceof ngeoDatasourceOGC)) {
+    if (!(dataSource instanceof gmfDatasourceOGC)) {
       throw new Error('Wrong dataSource type');
     }
     dataSource.timeRangeValue = time;
@@ -924,7 +925,7 @@ Controller.prototype.toggleNodeMenu = function (menuNodeId) {
 };
 
 /**
- * @param {import('gmf/datasource/gmfOGC').default} ds Data source to filter.
+ * @param {import('gmf/datasource/OGC').default} ds Data source to filter.
  */
 Controller.prototype.toggleFiltrableDataSource = function (ds) {
   // Set it first to null to be sure to trigger the changes on this watched property.
