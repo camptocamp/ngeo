@@ -70,7 +70,7 @@
     "@lit/reactive-element": "1.2.2",
     "@sentry/browser": "6.17.6",
     "@sentry/integrations": "6.17.6",
-    "@sentry/tracing": "6.17.5",
+    "@sentry/tracing": "6.17.6",
     "@sentry/types": "6.17.6",
     "@storybook/preset-scss": "1.0.3",
     "@storybook/web-components": "6.4.18",
