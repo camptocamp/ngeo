@@ -160,45 +160,45 @@ export default class GmfLidarPanel extends ToolPanelElement {
           ? html`
               ${this.line
                 ? html`
-              <div>
-                <button class="btn btn-default" @click=${() => this.csvExport()}">
-                  ${i18next.t('CSV export')}
-                </button>
-                <button class="btn btn-default" @click=${() => this.pngExport()}>
-                  ${i18next.t('PNG export')}
-                </button>
-                <button
-                  class="btn btn-default"
-                  @click=${() => this.resetPlot()}
-                  data-toggle="tooltip"
-                  data-placement="left"
-                  data-original-title="${i18next.t('Reset profile')}"
-                >
-                  <span class="fa fa-sync"></span>
-                </button>
-              </div>
-              <hr />
-              <button
-                class="btn btn-default"
-                ngeo-btn
-                ng-model="measureActive"
-                @click=${() => this.setMeasureActive()}
-                data-toggle="tooltip"
-                data-placement="left"
-                data-original-title="${i18next.t('Take measure on the graph')}"
-              >
-                ${i18next.t('Take measure')}
-              </button>
-              <button
-                class="btn btn-default"
-                @click=${() => this.clearMeasure()}
-                data-toggle="tooltip"
-                data-placement="left"
-                data-original-title="${i18next.t('Clear measure')}"
-              >
-                <span class="fa fa-eraser"></span>
-              </button>
-            `
+                    <div>
+                      <button class="btn btn-default" @click=${() => this.csvExport()}>
+                        ${i18next.t('CSV export')}
+                      </button>
+                      <button class="btn btn-default" @click=${() => this.pngExport()}>
+                        ${i18next.t('PNG export')}
+                      </button>
+                      <button
+                        class="btn btn-default"
+                        @click=${() => this.resetPlot()}
+                        data-toggle="tooltip"
+                        data-placement="left"
+                        data-original-title="${i18next.t('Reset profile')}"
+                      >
+                        <span class="fa fa-sync"></span>
+                      </button>
+                    </div>
+                    <hr />
+                    <button
+                      class="btn btn-default"
+                      ngeo-btn
+                      ng-model="measureActive"
+                      @click=${() => this.setMeasureActive()}
+                      data-toggle="tooltip"
+                      data-placement="left"
+                      data-original-title="${i18next.t('Take measure on the graph')}"
+                    >
+                      ${i18next.t('Take measure')}
+                    </button>
+                    <button
+                      class="btn btn-default"
+                      @click=${() => this.clearMeasure()}
+                      data-toggle="tooltip"
+                      data-placement="left"
+                      data-original-title="${i18next.t('Clear measure')}"
+                    >
+                      <span class="fa fa-eraser"></span>
+                    </button>
+                  `
                 : ``}
 
               <div>
