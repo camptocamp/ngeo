@@ -175,7 +175,11 @@ export default class {
     let i = -1;
     const nPoints = points.distance.length;
     let cx, cy;
-    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvas: any = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+    );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
@@ -227,7 +231,11 @@ export default class {
     if (!this.manager_.config.serverConfig) {
       throw new Error('Missing manager_.config.serverConfig');
     }
-    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvas: any = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+    );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
@@ -236,7 +244,11 @@ export default class {
     ctx.clearRect(0, 0, canvasEl.getBoundingClientRect().width, canvasEl.getBoundingClientRect().height);
 
     const margin = this.manager_.config.clientConfig.margin;
-    const container: any = d3select('#gmf-lidarprofile-container');
+    const container: any = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container')
+    );
     const containerEl = container.node();
     const containerWidth = containerEl.getBoundingClientRect().width;
     const containerHeight = containerEl.getBoundingClientRect().height;
@@ -306,7 +318,11 @@ export default class {
     this.updateScaleX = this.scaleX;
     this.updateScaleY = this.scaleY;
 
-    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+    );
 
     // @ts-ignore
     svg.call(zoom).on('dblclick.zoom', null);
@@ -350,7 +366,11 @@ export default class {
       return;
     }
     this.moved_ = false;
-    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvas: any = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+    );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
@@ -386,7 +406,11 @@ export default class {
     this.manager_.measure.clearMeasure();
 
     const tr = event.transform;
-    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+    );
     const xAxis: any = d3axisBottom(this.scaleX);
     const yAxis: any = d3axisLeft(this.scaleY).tickSize(-this.width_);
 
@@ -396,7 +420,11 @@ export default class {
     svg.select('.x.axis').call(xAxis.scale(newScaleX));
     svg.select('.y.axis').call(yAxis.scale(newScaleY));
 
-    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvas: any = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+    );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {
@@ -423,13 +451,17 @@ export default class {
       throw new Error('Missing manager_.config.serverConfig');
     }
 
-    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
-    const lidarInfo = d3select('#gmf-lidarprofile-container .lidar-info');
+    const lidarContainerElement = document
+      .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+      .shadowRoot.querySelector('#gmf-lidarprofile-container ');
+
+    const svg = d3select(lidarContainerElement.querySelector('svg.lidar-svg'));
+    const lidarInfo = d3select(lidarContainerElement.querySelector('.lidar-info'));
     const pointSize = this.manager_.config.serverConfig.point_size;
     const margin = this.manager_.config.clientConfig.margin;
     const tolerance = this.manager_.config.clientConfig.tolerance || 0;
 
-    const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvas = d3select(lidarContainerElement.querySelector('.lidar-canvas'));
     const canvasEl = canvas.node();
     const canvasCoordinates = d3pointer(event, canvasEl);
     const classification_colors = this.manager_.config.serverConfig.classification_colors;
@@ -554,7 +586,11 @@ export default class {
    */
   changeStyle(material: string): void {
     this.material = material;
-    const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvas: any = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+    );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
     if (ctx === null) {

@@ -277,7 +277,11 @@ export class LidarprofileManager {
       this.isPlotSetup_ = false;
     }
 
-    d3select('#gmf-lidarprofile-container .lidar-error').style('visibility', 'hidden');
+    const lidarContainerElement = document
+      .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+      .shadowRoot.querySelector('#gmf-lidarprofile-container');
+
+    d3select(lidarContainerElement.querySelector('.lidar-error')).style('visibility', 'hidden');
     let pytreeLinestring = this.utils.getPytreeLinestring(this.line_);
 
     let maxLODWith;
@@ -297,7 +301,7 @@ export class LidarprofileManager {
     }
 
     let lastLOD = false;
-    d3select('#gmf-lidarprofile-container .lod-info').html('');
+    d3select(lidarContainerElement.querySelector('.lod-info')).html('');
     this.config.clientConfig.pointSum = 0;
     let profileWidth = 0;
     if (this.config.clientConfig.autoWidth) {
@@ -307,7 +311,7 @@ export class LidarprofileManager {
     }
 
     const profileWidthTxt = i18next.t('Profile width: ');
-    d3select('#gmf-lidarprofile-container .width-info').html(`${profileWidthTxt} ${profileWidth}m`);
+    d3select(lidarContainerElement.querySelector('.width-info')).html(`${profileWidthTxt} ${profileWidth}m`);
 
     for (let i = 0; i < maxLODWith.maxLOD; i++) {
       if (i == 0) {
@@ -378,7 +382,12 @@ export class LidarprofileManager {
     if (!this.config.serverConfig) {
       throw new Error('Missing config.serverConfig');
     }
-    const lodInfo = d3select('#gmf-lidarprofile-container .lod-info');
+
+    const lodInfo = d3select(
+      document
+        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lod-info')
+    );
     if (this.config.serverConfig.debug) {
       let html = lodInfo.html();
       const loadingLodTxt = i18next.t('Loading LOD: ');
@@ -447,7 +456,11 @@ export class LidarprofileManager {
     if (!this.line_) {
       throw new Error('Missing line');
     }
-    const lidarError = d3select('#gmf-lidarprofile-container .lidar-error');
+    const lidarContainerElement = document
+      .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+      .shadowRoot.querySelector('#gmf-lidarprofile-container');
+
+    const lidarError = d3select(lidarContainerElement.querySelector('.lidar-error'));
 
     const typedArrayInt32 = new Int32Array(profile, 0, 4);
     const headerSize = typedArrayInt32[0];
@@ -462,7 +475,7 @@ export class LidarprofileManager {
       JSON.parse(strHeaderLocal);
     } catch (e) {
       if (!this.isPlotSetup_) {
-        const canvas: any = d3select('#gmf-lidarprofile-container .lidar-canvas');
+        const canvas: any = d3select(lidarContainerElement.querySelector('.lidar-canvas'));
         const canvasEl: HTMLCanvasElement = canvas.node();
         const ctx = canvasEl.getContext('2d');
         if (ctx === null) {
