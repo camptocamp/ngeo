@@ -24,3 +24,4 @@ audit:
       - webpack-dev-server
       - typedoc
       - npm
+      - karma
