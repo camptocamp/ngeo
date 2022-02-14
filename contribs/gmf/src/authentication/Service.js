@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -118,6 +118,7 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {import('gmf/options.js').gmfAuthenticationNoReloadRole} gmfAuthenticationNoReloadRole
    * @param {angular.IIntervalService} $interval Angular interval service
    *    The no reload roles
+   * @param {angular.IQService} $q The Angular $q service.
    * @ngInject
    */
   constructor(
@@ -127,7 +128,8 @@ export class AuthenticationService extends olEventsEventTarget {
     gmfUser,
     gmfAuthenticationConfig,
     gmfAuthenticationNoReloadRole,
-    $interval
+    $interval,
+    $q
   ) {
     super();
 
@@ -142,6 +144,12 @@ export class AuthenticationService extends olEventsEventTarget {
      * @private
      */
     this.$rootScope_ = $rootScope;
+
+    /**
+     * @type {angular.IQService}
+     * @private
+     */
+    this.$q_ = $q;
 
     /**
      * The authentication url without trailing slash
@@ -252,13 +260,14 @@ export class AuthenticationService extends olEventsEventTarget {
       Object.assign(params, {'otp': otp});
     }
 
-    return this.$http_
-      .post(url, $.param(params), {
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        withCredentials: true,
-      })
-      .then((resp) => this.onSuccessfulLogin(resp))
-      .then((resp) => this.handleLogin_(false, resp));
+    const http_promise = this.$http_.post(url, $.param(params), {
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      withCredentials: true,
+    });
+
+    const defer = this.$q_.defer();
+    this.deferrableOnSuccessfulLogin(defer, http_promise);
+    return defer.promise.then((resp) => this.handleLogin_(false, resp));
   }
 
   /**
@@ -267,6 +276,14 @@ export class AuthenticationService extends olEventsEventTarget {
    */
   onSuccessfulLogin(resp) {
     return resp;
+  }
+
+  /**
+   * @param {angular.IDeferred<AuthenticationLoginResponsePromise>} defer the deferrable response.
+   * @param {angular.IPromise<AuthenticationLoginResponsePromise>} promise Ajax promise.
+   */
+  deferrableOnSuccessfulLogin(defer, promise) {
+    promise.then((resp) => this.onSuccessfulLogin(resp)).then((resp) => defer.resolve(resp));
   }
 
   /**

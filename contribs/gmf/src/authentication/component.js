@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -120,6 +120,7 @@ const authenticationComponent = {
   bindings: {
     'passwordValidator': '<?gmfAuthenticationPasswordValidator',
     'onSuccessfulLogin': '<?gmfAuthenticationOnSuccessfulLogin',
+    'deferrableOnSuccessfulLogin': '<?gmfAuthenticationDeferrableOnSuccessfulLogin',
     'infoMessage': '=?gmfAuthenticationInfoMessage',
   },
   controller: 'GmfAuthenticationController',
@@ -212,6 +213,11 @@ export class AuthenticationController {
      * @type {function(AuthenticationLoginResponsePromise): AuthenticationLoginResponsePromise}
      */
     this.onSuccessfulLogin = null;
+
+    /**
+     * @type {function(angular.IDeferred<import("gmf/authentication/Service").AuthenticationLoginResponsePromise>, angular.IPromise<import("gmf/authentication/Service").AuthenticationLoginResponsePromise>): void}
+     */
+    this.deferrableOnSuccessfulLogin = null;
 
     /**
      * @type {?string}
@@ -332,10 +338,12 @@ export class AuthenticationController {
   }
 
   /**
-   * Initialise the controller.
+   * Initialize the controller.
    */
   $onInit() {
-    if (this.onSuccessfulLogin) {
+    if (this.deferrableOnSuccessfulLogin) {
+      this.gmfAuthenticationService_.deferrableOnSuccessfulLogin = this.deferrableOnSuccessfulLogin;
+    } else if (this.onSuccessfulLogin) {
       this.gmfAuthenticationService_.onSuccessfulLogin = this.onSuccessfulLogin;
     }
   }
