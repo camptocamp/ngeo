@@ -47,7 +47,7 @@ export class LineModel {
   /**
    * Get the lines
    *
-   * @returns
+   * @returns {BehaviorSubject<OlGeomLineString>} The existing line.
    */
   getLine(): BehaviorSubject<OlGeomLineString> {
     return this.line_;

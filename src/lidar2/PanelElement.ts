@@ -65,6 +65,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   @state() private measureActive = false;
 
   @state() private classifications: LidarprofileServerConfigClassifications = [];
+  @state() private availablePointAttributes: LidarprofileServerConfigPointAttributes[] = [];
 
   // override default initConfig
   initConfig(configuration: Configuration): void {
@@ -204,22 +205,26 @@ export default class GmfLidarPanel extends ToolPanelElement {
               <div>
                 <hr />
                 <p>${i18next.t('Material')}</p>
-                <select
-                  ng-options="option.name | translate for option in ::$ctrl.getAvailablePointAttributes()"
-                  ng-model-options="{getterSetter: true}"
-                  ng-model="$ctrl.getSetSelectedPointAttribute"
-                ></select>
+                <select id="select-attributes" @change="${() => this.selectPointAttribute()}">
+                  ${Object.entries(this.availablePointAttributes).map(
+                    ([key, value]) => html` <option value="${key}">${value.name}</option> `
+                  )}
+                </select>
               </div>
               <hr />
               <p>${i18next.t('Classes')}</p>
 
-              ${Object.entries(this.classifications).forEach(
-                (classification) => html`
-                  <input
-                    .checked="${!!classification[1].visible}"
-                    @click="${() => this.toggleVisibility(classification[1], classification[0])}"
-                  />
-                  <span>${classification[1].name}</span>
+              ${Object.entries(this.classifications).map(
+                ([key, value]) => html`
+                  <div>
+                    <input
+                      type="checkbox"
+                      id="${value.name}"
+                      .checked="${!!value.visible}"
+                      @click="${() => this.toggleVisibility(value, key)}"
+                    />
+                    <label for="${value.name}">${value.name}</label>
+                  </div>
                 `
               )}
             `
@@ -248,8 +253,21 @@ export default class GmfLidarPanel extends ToolPanelElement {
    * @param key The key string of the toggled classification.
    */
   toggleVisibility(classification: LidarprofileServerConfigClassification, key: string): void {
-    classification.visible === 0 ? 1 : 0;
+    classification.visible === 0 ? (classification.visible = 1) : (classification.visible = 0);
     this.setClassification(classification, parseInt(key));
+  }
+
+  /**
+   * Set visible the selected point attribute option
+   */
+  selectPointAttribute(): void {
+    const selectElement = this.renderRoot.querySelector('#select-attributes');
+    const selectedOption = (selectElement as HTMLSelectElement).value;
+    Object.entries(this.availablePointAttributes).map(([key, value]) => {
+      if (key === selectedOption) {
+        this.setSelectedPointAttribute(value);
+      }
+    });
   }
 
   /**
@@ -261,6 +279,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
       .then(() => {
         this.ready = true;
         this.classifications = this.getClassification();
+        this.availablePointAttributes = this.getAvailablePointAttributes();
       })
       .catch((error: string) => {
         throw new Error(`Error getting profile config: ${error}`);
@@ -357,22 +376,13 @@ export default class GmfLidarPanel extends ToolPanelElement {
   }
 
   /**
-   * Get / Set the selected point attribute
+   * Set the selected point attribute
    *
-   * @param {LidarprofileServerConfigPointAttribute} [opt_selectedOption] The new selected point attribute.
-   * @returns Selected point attribute.
+   * @param {LidarprofileServerConfigPointAttribute} selectedPointAttribute The new selected point attribute.
    */
-  getSetSelectedPointAttribute(
-    opt_selectedOption: LidarprofileServerConfigPointAttribute | undefined
-  ): LidarprofileServerConfigPointAttribute | undefined {
-    if (!this.profile.plot) {
-      throw new Error('Missing profile.plot');
-    }
-    if (opt_selectedOption !== undefined) {
-      this.profileConfig_.clientConfig.pointAttributes.selectedOption = opt_selectedOption;
-      this.profile.plot.changeStyle(opt_selectedOption.value);
-    }
-    return this.profileConfig_.clientConfig.pointAttributes.selectedOption;
+  setSelectedPointAttribute(selectedPointAttribute: LidarprofileServerConfigPointAttribute): void {
+    this.profileConfig_.clientConfig.pointAttributes.selectedOption = selectedPointAttribute;
+    this.profile.plot.changeStyle(selectedPointAttribute.value);
   }
 
   /**
