@@ -29,7 +29,7 @@ import configuration, {
   ngeoCsvQuote,
   ngeoCsvSeparator,
 } from 'gmfapi/store/config';
-import {download} from 'ngeo/download/service';
+import gmfDownloadService from 'ngeo/download/service';
 
 /**
  * Definition for grid columns.
@@ -123,7 +123,7 @@ export class DownloadCsvService {
    */
   startDownload(data: {[x: string]: any}[], columnDefs: GridColumnDef[], fileName: string): void {
     const fileContent = this.generateCsv(data, columnDefs);
-    download(fileContent, fileName, `text/csv;charset=${this.encoding_}`);
+    gmfDownloadService(fileContent, fileName, `text/csv;charset=${this.encoding_}`);
   }
 }
 

@@ -22,7 +22,7 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 
-import {download} from 'ngeo/download/service';
+import gmfDownloadService from 'ngeo/download/service';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoGeometryType from 'ngeo/GeometryType';
@@ -1322,7 +1322,7 @@ FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mime
 
   const data = format.writeFeatures(clones, writeOptions);
   if (typeof data == 'string') {
-    download(data, fileName, `${mimeType};charset=utf-8`);
+    gmfDownloadService(data, fileName, `${mimeType};charset=utf-8`);
   } else {
     console.error(`Unsupported type: ${typeof data}`);
   }
