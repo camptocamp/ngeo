@@ -28,6 +28,8 @@ import gmfMapComponent from 'gmf/map/component';
 
 import gmfPrintComponent from 'gmf/print/component';
 
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMapModule from 'ngeo/map/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
@@ -53,11 +55,9 @@ const myModule = angular.module('gmfapp', [
 /**
  * @class
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *   overlay manager service.
  * @ngInject
  */
-function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
+function MainController(gmfThemes) {
   gmfThemes.loadThemes();
 
   /**
@@ -94,7 +94,7 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
     }
   });
 
-  ngeoFeatureOverlayMgr.init(this.map);
+  ngeoMapFeatureOverlayMgr.init(this.map);
 }
 
 myModule.controller('MainController', MainController);

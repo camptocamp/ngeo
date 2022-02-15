@@ -35,6 +35,7 @@ import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [
@@ -45,14 +46,12 @@ const myModule = angular.module('app', [
 ]);
 
 /**
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr
- *    Ngeo FeatureOverlay manager.
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr
  *    Ngeo ToolActivate manager service.
  * @class
  * @ngInject
  */
-function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+function MainController(ngeoToolActivateMgr) {
   /**
    * @type {import('ol/style/Style').default}
    */
@@ -81,7 +80,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
     }),
   });
 
-  ngeoFeatureOverlayMgr.init(this.map);
+  ngeoMapFeatureOverlayMgr.init(this.map);
 
   /**
    * @type {boolean}

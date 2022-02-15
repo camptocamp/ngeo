@@ -24,6 +24,7 @@ import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import {interactionDecoration} from 'ngeo/misc/decorate';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
@@ -49,13 +50,11 @@ const myModule = angular.module('app', [
 ]);
 
 /**
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
- *     manager.
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
  * @class
  * @ngInject
  */
-function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
+function MainController(ngeoToolActivateMgr) {
   /**
    * @type {import('ol/Map').default}
    */
@@ -74,7 +73,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
   const map = this.map;
 
   // initialize the feature overlay manager with the map
-  ngeoFeatureOverlayMgr.init(map);
+  ngeoMapFeatureOverlayMgr.init(map);
 
   /**
    * Collection shared between the drawing interactions and the feature
@@ -84,7 +83,7 @@ function MainController(ngeoFeatureOverlayMgr, ngeoToolActivateMgr) {
    */
   const features = new olCollection();
 
-  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(
     new olStyleStyle({

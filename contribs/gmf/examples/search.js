@@ -23,6 +23,8 @@ import angular from 'angular';
 import './search.css';
 import gmfMapComponent from 'gmf/map/component';
 
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+
 import gmfSearchModule from 'gmf/search/module';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMessageNotification from 'ngeo/message/Notification';
@@ -49,15 +51,13 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo
- *    feature overlay manager service.
  * @class
  * @ngInject
  */
-function MainController(gmfThemes, ngeoFeatureOverlayMgr) {
+function MainController(gmfThemes) {
   gmfThemes.loadThemes();
 
-  ngeoFeatureOverlayMgr.init(this.map);
+  ngeoMapFeatureOverlayMgr.init(this.map);
 
   /**
    * @type {Twitter.Typeahead.Options}

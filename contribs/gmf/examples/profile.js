@@ -25,6 +25,8 @@ import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
 
 import gmfMapComponent from 'gmf/map/component';
 
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+
 import gmfProfileModule from 'gmf/profile/module';
 import ngeoMapModule from 'ngeo/map/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
@@ -52,12 +54,10 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @param {angular.IScope} $scope Angular scope.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
- *     manager.
  * @class
  * @ngInject
  */
-function MainController($scope, ngeoFeatureOverlayMgr) {
+function MainController($scope) {
   /**
    * @type {?import('ol/geom/LineString').default}
    */
@@ -92,12 +92,12 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
    */
   const features = new olCollection();
 
-  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(lineStyle);
 
   // Initialize the feature overlay manager with the map.
-  ngeoFeatureOverlayMgr.init(this.map);
+  ngeoMapFeatureOverlayMgr.init(this.map);
 
   /**
    * Draw line interaction.
