@@ -44,7 +44,6 @@ import gmfDrawingModule from 'gmf/drawing/module';
 import gmfFiltersModule from 'gmf/filters/module';
 import gmfHeaderModule from 'gmf/header/module';
 import gmfImportModule from 'gmf/import/module';
-import gmfLidarprofileModule from 'gmf/lidarprofile/module';
 import gmfObjecteditingModule from 'gmf/objectediting/module';
 import gmfPermalinkModule from 'gmf/permalink/module';
 import gmfRasterModule from 'gmf/raster/module';
@@ -75,7 +74,6 @@ export default angular.module('ngeo', [
   gmfFiltersModule.name,
   gmfHeaderModule.name,
   gmfImportModule.name,
-  gmfLidarprofileModule.name,
   gmfObjecteditingModule.name,
   gmfPermalinkModule.name,
   gmfRasterModule.name,

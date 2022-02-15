@@ -42,7 +42,7 @@ export class ToolButtonLidar extends ToolButtonElement {
         class="btn btn-default ${this.active_ ? 'active' : ''}"
         data-toggle="tooltip"
         data-placement="left"
-        data-original-title="${i18next.t('LIDAR')}"
+        data-original-title="${i18next.t('LIDAR profile')}"
       >
         <span class="fa fa-chart-line"></span>
       </button>

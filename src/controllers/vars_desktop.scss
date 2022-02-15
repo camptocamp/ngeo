@@ -59,9 +59,9 @@ $notification-width: 12.5rem !default;
   --footer-panel-height: 12.5rem;
   --footer-panel-height-lidar: 21.88rem;
   --current-footer-panel-height: 0;
+  --app-margin: #{$app-margin};
 
   // LIDAR profile
-  --app-margin: #{$app-margin};
   --lidarprofile-height: 21.88rem;
   --profile-legend-width: 9.38rem;
 }

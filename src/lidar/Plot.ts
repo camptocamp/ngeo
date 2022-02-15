@@ -38,11 +38,11 @@ import {
   zoom as d3zoom,
 } from 'd3';
 
-import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidarprofile/Manager';
-import {LidarprofilePoints as GmfLidarprofileUtilsLidarprofilePoints} from 'ngeo/lidarprofile/Utils';
-import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidarprofile/Utils';
-import {LidarprofileServerConfigClassification as GmfLidarprofileConfigLidarprofileServerConfigClassification} from 'ngeo/lidarprofile/Config';
-import {LidarprofileServerConfigClassifications as GmfLidarprofileConfigLidarprofileServerConfigClassifications} from 'ngeo/lidarprofile/Config';
+import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidar/Manager';
+import {LidarprofilePoints as GmfLidarprofileUtilsLidarprofilePoints} from 'ngeo/lidar/Utils';
+import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidar/Utils';
+import {LidarprofileServerConfigClassification as GmfLidarprofileConfigLidarprofileServerConfigClassification} from 'ngeo/lidar/Config';
+import {LidarprofileServerConfigClassifications as GmfLidarprofileConfigLidarprofileServerConfigClassifications} from 'ngeo/lidar/Config';
 
 import i18next from 'i18next';
 

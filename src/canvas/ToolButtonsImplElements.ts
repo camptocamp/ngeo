@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -140,27 +140,6 @@ export class ToolButtonProfile extends ToolButtonElement {
         data-original-title="${i18next.t('Elevation profile')}"
       >
         <span class="fa fa-chart-area"></span>
-      </button>
-    `;
-  }
-}
-
-@customElement('gmf-lidarprofile-button')
-export class ToolButtonLidarprofile extends ToolButtonElement {
-  constructor() {
-    super('lidarprofile');
-  }
-
-  render(): TemplateResult {
-    return html`
-      <button
-        @click=${() => this.click_()}
-        class="btn btn-default ${this.active_ ? 'active' : ''}"
-        data-toggle="tooltip"
-        data-placement="left"
-        data-original-title="${i18next.t('LIDAR profile')}"
-      >
-        <span class="fa fa-chart-line"></span>
       </button>
     `;
   }

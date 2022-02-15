@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -36,7 +36,6 @@ import gmfControllersAbstractDesktopController, {
 import appBase from '../appmodule';
 import gmfImportModule from 'gmf/import/module';
 import gmfFloorModule from 'gmf/floor/module';
-import gmfLidarprofileModule from 'gmf/lidarprofile/module';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoStreetviewModule from 'ngeo/streetview/module';
 import ngeoRoutingModule from 'ngeo/routing/module';
@@ -92,7 +91,6 @@ const appModule = angular.module('Appdesktop_alt', [
   gmfControllersAbstractDesktopController.name,
   gmfImportModule.name,
   gmfFloorModule.name,
-  gmfLidarprofileModule.name,
   ngeoRoutingModule.name,
   ngeoStreetviewModule.name,
   ngeoStatemanagerWfsPermalink.name,

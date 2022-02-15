@@ -24,17 +24,17 @@ import {customElement, property, state} from 'lit/decorators.js';
 import i18next from 'i18next';
 import 'bootstrap/js/src/tooltip';
 
-import gmfLidarprofileConfig from 'ngeo/lidarprofile/Config';
-import gmfLidarprofileManager from 'ngeo/lidarprofile/Manager';
+import gmfLidarprofileConfig from 'ngeo/lidar/Config';
+import gmfLidarprofileManager from 'ngeo/lidar/Manager';
 
-import {LidarprofileConfigService} from 'ngeo/lidarprofile/Config';
-import {LidarprofileManager} from 'ngeo/lidarprofile/Manager';
+import {LidarprofileConfigService} from 'ngeo/lidar/Config';
+import {LidarprofileManager} from 'ngeo/lidar/Manager';
 import {
   LidarprofileServerConfigPointAttributes,
   LidarprofileServerConfigPointAttribute,
   LidarprofileServerConfigClassifications,
   LidarprofileServerConfigClassification,
-} from 'ngeo/lidarprofile/Config';
+} from 'ngeo/lidar/Config';
 
 import OlMap from 'ol/Map';
 import OlGeomLineString from 'ol/geom/LineString';
@@ -348,9 +348,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
    */
   clearMeasure(): void {
     if (!this.profile.measure) {
-      // FIXME: error
-      //throw new Error('Missing profile.measure');
-      return;
+      throw new Error('Missing profile.measure');
     }
     this.measureActive = false;
     this.profile.measure.clearMeasure();

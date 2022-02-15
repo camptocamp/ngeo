@@ -25,8 +25,8 @@
 
 import {pointer as d3pointer, select as d3select} from 'd3';
 
-import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidarprofile/Manager';
-import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidarprofile/Utils';
+import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidar/Manager';
+import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidar/Utils';
 
 export default class {
   /**

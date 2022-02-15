@@ -30,15 +30,15 @@ import {saveAs} from 'file-saver';
 import {select as d3select} from 'd3';
 
 import OlGeomLineString from 'ol/geom/LineString';
+import {Coordinate as OlCoordinateCoordinate} from 'ol/coordinate';
 import {
   LidarprofileConfigService as GmfLidarprofileConfigLidarprofileConfigService,
   LidarprofileServerConfigClassifications,
   LidarprofileServerConfigLevels,
   LidarprofileServerConfigPointAttributes,
   LidarprofileServerConfigPointAttribute,
-} from 'ngeo/lidarprofile/Config';
-import {Coordinate as OlCoordinateCoordinate} from 'ol/coordinate';
-import {updateScaleFunction} from 'ngeo/lidarprofile/Plot';
+} from 'ngeo/lidar/Config';
+import {updateScaleFunction} from 'ngeo/lidar/Plot';
 
 /**
  * The lidar point attribute list width default option

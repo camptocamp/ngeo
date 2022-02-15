@@ -24,15 +24,15 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import gmfLidarprofileMeasure from 'ngeo/lidarprofile/Measure';
-import gmfLidarprofilePlot from 'ngeo/lidarprofile/Plot';
-import gmfLidarprofileUtils from 'ngeo/lidarprofile/Utils';
+import gmfLidarprofileMeasure from 'ngeo/lidar/Measure';
+import gmfLidarprofilePlot from 'ngeo/lidar/Plot';
+import gmfLidarprofileUtils from 'ngeo/lidar/Utils';
 
-import {LidarprofileConfigService as GmfLidarprofileConfigLidarprofileConfigService} from 'ngeo/lidarprofile/Config';
-import {LidarprofilePoints as GmfLidarprofileUtilsLidarprofilePoints} from 'ngeo/lidarprofile/Utils';
-import GmfLidarprofileUtils from 'ngeo/lidarprofile/Utils';
-import GmfLidarprofilePlot from 'ngeo/lidarprofile/Plot';
-import GmfLidarprofileMeasure from 'ngeo/lidarprofile/Measure';
+import {LidarprofileConfigService as GmfLidarprofileConfigLidarprofileConfigService} from 'ngeo/lidar/Config';
+import {LidarprofilePoints as GmfLidarprofileUtilsLidarprofilePoints} from 'ngeo/lidar/Utils';
+import GmfLidarprofileUtils from 'ngeo/lidar/Utils';
+import GmfLidarprofilePlot from 'ngeo/lidar/Plot';
+import GmfLidarprofileMeasure from 'ngeo/lidar/Measure';
 
 import {debounce} from 'ngeo/misc/debounce2';
 import {miscDebounce as ngeoMiscDebounceMiscDebounce} from 'ngeo/misc/debounce';
