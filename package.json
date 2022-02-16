@@ -69,7 +69,7 @@
     "@fortawesome/fontawesome-free": "5.15.4",
     "@lit/reactive-element": "1.2.2",
     "@sentry/browser": "6.17.8",
-    "@sentry/integrations": "6.17.7",
+    "@sentry/integrations": "6.17.8",
     "@sentry/tracing": "6.17.8",
     "@sentry/types": "6.17.8",
     "@storybook/preset-scss": "1.0.3",
