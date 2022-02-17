@@ -43,7 +43,7 @@ import DownloadCsvService from 'ngeo/download/Csv';
 import GmfDrawLine from './DrawLineComponent';
 
 import {Configuration} from 'gmfapi/store/config';
-import line from 'gmfapi/store/line';
+import line from 'ngeo/lidar/line';
 import map from 'gmfapi/store/map';
 import panels from 'gmfapi/store/panels';
 import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';

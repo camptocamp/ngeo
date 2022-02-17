@@ -25,7 +25,7 @@ import GmfBaseElement from 'gmfapi/elements/BaseElement';
 
 import OlGeomLineString from 'ol/geom/LineString';
 
-import line from 'gmfapi/store/line';
+import line from 'ngeo/lidar/line';
 import panels from 'gmfapi/store/panels';
 
 @customElement('gmf-lidar-footer')

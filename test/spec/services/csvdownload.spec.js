@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2022 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,24 +19,38 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import BaseElement from 'gmfapi/elements/BaseElement';
-import ToolButtonElement from 'gmfapi/elements/ToolButtonElement';
-import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
-import config from 'gmfapi/store/config';
-import user from 'gmfapi/store/user';
-import map from 'gmfapi/store/map';
-import panels from 'gmfapi/store/panels';
+import ngeoCsvDownload from 'ngeo/download/Csv';
 
-export default {
-  elements: {
-    BaseElement: BaseElement,
-    ToolButtonElement: ToolButtonElement,
-    ToolPanelElement: ToolPanelElement,
-  },
-  store: {
-    config: config,
-    user: user,
-    map: map,
-    panels: panels,
-  },
-};
+describe('ngeo.download.Csv', () => {
+  describe('#generateCsv', () => {
+    it('deals with no data', () => {
+      expect(ngeoCsvDownload.generateCsv([], [])).toBe('');
+    });
+
+    it('generates a CSV', () => {
+      const columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
+      /**
+       * @type {{}[]}
+       */
+      const data = [
+        {
+          'col 1': 'some text',
+          'col 2': 123,
+          'col 3': true,
+          'column that should be ignored': 'some text',
+        },
+        {
+          'col 1': 'some "more" text',
+          'col 2': null,
+          'col 3': undefined,
+        },
+      ];
+      const csv = ngeoCsvDownload.generateCsv(data, columnDefs);
+
+      const expectedCsv =
+        '"col 1","col 2","col 3"\n' + '"some text","123","true"\n' + '"some ""more"" text",,\n';
+
+      expect(csv).toBe(expectedCsv);
+    });
+  });
+});

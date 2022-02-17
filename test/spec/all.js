@@ -30,6 +30,8 @@ import './search/createlocationsearchbloodhound.spec';
 import './services/wmstime.spec';
 import './services/layerHelper.spec';
 import './services/backgroundlayermgr.spec';
+import './services/csvdownload.spec';
+import './services/featureoverlay.spec';
 import './services/decoratelayer.spec';
 import './services/wfspermalink.spec';
 import './services/decoratelayerloading.spec';

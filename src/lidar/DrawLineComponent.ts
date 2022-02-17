@@ -36,7 +36,7 @@ import OlGeomGeometry from 'ol/geom/Geometry';
 import OlInteractionDraw from 'ol/interaction/Draw';
 import {DrawEvent} from 'ol/interaction/Draw';
 
-import line from 'gmfapi/store/line';
+import line from 'ngeo/lidar/line';
 import map from 'gmfapi/store/map';
 import panels from 'gmfapi/store/panels';
 
