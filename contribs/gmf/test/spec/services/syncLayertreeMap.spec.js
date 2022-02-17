@@ -48,9 +48,9 @@ export const setupSyncLayertreeMap = () => {
   map.getLayers().push(group);
 
   const element = angular.element(
-    '<div ngeo-layertree="tree"' +
-      'ngeo-layertree-map="map"' +
-      'ngeo-layertree-nodelayer="getLayer(treeCtrl)"' +
+    '<div gmf-layertree-node="tree"' +
+      'gmf-layertree-node-map="map"' +
+      'gmf-layertree-node-nodelayer="getLayer(treeCtrl)"' +
       '</div>'
   );
 

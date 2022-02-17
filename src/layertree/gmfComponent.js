@@ -38,7 +38,7 @@ import gmfThemeThemes, {
 import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import {ServerType} from 'ngeo/datasource/OGC';
 
-import ngeoLayertreeComponent from 'ngeo/layertree/component';
+import gmfLayertreeNode from 'gmf/layertree/layertreeNode';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
@@ -77,7 +77,7 @@ const myModule = angular.module('gmfLayertreeComponent', [
   gmfLayertreeSyncLayertreeMap.name,
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,
-  ngeoLayertreeComponent.name,
+  gmfLayertreeNode.name,
   ngeoLayertreeController.name,
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
@@ -87,7 +87,7 @@ const myModule = angular.module('gmfLayertreeComponent', [
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
 myModule.value(
-  'ngeoLayertreeTemplateUrl',
+  'gmfLayertreeNodeTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -117,11 +117,11 @@ myModule.value(
   ($element, $attrs) => {
     const subTemplateUrl = 'gmf/layertree';
     return (
-      '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
-      'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
-      'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
-      'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
-      `ngeo-layertree-templateurl="${subTemplateUrl}">` +
+      '<div gmf-layertree-node="gmfLayertreeCtrl.root" ' +
+      'gmf-layertree-node-map="gmfLayertreeCtrl.map" ' +
+      'gmf-layertree-node-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
+      'gmf-layertree-node-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
+      `gmf-layertree-node-templateurl="${subTemplateUrl}">` +
       '</div>'
     );
   }

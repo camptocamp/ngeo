@@ -342,10 +342,10 @@
     class="gmf-layertree-node"
     ng-repeat="node in layertreeCtrl.node.children"
     ng-class="'gmf-layertree-depth-' + layertreeCtrl.depth"
-    ngeo-layertree="node"
-    ngeo-layertree-notroot
-    ngeo-layertree-map="layertreeCtrl.map"
-    ngeo-layertree-nodelayerexpr="layertreeCtrl.nodelayerExpr"
-    ngeo-layertree-listenersexpr="layertreeCtrl.listenersExpr"
+    gmf-layertree-node="node"
+    gmf-layertree-node-notroot
+    gmf-layertree-node-map="layertreeCtrl.map"
+    gmf-layertree-node-nodelayerexpr="layertreeCtrl.nodelayerExpr"
+    gmf-layertree-node-listenersexpr="layertreeCtrl.listenersExpr"
   ></li>
 </ul>

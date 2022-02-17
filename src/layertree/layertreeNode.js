@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -28,18 +28,18 @@ import 'bootstrap/js/src/collapse'; // needed to collapse a layertree
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoLayertree', [ngeoLayertreeController.name]);
+const myModule = angular.module('gmfLayertreeNode', [ngeoLayertreeController.name]);
 
 myModule.value(
-  'ngeoLayertreeTemplateUrl',
+  'gmfLayertreeNodeTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @returns {string} Template URL.
    */
   (element, attrs) => {
-    const templateUrl = attrs['ngeoLayertreeTemplateurl'];
-    return templateUrl !== undefined ? templateUrl : 'ngeo/layertree';
+    const templateUrl = attrs['gmfLayertreeNodeTemplateurl'];
+    return templateUrl !== undefined ? templateUrl : 'gmf/layertree/layertreeNode';
   }
 );
 
@@ -50,7 +50,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/layertree', require('./component.html'));
+    $templateCache.put('gmf/layertree/layertreeNode', require('./layertreeNode.html'));
   }
 );
 
@@ -125,7 +125,7 @@ myModule.run(
  *          'depth': {@link number}
  *      }
  * @htmlAttribute {string} ngeo-layertree-nodelayerexpr Expression that will be parsed
- *      to be a {@link ngeo-layertree-nodelayer}.
+ *      to be a {@link gmf-layertree-node-nodelayer}.
  * @htmlAttribute {string} ngeo-layertree-listeners Expression that will be parsed
  *      to be a {@link Function} with the argument:
  *      {
@@ -133,23 +133,23 @@ myModule.run(
  *          'treeCtrl': {@link import('ngeo/layertree/Controller').LayertreeController}
  *      }
  * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
- *      to be a {@link ngeo-layertree-listeners}.
- * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoLayertreeTemplateUrl
+ *      to be a {@link gmf-layertree-node-listeners}.
+ * @param {string|function(JQuery=, angular.IAttributes=): string} gmfLayertreeNodeTemplateUrl
  *     Template URL for the directive.
  * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
  * @ngname ngeoLayertree
  */
-function gmfLayertreeComponent(ngeoLayertreeTemplateUrl) {
+function gmfLayertreeNodeComponent(gmfLayertreeNodeTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
-    templateUrl: ngeoLayertreeTemplateUrl,
+    templateUrl: gmfLayertreeNodeTemplateUrl,
     controller: LayertreeController,
   };
 }
 
-myModule.directive('ngeoLayertree', gmfLayertreeComponent);
+myModule.directive('gmfLayertreeNode', gmfLayertreeNodeComponent);
 
 export default myModule;

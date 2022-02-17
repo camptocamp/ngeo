@@ -39,14 +39,14 @@ import olLayerLayer from 'ol/layer/Layer';
  * @hidden
  */
 export function LayertreeController($scope, $rootScope, $attrs) {
-  const isRoot = $attrs.ngeoLayertreeNotroot === undefined;
+  const isRoot = $attrs.gmfLayertreeNodeNotroot === undefined;
 
   /**
    * @type {boolean}
    */
   this.isRoot = isRoot;
 
-  const nodeExpr = $attrs.ngeoLayertree;
+  const nodeExpr = $attrs.gmfLayertreeNode;
 
   /**
    * @type {angular.IScope}
@@ -76,7 +76,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    */
   this.node = node;
 
-  const mapExpr = $attrs.ngeoLayertreeMap;
+  const mapExpr = $attrs.gmfLayertreeNodeMap;
   /**
    * @type {import('ol/Map').default}
    */
@@ -129,9 +129,9 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    */
   this.map = map;
 
-  let nodelayerExpr = $attrs.ngeoLayertreeNodelayer;
+  let nodelayerExpr = $attrs.gmfLayertreeNodeNodelayer;
   if (nodelayerExpr === undefined) {
-    const nodelayerexprExpr = $attrs.ngeoLayertreeNodelayerexpr;
+    const nodelayerexprExpr = $attrs.gmfLayertreeNodeNodelayerexpr;
     const newNodelayerExpr = $scope.$eval(nodelayerexprExpr);
     console.assert(typeof newNodelayerExpr == 'string');
     nodelayerExpr = newNodelayerExpr;
@@ -177,9 +177,9 @@ export function LayertreeController($scope, $rootScope, $attrs) {
     );
   }
 
-  let listenersExpr = $attrs.ngeoLayertreeListeners;
+  let listenersExpr = $attrs.gmfLayertreeNodeListeners;
   if (listenersExpr === undefined) {
-    const listenersexprExpr = $attrs.ngeoLayertreeListenersexpr;
+    const listenersexprExpr = $attrs.gmfLayertreeNodeListenersexpr;
     listenersExpr = $scope.$eval(listenersexprExpr);
   }
 

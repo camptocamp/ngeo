@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoLayertreeComponent from 'ngeo/layertree/component';
+import gmfLayertreeNode from 'gmf/layertree/layertreeNode';
 import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap';
@@ -36,7 +36,7 @@ import './common.scss';
  * @type {angular.IModule}
  */
 export default angular.module('ngeoLayertreeModule', [
-  ngeoLayertreeComponent.name,
+  gmfLayertreeNode.name,
   gmfLayertreeComponent.name,
   gmfLayertreeDatasourceGroupTreeComponent.name,
   gmfLayertreeSyncLayertreeMap.name,

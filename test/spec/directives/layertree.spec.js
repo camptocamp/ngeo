@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -38,9 +38,9 @@ describe('ngeo.layertree.component', () => {
     });
 
     const element = angular.element(
-      '<div ngeo-layertree="tree"' +
-        'ngeo-layertree-map="map"' +
-        'ngeo-layertree-nodelayer="getLayer(node)"' +
+      '<div gmf-layertree-node="tree"' +
+        'gmf-layertree-node-map="map"' +
+        'gmf-layertree-node-nodelayer="getLayer(node)"' +
         '</div>'
     );
 
