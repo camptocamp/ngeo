@@ -96,4 +96,5 @@ beforeEach(() => {
     lng: 'en',
   });
 });
+
 export default myModule;

@@ -20,6 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import ngeoCsvDownload from 'ngeo/download/Csv';
+import config from 'gmfapi/store/config';
 
 describe('ngeo.download.Csv', () => {
   describe('#generateCsv', () => {
@@ -28,6 +29,14 @@ describe('ngeo.download.Csv', () => {
     });
 
     it('generates a CSV', () => {
+      config.setConfig({
+        'ngeoCsvEncoding': 'utf-8',
+        'ngeoCsvExtension': '.csv',
+        'ngeoCsvIncludeHeader': true,
+        'ngeoCsvQuote': '"',
+        'ngeoCsvSeparator': ',',
+      });
+
       const columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
       /**
        * @type {{}[]}
