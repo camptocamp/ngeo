@@ -30,11 +30,11 @@ describe('ngeo.download.Csv', () => {
 
     it('generates a CSV', () => {
       config.setConfig({
-        'ngeoCsvEncoding': 'utf-8',
-        'ngeoCsvExtension': '.csv',
-        'ngeoCsvIncludeHeader': true,
-        'ngeoCsvQuote': '"',
-        'ngeoCsvSeparator': ',',
+        ngeoCsvEncoding: 'utf-8',
+        ngeoCsvExtension: '.csv',
+        ngeoCsvIncludeHeader: true,
+        ngeoCsvQuote: '"',
+        ngeoCsvSeparator: ',',
       });
 
       const columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
