@@ -31,18 +31,17 @@ import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import ngeoOfflineModule from 'ngeo/offline/module';
 import ngeoOfflineConfiguration from 'ngeo/offline/Configuration';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager';
 import angular from 'angular';
 
 class MainController {
   /**
-   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr
-   * ngeo feature overlay manager service.
    * @param {import('ngeo/offline/NetworkStatus').default} ngeoNetworkStatus ngeo network status service.
    * @param {NgeoOfflineServiceManager} ngeoOfflineServiceManager ngeo offline service.
    * @ngInject
    */
-  constructor(ngeoFeatureOverlayMgr, ngeoNetworkStatus, ngeoOfflineServiceManager) {
+  constructor(ngeoNetworkStatus, ngeoOfflineServiceManager) {
     /**
      * Save a square of 10 km sideways (Map's unit is the meter).
      *
@@ -73,7 +72,7 @@ class MainController {
       }),
     });
 
-    ngeoFeatureOverlayMgr.init(this.map);
+    ngeoMapFeatureOverlayMgr.init(this.map);
 
     ngeoOfflineServiceManager.setSaveService('offlineDownloader');
     ngeoOfflineServiceManager.setRestoreService('ngeoOfflineRestorer');

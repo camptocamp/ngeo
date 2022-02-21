@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,16 +19,33 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'gmf/sass/vars.scss';
-import './beforeeach';
-import './classes/legendmapfishprintv3.spec';
-import './controllers/gmfprintcontroller.spec';
-import './controllers/calculateCssVars.spec';
-import './services/share.spec';
-import './services/themesservice.spec';
-import './services/syncLayertreeMap.spec';
-import './services/treemanager.spec';
-import './services/thememanager.spec';
-import './services/permalinkservice.spec';
-import './directives/displayquerygrid.spec';
-import './directives/displayquerywindow.spec';
+import {TemplateResult, html} from 'lit';
+import {customElement} from 'lit/decorators';
+import ToolButtonElement from 'gmfapi/elements/ToolButtonElement';
+import i18next from 'i18next';
+import 'bootstrap/js/src/tooltip';
+
+@customElement('gmf-lidar-button')
+export class ToolButtonLidar extends ToolButtonElement {
+  constructor() {
+    super('lidar');
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
+  }
+
+  render(): TemplateResult {
+    return html`
+      <button
+        @click=${() => this.click_()}
+        class="btn btn-default ${this.active_ ? 'active' : ''}"
+        data-toggle="tooltip"
+        data-placement="left"
+        data-original-title="${i18next.t('LIDAR profile')}"
+      >
+        <span class="fa fa-chart-line"></span>
+      </button>
+    `;
+  }
+}

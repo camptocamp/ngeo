@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -30,13 +30,13 @@ import './search/createlocationsearchbloodhound.spec';
 import './services/wmstime.spec';
 import './services/layerHelper.spec';
 import './services/backgroundlayermgr.spec';
+import './services/csvdownload.spec';
+import './services/featureoverlay.spec';
 import './services/decoratelayer.spec';
 import './services/wfspermalink.spec';
-import './services/featureoverlay.spec';
 import './services/decoratelayerloading.spec';
 import './services/filters.spec';
 import './services/print.spec';
-import './services/csvdownload.spec';
 import './services/toolActivateMgr.spec';
 import './services/syncarrays.spec';
 import './services/location.spec';

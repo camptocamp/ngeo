@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -29,7 +29,6 @@ import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
 
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry';
-import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay';
 import {getUid as olUtilGetUid} from 'ol/util';
 import {remove as removeFromArray} from 'ol/array';
 import 'ngeo/sass/font.scss';
@@ -48,7 +47,6 @@ import panels from 'gmfapi/store/panels';
 const myModule = angular.module('ngeoFilter', [
   ngeoFilterRuleHelper.name,
   ngeoFilterRuleComponent.name,
-  ngeoMapFeatureOverlay.name,
   ngeoQueryMapQuerent.name,
 ]);
 

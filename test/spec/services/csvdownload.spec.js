@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,26 +19,27 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
+import ngeoCsvDownload from 'ngeo/download/Csv';
+import config from 'gmfapi/store/config';
+
 describe('ngeo.download.Csv', () => {
-  /** @type {import('ngeo/download/Csv').DownloadCsvService} */
-  let ngeoCsvDownload;
-
-  beforeEach(
-    angular.mock.inject((_ngeoCsvDownload_) => {
-      ngeoCsvDownload = _ngeoCsvDownload_;
-    })
-  );
-
   describe('#generateCsv', () => {
     it('deals with no data', () => {
       expect(ngeoCsvDownload.generateCsv([], [])).toBe('');
     });
 
     it('generates a CSV', () => {
+      config.setConfig({
+        ngeoCsvEncoding: 'utf-8',
+        ngeoCsvExtension: '.csv',
+        ngeoCsvIncludeHeader: true,
+        ngeoCsvQuote: '"',
+        ngeoCsvSeparator: ',',
+      });
+
       const columnDefs = [{name: 'col 1'}, {name: 'col 2'}, {name: 'col 3'}];
       /**
-       * @type {any[]}
+       * @type {{}[]}
        */
       const data = [
         {

@@ -51,7 +51,6 @@ const myModule = angular.module('gmfSearch', [
   gmfThemeThemes.name,
   ngeoMiscAutoProjection.name,
   ngeoMiscColorpickerComponent.name,
-  ngeoMapFeatureOverlayMgr.name,
   ngeoMessagePopoverComponent.name,
 ]);
 
@@ -162,8 +161,6 @@ export class SearchController {
    *    coordinates service.
    * @param {Function} ngeoSearchCreateGeoJSONBloodhound
    *    The ngeo create GeoJSON Bloodhound service.
-   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
-   *     overlay manager service.
    * @param {import('gmf/theme/Themes').ThemesService} gmfThemes gmf Themes service.
    * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager gmf Tree Manager
    *    service.
@@ -186,7 +183,6 @@ export class SearchController {
     gettextCatalog,
     ngeoAutoProjection,
     ngeoSearchCreateGeoJSONBloodhound,
-    ngeoFeatureOverlayMgr,
     gmfThemes,
     gmfTreeManager,
     gmfSearchFulltextSearch,
@@ -259,12 +255,6 @@ export class SearchController {
     this.ngeoSearchCreateGeoJSONBloodhound_ = ngeoSearchCreateGeoJSONBloodhound;
 
     /**
-     * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
-     * @private
-     */
-    this.ngeoFeatureOverlayMgr = ngeoFeatureOverlayMgr;
-
-    /**
      * @type {import('ngeo/statemanager/Location').StatemanagerLocation|undefined}
      * @private
      */
@@ -303,7 +293,7 @@ export class SearchController {
      * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      * @private
      */
-    this.featureOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    this.featureOverlay_ = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
 
     /**
      * @type {Twitter.Typeahead.Options}
@@ -793,7 +783,7 @@ export class SearchController {
   setStyleColor(color) {
     if (color) {
       this.color = color;
-      this.ngeoFeatureOverlayMgr.getLayer().changed();
+      ngeoMapFeatureOverlayMgr.getLayer().changed();
     }
   }
 

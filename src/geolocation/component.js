@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -35,7 +35,7 @@ import {buildStyle} from 'ngeo/options';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoGeolocation', [ngeoMapFeatureOverlayMgr.name]);
+const myModule = angular.module('ngeoGeolocation', []);
 
 /**
  * @enum {string}
@@ -87,14 +87,12 @@ myModule.directive('ngeoGeolocation', geolocationComponent);
  * @param {angular.IScope} $scope The directive's scope.
  * @param {JQuery} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *    overlay manager service.
  * @param {import('ngeo/options').ngeoGeolocationOptions} ngeoGeolocationOptions The options.
  * @ngInject
  * @ngdoc controller
  * @ngname ngeoGeolocationController
  */
-export function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoGeolocationOptions) {
+export function Controller($scope, $element, gettextCatalog, ngeoGeolocationOptions) {
   this.options = ngeoGeolocationOptions;
 
   $element.on('click', this.toggleTracking.bind(this));
@@ -103,11 +101,6 @@ export function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayM
    * @type {angular.IScope}
    */
   this.$scope_ = $scope;
-
-  /**
-   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
-   */
-  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {angular.gettext.gettextCatalog}
@@ -137,7 +130,7 @@ Controller.prototype.$onInit = function () {
   /**
    * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
-  this.featureOverlay_ = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  this.featureOverlay_ = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
 
   /**
    * @type {import('ol/Geolocation').default}

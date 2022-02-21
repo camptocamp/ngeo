@@ -28,11 +28,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfMapComponent', [
-  gmfPermalinkModule.name,
-  gmfEditingSnapping.name,
-  ngeoMapFeatureOverlayMgr.name,
-]);
+const myModule = angular.module('gmfMapComponent', [gmfPermalinkModule.name, gmfEditingSnapping.name]);
 
 /**
  * A "map" directive for a GeoMapFish application.
@@ -60,7 +56,6 @@ function gmfMapComponent() {
 myModule.directive('gmfMap', gmfMapComponent);
 
 /**
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
  * @param {import('gmf/permalink/Permalink').PermalinkService} gmfPermalink The gmf permalink service.
  * @param {import('gmf/editing/Snapping').EditingSnappingService} gmfSnapping The gmf snapping service.
  * @param {angular.auto.IInjectorService} $injector Main injector.
@@ -70,7 +65,7 @@ myModule.directive('gmfMap', gmfMapComponent);
  * @ngdoc controller
  * @ngname GmfMapController
  */
-export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $injector, $element) {
+export function Controller(gmfPermalink, gmfSnapping, $injector, $element) {
   // Scope properties
 
   /**
@@ -79,11 +74,6 @@ export function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping, $in
   this.map = null;
 
   // Injected properties
-
-  /**
-   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
-   */
-  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {import('gmf/permalink/Permalink').PermalinkService}
@@ -108,7 +98,7 @@ Controller.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
-  this.ngeoFeatureOverlayMgr_.init(this.map);
+  ngeoMapFeatureOverlayMgr.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
   this.map.setTarget(this.$element_[0]);

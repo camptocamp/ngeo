@@ -30,15 +30,15 @@ import {saveAs} from 'file-saver';
 import {select as d3select} from 'd3';
 
 import OlGeomLineString from 'ol/geom/LineString';
+import {Coordinate as OlCoordinateCoordinate} from 'ol/coordinate';
 import {
   LidarprofileConfigService as GmfLidarprofileConfigLidarprofileConfigService,
   LidarprofileServerConfigClassifications,
   LidarprofileServerConfigLevels,
   LidarprofileServerConfigPointAttributes,
   LidarprofileServerConfigPointAttribute,
-} from 'ngeo/lidarprofile/Config';
-import {Coordinate as OlCoordinateCoordinate} from 'ol/coordinate';
-import {updateScaleFunction} from 'ngeo/lidarprofile/Plot';
+} from 'ngeo/lidar/Config';
+import {updateScaleFunction} from 'ngeo/lidar/Plot';
 
 /**
  * The lidar point attribute list width default option
@@ -274,7 +274,10 @@ export default class {
    * @param profileClientConfig The profile client configuration.
    */
   downloadProfileAsImageFile(profileClientConfig: LidarprofileClientConfig): void {
-    const profileSVG = d3select('#gmf-lidarprofile-container svg.lidar-svg');
+    const lidarContainerElement = document
+      .querySelector('#lidar-footer')
+      .shadowRoot.querySelector('#gmf-lidarprofile-container ');
+    const profileSVG = d3select(lidarContainerElement.querySelector('svg.lidar-svg'));
     const w = parseInt(profileSVG.attr('width'), 10);
     const h = parseInt(profileSVG.attr('height'), 10);
     const margin = profileClientConfig.margin;
@@ -292,7 +295,7 @@ export default class {
     ctx.fillRect(0, 0, w, h);
 
     // Draw the profile canvas (the points) into the new canvas.
-    const profileCanvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const profileCanvas = d3select(lidarContainerElement.querySelector('.lidar-canvas'));
     const profileCanvasEl = profileCanvas.node();
     // @ts-ignore
     ctx.drawImage(profileCanvasEl, margin.left, margin.top);

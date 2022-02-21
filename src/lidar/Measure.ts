@@ -25,8 +25,8 @@
 
 import {pointer as d3pointer, select as d3select} from 'd3';
 
-import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidarprofile/Manager';
-import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidarprofile/Utils';
+import {LidarprofileManager as GmfLidarprofileManagerLidarprofileManager} from 'ngeo/lidar/Manager';
+import {LidarPoint as GmfLidarprofileUtilsLidarPoint} from 'ngeo/lidar/Utils';
 
 export default class {
   /**
@@ -74,7 +74,11 @@ export default class {
     this.pStart_ = {};
     this.pEnd_ = {};
 
-    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select(
+      document
+        .querySelector('#lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+    );
     svg.selectAll('#text_m').remove();
     svg.selectAll('#start_m').remove();
     svg.selectAll('#end_m').remove();
@@ -89,9 +93,13 @@ export default class {
    * Activate the measure tool
    */
   setMeasureActive(): void {
-    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select(
+      document
+        .querySelector('#lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+    );
     svg.style('cursor', 'pointer');
-    svg.on('click', (event) => this.measureHeigt(event));
+    svg.on('click', (event) => this.measureHeight(event));
   }
 
   /**
@@ -99,16 +107,24 @@ export default class {
    *
    * @param event Event .
    */
-  measureHeigt(event: MouseEvent): void {
+  measureHeight(event: MouseEvent): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');
     }
     if (!this.manager_.plot) {
       throw new Error('Missing manager.plot');
     }
-    const svg = d3select('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select(
+      document
+        .querySelector('#lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+    );
     const svgEl = svg.node();
-    const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
+    const canvas = d3select(
+      document
+        .querySelector('#lidar-footer')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+    );
     const canvasEl = canvas.node();
 
     const svgCoordinates = d3pointer(event, svgEl);

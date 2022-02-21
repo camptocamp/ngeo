@@ -23,6 +23,7 @@ import angular from 'angular';
 import './drawfeature.css';
 import 'bootstrap/js/src/tooltip';
 import gmfMapComponent from 'gmf/map/component';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import gmfDrawingModule from 'gmf/drawing/module';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
@@ -56,12 +57,10 @@ const myModule = angular.module('gmfapp', [
  *    features.
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo
- *    FeatureOverlay manager
  * @class
  * @ngInject
  */
-function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
+function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr) {
   /**
    * @type {angular.IScope}
    */
@@ -74,7 +73,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
 
   ngeoFeatureHelper.setProjection(view.getProjection());
 
-  const featureOverlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  const featureOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   featureOverlay.setFeatures(ngeoFeatures);
 
   /**

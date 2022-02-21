@@ -1358,6 +1358,7 @@ export type gmfCustomCSS = {
   authentication: string;
   authenticationPanel: string;
   desktopCanvas: string;
+  lidarPanel: string;
 };
 
 /**

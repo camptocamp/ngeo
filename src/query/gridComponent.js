@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,9 +21,7 @@
 
 import angular from 'angular';
 
-import ngeoDownloadCsv from 'ngeo/download/Csv';
-
-import ngeoDownloadService from 'ngeo/download/service';
+import downloadCsvService from 'ngeo/download/Csv';
 
 import ngeoGridComponent from 'ngeo/grid/component';
 
@@ -53,13 +51,7 @@ import 'bootstrap/js/src/dropdown';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfQueryGridComponent', [
-  ngeoDownloadCsv.name,
-  ngeoDownloadService.name,
-  ngeoGridComponent.name,
-  ngeoMapFeatureOverlayMgr.name,
-  ngeoQueryMapQuerent.name,
-]);
+const myModule = angular.module('gmfQueryGridComponent', [ngeoGridComponent.name, ngeoQueryMapQuerent.name]);
 
 myModule.value(
   'gmfDisplayquerygridTemplateUrl',
@@ -142,10 +134,7 @@ myModule.component('gmfDisplayquerygrid', queryGridComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV download service.
  * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
  * @param {import('gmf/options').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {JQuery} $element Element.
@@ -160,9 +149,7 @@ export function QueryGridController(
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
-  ngeoFeatureOverlayMgr,
   $timeout,
-  ngeoCsvDownload,
   ngeoQueryOptions,
   gmfCsvFilename,
   $element,
@@ -196,7 +183,7 @@ export function QueryGridController(
   /**
    * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
-  this.ngeoCsvDownload_ = ngeoCsvDownload;
+  this.ngeoCsvDownload_ = downloadCsvService;
 
   /**
    * @type {JQuery}
@@ -251,11 +238,6 @@ export function QueryGridController(
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features_ = new olCollection();
-
-  /**
-   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
-   */
-  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
@@ -327,12 +309,12 @@ QueryGridController.prototype.$onInit = function () {
     throw new Error('Missing getMapFn');
   }
 
-  const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  const featuresOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
 
   featuresOverlay.setStyle(buildStyle(this.options.featuresStyle));
 
-  const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  const highlightFeaturesOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   const highlightFeatureStyle = buildStyle(this.options.selectedFeatureStyle);
   highlightFeaturesOverlay.setStyle(highlightFeatureStyle);

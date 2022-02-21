@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -32,10 +32,7 @@ import MaskLayer from './Mask';
 /**
  * @type {!angular.IModule}
  */
-const myModule = angular.module('ngeoOffline', [
-  ngeoMapFeatureOverlayMgr.name,
-  ngeoMessageModalComponent.name,
-]);
+const myModule = angular.module('ngeoOffline', [ngeoMessageModalComponent.name]);
 
 myModule.value(
   'ngeoOfflineTemplateUrl',
@@ -110,8 +107,6 @@ myModule.component('ngeoOffline', component);
 export const Controller = class {
   /**
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr
-   * ngeo feature overlay manager service.
    * @param {import('ngeo/offline/ServiceManager').default} ngeoOfflineServiceManager
    * ngeo offline service Manager.
    * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
@@ -124,7 +119,6 @@ export const Controller = class {
    */
   constructor(
     $timeout,
-    ngeoFeatureOverlayMgr,
     ngeoOfflineServiceManager,
     ngeoOfflineConfiguration,
     ngeoOfflineMode,
@@ -185,7 +179,7 @@ export const Controller = class {
      * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
      * @private
      */
-    this.featuresOverlay_ = ngeoFeatureOverlayMgr.getFeatureOverlay();
+    this.featuresOverlay_ = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
 
     /**
      * @type {!olCollection<Feature<import('ol/geom/Geometry').default>>}

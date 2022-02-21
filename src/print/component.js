@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -66,7 +66,6 @@ import 'bootstrap/js/src/dropdown';
 const myModule = angular.module('gmfPrintComponent', [
   gmfThemeThemes.name,
   ngeoMapLayerHelper.name,
-  ngeoMapFeatureOverlayMgr.name,
   ngeoMiscFeatureHelper.name,
   ngeoPrintService.name,
   ngeoPrintUtils.name,
@@ -217,8 +216,6 @@ export class PrintController {
    * @param {angular.IQService} $q The Angular $q service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper The ngeo Layer Helper service.
-   * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Ngeo Feature
-   *    Overlay Manager service.
    * @param {import('ngeo/print/Utils').PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
    * @param {import('ngeo/print/Service').CreatePrint} ngeoCreatePrint The ngeo Create Print function.
    * @param {string} gmfPrintUrl The MapFishPrint URL.
@@ -241,7 +238,6 @@ export class PrintController {
     $q,
     gettextCatalog,
     ngeoLayerHelper,
-    ngeoFeatureOverlayMgr,
     ngeoPrintUtils,
     ngeoCreatePrint,
     gmfPrintUrl,
@@ -327,7 +323,7 @@ export class PrintController {
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      * @private
      */
-    this.featureOverlayLayer_ = ngeoFeatureOverlayMgr.getLayer();
+    this.featureOverlayLayer_ = ngeoMapFeatureOverlayMgr.getLayer();
 
     /**
      * @type {import('ngeo/print/Utils').PrintUtils}

@@ -32,7 +32,7 @@ import {interactionDecoration} from 'ngeo/misc/decorate';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.name]);
+const myModule = angular.module('gmfDrawProfileLine', []);
 
 /**
  * Simple directive that can be put on any element. The directive listen on
@@ -77,15 +77,13 @@ myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
 /**
  * @param {angular.IScope} $scope Scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
- *    manager.
  * @class
  * @hidden
  * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */
-export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
+export function Controller($scope, $timeout) {
   /**
    * @type {?import('ol/geom/LineString').default}
    */
@@ -116,7 +114,10 @@ export function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
    */
   this.getStyleFn = null;
 
-  const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
+  /**
+   * @type {import('ngeo/map/FeatureOverlay').FeatureOverlay}
+   */
+  const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(this.features_);
 
   const style = new olStyleStyle({

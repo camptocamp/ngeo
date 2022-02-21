@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -30,7 +30,6 @@ import ngeoGeometryType from 'ngeo/GeometryType';
 import ngeoInteractionModify from 'ngeo/interaction/Modify';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate';
-import ngeoMapFeatureOverlay from 'ngeo/map/FeatureOverlay';
 
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
 
@@ -66,7 +65,6 @@ import 'ngeo/sass/font.scss';
 const myModule = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
   ngeoFilterRuleHelper.name,
-  ngeoMapFeatureOverlay.name,
   ngeoMiscDatepickerComponent.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,

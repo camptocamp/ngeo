@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,16 +19,49 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
-import gmfLidarprofileComponent from 'gmf/lidarprofile/component';
-import gmfLidarprofilePanelComponent from 'gmf/lidarprofile/panelComponent';
-
-import './lidarprofile.scss';
+import {BehaviorSubject} from 'rxjs';
+import OlGeomLineString from 'ol/geom/LineString';
 
 /**
- * @type {angular.IModule}
+ * Object used to expose the OpenLayer map.
+ *
+ * Example of usage:
+ * ```js
+ *    (window as any).gmfapi.store.line.getLine().subscribe({
+ *      next: (line: OlGeomLineString) => {
+ *        if (line) {
+ *          ...
+ *        }
+ *      },
+ *    })
+ * ```
  */
-export default angular.module('gmfLidarprofileModule', [
-  gmfLidarprofileComponent.name,
-  gmfLidarprofilePanelComponent.name,
-]);
+export class LineModel {
+  /**
+   * The observable line's properties.
+   *
+   * @private
+   */
+  line_: BehaviorSubject<OlGeomLineString> = new BehaviorSubject<OlGeomLineString>(null);
+
+  /**
+   * Get the lines
+   *
+   * @returns {BehaviorSubject<OlGeomLineString>} The existing line.
+   */
+  getLine(): BehaviorSubject<OlGeomLineString> {
+    return this.line_;
+  }
+
+  /**
+   * Set the line.
+   *
+   * @param line The line
+   */
+  setLine(line: OlGeomLineString): void {
+    this.line_.next(line);
+  }
+}
+
+const line = new LineModel();
+export default line;

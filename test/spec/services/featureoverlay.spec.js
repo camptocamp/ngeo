@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -25,6 +25,7 @@ import olMap from 'ol/Map';
 import olCollection from 'ol/Collection';
 import olFeature from 'ol/Feature';
 import olStyleStyle from 'ol/style/Style';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 describe('ngeo.map.FeatureOverlayMgr', () => {
   /** @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} */
@@ -37,19 +38,25 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
   beforeEach(() => {
     map = new olMap({});
 
-    angular.mock.inject((_ngeoFeatureOverlayMgr_) => {
-      ngeoFeatureOverlayMgr = _ngeoFeatureOverlayMgr_;
-      ngeoFeatureOverlayMgr.init(map);
-      layer = ngeoFeatureOverlayMgr.getLayer();
+    angular.mock.inject(() => {
+      ngeoFeatureOverlayMgr = ngeoMapFeatureOverlayMgr;
+      ngeoMapFeatureOverlayMgr.groups_.forEach((value, index) => {
+        ngeoMapFeatureOverlayMgr.clear(index);
+      });
+      ngeoMapFeatureOverlayMgr.groups_.length = 0;
+      ngeoMapFeatureOverlayMgr.init(map);
+      layer = ngeoMapFeatureOverlayMgr.getLayer();
     });
   });
 
   it('creates an unmanaged layer', () => {
     expect(map.getLayers().getLength()).toBe(0);
+    expect(layer.getSource().getFeatures().length).toBe(0);
     expect(layer).toBeDefined();
   });
 
   it('adds and removes features', () => {
+    expect(layer.getSource().getFeatures().length).toBe(0);
     const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
     const feature = new olFeature();
     overlay.addFeature(feature);
@@ -60,6 +67,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
   });
 
   it('removes all the features', () => {
+    expect(layer.getSource().getFeatures().length).toBe(0);
     const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
     const feature = new olFeature();
     overlay.addFeature(feature);
@@ -68,6 +76,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
   });
 
   it("doesn't remove features from other overlays", () => {
+    expect(layer.getSource().getFeatures().length).toBe(0);
     const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
     const feature1 = new olFeature();
     overlay1.addFeature(feature1);
@@ -84,6 +93,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
   });
 
   it('correctly sets styles', () => {
+    expect(layer.getSource().getFeatures().length).toBe(0);
     const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
     const style1 = new olStyleStyle();
     overlay1.setStyle(style1);
@@ -116,6 +126,10 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
     let overlay, features;
 
     beforeEach(() => {
+      ngeoFeatureOverlayMgr.groups_.forEach((value, index) => {
+        ngeoFeatureOverlayMgr.clear(index);
+      });
+      ngeoFeatureOverlayMgr.groups_.length = 0;
       overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
       const feature1 = new olFeature();
       const feature2 = new olFeature();
@@ -129,6 +143,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
 
     describe('add features to the collection', () => {
       it('adds features to the overlay', () => {
+        expect(layer.getSource().getFeatures().length).toBe(2);
         features.push(new olFeature());
         expect(layer.getSource().getFeatures().length).toBe(3);
       });
@@ -136,6 +151,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
 
     describe('remove features from the collection', () => {
       it('removes features from the overlay', () => {
+        expect(layer.getSource().getFeatures().length).toBe(2);
         features.clear();
         expect(layer.getSource().getFeatures().length).toBe(0);
       });
@@ -143,6 +159,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
 
     describe('remove the collection', () => {
       it('removes the features from the collection', () => {
+        expect(layer.getSource().getFeatures().length).toBe(2);
         overlay.setFeatures(null);
         expect(layer.getSource().getFeatures().length).toBe(0);
       });
@@ -171,6 +188,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
 
     describe('replace the collection by another one', () => {
       it('uses the new collection and ignores the old one', () => {
+        expect(layer.getSource().getFeatures().length).toBe(2);
         const newFeatures = new olCollection();
         overlay.setFeatures(newFeatures);
         expect(layer.getSource().getFeatures().length).toBe(0);

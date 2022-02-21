@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import ngeoDatasourceModule from 'ngeo/datasource/module';
-import ngeoDownloadModule from 'ngeo/download/module';
 import ngeoDrawModule from 'ngeo/draw/module';
 import ngeoEditingModule from 'ngeo/editing/module';
 import ngeoFilterModule from 'ngeo/filter/module';
@@ -45,7 +44,6 @@ import gmfDrawingModule from 'gmf/drawing/module';
 import gmfFiltersModule from 'gmf/filters/module';
 import gmfHeaderModule from 'gmf/header/module';
 import gmfImportModule from 'gmf/import/module';
-import gmfLidarprofileModule from 'gmf/lidarprofile/module';
 import gmfObjecteditingModule from 'gmf/objectediting/module';
 import gmfPermalinkModule from 'gmf/permalink/module';
 import gmfRasterModule from 'gmf/raster/module';
@@ -53,7 +51,6 @@ import gmfThemeModule from 'gmf/theme/module';
 
 export default angular.module('ngeo', [
   ngeoDatasourceModule.name,
-  ngeoDownloadModule.name,
   ngeoDrawModule.name,
   ngeoEditingModule.name,
   ngeoFilterModule.name,
@@ -77,7 +74,6 @@ export default angular.module('ngeo', [
   gmfFiltersModule.name,
   gmfHeaderModule.name,
   gmfImportModule.name,
-  gmfLidarprofileModule.name,
   gmfObjecteditingModule.name,
   gmfPermalinkModule.name,
   gmfRasterModule.name,

@@ -179,30 +179,9 @@
       </gmf-profile>
 
       <!-- LIDAR -->
-      <gmf-lidarprofile-button slot="tool-button"></gmf-lidarprofile-button>
-      <div
-        slot="tool-panel-lidarprofile"
-        class="row lidar-profile-panel pointer-events-none"
-      >
-        <div class="col-sm-12">
-          <div class="gmf-app-tools-content-heading">
-            {{ 'Lidar profile (only on the canton of Neuchâtel)' | translate }}
-          </div>
-          <gmf-lidarprofile-panel
-            gmf-lidarprofile-panel-active="mainCtrl.drawLidarprofilePanelActive"
-            gmf-lidarprofile-panel-map="::mainCtrl.map"
-            gmf-lidarprofile-panel-line="mainCtrl.lidarProfileLine" class="pointer-events-auto">
-          </gmf-lidarprofile-panel>
-        </div>
-      </div>
-      <gmf-lidarprofile
-        slot="footer-lidarresult"
-        gmf-lidarprofile-active="lidarProfileChartActive"
-        gmf-lidarprofile-line="mainCtrl.lidarProfileLine"
-        ngeo-resizemap="mainCtrl.map"
-        ngeo-resizemap-state="lidarProfileChartActive"
-      >
-      </gmf-lidarprofile>
+      <gmf-lidar-button slot="tool-button"></gmf-lidar-button>
+      <gmf-lidar-panel slot="tool-panel-lidar"></gmf-lidar-panel>
+      <gmf-lidar-footer id="lidar-footer" slot="footer-lidar"></gmf-lidar-footer>
 
       <!-- Google Street View -->
       <gmf-googlestreetview-button slot="tool-button"></gmf-googlestreetview-button>

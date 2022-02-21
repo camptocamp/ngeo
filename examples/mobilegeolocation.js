@@ -29,18 +29,17 @@ import olSourceOSM from 'ol/source/OSM';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import ngeoGeolocation from 'ngeo/geolocation/component';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, gmfMapComponent.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
  * @class
  * @ngInject
  */
-function MainController($scope, ngeoFeatureOverlayMgr) {
+function MainController($scope) {
   /**
    * @type {import('ol/Map').default}
    */
@@ -56,7 +55,7 @@ function MainController($scope, ngeoFeatureOverlayMgr) {
     }),
   });
 
-  ngeoFeatureOverlayMgr.init(this.map);
+  ngeoMapFeatureOverlayMgr.init(this.map);
 }
 
 appmodule.controller('MainController', MainController);

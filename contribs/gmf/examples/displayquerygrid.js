@@ -28,6 +28,8 @@ import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
 
 import gmfMapComponent from 'gmf/map/component';
 
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
+
 import gmfQueryGridComponent from 'gmf/query/gridComponent';
 
 import gmfThemeManager from 'gmf/theme/Manager';
@@ -97,19 +99,11 @@ myModule.controller('gmfappQueryresultController', QueryresultController);
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
  * @param {import('gmf/datasource/Manager').DatasourceManager} gmfDataSourcesManager The gmf
  *     data sources manager service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *   overlay manager service.
  * @param {import('gmf/theme/Manager').ThemeManagerService} gmfThemeManager gmf Theme Manager service.
  * @param {string} defaultTheme The default theme.
  * @ngInject
  */
-function MainController(
-  gmfThemes,
-  gmfDataSourcesManager,
-  ngeoFeatureOverlayMgr,
-  gmfThemeManager,
-  defaultTheme
-) {
+function MainController(gmfThemes, gmfDataSourcesManager, gmfThemeManager, defaultTheme) {
   gmfThemes.loadThemes();
 
   /**
@@ -178,7 +172,7 @@ function MainController(
     }
   });
 
-  ngeoFeatureOverlayMgr.init(this.map);
+  ngeoMapFeatureOverlayMgr.init(this.map);
 }
 
 myModule.controller('MainController', MainController);

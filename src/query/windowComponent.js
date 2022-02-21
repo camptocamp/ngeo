@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,8 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import ngeoDownloadCsv from 'ngeo/download/Csv';
-import ngeoDownloadService from 'ngeo/download/service';
+import downloadCsvService from 'ngeo/download/Csv';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper';
 
@@ -45,9 +44,6 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfQueryWindowComponent', [
-  ngeoDownloadCsv.name,
-  ngeoDownloadService.name,
-  ngeoMapFeatureOverlayMgr.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscSwipe.name,
   ngeoQueryMapQuerent.name,
@@ -142,9 +138,6 @@ myModule.component('gmfDisplayquerywindow', queryWindowComponent);
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult ngeo query result.
  * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent ngeo map querent service.
- * @param {import('ngeo/download/Csv').DownloadCsvService} ngeoCsvDownload CSV download service.
- * @param {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
- *     overlay manager service.
  * @param {import('gmf/options').gmfCsvFilename} gmfCsvFilename The CSV file name.
  * @param {import('gmf/options').gmfDisplayQueryWindowOptions} gmfDisplayQueryWindowOptions The options.
  * @class
@@ -158,8 +151,6 @@ export function QueryWindowController(
   $scope,
   ngeoQueryResult,
   ngeoMapQuerent,
-  ngeoCsvDownload,
-  ngeoFeatureOverlayMgr,
   gmfCsvFilename,
   gmfDisplayQueryWindowOptions
 ) {
@@ -203,7 +194,7 @@ export function QueryWindowController(
   /**
    * @type {import('ngeo/download/Csv').DownloadCsvService}
    */
-  this.ngeoCsvDownload_ = ngeoCsvDownload;
+  this.ngeoCsvDownload_ = downloadCsvService;
 
   /**
    * Filename
@@ -221,11 +212,6 @@ export function QueryWindowController(
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   this.features_ = new olCollection();
-
-  /**
-   * @type {import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
-   */
-  this.ngeoFeatureOverlayMgr_ = ngeoFeatureOverlayMgr;
 
   /**
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
@@ -296,11 +282,11 @@ QueryWindowController.prototype.$onInit = function () {
   }
   this.draggableContainment = this.draggableContainment || 'document';
 
-  const featuresOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  const featuresOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
   featuresOverlay.setStyle(buildStyle(this.options.featuresStyle));
 
-  const highlightFeaturesOverlay = this.ngeoFeatureOverlayMgr_.getFeatureOverlay();
+  const highlightFeaturesOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   highlightFeaturesOverlay.setStyle(buildStyle(this.options.selectedFeatureStyle));
 

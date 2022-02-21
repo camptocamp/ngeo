@@ -41,6 +41,7 @@ import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 
 import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper';
+import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module';
@@ -368,16 +369,9 @@ export function PermalinkService(
   this.gmfLayerBeingSwipe_ = gmfLayerBeingSwipe;
 
   /**
-   * @type {?import('ngeo/map/FeatureOverlayMgr').FeatureOverlayMgr}
-   */
-  const ngeoFeatureOverlayMgr = $injector.has('ngeoFeatureOverlayMgr')
-    ? $injector.get('ngeoFeatureOverlayMgr')
-    : null;
-
-  /**
    * @type {?import('ngeo/map/FeatureOverlay').FeatureOverlay}
    */
-  this.featureOverlay_ = ngeoFeatureOverlayMgr ? ngeoFeatureOverlayMgr.getFeatureOverlay() : null;
+  this.featureOverlay_ = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
 
   /**
    * @type {?import('ngeo/misc/FeatureHelper').FeatureHelper}

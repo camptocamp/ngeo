@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +22,7 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 
-import ngeoDownloadService from 'ngeo/download/service';
+import gmfDownloadService from 'ngeo/download/service';
 
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoGeometryType from 'ngeo/GeometryType';
@@ -129,7 +129,6 @@ export const ArrowPositions = {
  * @param {import('ngeo/options').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
  * @param {import('ngeo/options').ngeoMeasureSpherical} ngeoMeasureSpherical Spherical measure.
  * @param {import('ngeo/options').ngeoPointfilter} ngeoPointfilter the point filter.
- * @param {import('ngeo/download/service').Download} ngeoDownload The donload service
  * @ngdoc service
  * @ngname ngeoFeatureHelper
  * @ngInject
@@ -140,8 +139,7 @@ export function FeatureHelper(
   ngeoMeasurePrecision,
   ngeoMeasureDecimals,
   ngeoMeasureSpherical,
-  ngeoPointfilter,
-  ngeoDownload
+  ngeoPointfilter
 ) {
   /**
    * @type {angular.IFilterService}
@@ -209,13 +207,6 @@ export function FeatureHelper(
    * @type {?import('ol/proj/Projection').default}
    */
   this.projection_ = null;
-
-  /**
-   * Download service.
-   *
-   * @type {import('ngeo/download/service').Download}
-   */
-  this.download_ = ngeoDownload;
 }
 
 /**
@@ -1331,7 +1322,7 @@ FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mime
 
   const data = format.writeFeatures(clones, writeOptions);
   if (typeof data == 'string') {
-    this.download_(data, fileName, `${mimeType};charset=utf-8`);
+    gmfDownloadService(data, fileName, `${mimeType};charset=utf-8`);
   } else {
     console.error(`Unsupported type: ${typeof data}`);
   }
@@ -1672,7 +1663,7 @@ FeatureHelper.prototype.findFeatureIndexByFid = function (features, fid) {
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoFeatureHelper', [ngeoDownloadService.name, ngeoMiscFilters.name]);
+const myModule = angular.module('ngeoFeatureHelper', [ngeoMiscFilters.name]);
 myModule.service('ngeoFeatureHelper', FeatureHelper);
 
 export default myModule;
