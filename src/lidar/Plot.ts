@@ -177,7 +177,7 @@ export default class {
     let cx, cy;
     const canvas: any = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
@@ -233,7 +233,7 @@ export default class {
     }
     const canvas: any = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
@@ -245,9 +245,7 @@ export default class {
 
     const margin = this.manager_.config.clientConfig.margin;
     const container: any = d3select(
-      document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container')
+      document.querySelector('#lidar-footer').shadowRoot.querySelector('#gmf-lidarprofile-container')
     );
     const containerEl = container.node();
     const containerWidth = containerEl.getBoundingClientRect().width;
@@ -320,7 +318,7 @@ export default class {
 
     const svg = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
     );
 
@@ -368,7 +366,7 @@ export default class {
     this.moved_ = false;
     const canvas: any = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
@@ -408,7 +406,7 @@ export default class {
     const tr = event.transform;
     const svg = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
     );
     const xAxis: any = d3axisBottom(this.scaleX);
@@ -422,7 +420,7 @@ export default class {
 
     const canvas: any = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
@@ -452,7 +450,7 @@ export default class {
     }
 
     const lidarContainerElement = document
-      .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+      .querySelector('#lidar-footer')
       .shadowRoot.querySelector('#gmf-lidarprofile-container ');
 
     const svg = d3select(lidarContainerElement.querySelector('svg.lidar-svg'));
@@ -588,7 +586,7 @@ export default class {
     this.material = material;
     const canvas: any = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
     );
     const canvasEl: HTMLCanvasElement = canvas.node();

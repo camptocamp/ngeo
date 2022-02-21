@@ -76,7 +76,7 @@ export default class {
 
     const svg = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
     );
     svg.selectAll('#text_m').remove();
@@ -95,11 +95,11 @@ export default class {
   setMeasureActive(): void {
     const svg = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
     );
     svg.style('cursor', 'pointer');
-    svg.on('click', (event) => this.measureHeigt(event));
+    svg.on('click', (event) => this.measureHeight(event));
   }
 
   /**
@@ -107,7 +107,7 @@ export default class {
    *
    * @param event Event .
    */
-  measureHeigt(event: MouseEvent): void {
+  measureHeight(event: MouseEvent): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');
     }
@@ -116,13 +116,13 @@ export default class {
     }
     const svg = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
     );
     const svgEl = svg.node();
     const canvas = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
     );
     const canvasEl = canvas.node();

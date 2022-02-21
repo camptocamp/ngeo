@@ -278,7 +278,7 @@ export class LidarprofileManager {
     }
 
     const lidarContainerElement = document
-      .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+      .querySelector('#lidar-footer')
       .shadowRoot.querySelector('#gmf-lidarprofile-container');
 
     d3select(lidarContainerElement.querySelector('.lidar-error')).style('visibility', 'hidden');
@@ -385,7 +385,7 @@ export class LidarprofileManager {
 
     const lodInfo = d3select(
       document
-        .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+        .querySelector('#lidar-footer')
         .shadowRoot.querySelector('#gmf-lidarprofile-container .lod-info')
     );
     if (this.config.serverConfig.debug) {
@@ -457,7 +457,7 @@ export class LidarprofileManager {
       throw new Error('Missing line');
     }
     const lidarContainerElement = document
-      .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+      .querySelector('#lidar-footer')
       .shadowRoot.querySelector('#gmf-lidarprofile-container');
 
     const lidarError = d3select(lidarContainerElement.querySelector('.lidar-error'));

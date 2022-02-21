@@ -275,7 +275,7 @@ export default class {
    */
   downloadProfileAsImageFile(profileClientConfig: LidarprofileClientConfig): void {
     const lidarContainerElement = document
-      .querySelector('gmf-desktop-canvas gmf-lidar-footer')
+      .querySelector('#lidar-footer')
       .shadowRoot.querySelector('#gmf-lidarprofile-container ');
     const profileSVG = d3select(lidarContainerElement.querySelector('svg.lidar-svg'));
     const w = parseInt(profileSVG.attr('width'), 10);

@@ -160,8 +160,7 @@ export class FeatureOverlayMgr {
   }
 
   /**
-   * @param {OlStyleStyleStyleLike} style
-   * Style.
+   * @param {OlStyleStyleStyleLike} style Style to apply.
    * @param {number} groupIndex Group index.
    */
   setStyle(style: OlStyleStyleStyleLike, groupIndex: number): void {
