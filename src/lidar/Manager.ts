@@ -115,7 +115,7 @@ export class LidarprofileManager {
 
   pointSum: number;
 
-  debouncer = debounce(this.updateData_.bind(this), 200);
+  debouncer = debounce(() => this.updateData_(), 200);
   /**
    * Provides a service to manage a D3js component to be used to draw an lidar point cloud profile chart.
    * Requires access to a Pytree webservice: https://github.com/sitn/pytree

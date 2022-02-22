@@ -308,9 +308,9 @@ export default class {
         [0, 0],
         [this.width_, this.height_],
       ])
-      .on('zoom', this.zoomed.bind(this));
+      .on('zoom', (event: any) => this.zoomed(event));
 
-    zoom.on('end', this.zoomEnd.bind(this));
+    zoom.on('end', (event: any) => this.zoomEnd(event));
 
     this.previousDomainX = this.scaleX.domain();
     this.updateScaleX = this.scaleX;
@@ -361,6 +361,7 @@ export default class {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   zoomEnd(event: any): void {
     if (event.sourceEvent && this.moved_ === false) {
+      this.manager_.updateData();
       return;
     }
     this.moved_ = false;
