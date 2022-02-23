@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {TemplateResult, html, css, CSSResult} from 'lit';
-import {customElement, state} from 'lit/decorators';
+import {customElement} from 'lit/decorators';
 import GmfBaseElement from 'gmfapi/elements/BaseElement';
 
 import OlGeomLineString from 'ol/geom/LineString';
@@ -30,20 +30,17 @@ import panels from 'gmfapi/store/panels';
 
 @customElement('gmf-lidar-footer')
 export class gmfLidarFooter extends GmfBaseElement {
-  @state() line: OlGeomLineString = null;
-
-  initConfig(): void {
+  connectedCallback(): void {
     this.subscriptions.push(
       line.getLine().subscribe({
         next: (line: OlGeomLineString) => {
-          if (line) {
-            this.line = line;
-          } else {
+          if (!line) {
             panels.closeFooterPanel();
           }
         },
       })
     );
+    super.connectedCallback();
   }
 
   static styles: CSSResult[] = [
@@ -131,7 +128,6 @@ export class gmfLidarFooter extends GmfBaseElement {
    * Reset the line and close the footer
    */
   closePanel(): void {
-    this.line = null;
     line.setLine(null);
     panels.closeFooterPanel();
   }
