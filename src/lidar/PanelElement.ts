@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {html, TemplateResult, unsafeCSS, CSSResult, css} from 'lit';
-import {customElement, property, state} from 'lit/decorators.js';
+import {customElement, state} from 'lit/decorators.js';
 import i18next from 'i18next';
 import 'bootstrap/js/src/tooltip';
 
@@ -56,23 +56,21 @@ export default class GmfLidarPanel extends ToolPanelElement {
   @state() private ready = false;
   @state() private active = false;
   @state() private map: undefined | OlMap = null;
-  @property({type: String}) drawlineClass = '';
+  @state() private drawlineClass = '';
 
   // The OpenLayers LineString geometry of the profle
   @state() private line: undefined | OlGeomLineString = null;
 
-  // State of the measure tool
-  @state() private measureActive = false;
-
   @state() private classifications: LidarprofileServerConfigClassifications = [];
   @state() private availablePointAttributes: LidarprofileServerConfigPointAttributes[] = [];
 
-  // override default initConfig
-  initConfig(configuration: Configuration): void {
-    if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.lidarPanel !== undefined) {
-      this.customCSS_ = configuration.gmfCustomCSS.lidarPanel;
-    }
+  connectedCallback(): void {
+    this.initSubscribe();
+    super.connectedCallback();
+  }
 
+  // Subscribe and initialize all properties
+  initSubscribe(): void {
     this.profile = gmfLidarprofileManager;
     this.profileConfig_ = gmfLidarprofileConfig;
 
@@ -112,6 +110,13 @@ export default class GmfLidarPanel extends ToolPanelElement {
         },
       })
     );
+  }
+
+  // Override default initConfig
+  initConfig(configuration: Configuration): void {
+    if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.lidarPanel !== undefined) {
+      this.customCSS_ = configuration.gmfCustomCSS.lidarPanel;
+    }
   }
 
   static styles: CSSResult[] = [
@@ -181,8 +186,6 @@ export default class GmfLidarPanel extends ToolPanelElement {
                     <hr />
                     <button
                       class="btn btn-default"
-                      ngeo-btn
-                      ng-model="measureActive"
                       @click=${() => this.setMeasureActive()}
                       data-toggle="tooltip"
                       data-placement="left"
@@ -338,7 +341,6 @@ export default class GmfLidarPanel extends ToolPanelElement {
     if (!this.profile.measure) {
       throw new Error('Missing profile.measure');
     }
-    this.measureActive = true;
     this.profile.measure.clearMeasure();
     this.profile.measure.setMeasureActive();
   }
@@ -350,7 +352,6 @@ export default class GmfLidarPanel extends ToolPanelElement {
     if (!this.profile.measure) {
       throw new Error('Missing profile.measure');
     }
-    this.measureActive = false;
     this.profile.measure.clearMeasure();
   }
 
