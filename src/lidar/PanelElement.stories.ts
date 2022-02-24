@@ -20,12 +20,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import './PanelElement';
-import jsonData from './test_data.json';
 
 import line from './line';
 import storeMap from 'gmfapi/store/map';
 import panels from 'gmfapi/store/panels';
-import config from 'gmfapi/store/config';
+import config, {Configuration} from 'gmfapi/store/config';
 
 import OlGeomLineString from 'ol/geom/LineString';
 import olMap from 'ol/Map';
@@ -44,9 +43,7 @@ type Args = {
 
 const Template = (args: Args) => {
   // Set the config in the store
-  const data = jsonData.constants;
-  // @ts-ignore data is supposed to be of "Configuration" type
-  config.setConfig(data);
+  config.setConfig({pytreeLidarprofileJsonUrl: 'https://sitn.ne.ch/pytree'} as Configuration);
 
   // Set the panel to always open lidar in the store
   panels.openToolPanel('lidar', {state: true});
