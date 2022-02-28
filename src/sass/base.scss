@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) Camptocamp SA
+ * Copyright (c) 2022 Camptocamp SA
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -186,17 +186,6 @@ dfn {
 // Spinner for generic purpose
 .custom-spinner-generic {
   fill: black;
-}
-
-// Spinner for login panel
-.login-spinner {
-  float: left;
-  margin-right: 20px;
-
-  .custom-spinner-connect {
-    fill: black;
-    font-size: 1.3rem;
-  }
 }
 
 // Spinner for KML import panel
