@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -94,6 +94,15 @@ export default class GmfAuthForm extends GmfBaseElement {
     css`
       [hidden] {
         display: none !important;
+      }
+      .login-spinner {
+        float: left;
+        margin-right: 20px;
+      }
+
+      i.fa-spin {
+        fill: black;
+        width: 1.3rem;
       }
     `,
   ];
@@ -189,7 +198,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                 ${this.isLoading
                   ? html`
                       <div class="login-spinner">
-                        <i class="fa fa-spin svg-lit-element"
+                        <i class="fa fa-spin"
                           >${
                             // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                             unsafeSVG(loadingSvg)
