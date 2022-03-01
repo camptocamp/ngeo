@@ -172,8 +172,6 @@ Controller.prototype.handleInputChange = function(name) {
   this.updating_ = true;
   const attribute = this.attributes.find((attr) => attr.name === name);
   this.sanitize_(attribute);
-  const value = this.properties[name];
-  this.feature.set(name, value);
   this.updating_ = false;
 };
 
@@ -186,17 +184,19 @@ Controller.prototype.handleInputChange = function(name) {
  * @private
  */
 Controller.prototype.sanitize_ = function(attribute) {
-  const value = this.properties[attribute.name];
+  let value = this.properties[attribute.name];
   if (value === undefined) {
-    this.properties[attribute.name] = null;
+    value = null;
   }
   if (attribute.type === 'boolean' && value === null) {
-    this.properties[attribute.name] = false;
+    value = false;
   } else if (attribute.format && !value) {
     // Case of date, datetime or time.
     // Shouldn't be set to an empty string
-    this.properties[attribute.name] = null;
+    value = null;
   }
+  this.properties[attribute.name] = value;
+  this.feature.set(attribute.name, value);
 };
 
 /**
