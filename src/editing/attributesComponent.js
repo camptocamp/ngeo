@@ -1,7 +1,6 @@
 import angular from 'angular';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 import * as olEvents from 'ol/events.js';
-import DateFormatter from 'ngeo/misc/php-date-formatter.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 
@@ -149,10 +148,15 @@ function Controller($scope, ngeoEventHelper) {
  */
 Controller.prototype.$onInit = function() {
   this.properties = this.feature.getProperties();
-  this.sanitize_();
 
   // Listen to the feature inner properties change and apply them to the form
   const uid = olUtilGetUid(this);
+
+  // Set properties before starting to listen to changes to avoid multi AngularJS apply error.
+  this.attributes.forEach((attribute) => {
+    this.sanitize_(attribute);
+  });
+
   this.ngeoEventHelper_.addListenerKey(
     uid,
     olEvents.listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this)
@@ -166,7 +170,8 @@ Controller.prototype.$onInit = function() {
  */
 Controller.prototype.handleInputChange = function(name) {
   this.updating_ = true;
-  this.sanitize_();
+  const attribute = this.attributes.find((attr) => attr.name === name);
+  this.sanitize_(attribute);
   const value = this.properties[name];
   this.feature.set(name, value);
   this.updating_ = false;
@@ -177,38 +182,21 @@ Controller.prototype.handleInputChange = function(name) {
  * Never keep a undefined values, use null.
  * On boolean, replace null by false.
  * On date, datetime and time replace empty string by null.
+ * @param {import('ngeo/format/Attribute.js').Attribute} attribute
  * @private
  */
-Controller.prototype.sanitize_ = function() {
-  const dateFormatter = new DateFormatter();
-  this.attributes.forEach((attribute) => {
-    const value = this.properties[attribute.name];
-    if (value === undefined) {
-      this.properties[attribute.name] = null;
-    }
-    if (attribute.type === 'boolean' && value === null) {
-      this.properties[attribute.name] = false;
-    } else if (attribute.format) {
-      // Case of date, datetime or time.
-      if (value) {
-        console.assert(typeof value == 'string');
-        const formattedValue = dateFormatter.parseDate(value, attribute.format);
-        let jsonFormat = 'Y-m-d\\TH:i:s';
-        if (attribute.type === 'date') {
-          jsonFormat = 'Y-m-d';
-        } else if (attribute.type === 'time') {
-          jsonFormat = 'H:i:s';
-        } else if (attribute.type === 'datetime') {
-          // Time zone correction
-          formattedValue.setMinutes(formattedValue.getMinutes() + formattedValue.getTimezoneOffset());
-        }
-        this.properties[attribute.name] = dateFormatter.formatDate(formattedValue, jsonFormat);
-      } else {
-        // Shouldn't be set to an empty string
-        this.properties[attribute.name] = null;
-      }
-    }
-  });
+Controller.prototype.sanitize_ = function(attribute) {
+  const value = this.properties[attribute.name];
+  if (value === undefined) {
+    this.properties[attribute.name] = null;
+  }
+  if (attribute.type === 'boolean' && value === null) {
+    this.properties[attribute.name] = false;
+  } else if (attribute.format && !value) {
+    // Case of date, datetime or time.
+    // Shouldn't be set to an empty string
+    this.properties[attribute.name] = null;
+  }
 };
 
 /**
