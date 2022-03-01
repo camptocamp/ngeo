@@ -158,6 +158,12 @@ dfn {
   }
 }
 
+// Fix GSGMF-1719: resizable buttons not centered
+.gmf-app-data-panel.ui-resizable,
+.gmf-app-tools-content.ui-resizable {
+  height: 100% !important;
+}
+
 .ui-resizable {
   &.ui-resizable-resizing {
     iframe {
