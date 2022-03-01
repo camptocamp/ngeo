@@ -494,6 +494,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       this.toolsActive = false;
       this.loginActive = false;
       this.printActive = false;
+      this.printPanelActive = false;
       this.drawFeatureActive = false;
       this.filterSelectorActive = false;
       this.editFeatureActive = false;
