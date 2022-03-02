@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -667,22 +667,32 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
 
   item.requestDeferred = this.q_.defer();
 
-  this.http_.post(url, featureRequest, {timeout: item.requestDeferred.promise}).then((response) => {
-    // (1) Unset requestDeferred
-    item.requestDeferred = null;
+  this.http_
+    .post(url, featureRequest, {timeout: item.requestDeferred.promise})
+    .then((response) => {
+      // (1) Unset requestDeferred
+      item.requestDeferred = null;
 
-    // (2) Clear any previous features in the item
-    item.features.clear();
+      // (2) Clear any previous features in the item
+      item.features.clear();
 
-    // (3) Read features from request response and add them to the item
-    const readFeatures = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-      new olFormatWFS().readFeatures(response.data)
-    );
-    if (readFeatures) {
-      item.features.extend(readFeatures);
-      this.refreshSnappingSource_();
-    }
-  });
+      // (3) Read features from request response and add them to the item
+      const readFeatures =
+        /** @type {import('ol/Feature.js').default<import("ol/geom/Geometry.js").default>[]} */ (
+          new olFormatWFS().readFeatures(response.data)
+        );
+      if (readFeatures) {
+        item.features.extend(readFeatures);
+        this.refreshSnappingSource_();
+      }
+    })
+    .catch((err) => {
+      if (err.xhrStatus === 'abort') {
+        console.error('WFS request aborted.');
+      } else {
+        console.error(err);
+      }
+    });
 };
 
 /**
