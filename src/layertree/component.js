@@ -103,7 +103,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/layertree', require('./gmfComponent.html'));
+    $templateCache.put('gmf/layertree', require('./component.html'));
   }
 );
 

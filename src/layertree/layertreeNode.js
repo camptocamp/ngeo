@@ -55,7 +55,7 @@ myModule.run(
 );
 
 /**
- * Provides the "ngeoLayertree" directive, a directive for
+ * Provides the "gmfLayertreeNode" directive, a directive for
  * creating layer trees in application.
  *
  * The directive assumes that tree nodes that are not leaves have a "children"
@@ -63,48 +63,49 @@ myModule.run(
  *
  * Example:
  *
- *      <div ngeo-layertree="ctrl.tree"
- *        ngeo-layertree-map="ctrl.map"
- *        ngeo-layertree-nodelayer="ctrl.getLayer(node)"
- *        ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)">
+ *      <div gmf-layertree-node="ctrl.tree"
+ *        gmf-layertree-node-map="ctrl.map"
+ *        gmf-layertree-node-nodelayer="ctrl.getLayer(node)"
+ *        gmf-layertree-node-listeners="ctrl.listeners(treeScope, treeCtrl)">
  *      </div>
  *
- * The "ngeo-layertree", "ngeo-layertree-map" and
- * "ngeo-layertree-nodelayer" attributes are mandatory attributes.
+ * The "gmf-layertree-node", "gmf-layertree-node-map" and
+ * "gmf-layertree-node-nodelayer" attributes are mandatory attributes.
  *
- * - "ngeo-layertree" specifies an expression providing the tree. The
+ * - "gmf-layertree-node" specifies an expression providing the tree. The
+ *   root of the tree is a node of a gmfLayertree or of a gmfLayertreenode. The
  *   directive watches that expression, making it possible to retrieve
  *   the tree data through Ajax.
  *
- * - "ngeo-layertree-map" specifies an expression providing the OpenLayers
+ * - "gmf-layertree-node-map" specifies an expression providing the OpenLayers
  *   map. The directive doesn't watch that expression.
  *
- * - The "ngeo-layertree-nodelayer" specifies an expression providing the
+ * - The "gmf-layertree-node-nodelayer" specifies an expression providing the
  *   layer for a given node. In most cases that expression will be function
  *   call with "node" as the argument to the function call. E.g.
- *   "ngeo-layertree-nodelayer="ctrl.getLayer(node)".
+ *   "gmf-layertree-node-nodelayer="ctrl.getLayer(node)".
  *
- * - The "ngeo-layertree-listeners" specifies an expression providing a function
+ * - The "gmf-layertree-node-listeners" specifies an expression providing a function
  *   to bind scope events to customs functions. You'll must set the listener on
  *   the "treeScope" and probably use "treeCtrl" as context. E.g.
- *   "ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)".
+ *   "gmf-layertree-node-listeners="ctrl.listeners(treeScope, treeCtrl)".
  *
  * The directive comes with a default template. That template assumes that
  * tree nodes that are not leaves have a "children" property referencing an
  * array of child nodes. It also assumes that nodes have a "name" property.
  *
  * By default the directive uses "layertree.html" as its templateUrl. This
- * can be changed by redefining the "ngeoLayertreeTemplateUrl" value (using
- * app.module.value('ngeoLayertreeTemplateUrl', 'path/layertree.html'), or
- * by adding an "ngeo-layertree-templateurl" attribute to the element.
+ * can be changed by redefining the "gmfLayertreeNodeTemplateUrl" value (using
+ * app.module.value('gmfLayertreeNodeTemplateUrl', 'path/layertree.html'), or
+ * by adding an "gmf-layertree-node-templateurl" attribute to the element.
  *
  * Example:
  *
- *      <div ngeo-layertree="ctrl.tree"
- *        ngeo-layertree-templateurl="path/to/layertree.html"
- *        ngeo-layertree-map="ctrl.map"
- *        ngeo-layertree-nodelayer="ctrl.getLayer(node)"
- *        ngeo-layertree-listeners="ctrl.listeners(treeScope, treeCtrl)"
+ *      <div gmf-layertree-node="ctrl.tree"
+ *        gmf-layertree-node-templateurl="path/to/layertree.html"
+ *        gmf-layertree-node-map="ctrl.map"
+ *        gmf-layertree-node-nodelayer="ctrl.getLayer(node)"
+ *        gmf-layertree-node-listeners="ctrl.listeners(treeScope, treeCtrl)"
  *      </div>
  *
  * The directive has its own scope, but it is not an isolate scope. That scope
@@ -114,32 +115,32 @@ myModule.run(
  *
  * See our live example: [../examples/layertree.html](../examples/layertree.html)
  *
- * @htmlAttribute {Object} ngeo-layertree One theme (JSON).
- * @htmlAttribute {string} ngeo-layertree-templateurl The template URL.
- * @htmlAttribute {import('ol/Map').default} ngeo-layertree-map The map.
- * @htmlAttribute {string} ngeo-layertree-nodelayer Expression that will be parsed
+ * @htmlAttribute {Object} gmf-layertree-node One theme (JSON).
+ * @htmlAttribute {string} gmf-layertree-node-templateurl The template URL.
+ * @htmlAttribute {import('ol/Map').default} gmf-layertree-node-map The map.
+ * @htmlAttribute {string} gmf-layertree-node-nodelayer Expression that will be parsed
  *      to be a {@link Function} that return a {@link import('ol/layer/Layer').default}
  *      with the argument:
  *      {
  *          'node': {@link Object}|undefined,
  *          'depth': {@link number}
  *      }
- * @htmlAttribute {string} ngeo-layertree-nodelayerexpr Expression that will be parsed
+ * @htmlAttribute {string} gmf-layertree-node-nodelayerexpr Expression that will be parsed
  *      to be a {@link gmf-layertree-node-nodelayer}.
- * @htmlAttribute {string} ngeo-layertree-listeners Expression that will be parsed
+ * @htmlAttribute {string} gmf-layertree-node-listeners Expression that will be parsed
  *      to be a {@link Function} with the argument:
  *      {
  *          'treeScope': !{@link angular.IScope},
  *          'treeCtrl': {@link import('ngeo/layertree/Controller').LayertreeController}
  *      }
- * @htmlAttribute {string} ngeo-layertree-listenersexpr Expression that will be parsed
+ * @htmlAttribute {string} gmf-layertree-node-listenersexpr Expression that will be parsed
  *      to be a {@link gmf-layertree-node-listeners}.
  * @param {string|function(JQuery=, angular.IAttributes=): string} gmfLayertreeNodeTemplateUrl
  *     Template URL for the directive.
  * @returns {angular.IDirective} The Directive Definition Object.
  * @ngInject
  * @ngdoc directive
- * @ngname ngeoLayertree
+ * @ngname gmfLayertreeNode
  */
 function gmfLayertreeNodeComponent(gmfLayertreeNodeTemplateUrl) {
   return {

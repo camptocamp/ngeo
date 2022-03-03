@@ -23,7 +23,7 @@ import angular from 'angular';
 import './layertree.css';
 import gmfDisclaimerModule from 'gmf/disclaimer/module';
 
-import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
 import gmfMapComponent from 'gmf/map/component';

@@ -26,7 +26,7 @@ import 'bootstrap/js/src/tooltip';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
 
 import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent';
-import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
 import gmfMapComponent from 'gmf/map/component';

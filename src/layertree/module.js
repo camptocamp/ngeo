@@ -21,7 +21,7 @@
 
 import angular from 'angular';
 import gmfLayertreeNode from 'gmf/layertree/layertreeNode';
-import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
