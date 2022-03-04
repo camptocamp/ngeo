@@ -283,7 +283,10 @@ export class AuthenticationService extends olEventsEventTarget {
    * @param {angular.IPromise<AuthenticationLoginResponsePromise>} promise Ajax promise.
    */
   deferrableOnSuccessfulLogin(defer, promise) {
-    promise.then((resp) => this.onSuccessfulLogin(resp)).then((resp) => defer.resolve(resp));
+    promise
+      .then((resp) => this.onSuccessfulLogin(resp))
+      .then((resp) => defer.resolve(resp))
+      .catch((resp) => defer.reject(resp));
   }
 
   /**
