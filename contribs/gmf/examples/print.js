@@ -22,7 +22,7 @@
 import angular from 'angular';
 import './print.css';
 import './gmf-hidden.inc.css';
-import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 
 import gmfMapComponent from 'gmf/map/component';
 

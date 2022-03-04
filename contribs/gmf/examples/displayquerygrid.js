@@ -24,7 +24,7 @@ import './displayquerygrid.css';
 import './gmf-hidden.inc.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
 
-import gmfLayertreeComponent from 'gmf/layertree/gmfComponent';
+import gmfLayertreeComponent from 'gmf/layertree/component';
 
 import gmfMapComponent from 'gmf/map/component';
 
