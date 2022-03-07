@@ -14,9 +14,6 @@ NGEO_TEST_JS_FILES := $(shell find test/ -type f -name '*.js')
 NGEO_EXAMPLES_HTML_FILES := $(shell ls -1 examples/*.html)
 NGEO_EXAMPLES_JS_FILES := $(NGEO_EXAMPLES_HTML_FILES:.html=.js)
 
-GMF_PARTIALS_FILES := $(shell find contribs/gmf/src/ -name *.html)
-GMF_JS_FILES := $(shell find contribs/gmf/src/ -type f -name '*.js') $(shell find contribs/gmf/src/ -type f -name '*.ts')
-GMF_ALL_SRC_FILES := $(shell find contribs/gmf/src/ -type f) $(NGEO_ALL_SRC_FILES)
 GMF_TEST_JS_FILES := $(shell find contribs/gmf/test/ -type f -name '*.js') $(shell find contribs/gmf/test/ -type f -name '*.ts')
 GMF_EXAMPLES_HTML_FILES := $(shell ls -1 contribs/gmf/examples/*.html)
 GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
@@ -25,7 +22,7 @@ GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js') $(shell find contribs/gmf/apps/ -type f -name '*.ts')
 BUILD_JS_FILES = $(shell ls -1 *.js) $(shell ls -1 utils/*.js) $(shell find buildtools/ -type f -name '*.js') $(shell find .storybook/ -type f -name '*.js') $(shell find cypress/ -type f -name '*.js')
 GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html' -or -name '*.html.ejs')
-GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(GMF_ALL_SRC_FILES)
+GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(NGEO_ALL_SRC_FILES)
 
 CHECK_EXAMPLE_CHECKER := $(patsubst test/check-example/%.html,.build/test-check-example/%.check.timestamp,$(shell ls -1 test/check-example/*.html))
 BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES := \
@@ -185,7 +182,7 @@ examples-hosted-ngeo: .build/examples-ngeo.timestamp .build/examples-hosted/inde
 .PHONY: examples-hosted-gmf
 examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contribs/gmf/index.html
 
-.build/examples-gmf.timestamp: $(GMF_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
+.build/examples-gmf.timestamp: $(NGEO_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
 		$(GMF_EXAMPLES_HTML_FILES) $(GMF_EXAMPLES_JS_FILES) \
 		.build/node_modules.timestamp \
 		.build/build-dll.timestamp \
@@ -196,7 +193,7 @@ examples-hosted-gmf: .build/examples-gmf.timestamp .build/examples-hosted/contri
 .PHONY: examples-hosted-apps
 examples-hosted-apps: .build/gmf-apps.timestamp
 
-.build/gmf-apps.timestamp: $(GMF_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
+.build/gmf-apps.timestamp: $(NGEO_APPS_ALL_SRC_FILES) $(WEBPACK_CONFIG_FILES) \
 		.build/node_modules.timestamp \
 		.build/examples-hosted/dist \
 		.build/examples-hosted-gmf-apps-deps.timestamp
@@ -213,7 +210,6 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 		$(NGEO_TEST_JS_FILES) \
 		$(NGEO_EXAMPLES_JS_FILES) \
 		$(GMF_TEST_JS_FILES) \
-		$(GMF_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
@@ -231,8 +227,6 @@ eslint-fix: .build/node_modules.copyright.timestamp .eslintrc.yaml \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
 		$(NGEO_EXAMPLES_JS_FILES) \
-		$(GMF_TEST_JS_FILES) \
-		$(GMF_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
@@ -382,11 +376,6 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 		$(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES)
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES) > $@
-
-.build/locale/gmf.pot: lingua.cfg .build/node_modules.timestamp \
-		$(GMF_PARTIALS_FILES) $(GMF_JS_FILES)
-	mkdir -p $(dir $@)
-	node buildtools/extract-messages $(GMF_PARTIALS_FILES) $(GMF_JS_FILES) > $@
 
 .build/locale/apps.pot: lingua.cfg .build/node_modules.timestamp \
 		$(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES)

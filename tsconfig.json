@@ -18,7 +18,6 @@
     "types": ["cypress", "node"],
     "paths": {
       "ngeo/*": ["src/*"],
-      "gmf/*": ["contribs/gmf/src/*"],
       "gmfapi/*": ["srcapi/*"],
       "api/*": ["api/src/*"],
       "lib/*": ["lib/*"],
@@ -35,7 +34,6 @@
     "src/**/*.ts",
     "lib/**/*.js",
     "api/src/**/*.js",
-    "contribs/gmf/src/**/*.js",
     "contribs/gmf/apps/**/*.js",
     "test/spec/**/*.js",
     "contribs/gmf/test/spec/**/*.js",

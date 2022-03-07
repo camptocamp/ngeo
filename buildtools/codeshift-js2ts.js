@@ -30,7 +30,6 @@
  * Test with:
  * find api/src -name '*.js' -exec npm run cs-tots -- --dry {} \;
  * find src -name '*.js' -exec npm run cs-tots -- --dry {} \;
- * find contribs/gmf/src -name '*.js' -exec npm run cs-tots -- --dry {} \;
  */
 const doctrine = require('doctrine');
 const prettier = require('prettier');

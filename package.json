@@ -49,7 +49,6 @@
     "ngeo": "./src",
     "api": "./api/src",
     "lib": "./lib",
-    "gmf": "./contribs/gmf/src",
     "jsts": "jsts/org/locationtech/jts",
     "olcs": "ol-cesium/src/olcs",
     "jquery-ui/datepicker": "jquery-ui/ui/widgets/datepicker",

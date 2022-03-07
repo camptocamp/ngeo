@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,7 +23,6 @@
  * Test with:
  * find api/src -name '*.js' -exec npm run cs-rmjs -- --dry {} \;
  * find src -name '*.js' -exec npm run cs-rmjs -- --dry {} \;
- * find contribs/gmf/src -name '*.js' -exec npm run cs-rmjs -- --dry {} \;
  */
 
 const prettier = require('prettier');
