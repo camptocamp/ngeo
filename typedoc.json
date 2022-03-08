@@ -1,6 +1,6 @@
 {
   "name": "ngeo",
-  "entryPoints": ["src", "srcapi", "contribs/gmf/src", "api/src"],
+  "entryPoints": ["src", "srcapi", "api/src"],
   "entryPointStrategy": "expand",
   "readme": "buildtools/doc-readme.md",
   "out": "apidoc",

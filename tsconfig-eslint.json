@@ -10,7 +10,6 @@
     "test/spec/**/*.js",
     "examples/*.js",
     "api/src/**/*.js",
-    "contribs/gmf/src/**/*.js",
     "contribs/gmf/apps/**/*.js",
     "contribs/gmf/test/spec/**/*.js",
     "contribs/gmf/examples/*.js"

@@ -560,7 +560,7 @@ export type ngeoStreetviewOptions = {
 };
 
 /**
- * @module contribs/gmf/src/options
+ * @module src/options
  */
 
 /**
