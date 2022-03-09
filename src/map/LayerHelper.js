@@ -30,6 +30,7 @@ import olLayerLayer from 'ol/layer/Layer';
 import olLayerVectorTile from 'ol/layer/VectorTile';
 import {isEmpty} from 'ol/obj';
 import olSourceImageWMS from 'ol/source/ImageWMS';
+import olSourceWMSServerType from 'ol/source/WMSServerType';
 import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceVectorTile from 'ol/source/VectorTile';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS';
@@ -166,14 +167,23 @@ LayerHelper.prototype.createBasicWMSLayer = function (
   if (opt_serverType) {
     params.SERVERTYPE = opt_serverType;
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
-    olServerType = opt_serverType.replace(ServerType.QGISSERVER, 'qgis');
+    olServerType = opt_serverType.replace(ServerType.QGISSERVER, olSourceWMSServerType.QGIS);
   }
+
   const options = Object.assign({}, opt_customSourceOptions, {
     url: sourceURL,
     params: params,
     serverType: olServerType,
     crossOrigin: opt_crossOrigin,
   });
+  if (
+    opt_serverType != olSourceWMSServerType.GEOSERVER &&
+    opt_serverType != olSourceWMSServerType.MAPSERVER &&
+    opt_serverType != olSourceWMSServerType.QGIS &&
+    opt_serverType != olSourceWMSServerType.CARMENTA_SERVER
+  ) {
+    options.hidpi = false;
+  }
   const source = new olSourceImageWMS(options);
   if (opt_params) {
     source.updateParams(opt_params);
