@@ -30,3 +30,14 @@ audit:
       - typedoc
       - npm
       - karma
+      - node-sass
+      - jsdoc
+      - eslint
+      - eslint-plugin-sort-imports-es6-autofix
+      - eslint-config-openlayers
+      - webpack-cli
+      - svgo
+      - node-sass
+      - '@camptocamp/babel-plugin-angularjs-annotate'
+      - copy-webpack-plugin
+      - angular-gettext-tools
