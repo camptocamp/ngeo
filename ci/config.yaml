@@ -25,3 +25,9 @@ audit:
       - typedoc
       - npm
       - karma
+      - webpack
+      - node-sass
+      - svgo
+      - webpack-cli
+      - eslint
+      - angular-gettext-tools
