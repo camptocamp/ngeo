@@ -153,7 +153,7 @@
     "jscodeshift": "0.13.1",
     "jsts": "2.8.1",
     "karma": "6.3.17",
-    "karma-chrome-launcher": "3.1.0",
+    "karma-chrome-launcher": "3.1.1",
     "karma-jasmine": "4.0.1",
     "karma-sinon": "1.0.5",
     "karma-sourcemap-loader": "0.3.8",
