@@ -174,7 +174,7 @@
     "ol-mapbox-style": "7.1.1",
     "parse-absolute-css-unit": "1.0.2",
     "popper.js": "1.16.1",
-    "proj4": "2.7.5",
+    "proj4": "2.8.0",
     "puppeteer": "13.5.1",
     "qruri": "0.0.4",
     "raw-loader": "4.0.2",
