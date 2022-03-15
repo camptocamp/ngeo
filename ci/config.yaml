@@ -31,3 +31,8 @@ audit:
       - npm
       - karma
       - angular-gettext-tools
+      - node-sass
+      - eslint-plugin-sort-imports-es6-autofix
+      - eslint-config-openlayers
+      - webpack-cli
+      - svgo
