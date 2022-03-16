@@ -313,7 +313,7 @@ export default class {
     // Draw the image of the profile into the context of the new canvas.
     const img_id = 'lidare_profile_for_export_uid';
     exportImage.id = img_id;
-    exportImage.src = `data:image/svg+xml;base64, ${btoa(svgStr)}`;
+    exportImage.src = `data:image/svg+xml;base64, ${btoa(decodeURIComponent(encodeURIComponent(svgStr)))}`;
     exportImage.style.setProperty('display', 'none');
     const body = document.getElementsByTagName('body')[0];
     // The image must be loaded to be drawn.
