@@ -125,7 +125,7 @@ Update the `.github/workflows/main.yaml`:
 ```diff
      env:
 -      MAIN_BRANCH: master
-+      MAIN_BRANCH: x.y
++      MAIN_BRANCH: 'x.y'
 ```
 
 Commit and push the changes:
@@ -179,6 +179,10 @@ Update the `.github/workflows/audit.yaml`, in the branch matrix:
 +          - 'x.y+1'
 ```
 
+Create the tag `backport x.y`.
+
+Protect the branch x.y.
+
 Run `c2cciutils-checks` to check that everything is in place.
 
 Commit and push the changes:
@@ -197,7 +201,3 @@ make transifex-init
 ```
 
 Update the references in the `index.html` file of the `gh-pages` branch.
-
-Create the tag `backport y.x`.
-
-Protect the branch x.y.
