@@ -168,7 +168,7 @@
     "moment": "2.29.1",
     "node-sass": "6.0.1",
     "node-sass-importer": "2.0.2",
-    "ol": "6.12.0",
+    "ol": "6.13.0",
     "ol-cesium": "2.13.0",
     "ol-layerswitcher": "3.8.3",
     "ol-mapbox-style": "7.1.1",
