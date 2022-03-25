@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -593,11 +593,6 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
     // Find the right firstlevelgroup in the new theme.
     const nodeToRestore = findGroupByName(themes, name);
     if (nodeToRestore) {
-      // Restore state.
-      const fullState = firstLevelGroupsFullState[name];
-      if (fullState) {
-        this.setNodeMetadataFromFullState_(nodeToRestore, fullState);
-      }
       nodesToRestore.push(nodeToRestore);
     }
   });
@@ -605,8 +600,15 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
   // Re add the firstlevelgroups.
   this.setFirstLevelGroups(nodesToRestore);
 
-  // Wait that Angular has created the layetree, then update the permalink.
+  // Wait that Angular has created the layetree, then restore state and update permalink.
   this.$timeout_(() => {
+    // Restore state of each child
+    this.rootCtrl.children.map((treeCtrl) => {
+      const name = treeCtrl.node.name;
+      this.setFirstLevelGroupFullState_(treeCtrl, firstLevelGroupsFullState[name]);
+    });
+
+    // Update permalink
     this.updateTreeGroupsState_(this.root.children, []);
   });
 };
@@ -647,7 +649,7 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl
     }
     const legendElement = $(`#gmf-layertree-node-${treeCtrl.uid}-legend`);
     if (legendElement) {
-      isLegendExpanded = legendElement.is(':visible');
+      isLegendExpanded = legendElement.hasClass('show');
     }
   }
 
@@ -660,33 +662,45 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl
 };
 
 /**
- * Set a node's metadata with the given fullState. Update also its children
- * recursively with the fullState children.
- * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node to update.
- * @param {TreeManagerFullState|undefined} fullState the fullState object
- *     to use.
- * @return {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} the node with modification.
+ * Restore state of the given treeCtrl including the state of its children from passed TreeManagerFullState.
+ * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl the ngeo layertree
+ *    controller to save.
+ * @param {TreeManagerFullState|undefined} fullState the fullState object.
  */
-LayertreeTreeManager.prototype.setNodeMetadataFromFullState_ = function (node, fullState) {
-  if (!fullState) {
-    return node;
+LayertreeTreeManager.prototype.setFirstLevelGroupFullState_ = function (treeCtrl, fullState) {
+  if (fullState === undefined) {
+    return;
   }
 
-  // Set the metadata of the node children recursively.
-  const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
-  if (groupNode.children) {
-    groupNode.children.map((child) => {
-      this.setNodeMetadataFromFullState_(child, fullState.children[child.name]);
-    });
+  if (treeCtrl.children.length > 0) {
+    const nodeElement = $(`#gmf-layertree-layer-group-${treeCtrl.uid}`);
+    // Set isExpanded only in groups.
+    if (nodeElement) {
+      if (fullState.isExpanded) {
+        nodeElement.addClass('show');
+      } else {
+        nodeElement.removeClass('show');
+      }
+    }
+  } else {
+    // Set state and isLegendExpanded only in leaves.
+    if (fullState.isChecked === true) {
+      treeCtrl.setState('on', false);
+    } else if (fullState.isChecked === false) {
+      treeCtrl.setState('off', false);
+    }
+    const legendElement = $(`#gmf-layertree-node-${treeCtrl.uid}-legend`);
+    if (fullState.isLegendExpanded) {
+      legendElement.addClass('show');
+    } else {
+      legendElement.removeClass('show');
+    }
   }
 
-  // Set the metadata with the fullState object information.
-  const metadata = node.metadata;
-  metadata.isChecked = fullState.isChecked;
-  metadata.isExpanded = fullState.isExpanded;
-  metadata.isLegendExpanded = fullState.isLegendExpanded;
-
-  return node;
+  // Set the state of the treeCtrl children recursively.
+  treeCtrl.children.map((child) => {
+    this.setFirstLevelGroupFullState_(child, fullState.children[child.node.name]);
+  });
 };
 
 /**
