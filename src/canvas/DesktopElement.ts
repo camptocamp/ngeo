@@ -424,7 +424,7 @@ export default class GmfDesktopCanvas extends BaseElement {
               height = styles.getPropertyValue(`--footer-panel-height`);
             }
             if (!height) {
-              height = '12.5rem';
+              height = '15.62rem';
             }
           }
           document.documentElement.style.setProperty('--current-footer-panel-height', height);
