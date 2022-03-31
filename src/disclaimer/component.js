@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -66,6 +66,7 @@ const myModule = angular.module('gmfDisclaimer', [
  * @param {JQuery} $element Element.
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @param {import('ngeo/message/Disclaimer').MessageDisclaimerService} ngeoDisclaimer Ngeo Disclaimer
  *    service.
@@ -81,6 +82,7 @@ export function DisclaimerController(
   $element,
   $sce,
   $timeout,
+  $rootScope,
   gettextCatalog,
   ngeoDisclaimer,
   ngeoEventHelper,
@@ -125,6 +127,11 @@ export function DisclaimerController(
    * @type {angular.ITimeoutService}
    */
   this.timeout_ = $timeout;
+
+  /**
+   * @type {angular.IScope}
+   */
+  this.rootScope_ = $rootScope;
 
   /**
    * @type {angular.gettext.gettextCatalog}
@@ -225,19 +232,13 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
         this.closeAll_(layer);
       }
 
-      const listenerKey = listen(
-        layer,
-        'propertychange',
-        /** @type {import('ol/events').ListenerFunction} */
-        (event) => {
-          if (layer.getVisible()) {
-            this.update_(layer);
-          } else {
-            this.closeAll_(layer);
-          }
+      this.rootScope_.$on('ngeo-layertree-state', () => {
+        if (layer.getVisible()) {
+          this.update_(layer);
+        } else {
+          this.closeAll_(layer);
         }
-      );
-      this.eventHelper_.addListenerKey(layerUid, listenerKey);
+      });
     } else {
       // Show disclaimer messages for this layer
       this.showAll_(layer);
