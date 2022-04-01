@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -84,7 +84,7 @@ function Template(args: Args): string {
     '  --right-panel-width-2: 20rem;',
     '}',
     '</style>',
-    '<gmf-desktop-canvas style="height: 20rem; display: block;">',
+    '<gmf-desktop-canvas style="height: 25rem; display: block;">',
     '<p slot="header">header</p>',
     '<p slot="data">data 1</p>',
     '<p slot="data">data 1</p>',
