@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import "./vars.scss"
+import './vars.scss';
 
 /**
  * Base url for the GeoMapFish demo server.
@@ -117,6 +117,7 @@ export default function (module) {
 
   module.constant('gmfAuthenticationConfig', {});
   module.constant('gmfSnappingConfig', {});
+  module.constant('gmfSnappingOptions', {});
   module.constant('gmfThemesOptions', {});
   module.constant('gmfContextualDataOptions', {});
   module.constant('gmfPrintOptions', {});
