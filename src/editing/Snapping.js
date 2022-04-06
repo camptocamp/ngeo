@@ -73,6 +73,7 @@ export class CustomSnap extends olInteractionSnap {
  *    service.
  * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} ngeoFeatures Collection
  *    of features.
+ * @param {import('gmf/options.js').gmfSnappingOptions} gmfSnappingOptions The options.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
@@ -87,7 +88,8 @@ export function EditingSnappingService(
   gmfSnappingConfig,
   gmfThemes,
   gmfTreeManager,
-  ngeoFeatures
+  ngeoFeatures,
+  gmfSnappingOptions
 ) {
   // === Injected services ===
 
@@ -127,7 +129,12 @@ export function EditingSnappingService(
   this.gmfSnappingConfig_ = gmfSnappingConfig;
 
   /**
-   * @type {import('gmf/theme/Themes').ThemesService}
+   * @type {import('gmf/options.js').gmfSnappingOptions}
+   */
+  this.gmfSnappingOptions_ = gmfSnappingOptions;
+
+  /**
+   * @type {import("gmf/theme/Themes.js").ThemesService}
    */
   this.gmfThemes_ = gmfThemes;
 
@@ -357,6 +364,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // When it becomes visible, it's added to the list of snappable tree ctrls.
   node = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
   const snappingConfig = getSnappingConfig(node);
+  const maxFeatures = this.gmfSnappingOptions_.maxFeatures || 50;
   if (snappingConfig) {
     const wfsConfig = this.getWFSConfig_(treeCtrl);
     if (wfsConfig) {
@@ -377,7 +385,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function (treeCtrl) {
         featurePrefix: 'feature',
         features: new olCollection(),
         interaction: null,
-        maxFeatures: 50,
+        maxFeatures: maxFeatures,
         requestDeferred: null,
         snappingConfig: snappingConfig,
         treeCtrl: treeCtrl,
