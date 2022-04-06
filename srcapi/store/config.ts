@@ -1037,6 +1037,16 @@ export type gmfDisclaimerOptions = {
 };
 
 /**
+ * The snapping options
+ */
+export type gmfSnappingOptions = {
+  /**
+   * The max number of features in the extent to allows snapping
+   */
+  maxFeatures: number;
+};
+
+/**
  * Configuration option for {@link import('gmf/query/gridComponent').GmfQueryGridComponent} to merge grid tabs.
  *
  * E.g. `'two_wheels_park': ['velo_park', 'moto_park']}` merges the sources
@@ -1383,6 +1393,7 @@ export type Configuration = {
   ngeoMeasurePrecision: ngeoMeasurePrecision;
   ngeoMeasureDecimals: ngeoMeasureDecimals;
   ngeoMeasureSpherical: ngeoMeasureSpherical;
+  gmfSnappingOptions: gmfSnappingOptions;
   ngeoSnappingTolerance: ngeoSnappingTolerance;
   ngeoPointfilter: ngeoPointfilter;
   ngeoCsvEncoding: ngeoCsvEncoding;
