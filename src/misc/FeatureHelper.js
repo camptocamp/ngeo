@@ -86,11 +86,11 @@ export const ArrowDirections = {
   /**
    * @type {string}
    */
-  FORWARDS: 'forwards',
+  FORWARD: 'forward',
   /**
    * @type {string}
    */
-  BACKWARDS: 'backwards',
+  BACKWARD: 'backward',
   /**
    * @type {string}
    */
@@ -381,10 +381,10 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
 
     // Handle arrowDirection - Add arrow at the right place of the segment and the right
     // direction
-    if (arrowDirection === ArrowDirections.FORWARDS || arrowDirection === ArrowDirections.BOTH) {
+    if (arrowDirection === ArrowDirections.FORWARD || arrowDirection === ArrowDirections.BOTH) {
       arrowStyles.push(getArrowStyle(end, false));
     }
-    if (arrowDirection === ArrowDirections.BACKWARDS || arrowDirection === ArrowDirections.BOTH) {
+    if (arrowDirection === ArrowDirections.BACKWARD || arrowDirection === ArrowDirections.BOTH) {
       arrowStyles.push(getArrowStyle(start, true));
     }
   };
