@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -317,6 +317,7 @@ class StreetviewController {
       throw new Error('Missing mapillary key');
     }
     const accessToken = this.options.key;
+    const bufferSize = this.options.bufferSize;
     //wait for the mly div to be there before making the service which needs it
     this.timeout_(() => {
       const mapillaryService = new MapillaryService(
@@ -325,7 +326,8 @@ class StreetviewController {
         this.http_,
         this.map,
         this.handlePanoramaPositionChange_,
-        accessToken
+        accessToken,
+        bufferSize
       );
       this.scope_.$watch(
         () => this.panelWidth,

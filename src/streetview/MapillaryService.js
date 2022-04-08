@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -35,9 +35,10 @@ export default class MapillaryService extends StreetviewService {
    * @param {?import("ol/Map.js").default} map The map.
    * @param {(newCoordinates: import("ol/coordinate.js").Coordinate | null) => void} handlePanoramaPositionChange Position change handler.
    * @param {string} accessToken The key to access the mapillary api.
+   * @param {number} bufferSize The size to add to the bbox buffer.
    * @ngInject
    */
-  constructor($scope, $timeout, $http, map, handlePanoramaPositionChange, accessToken) {
+  constructor($scope, $timeout, $http, map, handlePanoramaPositionChange, accessToken, bufferSize) {
     super($scope, map, handlePanoramaPositionChange);
 
     /**
@@ -56,6 +57,12 @@ export default class MapillaryService extends StreetviewService {
      * @private
      */
     this.accessToken_ = accessToken;
+
+    /**
+     * The size to add to the bbox buffer.
+     * @private
+     */
+    this.bufferSize_ = bufferSize || 0.001;
 
     /**
      * Container of the mapillary viewer.
@@ -140,7 +147,7 @@ export default class MapillaryService extends StreetviewService {
    * @private
    */
   searchImage_(lng, lat) {
-    const bbox = buffer([lng, lat, lng, lat], 0.001);
+    const bbox = buffer([lng, lat, lng, lat], this.bufferSize_);
     const baseUrl = `${MLY_METADATA_ENDPOINT}/images`;
     const path = `${baseUrl}?access_token=${this.accessToken_}&fields=id&bbox=${bbox}&limit=1`;
     return this.$http_.get(path).then(
