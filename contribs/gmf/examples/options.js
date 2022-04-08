@@ -136,6 +136,7 @@ export default function (module) {
   module.constant('gmfVectorTilesOptions', {});
   module.constant('gmfAuthenticationConfig', {});
   module.constant('gmfSnappingConfig', {});
+  module.constant('gmfSnappingOptions', {});
   module.constant('gmfThemesOptions', {});
   module.constant('gmfContextualDataOptions', {});
   module.constant('gmfPrintOptions', {});
