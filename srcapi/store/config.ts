@@ -557,6 +557,10 @@ export type ngeoStreetviewOptions = {
    * ClientId for Mapillary
    */
   key: string;
+  /**
+   * Buffer size for Mapillary bbox
+   */
+  bufferSize?: number;
 };
 
 /**
