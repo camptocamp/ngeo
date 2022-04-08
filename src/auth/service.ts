@@ -128,7 +128,7 @@ export class AuthenticationService {
    * @private
    */
   checkConnection_(): void {
-    if (this.user_.username) {
+    if (this.user_.username && this.user_.is_password_changed) {
       const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
       const options: RequestInit = {method: 'GET', credentials: 'include'};
       fetch(url, options)
@@ -146,7 +146,7 @@ export class AuthenticationService {
 
   handleDisconnection(): void {
     const noReload = this.noReloadRole_ ? this.getRolesNames().includes(this.noReloadRole_) : false;
-    this.resetUser_(UserState.DISCONNECTED, noReload);
+    this.resetUser(UserState.DISCONNECTED, noReload);
   }
 
   /**
@@ -273,7 +273,7 @@ export class AuthenticationService {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGOUT}`;
     const options: RequestInit = {method: 'GET', credentials: 'include'};
     return fetch(url, options).then(() => {
-      this.resetUser_(UserState.LOGGED_OUT, noReload);
+      this.resetUser(UserState.LOGGED_OUT, noReload);
     });
   }
 
@@ -345,9 +345,8 @@ export class AuthenticationService {
    * @param userState state of the user.
    * @param noReload Don't request a new user object from
    * the back-end after logging out, defaults to false.
-   * @private
    */
-  resetUser_(userState: UserState, noReload: boolean): void {
+  resetUser(userState: UserState, noReload: boolean): void {
     const emptyUserProperties = user.getEmptyUserProperties();
     user.setUser(emptyUserProperties, userState);
     if (!noReload) {
