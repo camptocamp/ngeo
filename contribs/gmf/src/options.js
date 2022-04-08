@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2021 Camptocamp SA
+// Copyright (c) 2020-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -306,6 +306,12 @@
  * Defaults to `true`.
  * @property {boolean} [external] Whether to use disclaimer messages elsewhere or not. Default to `false`.
  * If true, you should use the externalMessage and the externalVisibility too.
+ */
+
+/**
+ * The snapping options
+ * @typedef {Object} gmfSnappingOptions
+ * @property {number} [maxFeatures] The max number of features in the extent to allows snapping
  */
 
 /**
