@@ -101,7 +101,7 @@
     "@typescript-eslint/eslint-plugin": "5.18.0",
     "@typescript-eslint/parser": "5.19.0",
     "angular": "1.8.2",
-    "angular-animate": "1.8.2",
+    "angular-animate": "1.8.3",
     "angular-dynamic-locale": "0.1.38",
     "angular-float-thead": "0.1.2",
     "angular-gettext": "2.4.2",
