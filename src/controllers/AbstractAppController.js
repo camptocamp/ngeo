@@ -332,13 +332,20 @@ export function AbstractAppController($scope, $injector, mobile) {
   // On user update, set features user based.
   user.getProperties().subscribe({
     next: (properties) => {
-      this.gmfUser = properties;
       const userState = user.getState();
+      if (userState === UserState.DISCONNECTED && this.gmfUser.is_password_changed === false) {
+        this.gmfUser = properties;
+        return;
+      }
+      this.gmfUser = properties;
       if (userState === UserState.NOT_INITIALIZED) {
         return;
       }
       if (userState === UserState.DISCONNECTED) {
         this.loginActive = true;
+      }
+      if (this.gmfUser.is_password_changed === false) {
+        return;
       }
       userChange();
     },

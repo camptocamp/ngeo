@@ -67,8 +67,11 @@ export default class GmfAuthForm extends GmfBaseElement {
         next: (properties: User) => {
           this.gmfUser = properties;
           this.setOtpImage_();
-          this.checkUserMustChangeItsPassword_();
-          this.onUserStateUpdate_(user.getState());
+          if (this.gmfUser.is_password_changed === false) {
+            this.handleUserMustChangeItsPassword_();
+          } else {
+            this.onUserStateUpdate_(user.getState());
+          }
         },
       }),
       user.getLoginMessage().subscribe({
@@ -103,6 +106,19 @@ export default class GmfAuthForm extends GmfBaseElement {
       i.fa-spin {
         fill: black;
         width: 1.3rem;
+      }
+      .btn.btn-default {
+        background-color: var(--map-tools-bg-color);
+        border-color: var(--onhover-color);
+        color: var(--map-tools-color);
+      }
+      .btn.btn-default.active {
+        box-shadow: inset $light-box-shadow var(--light-box-shadow-color);
+      }
+      .btn.btn-default:hover,
+      .btn.btn-default.active {
+        background-color: var(--onhover-color);
+        border-color: var(--onhover-color-darken);
       }
     `,
   ];
@@ -332,10 +348,7 @@ export default class GmfAuthForm extends GmfBaseElement {
   /**
    * @private
    */
-  checkUserMustChangeItsPassword_(): void {
-    if (this.gmfUser.is_password_changed !== false) {
-      return;
-    }
+  handleUserMustChangeItsPassword_(): void {
     this.changingPasswordUsername_ = this.gmfUser.username;
     this.changingPassword = true;
     this.userMustChangeItsPassword = true;
@@ -544,6 +557,7 @@ export default class GmfAuthForm extends GmfBaseElement {
     oldPwd.value = '';
     newPwd.value = '';
     newPwdConf.value = '';
+    authenticationService.resetUser(UserState.DISCONNECTED, true);
   }
 
   /**
