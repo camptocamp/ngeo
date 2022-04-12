@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -84,5 +84,20 @@ export class StreetviewService {
       throw new Error('Missing map');
     }
     return olProj.toLonLat(coordinate, this.map_.getView().getProjection());
+  }
+
+  /**
+   * @param {import("ol/extent.js").Extent} extent Extent in EPSG:2056 to reproject.
+   * @return {import("ol/extent.js").Extent} LonLat extent.
+   */
+  extentToLonLat_(extent) {
+    if (!this.map_) {
+      throw new Error('Missing map');
+    }
+    return olProj.transformExtent(
+      extent,
+      this.map_.getView().getProjection(),
+      new olProj.Projection({code: 'EPSG:4326'})
+    );
   }
 }
