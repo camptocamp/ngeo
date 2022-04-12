@@ -59,10 +59,10 @@ export default class MapillaryService extends StreetviewService {
     this.accessToken_ = accessToken;
 
     /**
-     * The size to add to the bbox buffer.
+     * The size of the buffer (in pixel) to add to the coordinate points to create the request bbox.
      * @private
      */
-    this.bufferSize_ = bufferSize || 0.001;
+    this.bufferSizePx_ = bufferSize || 10;
 
     /**
      * Container of the mapillary viewer.
@@ -115,8 +115,24 @@ export default class MapillaryService extends StreetviewService {
    * @param {import("ol/coordinate.js").Coordinate} coordinates Map view projection coordinates.
    */
   getPanorama(coordinates) {
-    const [lng, lat] = this.toLonLat_(coordinates);
-    this.searchImage_(lng, lat).then(
+    // 1. Get the map resolution
+    const view = this.map_.getView();
+    const resolution = view.getResolution(); // map unit (m) per pixel
+
+    // 2. Calculate the buffer for tolerance in meter
+    const bufferSizeInMeters = this.bufferSizePx_ * resolution;
+
+    // 3. Create a buffer from coordinate points in EPSG:2056 (meter units)
+    const coord_easting = coordinates[0];
+    const coord_northing = coordinates[1];
+    const bufferAreaInMeter = buffer(
+      [coord_easting, coord_northing, coord_easting, coord_northing],
+      bufferSizeInMeters
+    );
+
+    // 4. Convert the buffer to WSG:84 (° units) and use it for the image request bbox
+    const bbox = this.extentToLonLat_(bufferAreaInMeter);
+    this.searchImage_(bbox).then(
       (imageId) => {
         this.noDataAtLocation = !imageId;
       },
@@ -141,13 +157,11 @@ export default class MapillaryService extends StreetviewService {
   }
 
   /**
-   * @param {number} lng A longitude value.
-   * @param {number} lat A latitude value.
+   * @param {import("ol/extent.js").Extent} bbox A bounding box in LatLong projection
    * @return {angular.IPromise<string>} Promise with the first imageId found or null.
    * @private
    */
-  searchImage_(lng, lat) {
-    const bbox = buffer([lng, lat, lng, lat], this.bufferSize_);
+  searchImage_(bbox) {
     const baseUrl = `${MLY_METADATA_ENDPOINT}/images`;
     const path = `${baseUrl}?access_token=${this.accessToken_}&fields=id&bbox=${bbox}&limit=1`;
     return this.$http_.get(path).then(
