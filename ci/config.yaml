@@ -29,3 +29,4 @@ audit:
       - webpack
       - i18next-parser
       - '@storybook/web-components'
+      - fast-sass-loader
