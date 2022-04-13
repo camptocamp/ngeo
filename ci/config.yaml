@@ -36,3 +36,4 @@ audit:
       - eslint-config-openlayers
       - webpack-cli
       - svgo
+      - fast-sass-loader
