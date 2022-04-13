@@ -362,6 +362,7 @@ export function buildStyle(styleDescriptor) {
  * @typedef {Object} ngeoStreetviewOptions
  * @property {string} viewer The viewer to use (google or mapillary)
  * @property {string} key ClientId for Mapillary
+ * @property {number} [bufferSize] Buffer size in pixels for Mapillary bbox
  */
 
 /**
