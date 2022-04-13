@@ -31,3 +31,4 @@ audit:
       - webpack-cli
       - eslint
       - angular-gettext-tools
+      - fast-sass-loader
