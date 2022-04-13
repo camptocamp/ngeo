@@ -41,3 +41,4 @@ audit:
       - '@camptocamp/babel-plugin-angularjs-annotate'
       - copy-webpack-plugin
       - angular-gettext-tools
+      - fast-sass-loader
