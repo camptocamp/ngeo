@@ -80,6 +80,10 @@ main {
   overflow: hidden;
 }
 
+.gmf-lidarprofile-chart-active main {
+  height: calc(100% - var(--lidarprofile-height));
+}
+
 .btn {
   padding: $half-app-margin $app-margin;
 }

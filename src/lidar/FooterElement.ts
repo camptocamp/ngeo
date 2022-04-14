@@ -20,7 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {TemplateResult, html, css, CSSResult} from 'lit';
-import {customElement} from 'lit/decorators';
+import {classMap} from 'lit/directives/class-map.js';
+import {customElement, state} from 'lit/decorators';
 import GmfBaseElement from 'gmfapi/elements/BaseElement';
 
 import OlGeomLineString from 'ol/geom/LineString';
@@ -30,10 +31,13 @@ import panels from 'gmfapi/store/panels';
 
 @customElement('gmf-lidar-footer')
 export class gmfLidarFooter extends GmfBaseElement {
+  // for non canvas mode
+  @state() private open = false;
   connectedCallback(): void {
     this.subscriptions.push(
       line.getLine().subscribe({
         next: (line: OlGeomLineString) => {
+          this.open = !!line;
           if (!line) {
             panels.closeFooterPanel();
           }
@@ -46,6 +50,11 @@ export class gmfLidarFooter extends GmfBaseElement {
   static styles: CSSResult[] = [
     ...GmfBaseElement.styles,
     css`
+      /** for non canvas mode */
+      .hidden {
+        display: none !important;
+      }
+
       #gmf-lidarprofile-container {
         position: relative;
         overflow: hidden;
@@ -108,7 +117,7 @@ export class gmfLidarFooter extends GmfBaseElement {
 
   render(): TemplateResult {
     return html`
-      <div id="gmf-lidarprofile-container" class="panel">
+      <div id="gmf-lidarprofile-container" class=${classMap({panel: true, hidden: !this.open})}>
         <div class="lidarprofile">
           <div class="lidar-error"></div>
           <canvas class="lidar-canvas"></canvas>
