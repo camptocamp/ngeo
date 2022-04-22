@@ -1,7 +1,7 @@
 /**
  * The MIT License (MIT)
  *
- * Copyright (c) Camptocamp SA
+ * Copyright (c) 2021-2022 Camptocamp SA
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -55,6 +55,7 @@ $light-box-shadow-color: rgba(0, 0, 0, 0.1) !default;
 $eavy-box-shadow: 0 0.37rem 0.75rem !default;
 $eavy-box-shadow-color: rgba(0, 0, 0, 0.3) !default;
 $icon-font-size: 1.25rem !default;
+$grid-gutter-width: 1.88rem !default;
 $border-color: darken($brand-primary, $standard-variation) !default;
 $border: 0.06rem solid !default;
 $hover-background-color: lighten($brand-primary, $standard-variation) !default;
