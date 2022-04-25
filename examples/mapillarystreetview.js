@@ -104,6 +104,7 @@ myModule.controller('MainController', MainController);
 myModule.constant('ngeoStreetviewOptions', {
   viewer: 'mapillary',
   key: 'd1dNaFk4aDVoVVlZd0dEZG95Wm84QTpkYmRkOGQyMWRkMThiM2E2',
+  bufferSize: 10, // value in pixels
 });
 options(myModule);
 
