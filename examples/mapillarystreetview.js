@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -104,6 +104,7 @@ myModule.controller('MainController', MainController);
 myModule.constant('ngeoStreetviewOptions', {
   viewer: 'mapillary',
   key: 'd1dNaFk4aDVoVVlZd0dEZG95Wm84QTpkYmRkOGQyMWRkMThiM2E2',
+  bufferSize: 10, // value in pixels
 });
 
 export default myModule;
