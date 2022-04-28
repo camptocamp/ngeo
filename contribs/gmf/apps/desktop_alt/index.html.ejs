@@ -11,7 +11,7 @@
     <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet" crossorigin="anonymous">
     <% } %>
   </head>
-  <body ng-keydown="mainCtrl.onKeydown($event)">
+  <body ng-keydown="mainCtrl.onKeydown($event)" tabindex="0">
   <div ng-show="mainCtrl.loading" class="loading-mask">
     <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
       <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
