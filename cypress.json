@@ -1,7 +1,7 @@
 {
   "baseUrl": "http://localhost:6006",
-  "integrationFolder": "src",
-  "testFiles": "**/*.spec.ts",
+  "integrationFolder": "./",
+  "testFiles": "+(src|srcapi)/**/*.spec.ts",
   "includeShadowDom": true,
   "defaultCommandTimeout": 10000
 }
