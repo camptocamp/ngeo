@@ -11,7 +11,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="""
 Script to convert .po and .pot translation files to .json files for i18next.
-Output files are saved to contribs/gmf/apps/build/locale/webcomponent/{language}/app.json.
+Output files are saved to locales/{language}/app.json.
 Existing app.json files are overwritten
 """,
         epilog="""
@@ -44,7 +44,7 @@ To convert all .po and .pot files in the project:
                 i18n[lang][entry.msgid] = entry.msgstr
 
     for lang, values in i18n.items():
-        output_dir = f"contribs/gmf/apps/build/locale/webcomponent/{lang}"
+        output_dir = f"locales/{lang}"
         output_file = f"{output_dir}/app.json"
         Path(output_dir).mkdir(parents=True, exist_ok=True)
         print(f"Writing {output_file}")
