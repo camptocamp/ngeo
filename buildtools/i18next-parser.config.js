@@ -21,7 +21,7 @@
 
 module.exports = {
   locales: ['en'],
-  output: 'locales/source/app.json',
+  output: 'locales/en/app.json',
   input: ['../src/**/*.{js,ts}', '../api/**/*.{js,ts}', '../contribs/gmf/apps/**/*.{js,ts,html*}'],
   useKeysAsDefaultValue: true,
   keySeparator: false,
