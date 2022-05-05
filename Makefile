@@ -154,7 +154,7 @@ serve-gmf: contribs/dist $(ANGULAR_LOCALES_FILES)
 	npm run serve-gmf-examples
 
 .PHONY: serve-gmf-apps
-serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) locales/source/app.json
+serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) locales/en/app.json
 	npm run serve-gmf-apps
 
 .PHONY: serve-api
@@ -377,7 +377,7 @@ contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-ve
 	mkdir -p $(dir $@)
 	node buildtools/extract-messages $(GMF_APPS_PARTIALS_FILES) $(GMF_APPS_JS_FILES) > $@
 
-locales/source/app.json:
+locales/en/app.json:
 	npm run i18next-parse
 
 .PHONY: transifex-get
