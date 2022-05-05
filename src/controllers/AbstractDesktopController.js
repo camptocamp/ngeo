@@ -503,6 +503,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       this.mapillaryStreetViewActive = false;
       this.queryPanelActive = false;
       this.importDataSourceActive = false;
+      this.drawLidarprofilePanelActive = false;
       this.$toolsPanel_.resizable('disable');
       this.$scope.$apply();
     });
