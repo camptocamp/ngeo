@@ -512,6 +512,8 @@ export default class GmfAuthForm extends GmfBaseElement {
    * @param evt Event from the form submit action.
    */
   resetPassword(evt: Event): void {
+    evt.preventDefault();
+
     this.isLoading = true;
 
     const resetBtn = evt.target as HTMLFormElement;
