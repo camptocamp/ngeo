@@ -40,6 +40,8 @@ import {
 } from 'ngeo/lidar/Config';
 import {updateScaleFunction} from 'ngeo/lidar/Plot';
 
+import i18next from 'i18next';
+
 /**
  * The lidar point attribute list width default option
  */
@@ -328,7 +330,7 @@ export default class {
       // Let the user download the image.
       canvas.toBlob((blob) => {
         if (!blob) {
-          throw new Error('Missing blob');
+          window.alert(i18next.t('No graph to export in PNG!'));
         }
         saveAs(blob, 'LIDAR_profile.png');
       });
