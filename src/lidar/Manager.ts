@@ -583,7 +583,7 @@ export class LidarprofileManager {
    * @private
    */
   getHTMLError_(): string {
-    const errorInfoTxt = i18next.t('Lidar profile service error');
+    const errorInfoTxt = i18next.t('LIDAR profile service error');
     const errorOfflineTxt = i18next.t('It might be offline');
     const errorOutsideTxt = i18next.t('Or did you attempt to draw a profile outside data extent?');
     const errorNoPointError = i18next.t(
