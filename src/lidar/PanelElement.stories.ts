@@ -30,7 +30,7 @@ import OlGeomLineString from 'ol/geom/LineString';
 import olMap from 'ol/Map';
 
 export default {
-  title: 'Lidar panel',
+  title: 'LIDAR panel',
   component: 'gmf-lidar-panel',
 };
 

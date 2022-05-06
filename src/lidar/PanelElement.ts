@@ -143,7 +143,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
       <style>
         ${unsafeCSS(this.customCSS_)}
       </style>
-      ${this.getTitle(i18next.t('Lidar profile (only on the canton of Neuchâtel)'))}
+      ${this.getTitle(i18next.t('LIDAR profile (only on the canton of Neuchâtel)'))}
       <div class="lidar-panel" gmf-drawprofileline>
         <p>
           <button class="btn btn-default ${this.drawlineClass}" @click=${() => this.toggleDrawLine()}>
