@@ -20,6 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {BehaviorSubject} from 'rxjs';
+import i18next from 'i18next';
 
 export interface AuthenticationFunctionalities {
   /**
@@ -108,6 +109,11 @@ export enum LoginMessageState {
   REQUIRED = 'Some layers in this link are not accessible to unauthenticated users. ' +
     'Please log in to see whole data.',
 }
+
+i18next.t(
+  'Some layers in this link are not accessible to unauthenticated users. ' +
+    'Please log in to see whole data.'
+);
 
 /**
  * Object used to expose the login user information.
