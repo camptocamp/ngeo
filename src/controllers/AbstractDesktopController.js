@@ -339,7 +339,7 @@ export class AbstractDesktopController extends AbstractAPIController {
           this.postLoading = true;
           this.gmfThemes.getThemesObject().finally(() => {
             this.postLoading = false;
-            if (this.gmfUser.is_password_changed) {
+            if (!(this.gmfUser.is_password_changed === false)) {
               this.loginActive = false;
             }
           });
