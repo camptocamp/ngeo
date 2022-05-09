@@ -340,7 +340,7 @@ export default class {
    * Transforms a lidarprofile into multiple single points sorted by distance.
    *
    * @param profilePoints in the profile
-   * @returns An array of Lidar Points.
+   * @returns An array of LIDAR Points.
    */
   getFlatPointsByDistance(profilePoints: LidarprofilePoints): LidarPoint[] {
     const points = [];
