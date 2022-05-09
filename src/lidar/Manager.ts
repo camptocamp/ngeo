@@ -535,7 +535,7 @@ export class LidarprofileManager {
           const intensity = view.getUint8(aoffset);
           points.intensity.push(intensity);
           this.profilePoints.intensity.push(intensity);
-        } else if (attribute.value == 'RGBA') {
+        } else if (attribute.value == 'COLOR_PACKED') {
           const r = view.getUint8(aoffset);
           const g = view.getUint8(aoffset + 1);
           const b = view.getUint8(aoffset + 2);
