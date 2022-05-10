@@ -168,7 +168,7 @@ export default class GmfAuthForm extends GmfBaseElement {
       ${this.loginInfoMessage
         ? html`
             <div class="alert alert-warning">
-              <span>${this.loginInfoMessage}</span>
+              <span>${i18next.t(this.loginInfoMessage)}</span>
             </div>
           `
         : ''}
