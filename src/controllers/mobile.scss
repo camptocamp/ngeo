@@ -67,6 +67,7 @@ gmf-map {
 .gmf-mobile-measure {
   bottom: $app-margin;
   right: $app-margin;
+  z-index: $above-menus-index;
   a {
     display: block;
     float: left;
@@ -113,6 +114,14 @@ gmf-map {
   }
 }
 
+gmf-displayquerywindow {
+  z-index: $above-menus-index;
+}
+
+.ol-overlaycontainer-stopevent {
+  z-index: $above-menus-index !important;
+}
+
 .ol-rotate {
   top: 4 * $map-tools-size + 2 * $app-margin + 3 * $micro-app-margin;
   right: $app-margin;
@@ -152,6 +161,7 @@ gmf-map {
 button[ngeo-geolocation] {
   right: $app-margin;
   top: 3 * $map-tools-size + 2 * $app-margin + 2 * $micro-app-margin;
+  z-index: $above-menus-index;
 }
 
 .ngeo-notification {
