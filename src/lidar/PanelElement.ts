@@ -424,12 +424,16 @@ export default class GmfLidarPanel extends ToolPanelElement {
   csvExport(): void {
     if (this.line) {
       const points = this.profile.utils.getFlatPointsByDistance(this.profile.profilePoints) || [];
-      const csvData = this.profile.utils.getCSVData(points);
-      const headerColumnNames = Object.keys(points[0]);
-      const headerColumns = headerColumnNames.map((columnName) => {
-        return {'name': columnName};
-      });
-      DownloadCsvService.startDownload(csvData, headerColumns, 'LIDAR_profile.csv');
+      try {
+        const csvData = this.profile.utils.getCSVData(points);
+        const headerColumnNames = Object.keys(points[0]);
+        const headerColumns = headerColumnNames.map((columnName) => {
+          return {'name': columnName};
+        });
+        DownloadCsvService.startDownload(csvData, headerColumns, 'LIDAR_profile.csv');
+      } catch (error) {
+        window.alert(i18next.t('No graph to export in CSV!'));
+      }
     }
   }
 
