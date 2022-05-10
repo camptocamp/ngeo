@@ -44,7 +44,6 @@ export GIT_REMOTE_NAME
 L10N_LANGUAGES = fr de it
 L10N_PO_FILES = \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES))) \
-	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/gmf.po, $(L10N_LANGUAGES))) \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
@@ -383,7 +382,6 @@ locales/en/app.json:
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
 	.build/locale/ngeo.pot \
-	.build/locale/gmf.pot \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/apps.po, $(L10N_LANGUAGES)))
 
 .PHONY: transifex-send
@@ -393,7 +391,6 @@ transifex-send: \
 		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
-		.build/locale/gmf.pot \
 		.build/locale/apps.pot
 	$(PY_VENV_BIN)/tx push --source
 	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --source
@@ -404,7 +401,6 @@ transifex-init: .build/python-venv.timestamp \
 		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
-		.build/locale/gmf.pot \
 		.build/locale/apps.pot
 	$(PY_VENV_BIN)/tx push --source --force --no-interactive
 	$(PY_VENV_BIN)/tx push --translations --force --no-interactive
@@ -414,10 +410,6 @@ transifex-init: .build/python-venv.timestamp \
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 	$(PY_VENV_BIN)/tx pull --resource=ngeo.ngeo-$(TX_VERSION) --language=$* --force --mode=reviewed
-	$(TOUCHBACK_TXRC)
-
-.build/locale/%/LC_MESSAGES/gmf.po: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
-	$(PY_VENV_BIN)/tx pull --resource=ngeo.gmf-$(TX_VERSION) --language=$* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 locales/%/app.json: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
@@ -438,7 +430,6 @@ locales/%/app.json: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 
 contribs/gmf/build/gmf-%.json: \
 		.build/locale/%/LC_MESSAGES/ngeo.po \
-		.build/locale/%/LC_MESSAGES/gmf.po \
 		.build/locale/%/LC_MESSAGES/demo.po \
 		.build/node_modules.timestamp
 	mkdir -p $(dir $@)
@@ -469,7 +460,6 @@ clean:
 	rm -rf .build/examples-hosted
 	rm -rf .build/contribs
 	rm -f .build/locale/ngeo.pot
-	rm -f .build/locale/gmf.pot
 	rm -f .build/locale/demo.pot
 	rm -rf contribs/gmf/build
 	rm -f $(ANGULAR_LOCALES_FILES)
