@@ -122,8 +122,6 @@ jobs:
           retention-days: 5
         if: failure()
 
-      - name: Regenerate the source file
-        run: rm locales/en/app.json; make locales/en/app.json
       - run: make transifex-send
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: buildtools/npm-publish
