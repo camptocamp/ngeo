@@ -71,7 +71,7 @@ jobs:
       - run: |
           sudo rm /etc/apt/sources.list.d/*.list
           sudo apt update
-          sudo apt install g++-10 libgbm1 graphicsmagick fonts-liberation2
+          sudo apt install g++-10 libgbm1 graphicsmagick fonts-liberation2 gettext
 
       - run: buildtools/set-version
       - run: make .build/node_modules.timestamp
