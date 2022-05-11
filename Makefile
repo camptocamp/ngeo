@@ -412,6 +412,10 @@ transifex-init: .build/python-venv.timestamp \
 	$(PY_VENV_BIN)/tx pull --resource=ngeo.ngeo-$(TX_VERSION) --language=$* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
+.build/locale/en/LC_MESSAGES/ngeo.po: .build/locale/ngeo.pot
+	mkdir -p $(dir $@)
+	msginit -i $< -o $@
+
 locales/%/app.json: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
 	mkdir -p $(dir $@)
 	$(PY_VENV_BIN)/tx pull --resource=ngeo.webcomponent-$(TX_VERSION) --language=$* --force --mode=reviewed
