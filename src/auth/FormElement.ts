@@ -366,10 +366,14 @@ export default class GmfAuthForm extends GmfBaseElement {
 
     const errors = [];
     const form = evt.target as HTMLFormElement;
-    const oldPwd = (form.oldPwdVal as HTMLInputElement).value;
-    const newPwd = (form.newPwdVal as HTMLInputElement).value;
-    const confPwd = (form.newPwdConfVal as HTMLInputElement).value;
-    const otpVal = (form.otp as HTMLInputElement).value;
+    const oldPwd = (form.oldpassword as HTMLInputElement).value;
+    const newPwd = (form.newpassword as HTMLInputElement).value;
+    const confPwd = (form.newpasswordconfirm as HTMLInputElement).value;
+
+    let otpVal = '';
+    if (this.twoFactorAuth) {
+      otpVal = (form.otp as HTMLInputElement).value;
+    }
 
     // Validation - Passwords are required.
     if (oldPwd === '') {
@@ -423,9 +427,12 @@ export default class GmfAuthForm extends GmfBaseElement {
             /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
             // Reset the values cannot be done via Event values
             const oldPwd = this.renderRoot.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
-            const otp = this.renderRoot.querySelector('input[name = "otp"]') as HTMLInputElement;
             oldPwd.value = '';
-            otp.value = '';
+
+            if (this.twoFactorAuth) {
+              const otp = this.renderRoot.querySelector('input[name = "otp"]') as HTMLInputElement;
+              otp.value = '';
+            }
 
             this.setError_([i18next.t('Incorrect old password.')]);
           });
