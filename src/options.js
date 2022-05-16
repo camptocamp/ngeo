@@ -514,7 +514,6 @@ export function buildStyle(styleDescriptor) {
  * The map definition.
  *
  * @typedef {Object} Map
- * @property {string} projection The main projection.
  * @property {number} [pixelRatio] The ratio between physical pixels and device-independent pixels (dips)
  * on the device.
  * @property {number} [maxTilesLoading=16] Maximum number tiles to load simultaneously.
