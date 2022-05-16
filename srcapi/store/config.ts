@@ -762,10 +762,6 @@ export type View = {
  */
 export type MapConfig = {
   /**
-   * The main projection.
-   */
-  projection: string;
-  /**
    * The ratio between physical pixels and device-independent pixels (dips)
    * on the device.
    */
