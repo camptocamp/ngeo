@@ -16,7 +16,7 @@ Existing app.json files are overwritten
 """,
         epilog="""
 To convert one (or more) specific file:
-    buildtools/convert-translations .build/locale/gmf.pot
+    buildtools/convert-translations .build/locale/ngeo.pot
 To convert all .po and .pot files in the project:
     buildtools/convert-translations `find .build -name "*.po*"`
 """,
