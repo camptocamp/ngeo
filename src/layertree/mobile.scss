@@ -31,6 +31,10 @@ nav.gmf-mobile-nav-left .gmf-layertree-node a[data-toggle] {
 }
 
 .gmf-layertree-node {
+  .off > .gmf-layertree-right-buttons {
+    display: none;
+  }
+
   .ngeo-sortable-handle {
     display: none;
   }
