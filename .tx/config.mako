@@ -9,14 +9,6 @@ type = PO
 trans.${lang} = .build/locale/${lang}/LC_MESSAGES/ngeo.po
 % endfor
 
-[ngeo.gmf-${tx_version.strip()}]
-source_file = .build/locale/gmf.pot
-source_lang = en
-type = PO
-% for lang in languages.split():
-trans.${lang} = .build/locale/${lang}/LC_MESSAGES/gmf.po
-% endfor
-
 [ngeo.webcomponent-${tx_version.strip()}]
 source_file = locales/en/app.json
 source_lang = en
