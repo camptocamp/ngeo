@@ -19,19 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {defineConfig} from 'cypress';
-
-export default defineConfig({
-  includeShadowDom: true,
-  defaultCommandTimeout: 10000,
-  e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
-    },
-    baseUrl: 'http://localhost:6006',
-    specPattern: './/+(src|srcapi)/**/*.spec.ts',
-    supportFile: 'src/e2e/support/commands.ts',
-  },
-});
+declare namespace Cypress {
+  interface Chainable<Subject = any> {
+    /**
+     * Custom command to load a page
+     *
+     * @example cy.loadPage()
+     */
+    loadPage(boolean, string): Chainable<null>;
+  }
+}

@@ -19,19 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {defineConfig} from 'cypress';
-
-export default defineConfig({
-  includeShadowDom: true,
-  defaultCommandTimeout: 10000,
-  e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
-    setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
-    },
-    baseUrl: 'http://localhost:6006',
-    specPattern: './/+(src|srcapi)/**/*.spec.ts',
-    supportFile: 'src/e2e/support/commands.ts',
-  },
+Cypress.Commands.add('loadPage', (reload = false, url = '/') => {
+  reload ? cy.reload : cy.visit(url);
+  let timeout = 4000;
+  if (reload) {
+    timeout = 1000;
+  }
+  cy.get('div.loading-mask', {timeout}).should('not.be.visible');
 });

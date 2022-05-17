@@ -19,27 +19,11 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-declare namespace Cypress {
-  interface Chainable<Subject = any> {
-    /**
-     * Custom command to load a page
-     * @example cy.loadPage()
-     */
-    loadPage(): Chainable<null>;
-  }
-}
-
-Cypress.Commands.add('loadPage', (reload = false, url = '/') => {
-  reload ? cy.reload : cy.visit(url);
-  cy.get('div.loading-mask').should('not.be.visible');
-});
+// import './support/commands';
 
 describe('Mobile interface', () => {
   it('should check the layout', () => {
-    cy.visit('https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
-
-    // Wait for the app to init
-    cy.wait(4000);
+    cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
 
     // Left menu button
     cy.get('.gmf-mobile-nav-left-trigger').should('be.visible');
@@ -138,12 +122,12 @@ describe('Mobile interface', () => {
         cy.wrap(slider).should('contain.value', 0.4);
         cy.wrap(slider).should('not.contain.value', 1);
       });
+
+    // Close the panel
+    cy.get('.overlay').click(300, 300, {force: true});
+    cy.wait(350);
   });
   it('should show the current location', () => {
-    cy.visit('https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
-    // Wait for the app to init
-    cy.wait(4000);
-
     cy.get('[ngeo-geolocation=""]').click();
     cy.wait(50);
   });
