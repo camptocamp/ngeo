@@ -22,7 +22,12 @@
 module.exports = {
   locales: ['en'],
   output: 'locales/en/app.json',
-  input: ['../src/**/*.{js,ts}', '../api/**/*.{js,ts}', '../contribs/gmf/apps/**/*.{js,ts,html*}'],
+  input: [
+    '../src/**/*.{js,ts}',
+    '../srcapi/**/*.{js,ts}',
+    '../api/src/**/*.{js,ts}',
+    '../contribs/gmf/apps/**/*.{js,ts,html*}',
+  ],
   useKeysAsDefaultValue: true,
   keySeparator: false,
   namespaceSeparator: false,
