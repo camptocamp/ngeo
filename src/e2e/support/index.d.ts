@@ -26,6 +26,6 @@ declare namespace Cypress {
      *
      * @example cy.loadPage()
      */
-    loadPage(boolean, string): Chainable<null>;
+    loadPage(boolean, string): Chainable<Subject>;
   }
 }

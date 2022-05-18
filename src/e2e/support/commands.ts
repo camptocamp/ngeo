@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Cypress.Commands.add('loadPage', (reload = false, url = '/') => {
-  reload ? cy.reload : cy.visit(url);
+  reload ? cy.reload() : cy.visit(url as string);
   let timeout = 4000;
   if (reload) {
     timeout = 1000;
