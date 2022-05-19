@@ -34,4 +34,9 @@ export default defineConfig({
     specPattern: './/+(src|srcapi)/**/*.spec.ts',
     supportFile: 'src/e2e/support/commands.ts',
   },
+  env: {
+    browserPermissions: {
+      geolocation: "allow"
+    }
+  }
 });
