@@ -81,6 +81,8 @@ export default class GmfLidarPanel extends ToolPanelElement {
           if (line) {
             this.drawlineClass = '';
             this.update_();
+          } else {
+            this.clearAll();
           }
         },
       })
@@ -308,20 +310,15 @@ export default class GmfLidarPanel extends ToolPanelElement {
    */
   update_(): void {
     this.profile.clearBuffer();
-    if (this.line) {
-      if (!this.profileConfig_.serverConfig) {
-        throw new Error('Missing profileConfig_.serverConfig');
-      }
-      const panelOptions = {
-        state: true,
-      };
-      panels.openFooterPanel('lidar', panelOptions);
-      this.profile.setLine(this.line);
-      this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
-    } else {
-      panels.closeFooterPanel();
-      this.clearAll();
+    if (!this.profileConfig_.serverConfig) {
+      throw new Error('Missing profileConfig_.serverConfig');
     }
+    const panelOptions = {
+      state: true,
+    };
+    panels.openFooterPanel('lidar', panelOptions);
+    this.profile.setLine(this.line);
+    this.profile.getProfileByLOD([], 0, true, this.profileConfig_.serverConfig.minLOD);
   }
 
   /**
@@ -331,7 +328,9 @@ export default class GmfLidarPanel extends ToolPanelElement {
     this.line = null;
     this.profile.setLine(null);
     this.profile.cartoHighlight.setPosition(undefined);
-    this.clearMeasure();
+    if (this.profile.measure) {
+      this.clearMeasure();
+    }
     this.resetPlot();
   }
   /**
