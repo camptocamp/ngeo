@@ -108,7 +108,7 @@ type NiceLOD = {
 export default class {
   onload: () => void;
   /**
-   * Clip a linstring with start and end measure given by D3 Chart domain
+   * Clip a linestring with start and end measure given by D3 Chart domain
    *
    * @param config the LIDAR profile config
    *    instance
