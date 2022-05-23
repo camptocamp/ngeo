@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@
 
 import './FormElement';
 import './PanelElement';
-import user, {UserState, User, LoginMessageState} from 'gmfapi/store/user';
+import user, {UserState, User, loginMessageRequired} from 'gmfapi/store/user';
 
 export default {
   title: 'Auth Form',
@@ -44,7 +44,7 @@ type Args = {
 
 const Template = (args: Args) => {
   user.setUser(args.user, UserState.READY);
-  user.setLoginMessage(args.loginInfoMessage ? LoginMessageState.REQUIRED : LoginMessageState.EMPTY);
+  user.setLoginMessage(args.loginInfoMessage ? loginMessageRequired : '');
   return '<gmf-auth-form></gmf-auth-form>';
 };
 

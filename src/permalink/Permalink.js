@@ -56,7 +56,7 @@ import olLayerGroup from 'ol/layer/Group';
 import {CollectionEvent} from 'ol/Collection';
 import {buildStyle} from 'ngeo/options';
 
-import user, {LoginMessageState} from 'gmfapi/store/user';
+import user, {loginMessageRequired} from 'gmfapi/store/user';
 
 /**
  * @enum {string}
@@ -1310,7 +1310,7 @@ PermalinkService.prototype.initLayers_ = function () {
           // we don't have any layertree
           if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
             this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
-            user.setLoginMessage(LoginMessageState.REQUIRED);
+            user.setLoginMessage(loginMessageRequired);
           }
           return;
         }
@@ -1411,7 +1411,7 @@ PermalinkService.prototype.initLayers_ = function () {
 
         if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
           this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
-          user.setLoginMessage(LoginMessageState.REQUIRED);
+          user.setLoginMessage(loginMessageRequired);
         }
       }).catch((err) => console.error(err));
     })
