@@ -52,7 +52,7 @@ import olStyleText from 'ol/style/Text';
 
 import 'gmfapi/index';
 import panels from 'gmfapi/store/panels';
-import user, {LoginMessageState} from 'gmfapi/store/user';
+import user, {loginMessageRequired} from 'gmfapi/store/user';
 
 import 'gmf/controllers/vars_desktop.scss';
 import 'gmf/controllers/desktop.scss';
@@ -182,7 +182,7 @@ export class AbstractDesktopController extends AbstractAPIController {
         $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular diggest
 
         if (panel === null || !panel.includes('auth')) {
-          user.setLoginMessage(LoginMessageState.EMPTY);
+          user.setLoginMessage('');
         }
       },
     });
