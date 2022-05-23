@@ -99,7 +99,7 @@
     "@types/tinycolor2": "1.4.3",
     "@types/typeahead": "0.11.32",
     "@typescript-eslint/eslint-plugin": "5.26.0",
-    "@typescript-eslint/parser": "5.25.0",
+    "@typescript-eslint/parser": "5.26.0",
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
     "angular-dynamic-locale": "0.1.38",
