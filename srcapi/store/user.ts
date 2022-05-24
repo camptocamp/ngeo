@@ -103,11 +103,15 @@ export enum UserState {
   NOT_INITIALIZED = 'not initialized',
 }
 
-export enum LoginMessageState {
-  EMPTY = '',
-  REQUIRED = 'Some layers in this link are not accessible to unauthenticated users. ' +
-    'Please log in to see whole data.',
+// The name should be t to be collected by i18next
+function t(msg: string): string {
+  return msg;
 }
+
+export const loginMessageRequired = t(
+  'Some layers in this link are not accessible to unauthenticated users. ' +
+    'Please log in to see whole data.'
+);
 
 /**
  * Object used to expose the login user information.
@@ -145,7 +149,7 @@ export class UserModel {
 
   constructor() {
     this.properties_ = new BehaviorSubject<User>(this.getEmptyUserProperties());
-    this.loginMessage_ = new BehaviorSubject<string>(LoginMessageState.EMPTY);
+    this.loginMessage_ = new BehaviorSubject<string>('');
     this.state_ = UserState.NOT_INITIALIZED;
   }
 
@@ -175,7 +179,7 @@ export class UserModel {
    *
    * @param messageState The new login message.
    */
-  setLoginMessage(messageState: LoginMessageState): void {
+  setLoginMessage(messageState: string): void {
     this.loginMessage_.next(messageState);
   }
 

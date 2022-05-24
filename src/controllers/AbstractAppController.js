@@ -64,7 +64,7 @@ import gmfAuthenticationService from 'ngeo/auth/service';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import storeMap from 'gmfapi/store/map';
-import user, {UserState} from 'gmfapi/store/user';
+import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
 
 /**
  * Application abstract controller.
@@ -260,12 +260,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.loginInfoMessage = null;
 
   $scope.$on('authenticationrequired', (event, args) => {
-    /** @type {angular.gettext.gettextCatalog} */
-    const gettextCatalog = $injector.get('gettextCatalog');
-    this.loginInfoMessage = gettextCatalog.getString(
-      'Some layers in this link are not accessible to unauthenticated users. ' +
-        'Please log in to see whole data.'
-    );
+    this.loginInfoMessage = loginMessageRequired;
     this.loginRedirectUrl = args.url;
     this.loginActive = true;
 

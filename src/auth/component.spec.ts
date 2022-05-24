@@ -22,7 +22,7 @@
 import gmfAuthenticationService from 'ngeo/auth/service';
 
 import configuration, {Configuration} from 'gmfapi/store/config';
-import user, {UserState, LoginMessageState} from 'gmfapi/store/user';
+import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
 
 describe('Auth component', () => {
   context('panel', () => {
@@ -43,7 +43,7 @@ describe('Auth component', () => {
 
     it('displays an info message', () => {
       cy.visit('iframe.html?id=auth-form--empty&args=loginInfoMessage:true');
-      cy.get('.alert span').should('have.length', 1).first().should('have.text', LoginMessageState.REQUIRED);
+      cy.get('.alert span').should('have.length', 1).first().should('have.text', loginMessageRequired);
     });
 
     it('displays a form with a user and a message', () => {
