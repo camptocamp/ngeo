@@ -72,7 +72,7 @@
     "@sentry/tracing": "6.19.7",
     "@sentry/types": "6.19.7",
     "@storybook/preset-scss": "1.0.3",
-    "@storybook/web-components": "6.5.4",
+    "@storybook/web-components": "6.5.5",
     "@trevoreyre/autocomplete-js": "2.2.0",
     "@types/angular": "1.8.4",
     "@types/angular-animate": "1.5.11",
