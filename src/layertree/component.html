@@ -251,6 +251,7 @@
 <div
   class="gmf-layertree-node-menu d-none"
   id="gmf-layertree-node-menu-{{::layertreeCtrl.uid}}"
+  ng-class="'gmf-layertree-node-menu-' + layertreeCtrl.node.id"
   ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)"
 >
   <div

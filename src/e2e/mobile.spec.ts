@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import exp from 'constants';
+import {and} from 'ol/format/filter';
 
 describe('Mobile interface', () => {
   /**
@@ -117,16 +117,16 @@ describe('Mobile interface', () => {
       cy.wait(350);
 
       // Disable 'Layers-exclusive' layer
-      cy.get('#gmf-layertree-node-212 > .gmf-layertree-name').click();
+      cy.get('div.gmf-layertree-node-597 > .gmf-layertree-name').click();
 
       // Open opacity setting of the 'Layers' group
       cy.get(
-        '#gmf-layertree-node-208 > .gmf-layertree-right-buttons > .gmf-layertree-node-menu-btn > .fa'
+        'div.gmf-layertree-node-596 > .gmf-layertree-right-buttons > .gmf-layertree-node-menu-btn > .fa'
       ).click();
       cy.wait(50);
 
       // Set the opacity to 0.4 and check the value
-      cy.get('#gmf-layertree-node-menu-208 > div > .input-action')
+      cy.get('div.gmf-layertree-node-menu-596 > div > .input-action')
         .invoke('val', 0.4)
         .trigger('change')
         .then((slider) => {
@@ -146,17 +146,30 @@ describe('Mobile interface', () => {
   context.skip('Geolocation', () => {
     it('should show the current location', () => {
       cy.get('[ngeo-geolocation=""]').click();
+      // TODO: assert on active geolocation
       cy.wait(250);
     });
 
-    it.skip('should move the map then get back to the current location', () => {
-      // FIXME: pan the map
+    it('should move the map then get back to the current location', () => {
+      cy.readWindowValue('map').then((map) => {
+        cy.simulateEvent(map, 'pointerdown', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 0);
+        cy.simulateEvent(map, 'pointerdrag', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 60, 0);
+        cy.simulateEvent(map, 'pointerdrag', 60, 0);
+        cy.simulateEvent(map, 'pointermove', 120, 0);
+        cy.simulateEvent(map, 'pointerdrag', 120, 0);
+        cy.simulateEvent(map, 'pointerup', 120, 0);
+      });
+      cy.wait(500);
+
       cy.get('[ngeo-geolocation=""]').click();
-      cy.wait(250);
+      // TODO: assert on active geolocation
     });
 
     it('should disable the geolocation tool', () => {
       cy.get('[ngeo-geolocation=""]').click();
+      // TODO: assert on unactive geolocation
       cy.wait(250);
     });
   });
@@ -165,8 +178,28 @@ describe('Mobile interface', () => {
    * Map tests
    */
   context.skip('Map', () => {
-    it.skip('should rotate the map and put it back to north heading', () => {
-      // FIXME: rotate with swiping ?
+    it('should rotate the map and put it back to north heading', () => {
+      cy.readWindowValue('map').then((map) => {
+        // Rotate the map
+        cy.simulateEvent(map, 'pointerdown', 0, 0, true, false, true);
+        cy.simulateEvent(map, 'pointermove', 0, 0);
+        cy.simulateEvent(map, 'pointerdrag', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 60, 60);
+        cy.simulateEvent(map, 'pointerdrag', 60, 60);
+        cy.simulateEvent(map, 'pointermove', 120, 120);
+        cy.simulateEvent(map, 'pointerdrag', 120, 120);
+        cy.simulateEvent(map, 'pointerup', 120, 120);
+
+        cy.wait(250);
+
+        // Check the rotation is correct
+        cy.get('.ol-compass').should('have.attr', 'style', 'transform: rotate(0.785398rad);');
+
+        cy.wait(250);
+
+        // Reset the rotation
+        cy.get('.ol-rotate-reset').click({force: true});
+      });
     });
   });
 
@@ -176,9 +209,7 @@ describe('Mobile interface', () => {
   context.skip('FTS', () => {
     it('should check the FTS appearance', () => {
       // Check the placeholder
-      cy.get('.tt-input').then((field) => {
-        expect(field).to.have.attr('placeholder', 'Search…');
-      });
+      cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');
     });
 
     it('should search on a word', () => {
@@ -214,9 +245,8 @@ describe('Mobile interface', () => {
         expect(btn).to.have.css('width', '0px');
         expect(btn).to.have.css('height', '40px');
 
-        cy.get('.tt-input').then((field) => {
-          expect(field).to.have.attr('placeholder', 'Search…');
-        });
+        // Check the placeholder
+        cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');
       });
     });
 
@@ -229,9 +259,7 @@ describe('Mobile interface', () => {
             expect(btn).to.not.be.visible;
 
             // Check the placeholder
-            cy.get('.tt-input').then((field) => {
-              expect(field).to.have.attr('placeholder', 'Search…');
-            });
+            cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');
           });
       });
     });
@@ -283,7 +311,7 @@ describe('Mobile interface', () => {
       cy.get('.gmf-mobile-nav-left-trigger')
         .click()
         .then(() => {
-          cy.get('#gmf-layertree-node-205 > .gmf-layertree-right-buttons > a > .fa').click();
+          cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa').click();
           cy.get('.overlay').click();
         });
 
@@ -295,7 +323,7 @@ describe('Mobile interface', () => {
       cy.get('.gmf-mobile-nav-left-trigger')
         .click()
         .then(() => {
-          cy.get('#gmf-layertree-node-580 > .gmf-layertree-right-buttons > a > .fa').click();
+          cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa').click();
           cy.get('.overlay').click();
         });
 
@@ -308,38 +336,206 @@ describe('Mobile interface', () => {
       cy.get('.gmf-mobile-nav-left-trigger')
         .click()
         .then(() => {
-          cy.get('#gmf-layertree-node-649 > .gmf-layertree-right-buttons > a > .fa').click();
+          cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa').click();
           cy.get('.overlay').click();
         });
     });
   });
 
   context('Measures', () => {
-    it('Activate coordinate tool', () => {
-      // TODO: uncomment others tests
-      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
-
+    beforeEach(() => {
+      cy.loadPage(
+        false,
+        'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en?map_x=2632464&map_y=1185457'
+      );
+    });
+    it.skip('Activate coordinate tool', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#measure-tools"]').click();
       cy.get('#measure-tools > ul > :nth-child(1) > .gmf-mobile-nav-button').click();
 
       cy.get('.tooltip').should('be.visible');
 
-      cy.wait(300);
+      cy.wait(350);
 
-      // Close the tool.
+      // Close the tool
       cy.get('[gmf-mobile-measurepoint=""] > .btn').click();
 
-      cy.wait(300);
+      cy.wait(350);
     });
-    it.skip('Coordinate tool and pan', () => {});
-    it('Length tool', () => {
+
+    it.skip('Coordinate tool and pan', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
+      cy.get('[data-target="#measure-tools"]').click();
+      cy.get('#measure-tools > ul > :nth-child(1) > .gmf-mobile-nav-button').click();
+
+      cy.get('.tooltip').should('be.visible');
+      cy.get('.tooltip').then((tooltip) => {
+        expect(tooltip)
+          .to.have.prop('textContent')
+          .to.match(/2,632,464, 1.185,457/gm);
+      });
+
+      cy.wait(350);
+
+      cy.readWindowValue('map').then((map) => {
+        cy.simulateEvent(map, 'pointerdown', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 0);
+        cy.simulateEvent(map, 'pointerdrag', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 60, 0);
+        cy.simulateEvent(map, 'pointerdrag', 60, 0);
+        cy.simulateEvent(map, 'pointermove', 120, 0);
+        cy.simulateEvent(map, 'pointerdrag', 120, 0);
+        cy.simulateEvent(map, 'pointerup', 120, 0);
+
+        cy.wait(500);
+
+        cy.get('.tooltip').then((tooltip) => {
+          // Check on a Regex because coordinates could differs
+          expect(tooltip)
+            .to.have.prop('textContent')
+            .to.match(/2,62[3-6],[0-9]{3}, 1.185,457/gm);
+          cy.wait(1000);
+        });
+
+        // Close the tool
+        cy.get('[gmf-mobile-measurepoint=""] > .btn').click();
+
+        cy.wait(350);
+      });
+    });
+
+    it.skip('Length tool', () => {
+      cy.get('.gmf-mobile-nav-right-trigger').click();
+      cy.get('[data-target="#measure-tools"]').click();
       cy.get('#measure-tools > ul > :nth-child(2) > .gmf-mobile-nav-button').click();
+      // TODO: assert on the map cross
 
       cy.wait(300);
+
+      cy.readWindowValue('map').then((map) => {
+        cy.log('Set a starting point');
+        cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').click();
+        cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
+
+        cy.simulateEvent(map, 'pointerdown', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 0);
+        cy.simulateEvent(map, 'pointerdrag', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 120, 0);
+        cy.simulateEvent(map, 'pointerdrag', 120, 0);
+        cy.simulateEvent(map, 'pointerup', 120, 0);
+
+        cy.wait(500);
+
+        cy.log('First segment done');
+        cy.get('[ng-if="ctrl.dirty"]').click();
+        cy.wait(500);
+
+        cy.simulateEvent(map, 'pointerdown', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 0);
+        cy.simulateEvent(map, 'pointerdrag', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 60);
+        cy.simulateEvent(map, 'pointerdrag', 0, 60);
+        cy.simulateEvent(map, 'pointerup', 0, 60);
+
+        cy.wait(500);
+
+        cy.log('Second segment done');
+        cy.get('[ng-if="ctrl.dirty"]').click();
+
+        cy.get('.tooltip').then((tooltip) => {
+          // Check on a Regex because length could differs
+          expect(tooltip)
+            .to.have.prop('textContent')
+            .to.match(/\d+[.]*\d*\s\w+/g);
+        });
+
+        cy.wait(500);
+
+        cy.log('Terminate the line');
+        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
+        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').should('not.exist');
+        cy.get('.tooltip').should('have.css', 'background-color', 'rgb(255, 204, 51)');
+
+        cy.log('Clear the line');
+        cy.get('[ng-if="ctrl.valid"]').click();
+        cy.get('.tooltip').should('not.be.visible');
+
+        cy.log('Close the tool');
+        cy.get('[ng-if="ctrl.active"]').click();
+        cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
+        cy.get('[ng-if="ctrl.active"]').should('not.exist');
+        cy.get('[ng-if="ctrl.valid"]').should('not.exist');
+      });
     });
-    it('Area tool', () => {});
+
+    it('Area tool', () => {
+      cy.get('.gmf-mobile-nav-right-trigger').click();
+      cy.get('[data-target="#measure-tools"]').click();
+      cy.get('#measure-tools > ul > :nth-child(3) > .gmf-mobile-nav-button').click();
+      // TODO: assert on the map cross
+
+      cy.wait(300);
+
+      cy.readWindowValue('map').then((map) => {
+        cy.log('Set a starting point');
+        cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').click();
+        cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
+
+        cy.simulateEvent(map, 'pointerdown', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 0);
+        cy.simulateEvent(map, 'pointerdrag', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 120, 0);
+        cy.simulateEvent(map, 'pointerdrag', 120, 0);
+        cy.simulateEvent(map, 'pointerup', 120, 0);
+
+        cy.wait(500);
+
+        cy.log('First segment done');
+        cy.get('[ng-if="ctrl.dirty"]').click();
+
+        cy.log('Area is null with only one segment');
+        cy.contains('0 m²').should('exist');
+
+        cy.wait(500);
+
+        cy.simulateEvent(map, 'pointerdown', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 0);
+        cy.simulateEvent(map, 'pointerdrag', 0, 0);
+        cy.simulateEvent(map, 'pointermove', 0, 60);
+        cy.simulateEvent(map, 'pointerdrag', 0, 60);
+        cy.simulateEvent(map, 'pointerup', 0, 60);
+
+        cy.wait(500);
+
+        cy.log('Second segment done');
+        cy.get('[ng-if="ctrl.dirty"]').click();
+
+        cy.get('.tooltip').then((tooltip) => {
+          // Check on a Regex because length could differs
+          expect(tooltip)
+            .to.have.prop('textContent')
+            .to.match(/\d+[.]*\d*\s\w+[²]/gm);
+        });
+
+        cy.wait(500);
+
+        cy.log('Terminate the line');
+        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
+        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').should('not.exist');
+        cy.get('.tooltip').should('have.css', 'background-color', 'rgb(255, 204, 51)');
+
+        cy.log('Clear the line');
+        cy.get('[ng-if="ctrl.valid"]').click();
+        cy.get('.tooltip').should('not.be.visible');
+
+        cy.log('Close the tool');
+        cy.get('[ng-if="ctrl.active"]').click();
+        cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
+        cy.get('[ng-if="ctrl.active"]').should('not.exist');
+        cy.get('[ng-if="ctrl.valid"]').should('not.exist');
+      });
+    });
   });
 });
 

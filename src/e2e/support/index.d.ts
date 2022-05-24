@@ -41,13 +41,14 @@ declare namespace Cypress {
      * @example cy.simulateEvent('map');
      */
     simulateEvent(
+      map: any,
       type: string,
       x: number,
       y: number,
-      opt_altKey: boolean,
-      opt_ctrlKey: boolean,
-      opt_shiftKey: boolean,
-      opt_pointerId: number
+      opt_altKey?: boolean,
+      opt_ctrlKey?: boolean,
+      opt_shiftKey?: boolean,
+      opt_pointerId?: number
     ): Chainable<Subject>;
   }
 }
