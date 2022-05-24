@@ -10,7 +10,7 @@
 <div
   ng-if="::!layertreeCtrl.isRoot"
   id="gmf-layertree-node-{{::layertreeCtrl.uid}}"
-  ng-class="[layertreeCtrl.node.children ? 'gmf-layertree-group' : 'gmf-layertree-leaf', 'gmf-layertree-depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl)]"
+  ng-class="[layertreeCtrl.node.children ? 'gmf-layertree-group' : 'gmf-layertree-leaf', 'gmf-layertree-depth-' + layertreeCtrl.depth, gmfLayertreeCtrl.getResolutionStyle(layertreeCtrl.node), gmfLayertreeCtrl.getNodeState(layertreeCtrl), 'gmf-layertree-node-' + layertreeCtrl.node.id]"
 >
   <div
     class="ngeo-sortable-handle"

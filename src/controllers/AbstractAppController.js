@@ -145,6 +145,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   }
 
   storeMap.setMap(map);
+  window['map'] = map;
 
   /**
    * Location service
