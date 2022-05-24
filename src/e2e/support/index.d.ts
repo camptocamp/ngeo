@@ -24,8 +24,30 @@ declare namespace Cypress {
     /**
      * Custom command to load a page
      *
-     * @example cy.loadPage()
+     * @example cy.loadPage('https://example.com');
      */
     loadPage(boolean, string): Chainable<Subject>;
+
+    /**
+     * Custom command to get a value from the window
+     *
+     * @example cy.readWindowValue('map');
+     */
+    readWindowValue(key: string): Chainable<Subject>;
+
+    /**
+     * Custom command to simulate an OpenLayers event
+     *
+     * @example cy.simulateEvent('map');
+     */
+    simulateEvent(
+      type: string,
+      x: number,
+      y: number,
+      opt_altKey: boolean,
+      opt_ctrlKey: boolean,
+      opt_shiftKey: boolean,
+      opt_pointerId: number
+    ): Chainable<Subject>;
   }
 }
