@@ -542,6 +542,11 @@ describe('Mobile interface', () => {
    * Login tests
    */
   context('Login', () => {
+    before(() => {
+      // FIXME: baseUrl in env with corresponding version
+      cy.intercept('https://geomapfish-demo-2-7.camptocamp.com/login').as('login');
+      cy.intercept('https://geomapfish-demo-2-7.camptocamp.com/logout').as('logout');
+    });
     it('Should log in and out', () => {
       cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
 
@@ -551,13 +556,17 @@ describe('Mobile interface', () => {
       cy.get('#login')
         .shadow()
         .then((authPanel) => {
-          // FIXME: Not hardcode user/psw
           cy.wrap(authPanel).find('input[name="login"]').type(Cypress.env('demoUser')['login']);
           cy.wrap(authPanel).find('input[name="password"]').type(Cypress.env('demoUser')['password']);
           cy.wrap(authPanel).find('input[type="submit"]').click();
+          cy.wait('@login').then((interception) => {
+            expect(interception.response.statusCode).to.be.eq(200);
+            const responseBody = JSON.parse(interception.response.body);
+            expect(responseBody.username).to.be.eq(Cypress.env('demoUser')['login']);
+          });
         });
 
-      cy.log('Check the auth panel is closed when logged');
+      cy.log('Check that the auth panel is closed when logged');
       cy.get('#login').should('not.be.visible');
 
       cy.log('Check the login panel when logged');
@@ -571,7 +580,15 @@ describe('Mobile interface', () => {
 
           cy.log('Log out and get back on the auth panel');
           cy.wrap(authPanel).find('input[value="Logout"]').click();
+          cy.wait('@logout').then((interception) => {
+            expect(interception.response.statusCode).to.be.eq(200);
+            expect(interception.response.body).to.be.eq('true');
+          });
+
+          cy.log('Not logged with panel open');
           cy.get('#login').should('be.visible');
+
+          cy.log('Close the login panel');
           cy.get('.overlay').click();
         });
     });
