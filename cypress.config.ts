@@ -36,7 +36,12 @@ export default defineConfig({
   },
   env: {
     browserPermissions: {
-      geolocation: "allow"
-    }
-  }
+      notifications: 'allow',
+      geolocation: 'allow',
+    },
+    demoUser: {
+      login: 'demo',
+      password: 'democ2c',
+    },
+  },
 });

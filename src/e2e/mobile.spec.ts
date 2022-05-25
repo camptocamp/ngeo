@@ -342,7 +342,7 @@ describe('Mobile interface', () => {
     });
   });
 
-  context('Measures', () => {
+  context.skip('Measures', () => {
     beforeEach(() => {
       cy.loadPage(
         false,
@@ -535,6 +535,45 @@ describe('Mobile interface', () => {
         cy.get('[ng-if="ctrl.active"]').should('not.exist');
         cy.get('[ng-if="ctrl.valid"]').should('not.exist');
       });
+    });
+  });
+
+  /**
+   * Login tests
+   */
+  context('Login', () => {
+    it('Should log in and out', () => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
+
+      cy.get('.gmf-mobile-nav-right-trigger').click();
+      cy.get('[data-target="#login"]').click();
+
+      cy.get('#login')
+        .shadow()
+        .then((authPanel) => {
+          // FIXME: Not hardcode user/psw
+          cy.wrap(authPanel).find('input[name="login"]').type(Cypress.env('demoUser')['login']);
+          cy.wrap(authPanel).find('input[name="password"]').type(Cypress.env('demoUser')['password']);
+          cy.wrap(authPanel).find('input[type="submit"]').click();
+        });
+
+      cy.log('Check the auth panel is closed when logged');
+      cy.get('#login').should('not.be.visible');
+
+      cy.log('Check the login panel when logged');
+      cy.get('.gmf-mobile-nav-right-trigger').click();
+      cy.get('#login')
+        .shadow()
+        .then((authPanel) => {
+          cy.wrap(authPanel).find('div > strong').should('have.text', Cypress.env('demoUser')['login']);
+          cy.wrap(authPanel).find('input[value="Change password"]').should('be.visible');
+          cy.wrap(authPanel).find('input[value="Logout"]').should('be.visible');
+
+          cy.log('Log out and get back on the auth panel');
+          cy.wrap(authPanel).find('input[value="Logout"]').click();
+          cy.get('#login').should('be.visible');
+          cy.get('.overlay').click();
+        });
     });
   });
 });
