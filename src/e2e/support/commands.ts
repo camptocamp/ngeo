@@ -22,6 +22,14 @@
 import 'cy-mobile-commands';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 
+// Hook for URL aliases
+beforeEach(() => {
+  cy.intercept(Cypress.env('serverUrl') + '/login').as('login');
+  cy.intercept(Cypress.env('serverUrl') + '/logout').as('logout');
+  cy.intercept(Cypress.env('serverUrl') + '/dynamic.json*').as('dynamic_json');
+  cy.intercept(Cypress.env('serverUrl') + '/themes*').as('themes');
+});
+
 /**
  * This loads the page or reload it.
  *
@@ -30,11 +38,10 @@ import MapBrowserEvent from 'ol/MapBrowserEvent';
  */
 Cypress.Commands.add('loadPage', (reload = false, url = '/') => {
   reload ? cy.reload() : cy.visit(url as string);
-  let timeout = 4000;
-  if (reload) {
-    timeout = 1000;
-  }
-  cy.get('div.loading-mask', {timeout}).should('not.be.visible');
+  cy.wait('@dynamic_json', {timeout: 10000}).then((interception) => {
+    expect(interception.response.statusCode).to.be.eq(200);
+    cy.get('div.loading-mask').should('not.be.visible');
+  });
 });
 
 /**

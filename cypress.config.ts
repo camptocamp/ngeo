@@ -43,5 +43,6 @@ export default defineConfig({
       login: 'demo',
       password: 'democ2c',
     },
+    serverUrl: 'https://geomapfish-demo-2-7.camptocamp.com',
   },
 });

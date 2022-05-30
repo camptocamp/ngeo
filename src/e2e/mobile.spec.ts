@@ -542,11 +542,6 @@ describe('Mobile interface', () => {
    * Login tests
    */
   context('Login', () => {
-    before(() => {
-      // FIXME: baseUrl in env with corresponding version
-      cy.intercept('https://geomapfish-demo-2-7.camptocamp.com/login').as('login');
-      cy.intercept('https://geomapfish-demo-2-7.camptocamp.com/logout').as('logout');
-    });
     it('Should log in and out', () => {
       cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
 
