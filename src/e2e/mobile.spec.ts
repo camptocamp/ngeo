@@ -19,8 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {and} from 'ol/format/filter';
-
 describe('Mobile interface', () => {
   /**
    * Layout tests
@@ -551,13 +549,17 @@ describe('Mobile interface', () => {
       cy.get('#login')
         .shadow()
         .then((authPanel) => {
-          cy.wrap(authPanel).find('input[name="login"]').type(Cypress.env('demoUser')['login']);
-          cy.wrap(authPanel).find('input[name="password"]').type(Cypress.env('demoUser')['password']);
+          cy.wrap(authPanel)
+            .find('input[name="login"]')
+            .type(Cypress.env('demoUser')['login'] as string);
+          cy.wrap(authPanel)
+            .find('input[name="password"]')
+            .type(Cypress.env('demoUser')['password'] as string);
           cy.wrap(authPanel).find('input[type="submit"]').click();
           cy.wait('@login').then((interception) => {
             expect(interception.response.statusCode).to.be.eq(200);
             const responseBody = JSON.parse(interception.response.body);
-            expect(responseBody.username).to.be.eq(Cypress.env('demoUser')['login']);
+            expect(responseBody.username).to.be.eq(Cypress.env('demoUser')['login'] as string);
           });
         });
 
@@ -569,7 +571,9 @@ describe('Mobile interface', () => {
       cy.get('#login')
         .shadow()
         .then((authPanel) => {
-          cy.wrap(authPanel).find('div > strong').should('have.text', Cypress.env('demoUser')['login']);
+          cy.wrap(authPanel)
+            .find('div > strong')
+            .should('have.text', Cypress.env('demoUser')['login'] as string);
           cy.wrap(authPanel).find('input[value="Change password"]').should('be.visible');
           cy.wrap(authPanel).find('input[value="Logout"]').should('be.visible');
 

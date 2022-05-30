@@ -21,13 +21,14 @@
 
 import 'cy-mobile-commands';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
+import olMap from 'ol/Map';
 
 // Hook for URL aliases
 beforeEach(() => {
-  cy.intercept(Cypress.env('serverUrl') + '/login').as('login');
-  cy.intercept(Cypress.env('serverUrl') + '/logout').as('logout');
-  cy.intercept(Cypress.env('serverUrl') + '/dynamic.json*').as('dynamic_json');
-  cy.intercept(Cypress.env('serverUrl') + '/themes*').as('themes');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/login`).as('login');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/logout`).as('logout');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/dynamic.json*`).as('dynamic_json');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/themes*`).as('themes');
 });
 
 /**
@@ -37,7 +38,7 @@ beforeEach(() => {
  * @param {string} url The URL to load.
  */
 Cypress.Commands.add('loadPage', (reload = false, url = '/') => {
-  reload ? cy.reload() : cy.visit(url as string);
+  reload ? cy.reload() : cy.visit(url);
   cy.wait('@dynamic_json', {timeout: 10000}).then((interception) => {
     expect(interception.response.statusCode).to.be.eq(200);
     cy.get('div.loading-mask').should('not.be.visible');
@@ -62,8 +63,8 @@ Cypress.Commands.add(
   'simulateEvent',
   {prevSubject: false},
   (
-    map,
-    type,
+    map: olMap,
+    type: string,
     x = 0,
     y = 0,
     opt_altKey = false,
@@ -89,7 +90,7 @@ Cypress.Commands.add(
       pointerId: opt_pointerId,
       isPrimary: true,
       button: 0,
-    };
+    } as unknown as UIEvent;
 
     const simulatedEvent = new MapBrowserEvent(type, map, event);
     map.handleMapBrowserEvent(simulatedEvent);
@@ -102,6 +103,6 @@ Cypress.Commands.add(
  * @param {string} key The window key to get.
  * @returns {Cypress.Chainable<any>} .
  */
-Cypress.Commands.add('readWindowValue', (key) => {
+Cypress.Commands.add('readWindowValue', (key: string) => {
   return cy.window().its(key);
 });
