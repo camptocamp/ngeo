@@ -69,7 +69,7 @@ describe('Mobile interface', () => {
       );
 
       // Check the layertree content
-      cy.get('ul#gmf-layertree-layer-group-75').should('not.be.empty');
+      cy.get('ul#gmf-layertree-layer-group-75').children().should('exist');
 
       // Test the submenu
       cy.get(
@@ -174,10 +174,9 @@ describe('Mobile interface', () => {
       cy.contains('Themes').click();
       cy.contains('Demo').click();
 
-      // Disable all active layers
+      // Disable all active layers and check
       cy.get('div.gmf-layertree-node-596').dblclick();
       cy.get('div.gmf-layertree-node-597').click();
-
       const groups = [
         'div.gmf-layertree-node-68', // OSM functions mixed
         'div.gmf-layertree-node-596', // Layers
@@ -194,11 +193,88 @@ describe('Mobile interface', () => {
         cy.get(group).should('not.have.class', 'on');
       });
 
-      // 4. add osm layer and check
-      // 5. select layergroup (Layers) and check
+      // Activate OSM open layer and check
+      cy.get('div.gmf-layertree-node-139').first().click();
+      cy.get('div.gmf-layertree-node-139').first().should('have.class', 'on');
+
+      // Activate layergroup (Layers) and check
+      cy.get('div.gmf-layertree-node-596').click();
+      const layers = [
+        'div#gmf-layertree-node-585',
+        'div#gmf-layertree-node-586',
+        'div#gmf-layertree-node-587',
+        'div#gmf-layertree-node-588',
+      ];
+      cy.get('div#gmf-layertree-node-498 > .gmf-layertree-expand-node').click();
+      layers.forEach((layer) => {
+        cy.get(layer).should('be.visible');
+        cy.get(layer).should('have.class', 'on');
+        cy.get(layer).should('not.have.class', 'off');
+      });
+
+      // Open sub-group and check
+      cy.get('div#gmf-layertree-node-588 > .gmf-layertree-expand-node').click();
+      const subLayers = ['div#gmf-layertree-node-589', 'div#gmf-layertree-node-590'];
+      subLayers.forEach((layer) => {
+        cy.get(layer).should('be.visible');
+        cy.get(layer).should('have.class', 'on');
+        cy.get(layer).should('not.have.class', 'off');
+      });
+
+      cy.contains('Clear all').click();
     });
-    it.skip('Check layer and layergroup selection II', () => {});
-    it.skip('Check layers with minimum and maximum zoom visibility', () => {});
+    it('Check layer and layergroup selection II', () => {
+      cy.contains('Themes').click();
+      cy.contains('Demo').click();
+
+      cy.get('div.gmf-layertree-node-139').first().click();
+      cy.get('div.gmf-layertree-node-139').first().should('have.class', 'on');
+      cy.get('div.gmf-layertree-node-68').should('have.class', 'indeterminate');
+
+      cy.get('div.gmf-layertree-node-68').dblclick();
+      cy.get('div.gmf-layertree-node-68').should('have.class', 'off');
+
+      cy.contains('Clear all').click();
+    });
+    it('Check layers with minimum and maximum zoom visibility', () => {
+      cy.contains('Themes').click();
+      cy.contains('Demo').click();
+
+      cy.get('div.gmf-layertree-node-114').first().click();
+      cy.get('div.gmf-layertree-node-114').first().should('be.visible');
+      cy.get('.ol-scale-line-inner').should('contain.html', '2 km');
+      cy.get('#gmf-layertree-node-846 > .gmf-layertree-name > .gmf-layertree-zoom').click();
+      cy.get('.ol-scale-line-inner').should('contain.html', '100 m');
+      cy.get('#gmf-layertree-node-846 > .gmf-layertree-name > .gmf-layertree-zoom').should('not.be.visible');
+    });
+    it('Remove a layer', () => {
+      cy.get('div.gmf-layertree-node-68 span.fa-trash').click();
+
+      const groups = [
+        'div.gmf-layertree-node-68', // OSM functions mixed
+        'div.gmf-layertree-node-596', // Layers
+        'div.gmf-layertree-node-597', // Layers-exclusive
+        'div.gmf-layertree-node-66', // Group
+        'div.gmf-layertree-node-146', // OSM functions
+        'div.gmf-layertree-node-153', // External
+        'div.gmf-layertree-node-174', // Filters mixed
+        'div.gmf-layertree-node-183', // Filters
+        'div.gmf-layertree-node-284', // ESRI no WFS no Geom
+      ];
+      groups.forEach((group) => {
+        if (group === 'div.gmf-layertree-node-68') {
+          cy.get(group).should('not.exist');
+        } else {
+          cy.get(group).should('exist');
+        }
+      });
+    });
+    it('Remove all layers', () => {
+      // Check the layertree content
+      cy.get('ul#gmf-layertree-layer-group-75').children().should('exist');
+      cy.contains('Clear all').click();
+      cy.get('ul#gmf-layertree-layer-group-75').children().should('not.exist');
+    });
   });
 
   /**
@@ -475,7 +551,7 @@ describe('Mobile interface', () => {
       cy.wait(300);
 
       cy.readWindowValue('map').then((map) => {
-        cy.log('Set a starting point');
+        // Set a starting point
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').click();
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
 
@@ -485,10 +561,9 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointermove', 120, 0);
         cy.simulateEvent(map, 'pointerdrag', 120, 0);
         cy.simulateEvent(map, 'pointerup', 120, 0);
-
         cy.wait(500);
 
-        cy.log('First segment done');
+        // First segment done
         cy.get('[ng-if="ctrl.dirty"]').click();
         cy.wait(500);
 
@@ -498,10 +573,9 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointermove', 0, 60);
         cy.simulateEvent(map, 'pointerdrag', 0, 60);
         cy.simulateEvent(map, 'pointerup', 0, 60);
-
         cy.wait(500);
 
-        cy.log('Second segment done');
+        // Second segment done
         cy.get('[ng-if="ctrl.dirty"]').click();
 
         cy.get('.tooltip').then((tooltip) => {
@@ -513,16 +587,16 @@ describe('Mobile interface', () => {
 
         cy.wait(500);
 
-        cy.log('Terminate the line');
+        // Terminate the line
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').should('not.exist');
         cy.get('.tooltip').should('have.css', 'background-color', 'rgb(255, 204, 51)');
 
-        cy.log('Clear the line');
+        // Clear the line
         cy.get('[ng-if="ctrl.valid"]').click();
         cy.get('.tooltip').should('not.be.visible');
 
-        cy.log('Close the tool');
+        // Close the tool
         cy.get('[ng-if="ctrl.active"]').click();
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
         cy.get('[ng-if="ctrl.active"]').should('not.exist');
@@ -539,7 +613,7 @@ describe('Mobile interface', () => {
       cy.wait(300);
 
       cy.readWindowValue('map').then((map) => {
-        cy.log('Set a starting point');
+        // Set a starting point
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').click();
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
 
@@ -549,13 +623,12 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointermove', 120, 0);
         cy.simulateEvent(map, 'pointerdrag', 120, 0);
         cy.simulateEvent(map, 'pointerup', 120, 0);
-
         cy.wait(500);
 
-        cy.log('First segment done');
+        // First segment done
         cy.get('[ng-if="ctrl.dirty"]').click();
 
-        cy.log('Area is null with only one segment');
+        // Area is null with only one segment
         cy.contains('0 m²').should('exist');
 
         cy.wait(500);
@@ -566,10 +639,9 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointermove', 0, 60);
         cy.simulateEvent(map, 'pointerdrag', 0, 60);
         cy.simulateEvent(map, 'pointerup', 0, 60);
-
         cy.wait(500);
 
-        cy.log('Second segment done');
+        // Second segment done
         cy.get('[ng-if="ctrl.dirty"]').click();
 
         cy.get('.tooltip').then((tooltip) => {
@@ -581,16 +653,16 @@ describe('Mobile interface', () => {
 
         cy.wait(500);
 
-        cy.log('Terminate the line');
+        // Terminate the line
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').should('not.exist');
         cy.get('.tooltip').should('have.css', 'background-color', 'rgb(255, 204, 51)');
 
-        cy.log('Clear the line');
+        // Clear the line
         cy.get('[ng-if="ctrl.valid"]').click();
         cy.get('.tooltip').should('not.be.visible');
 
-        cy.log('Close the tool');
+        // Close the tool
         cy.get('[ng-if="ctrl.active"]').click();
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
         cy.get('[ng-if="ctrl.active"]').should('not.exist');
@@ -619,15 +691,15 @@ describe('Mobile interface', () => {
           cy.wrap(authPanel).find('input[type="submit"]').click();
           cy.wait('@login').then((interception) => {
             expect(interception.response.statusCode).to.be.eq(200);
-            const responseBody = JSON.parse(interception.response.body);
-            expect(responseBody.username).to.be.eq(Cypress.env('demoUser')['login'] as string);
+            const responseBody = JSON.parse(interception.response.body as string);
+            expect(responseBody.username as string).to.be.eq(Cypress.env('demoUser')['login'] as string);
           });
         });
 
-      cy.log('Check that the auth panel is closed when logged');
+      // Check that the panel is closed when logged
       cy.get('#login').should('not.be.visible');
 
-      cy.log('Check the login panel when logged');
+      // Check the login panel when logged
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('#login')
         .shadow()
@@ -638,17 +710,17 @@ describe('Mobile interface', () => {
           cy.wrap(authPanel).find('input[value="Change password"]').should('be.visible');
           cy.wrap(authPanel).find('input[value="Logout"]').should('be.visible');
 
-          cy.log('Log out and get back on the auth panel');
+          // Log out and get back on the auth panel
           cy.wrap(authPanel).find('input[value="Logout"]').click();
           cy.wait('@logout').then((interception) => {
             expect(interception.response.statusCode).to.be.eq(200);
             expect(interception.response.body).to.be.eq('true');
           });
 
-          cy.log('Not logged with panel open');
+          // Not logged with panel open
           cy.get('#login').should('be.visible');
 
-          cy.log('Close the login panel');
+          // Close the login panel
           cy.get('.overlay').click();
         });
     });
