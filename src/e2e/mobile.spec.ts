@@ -23,7 +23,7 @@ describe('Mobile interface', () => {
   /**
    * Layout tests
    */
-  context.skip('Layout', () => {
+  context('Layout', () => {
     it('Check the layout', () => {
       cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
 
@@ -46,16 +46,13 @@ describe('Mobile interface', () => {
     it('Zoom in and out', () => {
       cy.get('.ol-zoom-in').click();
       cy.get('.ol-scale-line-inner').should('contain.html', '1000 m');
-      cy.wait(350);
       cy.get('.ol-zoom-out').click();
       cy.get('.ol-scale-line-inner').should('contain.html', '2 km');
-      cy.wait(350);
     });
 
     it('Navigate the left menu', () => {
       // Open the panel, then check the panel title
       cy.get('.gmf-mobile-nav-left-trigger').click();
-      cy.wait(350);
       cy.get('.gmf-mobile-nav-left > header > .gmf-mobile-nav-header-title').should('contain.html', 'Data');
 
       // Check button 'background' and 'themes'
@@ -75,30 +72,23 @@ describe('Mobile interface', () => {
       cy.get(
         '.gmf-mobile-nav-left > .gmf-mobile-nav-active > :nth-child(1) > :nth-child(1) > .gmf-mobile-nav-button'
       ).click();
-      cy.wait(350);
       cy.get('.gmf-mobile-nav-left > header > .gmf-mobile-nav-go-back').click();
-      cy.wait(350);
 
       // Close the panel
       cy.get('.overlay').click(300, 300, {force: true});
-      cy.wait(350);
     });
 
     it('Navigate the right menu', () => {
       // Open the panel, then check the panel title
       cy.get('.gmf-mobile-nav-right-trigger').click();
-      cy.wait(350);
       cy.get('.gmf-mobile-nav-right > header > .gmf-mobile-nav-header-title').should('contain.html', 'Tools');
 
       // Test the submenu
       cy.get('[data-target="#measure-tools"]').click();
-      cy.wait(350);
       cy.get('.gmf-mobile-nav-right > header > .gmf-mobile-nav-go-back').click();
-      cy.wait(350);
 
       // Close the panel
       cy.get('.overlay').click(300, 300, {force: true});
-      cy.wait(350);
     });
 
     it.skip('Close with swipe', () => {
@@ -111,7 +101,6 @@ describe('Mobile interface', () => {
    */
   context('Layertree', () => {
     it('Test layer opacity settings', () => {
-      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
       cy.get('.gmf-mobile-nav-left-trigger').click();
 
       // Open opacity setting of the 'Layers' group
@@ -199,31 +188,31 @@ describe('Mobile interface', () => {
 
       // Activate layergroup (Layers) and check
       cy.get('div.gmf-layertree-node-596').click();
+      cy.get('div.gmf-layertree-node-596 > .gmf-layertree-expand-node').click();
       const layers = [
-        'div#gmf-layertree-node-585',
-        'div#gmf-layertree-node-586',
-        'div#gmf-layertree-node-587',
-        'div#gmf-layertree-node-588',
+        {selector: 'div.gmf-layertree-node-99', index: 0},
+        {selector: 'div.gmf-layertree-node-106', index: 0},
+        {selector: 'div.gmf-layertree-node-126', index: 1},
+        {selector: 'div.gmf-layertree-node-137', index: 0},
       ];
-      cy.get('div#gmf-layertree-node-498 > .gmf-layertree-expand-node').click();
       layers.forEach((layer) => {
-        cy.get(layer).should('be.visible');
-        cy.get(layer).should('have.class', 'on');
-        cy.get(layer).should('not.have.class', 'off');
+        cy.get(layer.selector).eq(layer.index).should('be.visible');
+        cy.get(layer.selector).eq(layer.index).should('have.class', 'on');
+        cy.get(layer.selector).eq(layer.index).should('not.have.class', 'off');
       });
 
       // Open sub-group and check
-      cy.get('div#gmf-layertree-node-588 > .gmf-layertree-expand-node').click();
-      const subLayers = ['div#gmf-layertree-node-589', 'div#gmf-layertree-node-590'];
+      cy.get('div.gmf-layertree-node-137 > .gmf-layertree-expand-node').eq(0).click();
+      const subLayers = ['div.gmf-layertree-node-102', 'div.gmf-layertree-node-107'];
       subLayers.forEach((layer) => {
-        cy.get(layer).should('be.visible');
-        cy.get(layer).should('have.class', 'on');
-        cy.get(layer).should('not.have.class', 'off');
+        cy.get(layer).eq(0).should('be.visible');
+        cy.get(layer).eq(0).should('have.class', 'on');
+        cy.get(layer).eq(0).should('not.have.class', 'off');
       });
 
       cy.contains('Clear all').click();
     });
-    it('Check layer and layergroup selection II', () => {
+    it.skip('Check layer and layergroup selection II', () => {
       cy.contains('Themes').click();
       cy.contains('Demo').click();
 
@@ -243,9 +232,9 @@ describe('Mobile interface', () => {
       cy.get('div.gmf-layertree-node-114').first().click();
       cy.get('div.gmf-layertree-node-114').first().should('be.visible');
       cy.get('.ol-scale-line-inner').should('contain.html', '2 km');
-      cy.get('#gmf-layertree-node-846 > .gmf-layertree-name > .gmf-layertree-zoom').click();
+      cy.get('.gmf-layertree-node-114 .gmf-layertree-zoom').click();
       cy.get('.ol-scale-line-inner').should('contain.html', '100 m');
-      cy.get('#gmf-layertree-node-846 > .gmf-layertree-name > .gmf-layertree-zoom').should('not.be.visible');
+      cy.get('.gmf-layertree-node-114 .gmf-layertree-zoom').should('not.be.visible');
     });
     it('Remove a layer', () => {
       cy.get('div.gmf-layertree-node-68 span.fa-trash').click();
@@ -274,17 +263,19 @@ describe('Mobile interface', () => {
       cy.get('ul#gmf-layertree-layer-group-75').children().should('exist');
       cy.contains('Clear all').click();
       cy.get('ul#gmf-layertree-layer-group-75').children().should('not.exist');
+
+      // Close the panel
+      cy.get('.overlay').click(300, 300, {force: true});
     });
   });
 
   /**
    * Geolocation tests
    */
-  context.skip('Geolocation', () => {
+  context('Geolocation', () => {
     it('Show the current location', () => {
       cy.get('[ngeo-geolocation=""]').click();
       // TODO: assert on active geolocation
-      cy.wait(250);
     });
 
     it('Move the map then get back to the current location', () => {
@@ -298,23 +289,22 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointerdrag', 120, 0);
         cy.simulateEvent(map, 'pointerup', 120, 0);
       });
-      cy.wait(500);
-
-      cy.get('[ngeo-geolocation=""]').click();
-      // TODO: assert on active geolocation
+      cy.wait(500).then(() => {
+        cy.get('[ngeo-geolocation=""]').click();
+        // TODO: assert on active geolocation
+      });
     });
 
     it('Disable the geolocation tool', () => {
       cy.get('[ngeo-geolocation=""]').click();
       // TODO: assert on unactive geolocation
-      cy.wait(250);
     });
   });
 
   /**
    * Map tests
    */
-  context.skip('Map', () => {
+  context('Map', () => {
     it('Rotate the map and put it back to north heading', () => {
       cy.readWindowValue('map').then((map) => {
         // Rotate the map
@@ -332,8 +322,6 @@ describe('Mobile interface', () => {
         // Check the rotation is correct
         cy.get('.ol-compass').should('have.attr', 'style', 'transform: rotate(0.785398rad);');
 
-        cy.wait(250);
-
         // Reset the rotation
         cy.get('.ol-rotate-reset').click({force: true});
       });
@@ -343,7 +331,7 @@ describe('Mobile interface', () => {
   /**
    * Fulltext Search tests
    */
-  context.skip('FTS', () => {
+  context('FTS', () => {
     it('Check the FTS appearance', () => {
       // Check the placeholder
       cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');
@@ -364,12 +352,7 @@ describe('Mobile interface', () => {
       // Check the suggestions menu and select the first result
       const suggestions = Cypress.$('.tt-menu > .tt-dataset-1');
       cy.wrap(suggestions).should('be.visible');
-
-      cy.wait(250);
-
       cy.wrap(suggestions).click(125, 50);
-
-      cy.wait(250);
     });
 
     it('Clear the field and keep the result visible', () => {
@@ -407,8 +390,6 @@ describe('Mobile interface', () => {
       // Check the suggestions menu
       const suggestions = Cypress.$('.tt-menu > .tt-dataset-1');
       cy.wrap(suggestions).should('be.visible');
-
-      cy.wait(200);
 
       // Click on 'Lausanne';
       cy.wrap(suggestions).click(125, 50);
@@ -479,7 +460,7 @@ describe('Mobile interface', () => {
     });
   });
 
-  context.skip('Measures', () => {
+  context('Measures', () => {
     beforeEach(() => {
       cy.loadPage(
         false,
@@ -674,8 +655,9 @@ describe('Mobile interface', () => {
   /**
    * Login tests
    */
-  context.skip('Login', () => {
+  context('Login', () => {
     it('Log in and out', () => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#login"]').click();
 
