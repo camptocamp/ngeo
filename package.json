@@ -22,7 +22,7 @@
     "storybook": "NODE_ENV=env TARGET=ngeo-examples start-storybook --port=6006",
     "storybook-ci": "NODE_ENV=env TARGET=ngeo-examples start-storybook --port=6006 --ci",
     "cypress-cli": "cypress run --headless",
-    "cypress-ui": "cypress open",
+    "cypress-ui": "cypress open --e2e",
     "test-cli": "start-server-and-test storybook-ci http://localhost:6006 cypress-cli",
     "test": "start-server-and-test storybook-ci http://localhost:6006 cypress-ui",
     "chromatic": "chromatic --exit-zero-on-changes",
