@@ -212,7 +212,7 @@ describe('Mobile interface', () => {
 
       cy.contains('Clear all').click();
     });
-    it.skip('Check layer and layergroup selection II', () => {
+    it('Check layer and layergroup selection II', () => {
       cy.contains('Themes').click();
       cy.contains('Demo').click();
 
@@ -491,7 +491,7 @@ describe('Mobile interface', () => {
       cy.get('.tooltip').then((tooltip) => {
         expect(tooltip)
           .to.have.prop('textContent')
-          .to.match(/2,632,464, 1.185,457/gm);
+          .to.match(/2,632,464, 1,185,457/gm);
       });
 
       cy.wait(350);
@@ -512,7 +512,7 @@ describe('Mobile interface', () => {
           // Check on a Regex because coordinates could differs
           expect(tooltip)
             .to.have.prop('textContent')
-            .to.match(/2,62[3-6],[0-9]{3}, 1.185,457/gm);
+            .to.match(/\d+[,]*\d*[,]*\d*,\s1,185,457/gm);
           cy.wait(1000);
         });
 
