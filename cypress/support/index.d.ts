@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2022 Camptocamp SA
+// Copyright (c) 2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,23 +19,36 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+declare namespace Cypress {
+  interface Chainable<Subject = any> {
+    /**
+     * Custom command to load a page
+     *
+     * @example cy.loadPage('https://example.com');
+     */
+    loadPage(boolean, string): Chainable<Subject>;
 
-// Import commands.js using ES2015 syntax:
-import './commands';
+    /**
+     * Custom command to get a value from the window
+     *
+     * @example cy.readWindowValue('map');
+     */
+    readWindowValue(key: string): Chainable<Subject>;
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+    /**
+     * Custom command to simulate an OpenLayers event
+     *
+     * @example cy.simulateEvent('map');
+     */
+    simulateEvent(
+      map: any,
+      type: string,
+      x: number,
+      y: number,
+      opt_altKey?: boolean,
+      opt_ctrlKey?: boolean,
+      opt_shiftKey?: boolean,
+      opt_pointerId?: number
+    ): Chainable<Subject>;
+  }
+}
