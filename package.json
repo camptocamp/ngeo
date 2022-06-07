@@ -92,7 +92,7 @@
     "@types/jquery.ui.datetimepicker": "0.3.30",
     "@types/jqueryui": "1.12.16",
     "@types/jsts": "0.17.12",
-    "@types/node": "17.0.40",
+    "@types/node": "17.0.41",
     "@types/offscreencanvas": "2019.7.0",
     "@types/proj4": "2.5.2",
     "@types/sinon": "10.0.11",
