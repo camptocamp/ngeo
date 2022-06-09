@@ -289,7 +289,7 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointerdrag', 120, 0);
         cy.simulateEvent(map, 'pointerup', 120, 0);
       });
-      cy.wait(500).then(() => {
+      cy.wait(350).then(() => {
         cy.get('[ngeo-geolocation=""]').click();
         // TODO: assert on active geolocation
       });
@@ -316,8 +316,7 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointermove', 120, 120);
         cy.simulateEvent(map, 'pointerdrag', 120, 120);
         cy.simulateEvent(map, 'pointerup', 120, 120);
-
-        cy.wait(250);
+        cy.wait(350);
 
         // Check the rotation is correct
         cy.get('.ol-compass').should('have.attr', 'style', 'transform: rotate(0.785398rad);');
@@ -395,7 +394,7 @@ describe('Mobile interface', () => {
       cy.wrap(suggestions).click(125, 50);
 
       // Wait for map recenter
-      cy.wait(400);
+      cy.wait(350);
 
       cy.get('.tt-input').focus();
 
@@ -403,7 +402,7 @@ describe('Mobile interface', () => {
       cy.wrap(suggestions).click(125, 150);
 
       // Wait for map recenter
-      cy.wait(400);
+      cy.wait(350);
 
       // Close the search
       const clearBtn = Cypress.$('span.gmf-clear-button');
@@ -471,30 +470,22 @@ describe('Mobile interface', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#measure-tools"]').click();
       cy.get('#measure-tools > ul > :nth-child(1) > .gmf-mobile-nav-button').click();
-
       cy.get('.tooltip').should('be.visible');
-
-      cy.wait(350);
 
       // Close the tool
       cy.get('[gmf-mobile-measurepoint=""] > .btn').click();
-
-      cy.wait(350);
     });
 
     it('Coordinate tool and pan', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#measure-tools"]').click();
       cy.get('#measure-tools > ul > :nth-child(1) > .gmf-mobile-nav-button').click();
-
       cy.get('.tooltip').should('be.visible');
       cy.get('.tooltip').then((tooltip) => {
         expect(tooltip)
           .to.have.prop('textContent')
           .to.match(/2,632,464, 1,185,457/gm);
       });
-
-      cy.wait(350);
 
       cy.readWindowValue('map').then((map) => {
         cy.simulateEvent(map, 'pointerdown', 0, 0);
@@ -505,7 +496,6 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointermove', 120, 0);
         cy.simulateEvent(map, 'pointerdrag', 120, 0);
         cy.simulateEvent(map, 'pointerup', 120, 0);
-
         cy.wait(500);
 
         cy.get('.tooltip').then((tooltip) => {
@@ -513,13 +503,10 @@ describe('Mobile interface', () => {
           expect(tooltip)
             .to.have.prop('textContent')
             .to.match(/\d+[,]*\d*[,]*\d*,\s1,185,457/gm);
-          cy.wait(1000);
         });
 
         // Close the tool
         cy.get('[gmf-mobile-measurepoint=""] > .btn').click();
-
-        cy.wait(350);
       });
     });
 
@@ -528,8 +515,6 @@ describe('Mobile interface', () => {
       cy.get('[data-target="#measure-tools"]').click();
       cy.get('#measure-tools > ul > :nth-child(2) > .gmf-mobile-nav-button').click();
       // TODO: assert on the map cross
-
-      cy.wait(300);
 
       cy.readWindowValue('map').then((map) => {
         // Set a starting point
@@ -546,7 +531,6 @@ describe('Mobile interface', () => {
 
         // First segment done
         cy.get('[ng-if="ctrl.dirty"]').click();
-        cy.wait(500);
 
         cy.simulateEvent(map, 'pointerdown', 0, 0);
         cy.simulateEvent(map, 'pointermove', 0, 0);
@@ -565,8 +549,6 @@ describe('Mobile interface', () => {
             .to.have.prop('textContent')
             .to.match(/\d+[.]*\d*\s\w+/g);
         });
-
-        cy.wait(500);
 
         // Terminate the line
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
@@ -591,8 +573,6 @@ describe('Mobile interface', () => {
       cy.get('#measure-tools > ul > :nth-child(3) > .gmf-mobile-nav-button').click();
       // TODO: assert on the map cross
 
-      cy.wait(300);
-
       cy.readWindowValue('map').then((map) => {
         // Set a starting point
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').click();
@@ -612,8 +592,6 @@ describe('Mobile interface', () => {
         // Area is null with only one segment
         cy.contains('0 m²').should('exist');
 
-        cy.wait(500);
-
         cy.simulateEvent(map, 'pointerdown', 0, 0);
         cy.simulateEvent(map, 'pointermove', 0, 0);
         cy.simulateEvent(map, 'pointerdrag', 0, 0);
@@ -631,8 +609,6 @@ describe('Mobile interface', () => {
             .to.have.prop('textContent')
             .to.match(/\d+[.]*\d*\s\w+[²]/gm);
         });
-
-        cy.wait(500);
 
         // Terminate the line
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
