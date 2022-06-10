@@ -463,7 +463,7 @@ describe('Mobile interface', () => {
     beforeEach(() => {
       cy.loadPage(
         false,
-        'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en?map_x=2632464&map_y=1185457'
+        'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632464&map_y=1185457'
       );
     });
     it('Activate coordinate tool', () => {
@@ -629,6 +629,38 @@ describe('Mobile interface', () => {
   });
 
   /**
+   * Query tests
+   */
+  context('Query', () => {
+    beforeEach(() => {
+      cy.loadPage(
+        false,
+        'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632270&map_y=1186700'
+      );
+    });
+    it('Query a layer', () => {
+      cy.wait(500);
+
+      cy.readWindowValue('map').then((map) => {
+        cy.simulateEventAtCoord(map, 'click', 2632259.9999999995, 1186419.9999999998);
+        cy.simulateEventAtCoord(map, 'singleclick', 2632259.9999999995, 1186419.9999999998);
+        //cy.wait(500);
+      });
+    });
+  });
+
+  /**
+   * Disclaimer tests
+   */
+  context('Disclaimer', () => {
+    it('Show and hide a disclaimer', () => {
+      cy.get('gmf-disclaimer').should('be.visible');
+      cy.get('gmf-disclaimer .fa').click();
+      cy.get('gmf-disclaimer').should('not.be.visible');
+    });
+  });
+
+  /**
    * Login tests
    */
   context('Login', () => {
@@ -689,7 +721,7 @@ describe('Mobile_alt interface', () => {
   /**
    * Layertree tests
    */
-  context('Layertree', () => {
+  context.skip('Layertree', () => {
     it.skip('Test no flush layertree (desktop_alt)', () => {
       // TODO: load desktop_alt
     });

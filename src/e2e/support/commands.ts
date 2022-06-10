@@ -97,6 +97,42 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add(
+  'simulateEventAtCoord',
+  {prevSubject: false},
+  (
+    map: olMap,
+    type: string,
+    map_x: number,
+    map_y: number,
+    opt_altKey = false,
+    opt_ctrlKey = false,
+    opt_shiftKey = false,
+    opt_pointerId = 0
+  ) => {
+    cy.log(`simulating ${type} at coordinate [${map_x}, ${map_y}]`);
+    const viewport = map.getViewport();
+    const pixels = map.getPixelFromCoordinate([map_x, map_y]);
+
+    const event = {
+      type,
+      target: viewport.firstChild,
+      clientX: viewport.clientLeft + pixels[0],
+      clientY: viewport.clientTop + pixels[1],
+      altKey: opt_altKey,
+      ctrlKey: opt_ctrlKey,
+      shiftKey: opt_shiftKey,
+      preventDefault() {},
+      pointerType: 'mouse',
+      pointerId: opt_pointerId,
+      isPrimary: true,
+      button: 0,
+    } as unknown as UIEvent;
+    const simulatedEvent = new MapBrowserEvent(type, map, event);
+    map.handleMapBrowserEvent(simulatedEvent);
+  }
+);
+
 /**
  * Reads a value from the window
  *
