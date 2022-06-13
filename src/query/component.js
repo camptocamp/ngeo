@@ -387,7 +387,8 @@ export class QueryController {
    * @private
    */
   handleMapClick_(evt) {
-    if (!(evt instanceof MapBrowserEvent)) {
+    if (!evt.originalEvent) {
+      // not a MapBrowserEvent
       return;
     }
 
