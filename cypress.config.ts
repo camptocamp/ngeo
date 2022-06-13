@@ -25,14 +25,11 @@ export default defineConfig({
   includeShadowDom: true,
   defaultCommandTimeout: 10000,
   e2e: {
-    // We've imported your old cypress plugins here.
-    // You may want to clean this up later by importing these.
     setupNodeEvents(on, config) {
       return require('./cypress/plugins/index.ts')(on, config);
     },
     baseUrl: 'http://localhost:6006',
     specPattern: './/+(src|srcapi)/**/*.spec.ts',
-    supportFile: 'src/e2e/support/commands.ts',
   },
   env: {
     browserPermissions: {

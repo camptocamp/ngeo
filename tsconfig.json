@@ -30,6 +30,7 @@
     }
   },
   "include": [
+    "cypress/**/*.ts",
     "src/**/*.js",
     "src/**/*.ts",
     "lib/**/*.js",

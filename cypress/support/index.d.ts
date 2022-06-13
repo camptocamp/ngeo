@@ -50,5 +50,21 @@ declare namespace Cypress {
       opt_shiftKey?: boolean,
       opt_pointerId?: number
     ): Chainable<Subject>;
+
+    /**
+     * Custom command to simulate an OpenLayers event given a 2056 coordinate from the map
+     *
+     * @example cy.simulateEventAtCoord('map');
+     */
+    simulateEventAtCoord(
+      map: any,
+      type: string,
+      map_x: number,
+      map_y: number,
+      opt_altKey?: boolean,
+      opt_ctrlKey?: boolean,
+      opt_shiftKey?: boolean,
+      opt_pointerId?: number
+    ): Chainable<Subject>;
   }
 }

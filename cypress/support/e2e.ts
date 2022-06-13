@@ -19,9 +19,36 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// ***********************************************
+// This example commands.js shows you how to
+// create various custom commands and overwrite
+// existing commands.
+//
+// For more comprehensive examples of custom
+// commands please read more here:
+// https://on.cypress.io/custom-commands
+// ***********************************************
+//
+//
+// -- This is a parent command --
+// Cypress.Commands.add('login', (email, password) => { ... })
+//
+//
+// -- This is a child command --
+// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
+//
+//
+// -- This is a dual command --
+// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
+//
+//
+// -- This will overwrite an existing command --
+// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
 import 'cy-mobile-commands';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import olMap from 'ol/Map';
+import {Interception} from 'cypress/types/net-stubbing';
 
 // Hook for URL aliases
 beforeEach(() => {
@@ -40,8 +67,10 @@ beforeEach(() => {
 Cypress.Commands.add('loadPage', (reload = false, url = '/') => {
   reload ? cy.reload() : cy.visit(url);
   cy.wait('@dynamic_json', {timeout: 10000}).then((interception) => {
-    expect(interception.response.statusCode).to.be.eq(200);
-    cy.get('div.loading-mask').should('not.be.visible');
+    if (interception.response) {
+      expect(interception.response.statusCode).to.be.eq(200);
+      cy.get('div.loading-mask').should('not.be.visible');
+    }
   });
 });
 
