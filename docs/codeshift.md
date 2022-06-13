@@ -18,8 +18,8 @@ The second script will do the real migration.
 Then we can run it on one file with:
 
 ```bash
-git mv <file_path>.js <file_path>.ts
-npm run cs-tots -- <file_path>.ts
+git mv < file_path > .js < file_path > .ts
+npm run cs-tots -- < file_path > .ts
 ```
 
 Conversion limitations:
