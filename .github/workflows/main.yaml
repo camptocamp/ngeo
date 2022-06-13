@@ -194,7 +194,7 @@ jobs:
         run: echo "::set-output name=branch::${{ github.head_ref || github.ref_name }}"
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gh-pages
           path: ${{ steps.branch.outputs.branch }}
