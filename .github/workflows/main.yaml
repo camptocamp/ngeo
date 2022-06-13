@@ -175,7 +175,7 @@ jobs:
     runs-on: ubuntu-20.04
     name: Github Pages
     timeout-minutes: 10
-    concurrency: gh-pages
+    concurrency: gh-pages-push
     needs:
       - main
 

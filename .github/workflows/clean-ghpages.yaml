@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-18.04
     name: Clean GitHub pages
     timeout-minutes: 5
+    concurrency: gh-pages-push
 
     steps:
       - uses: actions/checkout@v3
