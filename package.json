@@ -157,7 +157,7 @@
     "karma-jasmine": "5.0.1",
     "karma-sinon": "1.0.5",
     "karma-sourcemap-loader": "0.3.8",
-    "karma-webpack": "4.0.2",
+    "karma-webpack": "5.0.0",
     "lit": "2.2.5",
     "lit-element": "3.2.0",
     "lit-html": "2.2.5",
