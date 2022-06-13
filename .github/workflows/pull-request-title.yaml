@@ -16,7 +16,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: morrisoncole/pr-lint-action@v1.5.0
+      - uses: morrisoncole/pr-lint-action@v1.6.1
         with:
           title-regex: "^(\\[.*\\] )?[A-Z0-9].*"
           on-failed-regex-comment: 'The title should start with a capital (regex: %regex%).'
