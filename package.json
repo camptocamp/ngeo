@@ -139,7 +139,7 @@
     "floatthead": "2.2.4",
     "fs-extra": "10.1.0",
     "glob": "8.0.3",
-    "html-webpack-plugin": "4.5.2",
+    "html-webpack-plugin": "5.5.0",
     "i18next": "21.8.9",
     "i18next-browser-languagedetector": "6.1.4",
     "i18next-parser": "6.5.0",
