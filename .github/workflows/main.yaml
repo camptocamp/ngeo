@@ -48,11 +48,11 @@ jobs:
         run: echo "::set-output name=sha::$(jq -r .pull_request.head.sha < ${GITHUB_EVENT_PATH})"
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
         if: github.event_name != 'pull_request_target'
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           ref: ${{ steps.sha.outputs.sha }}
@@ -184,7 +184,7 @@ jobs:
         run: echo ${GITHUB_EVENT} | python3 -m json.tool
         env:
           GITHUB_EVENT: ${{ toJson(github) }}
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: gh-pages
           fetch-depth: 0
