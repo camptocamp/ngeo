@@ -58,7 +58,7 @@ jobs:
           ref: ${{ steps.sha.outputs.sha }}
         if: github.event_name == 'pull_request_target'
 
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: '16.x'
 
