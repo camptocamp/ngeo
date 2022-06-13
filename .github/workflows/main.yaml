@@ -108,7 +108,7 @@ jobs:
       - run: npm run build-storybook
       - run: make check-examples
         if: github.event_name != 'pull_request_target'
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: Examples hosted
           path: .build/examples-hosted
@@ -123,7 +123,7 @@ jobs:
       - run: npm run dist
       - run: npm run dist-spinner
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: Npm logs
           path: /home/runner/.npm/_logs
@@ -165,7 +165,7 @@ jobs:
           cp -ar .build/storybook gh-pages/storybook
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: gh-pages
           path: gh-pages
