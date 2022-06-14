@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {TemplateResult, html, css, CSSResult} from 'lit';
+import {TemplateResult, html, css, CSSResult, unsafeCSS} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 import {customElement, state} from 'lit/decorators';
 import GmfBaseElement from 'gmfapi/elements/BaseElement';
@@ -28,9 +28,11 @@ import OlGeomLineString from 'ol/geom/LineString';
 
 import line from 'ngeo/lidar/line';
 import panels from 'gmfapi/store/panels';
+import {Configuration} from 'gmfapi/store/config';
 
 @customElement('gmf-lidar-footer')
 export class gmfLidarFooter extends GmfBaseElement {
+  @state() private customCSS_ = '';
   // for non canvas mode
   @state() private open = false;
   connectedCallback(): void {
@@ -45,6 +47,13 @@ export class gmfLidarFooter extends GmfBaseElement {
       })
     );
     super.connectedCallback();
+  }
+
+  // Override default initConfig
+  initConfig(configuration: Configuration): void {
+    if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.lidarFooter !== undefined) {
+      this.customCSS_ = configuration.gmfCustomCSS.lidarFooter;
+    }
   }
 
   static styles: CSSResult[] = [
@@ -117,6 +126,10 @@ export class gmfLidarFooter extends GmfBaseElement {
 
   render(): TemplateResult {
     return html`
+      <style>
+        ${unsafeCSS(this.customCSS_)}
+      </style>
+
       <div id="gmf-lidarprofile-container" class=${classMap({panel: true, hidden: !this.open})}>
         <div class="lidarprofile">
           <div class="lidar-error"></div>
