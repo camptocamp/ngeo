@@ -35,7 +35,7 @@ import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceVectorTile from 'ol/source/VectorTile';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS';
 import {appendParams as olUriAppendParams} from 'ol/uri';
-import olMapboxStyleStylefunction from 'ol-mapbox-style/dist/stylefunction';
+import {stylefunction as olMapboxStyleStylefunction} from 'ol-mapbox-style';
 import {ServerType} from 'ngeo/datasource/OGC';
 
 /**
