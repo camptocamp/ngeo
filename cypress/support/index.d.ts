@@ -23,21 +23,18 @@ declare namespace Cypress {
   interface Chainable<Subject = any> {
     /**
      * Custom command to load a page
-     *
      * @example cy.loadPage('https://example.com');
      */
     loadPage(boolean, string): Chainable<Subject>;
 
     /**
      * Custom command to get a value from the window
-     *
      * @example cy.readWindowValue('map');
      */
     readWindowValue(key: string): Chainable<Subject>;
 
     /**
      * Custom command to simulate an OpenLayers event
-     *
      * @example cy.simulateEvent('map');
      */
     simulateEvent(
@@ -53,7 +50,6 @@ declare namespace Cypress {
 
     /**
      * Custom command to simulate an OpenLayers event given a 2056 coordinate from the map
-     *
      * @example cy.simulateEventAtCoord('map');
      */
     simulateEventAtCoord(

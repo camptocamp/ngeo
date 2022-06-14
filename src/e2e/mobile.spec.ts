@@ -632,20 +632,79 @@ describe('Mobile interface', () => {
    * Query tests
    */
   context('Query', () => {
-    beforeEach(() => {
+    it('Query a layer and test the query window result layout', () => {
       cy.loadPage(
         false,
-        'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632270&map_y=1186700'
+        'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632270&map_y=1186700&theme=Demo&tree_groups=Filters&tree_group_layers_Filters=osm_open'
       );
-    });
-    it('Query a layer', () => {
-      cy.wait(500);
-
+      cy.wait('@themes').then(() => console.log(`themes: ${Date.now()}`));
+      cy.wait(350); // query not working without the wait
       cy.readWindowValue('map').then((map) => {
-        cy.simulateEventAtCoord(map, 'click', 2632259.9999999995, 1186419.9999999998);
-        cy.simulateEventAtCoord(map, 'singleclick', 2632259.9999999995, 1186419.9999999998);
-        //cy.wait(500);
+        console.log(`click: ${Date.now()}`);
+        cy.simulateEventAtCoord(map, 'singleclick', 2632270.3478662833, 1186347.1376920743);
       });
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('be.visible');
+
+      // Test the collapse button
+      cy.get('.collapse-button').should('have.class', 'collapse-button-down');
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
+        'have.css',
+        'height',
+        '209.671875px'
+      );
+      cy.get('.collapse-button').click();
+      cy.get('.collapse-button').should('have.class', 'collapse-button-up');
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
+        'have.css',
+        'height',
+        '80px'
+      );
+      cy.get('.collapse-button').click();
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
+        'have.css',
+        'height',
+        '209.671875px'
+      );
+
+      // Test the previous/next result button
+      cy.get('.results > span').then(($el) => {
+        const num = $el[1].textContent;
+        expect(num).to.eq('1');
+      });
+      cy.get('div.placeholder > button.next').click();
+      cy.get('.results > span').then(($el) => {
+        const num = $el[1].textContent;
+        expect(num).to.eq('2');
+      });
+      cy.get('div.placeholder > button.previous').click();
+      cy.get('.results > span').then(($el) => {
+        const num = $el[1].textContent;
+        expect(num).to.eq('1');
+      });
+
+      // Close the window query result
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-times').click();
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('not.be.visible');
+    });
+    it('Query "OSM open" and scroll in the query result window', () => {
+      cy.wait(350); // query not working without the wait
+      cy.readWindowValue('map').then((map) => {
+        cy.simulateEventAtCoord(map, 'singleclick', 2632899.9999999995, 1186939.9999999998);
+      });
+
+      // Scroll in the result
+      cy.get('.details').then((element) => {
+        cy.wrap(element[0].scrollTop).should('eq', 0);
+        cy.wrap(element)
+          .scrollTo('bottom')
+          .then((element) => {
+            cy.wrap(element[0].scrollTop).should('eq', 95);
+          });
+      });
+
+      // Close the window query result
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-times').click();
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('not.be.visible');
     });
   });
 
@@ -654,6 +713,8 @@ describe('Mobile interface', () => {
    */
   context('Disclaimer', () => {
     it('Show and hide a disclaimer', () => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
+
       cy.get('gmf-disclaimer').should('be.visible');
       cy.get('gmf-disclaimer .fa').click();
       cy.get('gmf-disclaimer').should('not.be.visible');
