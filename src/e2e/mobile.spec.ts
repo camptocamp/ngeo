@@ -738,7 +738,7 @@ describe('Mobile interface', () => {
             .type(Cypress.env('demoUser')['login'] as string);
           cy.wrap(authPanel)
             .find('input[name="password"]')
-            .type(Cypress.env('demoUser')['password'] as string);
+            .type(Cypress.env('demoUser')['password'] as string, {force: true}); // From https://github.com/cypress-io/cypress/issues/5830
           cy.wrap(authPanel).find('input[type="submit"]').click();
           cy.wait('@login').then((interception) => {
             expect(interception.response.statusCode).to.be.eq(200);
