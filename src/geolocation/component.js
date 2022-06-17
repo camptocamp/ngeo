@@ -182,14 +182,14 @@ Controller.prototype.$onInit = function () {
   /**
    * @type {olFeature<import('ol/geom/Geometry').default>}
    */
-  this.positionFeature_ = new olFeature();
+  this.positionFeature_ = new olFeature({name: 'GeolocationPositionFeature'});
 
   this.positionFeature_.setStyle(buildStyle(this.options.positionFeatureStyle));
 
   /**
    * @type {olFeature<import('ol/geom/Geometry').default>}
    */
-  this.accuracyFeature_ = new olFeature();
+  this.accuracyFeature_ = new olFeature({name: 'GeolocationAccuracyFeature'});
 
   this.accuracyFeature_.setStyle(buildStyle(this.options.accuracyFeatureStyle));
 

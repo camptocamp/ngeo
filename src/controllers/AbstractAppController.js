@@ -145,6 +145,8 @@ export function AbstractAppController($scope, $injector, mobile) {
   }
 
   storeMap.setMap(map);
+
+  // Needed cypress e2e tests
   window['map'] = map;
 
   /**

@@ -19,6 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import {FeatureOverlayMgr} from 'ngeo/map/FeatureOverlayMgr';
+
 describe('Mobile interface', () => {
   /**
    * Layout tests
@@ -212,6 +214,7 @@ describe('Mobile interface', () => {
 
       cy.contains('Clear all').click();
     });
+
     it('Check layer and layergroup selection II', () => {
       cy.contains('Themes').click();
       cy.contains('Demo').click();
@@ -225,6 +228,7 @@ describe('Mobile interface', () => {
 
       cy.contains('Clear all').click();
     });
+
     it('Check layers with minimum and maximum zoom visibility', () => {
       cy.contains('Themes').click();
       cy.contains('Demo').click();
@@ -236,6 +240,7 @@ describe('Mobile interface', () => {
       cy.get('.ol-scale-line-inner').should('contain.html', '100 m');
       cy.get('.gmf-layertree-node-114 .gmf-layertree-zoom').should('not.be.visible');
     });
+
     it('Remove a layer', () => {
       cy.get('div.gmf-layertree-node-68 span.fa-trash').click();
 
@@ -258,6 +263,7 @@ describe('Mobile interface', () => {
         }
       });
     });
+
     it('Remove all layers', () => {
       // Check the layertree content
       cy.get('ul#gmf-layertree-layer-group-75').children().should('exist');
@@ -274,8 +280,18 @@ describe('Mobile interface', () => {
    */
   context('Geolocation', () => {
     it('Show the current location', () => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
+
       cy.get('[ngeo-geolocation=""]').click();
-      // TODO: assert on active geolocation
+
+      // Assert on active geolocation
+      cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+        const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+        const feature = features.find((f) => f.get('name') === 'GeolocationPositionFeature');
+        cy.wrap(feature).should('not.be.undefined');
+        const feature2 = features.find((f) => f.get('name') === 'GeolocationAccuracyFeature');
+        cy.wrap(feature2).should('not.be.undefined');
+      });
     });
 
     it('Move the map then get back to the current location', () => {
@@ -291,13 +307,29 @@ describe('Mobile interface', () => {
       });
       cy.wait(350).then(() => {
         cy.get('[ngeo-geolocation=""]').click();
-        // TODO: assert on active geolocation
+
+        // Assert on active geolocation
+        cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+          const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+          const feature = features.find((f) => f.get('name') === 'GeolocationPositionFeature');
+          cy.wrap(feature).should('not.be.undefined');
+          const feature2 = features.find((f) => f.get('name') === 'GeolocationAccuracyFeature');
+          cy.wrap(feature2).should('not.be.undefined');
+        });
       });
     });
 
     it('Disable the geolocation tool', () => {
       cy.get('[ngeo-geolocation=""]').click();
-      // TODO: assert on unactive geolocation
+      // Assert on unactive geolocation
+      cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+        const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+        //console.log(features[0].get('name'));
+        const feature = features.find((f) => f.get('name') === 'GeolocationPositionFeature');
+        cy.wrap(feature).should('be.undefined');
+        const feature2 = features.find((f) => f.get('name') === 'GeolocationAccuracyFeature');
+        cy.wrap(feature2).should('be.undefined');
+      });
     });
   });
 
@@ -466,6 +498,7 @@ describe('Mobile interface', () => {
         'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632464&map_y=1185457'
       );
     });
+
     it('Activate coordinate tool', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#measure-tools"]').click();
@@ -686,6 +719,7 @@ describe('Mobile interface', () => {
       cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-times').click();
       cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('not.be.visible');
     });
+
     it('Query "OSM open" and scroll in the query result window', () => {
       cy.wait(350); // query not working without the wait
       cy.readWindowValue('map').then((map) => {
