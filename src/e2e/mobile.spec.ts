@@ -384,6 +384,13 @@ describe('Mobile interface', () => {
       const suggestions = Cypress.$('.tt-menu > .tt-dataset-1');
       cy.wrap(suggestions).should('be.visible');
       cy.wrap(suggestions).click(125, 50);
+
+      // Assert that there is a search feature on overlay
+      cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+        const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+        const feature = features.find((f) => f.get('name') === 'SearchFeature');
+        cy.wrap(feature).should('not.be.undefined');
+      });
     });
 
     it('Clear the field and keep the result visible', () => {
@@ -398,6 +405,13 @@ describe('Mobile interface', () => {
 
         // Check the placeholder
         cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');
+
+        // Assert that there is a search feature on overlay
+        cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+          const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+          const feature = features.find((f) => f.get('name') === 'SearchFeature');
+          cy.wrap(feature).should('not.be.undefined');
+        });
       });
     });
 
@@ -411,6 +425,13 @@ describe('Mobile interface', () => {
 
             // Check the placeholder
             cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');
+
+            // Assert that there is no search feature on overlay
+            cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+              const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+              const feature = features.find((f) => f.get('name') === 'SearchFeature');
+              cy.wrap(feature).should('be.undefined');
+            });
           });
       });
     });
@@ -425,16 +446,24 @@ describe('Mobile interface', () => {
       // Click on 'Lausanne';
       cy.wrap(suggestions).click(125, 50);
 
-      // Wait for map recenter
-      cy.wait(350);
+      // Assert that there is a search feature on overlay
+      cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+        const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+        const feature = features.find((f) => f.get('name') === 'SearchFeature');
+        cy.wrap(feature).should('not.be.undefined');
+      });
 
       cy.get('.tt-input').focus();
 
       // Click on 'Le-Mont-sur-Lausanne';
       cy.wrap(suggestions).click(125, 150);
 
-      // Wait for map recenter
-      cy.wait(350);
+      // Assert that there is a search feature on overlay
+      cy.readWindowValue('overlayMgr').then((manager: FeatureOverlayMgr) => {
+        const features = manager.getLayer().getSource().getFeaturesCollection().getArray();
+        const feature = features.find((f) => f.get('name') === 'SearchFeature');
+        cy.wrap(feature).should('not.be.undefined');
+      });
 
       // Close the search
       const clearBtn = Cypress.$('span.gmf-clear-button');
