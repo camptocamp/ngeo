@@ -685,9 +685,9 @@ LayertreeTreeManager.prototype.setFirstLevelGroupFullState_ = function (treeCtrl
   } else {
     // Set state and isLegendExpanded only in leaves.
     if (fullState.isChecked === true) {
-      treeCtrl.setState('on', false);
+      treeCtrl.setState('on');
     } else if (fullState.isChecked === false) {
-      treeCtrl.setState('off', false);
+      treeCtrl.setState('off');
     }
     const legendElement = $(`#gmf-layertree-node-${treeCtrl.uid}-legend`);
     if (fullState.isLegendExpanded) {
