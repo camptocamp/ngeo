@@ -45,7 +45,23 @@ type Args = {
 const Template = (args: Args) => {
   user.setUser(args.user, UserState.READY);
   user.setLoginMessage(args.loginInfoMessage ? loginMessageRequired : '');
-  return '<gmf-auth-form></gmf-auth-form>';
+  return `<gmf-auth-form>
+    <input
+      slot="gmf-auth-login"
+      type="text"
+      class="form-control"
+      name="login"
+      autocomplete="username"
+      placeholder="Username" />
+    <input
+      slot="gmf-auth-password"
+      type="password"
+      class="form-control"
+      name="password"
+      autocomplete="current-password"
+      aria-describedby="password-constraints"
+      placeholder="Password"
+    /></gmf-auth-form>`;
 };
 
 const defaultProperties: Args = {
@@ -69,5 +85,20 @@ WithUser.args.user = login;
 export function Panel(): string {
   return `
     <gmf-auth-panel>
-    </gmf-auth-panel>`;
+      <input
+        slot="gmf-auth-login"
+        type="text"
+        class="form-control"
+        name="login"
+        autocomplete="username"
+        placeholder="Username" />
+      <input
+        slot="gmf-auth-password"
+        type="password"
+        class="form-control"
+        name="password"
+        autocomplete="current-password"
+        aria-describedby="password-constraints"
+        placeholder="Password"
+      /></gmf-auth-panel>`;
 }

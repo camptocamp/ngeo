@@ -184,15 +184,10 @@ export default class GmfAuthForm extends GmfBaseElement {
             <div>
               <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
                 <div class="form-group">
-                  <input type="text" class="form-control" name="login" placeholder=${i18next.t('Username')} />
+                  <slot name="gmf-auth-login"></slot>
                 </div>
                 <div class="form-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    name="password"
-                    placeholder=${i18next.t('Password')}
-                  />
+                  <slot name="gmf-auth-password"></slot>
                 </div>
                 ${this.twoFactorAuth
                   ? html`
@@ -203,6 +198,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                           autocomplete="off"
                           class="form-control"
                           name="otp"
+                          autocomplete="one-time-code"
                           placeholder=${i18next.t('Authentication code')}
                         />
                       </div>
@@ -251,6 +247,8 @@ export default class GmfAuthForm extends GmfBaseElement {
                     type="password"
                     class="form-control"
                     name="oldpassword"
+                    autocomplete="current-password"
+                    aria-describedby="password-constraints"
                     placeholder=${i18next.t('Old password')}
                   />
                 </div>
@@ -259,6 +257,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                     type="password"
                     class="form-control"
                     name="newpassword"
+                    autocomplete="new-password"
                     placeholder=${i18next.t('New password')}
                   />
                 </div>
@@ -267,6 +266,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                     type="password"
                     class="form-control"
                     name="newpasswordconfirm"
+                    autocomplete="new-password"
                     placeholder=${i18next.t('Confirm new password')}
                   />
                 </div>
@@ -294,6 +294,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                           autocomplete="off"
                           class="form-control"
                           name="otp"
+                          autocomplete="one-time-code"
                           placeholder=${i18next.t('Authentication code')}
                         />
                       </div>
@@ -453,8 +454,8 @@ export default class GmfAuthForm extends GmfBaseElement {
     this.isLoading = true;
     const errors = [];
     const form = evt.target as HTMLFormElement;
-    const loginVal = (form.login as HTMLInputElement).value;
-    const pwdVal = (form.password as HTMLInputElement).value;
+    const loginVal = (document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement).value;
+    const pwdVal = (document.body.querySelector('input[slot=gmf-auth-password]') as HTMLInputElement).value;
 
     if (loginVal === '') {
       errors.push(i18next.t('The username is required.'));
@@ -523,9 +524,7 @@ export default class GmfAuthForm extends GmfBaseElement {
 
     this.isLoading = true;
 
-    const resetBtn = evt.target as HTMLFormElement;
-    const form = resetBtn.parentNode.parentNode as HTMLFormElement;
-    const login = (form.login as HTMLInputElement).value;
+    const login = (document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement).value;
 
     if (login === '') {
       this.isLoading = false;
