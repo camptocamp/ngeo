@@ -41,7 +41,8 @@
     "url": "https://github.com/camptocamp/ngeo/issues"
   },
   "bin": {
-    "compile-catalog": "buildtools/compile-catalog.js"
+    "compile-catalog": "buildtools/compile-catalog.js",
+    "check-examples": "buildtools/check-examples.js"
   },
   "browser": {
     "ngeo/test": "./test/spec",
