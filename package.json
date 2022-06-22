@@ -42,7 +42,7 @@
   },
   "bin": {
     "compile-catalog": "buildtools/compile-catalog.js",
-    "check-examples": "buildtools/check-examples.js"
+    "check-example": "buildtools/check-example.js"
   },
   "browser": {
     "ngeo/test": "./test/spec",
