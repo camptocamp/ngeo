@@ -77,7 +77,10 @@ export default class GmfAuthPanel extends ToolPanelElement {
         ${unsafeCSS(this.customCSS_)}
       </style>
       ${this.getTitle(i18next.t('Login'))}
-      <gmf-auth-form .passwordValidator=${this.passwordValidator}></gmf-auth-form>
+      <gmf-auth-form .passwordValidator=${this.passwordValidator}>
+        <slot name="gmf-auth-login" slot="gmf-auth-login"></slot>
+        <slot name="gmf-auth-password" slot="gmf-auth-password"></slot>
+      </gmf-auth-form>
       ${spinnerTemplate}
     `;
   }

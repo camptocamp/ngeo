@@ -29,15 +29,16 @@ describe('Auth component', () => {
     it('displays an empty auth form', () => {
       cy.visit('iframe.html?id=auth-form--empty');
       cy.get('input').should('have.length', 3);
+      // the slots are at the end
       cy.get('input')
-        .first()
+        .eq(1)
         .should('have.attr', 'type', 'text')
         .should('have.attr', 'placeholder', 'Username');
       cy.get('input')
-        .eq(1)
+        .eq(2)
         .should('have.attr', 'type', 'password')
         .should('have.attr', 'placeholder', 'Password');
-      cy.get('input').last().should('have.attr', 'type', 'submit').should('have.value', 'Connect');
+      cy.get('input').first().should('have.attr', 'type', 'submit').should('have.value', 'Connect');
       cy.get('.alert').should('have.length', 0);
     });
 
@@ -48,7 +49,8 @@ describe('Auth component', () => {
 
     it('displays a form with a user and a message', () => {
       cy.visit('iframe.html?id=auth-form--with-user&args=loginInfoMessage:false');
-      cy.get('input').should('have.length', 2).first().should('have.value', 'Logout');
+      // two inputs are invisible but present in the slot
+      cy.get('input').should('have.length', 4).first().should('have.value', 'Logout');
       cy.get('.form-group span').first().should('have.text', 'Logged in as');
       cy.get('.form-group strong').first().should('have.text', 'George');
     });
