@@ -486,6 +486,7 @@ export default class GmfAuthForm extends GmfBaseElement {
       authenticationService
         .login(loginVal, pwdVal)
         .then(() => {
+          this.cleanForm_();
           this.resetError_();
         })
         .catch(() => {
@@ -512,6 +513,7 @@ export default class GmfAuthForm extends GmfBaseElement {
     authenticationService
       .logout()
       .then(() => {
+        this.cleanForm_();
         this.resetError_();
       })
       .catch(() => {
@@ -551,6 +553,7 @@ export default class GmfAuthForm extends GmfBaseElement {
     authenticationService
       .resetPassword(login)
       .then(() => {
+        this.cleanForm_();
         this.resetPasswordShown = true;
         this.resetError_();
       })
@@ -568,6 +571,7 @@ export default class GmfAuthForm extends GmfBaseElement {
    * Reset the changePassword values and error.
    */
   changePasswordReset(): void {
+    this.cleanForm_();
     this.resetError_();
     this.changingPassword = false;
     this.userMustChangeItsPassword = false;
@@ -610,6 +614,20 @@ export default class GmfAuthForm extends GmfBaseElement {
       }
       ngeoMessageNotification.notify(options);
     });
+  }
+
+  /**
+   * Clear the form
+   */
+  cleanForm_(): void {
+    const form = this.renderRoot.querySelector('form') as HTMLFormElement;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    const loginField = document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement;
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    const passwordField = document.body.querySelector('input[slot=gmf-auth-password]') as HTMLInputElement;
+    form.reset();
+    loginField.value = '';
+    passwordField.value = '';
   }
 
   /**
