@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2021 Camptocamp SA
+// Copyright (c) 2020-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -135,7 +135,7 @@ function check(context) {
         if (leadingComments.length < headerLines.length) {
           context.report({
             loc: node.loc,
-            message: 'incorrect header',
+            message: `incorrect header ${leadingComments.length} should be ${headerLines.length}`,
             fix: genReplaceFixer(
               context,
               leadingComments,
@@ -149,7 +149,7 @@ function check(context) {
           if (!match(leadingComments[i].value, headerLines[i])) {
             context.report({
               loc: node.loc,
-              message: 'incorrect header',
+              message: `incorrect header ${leadingComments[i].value} should be ${headerLines[i]}`,
               fix: genReplaceFixer(
                 context,
                 leadingComments,
