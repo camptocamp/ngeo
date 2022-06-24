@@ -43,7 +43,7 @@ import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerLayer from 'ol/layer/Layer';
 import {isEmpty} from 'ol/obj';
 import olSourceImageWMS from 'ol/source/ImageWMS';

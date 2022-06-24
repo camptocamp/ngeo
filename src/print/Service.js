@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@ import ngeoPrintVectorEncoder from 'ngeo/print/VectorEncoder';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import {stableSort} from 'ol/array';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerVector from 'ol/layer/Vector';
 import * as olSize from 'ol/size';
 import olSourceImageWMS from 'ol/source/ImageWMS';
@@ -298,7 +298,7 @@ PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
- * @param {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer The layer.
+ * @param {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer The layer.
  * @param {string} url URL of the WMS server.
  * @param {Object<string, string>} params URL parameters
  */
@@ -373,7 +373,7 @@ function getAbsoluteUrl_(url) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
- * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Layer.
+ * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -389,7 +389,7 @@ PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
- * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Layer.
+ * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {
@@ -453,7 +453,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
 
 /**
  * @param {import('ngeo/print/mapfish-print-v3').MapFishPrintLayer[]} arr Array.
- * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Layer.
+ * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
   if (!(layer instanceof olLayerTile)) {

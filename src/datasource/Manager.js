@@ -36,7 +36,7 @@ import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {getUid as olUtilGetUid} from 'ol/util';
 import {listen} from 'ol/events';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import {clear as clearObject} from 'ol/obj';
 import olLayerImage from 'ol/layer/Image';
 import olSourceImageWMS from 'ol/source/ImageWMS';

@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import olLayerGroup from 'ol/layer/Group';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import ImageWMS from 'ol/source/ImageWMS';
 import {dpi as screenDpi} from 'ngeo/utils';
 import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper';
@@ -266,7 +266,7 @@ export default class LegendMapFishPrintV3 {
    * Create a legend item from the given WMTS layer.
    *
    * @param {import('gmf/themes').GmfLayer} node the current themes node.
-   * @param {import("ol/layer/Tile").default} layer The layer to extract the legend from.
+   * @param {import("ol/layer/WebGLTile").default} layer The layer to extract the legend from.
    * @param {number} dpi The DPI.
    * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass} Legend object for print report
    * or null.

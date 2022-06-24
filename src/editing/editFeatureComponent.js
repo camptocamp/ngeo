@@ -62,7 +62,7 @@ import olFeature from 'ol/Feature';
 import olFormatGeoJSON from 'ol/format/GeoJSON';
 import olInteractionModify from 'ol/interaction/Modify';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olStyleFill from 'ol/style/Fill';
 import olStyleStyle from 'ol/style/Style';
 import olStyleText from 'ol/style/Text';
@@ -360,7 +360,7 @@ export function Controller(
   this.editableNode_ = null;
 
   /**
-   * @type {?import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Tile').default<import('ol/source/Tile').default>}
+   * @type {?import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>}
    */
   this.editableWMSLayer_ = null;
 

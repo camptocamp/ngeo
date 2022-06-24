@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -87,7 +87,7 @@ export class SwipeController {
     this.map;
 
     /**
-     * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
+     * @type {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>}
      */
     this.layer;
 
