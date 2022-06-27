@@ -38,7 +38,7 @@ import olGeomPolygon, {
   fromCircle as olGeomPolygonFromCircle,
   fromExtent as olGeomPolygonFromExtent,
 } from 'ol/geom/Polygon';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceOSM from 'ol/source/OSM';
 import olSourceVector from 'ol/source/Vector';

@@ -36,7 +36,7 @@ import ngeoLayertreeModule from 'ngeo/layertree/module';
 import ngeoMapModule from 'ngeo/map/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 import options from './options';
 

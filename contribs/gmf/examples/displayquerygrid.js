@@ -41,7 +41,7 @@ import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoQueryComponent from 'ngeo/query/component';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 import options from './options';
 

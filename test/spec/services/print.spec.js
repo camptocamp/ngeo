@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -32,7 +32,7 @@ import olGeomLineString from 'ol/geom/LineString';
 import olGeomPoint from 'ol/geom/Point';
 import olGeomPolygon from 'ol/geom/Polygon';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceImageWMS from 'ol/source/ImageWMS';
 import olSourceTileWMS from 'ol/source/TileWMS';

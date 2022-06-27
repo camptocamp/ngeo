@@ -24,7 +24,7 @@ import angular from 'angular';
 import ngeoMapswipeModule from 'ngeo/map/swipe';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olMap from 'ol/Map';
 import olSourceOSM, {ATTRIBUTION} from 'ol/source/OSM';
 import olView from 'ol/View';
@@ -42,7 +42,7 @@ function MainController() {
   });
 
   /**
-   * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
+   * @type {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>}
    */
   this.openSeaMapLayer = new olLayerTile({
     source: new olSourceOSM({

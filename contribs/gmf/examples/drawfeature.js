@@ -33,7 +33,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 import options from './options';
 

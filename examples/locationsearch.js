@@ -28,7 +28,7 @@ import ngeoSearchModule from 'ngeo/search/module';
 import * as olProj from 'ol/proj';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 
 /** @type {angular.IModule} **/

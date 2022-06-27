@@ -32,7 +32,7 @@ import olCollection from 'ol/Collection';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olInteractionDraw from 'ol/interaction/Draw';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 import olStyleCircle from 'ol/style/Circle';
 import olStyleFill from 'ol/style/Fill';

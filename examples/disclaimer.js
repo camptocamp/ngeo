@@ -27,7 +27,7 @@ import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer';
 import {MessageType} from 'ngeo/message/Message';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';

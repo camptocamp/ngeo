@@ -34,7 +34,7 @@ import olCollection from 'ol/Collection';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olInteractionDraw from 'ol/interaction/Draw';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 import olStyleStroke from 'ol/style/Stroke';
 import olStyleStyle from 'ol/style/Style';

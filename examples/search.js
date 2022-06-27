@@ -29,7 +29,7 @@ import {proj as EPSG2056} from 'ngeo/proj/EPSG_2056';
 import ngeoSearchModule from 'ngeo/search/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerVector from 'ol/layer/Vector';
 import * as olProj from 'ol/proj';
 import olSourceOSM from 'ol/source/OSM';

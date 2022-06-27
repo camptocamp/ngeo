@@ -29,7 +29,7 @@ import {interactionDecoration} from 'ngeo/misc/decorate';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module';
 import olMap from 'ol/Map';
 import olInteractionDraw from 'ol/interaction/Draw';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceOSM from 'ol/source/OSM';
 import olSourceVector from 'ol/source/Vector';

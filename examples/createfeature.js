@@ -32,7 +32,7 @@ import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import olCollection from 'ol/Collection';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceOSM from 'ol/source/OSM';
 import olSourceVector from 'ol/source/Vector';

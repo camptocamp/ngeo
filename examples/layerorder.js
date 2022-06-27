@@ -31,7 +31,7 @@ import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerImage from 'ol/layer/Image';
 import olSourceWMS from 'ol/source/ImageWMS';
 import {MAPSERVER_PROXY} from './url';

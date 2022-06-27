@@ -35,7 +35,7 @@ import ngeoMiscFilters from 'ngeo/misc/filters';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olControlScaleLine from 'ol/control/ScaleLine';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 import olStyleStyle from 'ol/style/Style';
 import olStyleCircle from 'ol/style/Circle';

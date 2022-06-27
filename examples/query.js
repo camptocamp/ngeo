@@ -41,7 +41,7 @@ import ngeoQueryModule from 'ngeo/query/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceImageWMS from 'ol/source/ImageWMS';
 import olSourceOSM from 'ol/source/OSM';
 

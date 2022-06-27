@@ -28,7 +28,7 @@ import ngeoMiscControlComponent from 'ngeo/misc/controlComponent';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olControlMousePosition from 'ol/control/MousePosition';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
 
 /** @type {angular.IModule} **/
