@@ -3,6 +3,7 @@
     "allowJs": true,
     "emitDeclarationOnly": true,
     "skipLibCheck": true,
+    "inlineSources": true,
     "outDir": ".."
   },
   "include": ["**/*.js", "src/**/*.ts"],

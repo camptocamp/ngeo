@@ -13,6 +13,7 @@
     "strictFunctionTypes": true,
     "skipLibCheck": true,
     "sourceMap": true,
+    "inlineSources": true,
     "experimentalDecorators": true,
     "baseUrl": "./",
     "types": ["cypress", "node"],
