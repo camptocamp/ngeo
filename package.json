@@ -71,7 +71,7 @@
     "@sentry/browser": "7.3.0",
     "@sentry/integrations": "6.19.7",
     "@sentry/tracing": "7.3.0",
-    "@sentry/types": "7.3.0",
+    "@sentry/types": "7.4.1",
     "@storybook/preset-scss": "1.0.3",
     "@storybook/web-components": "6.5.9",
     "@trevoreyre/autocomplete-js": "2.2.0",
