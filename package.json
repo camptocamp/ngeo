@@ -65,7 +65,7 @@
     "@babel/plugin-transform-spread": "7.17.12",
     "@babel/plugin-transform-typescript": "7.18.6",
     "@babel/preset-env": "7.18.6",
-    "@babel/preset-typescript": "7.17.12",
+    "@babel/preset-typescript": "7.18.6",
     "@fortawesome/fontawesome-free": "5.15.4",
     "@lit/reactive-element": "1.3.3",
     "@sentry/browser": "7.3.0",
