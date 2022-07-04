@@ -3,6 +3,12 @@
   separateMajorMinor: true,
   extends: ['config:base', 'schedule:earlyMondays'],
   lockFileMaintenance: {enabled: true, automerge: true},
+  regexManagers: [
+    {
+      fileMatch: ['^ci/applications-versions.yaml$'],
+      matchStrings: ['(?<depName>[^\\s]+): (?<currentValue>[^\\s]+) # (?<datasource>[^\\s]+)'],
+    },
+  ],
   packageRules: [
     /** Automerge the patch, the minor and the dev dependency */
     {
