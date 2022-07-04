@@ -13,10 +13,6 @@ checks:
       - ^buildtools/asitvd.capabilities\.xml$
       - ^examples/measure\.js$
       - ^src/bootstrap-custom\.css\.map$
-  dependabot_config:
-    update_ignore:
-      - directory: /
-        package-ecosystem: npm
 
 audit:
   npm:
