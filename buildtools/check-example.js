@@ -253,12 +253,14 @@ function loaded(page, browser) {
       !location.url.startsWith('http://localhost:3001/.build/examples-hosted/dist/vendor.js') &&
       location.url.startsWith('http://localhost:3001/')
     ) {
-      console.log(`Console ${type}`);
-      console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
-      console.log(message.text());
-      if (!message.text().includes('CORS')) {
-        await browser.close();
-        process.exit(2);
+      if (type != 'warning' || !message.text().includes(' GPU ')) {
+        console.log(`Console ${type}`);
+        console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
+        console.log(message.text());
+        if (!message.text().includes('CORS')) {
+          await browser.close();
+          process.exit(2);
+        }
       }
     }
   });
