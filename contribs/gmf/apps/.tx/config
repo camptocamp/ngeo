@@ -1,0 +1,7 @@
+[main]
+host = https://www.transifex.com
+
+[o:camptocamp:p:ngeo:r:gmf-apps]
+source_file = ../../../.build/locale/apps.pot
+type = PO
+file_filter = ../../../.build/locale/<lang>/LC_MESSAGES/apps.po

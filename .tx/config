@@ -1,0 +1,12 @@
+[main]
+host = https://www.transifex.com
+
+[o:camptocamp:p:ngeo:r:ngeo]
+source_file = .build/locale/ngeo.pot
+type = PO
+file_filter = .build/locale/<lang>/LC_MESSAGES/ngeo.po
+
+[o:camptocamp:p:ngeo:r:webcomponent]
+source_file = locales/en/app.json
+type = KEYVALUEJSON
+file_filter = locales/<lang>/app.json

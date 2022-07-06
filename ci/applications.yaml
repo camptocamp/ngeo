@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/camptocamp/c2cciutils/master/c2cciutils/schema-applications.json
+
+transifex/cli:
+  type: tar
+  get-file-name: tx-linux-amd64.tar.gz
+  tar-file-name: tx
+  to-file-name: tx
+  finish-commands:
+    - - chmod
+      - +x
+      - tx
+    - - tx
+      - --version
