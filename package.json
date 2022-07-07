@@ -117,7 +117,7 @@
     "karma-webpack": "4.0.2",
     "loader-utils": "2.0.0",
     "localforage": "1.7.3",
-    "moment": "2.29.2",
+    "moment": "2.29.4",
     "ng-raven": "1.0.1",
     "node-sass": "4.13.1",
     "node-sass-importer": "1.0.0",
