@@ -285,6 +285,13 @@ module.exports = function (config) {
     })
   );
 
+  plugins.push(
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^cross-fetch$/,
+      contextRegExp: /i18next-http-backend\/esm$/,
+    })
+  );
+
   return {
     context: path.resolve(__dirname, '../'),
     output: {

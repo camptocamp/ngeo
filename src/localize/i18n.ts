@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +22,7 @@
 import i18next from 'i18next';
 //@ts-ignore
 import locI18next from 'loc-i18next';
-import Backend from 'i18next-xhr-backend';
+import Backend from 'i18next-http-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import {InitOptions} from 'i18next';
 import {Configuration} from 'gmfapi/store/config';
