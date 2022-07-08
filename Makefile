@@ -1,4 +1,4 @@
-TX_VERSION ?= 2_7
+MAJOR_VERSION ?= 2.7
 DEMO_BRANCH ?= prod-2-7
 
 ANGULAR_VERSION := $(shell buildtools/get-version angular)
@@ -345,7 +345,12 @@ contribs/gmf/build/angular-locale_%.js: package.json
 .build/python-venv.timestamp: requirements.txt
 	mkdir -p $(dir $@)
 	python3 -m venv .build/python-venv
+	$(PY_VENV_BIN)/pip install -r ci/requirements.txt
 	$(PY_VENV_BIN)/pip install -r requirements.txt
+	touch $@
+
+.build/applications.timestamp: .build/python-venv.timestamp ci/applications.yaml ci/applications-versions.yaml
+	$(PY_VENV_BIN)/c2cciutils-download-applications --applications-file=ci/applications.yaml --versions-file=ci/applications-versions.yaml
 	touch $@
 
 # i18n
@@ -353,18 +358,12 @@ contribs/gmf/build/angular-locale_%.js: package.json
 # if don't exists create one for read only access
 $(HOME)/.transifexrc:
 	echo "[https://www.transifex.com]" > $@
+	echo "api_hostname  = https://api.transifex.com" >> $@
+	echo "rest_hostname = https://rest.api.transifex.com" >> $@
 	echo "hostname = https://www.transifex.com" >> $@
 	echo "username = c2c" >> $@
 	echo "password = c2cc2c" >> $@
-	echo "token =" >> $@
-
-.tx/config: .tx/config.mako .build/python-venv.timestamp
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
-
-contribs/gmf/apps/.tx/config: contribs/gmf/apps/.tx/config.mako .build/python-venv.timestamp
-	PYTHONIOENCODING=UTF-8 $(PY_VENV_BIN)/mako-render \
-		--var "tx_version=$(TX_VERSION)" --var "languages=$(L10N_LANGUAGES)" $< > $@
+	echo "token = 1/dc02578696187cc29e4e6486f8611fdbfe60b235" >> $@
 
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
 		$(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES)
@@ -386,45 +385,45 @@ transifex-get: $(L10N_PO_FILES) \
 
 .PHONY: transifex-send
 transifex-send: \
-		.build/python-venv.timestamp \
+		.build/applications.timestamp \
 		.tx/config \
 		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/apps.pot
-	$(PY_VENV_BIN)/tx push --source
-	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --source
+	tx push --branch=$(MAJOR_VERSION) --source
+	cd contribs/gmf/apps/; tx push --source
 
 .PHONY: transifex-init
-transifex-init: .build/python-venv.timestamp \
+transifex-init: .build/applications.timestamp \
 		.tx/config \
 		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
 		.build/locale/apps.pot
-	$(PY_VENV_BIN)/tx push --source --force --no-interactive
-	$(PY_VENV_BIN)/tx push --translations --force --no-interactive
+	tx push --branch=$(MAJOR_VERSION) --source --force
+	tx push --branch=$(MAJOR_VERSION) --translation --force
 
-	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --source --force --no-interactive
-	cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx push --translations --force --no-interactive
+	cd contribs/gmf/apps/; tx push --branch=$(MAJOR_VERSION) --source --force
+	cd contribs/gmf/apps/; tx push --branch=$(MAJOR_VERSION) --translation --force
 
-.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
-	$(PY_VENV_BIN)/tx pull --resource=ngeo.ngeo-$(TX_VERSION) --language=$* --force --mode=reviewed
+.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
+	tx pull --branch=$(MAJOR_VERSION) --resources=ngeo.ngeo --languages=$* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .build/locale/en/LC_MESSAGES/ngeo.po: .build/locale/ngeo.pot
 	mkdir -p $(dir $@)
 	msginit -i $< -o $@
 
-locales/%/app.json: .tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
+locales/%/app.json: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
 	mkdir -p $(dir $@)
-	$(PY_VENV_BIN)/tx pull --resource=ngeo.webcomponent-$(TX_VERSION) --language=$* --force --mode=reviewed
+	tx pull --branch=$(MAJOR_VERSION) --resources=ngeo.webcomponent --languages=$* --force --mode=reviewed
 	touch $@
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/apps.po
-.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/python-venv.timestamp
-	(cd contribs/gmf/apps/; ../../../$(PY_VENV_BIN)/tx pull -l $* --force --mode=reviewed)
+.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/applications.timestamp
+	(cd contribs/gmf/apps/; tx pull --branch=$(MAJOR_VERSION) --languages=$* --force --mode=reviewed)
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
