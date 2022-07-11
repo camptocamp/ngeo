@@ -4,7 +4,7 @@
   schedule: 'before 1am on Sunday',
   separateMajorMinor: true,
   separateMinorPatch: true,
-  lockFileMaintenance: { enabled: true, automerge: true },
+  lockFileMaintenance: {enabled: true, automerge: true},
   baseBranches: ['master', '2.7'],
   regexManagers: [
     {
