@@ -54,7 +54,6 @@
     "olcs": "ol-cesium/src/olcs",
     "jquery-ui/datepicker": "jquery-ui/ui/widgets/datepicker",
     "mapillary-js/src/Mapillary": "mapillary-js/dist/mapillary.js",
-    "@sentry/integrations": "@sentry/integrations/dist/angular.js",
     "typeahead": "corejs-typeahead"
   },
   "devDependencies": {
@@ -69,7 +68,6 @@
     "@fortawesome/fontawesome-free": "5.15.4",
     "@lit/reactive-element": "1.3.3",
     "@sentry/browser": "7.6.0",
-    "@sentry/integrations": "7.6.0",
     "@sentry/tracing": "7.6.0",
     "@sentry/types": "7.6.0",
     "@storybook/preset-scss": "1.0.3",
