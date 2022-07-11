@@ -1,8 +1,11 @@
 {
-  baseBranches: ['master', '2.7'],
+  extends: ['config:base'],
+  timezone: 'Europe/Zurich',
+  schedule: 'before 1am on Sunday',
   separateMajorMinor: true,
-  extends: ['config:base', 'schedule:earlyMondays'],
-  lockFileMaintenance: {enabled: true, automerge: true},
+  separateMinorPatch: true,
+  lockFileMaintenance: { enabled: true, automerge: true },
+  baseBranches: ['master', '2.7'],
   regexManagers: [
     {
       fileMatch: ['^ci/applications-versions.yaml$'],
