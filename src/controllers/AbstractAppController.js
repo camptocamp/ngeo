@@ -49,7 +49,6 @@ import {ThemeEventType} from 'gmf/theme/Manager';
 import {getBrowserLanguage} from 'ngeo/utils';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
-import {Angular as AngularIntegration} from '@sentry/integrations';
 import createProjection from 'ngeo/proj/utils';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -605,13 +604,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   if ($injector.has('sentryOptions')) {
     const options = $injector.get('sentryOptions');
     if (options.dsn) {
-      // For Angularjs code
-      options.serverName = options.environment;
-
-      // For booth
-      options.integrations = [new Integrations.BrowserTracing(), new AngularIntegration()];
-
-      // For non Angularjs code
+      options.integrations = [new Integrations.BrowserTracing()];
       const tags = options.tags || [];
       delete options.tags;
       Object.assign(options, {
