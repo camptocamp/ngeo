@@ -793,22 +793,20 @@ describe('Mobile interface', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#login"]').click();
 
-      cy.get('#login')
-        .shadow()
-        .then((authPanel) => {
-          cy.wrap(authPanel)
-            .find('input[name="login"]')
-            .type(Cypress.env('demoUser')['login'] as string);
-          cy.wrap(authPanel)
-            .find('input[name="password"]')
-            .type(Cypress.env('demoUser')['password'] as string, {force: true}); // From https://github.com/cypress-io/cypress/issues/5830
-          cy.wrap(authPanel).find('input[type="submit"]').click();
-          cy.wait('@login').then((interception) => {
-            expect(interception.response.statusCode).to.be.eq(200);
-            const responseBody = JSON.parse(interception.response.body as string);
-            expect(responseBody.username as string).to.be.eq(Cypress.env('demoUser')['login'] as string);
-          });
+      cy.get('#login').then((authPanel) => {
+        cy.wrap(authPanel)
+          .find('input[name="login"]')
+          .type(Cypress.env('demoUser')['login'] as string);
+        cy.wrap(authPanel)
+          .find('input[name="password"]')
+          .type(Cypress.env('demoUser')['password'] as string, {force: true}); // From https://github.com/cypress-io/cypress/issues/5830
+        cy.wrap(authPanel).find('input[type="submit"]').click();
+        cy.wait('@login').then((interception) => {
+          expect(interception.response.statusCode).to.be.eq(200);
+          const responseBody = JSON.parse(interception.response.body as string);
+          expect(responseBody.username as string).to.be.eq(Cypress.env('demoUser')['login'] as string);
         });
+      });
 
       // Check that the panel is closed when logged
       cy.get('#login').should('not.be.visible');
