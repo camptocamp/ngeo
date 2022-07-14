@@ -19,6 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import olMap from 'ol/Map';
+import {LineString, Polygon} from 'ol/geom';
+import MobileDraw from 'ngeo/interaction/MobileDraw';
 import {FeatureOverlayMgr} from 'ngeo/map/FeatureOverlayMgr';
 
 describe('Mobile interface', () => {
@@ -295,7 +298,7 @@ describe('Mobile interface', () => {
     });
 
     it('Move the map then get back to the current location', () => {
-      cy.readWindowValue('map').then((map) => {
+      cy.readWindowValue('map').then((map: olMap) => {
         cy.simulateEvent(map, 'pointerdown', 0, 0);
         cy.simulateEvent(map, 'pointermove', 0, 0);
         cy.simulateEvent(map, 'pointerdrag', 0, 0);
@@ -338,7 +341,7 @@ describe('Mobile interface', () => {
    */
   context('Map', () => {
     it('Rotate the map and put it back to north heading', () => {
-      cy.readWindowValue('map').then((map) => {
+      cy.readWindowValue('map').then((map: olMap) => {
         // Rotate the map
         cy.simulateEvent(map, 'pointerdown', 0, 0, true, false, true);
         cy.simulateEvent(map, 'pointermove', 0, 0);
@@ -549,7 +552,7 @@ describe('Mobile interface', () => {
           .to.match(/2,632,464, 1,185,457/gm);
       });
 
-      cy.readWindowValue('map').then((map) => {
+      cy.readWindowValue('map').then((map: olMap) => {
         cy.simulateEvent(map, 'pointerdown', 0, 0);
         cy.simulateEvent(map, 'pointermove', 0, 0);
         cy.simulateEvent(map, 'pointerdrag', 0, 0);
@@ -576,9 +579,15 @@ describe('Mobile interface', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#measure-tools"]').click();
       cy.get('#measure-tools > ul > :nth-child(2) > .gmf-mobile-nav-button').click();
-      // TODO: assert on the map cross
 
-      cy.readWindowValue('map').then((map) => {
+      // Assert there is nothing drawn yet
+      cy.readWindowValue('map').then((map: olMap) => {
+        const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
+        const feature = drawInteraction.getFeature();
+        cy.wrap(feature).should('be.null');
+      });
+
+      cy.readWindowValue('map').then((map: olMap) => {
         // Set a starting point
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').click();
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
@@ -591,8 +600,19 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointerup', 120, 0);
         cy.wait(500);
 
-        // First segment done
-        cy.get('[ng-if="ctrl.dirty"]').click();
+        // First segment drawn and assert
+        cy.get('[ng-if="ctrl.dirty"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('not.be.null');
+              cy.wrap(feature.get('name')).should('be.eq', 'mobileDrawLine');
+              const lineString = feature.getGeometry() as LineString;
+              cy.wrap(lineString.getCoordinates().length).should('be.eq', 3);
+            });
+          });
 
         cy.simulateEvent(map, 'pointerdown', 0, 0);
         cy.simulateEvent(map, 'pointermove', 0, 0);
@@ -602,8 +622,19 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointerup', 0, 60);
         cy.wait(500);
 
-        // Second segment done
-        cy.get('[ng-if="ctrl.dirty"]').click();
+        // Second segment drawn and assert
+        cy.get('[ng-if="ctrl.dirty"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('not.be.null');
+              cy.wrap(feature.get('name')).should('be.eq', 'mobileDrawLine');
+              const lineString = feature.getGeometry() as LineString;
+              cy.wrap(lineString.getCoordinates().length).should('be.eq', 4);
+            });
+          });
 
         cy.get('.tooltip').then((tooltip) => {
           // Check on a Regex because length could differs
@@ -612,13 +643,32 @@ describe('Mobile interface', () => {
             .to.match(/\d+[.]*\d*\s\w+/g);
         });
 
-        // Terminate the line
-        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
+        // Terminate the line and assert
+        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('not.be.null');
+              cy.wrap(feature.get('name')).should('be.eq', 'mobileDrawLine');
+              const lineString = feature.getGeometry() as LineString;
+              cy.wrap(lineString.getCoordinates().length).should('be.eq', 4);
+            });
+          });
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').should('not.exist');
         cy.get('.tooltip').should('have.css', 'background-color', 'rgb(255, 204, 51)');
 
-        // Clear the line
-        cy.get('[ng-if="ctrl.valid"]').click();
+        // Clear the line and assert there is nothing drawn
+        cy.get('[ng-if="ctrl.valid"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('be.null');
+            });
+          });
         cy.get('.tooltip').should('not.be.visible');
 
         // Close the tool
@@ -633,9 +683,15 @@ describe('Mobile interface', () => {
       cy.get('.gmf-mobile-nav-right-trigger').click();
       cy.get('[data-target="#measure-tools"]').click();
       cy.get('#measure-tools > ul > :nth-child(3) > .gmf-mobile-nav-button').click();
-      // TODO: assert on the map cross
 
-      cy.readWindowValue('map').then((map) => {
+      // Assert there is nothing drawn yet
+      cy.readWindowValue('map').then((map: olMap) => {
+        const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
+        const feature = drawInteraction.getFeature();
+        cy.wrap(feature).should('be.null');
+      });
+
+      cy.readWindowValue('map').then((map: olMap) => {
         // Set a starting point
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').click();
         cy.get('[ng-if="ctrl.drawing && (!ctrl.valid)"]').should('not.exist');
@@ -648,8 +704,19 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointerup', 120, 0);
         cy.wait(500);
 
-        // First segment done
-        cy.get('[ng-if="ctrl.dirty"]').click();
+        // First segment drawn and assert
+        cy.get('[ng-if="ctrl.dirty"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('not.be.null');
+              cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
+              const lineString = feature.getGeometry() as Polygon;
+              cy.wrap(lineString.getCoordinates()[0].length).should('be.eq', 4);
+            });
+          });
 
         // Area is null with only one segment
         cy.contains('0 m²').should('exist');
@@ -662,8 +729,19 @@ describe('Mobile interface', () => {
         cy.simulateEvent(map, 'pointerup', 0, 60);
         cy.wait(500);
 
-        // Second segment done
-        cy.get('[ng-if="ctrl.dirty"]').click();
+        // Second segment drawn and assert
+        cy.get('[ng-if="ctrl.dirty"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('not.be.null');
+              cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
+              const lineString = feature.getGeometry() as Polygon;
+              cy.wrap(lineString.getCoordinates()[0].length).should('be.eq', 5);
+            });
+          });
 
         cy.get('.tooltip').then((tooltip) => {
           // Check on a Regex because length could differs
@@ -672,13 +750,32 @@ describe('Mobile interface', () => {
             .to.match(/\d+[.]*\d*\s\w+[²]/gm);
         });
 
-        // Terminate the line
-        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').click();
+        // Terminate the line and assert
+        cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('not.be.null');
+              cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
+              const lineString = feature.getGeometry() as Polygon;
+              cy.wrap(lineString.getCoordinates()[0].length).should('be.eq', 5);
+            });
+          });
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').should('not.exist');
         cy.get('.tooltip').should('have.css', 'background-color', 'rgb(255, 204, 51)');
 
-        // Clear the line
-        cy.get('[ng-if="ctrl.valid"]').click();
+        // Clear the line and assert there is nothing drawn
+        cy.get('[ng-if="ctrl.valid"]')
+          .click()
+          .then(() => {
+            cy.readWindowValue('map').then((map: olMap) => {
+              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
+              const feature = drawInteraction.getFeature();
+              cy.wrap(feature).should('be.null');
+            });
+          });
         cy.get('.tooltip').should('not.be.visible');
 
         // Close the tool
@@ -701,7 +798,7 @@ describe('Mobile interface', () => {
       );
       cy.wait('@themes').then(() => console.log(`themes: ${Date.now()}`));
       cy.wait(350); // query not working without the wait
-      cy.readWindowValue('map').then((map) => {
+      cy.readWindowValue('map').then((map: olMap) => {
         console.log(`click: ${Date.now()}`);
         cy.simulateEventAtCoord(map, 'singleclick', 2632270.3478662833, 1186347.1376920743);
       });
@@ -751,7 +848,7 @@ describe('Mobile interface', () => {
 
     it('Query "OSM open" and scroll in the query result window', () => {
       cy.wait(350); // query not working without the wait
-      cy.readWindowValue('map').then((map) => {
+      cy.readWindowValue('map').then((map: olMap) => {
         cy.simulateEventAtCoord(map, 'singleclick', 2632899.9999999995, 1186939.9999999998);
       });
 
