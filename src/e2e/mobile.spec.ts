@@ -120,7 +120,11 @@ describe('Mobile interface', () => {
         .then((slider) => {
           cy.wrap(slider).should('contain.value', 0.4);
           cy.wrap(slider).should('not.contain.value', 1);
-          // TODO: assert on the map object
+          cy.readWindowValue('map').then((map: olMap) => {
+            const layerGroups = map.getLayerGroup().getLayersArray();
+            const layerGroup = layerGroups.find((group) => group.get('layerNodeName') === 'Layers');
+            cy.wrap(layerGroup.get('opacity')).should('be.eq', 0.4);
+          });
         });
 
       // Close the panel
