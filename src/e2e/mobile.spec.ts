@@ -944,9 +944,44 @@ describe('Mobile_alt interface', () => {
   /**
    * Layertree tests
    */
-  context.skip('Layertree', () => {
-    it.skip('Test no flush layertree (desktop_alt)', () => {
-      // TODO: load desktop_alt
+  context('Layertree', () => {
+    it('Test no flush layertree (desktop_alt)', () => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile_alt.html?lang=en');
+      cy.get('.gmf-mobile-nav-left-trigger').click();
+
+      const groups = [
+        'div.gmf-layertree-node-68', // OSM functions mixed
+        'div.gmf-layertree-node-596', // Layers
+        'div.gmf-layertree-node-597', // Layers-exclusive
+        'div.gmf-layertree-node-66', // Group
+        'div.gmf-layertree-node-146', // OSM functions
+        'div.gmf-layertree-node-153', // External
+        'div.gmf-layertree-node-174', // Filters mixed
+        'div.gmf-layertree-node-183', // Filters
+        'div.gmf-layertree-node-284', // ESRI no WFS no Geom
+      ];
+      groups.forEach((group) => {
+        if (group === 'div.gmf-layertree-node-596' || group === 'div.gmf-layertree-node-597') {
+          cy.get(group).should('have.class', 'indeterminate');
+        } else {
+          cy.get(group).should('have.class', 'off');
+        }
+      });
+
+      // Add 'Heritage' theme
+      cy.contains('Themes').click();
+      cy.contains('Heritage').click();
+
+      groups.push('div.gmf-layertree-node-7'); // Heritage
+      groups.forEach((group) => {
+        if (group === 'div.gmf-layertree-node-596' || group === 'div.gmf-layertree-node-597') {
+          cy.get(group).should('have.class', 'indeterminate');
+        } else if (group === 'div.gmf-layertree-node-7') {
+          cy.get(group).should('have.class', 'on');
+        } else {
+          cy.get(group).should('have.class', 'off');
+        }
+      });
     });
   });
 });
