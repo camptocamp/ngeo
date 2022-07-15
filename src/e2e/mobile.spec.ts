@@ -800,11 +800,9 @@ describe('Mobile interface', () => {
         false,
         'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632270&map_y=1186700&theme=Demo&tree_groups=Filters&tree_group_layers_Filters=osm_open'
       );
-      cy.wait('@themes').then(() => console.log(`themes: ${Date.now()}`));
       cy.wait(350); // query not working without the wait
       cy.readWindowValue('map').then((map: olMap) => {
-        console.log(`click: ${Date.now()}`);
-        cy.simulateEventAtCoord(map, 'singleclick', 2632270.3478662833, 1186347.1376920743);
+        cy.simulateEventAtCoord(map, 'singleclick', 2629630, 1181640);
       });
       cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('be.visible');
 
@@ -853,7 +851,7 @@ describe('Mobile interface', () => {
     it('Query "OSM open" and scroll in the query result window', () => {
       cy.wait(350); // query not working without the wait
       cy.readWindowValue('map').then((map: olMap) => {
-        cy.simulateEventAtCoord(map, 'singleclick', 2632899.9999999995, 1186939.9999999998);
+        cy.simulateEventAtCoord(map, 'singleclick', 2629630, 1181640);
       });
 
       // Scroll in the result
@@ -862,13 +860,26 @@ describe('Mobile interface', () => {
         cy.wrap(element)
           .scrollTo('bottom')
           .then((element) => {
-            cy.wrap(element[0].scrollTop).should('eq', 95);
+            cy.wrap(element[0].scrollTop).should('eq', 75);
           });
       });
 
       // Close the window query result
       cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-times').click();
       cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('not.be.visible');
+    });
+    it('Query "OSM open" and open a popup url', () => {
+      cy.readWindowValue('map').then((map: olMap) => {
+        cy.simulateEventAtCoord(map, 'singleclick', 2629630, 1181640);
+        cy.get(':nth-child(1) > .details-value > a').click();
+        cy.get('.ngeo-displaywindow > .windowcontainer').should('be.visible');
+        cy.get(
+          '.ngeo-displaywindow > .windowcontainer > .animation-container > .slide-animation > .header > .title'
+        ).should('have.text', 'OSM');
+
+        cy.get('.ngeo-displaywindow > .windowcontainer > .btn').click();
+        cy.get('.ngeo-displaywindow > .windowcontainer').should('not.be.visible');
+      });
     });
   });
 
