@@ -283,6 +283,27 @@ describe('Mobile interface', () => {
   });
 
   /**
+   * Drawing tests
+   */
+  context('Drawing', () => {
+    it('Show the drawing layers as read-only', () => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
+
+      cy.get('.gmf-mobile-nav-left-trigger').click();
+      cy.contains('Themes').click();
+      cy.contains('Edit').click();
+
+      cy.readWindowValue('map').then((map: olMap) => {
+        const data = map
+          .getLayers()
+          .getArray()
+          .find((group) => group.get('groupName') === 'data');
+        console.log(data.getLayersArray());
+      });
+    });
+  });
+
+  /**
    * Geolocation tests
    */
   context('Geolocation', () => {
