@@ -56,6 +56,7 @@ beforeEach(() => {
   cy.intercept(`${Cypress.env('serverUrl') as string}/logout`).as('logout');
   cy.intercept(`${Cypress.env('serverUrl') as string}/dynamic.json*`).as('dynamic_json');
   cy.intercept(`${Cypress.env('serverUrl') as string}/themes*`).as('themes');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/mapserv_proxy*`).as('mapserv_proxy');
 });
 
 /**

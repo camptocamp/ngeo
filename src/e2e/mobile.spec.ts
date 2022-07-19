@@ -919,17 +919,41 @@ describe('Mobile interface', () => {
       cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-times').click();
       cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('not.be.visible');
     });
-    it('Query "OSM open" and open a popup url', () => {
-      cy.readWindowValue('map').then((map: olMap) => {
-        cy.simulateEventAtCoord(map, 'singleclick', 2629630, 1181640);
-        cy.get(':nth-child(1) > .details-value > a').click();
-        cy.get('.ngeo-displaywindow > .windowcontainer').should('be.visible');
-        cy.get(
-          '.ngeo-displaywindow > .windowcontainer > .animation-container > .slide-animation > .header > .title'
-        ).should('have.text', 'OSM');
 
-        cy.get('.ngeo-displaywindow > .windowcontainer > .btn').click();
-        cy.get('.ngeo-displaywindow > .windowcontainer').should('not.be.visible');
+    const sizes = ['samsung-s10', [1000, 660]];
+    sizes.forEach((size) => {
+      it(`Query "OSM open" and open a popup url on '${size}' screen`, () => {
+        if (Cypress._.isArray(size)) {
+          cy.viewport(size[0], size[1]);
+        } else {
+          cy.viewport(size as Cypress.ViewportPreset);
+        }
+
+        cy.readWindowValue('map').then((map: olMap) => {
+          cy.simulateEventAtCoord(map, 'singleclick', 2629630, 1181640);
+          cy.wait('@mapserv_proxy').then(() => {
+            cy.get(':nth-child(1) > .details-value > a').click();
+
+            cy.get('.ngeo-displaywindow > .windowcontainer').should('be.visible');
+            cy.get(
+              '.ngeo-displaywindow > .windowcontainer > .animation-container > .slide-animation > .header > .title'
+            ).should('have.text', 'OSM');
+
+            // Check that the popop window is inside the window dimensions
+            cy.window().then((win) => {
+              const displaywindow = Cypress.$('.ngeo-displaywindow > .windowcontainer');
+              const popupWidth = displaywindow.width();
+              const popupHeight = displaywindow.height();
+              const windowWidth = win.innerWidth;
+              const windowHeight = win.innerHeight;
+              cy.wrap(popupWidth).should('be.lessThan', windowWidth);
+              cy.wrap(popupHeight).should('be.lessThan', windowHeight);
+            });
+
+            cy.get('.ngeo-displaywindow > .windowcontainer > .btn').click();
+            cy.get('.ngeo-displaywindow > .windowcontainer').should('not.be.visible');
+          });
+        });
       });
     });
   });
