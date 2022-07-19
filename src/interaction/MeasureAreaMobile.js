@@ -46,10 +46,12 @@ class MeasureAreaMobile extends ngeoInteractionMeasureArea {
    * @returns {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {
-    return new ngeoInteractionMobileDraw({
+    const interaction = new ngeoInteractionMobileDraw({
       type: 'Polygon',
       style: style,
     });
+    interaction.set('name', 'PolygonMobileDraw');
+    return interaction;
   }
 }
 

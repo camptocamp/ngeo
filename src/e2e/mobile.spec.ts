@@ -607,8 +607,11 @@ describe('Mobile interface', () => {
 
       // Assert there is nothing drawn yet
       cy.readWindowValue('map').then((map: olMap) => {
-        const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
-        const feature = drawInteraction.getFeature();
+        const drawInteraction = map
+          .getInteractions()
+          .getArray()
+          .find((interaction) => interaction.get('name') === 'LineStringMobileDraw');
+        const feature = (drawInteraction as MobileDraw).getFeature();
         cy.wrap(feature).should('be.null');
       });
 
@@ -630,8 +633,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'LineStringMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'mobileDrawLine');
               const lineString = feature.getGeometry() as LineString;
@@ -652,8 +658,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'LineStringMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'mobileDrawLine');
               const lineString = feature.getGeometry() as LineString;
@@ -673,8 +682,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'LineStringMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'mobileDrawLine');
               const lineString = feature.getGeometry() as LineString;
@@ -689,8 +701,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[13] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'LineStringMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('be.null');
             });
           });
@@ -711,8 +726,11 @@ describe('Mobile interface', () => {
 
       // Assert there is nothing drawn yet
       cy.readWindowValue('map').then((map: olMap) => {
-        const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
-        const feature = drawInteraction.getFeature();
+        const drawInteraction = map
+          .getInteractions()
+          .getArray()
+          .find((interaction) => interaction.get('name') === 'PolygonMobileDraw');
+        const feature = (drawInteraction as MobileDraw).getFeature();
         cy.wrap(feature).should('be.null');
       });
 
@@ -734,8 +752,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'PolygonMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
               const lineString = feature.getGeometry() as Polygon;
@@ -759,8 +780,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'PolygonMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
               const lineString = feature.getGeometry() as Polygon;
@@ -780,8 +804,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'PolygonMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
               const lineString = feature.getGeometry() as Polygon;
@@ -796,8 +823,11 @@ describe('Mobile interface', () => {
           .click()
           .then(() => {
             cy.readWindowValue('map').then((map: olMap) => {
-              const drawInteraction = map.getInteractions().getArray()[11] as MobileDraw;
-              const feature = drawInteraction.getFeature();
+              const drawInteraction = map
+                .getInteractions()
+                .getArray()
+                .find((interaction) => interaction.get('name') === 'PolygonMobileDraw');
+              const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('be.null');
             });
           });

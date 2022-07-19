@@ -48,9 +48,11 @@ export default class extends ngeoInteractionMeasureLength {
    * @returns {ngeoInteractionMobileDraw} The interaction
    */
   createDrawInteraction(style, source) {
-    return new ngeoInteractionMobileDraw({
+    const interaction = new ngeoInteractionMobileDraw({
       type: 'LineString',
       style: style,
     });
+    interaction.set('name', 'LineStringMobileDraw');
+    return interaction;
   }
 }
