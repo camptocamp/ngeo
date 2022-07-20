@@ -860,22 +860,20 @@ describe('Mobile interface', () => {
       // Test the collapse button
       cy.get('.collapse-button').should('have.class', 'collapse-button-down');
       cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
-        'have.css',
-        'height',
-        '209.671875px'
+        'have.class',
+        'animation-container-detailed'
       );
       cy.get('.collapse-button').click();
       cy.get('.collapse-button').should('have.class', 'collapse-button-up');
       cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
-        'have.css',
-        'height',
-        '80px'
+        'not.have.class',
+        'animation-container-detailed'
       );
       cy.get('.collapse-button').click();
+      cy.get('.collapse-button').should('have.class', 'collapse-button-down');
       cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
-        'have.css',
-        'height',
-        '209.671875px'
+        'have.class',
+        'animation-container-detailed'
       );
 
       // Test the previous/next result button
@@ -911,7 +909,7 @@ describe('Mobile interface', () => {
         cy.wrap(element)
           .scrollTo('bottom')
           .then((element) => {
-            cy.wrap(element[0].scrollTop).should('eq', 75);
+            cy.wrap(element[0].scrollTop).should('least', 75);
           });
       });
 
