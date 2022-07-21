@@ -300,13 +300,17 @@ describe('Mobile interface', () => {
           .find((group) => group.get('groupName') === 'data');
         console.log(data.getLayersArray());
       });
+
+      // Close the panel
+      cy.get('.overlay').click(300, 300, {force: true});
     });
   });
 
   /**
    * Geolocation tests
+   * NB: we ignore Firefox as Geolocation permission is not working ...
    */
-  context('Geolocation', () => {
+  context('Geolocation', {browser: '!firefox'}, () => {
     it('Show the current location', () => {
       cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
 
@@ -759,8 +763,8 @@ describe('Mobile interface', () => {
               const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
-              const lineString = feature.getGeometry() as Polygon;
-              cy.wrap(lineString.getCoordinates()[0].length).should('be.eq', 4);
+              const polygon = feature.getGeometry() as Polygon;
+              cy.wrap(polygon.getCoordinates()[0].length).should('be.eq', 4);
             });
           });
 
@@ -787,8 +791,8 @@ describe('Mobile interface', () => {
               const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
-              const lineString = feature.getGeometry() as Polygon;
-              cy.wrap(lineString.getCoordinates()[0].length).should('be.eq', 5);
+              const polygon = feature.getGeometry() as Polygon;
+              cy.wrap(polygon.getCoordinates()[0].length).should('be.eq', 5);
             });
           });
 
@@ -811,8 +815,8 @@ describe('Mobile interface', () => {
               const feature = (drawInteraction as MobileDraw).getFeature();
               cy.wrap(feature).should('not.be.null');
               cy.wrap(feature.get('name')).should('be.eq', 'DrawMobilePolygon');
-              const lineString = feature.getGeometry() as Polygon;
-              cy.wrap(lineString.getCoordinates()[0].length).should('be.eq', 5);
+              const polygon = feature.getGeometry() as Polygon;
+              cy.wrap(polygon.getCoordinates()[0].length).should('be.eq', 5);
             });
           });
         cy.get('[ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty"]').should('not.exist');
