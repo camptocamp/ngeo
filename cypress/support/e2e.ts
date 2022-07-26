@@ -57,6 +57,12 @@ beforeEach(() => {
   cy.intercept(`${Cypress.env('serverUrl') as string}/dynamic.json*`).as('dynamic_json');
   cy.intercept(`${Cypress.env('serverUrl') as string}/themes*`).as('themes');
   cy.intercept(`${Cypress.env('serverUrl') as string}/mapserv_proxy*`).as('mapserv_proxy');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/printproxy/capabilities.json*`).as(
+    'print_capabilities'
+  );
+  cy.intercept(`${Cypress.env('serverUrl') as string}/printproxy/report.pdf`).as('report_pdf');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/profile.json*`).as('profile');
+  cy.intercept(`${Cypress.env('serverUrl') as string}/raster*`).as('raster');
 });
 
 /**
