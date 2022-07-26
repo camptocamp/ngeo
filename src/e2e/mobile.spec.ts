@@ -24,6 +24,18 @@ import {LineString, Polygon} from 'ol/geom';
 import MobileDraw from 'ngeo/interaction/MobileDraw';
 import {FeatureOverlayMgr} from 'ngeo/map/FeatureOverlayMgr';
 
+const groups = [
+  'div.gmf-layertree-node-68', // OSM functions mixed
+  'div.gmf-layertree-node-596', // Layers
+  'div.gmf-layertree-node-597', // Layers-exclusive
+  'div.gmf-layertree-node-66', // Group
+  'div.gmf-layertree-node-146', // OSM functions
+  'div.gmf-layertree-node-153', // External
+  'div.gmf-layertree-node-174', // Filters mixed
+  'div.gmf-layertree-node-183', // Filters
+  'div.gmf-layertree-node-284', // ESRI no WFS no Geom
+];
+
 describe('Mobile interface', () => {
   /**
    * Layout tests
@@ -175,17 +187,6 @@ describe('Mobile interface', () => {
       // Disable all active layers and check
       cy.get('div.gmf-layertree-node-596').dblclick();
       cy.get('div.gmf-layertree-node-597').click();
-      const groups = [
-        'div.gmf-layertree-node-68', // OSM functions mixed
-        'div.gmf-layertree-node-596', // Layers
-        'div.gmf-layertree-node-597', // Layers-exclusive
-        'div.gmf-layertree-node-66', // Group
-        'div.gmf-layertree-node-146', // OSM functions
-        'div.gmf-layertree-node-153', // External
-        'div.gmf-layertree-node-174', // Filters mixed
-        'div.gmf-layertree-node-183', // Filters
-        'div.gmf-layertree-node-284', // ESRI no WFS no Geom
-      ];
       groups.forEach((group) => {
         cy.get(group).should('have.class', 'off');
         cy.get(group).should('not.have.class', 'on');
@@ -251,17 +252,6 @@ describe('Mobile interface', () => {
     it('Remove a layer', () => {
       cy.get('div.gmf-layertree-node-68 span.fa-trash').click();
 
-      const groups = [
-        'div.gmf-layertree-node-68', // OSM functions mixed
-        'div.gmf-layertree-node-596', // Layers
-        'div.gmf-layertree-node-597', // Layers-exclusive
-        'div.gmf-layertree-node-66', // Group
-        'div.gmf-layertree-node-146', // OSM functions
-        'div.gmf-layertree-node-153', // External
-        'div.gmf-layertree-node-174', // Filters mixed
-        'div.gmf-layertree-node-183', // Filters
-        'div.gmf-layertree-node-284', // ESRI no WFS no Geom
-      ];
       groups.forEach((group) => {
         if (group === 'div.gmf-layertree-node-68') {
           cy.get(group).should('not.exist');
@@ -1037,17 +1027,6 @@ describe('Mobile_alt interface', () => {
       cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile_alt.html?lang=en');
       cy.get('.gmf-mobile-nav-left-trigger').click();
 
-      const groups = [
-        'div.gmf-layertree-node-68', // OSM functions mixed
-        'div.gmf-layertree-node-596', // Layers
-        'div.gmf-layertree-node-597', // Layers-exclusive
-        'div.gmf-layertree-node-66', // Group
-        'div.gmf-layertree-node-146', // OSM functions
-        'div.gmf-layertree-node-153', // External
-        'div.gmf-layertree-node-174', // Filters mixed
-        'div.gmf-layertree-node-183', // Filters
-        'div.gmf-layertree-node-284', // ESRI no WFS no Geom
-      ];
       groups.forEach((group) => {
         if (group === 'div.gmf-layertree-node-596' || group === 'div.gmf-layertree-node-597') {
           cy.get(group).should('have.class', 'indeterminate');
