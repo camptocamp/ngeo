@@ -43,6 +43,8 @@ describe('Desktop interface', () => {
         cy.wait('@raster').then((interception) => {
           expect(interception.response.statusCode).to.be.eq(200);
           expect(interception.response.body['aster']).to.be.eq(977);
+          const element = Cypress.$('.gmf-elevationwidget-value');
+          cy.wrap(element[0]['innerText'].replace(/\s/g, ' ')).should('eq', '977 m');
         });
         // Request the raster service with SRTM
         cy.get('gmf-elevationwidget a.btn').click();
@@ -51,9 +53,27 @@ describe('Desktop interface', () => {
         cy.wait('@raster').then((interception) => {
           expect(interception.response.statusCode).to.be.eq(200);
           expect(interception.response.body['srtm']).to.be.eq(969);
+          const element = Cypress.$('.gmf-elevationwidget-value');
+          cy.wrap(element[0]['innerText'].replace(/\s/g, ' ')).should('eq', '969 m');
         });
+
+        // Check the mouse position coordinate with MN95
+        const element = map.getViewport();
+        cy.simulateDOMEvent(element, 'pointermove', 0, 0);
+        cy.get('.gmf-mouseposition-control').should('have.text', '2,629,264, 1,185,915 m');
+
+        // Check the mouse position coordinate with MN03
+        cy.get('.gmf-mouseposition-control').click();
+        cy.get('gmf-mouseposition.text-center > .btn-group > .dropdown-menu > :nth-child(3) > a').click();
+        cy.simulateDOMEvent(element, 'pointermove', 0, 0);
+        cy.get('.gmf-mouseposition-control').should('have.text', '629,264, 185,915 m');
+
+        // Check the mouse position coordinate with WSG64
+        cy.get('.gmf-mouseposition-control').click();
+        cy.get('gmf-mouseposition.text-center > .btn-group > .dropdown-menu > :nth-child(4) > a').click();
+        cy.simulateDOMEvent(element, 'pointermove', 0, 0);
+        cy.get('.gmf-mouseposition-control').should('have.text', '46° 49′ 25.48″ N, 7° 49′ 19.71″ E');
       });
-      // TODO: check the coordinate widget and projection
 
       // Close the info bar
       cy.get('.gmf-app-map-info').click();

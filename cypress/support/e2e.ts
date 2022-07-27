@@ -133,6 +133,15 @@ Cypress.Commands.add(
   }
 );
 
+Cypress.Commands.add('simulateDOMEvent', {prevSubject: false}, (element, type, x = 0, y = 0) => {
+  cy.log(`simulating DOM event ${type} at [${x}, ${y}]`);
+  const event = new PointerEvent(type, {
+    clientX: element.clientLeft + x + element.clientWidth / 2,
+    clientY: element.clientTop + y + element.clientHeight / 2,
+  });
+  element.dispatchEvent(event);
+});
+
 Cypress.Commands.add(
   'simulateEventAtCoord',
   {prevSubject: false},

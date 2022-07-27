@@ -38,7 +38,7 @@ declare namespace Cypress {
      * @example cy.simulateEvent('map');
      */
     simulateEvent(
-      map: any,
+      map: olMap,
       type: string,
       x: number,
       y: number,
@@ -53,7 +53,7 @@ declare namespace Cypress {
      * @example cy.simulateEventAtCoord('map');
      */
     simulateEventAtCoord(
-      map: any,
+      map: olMap,
       type: string,
       map_x: number,
       map_y: number,
@@ -62,5 +62,7 @@ declare namespace Cypress {
       opt_shiftKey?: boolean,
       opt_pointerId?: number
     ): Chainable<Subject>;
+
+    simulateDOMEvent(element: HTMLElement, type: string, x: number, y: number): Chainable<Subject>;
   }
 }
