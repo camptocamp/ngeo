@@ -119,53 +119,71 @@ describe('Desktop interface', () => {
         });
 
         cy.get('.gmf-print-pdf').click();
+
         cy.wait('@report_pdf').then((interception) => {
-          //expect(interception.response.statusCode).to.be.eq(200);
+          expect(interception.response.statusCode).to.be.eq(200);
 
-          // Intercept the status request
-          const statusUrl = interception.response.body.statusURL;
-          const url = `${Cypress.env('serverUrl') as string}${statusUrl}`.replace(
-            'print/print',
-            'printproxy'
-          );
-          cy.intercept(`${url}`).as('status');
+          // Get the status URL
+          const statusURL = `${Cypress.env('serverUrl') as string}${
+            interception.response.body.statusURL
+          }`.replace('print/print', 'printproxy');
 
-          waitOnStatus();
-          //validateImage();
+          // Get the download URL
+          const downloadURL = `${Cypress.env('serverUrl') as string}${
+            interception.response.body.downloadURL
+          }`.replace('print/print', 'printproxy');
+
+          let count = 0;
+          interceptAndWaitOnStatus(statusURL, downloadURL, count, 'waiting');
+
+          //cy.get('.gmf-print-actions > span > .fa > svg').should('have.css', 'display', 'none');
         });
       });
     });
   });
 });
 
-function waitOnStatus() {
-  cy.wait('@status').then((interception) => {
-    console.log(interception);
+function interceptAndWaitOnStatus(statusUrl: string, downloadUrl: string, count: number, status: string) {
+  // Stub the request response
+  cy.intercept(`${statusUrl}`, (req) => {
+    req.reply({status});
+  }).as(`status${count}`);
+
+  // Do the assertions on the stubbed request
+  cy.wait(`@status${count}`).then((interception) => {
     expect(interception.response.statusCode).to.be.eq(200);
-    expect(interception.response.body.status).to.be.oneOf(['waiting', 'running', 'finished']);
-    if (interception.response.body.status === 'running' || interception.response.body.status === 'waiting') {
-      waitOnStatus();
+    const status = interception.response.body.status;
+
+    count++;
+    if (status === 'waiting') {
+      expect(status).to.eq('waiting');
+      cy.get('.gmf-print-actions > span > .fa > svg').should('be.visible');
+      cy.get('.gmf-print-cancel').should('be.visible');
+      return interceptAndWaitOnStatus(statusUrl, downloadUrl, count, 'running');
+    } else if (status === 'running' && count < 3) {
+      expect(status).to.eq('running');
+      cy.get('.gmf-print-actions > span > .fa > svg').should('be.visible');
+      cy.get('.gmf-print-cancel').should('be.visible');
+      return interceptAndWaitOnStatus(statusUrl, downloadUrl, count, 'running');
+    } else if (status === 'running' && count == 3) {
+      expect(status).to.eq('running');
+      cy.get('.gmf-print-actions > span > .fa > svg').should('be.visible');
+      cy.get('.gmf-print-cancel').should('be.visible');
+      return interceptAndWaitOnStatus(statusUrl, downloadUrl, count, 'finished');
     } else {
-      console.log('done.');
+      expect(status).to.eq('finished');
+      validatePrintIsDone(downloadUrl);
+      return;
     }
   });
 }
 
-function validateImage(downloadedFilename: any = null) {
-  const downloadsFolder = Cypress.config('downloadsFolder');
-
-  if (!downloadedFilename) {
-    downloadedFilename = `${downloadsFolder}/GeoMapFish_2022-07-21_13-15-34.pdf`;
-  }
-
-  // ensure the file has been saved before trying to parse it
-  cy.readFile(downloadedFilename, 'binary', {timeout: 15000}).should((buffer) => {
-    // by having length assertion we ensure the file has text
-    // since we don't know when the browser finishes writing it to disk
-
-    // Tip: use expect() form to avoid dumping binary contents
-    // of the buffer into the Command Log
-    expect(buffer.length).to.be.gt(1000);
+function validatePrintIsDone(url: string) {
+  //cy.intercept(`${url}`).as(`downloadedFile`);
+  //cy.wait('@downloadedFile');
+  cy.on('locationchange', (newUrl) => {
+    console.log(newUrl);
+    //expect(newUrl).to.contain("?magic=true")
   });
 }
 
