@@ -15,7 +15,7 @@
     "sourceMap": true,
     "experimentalDecorators": true,
     "baseUrl": "./",
-    "types": ["cypress", "node"],
+    "types": ["cypress", "node", "cypress-real-events"],
     "paths": {
       "ngeo/*": ["src/*"],
       "gmfapi/*": ["srcapi/*"],

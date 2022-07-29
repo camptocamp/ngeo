@@ -46,23 +46,22 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import 'cy-mobile-commands';
+import 'cypress-real-events';
+import 'cypress-browser-permissions';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import olMap from 'ol/Map';
-import {Interception} from 'cypress/types/net-stubbing';
 
 // Hook for URL aliases
 beforeEach(() => {
-  cy.intercept(`${Cypress.env('serverUrl') as string}/login`).as('login');
-  cy.intercept(`${Cypress.env('serverUrl') as string}/logout`).as('logout');
-  cy.intercept(`${Cypress.env('serverUrl') as string}/dynamic.json*`).as('dynamic_json');
-  cy.intercept(`${Cypress.env('serverUrl') as string}/themes*`).as('themes');
-  cy.intercept(`${Cypress.env('serverUrl') as string}/mapserv_proxy*`).as('mapserv_proxy');
-  cy.intercept(`${Cypress.env('serverUrl') as string}/printproxy/capabilities.json*`).as(
-    'print_capabilities'
-  );
-  cy.intercept(`${Cypress.env('serverUrl') as string}/printproxy/report.pdf`).as('report_pdf');
-  cy.intercept(`${Cypress.env('serverUrl') as string}/profile.json*`).as('profile');
-  cy.intercept(`${Cypress.env('serverUrl') as string}/raster*`).as('raster');
+  cy.intercept(`${Cypress.env('serverUrl')}/login`).as('login');
+  cy.intercept(`${Cypress.env('serverUrl')}/logout`).as('logout');
+  cy.intercept(`${Cypress.env('serverUrl')}/dynamic.json*`).as('dynamic_json');
+  cy.intercept(`${Cypress.env('serverUrl')}/themes*`).as('themes');
+  cy.intercept(`${Cypress.env('serverUrl')}/mapserv_proxy*`).as('mapserv_proxy');
+  cy.intercept(`${Cypress.env('serverUrl')}/printproxy/capabilities.json*`).as('print_capabilities');
+  cy.intercept(`${Cypress.env('serverUrl')}/printproxy/report.pdf`).as('report_pdf');
+  cy.intercept(`${Cypress.env('serverUrl')}/profile.json*`).as('profile');
+  cy.intercept(`${Cypress.env('serverUrl')}/raster*`).as('raster');
 });
 
 /**

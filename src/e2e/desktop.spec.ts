@@ -82,7 +82,114 @@ describe('Desktop interface', () => {
     });
   });
 
-  context('Profile', () => {
+  function clearAllAndLoadDemoTheme() {
+    cy.contains('Clear all').click();
+    cy.get('.dropdown > .btn').click();
+    cy.get('.gmf-theme-selector > :nth-child(2)').click();
+  }
+
+  /**
+   * Layertree tests
+   *
+   * NB: All cy.realXXXX commands are not supported by Firefox
+   * In such case, the test is ignored for this browser
+   */
+  context('Layertree', () => {
+    beforeEach(() => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/desktop.html?lang=en');
+    });
+    it.skip('Check the layertree buttons', () => {
+      cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/desktop.html?lang=en');
+
+      cy.get('div.gmf-layertree-node-597 > .gmf-layertree-expand-node').click(); // Layers-exclusive
+
+      const layers = [
+        {selector: 'div.gmf-layertree-node-99', class: 'off'}, // Cinema
+        {selector: 'div.gmf-layertree-node-106', class: 'on'}, // Post office
+        {selector: 'div.gmf-layertree-node-126', class: 'off'}, // OSM Time (range, date picker)
+        {selector: 'div.gmf-layertree-node-137', class: 'off'}, // Hobbies
+      ];
+      layers.forEach((layer) => {
+        cy.get(layer.selector).should('have.class', layer.class);
+      });
+
+      // First layer is hidden and the new one is displayed
+      cy.get('div.gmf-layertree-node-99').eq(1).click();
+      layers[0]['class'] = 'on';
+      layers[1]['class'] = 'off';
+      layers.forEach((layer) => {
+        cy.get(layer.selector).should('have.class', layer.class);
+      });
+    });
+    it.skip('Check the WMS (not-mixed)', {browser: '!firefox'}, () => {
+      // Clean and re-open 'Demo' theme
+      clearAllAndLoadDemoTheme();
+
+      // Check layer on/off
+      cy.get('div.gmf-layertree-node-114')
+        .should('have.class', 'off')
+        .eq(0)
+        .click()
+        .then(() => {
+          cy.get('div.gmf-layertree-node-114').should('have.class', 'on');
+          cy.get('i.gmf-layertree-zoom').should('be.visible');
+
+          // FIXME: Check the 'zoom to visible level' button
+          //cy.get('gmf-layertree').scrollTo('top');
+          //cy.get('i.gmf-layertree-zoom').eq(0).click();
+          //cy.get('i.gmf-layertree-zoom').should('not.be.visible');
+        });
+
+      // Check the right menu
+      cy.get('div.gmf-layertree-node-114')
+        .eq(0)
+        .realHover()
+        .then(() => {
+          // Assert and click the cog button
+          cy.get('.gmf-layertree-right-buttons > span > span')
+            .eq(0)
+            .should('not.have.css', 'visibility', 'hidden')
+            .click()
+            .then(($el) => {
+              // Get the appropriate UUID for the popover menu
+              const popoverUUID = $el.attr('aria-describedby');
+              cy.get(`div#${popoverUUID}`).should('be.visible');
+
+              // Check the popover menu
+              cy.get(`div#${popoverUUID} > .popover-body > div > ul > :nth-child(1)`).should('be.visible'); // Opacity slider
+              cy.get(`div#${popoverUUID} > .popover-body > div > ul > :nth-child(2)`).should('be.visible'); // Show/hide legend
+              cy.get(`div#${popoverUUID} > .popover-body > div > ul > :nth-child(3)`).should('be.visible'); // Swipper button
+            });
+        });
+    });
+
+    it.skip('Check the WMS mixed', () => {});
+
+    it('Reordoning the groups', {browser: '!firefox'}, () => {
+      clearAllAndLoadDemoTheme();
+
+      // Disable opened by default groups
+      cy.get('div.gmf-layertree-node-68 > .gmf-layertree-expand-node').click();
+      cy.get('div.gmf-layertree-node-596').dblclick();
+      cy.get('div.gmf-layertree-node-597').click();
+
+      // Swipe the first group
+      cy.get('div.gmf-layertree-node-68')
+        .realHover()
+        .then(() => {
+          cy.get('div.gmf-layertree-node-68 > .ngeo-sortable-handle > i')
+            .should('not.have.css', 'visibility', 'hidden')
+            .trigger('mousedown', {button: 1});
+          cy.get('div.gmf-layertree-node-597').trigger('mousedown').trigger('mouseup');
+        });
+    });
+
+    it.skip('Check the WMTS', () => {});
+    it.skip('Should close the legend with the layer', () => {});
+    it.skip('Should resize the tree panel', () => {});
+  });
+
+  context.skip('Profile', () => {
     it('Checks the profile', () => {
       cy.get('[ng-model="mainCtrl.drawProfilePanelActive"]').click();
       cy.get('canvas').click(100, 200);
@@ -99,92 +206,6 @@ describe('Desktop interface', () => {
       cy.get('.profile-panel .close').click();
     });
   });
-
-  /**
-   * Print tests
-   */
-  context('Print', () => {
-    it('Checks the print panel', () => {
-      cy.get('[ng-model="mainCtrl.printPanelActive"]').click();
-      cy.wait('@print_capabilities').then(() => {
-        cy.get('gmf-print > div > div:nth-child(1) > div:nth-child(2) > div > input').type('Title');
-        cy.get('gmf-print > div > div:nth-child(1) > div:nth-child(3) > div > textarea').type('Comments');
-        cy.get('.col-md-4 > .form-control').type('45');
-
-        // Assert on the map
-        cy.get('.ol-compass').should('have.attr', 'style', 'transform: rotate(0.785398rad);');
-        cy.readWindowValue('map').then((map: olMap) => {
-          const mask = map.getAllLayers().find((layer) => layer.get('name') === 'PrintMask');
-          cy.wrap(mask).should('not.be.undefined');
-        });
-
-        cy.get('.gmf-print-pdf').click();
-
-        cy.wait('@report_pdf').then((interception) => {
-          expect(interception.response.statusCode).to.be.eq(200);
-
-          // Get the status URL
-          const statusURL = `${Cypress.env('serverUrl') as string}${
-            interception.response.body.statusURL
-          }`.replace('print/print', 'printproxy');
-
-          // Get the download URL
-          const downloadURL = `${Cypress.env('serverUrl') as string}${
-            interception.response.body.downloadURL
-          }`.replace('print/print', 'printproxy');
-
-          let count = 0;
-          interceptAndWaitOnStatus(statusURL, downloadURL, count, 'waiting');
-
-          //cy.get('.gmf-print-actions > span > .fa > svg').should('have.css', 'display', 'none');
-        });
-      });
-    });
-  });
 });
-
-function interceptAndWaitOnStatus(statusUrl: string, downloadUrl: string, count: number, status: string) {
-  // Stub the request response
-  cy.intercept(`${statusUrl}`, (req) => {
-    req.reply({status});
-  }).as(`status${count}`);
-
-  // Do the assertions on the stubbed request
-  cy.wait(`@status${count}`).then((interception) => {
-    expect(interception.response.statusCode).to.be.eq(200);
-    const status = interception.response.body.status;
-
-    count++;
-    if (status === 'waiting') {
-      expect(status).to.eq('waiting');
-      cy.get('.gmf-print-actions > span > .fa > svg').should('be.visible');
-      cy.get('.gmf-print-cancel').should('be.visible');
-      return interceptAndWaitOnStatus(statusUrl, downloadUrl, count, 'running');
-    } else if (status === 'running' && count < 3) {
-      expect(status).to.eq('running');
-      cy.get('.gmf-print-actions > span > .fa > svg').should('be.visible');
-      cy.get('.gmf-print-cancel').should('be.visible');
-      return interceptAndWaitOnStatus(statusUrl, downloadUrl, count, 'running');
-    } else if (status === 'running' && count == 3) {
-      expect(status).to.eq('running');
-      cy.get('.gmf-print-actions > span > .fa > svg').should('be.visible');
-      cy.get('.gmf-print-cancel').should('be.visible');
-      return interceptAndWaitOnStatus(statusUrl, downloadUrl, count, 'finished');
-    } else {
-      expect(status).to.eq('finished');
-      validatePrintIsDone(downloadUrl);
-      return;
-    }
-  });
-}
-
-function validatePrintIsDone(url: string) {
-  //cy.intercept(`${url}`).as(`downloadedFile`);
-  //cy.wait('@downloadedFile');
-  cy.on('locationchange', (newUrl) => {
-    console.log(newUrl);
-    //expect(newUrl).to.contain("?magic=true")
-  });
-}
 
 describe('Desktop_alt interface', () => {});

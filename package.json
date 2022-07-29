@@ -125,6 +125,7 @@
     "cypress": "10.8.0",
     "cy-mobile-commands": "0.3.0",
     "cypress-browser-permissions": "1.1.0",
+    "cypress-real-events": "^1.7.1",
     "d3": "7.6.1",
     "doctrine": "3.0.0",
     "editorconfig-checker": "4.0.2",
