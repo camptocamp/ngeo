@@ -66,7 +66,7 @@
     "@babel/preset-env": "7.18.6",
     "@babel/preset-typescript": "7.18.6",
     "@fortawesome/fontawesome-free": "5.15.4",
-    "@lit/reactive-element": "1.3.3",
+    "@lit/reactive-element": "1.3.4",
     "@sentry/browser": "7.6.0",
     "@sentry/tracing": "7.6.0",
     "@sentry/types": "7.6.0",
