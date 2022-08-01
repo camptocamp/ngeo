@@ -128,7 +128,7 @@
     "editorconfig-checker": "4.0.2",
     "ejs-loader": "0.5.0",
     "eslint": "8.19.0",
-    "eslint-plugin-jsdoc": "39.3.3",
+    "eslint-plugin-jsdoc": "39.3.4",
     "event-hooks-webpack-plugin": "2.2.0",
     "expose-loader": "1.0.3",
     "extract-loader": "5.1.0",
