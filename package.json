@@ -84,7 +84,7 @@
     "@types/d3-selection": "3.0.2",
     "@types/d3-transition": "3.0.1",
     "@types/file-saver": "2.0.5",
-    "@types/geojson": "7946.0.8",
+    "@types/geojson": "7946.0.10",
     "@types/googlemaps": "3.43.3",
     "@types/jasmine": "4.0.3",
     "@types/jquery": "3.5.14",
