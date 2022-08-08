@@ -421,7 +421,8 @@ export class QueryController {
    */
   handleMapPointerMove_(evt) {
     // No need to do anything if user is dragging the map
-    if (!(evt instanceof MapBrowserEvent) || evt.dragging) {
+    if (!evt.originalEvent || evt.dragging) {
+      // not a MapBrowserEvent
       return false;
     }
 

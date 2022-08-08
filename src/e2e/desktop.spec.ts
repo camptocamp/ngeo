@@ -1,5 +1,8 @@
 import olMap from 'ol/Map';
 import {FeatureOverlayMgr} from 'ngeo/map/FeatureOverlayMgr';
+import path from 'path';
+import neatCSV from 'neat-csv';
+import stripBom from 'strip-bom';
 
 describe('Desktop interface', () => {
   /**
@@ -82,10 +85,13 @@ describe('Desktop interface', () => {
     });
   });
 
-  function clearAllAndLoadDemoTheme() {
+  function clearAllAndLoadTheme(theme: string = undefined) {
+    if (theme === undefined) {
+      theme = 'demo';
+    }
     cy.contains('Clear all').click();
     cy.get('.dropdown > .btn').click();
-    cy.get('.gmf-theme-selector > :nth-child(2)').click();
+    cy.contains(theme).click();
   }
 
   /**
@@ -123,7 +129,7 @@ describe('Desktop interface', () => {
     });
     it.skip('Check the WMS (not-mixed)', {browser: '!firefox'}, () => {
       // Clean and re-open 'Demo' theme
-      clearAllAndLoadDemoTheme();
+      clearAllAndLoadTheme();
 
       // Check layer on/off
       cy.get('div.gmf-layertree-node-114')
@@ -166,7 +172,7 @@ describe('Desktop interface', () => {
     it.skip('Check the WMS mixed', () => {});
 
     it('Reordoning the groups', {browser: '!firefox'}, () => {
-      clearAllAndLoadDemoTheme();
+      clearAllAndLoadTheme();
 
       // Disable opened by default groups
       cy.get('div.gmf-layertree-node-68 > .gmf-layertree-expand-node').click();
@@ -177,17 +183,130 @@ describe('Desktop interface', () => {
       cy.get('div.gmf-layertree-node-68')
         .realHover()
         .then(() => {
-          cy.get('div.gmf-layertree-node-68 > .ngeo-sortable-handle > i')
-            .should('not.have.css', 'visibility', 'hidden')
-            .trigger('mousedown', {button: 1});
-          cy.get('div.gmf-layertree-node-597').trigger('mousedown').trigger('mouseup');
+          cy.get('div.gmf-layertree-node-68 > .ngeo-sortable-handle > i').then(($el) => {
+            //cy.wrap($el).should('not.have.css', 'visibility', 'hidden');
+            const rect = $el[0].getBoundingClientRect();
+            console.log(rect);
+            cy.wrap($el)
+              .trigger('mousedown', {button: 1, pageX: rect.left, pageY: rect.top, force: true})
+              .trigger('mousemove', {button: 1, pageX: rect.left, pageY: rect.top + 50, force: true})
+              .trigger('mouseup', {button: 1, force: true});
+          });
         });
     });
 
     it.skip('Check the WMTS', () => {});
     it.skip('Should close the legend with the layer', () => {});
-    it.skip('Should resize the tree panel', () => {});
+    it.skip('Should resize the tree panel', () => {
+      cy.get('.gmf-app-data-panel').should('be.visible');
+      cy.get('.gmf-app-data-panel-toggle-btn').click();
+      cy.get('.gmf-app-data-panel').should('not.be.visible');
+      cy.get('.gmf-app-data-panel-toggle-btn').click();
+
+      cy.get('.ui-resizable-handle.ui-resizable-e')
+        .eq(0)
+        .then(($el) => {
+          const rect = $el[0].getBoundingClientRect();
+          console.log(rect);
+          const dragAmount = 50;
+          cy.window().then((window) => {
+            const pageX = rect.left + window.pageXOffset;
+            cy.wrap($el)
+              .trigger('mouseover', {force: true})
+              .trigger('mousedown', {button: 1, pageX, pageY: rect.top, force: true})
+              .trigger('mousemove', {button: 1, pageX: pageX + dragAmount, pageY: rect.top, force: true})
+              .trigger('mouseup', {button: 1, force: true});
+          });
+        });
+    });
   });
+
+  function validateCsv(csv: string, validationObject: any) {
+    cy.wrap(csv)
+      .then(stripBom) // Remove Byte order mark
+      .then(neatCSV) // Parse the CSV
+      .then((list: any) => {
+        expect(list, 'number of records').to.have.length(1);
+        expect(list[0], 'first record').to.deep.equal(validationObject);
+      });
+  }
+
+  context('Query window', () => {
+    it('Query any layer', () => {
+      cy.loadPage(
+        false,
+        'https://localhost:3000/contribs/gmf/apps/desktop.html?lang=en&map_x=2632287&map_y=1186329&map_zoom=9'
+      );
+
+      cy.wait(500); // query not working without the wait
+
+      cy.readWindowValue('map').then((map: olMap) => {
+        // Don't work with the coordinates without that ...
+        const offsetX = 80.25;
+        const offsetY = -11;
+        cy.simulateEventAtCoord(map, 'singleclick', 2632271 + offsetX, 1186342 + offsetY);
+      });
+      cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('be.visible');
+      cy.get('.previous').should('be.visible');
+      cy.get('.next').should('be.visible');
+
+      // Previous and next result
+      cy.get('.results > span').then(($el) => {
+        const num = $el[1].textContent;
+        expect(num).to.eq('1');
+      });
+      cy.get('div.placeholder > button.next').click();
+      cy.get('.results > span').then(($el) => {
+        const num = $el[1].textContent;
+        expect(num).to.eq('2');
+      });
+      cy.get('div.placeholder > button.previous').click();
+      cy.get('.results > span').then(($el) => {
+        const num = $el[1].textContent;
+        expect(num).to.eq('1');
+      });
+
+      // Filter the result
+      cy.get('.results > :nth-child(5) > .btn').click();
+      cy.get('.dropup.show > .dropdown-menu > :nth-child(3) > a').click();
+      cy.get('div.placeholder > button.previous').should('not.be.visible');
+      cy.get('div.placeholder > button.next').should('not.be.visible');
+      // Export CSV
+      cy.get(':nth-child(6) > .btn').click();
+      cy.get('.dropup.show > .dropdown-menu > :nth-child(1) > a').click();
+
+      // Validate the CSV import
+      const downloadsFolder = Cypress.config('downloadsFolder');
+      const filename = path.join(downloadsFolder, 'query-results.csv');
+      const validationObject = {
+        amenity: 'post_office',
+        osm_id: '2789081430',
+        display_name: '2789081430',
+      };
+      cy.readFile(filename, 'utf-8').then((csv) => validateCsv(csv, validationObject));
+    });
+
+    it('Result in a grid', () => {
+      cy.loadPage(
+        false,
+        'https://localhost:3000/contribs/gmf/apps/desktop_alt.html?lang=en&map_x=2632287&map_y=1186329&map_zoom=9'
+      );
+
+      cy.wait(500); // query not working without the wait
+
+      cy.readWindowValue('map').then((map: olMap) => {
+        // Don't work with the coordinates without that ...
+        const offsetX = 80.25;
+        const offsetY = -11;
+        cy.simulateEventAtCoord(map, 'singleclick', 2632271 + offsetX, 1186342 + offsetY);
+      });
+      cy.get('.gmf-displayquerygrid').should('be.visible');
+      cy.get('.container-fluid > .row').should('not.be.visible');
+      cy.get('.row- > :nth-child(2)').click();
+      cy.get('.container-fluid > .row').should('be.visible');
+    });
+  });
+  context.skip('Query grid', () => {});
 
   context.skip('Profile', () => {
     it('Checks the profile', () => {
