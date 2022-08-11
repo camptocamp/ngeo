@@ -74,11 +74,13 @@ export default class {
     this.pStart_ = {};
     this.pEnd_ = {};
 
-    const svg = d3select(
-      document
-        .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
-    );
+    const shadowRoot = document.querySelector('#lidar-footer').shadowRoot;
+    if (shadowRoot === null) {
+      return;
+    }
+
+    const selector = shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg');
+    const svg = d3select(selector);
     svg.selectAll('#text_m').remove();
     svg.selectAll('#start_m').remove();
     svg.selectAll('#end_m').remove();
