@@ -139,7 +139,7 @@
     "fs-extra": "10.1.0",
     "glob": "8.0.3",
     "html-webpack-plugin": "4.5.2",
-    "i18next": "21.8.16",
+    "i18next": "21.9.1",
     "i18next-browser-languagedetector": "6.1.5",
     "i18next-parser": "6.5.0",
     "i18next-http-backend": "1.4.1",
