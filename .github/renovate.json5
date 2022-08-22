@@ -2,9 +2,12 @@
   extends: ['config:base'],
   timezone: 'Europe/Zurich',
   schedule: 'before 1am on Sunday',
+  labels: ['dependencies'],
   separateMajorMinor: true,
   separateMinorPatch: true,
-  lockFileMaintenance: {enabled: true, automerge: true},
+  prHourlyLimit: 0,
+  prConcurrentLimit: 0,
+  lockFileMaintenance: { enabled: true, automerge: true },
   baseBranches: ['master', '2.7'],
   regexManagers: [
     {
