@@ -738,8 +738,8 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
   if (this.supportsVertexRemoval_(feature)) {
     const buffer = resolution * VertexStyleRegularShapeRadius;
     let coordinates = null;
-    let coordinates = null;
-    let coordinates = null;
+    let coordinates2 = null;
+    let coordinates3 = null;
     let minNumCoordinates = -1;
 
     const geometry = feature.getGeometry();
@@ -747,13 +747,13 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
       coordinates = geometry.getCoordinates();
       minNumCoordinates = 2;
     } else if (geometry instanceof olGeomPolygon) {
-      coordinates = geometry.getCoordinates();
+      coordinates2 = geometry.getCoordinates();
       minNumCoordinates = 4;
     } else if (geometry instanceof olGeomMultiLineString) {
-      coordinates = geometry.getCoordinates();
+      coordinates2 = geometry.getCoordinates();
       minNumCoordinates = 2;
     } else if (geometry instanceof olGeomMultiPolygon) {
-      coordinates = geometry.getCoordinates();
+      coordinates3 = geometry.getCoordinates();
       minNumCoordinates = 4;
     }
 
@@ -763,12 +763,12 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
       if (index !== -1) {
         info = [index];
       }
-    } else if (coordinates) {
+    } else if (coordinates2) {
       // Array of Array of ol.Coordinate - 2 indexes
-      const ii = coordinates.length;
+      const ii = coordinates2.length;
       for (let i = 0; i < ii; i++) {
         const index = this.getCoordinateIndexThatHitsAt_(
-          coordinates[i],
+          coordinates2[i],
           coordinate,
           minNumCoordinates,
           buffer
@@ -778,15 +778,15 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
           break;
         }
       }
-    } else if (coordinates) {
+    } else if (coordinates3) {
       // Array of Array of Array of ol.Coordinate - 3 indexes
-      const ii = coordinates.length;
+      const ii = coordinates3.length;
       for (let i = 0; i < ii; i++) {
-        const coordinates = coordinates[i];
-        const jj = coordinates.length;
+        const coordinates2 = coordinates3[i];
+        const jj = coordinates2.length;
         for (let j = 0; j < jj; j++) {
           const index = this.getCoordinateIndexThatHitsAt_(
-            coordinates[j],
+            coordinates2[j],
             coordinate,
             minNumCoordinates,
             buffer

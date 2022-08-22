@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -271,10 +271,10 @@ export default class extends olInteractionInteraction {
       } else {
         sketchFeatureGeom = this.sketchFeature_.getGeometry();
         if (sketchFeatureGeom instanceof olGeomPolygon) {
-          const coordinates = sketchFeatureGeom.getCoordinates();
-          coordinates = coordinates[0];
+          const coordinates2 = sketchFeatureGeom.getCoordinates();
+          coordinates = coordinates2[0];
           coordinates.push(coordinate.slice());
-          sketchFeatureGeom.setCoordinates(coordinates);
+          sketchFeatureGeom.setCoordinates(coordinates2);
         }
       }
     }
@@ -379,8 +379,8 @@ export default class extends olInteractionInteraction {
     } else if (this.type_ === 'Polygon') {
       const sketchFeatureGeom = this.sketchFeature_.getGeometry();
       if (sketchFeatureGeom instanceof olGeomPolygon) {
-        const coordinates = sketchFeatureGeom.getCoordinates();
-        const coordinates = coordinates[0];
+        const coordinates2 = sketchFeatureGeom.getCoordinates();
+        const coordinates = coordinates2[0];
         coordinates.pop();
         coordinates.push(center);
         sketchFeatureGeom.setCoordinates([coordinates]);
