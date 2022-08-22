@@ -271,10 +271,10 @@ export default class extends olInteractionInteraction {
       } else {
         sketchFeatureGeom = this.sketchFeature_.getGeometry();
         if (sketchFeatureGeom instanceof olGeomPolygon) {
-          const coordinatess = sketchFeatureGeom.getCoordinates();
-          coordinates = coordinatess[0];
+          const coordinates = sketchFeatureGeom.getCoordinates();
+          coordinates = coordinates[0];
           coordinates.push(coordinate.slice());
-          sketchFeatureGeom.setCoordinates(coordinatess);
+          sketchFeatureGeom.setCoordinates(coordinates);
         }
       }
     }
@@ -379,8 +379,8 @@ export default class extends olInteractionInteraction {
     } else if (this.type_ === 'Polygon') {
       const sketchFeatureGeom = this.sketchFeature_.getGeometry();
       if (sketchFeatureGeom instanceof olGeomPolygon) {
-        const coordinatess = sketchFeatureGeom.getCoordinates();
-        const coordinates = coordinatess[0];
+        const coordinates = sketchFeatureGeom.getCoordinates();
+        const coordinates = coordinates[0];
         coordinates.pop();
         coordinates.push(center);
         sketchFeatureGeom.setCoordinates([coordinates]);

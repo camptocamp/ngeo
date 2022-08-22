@@ -774,7 +774,7 @@ Controller.prototype.afterReorder = function () {
   // Update gmfTreeManager rootctrl children order
   this.gmfTreeManager_.rootCtrl.children = treeCtrls;
 
-  // Update map 'data' groupe layers order
+  // Update map 'data' group layers order
   this.layers.length = 0;
   this.gmfTreeManager_.rootCtrl.children.forEach((child) => {
     if (!(child.layer instanceof LayerBase)) {

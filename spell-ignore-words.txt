@@ -5,3 +5,4 @@ copyable
 ist
 sie
 pullrequests
+totaly

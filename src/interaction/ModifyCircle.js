@@ -185,7 +185,7 @@ export default class extends olInteractionPointer {
    */
   removeFeature_(feature) {
     this.removeFeatureSegmentData_(feature);
-    // Remove the vertex feature if the collection of canditate features
+    // Remove the vertex feature if the collection of candidate features
     // is empty.
     if (this.vertexFeature_ && this.features_.getLength() === 0) {
       /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (

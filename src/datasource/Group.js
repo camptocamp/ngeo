@@ -27,7 +27,7 @@ import olCollection from 'ol/Collection';
  * @typedef {Object} GroupOptions
  * @property {import('ngeo/datasource/DataSource').default[]} dataSources List of data source
  *    combined in the group.
- *    At least one must be defined upon the cration of the group.
+ *    At least one must be defined upon the creation of the group.
  * @property {string} title A human-readable title for the group. Usually, the WMS Server title is
  * used for this property.
  */

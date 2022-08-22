@@ -739,7 +739,7 @@ export function buildStyle(styleDescriptor) {
  */
 
 /**
- * The display querry grid component options.
+ * The display query grid component options.
  *
  * @typedef {Object} gmfDisplayQueryGridOptions
  * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.
@@ -751,7 +751,7 @@ export function buildStyle(styleDescriptor) {
  */
 
 /**
- * The display querry grid component options.
+ * The display query grid component options.
  *
  * @typedef {Object} gmfDisplayQueryWindowOptions
  * @property {import('ngeo/options').StyleLike} featuresStyle A style object for all features from the result of the query.

@@ -1100,7 +1100,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function (active) {
  * Called when the map is clicked.
  *
  * (1) If a vector feature was clicked, don't do anything (i.e. allow the
- *     interactions to do their bidings without selecting a new feature).
+ *     interactions to do their bindings without selecting a new feature).
  *
  * (2) Otherwise, if there is a feature being edited and has unsaved
  *     modifications, show the confirmation modal asking the user what to do

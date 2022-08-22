@@ -73,7 +73,7 @@ export function createGeoJSONBloodhound(
       },
     },
     // datumTokenizer is required by the Bloodhound constructor but it
-    // is not used when only a remote is passsed to Bloodhound.
+    // is not used when only a remote is passed to Bloodhound.
     datumTokenizer: (datum) => {
       return [];
     },

@@ -1062,7 +1062,7 @@ export type GridMergeTabs = {
 export type gmfQueryGrid = boolean;
 
 /**
- * The display querry grid component options.
+ * The display query grid component options.
  */
 export type gmfDisplayQueryGridOptions = {
   /**
@@ -1089,7 +1089,7 @@ export type gmfDisplayQueryGridOptions = {
 };
 
 /**
- * The display querry grid component options.
+ * The display query grid component options.
  */
 export type gmfDisplayQueryWindowOptions = {
   /**

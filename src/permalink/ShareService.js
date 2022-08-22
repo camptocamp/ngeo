@@ -129,7 +129,7 @@ PermalinkShareService.prototype.postShortUrl_ = function (params) {
 export const URL_MAX_LEN = 2083;
 
 /**
- * Max length defined for the url parth section.
+ * Max length defined for the URL path section.
  * Check IE limits, see {@link http://support.microsoft.com/kb/208427}
  *
  * @type {number}

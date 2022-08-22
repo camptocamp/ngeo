@@ -165,13 +165,13 @@ function* mergeSources(opts, entry, resolve, level) {
     // if current import is in comments, then skip it
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const range = this;
-    const finded = commentRanges.find((commentRange) => {
+    const found = commentRanges.find((commentRange) => {
       if (range.start >= commentRange[0] && range.end <= commentRange[1]) {
         return true;
       }
     });
 
-    if (finded) {
+    if (found) {
       return total;
     }
 
