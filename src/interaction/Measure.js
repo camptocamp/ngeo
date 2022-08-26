@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -42,9 +42,9 @@ import VectorSource from 'ol/source/Vector';
  * @property {Element} [continueMsg] Element including the message to display in the help tooltip when the
  * user already added the first point.
  * @property {number} [precision] Defines the number of digits to keep in the measurement. If not defined,
- * then the default behaviour occurs depending on the measure type.
+ * then the default behavior occurs depending on the measure type.
  * @property {number} [decimals] Defines the number of decimals to keep in the measurement. If not defined,
- * then the default behaviour occurs depending on the measure type.
+ * then the default behavior occurs depending on the measure type.
  * @property {number} [tolerance] Defines the tolerance.
  * @property {import('ol/style/Style').StyleLike} [style] The style to be used when
  * drawing is finished.
@@ -131,7 +131,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * Defines the number of decimals to keep in the measurement. If not defined,
-     * then the default behaviour occurs depending on the measure type.
+     * then the default behavior occurs depending on the measure type.
      *
      * @type {number|undefined}
      * @protected
@@ -140,7 +140,7 @@ class Measure extends olInteractionInteraction {
 
     /**
      * Defines the number of precision to keep in the measurement. If not defined,
-     * then the default behaviour occurs depending on the measure type.
+     * then the default behavior occurs depending on the measure type.
      *
      * @type {number|undefined}
      * @protected

@@ -764,7 +764,7 @@ Controller.prototype.afterReorder = function () {
         treeCtrls.push(treeCtrl);
         // TODO - validate this, used to be a plain `return`, which is
         // not truthy and doesn't break the `some`, but I suspect this
-        // is not the wanted behaviour...
+        // is not the wanted behavior...
         return false;
       }
       return false;

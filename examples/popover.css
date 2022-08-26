@@ -9,7 +9,7 @@
 .content {
   width: 10vw;
   height: 100vh;
-  background-color: grey;
+  background-color: gray;
   overflow: scroll;
 }
 

@@ -165,7 +165,7 @@ export function DisclaimerController(
 }
 
 /**
- * Initialise the controller.
+ * Initialize the controller.
  */
 DisclaimerController.prototype.$onInit = function () {
   if (!this.map) {

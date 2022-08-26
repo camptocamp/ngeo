@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -286,7 +286,7 @@ GridController.prototype.selectRange_ = function (attributes) {
 };
 
 /**
- * Prevent the default browser behaviour of selecting text
+ * Prevent the default browser behavior of selecting text
  * when selecting multiple rows with SHIFT or CTRL/Meta.
  *
  * @param {JQuery.Event} event Event.
