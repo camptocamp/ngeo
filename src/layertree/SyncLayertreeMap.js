@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -32,7 +32,7 @@ import Group from 'ol/layer/Group';
 /**
  * Service to create layer based on a ngeo.layertree.Controller with a
  * GMFThemesGroup or a GMFThemesLeaf as node object.
- * This layer is also used to synchronise a state of ngeo.layertree.Controller
+ * This layer is also used to synchronize a state of ngeo.layertree.Controller
  * and its corresponding layer in the map.
  *
  * @class
@@ -113,7 +113,7 @@ SyncLayertreeMap.prototype.createLayer = function (treeCtrl, map, dataLayerGroup
 };
 
 /**
- * Synchronise the state of each layers corresponding to the given tree and
+ * Synchronize the state of each layers corresponding to the given tree and
  * all its children.
  *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.

@@ -184,7 +184,7 @@ export function Controller($scope, $timeout) {
 }
 
 /**
- * Initialise the controller.
+ * Initialize the controller.
  */
 Controller.prototype.$onInit = function () {
   if (!this.getMapFn) {

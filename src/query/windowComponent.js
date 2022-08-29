@@ -274,7 +274,7 @@ export function QueryWindowController(
 }
 
 /**
- * Initialise the controller.
+ * Initialize the controller.
  */
 QueryWindowController.prototype.$onInit = function () {
   if (this.options.collapsed !== undefined) {

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -218,7 +218,7 @@ export default class extends olOverlay {
   /**
    * When the mouse is hovering the menu, set the event coordinate and pixel
    * values to Infinity to do as if the mouse had been move out of range of the
-   * map. This prevents behaviours such as vertex still appearing while mouse
+   * map. This prevents behaviors such as vertex still appearing while mouse
    * hovering edges of features bound to an active modify control while the
    * cursor is on top of the menu.
    *

@@ -167,7 +167,7 @@ export function Controller($scope, ngeoEventHelper) {
 }
 
 /**
- * Initialise the component.
+ * Initialize the component.
  */
 Controller.prototype.$onInit = function () {
   if (!this.feature) {
