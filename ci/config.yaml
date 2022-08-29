@@ -7,6 +7,8 @@ checks:
   versions:
     rebuild: False
   codespell:
+    internal_dictionaries:
+      - clear
     ignore_re:
       - ^contribs/gmf/test/spec/data/themescapabilities\.js$
       - ^contribs/gmf/test/spec/data/themes\.js$
