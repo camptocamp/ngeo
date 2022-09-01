@@ -63,6 +63,12 @@ declare namespace Cypress {
       opt_pointerId?: number
     ): Chainable<Subject>;
 
-    simulateDOMEvent(element: HTMLElement, type: string, x: number, y: number): Chainable<Subject>;
+    simulateDOMEvent(
+      element: HTMLElement,
+      type: string,
+      x: number,
+      y: number,
+      opt_ctrlKey?: boolean
+    ): Chainable<Subject>;
   }
 }
