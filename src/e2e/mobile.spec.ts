@@ -108,7 +108,8 @@ describe('Mobile interface', () => {
       cy.get('.overlay').click(300, 300, {force: true});
     });
 
-    it('Close with swipe', () => {
+    // Ignore firefox as Touch is not recognized
+    it('Close with swipe', {browser: '!firefox'}, () => {
       // Open and check the left panel
       cy.get('.gmf-mobile-nav-left-trigger').click();
       cy.get('.gmf-mobile-nav-left > .gmf-mobile-nav-slide.gmf-mobile-nav-active')
