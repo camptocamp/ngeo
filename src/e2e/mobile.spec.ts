@@ -108,8 +108,18 @@ describe('Mobile interface', () => {
       cy.get('.overlay').click(300, 300, {force: true});
     });
 
-    it.skip('Close with swipe', () => {
-      // FIXME: https://www.npmjs.com/package/cy-mobile-commands for swiping ?
+    it('Close with swipe', () => {
+      // Open and check the left panel
+      cy.get('.gmf-mobile-nav-left-trigger').click();
+      cy.get('.gmf-mobile-nav-left > .gmf-mobile-nav-slide.gmf-mobile-nav-active')
+        .swipe([100, 100], [25, 100])
+        .should('not.be.visible');
+
+      // Open and check the right panel
+      cy.get('.gmf-mobile-nav-right-trigger').click();
+      cy.get('.gmf-mobile-nav-right > .gmf-mobile-nav-slide.gmf-mobile-nav-active')
+        .swipe([900, 100], [975, 100])
+        .should('not.be.visible');
     });
   });
 
