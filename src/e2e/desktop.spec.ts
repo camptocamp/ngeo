@@ -294,6 +294,9 @@ describe('Desktop interface', () => {
 
       cy.wait(500); // query not working without the wait
 
+      // Close dislaimer
+      cy.get('[ng-model="disclaimerVisibility"] > .modal').click();
+
       cy.readWindowValue('map').then((map: olMap) => {
         // Don't work with the coordinates without that ...
         const offsetX = 80.25;
@@ -302,8 +305,35 @@ describe('Desktop interface', () => {
       });
       cy.get('.gmf-displayquerygrid').should('be.visible');
       cy.get('.container-fluid > .row').should('not.be.visible');
+
+      // Check the tab and change the active one
+      cy.get(':nth-child(1) > .nav-link').should('be.visible').and('have.class', 'active');
+      cy.get(':nth-child(2) > .nav-link').should('be.visible').click().should('have.class', 'active');
+      cy.get(':nth-child(1) > .nav-link').click();
+
+      // Click on the line
       cy.get('.row- > :nth-child(2)').click();
       cy.get('.container-fluid > .row').should('be.visible');
+
+      // Assert the zoom-to button
+      cy.get('.nav > :nth-child(2) > .btn').click();
+      cy.readWindowValue('map').then((map: olMap) => {
+        expect(map.getView().getZoom()).to.be.eq(11);
+      });
+
+      // FIXME: box selection
+      // cy.get('.ol-zoom-out').click().click();
+
+      // cy.wait(1000);
+
+      // cy.readWindowValue('map').then((map: olMap) => {
+      //   const element = map.getViewport();
+      //   cy.simulateDOMEvent(element, 'pointerdown', 0, 0, true);
+      //   cy.simulateDOMEvent(element, 'pointerup', 0, 0, true);
+      //   cy.simulateDOMEvent(element, 'pointermove', 100, 100, true);
+      //   cy.simulateDOMEvent(element, 'pointerdown', 100, 100, true);
+      //   cy.simulateDOMEvent(element, 'pointerup', 100, 100, true);
+      // });
     });
   });
   context.skip('Query grid', () => {});
