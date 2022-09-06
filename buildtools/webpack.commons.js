@@ -323,7 +323,7 @@ module.exports = function (config) {
         api: path.resolve(__dirname, '../api/src'),
         lib: path.resolve(__dirname, '../lib'),
         gmf: path.resolve(__dirname, '../src'),
-        jsts: 'jsts/org/locationtech/jts',
+        jsts: 'jsts/src/org/locationtech/jts',
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.js',
