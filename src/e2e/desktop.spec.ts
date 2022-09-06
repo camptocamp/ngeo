@@ -19,6 +19,12 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/unbound-method */
+
 import olMap from 'ol/Map';
 import path from 'path';
 import neatCSV from 'neat-csv';
@@ -250,7 +256,9 @@ describe('Desktop interface', () => {
    */
   function validateCsv(csv: string, validationObject: any) {
     cy.wrap(csv)
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       .then(stripBom) // Remove Byte order mark
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       .then(neatCSV) // Parse the CSV
       .then((list: any) => {
         expect(list, 'number of records').to.have.length(1);
@@ -310,7 +318,7 @@ describe('Desktop interface', () => {
         osm_id: '2789081430',
         display_name: '2789081430',
       };
-      cy.readFile(filename, 'utf-8').then((csv) => validateCsv(csv, validationObject));
+      cy.readFile(filename, 'utf-8').then((csv: string) => validateCsv(csv, validationObject));
     });
 
     it('Result in a grid', () => {
