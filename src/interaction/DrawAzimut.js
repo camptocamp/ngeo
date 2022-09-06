@@ -110,6 +110,7 @@ class DrawAzimut extends olInteractionPointer {
      * @private
      */
     this.sketchLayer_ = new olLayerVector({
+      className: 'canvas2d',
       source: new VectorSource({
         useSpatialIndex: false,
         wrapX: false,

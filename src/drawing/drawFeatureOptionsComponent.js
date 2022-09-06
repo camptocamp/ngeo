@@ -189,6 +189,7 @@ export class DrawFeatureOptionsController {
      * @private
      */
     this.snapSource_ = new OLSourceVector({
+      className: 'canvas2d',
       features: [this.snapFeature_],
     });
 

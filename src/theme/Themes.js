@@ -408,6 +408,7 @@ export class ThemesService extends olEventsEventTarget {
     const gettextCatalog = this.gettextCatalog;
     gettextCatalog.getString('blank');
     const layer = new VectorLayer({
+      className: 'canvas2d',
       source: new VectorSource(),
     });
     layer.set('label', 'blank');

@@ -149,6 +149,7 @@ export class LidarprofileManager {
      * The hovered point geometry (point) in D3 profile highlighted on the 2D map
      */
     this.lidarPointHighlight = new olLayerVector({
+      className: 'canvas2d',
       source: new olSourceVector({}),
       style: new olStyleStyle({
         image: new olStyleCircle({
@@ -165,6 +166,7 @@ export class LidarprofileManager {
      * with real mapunites stroke width
      */
     this.lidarBuffer = new olLayerVector({
+      className: 'canvas2d',
       source: new olSourceVector({}),
     });
 

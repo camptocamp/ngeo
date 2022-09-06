@@ -217,6 +217,7 @@ class Measure extends olInteractionInteraction {
       options.layer !== undefined
         ? options.layer
         : new olLayerVector({
+            className: 'canvas2d',
             source: new olSourceVector(),
             style: style,
           });

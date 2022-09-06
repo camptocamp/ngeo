@@ -60,6 +60,7 @@ class ModifyRectangle extends olInteractionPointer {
      * @private
      */
     this.vectorPoints_ = new olLayerVector({
+      className: 'canvas2d',
       source: new olSourceVector({
         wrapX: !!options.wrapX,
       }),

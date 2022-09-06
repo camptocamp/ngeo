@@ -127,6 +127,7 @@ export default class extends olInteractionPointer {
      * @private
      */
     this.overlay_ = new olLayerVector({
+      className: 'canvas2d',
       source: new olSourceVector({
         useSpatialIndex: false,
         wrapX: !!options.wrapX,

@@ -115,6 +115,7 @@ export class QueryController {
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
+      className: 'canvas2d',
       source: this.vectorSource_,
     });
 

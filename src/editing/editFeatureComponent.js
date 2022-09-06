@@ -577,6 +577,7 @@ Controller.prototype.$onInit = function () {
    * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
    */
   this.highlightVectorLayer_ = new olLayerVector({
+    className: 'canvas2d',
     source: new VectorSource({
       wrapX: false,
       features: new olCollection(),

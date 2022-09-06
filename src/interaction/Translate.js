@@ -95,6 +95,7 @@ export default class extends olInteractionTranslate {
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
+      className: 'canvas2d',
       source: this.vectorSource_,
       style: options.style,
       updateWhileAnimating: true,

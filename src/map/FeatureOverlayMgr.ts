@@ -77,6 +77,7 @@ export class FeatureOverlayMgr {
       useSpatialIndex: false,
     });
     this.layer_ = new olLayerVector({
+      className: 'canvas2d',
       source: this.source_,
       style: this.styleFunction_.bind(this),
       updateWhileAnimating: true,

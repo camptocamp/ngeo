@@ -273,6 +273,7 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {import('ol/layer/Vector').default<import('ol/source/Vector').default<import('ol/geom/Geometry').default>>}
      */
     this.editFeatureVectorLayer = new olLayerVector({
+      className: 'canvas2d',
       source: new olSourceVector({
         wrapX: false,
         features: new olCollection(),
