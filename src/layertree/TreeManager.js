@@ -53,6 +53,7 @@ import {listen} from 'ol/events';
  * Thought to be the tree source of the gmf layertree directive.
  *
  * @class
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -66,6 +67,7 @@ import {listen} from 'ol/events';
  * @hidden
  */
 export function LayertreeTreeManager(
+  $rootScope,
   $timeout,
   $injector,
   gettextCatalog,
@@ -73,6 +75,11 @@ export function LayertreeTreeManager(
   gmfThemes,
   ngeoStateManager
 ) {
+  /**
+   * @type {angular.IScope}
+   */
+  this.rootScope_ = $rootScope;
+
   /**
    * @type {angular.ITimeoutService}
    */
@@ -259,6 +266,12 @@ LayertreeTreeManager.prototype.addSecondLevelGroups = function (
         // Set the tree child accordingly
         this.setSearchedChild(child, enabled);
       });
+
+      setTimeout(() => {
+        // Update the permalink
+        const treeCtrl = this.getTreeCtrlByNodeId(group.id);
+        this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, treeCtrl);
+      }, 0);
     });
   if (groupNotAdded.length > 0 && !opt_silent) {
     this.notifyCantAddGroups_(groupNotAdded);
@@ -601,6 +614,7 @@ LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function (id) {
         correspondingTreeCtrl = treeCtrl;
         return LayertreeVisitorDecision.STOP;
       }
+      return LayertreeVisitorDecision.DESCEND;
     });
   }
   return correspondingTreeCtrl;
