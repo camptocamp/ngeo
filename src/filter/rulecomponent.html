@@ -143,8 +143,14 @@
       <div class="form-group ngeo-rule-type-text" ng-switch-default>
         <div ng-switch="$ctrl.clone.operator">
           <div ng-switch-when="..">
-            <input type="number" class="form-control" ng-model="$ctrl.clone.lowerBoundary" />
-            <input type="number" class="form-control" ng-model="$ctrl.clone.upperBoundary" />
+            <div class="ngeo-between-rule-start">
+              <span translate>Between </span>
+              <input type="number" class="form-control" ng-model="$ctrl.clone.lowerBoundary" />
+            </div>
+            <div class="ngeo-between-rule-end">
+              <span translate> and </span>
+              <input type="number" class="form-control" ng-model="$ctrl.clone.upperBoundary" />
+            </div>
           </div>
           <div ng-switch-default>
             <input
