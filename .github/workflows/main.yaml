@@ -117,8 +117,8 @@ jobs:
         if: failure()
 
       # Generate API doc, api, lib
-      - run: npm run doc
       - run: npm run doc -- srcapi/store/config.ts --json dist/typedoc.json
+      - run: npm run doc
       - run: npm run build-api
       - run: npm run dist
       - run: npm run dist-spinner

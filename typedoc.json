@@ -1,4 +1,5 @@
 {
+  "$schema": "https://typedoc.org/schema.json",
   "name": "ngeo",
   "entryPoints": ["src", "srcapi", "api/src"],
   "entryPointStrategy": "expand",
