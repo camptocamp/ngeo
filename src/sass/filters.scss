@@ -1,0 +1,15 @@
+.ngeo-between-rule-start,
+.ngeo-between-rule-end {
+  display: inline-block;
+  font-size: 0.69rem;
+
+  span {
+    float: left;
+    padding-top: 0.25rem;
+    padding-right: 0.25rem;
+  }
+  input {
+    max-width: 4.23rem;
+    border-radius: 2px;
+  }
+}
