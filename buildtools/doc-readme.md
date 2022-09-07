@@ -4,7 +4,7 @@ API documentation of ngeo.
 
 [API constants definitions](modules/srcapi_store_config.html#APIConfig)
 
-[Themes API](interfaces/contribs_gmf_src_themes.GmfTheme.html)
+[Themes API](modules/src_themes.html)
 
 Note that the stable API is in [srcapi](modules/srcapi.html) and will be available directly on `window`. The rest of the API can change without any notice.
 
