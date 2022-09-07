@@ -576,6 +576,7 @@ export class FilterSelectorController {
     if (!dataSource) {
       return;
     }
+    panels.openToolPanel('filter', {state: true});
 
     // A data source has been selected. Make sure the component is active.
     if (!this.active) {
