@@ -53,6 +53,7 @@ import {listen} from 'ol/events';
  * Thought to be the tree source of the gmf layertree directive.
  *
  * @class
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.auto.IInjectorService} $injector Angular injector service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -66,6 +67,7 @@ import {listen} from 'ol/events';
  * @hidden
  */
 export function LayertreeTreeManager(
+  $rootScope,
   $timeout,
   $injector,
   gettextCatalog,
@@ -73,6 +75,11 @@ export function LayertreeTreeManager(
   gmfThemes,
   ngeoStateManager
 ) {
+  /**
+   * @type {angular.IScope}
+   */
+  this.rootScope_ = $rootScope;
+
   /**
    * @type {angular.ITimeoutService}
    */
@@ -219,6 +226,75 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function (firstLevelGroups,
   }
 
   return groupNotAdded.length === 0;
+};
+
+/**
+ * Add some groups as tree's children. If the service use mode 'flush', the
+ * previous tree's children will be removed. Add only groups that are not
+ * already in the tree.
+ *
+ * NB: The first level group is added, second-level tree is set active when
+ * it corresponds to the searched group.
+ *
+ * @param {import('gmf/themes').GmfGroup[]} firstLevelGroups An array of gmf theme group.
+ * @param {string} groupName The group's name to add.
+ * @param {boolean} [opt_add] if true, force to use the 'add' mode this time.
+ * @param {boolean} [opt_silent] if true notifyCantAddGroups_ is not called.
+ * @returns {boolean} True if the group has been added. False otherwise.
+ */
+LayertreeTreeManager.prototype.addSecondLevelGroups = function (
+  firstLevelGroups,
+  groupName,
+  opt_add,
+  opt_silent
+) {
+  /** @type {import('gmf/themes').GmfGroup[]} */
+  const groupNotAdded = [];
+
+  firstLevelGroups
+    .slice()
+    .reverse()
+    .forEach((group) => {
+      if (!this.addFirstLevelGroup_(group)) {
+        groupNotAdded.push(group);
+      }
+
+      group.children.forEach((child) => {
+        // Find if the tree child is the one we searched
+        let enabled = child.name === groupName;
+
+        // Set the tree child accordingly
+        this.setSearchedChild(child, enabled);
+      });
+
+      setTimeout(() => {
+        // Update the permalink
+        const treeCtrl = this.getTreeCtrlByNodeId(group.id);
+        this.rootScope_.$broadcast('ngeo-layertree-state', treeCtrl, treeCtrl);
+      }, 0);
+    });
+  if (groupNotAdded.length > 0 && !opt_silent) {
+    this.notifyCantAddGroups_(groupNotAdded);
+  }
+
+  return groupNotAdded.length === 0;
+};
+
+/**
+ * Enable/disable the tree child (node) and apply it to children if present.
+ *
+ * @param {import('gmf/themes').GmfGroup} node The child object in the tree.
+ * @param {boolean} enabled If the child is active or not in the layer-tree.
+ */
+LayertreeTreeManager.prototype.setSearchedChild = function (node, enabled) {
+  // Second/third-level group
+  if (node.children) {
+    node.children.forEach((child) => {
+      this.setSearchedChild(child, enabled);
+    });
+  } else {
+    node.metadata.isChecked = enabled;
+  }
 };
 
 /**
@@ -370,7 +446,13 @@ LayertreeTreeManager.prototype.addGroupByName = function (groupName, opt_add) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     const group = findGroupByName(themes, groupName);
     if (group) {
-      this.addFirstLevelGroups([group], opt_add, false);
+      // If the group we add is the name of the parent node, it's a first level group,
+      // otherwise it is a second group that we need to activate
+      if (group.name === groupName) {
+        this.addFirstLevelGroups([group], opt_add, false);
+      } else {
+        this.addSecondLevelGroups([group], groupName, opt_add, false);
+      }
     }
   });
 };
@@ -532,6 +614,7 @@ LayertreeTreeManager.prototype.getTreeCtrlByNodeId = function (id) {
         correspondingTreeCtrl = treeCtrl;
         return LayertreeVisitorDecision.STOP;
       }
+      return LayertreeVisitorDecision.DESCEND;
     });
   }
   return correspondingTreeCtrl;
