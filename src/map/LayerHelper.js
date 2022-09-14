@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import * as olArray from 'ol/array';
 import olFormatMVT from 'ol/format/MVT';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities';
 import olLayerGroup from 'ol/layer/Group';
@@ -30,7 +29,6 @@ import olLayerLayer from 'ol/layer/Layer';
 import olLayerVectorTile from 'ol/layer/VectorTile';
 import {isEmpty} from 'ol/obj';
 import olSourceImageWMS from 'ol/source/ImageWMS';
-import olSourceWMSServerType from 'ol/source/WMSServerType';
 import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceVectorTile from 'ol/source/VectorTile';
 import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS';
@@ -167,7 +165,7 @@ LayerHelper.prototype.createBasicWMSLayer = function (
   if (opt_serverType) {
     params.SERVERTYPE = opt_serverType;
     // OpenLayers expects 'qgis' insteads of 'qgisserver'
-    olServerType = opt_serverType.replace(ServerType.QGISSERVER, olSourceWMSServerType.QGIS);
+    olServerType = opt_serverType.replace(ServerType.QGISSERVER, 'qgis');
   }
 
   const options = Object.assign({}, opt_customSourceOptions, {
@@ -177,10 +175,10 @@ LayerHelper.prototype.createBasicWMSLayer = function (
     crossOrigin: opt_crossOrigin,
   });
   if (
-    opt_serverType != olSourceWMSServerType.GEOSERVER &&
-    opt_serverType != olSourceWMSServerType.MAPSERVER &&
-    opt_serverType != olSourceWMSServerType.QGIS &&
-    opt_serverType != olSourceWMSServerType.CARMENTA_SERVER
+    opt_serverType != 'mapserver' &&
+    opt_serverType != 'geoserver' &&
+    opt_serverType != 'carmentaserver' &&
+    opt_serverType != 'qgis'
   ) {
     options.hidpi = false;
   }
@@ -244,8 +242,9 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
 
 /**
  * Small hack to get perfect sync with the on resolution status and the zoom to resolution.
- * @param {number} maximum resolution.
- * @return {number} fixed maximum resolution.
+ *
+ * @param {number} opt_maxResolution resolution.
+ * @returns {number} fixed maximum resolution.
  */
 LayerHelper.prototype.fixResolution_ = function (opt_maxResolution) {
   if (opt_maxResolution) {
@@ -315,7 +314,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
 
       // Add styles from capabilities as param of the layer
       const layers = result.Contents.Layer;
-      const l = olArray.find(layers, (elt, index, array) => elt.Identifier == layerName);
+      const l = layers.find((elt) => elt.Identifier == layerName);
       if (!l) {
         return $q.reject(`Layer ${layerName} not available in WMTS capabilities from ${capabilitiesURL}`);
       }
@@ -512,9 +511,10 @@ LayerHelper.prototype.getFlatLayers_ = function (layer, array, computedOpacity) 
  * Get a layer that has the LAYER_NODE_NAME_KEY property equal to a given layer name from
  * an array of layers. If one of the layers in the array is a group, then the
  * layers contained in that group are searched as well.
+ *
  * @param {string} nodeName The node name of the layer we're looking for.
  * @param {import("ol/layer/Base").default[]} layers Layers.
- * @return {?import("ol/layer/Base").default} Layer.
+ * @returns {?import("ol/layer/Base").default} Layer.
  */
 LayerHelper.prototype.getLayerByNodeName = function (nodeName, layers) {
   /** @type {?import("ol/layer/Base").default} */

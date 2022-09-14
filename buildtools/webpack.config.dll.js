@@ -41,18 +41,6 @@ module.exports = {
           options: {
             babelrc: false,
             comments: false,
-            presets: [
-              [
-                require.resolve('@babel/preset-env'),
-                {
-                  targets: {
-                    browsers: require('./webpack.share').browsers,
-                  },
-                  modules: false,
-                  loose: true,
-                },
-              ],
-            ],
           },
         },
       },

@@ -74,7 +74,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   });
 
   /**
-   * @return {import('gmf/themes').GmfTheme[]}
+   * @returns {import('gmf/themes').GmfTheme[]}
    */
   const getThemes = () => {
     return /** @type {import('gmf/themes').GmfTheme[]} */ (/** @type any */ (gmfTestDataThemes.themes));
@@ -83,6 +83,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
   /**
    * Create a layer and add it in the layer group of the map.
    * The layer to add is defined by the theme and the group index.
+   *
    * @param {number} themeIndex
    * @param {number} groupIndex
    */

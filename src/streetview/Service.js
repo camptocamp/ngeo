@@ -88,7 +88,7 @@ export class StreetviewService {
 
   /**
    * @param {import("ol/extent.js").Extent} extent Extent in EPSG:2056 to reproject.
-   * @return {import("ol/extent.js").Extent} LonLat extent.
+   * @returns {import("ol/extent.js").Extent} LonLat extent.
    */
   extentToLonLat_(extent) {
     if (!this.map_) {

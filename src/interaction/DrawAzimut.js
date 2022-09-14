@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -26,7 +26,6 @@ import {listen} from 'ol/events';
 import {FALSE} from 'ol/functions';
 import olGeomCircle from 'ol/geom/Circle';
 import olGeomGeometryCollection from 'ol/geom/GeometryCollection';
-import olGeomGeometryType from 'ol/geom/GeometryType.js';
 import olGeomLineString from 'ol/geom/LineString';
 import olGeomPoint from 'ol/geom/Point';
 import olInteractionPointer from 'ol/interaction/Draw';
@@ -51,7 +50,7 @@ class DrawAzimut extends olInteractionPointer {
    */
   constructor(options) {
     super({
-      type: olGeomGeometryType.CIRCLE,
+      type: 'Circle',
     });
 
     this.shouldStopEvent = FALSE;

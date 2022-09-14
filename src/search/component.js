@@ -380,6 +380,7 @@ export class SearchController {
 
     /**
      * FIXME: dynamic typing when the config key is different
+     *
      * @type {import('gmf/options.js').gmfSearchOptions}
      */
     this.options = this.injector_.get(config);

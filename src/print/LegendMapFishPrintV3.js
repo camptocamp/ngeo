@@ -267,6 +267,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMTS layer.
+   *
    * @param {import('gmf/themes').GmfLayer} node the current themes node.
    * @param {import("ol/layer/Tile").default} layer The layer to extract the legend from.
    * @param {number} dpi The DPI.
@@ -298,6 +299,7 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * Create a legend item from the given WMS layer and from the given node.
+   *
    * @param {import('gmf/themes').GmfLayerWMS} node the current themes node.
    * @param {import("ol/layer/Layer").default<import("ol/source/ImageWMS").default>} layer the layer
    * that match the given node.
@@ -373,10 +375,11 @@ export default class LegendMapFishPrintV3 {
 
   /**
    * TODO
+   *
    * @param {string} nodeName
    * @param {LegendURLDPI} icon_dpi
    * @param {string} serverType
-   * @return {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass}
+   * @returns {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass}
    * @private
    */
   getLegendItemForWMSNode_(nodeName, icon_dpi, serverType) {
@@ -420,9 +423,10 @@ export default class LegendMapFishPrintV3 {
   /**
    * Return the metadata legendImage of a layer from the given node
    * or undefined.
+   *
    * @param {number} [dpi=96] the image DPI.
    * @param {import('gmf/themes').GmfLayer|import('gmf/themes').GmfLayerWMS} node the node to extract metadata from.
-   * @return {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
+   * @returns {LegendURLDPI|undefined} The legendImage with selected DPI or undefined.
    * @private
    */
   getMetadataLegendImage_(node, dpi = -1) {
