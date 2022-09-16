@@ -330,7 +330,10 @@ describe('Desktop interface', () => {
       cy.wait(500); // query not working without the wait
 
       // Close disclaimer
-      cy.get('[ng-model="disclaimerVisibility"] > .modal').click();
+      cy.get('[ng-model="disclaimerVisibility"] .modal-header > .close').click();
+      cy.get('[ng-model="disclaimerVisibility"] > .modal > .modal-dialog > .modal-content').should(
+        'not.be.visible'
+      );
 
       cy.readWindowValue('map').then((map: olMap) => {
         // Don't work with the coordinates without that ...
