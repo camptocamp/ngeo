@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {includes as olArrayIncludes} from 'ol/array';
 import olFormatGeoJSON from 'ol/format/GeoJSON';
 
 /**
@@ -98,7 +97,7 @@ class ArcGISGeoJSON extends olFormatGeoJSON {
       // @ts-ignore: Arcgis specific
       const layerName = feature[layerIdentifier];
       // Exclude feature if its layer name is not set among the layers
-      if (this.layers_ && !olArrayIncludes(this.layers_, layerName)) {
+      if (this.layers_ && !this.layers_.indexOf(layerName)) {
         continue;
       }
       features.push(this.readFeatureFromObject(geoJSONFeatures[i], opt_options));

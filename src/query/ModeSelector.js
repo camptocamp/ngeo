@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -208,6 +208,7 @@ export class QueryModeSelector {
    * Handle key down events.
    * Watch out, some computer or OS (not browser) trigger a pressed key event only once, but
    * some others trigger it infinitely every x milliseconds.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
@@ -265,6 +266,7 @@ export class QueryModeSelector {
    * Handle key up events.
    * Watch out, some computer or OS (not browser) trigger a pressed key event only once, but
    * some others trigger it infinitely every x milliseconds.
+   *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
    */
@@ -299,6 +301,7 @@ export class QueryModeSelector {
   /**
    * Check the focus on the page determined by the browser.
    * If the page is not anymore focus then reset the mode.
+   *
    * @private
    */
   checkPageFocus_() {
@@ -311,7 +314,8 @@ export class QueryModeSelector {
 
   /**
    * Reset the mode to the default one.
-   * @return {boolean} true if the scope should be updated.
+   *
+   * @returns {boolean} true if the scope should be updated.
    * @private
    */
   reset_() {

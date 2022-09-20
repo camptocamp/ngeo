@@ -22,7 +22,6 @@
 import angular from 'angular';
 import ngeoMapLayerHelper, {DATASOURCE_ID} from 'ngeo/map/LayerHelper';
 import {getUid as olUtilGetUid} from 'ol/util';
-import * as olArray from 'ol/array';
 import olCollection from 'ol/Collection';
 import olEventsEventTarget from 'ol/events/Target';
 import VectorLayer from 'ol/layer/Vector';
@@ -640,7 +639,7 @@ export function findGroupByName(themes, name) {
  * @hidden
  */
 export function findObjectByName(objects, objectName) {
-  return olArray.find(objects, (object) => object.name === objectName);
+  return objects.find((object) => object.name === objectName);
 }
 
 /**

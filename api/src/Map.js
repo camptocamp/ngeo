@@ -81,6 +81,7 @@ import Search from 'api/Search';
 
 /**
  * Attr is ['title', 'description'] by default
+ *
  * @typedef {Object} CustomLayer
  * @property {string[]} [attr]
  * @property {function(): void} [success]

@@ -33,7 +33,7 @@ import gmfTestDataThemescapabilities from '../data/themescapabilities';
 import {uncheckAllNodes} from '../data/manipulateThemes';
 
 /**
- * @return {[angular.IHttpBackendService, import('gmf/layertree/SyncLayertreeMap').default, JQuery, import("ol/Map").default, (treeCtrl: import("ngeo/layertree/Controller").LayertreeController) => import("ol/layer/Base").default)]}
+ * @returns {[angular.IHttpBackendService, import('gmf/layertree/SyncLayertreeMap').default, JQuery, import("ol/Map").default, (treeCtrl: import("ngeo/layertree/Controller").LayertreeController) => import("ol/layer/Base").default)]}
  */
 export const setupSyncLayertreeMap = () => {
   const map = new olMap({

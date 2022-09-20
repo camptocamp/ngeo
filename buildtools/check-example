@@ -22,6 +22,7 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -45,17 +46,23 @@ def main():
     ref = sys.argv[2]
     mask = ref.replace("-ref", "-mask")
     diff = current.replace(".html.png", "-diff.png")
+    old_ref = ref
 
     if os.path.exists(mask):
         print("Apply mask: " + mask)
         old_current = current
-        old_ref = ref
         current = tempfile.NamedTemporaryFile(suffix="-current.png").name
         ref = tempfile.NamedTemporaryFile(suffix="-ref.png").name
-        subprocess.check_call(["gm", "composite", "-compose", "Multiply", old_current, mask, current])
-        subprocess.check_call(["gm", "composite", "-compose", "Multiply", old_ref, mask, ref])
+        subprocess.run(["gm", "composite", "-compose", "Multiply", old_current, mask, current], check=True)
+        subprocess.run(["gm", "composite", "-compose", "Multiply", old_ref, mask, ref], check=True)
 
-    result = subprocess.check_output(
+    # Set to True to regenerate ref images
+    if True:
+        if "/error-" not in ref:
+            shutil.copyfile(current, old_ref)
+            shutil.copyfile(current, ref)
+            sys.exit(0)
+    result = subprocess.run(
         [
             "gm",
             "compare",
@@ -67,7 +74,8 @@ def main():
             ref,
             "-file",
             diff,
-        ]
+        ],
+        check=True,
     )
     result = float(result.decode().split("\n")[-2].split()[1])
     if result > 0.01:

@@ -49,18 +49,21 @@ export default class MapillaryService extends StreetviewService {
 
     /**
      * Angular $http service.
+     *
      * @private
      */
     this.$http_ = $http;
 
     /**
      * The key to access the mapillary api.
+     *
      * @private
      */
     this.accessToken_ = accessToken;
 
     /**
      * The size of the buffer (in pixel) to add to the coordinate points to create the request bbox.
+     *
      * @private
      */
     this.bufferSizePx_ = bufferSize || 10;
@@ -164,7 +167,7 @@ export default class MapillaryService extends StreetviewService {
 
   /**
    * @param {import("ol/extent.js").Extent} bbox A bounding box in LatLong projection
-   * @return {angular.IPromise<string>} Promise with the first imageId found or null.
+   * @returns {angular.IPromise<string>} Promise with the first imageId found or null.
    * @private
    */
   searchImage_(bbox) {

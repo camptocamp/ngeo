@@ -37,6 +37,7 @@ const uncheckNodeRecursively = (node) => {
 
 /**
  * Deactivate all layers in the theme.json
+ *
  * @param {import('gmf/themes').GmfTheme[]} themes
  */
 export const uncheckAllNodes = (themes) => {

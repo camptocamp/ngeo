@@ -31,7 +31,7 @@ import OlStyleStroke from 'ol/style/Stroke';
 import {BehaviorSubject} from 'rxjs';
 import OlControlControl from 'ol/control/Control';
 import OlInteractionInteraction from 'ol/interaction/Interaction';
-import {DefaultsOptions as OlInteractionDefaultsOptions} from 'ol/interaction';
+import {DefaultsOptions as OlInteractionDefaultsOptions} from 'ol/interaction/defaults';
 import {Options as OlControlZoomOptions} from 'ol/control/Zoom';
 import OlFeature from 'ol/Feature';
 import OlGeomGeometry from 'ol/geom/Geometry';

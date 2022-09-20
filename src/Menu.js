@@ -22,7 +22,6 @@
 import ngeoCustomEvent from 'ngeo/CustomEvent';
 import {listen, unlistenByKey} from 'ol/events';
 import olOverlay from 'ol/Overlay';
-import olOverlayPositioning from 'ol/OverlayPositioning';
 
 /**
  * The options for an action item for the contextual menu overlay.
@@ -57,7 +56,7 @@ export default class extends olOverlay {
    * @param {import('ol/Overlay').Options} [options] Overlay options.
    */
   constructor(menuOptions, options = {}) {
-    options.positioning = olOverlayPositioning.TOP_LEFT;
+    options.positioning = 'top-left';
     if (!menuOptions) {
       throw new Error('Missing menuOptions');
     }

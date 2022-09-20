@@ -211,6 +211,7 @@ Controller.prototype.handleInputChange = function (name) {
  * Never keep a undefined values, use null.
  * On boolean, replace null by false.
  * On date, datetime and time replace empty string by null.
+ *
  * @param {import('ngeo/format/Attribute.js').Attribute} attribute
  */
 Controller.prototype.sanitize_ = function (attribute) {

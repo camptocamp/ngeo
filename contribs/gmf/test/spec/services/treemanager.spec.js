@@ -47,6 +47,7 @@ describe('gmf.layertree.TreeManager', () => {
 
   /**
    * Delete unwanted randomly added property "$$hashKey".
+   *
    * @param {object} object
    */
   const cleanObject = (object) => {

@@ -25,17 +25,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 const dest = path.resolve(__dirname, '../api/dist/');
 
-const babelPresetEnv = [
-  '@babel/preset-env',
-  {
-    targets: {
-      browsers: require('./webpack.share').browsers,
-    },
-    modules: false,
-    loose: true,
-  },
-];
-
 module.exports = (env, argv) => {
   const library = argv.library ? argv.library : 'demo';
   return {
@@ -50,7 +39,6 @@ module.exports = (env, argv) => {
             options: {
               babelrc: false,
               comments: false,
-              presets: [babelPresetEnv],
             },
           },
         },

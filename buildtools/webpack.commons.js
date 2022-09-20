@@ -49,16 +49,6 @@ module.exports = function (config) {
     $: 'jquery',
   });
 
-  const babelPresetEnv = [
-    require.resolve('@babel/preset-env'),
-    {
-      targets: {
-        browsers: config.browsers || require('./webpack.share').browsers,
-      },
-      loose: true,
-    },
-  ];
-
   // Expose corejs-typeahead as window.Bloodhound
   const typeaheadRule = {
     test: require.resolve('corejs-typeahead'),
@@ -149,7 +139,6 @@ module.exports = function (config) {
     use: {
       loader: 'babel-loader',
       options: {
-        presets: [babelPresetEnv, require.resolve('@babel/preset-typescript')],
         babelrc: false,
         comments: false,
         assumptions: {
@@ -182,7 +171,6 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        presets: [babelPresetEnv],
         plugins: [require.resolve('babel-plugin-angularjs-annotate')],
       },
     },
@@ -206,7 +194,6 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        presets: [babelPresetEnv],
       },
     },
   };

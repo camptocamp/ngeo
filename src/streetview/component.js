@@ -170,6 +170,7 @@ class StreetviewController {
 
     /**
      * Angular $http service.
+     *
      * @private
      */
     this.http_ = $http;

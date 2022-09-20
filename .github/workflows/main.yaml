@@ -110,6 +110,27 @@ jobs:
         if: github.event_name != 'pull_request_target'
       - uses: actions/upload-artifact@v3
         with:
+          name: Examples
+          path: examples
+          if-no-files-found: ignore
+          retention-days: 5
+        if: always()
+      - uses: actions/upload-artifact@v3
+        with:
+          name: GMF Examples
+          path: contribs/gmf/examples
+          if-no-files-found: ignore
+          retention-days: 5
+        if: always()
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Apps
+          path: contribs/gmf/apps
+          if-no-files-found: ignore
+          retention-days: 5
+        if: always()
+      - uses: actions/upload-artifact@v3
+        with:
           name: Examples hosted
           path: .build/examples-hosted
           if-no-files-found: ignore
