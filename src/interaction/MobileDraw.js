@@ -229,7 +229,7 @@ export default class extends olInteractionInteraction {
     // == point ==
     if (this.type_ === 'Point') {
       if (!this.sketchFeature_) {
-        this.sketchFeature_ = new olFeature(new olGeomPoint(coordinate));
+        this.sketchFeature_ = new olFeature({geometry: new olGeomPoint(coordinate), name: 'mobileDrawPoint'});
         const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
         this.dispatchEvent(event);
       }
@@ -245,7 +245,10 @@ export default class extends olInteractionInteraction {
       this.sketchPoints_.push(this.sketchPoint_);
       if (!this.sketchFeature_) {
         coordinates = [coordinate.slice(), coordinate.slice()];
-        this.sketchFeature_ = new olFeature(new olGeomLineString(coordinates));
+        this.sketchFeature_ = new olFeature({
+          geometry: new olGeomLineString(coordinates),
+          name: 'mobileDrawLine',
+        });
         const event = new ngeoCustomEvent('drawstart', {feature: this.sketchFeature_});
         this.dispatchEvent(event);
       } else {
@@ -263,7 +266,10 @@ export default class extends olInteractionInteraction {
       this.sketchPoints_.push(this.sketchPoint_);
       if (!this.sketchFeature_) {
         coordinates = [coordinate.slice(), coordinate.slice(), coordinate.slice()];
-        this.sketchFeature_ = new olFeature(new olGeomPolygon([coordinates]));
+        this.sketchFeature_ = new olFeature({
+          geometry: new olGeomPolygon([coordinates]),
+          name: 'DrawMobilePolygon',
+        });
         const event = new ngeoCustomEvent('drawstart', {
           feature: this.sketchFeature_,
         });
@@ -462,7 +468,7 @@ export default class extends olInteractionInteraction {
       const geometry = this.getSketchPointGeometry_();
       geometry.setCoordinates(center);
     } else {
-      this.sketchPoint_ = new olFeature(new olGeomPoint(center));
+      this.sketchPoint_ = new olFeature({geometry: new olGeomPoint(center), name: 'mobileDrawPoint'});
     }
   }
 

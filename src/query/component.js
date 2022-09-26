@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -387,7 +387,8 @@ export class QueryController {
    * @private
    */
   handleMapClick_(evt) {
-    if (!(evt instanceof MapBrowserEvent)) {
+    if (!evt.originalEvent) {
+      // not a MapBrowserEvent
       return;
     }
 
@@ -420,7 +421,8 @@ export class QueryController {
    */
   handleMapPointerMove_(evt) {
     // No need to do anything if user is dragging the map
-    if (!(evt instanceof MapBrowserEvent) || evt.dragging) {
+    if (!evt.originalEvent || evt.dragging) {
+      // not a MapBrowserEvent
       return false;
     }
 

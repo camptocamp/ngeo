@@ -850,6 +850,7 @@ export class SearchController {
         new olFeature({
           geometry: geom,
           'layer_name': COORDINATES_LAYER_NAME,
+          name: 'SearchFeature',
         })
       );
       this.map.getView().setCenter(coordinateSuggestion.position);
@@ -916,6 +917,7 @@ export class SearchController {
     if (featureGeometry instanceof SimpleGeometry && size) {
       const view = this.map.getView();
       this.featureOverlay_.clear();
+      feature.set('name', 'SearchFeature');
       this.featureOverlay_.addFeature(feature);
       this.displayColorPicker = true;
       const fitArray =
@@ -1004,6 +1006,7 @@ export class SearchController {
         const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
           format.readFeature(data.features[resultIndex - 1])
         );
+        feature.set('name', 'SearchFeature');
         this.featureOverlay_.addFeature(feature);
         /**
          * @type {import('ol/View').FitOptions}

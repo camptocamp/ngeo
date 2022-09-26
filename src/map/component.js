@@ -103,6 +103,9 @@ Controller.prototype.$onInit = function () {
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
   this.map.setTarget(this.$element_[0]);
+
+  // Needed cypress e2e tests
+  window['overlayMgr'] = ngeoMapFeatureOverlayMgr;
 };
 
 myModule.controller('GmfMapController', Controller);

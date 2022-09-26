@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -270,7 +270,8 @@ Controller.prototype.onPointerMove_ = function () {
  * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.afterPointerMove_ = function (evt) {
-  if (this.inViewport_ && evt instanceof MapBrowserEvent) {
+  if (this.inViewport_ && evt.originalEvent) {
+    // evt is instance of MapBrowserEvent
     const params = {
       'layers': this.layer,
     };

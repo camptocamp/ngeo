@@ -271,7 +271,7 @@ export class PrintController {
     /**
      * @private
      */
-    this.maskLayer_ = new MaskLayer();
+    this.maskLayer_ = new MaskLayer({name: 'PrintMask'});
 
     /**
      * @type {boolean}
