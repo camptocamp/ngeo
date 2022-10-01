@@ -168,7 +168,7 @@
     "localforage": "1.10.0",
     "mapillary-js": "4.1.1",
     "moment": "2.29.4",
-    "neat-csv": "5.2.0",
+    "neat-csv": "7.0.0",
     "node-sass": "7.0.3",
     "node-sass-importer": "2.0.2",
     "ol": "7.1.0",
