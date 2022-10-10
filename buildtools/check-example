@@ -76,8 +76,9 @@ def main():
             diff,
         ],
         check=True,
+        stdout=subprocess.PIPE,
     )
-    result = float(result.decode().split("\n")[-2].split()[1])
+    result = float(result.stdout.decode().splitlines()[-2].split()[1])
     if result > 0.01:
         print(f"{result} > 0.01 => {diff}")
         sys.exit(1)
