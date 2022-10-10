@@ -154,6 +154,7 @@ jobs:
 
       - run: make transifex-send
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
+      - run: git diff
       - run: buildtools/npm-publish
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
 
