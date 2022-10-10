@@ -57,7 +57,7 @@ def main():
         subprocess.run(["gm", "composite", "-compose", "Multiply", old_ref, mask, ref], check=True)
 
     # Set to True to regenerate ref images
-    if True:
+    if False:
         if "/error-" not in ref:
             shutil.copyfile(current, old_ref)
             shutil.copyfile(current, ref)
