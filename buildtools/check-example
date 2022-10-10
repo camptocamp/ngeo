@@ -71,14 +71,14 @@ def main():
             "-highlight-style",
             "assign",
             current,
-            ref,
+            old_ref,
             "-file",
             diff,
         ],
         check=True,
         stdout=subprocess.PIPE,
     )
-    result = float(result.stdout.decode().splitlines()[-2].split()[1])
+    result = float(result.stdout.decode().splitlines()[-1].split()[1])
     if result > 0.01:
         print(f"{result} > 0.01 => {diff}")
         sys.exit(1)
