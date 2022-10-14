@@ -30,8 +30,10 @@ import {listen as olEventsListen} from 'ol/events';
 import {always as olEventsConditionAlways} from 'ol/events/condition';
 import olInteractionDraw, {createBox as olInteractionDrawCreateBox} from 'ol/interaction/Draw';
 import olLayerVector from 'ol/layer/Vector';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
 import olSourceVector from 'ol/source/Vector';
+
+import ImageLayer from 'ol/layer/Image';
+import TileLayer from 'ol/layer/Tile';
 
 /**
  * @type {angular.IModule}
@@ -426,19 +428,14 @@ export class QueryController {
       return false;
     }
 
-    const pixel = this.map.getEventPixel(evt.originalEvent);
-
-    /**
-     * @param {import('ol/layer/Base').default} layer
-     * @returns {boolean}
-     */
-    const queryable = function (layer) {
-      const visible = layer.get('visible');
-      const sourceids = layer.get('querySourceIds');
-      return visible && !!sourceids;
-    };
-    const hit = this.map.forEachLayerAtPixel(pixel, () => true, {
-      layerFilter: queryable,
+    let hit = false;
+    this.map.getAllLayers().forEach((layer) => {
+      if (layer.get('visible') && !!layer.get('querySourceIds'))
+        if (layer instanceof ImageLayer || layer instanceof TileLayer) {
+          if (layer.getData(evt.pixel)) {
+            hit = true;
+          }
+        }
     });
     this.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
   }
