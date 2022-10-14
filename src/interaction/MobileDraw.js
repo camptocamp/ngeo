@@ -138,7 +138,7 @@ export default class extends olInteractionInteraction {
   }
 
   /**
-   * @param {import('ol/PluggableMap').default} map Map.
+   * @param {import('ol/Map').default} map Map.
    */
   setMap(map) {
     const currentMap = this.getMap();

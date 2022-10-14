@@ -126,7 +126,7 @@ export default class extends olOverlay {
   }
 
   /**
-   * @param {import('ol/PluggableMap').default|undefined} map Map.
+   * @param {import('ol/Map').default|undefined} map Map.
    * @override
    */
   setMap(map) {
