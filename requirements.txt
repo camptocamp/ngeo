@@ -4,4 +4,4 @@ htmlmin==0.1.12
 Mako==1.2.3
 requests==2.27.1
 polib==1.1.1
-urllib3==1.26.5
+urllib3==1.26.12
