@@ -263,7 +263,7 @@ class DrawAzimut extends olInteractionPointer {
   }
 
   /**
-   * @param {import('ol/PluggableMap').default} map Map.
+   * @param {import('ol/Map').default} map Map.
    */
   setMap(map) {
     olInteractionPointer.prototype.setMap.call(this, map);

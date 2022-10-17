@@ -219,7 +219,7 @@ export default class extends olInteractionPointer {
   }
 
   /**
-   * @param {import('ol/PluggableMap').default} map Map.
+   * @param {import('ol/Map').default} map Map.
    */
   setMap(map) {
     this.overlay_.setMap(map);
@@ -310,7 +310,7 @@ export default class extends olInteractionPointer {
 
   /**
    * @param {import('ol/pixel').Pixel} pixel Pixel
-   * @param {import('ol/PluggableMap').default} map Map.
+   * @param {import('ol/Map').default} map Map.
    * @private
    */
   handlePointerAtPixel_(pixel, map) {

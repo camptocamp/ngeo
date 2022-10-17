@@ -616,7 +616,7 @@ export class PrintController {
   }
 
   /**
-   * @param {import('ol/PluggableMap').FrameState} frameState Frame state.
+   * @param {import('ol/Map').FrameState} frameState Frame state.
    * @returns {number} Scale of the map to print.
    */
   getScaleFn(frameState) {

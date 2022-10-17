@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,7 +40,7 @@ export default class Mask extends Layer {
     this.context_.canvas.style.position = 'absolute';
 
     /**
-     * @type {function(import('ol/PluggableMap').FrameState):number}
+     * @type {function(import('ol/Map').FrameState):number}
      */
     this.getScale;
 
@@ -56,7 +56,7 @@ export default class Mask extends Layer {
   }
 
   /**
-   * @param {import("ol/PluggableMap").FrameState} frameState
+   * @param {import("ol/Map").FrameState} frameState
    * @returns {HTMLElement}
    */
   render(frameState) {

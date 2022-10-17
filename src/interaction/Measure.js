@@ -276,7 +276,7 @@ class Measure extends olInteractionInteraction {
   }
 
   /**
-   * @param {import('ol/PluggableMap').default} map Map.
+   * @param {import('ol/Map').default} map Map.
    */
   setMap(map) {
     olInteractionInteraction.prototype.setMap.call(this, map);

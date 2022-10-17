@@ -201,7 +201,7 @@ Controller.prototype.initOlControl_ = function () {
     className: 'gmf-mouseposition-control',
     coordinateFormat: formatFn,
     target: this.$element_.find('.gmf-mouseposition-control-target').get(0),
-    undefinedHTML: gettextCatalog.getString('Coordinates'),
+    placeholder: gettextCatalog.getString('Coordinates'),
   });
 
   this.setProjection(this.projections[0]);
