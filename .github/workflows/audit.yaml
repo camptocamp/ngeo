@@ -38,9 +38,24 @@ jobs:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
 
-      - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
-      - run: python3 -m pip install --user --upgrade pip
-      - run: python3 -m pip install --user --pre c2cciutils[audit]
+      - run: python3 -m venv ~/.venv
+      - run: ~/.venv/bin/pip install --pre c2cciutils[audit]
+      - run: python3 -m pip install --pre c2cciutils[audit]
+
+      - name: Check .tool-versions file existence
+        id: tool-versions
+        uses: andstor/file-existence-action@v1
+        with:
+          files: .tool-versions
+      - uses: asdf-vm/actions/install@v1
+        if: steps.tool-versions.outputs.files_exists == 'true'
+      - uses: asdf-vm/actions/setup@v1
+        if: steps.tool-versions.outputs.files_exists != 'true'
+      - run: cat /tmp/python-build.*.log
+        if: failure()
+      - run: python --version
 
       - name: Audit
-        run: c2cciutils-audit --branch=${{ matrix.branch }}
+        run: ~/.venv/bin/c2cciutils-audit --branch=${{ matrix.branch }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
