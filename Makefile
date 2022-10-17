@@ -408,7 +408,7 @@ transifex-init: .build/applications.timestamp \
 	cd contribs/gmf/apps/; tx push --branch=$(MAJOR_VERSION) --translation --force
 
 .build/locale/%/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
-	tx pull --branch=$(MAJOR_VERSION) --resources=ngeo.ngeo --languages=$* --force --mode=reviewed
+	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.ngeo --languages=$* --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .build/locale/en/LC_MESSAGES/ngeo.po: .build/locale/ngeo.pot
@@ -417,13 +417,13 @@ transifex-init: .build/applications.timestamp \
 
 locales/%/app.json: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
 	mkdir -p $(dir $@)
-	tx pull --branch=$(MAJOR_VERSION) --resources=ngeo.webcomponent --languages=$* --force --mode=reviewed
+	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.webcomponent --languages=$* --force --mode=reviewed
 	touch $@
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/apps.po
 .build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/applications.timestamp
-	(cd contribs/gmf/apps/; tx pull --branch=$(MAJOR_VERSION) --languages=$* --force --mode=reviewed)
+	(cd contribs/gmf/apps/; tx pull --translations --branch=$(MAJOR_VERSION) --languages=$* --force --mode=reviewed)
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
