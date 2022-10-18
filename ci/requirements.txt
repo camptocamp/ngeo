@@ -1,2 +1,4 @@
 c2cciutils==1.1.dev20210617081616
 urllib3==1.26.5
+pip>=21.1 # not directly required, pinned by Snyk to avoid a vulnerability
+pipenv>=2022.1.8 # not directly required, pinned by Snyk to avoid a vulnerability
