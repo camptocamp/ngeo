@@ -351,9 +351,11 @@ export class ExternalDatSourcesManager {
     const id = getId(layer);
     const service = capabilities.Service;
 
-    const originalUrl = url || service.OnlineResource;
+    const req = capabilities.Capability.Request;
+    const dcpType = req.GetMap.DCPType.find((type) => type.hasOwnProperty('HTTP'));
+    const getMapUrl = dcpType !== undefined ? dcpType.HTTP.Get.OnlineResource : url;
 
-    url = service.OnlineResource || url;
+    const originalUrl = url || getMapUrl;
 
     let dataSource;
 
@@ -361,8 +363,6 @@ export class ExternalDatSourcesManager {
     if (this.extDataSources_[id]) {
       dataSource = this.extDataSources_[id];
     } else {
-      const req = capabilities.Capability.Request;
-
       // ogcImageType
       const formats = req.GetMap.Format;
       const imagePngType = 'image/png';
@@ -393,7 +393,7 @@ export class ExternalDatSourcesManager {
         ],
         ogcType: Type.WMS,
         visible: true,
-        wmsUrl: url,
+        wmsUrl: getMapUrl,
       };
       if (wmsInfoFormat) {
         options.wmsInfoFormat = wmsInfoFormat;
@@ -411,7 +411,7 @@ export class ExternalDatSourcesManager {
     //     Will also add the data source to the `import('ngeo/datasource/DataSource').DataSources`
     //     collection.
     //     If the group is created, its inner OL layer is also added to the map.
-    let wmsGroup = this.getWMSGroup(url);
+    let wmsGroup = this.getWMSGroup(getMapUrl);
     if (wmsGroup) {
       if (!wmsGroup.dataSources.includes(dataSource)) {
         wmsGroup.addDataSource(dataSource);
@@ -423,7 +423,7 @@ export class ExternalDatSourcesManager {
           dataSources: [dataSource],
           injector: this.injector_,
           title: service.Title,
-          url: url,
+          url: getMapUrl,
         },
         this.ngeoLayerHelper_
       );
