@@ -1,0 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-PYTHON-PIPENV-2330883:
+    - '*':
+        reason: New version not compatible with used c2cciutils version, used only in CI
+        created: 2022-10-20T07:23:33.473Z
+patch: {}
