@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import {findIndex as findIndexInArray} from 'ol/array';
 
 /**
  * @type {!angular.IModule}
@@ -137,13 +136,12 @@ export class Controller {
     const value = this.value;
 
     // Update currentIndex
-    this.currentIndex = findIndexInArray(
-      this.items,
+    this.currentIndex = this.items.findIndex(
       /**
        * @param {Object<string, string>} item
        * @returns {boolean}
        */
-      function (item) {
+      (item) => {
         return item.value === value;
       }
     );
