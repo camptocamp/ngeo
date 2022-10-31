@@ -17,6 +17,7 @@
     {
       fileMatch: ['^.github/workflows/main.yaml$'],
       matchStrings: ['node-version: \'(?<currentValue>[^\\s]+).x\''],
+      depNameTemplate: 'node',
       datasourceTemplate: 'node',
     }
   ],
