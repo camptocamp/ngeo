@@ -14,6 +14,11 @@
       fileMatch: ['^ci/applications-versions.yaml$'],
       matchStrings: ['(?<depName>[^\\s]+): (?<currentValue>[^\\s]+) # (?<datasource>[^\\s]+)'],
     },
+    {
+      fileMatch: ['^.github/workflows/main.yaml$'],
+      matchStrings: ['node-version: \'(?<currentValue>[^\\s]+).x\''],
+      datasourceTemplate: 'node',
+    }
   ],
   packageRules: [
     /** Automerge the patch, the minor and the dev dependency */
