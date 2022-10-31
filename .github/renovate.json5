@@ -16,10 +16,10 @@
     },
     {
       fileMatch: ['^.github/workflows/main.yaml$'],
-      matchStrings: ['node-version: \'(?<currentValue>[^\\s]+).x\''],
+      matchStrings: ["node-version: '(?<currentValue>[^\\s]+).x'"],
       depNameTemplate: 'node',
       datasourceTemplate: 'node',
-    }
+    },
   ],
   packageRules: [
     /** Automerge the patch, the minor and the dev dependency */
