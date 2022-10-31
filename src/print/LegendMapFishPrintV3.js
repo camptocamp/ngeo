@@ -115,23 +115,20 @@ export default class LegendMapFishPrintV3 {
     /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintLegendClass[]} */
     const groupClasses = [];
     // Iter first on layers to preserve the user order. Use reverse to have a top to bottom order.
-    dataLayerGroup
-      .getLayers()
-      .getArray()
-      .reverse()
-      .forEach((layer) => {
-        let nodeFirstLevel;
-        // Get the node that match this layer
-        nodesThemes.some((nodeTheme) => {
-          nodeFirstLevel = nodeTheme.children.find((node) => node.name === layer.get(LAYER_NODE_NAME_KEY));
-          return nodeFirstLevel !== undefined;
-        });
-        if (nodeFirstLevel) {
-          // Collect the legend classes for this node and this layer.
-          const item = this.collectLegendClassesInTree_(nodeFirstLevel, layer, scale, dpi, bbox);
-          this.addClassItemToArray_(groupClasses, item);
-        }
+    const layerGroup = [...dataLayerGroup.getLayers().getArray()].reverse();
+    layerGroup.forEach((layer) => {
+      let nodeFirstLevel;
+      // Get the node that match this layer
+      nodesThemes.some((nodeTheme) => {
+        nodeFirstLevel = nodeTheme.children.find((node) => node.name === layer.get(LAYER_NODE_NAME_KEY));
+        return nodeFirstLevel !== undefined;
       });
+      if (nodeFirstLevel) {
+        // Collect the legend classes for this node and this layer.
+        const item = this.collectLegendClassesInTree_(nodeFirstLevel, layer, scale, dpi, bbox);
+        this.addClassItemToArray_(groupClasses, item);
+      }
+    });
     return groupClasses;
   }
 
