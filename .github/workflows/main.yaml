@@ -135,7 +135,7 @@ jobs:
           path: .build/examples-hosted
           if-no-files-found: ignore
           retention-days: 5
-        if: failure()
+        if: always()
 
       # Generate API doc, api, lib
       - run: npm run doc -- srcapi/store/config.ts --json dist/typedoc.json
