@@ -32,3 +32,4 @@ audit:
       - eslint
       - angular-gettext-tools
       - fast-sass-loader
+      - loader-utils
