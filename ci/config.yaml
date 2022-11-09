@@ -37,3 +37,4 @@ audit:
       - webpack-cli
       - svgo
       - fast-sass-loader
+      - loader-utils
