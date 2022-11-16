@@ -211,7 +211,6 @@ export default class GmfAuthForm extends GmfBaseElement {
                         ${i18next.t('The following field should be kept empty on first login:')}
                         <input
                           type="text"
-                          autocomplete="off"
                           class="form-control"
                           name="otp"
                           autocomplete="one-time-code"
@@ -307,7 +306,6 @@ export default class GmfAuthForm extends GmfBaseElement {
                       <div class="form-group">
                         <input
                           type="text"
-                          autocomplete="off"
                           class="form-control"
                           name="otp"
                           autocomplete="one-time-code"
