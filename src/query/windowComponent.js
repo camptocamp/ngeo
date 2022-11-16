@@ -299,7 +299,7 @@ QueryWindowController.prototype.$onInit = function () {
     windowContainer.resizable({
       handles: 'all',
       minHeight: 240,
-      minWidth: 260,
+      minWidth: 270,
     });
   }
 };
