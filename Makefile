@@ -140,7 +140,7 @@ test-debug: .build/node_modules.timestamp .build/build-dll.timestamp .build/node
 	TS_NODE_PROJECT=disable.json ./node_modules/karma/bin/karma start karma-conf.js --browsers=Chrome --single-run=false --autoWatch=true
 
 .build/node_modules_karma-chrome-launcher.timestamp:
-	npm install --no-optional karma-chrome-launcher
+	npm install --omit=optional karma-chrome-launcher
 	mkdir -p $(dir $@)
 	touch $@
 
@@ -200,7 +200,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	touch $@
 
 .build/node_modules.copyright.timestamp: .build/node_modules.timestamp
-	npm install --no-save --no-optional --no-package-lock ./buildtools/copyright
+	npm install --no-save --omit=optional --no-package-lock ./buildtools/copyright
 	touch $@
 
 .build/eslint.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml \
@@ -332,7 +332,7 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
-	npm install --no-optional
+	npm install --omit=optional
 	# Installed from peer dependency from ol-layerswitcher and that breaks our types
 	rm -rf ./node_modules/@types/openlayers
 	mkdir -p $(dir $@)
