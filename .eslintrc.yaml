@@ -3,6 +3,8 @@ extends:
   - plugin:jsdoc/recommended
   - plugin:@typescript-eslint/recommended
   - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - plugin:wc/recommended
+  - plugin:lit/recommended
 
 plugins:
   - copyright
