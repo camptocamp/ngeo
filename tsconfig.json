@@ -16,6 +16,11 @@
     "experimentalDecorators": true,
     "baseUrl": "./",
     "types": ["cypress", "node", "cypress-real-events"],
+    "plugins": [
+      {
+        "name": "ts-lit-plugin"
+      }
+    ],
     "paths": {
       "ngeo/*": ["src/*"],
       "gmfapi/*": ["srcapi/*"],

@@ -199,6 +199,7 @@
     "terser": "5.15.1",
     "terser-webpack-plugin": "4.2.3",
     "tinycolor2": "1.4.2",
+    "ts-lit-plugin": "1.2.1",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.1.0",
     "typedoc": "0.23.20",
