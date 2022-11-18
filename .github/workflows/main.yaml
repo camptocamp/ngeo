@@ -45,7 +45,7 @@ jobs:
 
       - name: Get sha
         id: sha
-        run: echo "::set-output name=sha::$(jq -r .pull_request.head.sha < ${GITHUB_EVENT_PATH})"
+        run: echo "sha=$(jq -r .pull_request.head.sha < ${GITHUB_EVENT_PATH})" >> $GITHUB_OUTPUT
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
 
       - uses: actions/checkout@v3
@@ -213,7 +213,7 @@ jobs:
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - id: branch
-        run: echo "::set-output name=branch::${{ github.head_ref || github.ref_name }}"
+        run: echo "branch=${{ github.head_ref || github.ref_name }}" >> $GITHUB_OUTPUT
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - uses: actions/download-artifact@v3
