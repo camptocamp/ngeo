@@ -180,7 +180,7 @@
     "raw-loader": "4.0.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "regenerator-runtime": "0.13.10",
+    "regenerator-runtime": "0.13.11",
     "resize-observer-polyfill": "1.5.1",
     "rxjs": "7.5.7",
     "sass": "1.49.11",
