@@ -236,22 +236,23 @@ module.exports = function (config) {
         });
         files.sort(
           get_comp(
-            config.fist_scss || [
-              // ngeo default apps
-              '/apps/desktop/sass/vars_desktop.scss',
-              '/apps/desktop_alt/sass/vars_desktop_alt.scss',
-              '/apps/iframe_api/sass/vars_iframe_api.scss',
-              '/apps/mobile/sass/vars_mobile.scss',
-              '/apps/mobile_alt/sass/vars_mobile_alt.scss',
-              '/apps/oeedit/sass/vars_oeedit.scss',
-              // GeoMapFish project sass vars files
-              '/apps/sass/vars_',
-              '/controllers/vars_',
-              // For the examples
-              'examples/vars.scss',
-              // For the tests
-              'sass/vars.scss',
-            ],
+            config.first_scss ||
+              config.fist_scss || [
+                // ngeo default apps
+                '/apps/desktop/sass/vars_desktop.scss',
+                '/apps/desktop_alt/sass/vars_desktop_alt.scss',
+                '/apps/iframe_api/sass/vars_iframe_api.scss',
+                '/apps/mobile/sass/vars_mobile.scss',
+                '/apps/mobile_alt/sass/vars_mobile_alt.scss',
+                '/apps/oeedit/sass/vars_oeedit.scss',
+                // GeoMapFish project sass vars files
+                '/apps/sass/vars_',
+                '/controllers/vars_',
+                // For the examples
+                'examples/vars.scss',
+                // For the tests
+                'sass/vars.scss',
+              ],
             config.last_scss || [
               // project and ngeo default apps other sass files
               '/apps/',
