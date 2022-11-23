@@ -223,7 +223,7 @@ module.exports = function (config) {
         });
         files.sort(
           get_comp(
-            config.fist_scss || [
+            config.scss_order || [
               // ngeo default apps
               '/apps/desktop/sass/vars_desktop.scss',
               '/apps/desktop_alt/sass/vars_desktop_alt.scss',
