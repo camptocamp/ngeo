@@ -51,7 +51,7 @@
     "@types/cesium": "1.67.14",
     "@types/d3": "6.2.0",
     "@types/d3-selection": "1.4.3",
-    "@types/d3-transition": "2.0.2",
+    "@types/d3-transition": "2.0.0",
     "@types/file-saver": "2.0.5",
     "@types/geojson": "7946.0.10",
     "@types/googlemaps": "3.43.3",
