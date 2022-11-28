@@ -1,2 +1,10 @@
 *.html
 *.min.js
+*.js
+*.css
+*.scss
+*.html
+*.json
+.jshintrc
+*.md
+*.ts
