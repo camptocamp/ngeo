@@ -60,7 +60,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
 
       - uses: camptocamp/initialise-gopass-summon-action@v2
         with:
@@ -95,6 +95,8 @@ jobs:
       - run: make lint
         if: github.event_name != 'pull_request_target'
       - run: make test
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         if: github.event_name != 'pull_request_target'
       - run: make check-examples-checker
         if: github.event_name != 'pull_request_target'
@@ -102,10 +104,17 @@ jobs:
       - run: make serve-gmf-apps &
         if: github.event_name != 'pull_request_target'
       - run: npm run test-cli
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         if: github.event_name != 'pull_request_target'
       # Webpack build of ngeo/gmf examples and gmf apps
-      - run: NODE_ENV=production make examples-hosted
+      - run: make examples-hosted
+        env:
+          NODE_ENV: production
+          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run build-storybook
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - run: make check-examples
         if: github.event_name != 'pull_request_target'
       - uses: actions/upload-artifact@v3
@@ -141,7 +150,11 @@ jobs:
       - run: npm run doc -- srcapi/store/config.ts --json dist/typedoc.json
       - run: npm run doc
       - run: npm run build-api
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run dist
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run dist-spinner
 
       - uses: actions/upload-artifact@v3
@@ -161,10 +174,13 @@ jobs:
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
       - name: Publish Storybook to Chromatic to run visual tests
         run: GITHUB_SHA=${GITHUB_SHA_} npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token) --branch-name=${GITHUB_HEAD_REF}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
         env:
+          NODE_OPTIONS: --openssl-legacy-provider
           GITHUB_SHA_: ${{ steps.sha.outputs.sha }}
 
       - name: Notify c2cgeoportal
