@@ -11,7 +11,7 @@ max_line_length = 110
 quote_type = single
 insert_final_newline = true
 
-[*.{js,ts,css,scss,html,md,yaml,json,json5,jshintrc}]
+[*.{js,ts,css,scss,html,md,yaml,json,json5,jshintrc,whitesource}]
 indent_size = 2
 
 [Makefile]
