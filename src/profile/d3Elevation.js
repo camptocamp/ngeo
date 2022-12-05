@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2022 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -407,6 +407,7 @@ function d3Elevation(options, functions) {
         if (!area) {
           throw new Error('Missing area');
         }
+        // @ts-ignore
         g.select('.area').transition().attr('d', area);
       }
 
@@ -432,6 +433,7 @@ function d3Elevation(options, functions) {
           .defined((d) => linesConfiguration[name].zExtractor(d) !== null);
 
         // Update path for the line.
+        // @ts-ignore
         g.select(`.line.${name}`).transition().attr('d', line);
       }
 
@@ -451,6 +453,7 @@ function d3Elevation(options, functions) {
           (dommainValue) => /** @type {string} */ (formatter.ytick(/** @type {number} */ (dommainValue), 'm'))
         );
 
+        // @ts-ignore
         g.select('.x.axis')
           .transition()
           .call(/** @type {any} */ (xAxis));
@@ -465,11 +468,13 @@ function d3Elevation(options, functions) {
           yAxis.ticks(height / 15);
         }
 
+        // @ts-ignore
         g.select('.y.axis')
           .transition()
           .call(/** @type {any} */ (yAxis));
       }
 
+      // @ts-ignore
       g.select('.grid-y')
         .transition()
         .call(/** @type {any} */ (yAxis.tickSize(-width).tickFormat(null)))
@@ -625,6 +630,7 @@ function d3Elevation(options, functions) {
 
     poiEnterG.append('line').style('shape-rendering', 'crispEdges');
 
+    // @ts-ignore
     poiEnterG.style('opacity', 0).transition().duration(1000).delay(100).style('opacity', 1);
 
     poiEnterG
