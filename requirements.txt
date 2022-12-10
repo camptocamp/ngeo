@@ -5,3 +5,4 @@ Mako==1.2.3
 requests==2.27.1
 transifex-client==0.12.5  # rq.filter: <=0.12.5
 urllib3==1.26.8
+certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
