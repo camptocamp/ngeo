@@ -3,6 +3,7 @@
 checks:
   versions:
     rebuild: False
+    audit: False
   codespell:
     ignore_re:
       - ^contribs/gmf/test/spec/data/themescapabilities\.js$
