@@ -1,9 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/camptocamp/c2cciutils/master/c2cciutils/schema.json
 
 checks:
-  versions:
-    rebuild: False
-    audit: False
   codespell:
     ignore_re:
       - ^contribs/gmf/test/spec/data/themescapabilities\.js$
