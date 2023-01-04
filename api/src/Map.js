@@ -111,9 +111,7 @@ class Map {
     // Get background layer first...
     themes.getBackgroundLayers().then((layers) => {
       // The options is an array for backward compatibility reason.
-      const backgroundLayer = options.backgroundLayers || [
-        constants.backgroundLayer,
-      ];
+      const backgroundLayer = options.backgroundLayers || [constants.backgroundLayer];
       for (const layer of layers) {
         if (backgroundLayer.includes(layer.get('config.name'))) {
           // we don't want the background layer in the layerswitch so we remove the title.
@@ -191,22 +189,18 @@ class Map {
         .getLayers()
         .getArray()
         .filter((layer) => layer.getVisible());
-      const visibleLayersName = visibleLayers.map((layer) =>
-        layer.get('config.name')
-      );
+      const visibleLayersName = visibleLayers.map((layer) => layer.get('config.name'));
 
       this.clearSelection();
 
       for (const layer of constants.queryableLayers) {
         if (visibleLayersName.includes(layer)) {
-          getFeaturesFromCoordinates(layer, event.coordinate, resolution).then(
-            (feature) => {
-              if (feature) {
-                this.vectorSource_.addFeature(feature);
-                this.selectObject(feature.getId(), event.coordinate, true);
-              }
+          getFeaturesFromCoordinates(layer, event.coordinate, resolution).then((feature) => {
+            if (feature) {
+              this.vectorSource_.addFeature(feature);
+              this.selectObject(feature.getId(), event.coordinate, true);
             }
-          );
+          });
         }
       }
     });
@@ -251,9 +245,7 @@ class Map {
    */
   addMarker(options = {}) {
     const marker = new Feature({
-      geometry: new Point(
-        options.position ? options.position : this.view_.getCenter()
-      ),
+      geometry: new Point(options.position ? options.position : this.view_.getCenter()),
     });
     if (options.icon) {
       // FIXME: use size?
@@ -325,9 +317,7 @@ class Map {
             const values = zip(columns, line.split('\t'));
             // reverse to order of the coordinates to be compatible with the old api.
             const marker = new Feature({
-              geometry: new Point(
-                values.point.split(',').reverse().map(parseFloat)
-              ),
+              geometry: new Point(values.point.split(',').reverse().map(parseFloat)),
             });
             marker.setProperties(filterByKeys(values, attr));
             marker.setId(values.id);
@@ -385,11 +375,7 @@ class Map {
         if (table) {
           contentHTML += '<table><tbody>';
           for (const key in properties) {
-            if (
-              !EXCLUDE_PROPERTIES.includes(key) &&
-              key !== geometryName &&
-              properties[key] !== undefined
-            ) {
+            if (!EXCLUDE_PROPERTIES.includes(key) && key !== geometryName && properties[key] !== undefined) {
               contentHTML += '<tr>';
               contentHTML += `<th>${translations[key] || key}</th>`;
               contentHTML += `<td>${properties[key]}</td>`;
@@ -401,9 +387,7 @@ class Map {
           contentHTML += `<div><b>${properties.title}</b></div>`;
           contentHTML += `<p>${properties.description}</p>`;
         }
-        const content = this.overlay_
-          .getElement()
-          .querySelector('.ol-popup-content');
+        const content = this.overlay_.getElement().querySelector('.ol-popup-content');
         content.innerHTML = contentHTML;
         this.overlay_.setPosition(position);
       });

@@ -15,14 +15,8 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceTileWMS from 'ol/source/TileWMS.js';
 
-
 /** @type {!angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoMiscSortableComponent.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscSortableComponent.name]);
 
 /**
  * @param {angular.IScope} $scope Scope.
@@ -30,12 +24,11 @@ const module = angular.module('app', [
  * @ngInject
  */
 function MainController($scope) {
-
   /** @type {import("ol/layer/Tile.js").default} */
   const asitvd = new olLayerTile({
     source: new ngeoSourceAsitVD({
-      layer: 'asitvd.fond_couleur'
-    })
+      layer: 'asitvd.fond_couleur',
+    }),
   });
   asitvd.set('name', 'asitvd');
 
@@ -45,8 +38,8 @@ function MainController($scope) {
       projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.swissboundaries3d-gemeinde-flaeche.fill'},
-      serverType: 'mapserver'
-    })
+      serverType: 'mapserver',
+    }),
   });
   boundaries.set('name', 'Boundaries');
 
@@ -56,8 +49,8 @@ function MainController($scope) {
       projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.geologie-gravimetrischer_atlas'},
-      serverType: 'mapserver'
-    })
+      serverType: 'mapserver',
+    }),
   });
   waterBodies.set('name', 'Water bodies');
 
@@ -67,8 +60,8 @@ function MainController($scope) {
       projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.swisstopo.dreiecksvermaschung'},
-      serverType: 'mapserver'
-    })
+      serverType: 'mapserver',
+    }),
   });
   cities.set('name', 'Cities');
 
@@ -76,18 +69,13 @@ function MainController($scope) {
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
-    layers: [
-      asitvd,
-      boundaries,
-      waterBodies,
-      cities
-    ],
+    layers: [asitvd, boundaries, waterBodies, cities],
     view: new olView({
       projection: EPSG21781,
       resolutions: [1000, 500, 200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
-      zoom: 1
-    })
+      zoom: 1,
+    }),
   });
 
   const map = this.map;
@@ -101,8 +89,8 @@ function MainController($scope) {
       projection: undefined, // should be removed in next OL version
       url: 'https://wms.geo.admin.ch',
       params: {'LAYERS': 'ch.bafu.laerm-strassenlaerm_tag'},
-      serverType: 'mapserver'
-    })
+      serverType: 'mapserver',
+    }),
   });
   this.roads_.set('name', 'Roads');
 
@@ -114,13 +102,15 @@ function MainController($scope) {
 
   const selectedLayers = this.selectedLayers;
 
-  ngeoMiscSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope,
-    layerFilter);
+  ngeoMiscSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope, layerFilter);
 
   // watch any change on layers array to refresh the map
-  $scope.$watchCollection(() => selectedLayers, () => {
-    map.render();
-  });
+  $scope.$watchCollection(
+    () => selectedLayers,
+    () => {
+      map.render();
+    }
+  );
 
   /**
    * @param {import("ol/layer/Base.js").default} layer Layer.
@@ -130,9 +120,7 @@ function MainController($scope) {
   function layerFilter(layer) {
     return layer !== asitvd;
   }
-
 }
-
 
 /**
  * Add/remove the "Roads" layer when used as a setter, and return whether
@@ -142,7 +130,7 @@ function MainController($scope) {
  *     `false` if the "Roads" layer is not in the map, `undefined` if the
  *     function is used as setter.
  */
-MainController.prototype.toggleRoadsLayer = function(val) {
+MainController.prototype.toggleRoadsLayer = function (val) {
   if (val === undefined) {
     return this.map.getLayers().getArray().indexOf(this.roads_) >= 0;
   } else {
@@ -154,8 +142,6 @@ MainController.prototype.toggleRoadsLayer = function(val) {
   }
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

@@ -27,17 +27,14 @@ import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
 import 'ngeo/sass/font.scss';
 
-
 /**
  * @typedef {Object} MenuEventTarget
  * @property {string} action
  */
 
-
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<MenuEventTarget>} MenuEvent
  */
-
 
 /**
  * @type {!angular.IModule}
@@ -52,23 +49,24 @@ const module = angular.module('ngeoRule', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
-});
-
-
-module.value('ngeoRuleTemplateUrl',
+module.value(
+  'ngeoRuleTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoRuleTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/filter/rulecomponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/filter/rulecomponent';
+  }
+);
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -82,13 +80,11 @@ function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
   return ngeoRuleTemplateUrl($attrs);
 }
 
-
 /**
  * @private
  * @hidden
  */
 class RuleController {
-
   /**
    * @param {!angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {!angular.IScope} $scope Angular scope.
@@ -103,9 +99,7 @@ class RuleController {
    * @ngdoc controller
    * @ngname NgeoRuleController
    */
-  constructor(gettextCatalog, $scope, $timeout, ngeoFeatureHelper,
-    ngeoRuleHelper, ngeoToolActivateMgr) {
-
+  constructor(gettextCatalog, $scope, $timeout, ngeoFeatureHelper, ngeoRuleHelper, ngeoToolActivateMgr) {
     // Binding properties
 
     /**
@@ -128,7 +122,6 @@ class RuleController {
      * @type {string}
      */
     this.toolGroup;
-
 
     // Injected properties
 
@@ -168,7 +161,6 @@ class RuleController {
      */
     this.ngeoToolActivateMgr_ = ngeoToolActivateMgr;
 
-
     // Inner properties
 
     /**
@@ -189,11 +181,9 @@ class RuleController {
     this.operators = {
       [operatorType.EQUAL_TO]: gettextCatalog.getString('Is equal to'),
       [operatorType.GREATER_THAN]: gettextCatalog.getString('Is greater than'),
-      [operatorType.GREATER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
-        'Is greater than or equal to'),
+      [operatorType.GREATER_THAN_OR_EQUAL_TO]: gettextCatalog.getString('Is greater than or equal to'),
       [operatorType.LESSER_THAN]: gettextCatalog.getString('Is lesser than'),
-      [operatorType.LESSER_THAN_OR_EQUAL_TO]: gettextCatalog.getString(
-        'Is lesser than or equal to'),
+      [operatorType.LESSER_THAN_OR_EQUAL_TO]: gettextCatalog.getString('Is lesser than or equal to'),
       [operatorType.NOT_EQUAL_TO]: gettextCatalog.getString('Is not equal to'),
       [operatorType.LIKE]: gettextCatalog.getString('Contains'),
       [spatialOperatorType.CONTAINS]: gettextCatalog.getString('Contains'),
@@ -202,7 +192,7 @@ class RuleController {
       [temporalOperatorType.BEGINS]: gettextCatalog.getString('Begins at'),
       [temporalOperatorType.DURING]: gettextCatalog.getString('During'),
       [temporalOperatorType.ENDS]: gettextCatalog.getString('Ends at'),
-      [temporalOperatorType.EQUALS]: gettextCatalog.getString('Is equal to')
+      [temporalOperatorType.EQUALS]: gettextCatalog.getString('Is equal to'),
     };
 
     /**
@@ -218,7 +208,7 @@ class RuleController {
       [operatorType.LIKE]: '~',
       [temporalOperatorType.BEGINS]: '>=',
       [temporalOperatorType.ENDS]: '<=',
-      [temporalOperatorType.EQUALS]: '='
+      [temporalOperatorType.EQUALS]: '=',
     };
 
     /**
@@ -233,7 +223,7 @@ class RuleController {
       maxDefValue: this.createDate_(),
       minDefValue: this.createWeekAgoDate_(),
       mode: 'range',
-      interval: [0, 1, 0, 0]
+      interval: [0, 1, 0, 0],
     };
 
     /**
@@ -248,21 +238,20 @@ class RuleController {
       maxDefValue: this.createDate_(),
       minDefValue: this.createDate_(),
       mode: 'value',
-      interval: [0, 1, 0, 0]
+      interval: [0, 1, 0, 0],
     };
 
     /**
      * @type {!import("ngeo/misc/ToolActivate.js").default}
      * @private
      */
-    this.toolActivate_;// = new ngeo.misc.ToolActivate(this.rule, 'active');
+    this.toolActivate_; // = new ngeo.misc.ToolActivate(this.rule, 'active');
 
     /**
      * @type {!Array.<Function>}
      * @private
      */
     this.unlisteners_ = [];
-
 
     // Inner properties when dealing with a `ngeo.rule.Geometry`
 
@@ -304,7 +293,7 @@ class RuleController {
      */
     this.modify_ = new ngeoInteractionModify({
       features: this.selectedFeatures,
-      style: ngeoFeatureHelper.getVertexStyle(false)
+      style: ngeoFeatureHelper.getVertexStyle(false),
     });
     this.interactions_.push(this.modify_);
 
@@ -319,10 +308,10 @@ class RuleController {
           text: '\uf01e',
           font: '900 18px "Font Awesome 5 Free"',
           fill: new olStyleFill({
-            color: '#7a7a7a'
-          })
-        })
-      })
+            color: '#7a7a7a',
+          }),
+        }),
+      }),
     });
     this.interactions_.push(this.rotate_);
 
@@ -337,10 +326,10 @@ class RuleController {
           text: '\uf0b2',
           font: '900 18px "Font Awesome 5 Free"',
           fill: new olStyleFill({
-            color: '#7a7a7a'
-          })
-        })
-      })
+            color: '#7a7a7a',
+          }),
+        }),
+      }),
     });
     this.interactions_.push(this.translate_);
 
@@ -355,26 +344,17 @@ class RuleController {
     /**
      * @type {!import("ngeo/misc/ToolActivate.js").default}
      */
-    this.modifyToolActivate = new ngeoMiscToolActivate(
-      this.modify_,
-      'active'
-    );
+    this.modifyToolActivate = new ngeoMiscToolActivate(this.modify_, 'active');
 
     /**
      * @type {import("ngeo/misc/ToolActivate.js").default}
      */
-    this.rotateToolActivate = new ngeoMiscToolActivate(
-      this.rotate_,
-      'active'
-    );
+    this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
 
     /**
      * @type {import("ngeo/misc/ToolActivate.js").default}
      */
-    this.translateToolActivate = new ngeoMiscToolActivate(
-      this.translate_,
-      'active'
-    );
+    this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
 
     /**
      * The geometry type used by the clone feature.
@@ -393,13 +373,9 @@ class RuleController {
 
     this.toolActivate_ = new ngeoMiscToolActivate(this.rule, 'active');
 
-    this.ngeoToolActivateMgr_.registerTool(
-      this.toolGroup, this.toolActivate_);
+    this.ngeoToolActivateMgr_.registerTool(this.toolGroup, this.toolActivate_);
 
-    this.scope_.$watch(
-      () => this.rule.active,
-      this.handleActiveChange_.bind(this)
-    );
+    this.scope_.$watch(() => this.rule.active, this.handleActiveChange_.bind(this));
 
     // If the rule is a DATE or DATETIME, then a datepicker directive is used.
     // It is not possible to set the current values to the datepicker, but you
@@ -408,103 +384,114 @@ class RuleController {
     //
     // This chunk of code ensures that the rule properties are synchronized
     // with the TimeProperty objects required to build the datepickers.
-    if (this.clone.type === ngeoFormatAttributeType.DATE ||
-        this.clone.type === ngeoFormatAttributeType.DATETIME
+    if (
+      this.clone.type === ngeoFormatAttributeType.DATE ||
+      this.clone.type === ngeoFormatAttributeType.DATETIME
     ) {
       // Watch 'expression'
-      this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.getExpression(),
-        (newVal) => {
-          if (typeof newVal == 'string') {
-            this.timeValueMode.minDefValue = newVal || this.createDate_();
+      this.unlisteners_.push(
+        this.scope_.$watch(
+          () => this.clone.getExpression(),
+          (newVal) => {
+            if (typeof newVal == 'string') {
+              this.timeValueMode.minDefValue = newVal || this.createDate_();
+            }
           }
-        }
-      ));
+        )
+      );
       // Watch 'lowerBoundary'
-      this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.lowerBoundary,
-        (newVal) => {
-          if (typeof newVal == 'string') {
-            this.timeRangeMode.minDefValue = newVal || this.createWeekAgoDate_();
+      this.unlisteners_.push(
+        this.scope_.$watch(
+          () => this.clone.lowerBoundary,
+          (newVal) => {
+            if (typeof newVal == 'string') {
+              this.timeRangeMode.minDefValue = newVal || this.createWeekAgoDate_();
+            }
           }
-        }
-      ));
+        )
+      );
       // Watch 'upperBoundary'
-      this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.upperBoundary,
-        (newVal) => {
-          if (typeof newVal == 'string') {
-            this.timeRangeMode.maxDefValue = newVal || this.createDate_();
+      this.unlisteners_.push(
+        this.scope_.$watch(
+          () => this.clone.upperBoundary,
+          (newVal) => {
+            if (typeof newVal == 'string') {
+              this.timeRangeMode.maxDefValue = newVal || this.createDate_();
+            }
           }
-        }
-      ));
+        )
+      );
     } else if (this.clone.type === ngeoFormatAttributeType.GEOMETRY) {
-
       // Watch 'operator' of clone. Make sure any existing geometry is
       // supported by the newly selected operator. If it doesn't, reset
       // the expression, i.e. geometry.
-      this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.operator,
-        (newVal) => {
-          this.drawActive = false;
-          if (newVal && newVal === RuleSpatialOperatorType.CONTAINS) {
-            const clone = this.clone;
-            if (clone instanceof ngeoRuleGeometry) {
-              const geometry = clone.feature.getGeometry();
-              if (geometry) {
-                const geomType = this.ngeoFeatureHelper_.getType(clone.feature);
-                const supportedTypes = [
-                  ngeoGeometryType.CIRCLE,
-                  ngeoGeometryType.POLYGON,
-                  ngeoGeometryType.RECTANGLE
-                ];
-                if (!supportedTypes.includes(geomType)) {
-                  this.clone.setExpression(null);
+      this.unlisteners_.push(
+        this.scope_.$watch(
+          () => this.clone.operator,
+          (newVal) => {
+            this.drawActive = false;
+            if (newVal && newVal === RuleSpatialOperatorType.CONTAINS) {
+              const clone = this.clone;
+              if (clone instanceof ngeoRuleGeometry) {
+                const geometry = clone.feature.getGeometry();
+                if (geometry) {
+                  const geomType = this.ngeoFeatureHelper_.getType(clone.feature);
+                  const supportedTypes = [
+                    ngeoGeometryType.CIRCLE,
+                    ngeoGeometryType.POLYGON,
+                    ngeoGeometryType.RECTANGLE,
+                  ];
+                  if (!supportedTypes.includes(geomType)) {
+                    this.clone.setExpression(null);
+                  }
                 }
               }
             }
           }
-        }
-      ));
+        )
+      );
 
       // Watch 'expression' of clone. Set 'geomType' property accordingly.
-      this.unlisteners_.push(this.scope_.$watch(
-        () => this.clone.expression,
-        (newVal) => {
-          if (newVal) {
-            const clone = this.clone;
-            if (clone instanceof ngeoRuleGeometry) {
-              this.geomType = this.ngeoFeatureHelper_.getType(clone.feature);
+      this.unlisteners_.push(
+        this.scope_.$watch(
+          () => this.clone.expression,
+          (newVal) => {
+            if (newVal) {
+              const clone = this.clone;
+              if (clone instanceof ngeoRuleGeometry) {
+                this.geomType = this.ngeoFeatureHelper_.getType(clone.feature);
+              }
+            } else {
+              this.geomType = null;
             }
-          } else {
-            this.geomType = null;
           }
-        }
-      ));
+        )
+      );
 
       // Watch both 'expression', 'active' and the modify control to be all
       // thruthy. When that's the case, the clone feature is added to the
       // selection collection.
-      this.unlisteners_.push(this.scope_.$watch(
-        () => {
-          const hasExpression = this.clone.getExpression() !== null;
-          const isActive = this.rule.active === true;
-          const editToolIsActive = this.modify_.getActive() ||
-                this.rotate_.getActive() ||
-                this.translate_.getActive();
-          return hasExpression && isActive && editToolIsActive;
-        },
-        (newVal) => {
-          if (newVal) {
-            const clone = this.clone;
-            if (clone instanceof ngeoRuleGeometry) {
-              this.selectedFeatures.push(clone.feature);
+      this.unlisteners_.push(
+        this.scope_.$watch(
+          () => {
+            const hasExpression = this.clone.getExpression() !== null;
+            const isActive = this.rule.active === true;
+            const editToolIsActive =
+              this.modify_.getActive() || this.rotate_.getActive() || this.translate_.getActive();
+            return hasExpression && isActive && editToolIsActive;
+          },
+          (newVal) => {
+            if (newVal) {
+              const clone = this.clone;
+              if (clone instanceof ngeoRuleGeometry) {
+                this.selectedFeatures.push(clone.feature);
+              }
+            } else {
+              this.selectedFeatures.clear();
             }
-          } else {
-            this.selectedFeatures.clear();
           }
-        }
-      ));
+        )
+      );
     }
   }
 
@@ -518,8 +505,7 @@ class RuleController {
       // it manually to let it do its magic
       this.handleActiveChange_(false, true);
     }
-    this.ngeoToolActivateMgr_.unregisterTool(
-      this.toolGroup, this.toolActivate_);
+    this.ngeoToolActivateMgr_.unregisterTool(this.toolGroup, this.toolActivate_);
     for (let i = 0, ii = this.unlisteners_.length; i < ii; i++) {
       this.unlisteners_[i]();
     }
@@ -568,7 +554,7 @@ class RuleController {
    */
   toggleChoiceSelection(choice) {
     const rule = this.clone;
-    const choices = rule.getExpression() ? /** @type {string} */(rule.getExpression()).split(',') : [];
+    const choices = rule.getExpression() ? /** @type {string} */ (rule.getExpression()).split(',') : [];
     const idx = choices.indexOf(choice);
     if (idx > -1) {
       choices.splice(idx, 1);
@@ -577,7 +563,6 @@ class RuleController {
     }
     rule.setExpression(choices.length ? choices.join(',') : null);
   }
-
 
   /**
    * @param {Object} date Date
@@ -600,7 +585,6 @@ class RuleController {
    * @private
    */
   createDate_(opt_timeDelta) {
-
     const date = new Date();
 
     if (opt_timeDelta !== undefined) {
@@ -628,9 +612,7 @@ class RuleController {
     return date.toLocaleDateString();
   }
 
-
   // === Methods used when bound to a `ngeo.rule.Geometry`
-
 
   /**
    * Called when the active property of a rule changes. Only used when this
@@ -643,10 +625,10 @@ class RuleController {
    * @private
    */
   handleActiveChange_(active, oldActive) {
-
-    if (!(this.rule instanceof ngeoRuleGeometry) ||
-        !(this.clone instanceof ngeoRuleGeometry) ||
-        active === oldActive
+    if (
+      !(this.rule instanceof ngeoRuleGeometry) ||
+      !(this.clone instanceof ngeoRuleGeometry) ||
+      active === oldActive
     ) {
       return;
     }
@@ -662,41 +644,13 @@ class RuleController {
     console.assert(mapDiv);
 
     if (active) {
-      keys.push(
-        olEvents.listen(
-          this.drawnFeatures,
-          'add',
-          this.handleFeaturesAdd_,
-          this
-        )
-      );
+      keys.push(olEvents.listen(this.drawnFeatures, 'add', this.handleFeaturesAdd_, this));
 
-      keys.push(
-        olEvents.listen(
-          mapDiv,
-          'contextmenu',
-          this.handleMapContextMenu_,
-          this
-        )
-      );
+      keys.push(olEvents.listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this));
 
-      keys.push(
-        olEvents.listen(
-          this.translate_,
-          'translateend',
-          this.handleTranslateEnd_,
-          this
-        )
-      );
+      keys.push(olEvents.listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
 
-      keys.push(
-        olEvents.listen(
-          this.rotate_,
-          'rotateend',
-          this.handleRotateEnd_,
-          this
-        )
-      );
+      keys.push(olEvents.listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
 
       this.featureOverlay.removeFeature(ruleFeature);
       this.featureOverlay.addFeature(cloneFeature);
@@ -713,7 +667,6 @@ class RuleController {
       if (cloneFeature.getGeometry()) {
         this.ngeoFeatureHelper_.setStyle(cloneFeature, true);
       }
-
     } else {
       cloneFeature.setStyle(null);
       keys.forEach(olEvents.unlistenByKey);
@@ -777,7 +730,6 @@ class RuleController {
   handleFeaturesAdd_(evt) {
     // timeout to prevent double-click to zoom the map
     this.timeout_(() => {
-
       const clone = this.clone;
       if (clone instanceof ngeoRuleGeometry) {
         const feature = clone.feature;
@@ -791,8 +743,7 @@ class RuleController {
         this.drawActive = false;
 
         // (3) Set properties, then style
-        const properties = this.ngeoFeatureHelper_.getNonSpatialProperties(
-          drawnFeature);
+        const properties = this.ngeoFeatureHelper_.getNonSpatialProperties(drawnFeature);
         this.ngeoFeatureHelper_.clearNonSpatialProperties(feature);
         feature.setProperties(properties);
         this.ngeoFeatureHelper_.setStyle(feature, true);
@@ -818,7 +769,6 @@ class RuleController {
    * @private
    */
   handleMapContextMenu_(evt) {
-
     // (1) Remove previous menu, if any
     this.removeMenu_();
 
@@ -826,19 +776,16 @@ class RuleController {
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
 
-    let feature = this.map.forEachFeatureAtPixel(
-      pixel,
-      (feature) => {
-        /** @type {import('ol/Feature.js').default} */
-        let ret = null;
-        if (this.selectedFeatures.getArray().includes(
-          /** @type {import('ol/Feature.js').default} */(feature)
-        )) {
-          ret = /** @type {import('ol/Feature.js').default} */(feature);
-        }
-        return ret;
+    let feature = this.map.forEachFeatureAtPixel(pixel, (feature) => {
+      /** @type {import('ol/Feature.js').default} */
+      let ret = null;
+      if (
+        this.selectedFeatures.getArray().includes(/** @type {import('ol/Feature.js').default} */ (feature))
+      ) {
+        ret = /** @type {import('ol/Feature.js').default} */ (feature);
       }
-    );
+      return ret;
+    });
 
     feature = feature ? feature : null;
 
@@ -846,27 +793,30 @@ class RuleController {
     //     type of geometry, then show the menu
     const actions = [];
     if (feature) {
-
       const type = this.ngeoFeatureHelper_.getType(feature);
       const gettextCatalog = this.gettextCatalog_;
 
-      if (type == ngeoGeometryType.CIRCLE ||
-          type == ngeoGeometryType.LINE_STRING ||
-          type == ngeoGeometryType.POLYGON ||
-          type == ngeoGeometryType.RECTANGLE) {
+      if (
+        type == ngeoGeometryType.CIRCLE ||
+        type == ngeoGeometryType.LINE_STRING ||
+        type == ngeoGeometryType.POLYGON ||
+        type == ngeoGeometryType.RECTANGLE
+      ) {
         actions.push({
           cls: 'fas fa-arrows-alt',
           label: gettextCatalog.getString('Move'),
-          name: 'move'
+          name: 'move',
         });
       }
-      if (type == ngeoGeometryType.LINE_STRING ||
-          type == ngeoGeometryType.POLYGON ||
-          type == ngeoGeometryType.RECTANGLE) {
+      if (
+        type == ngeoGeometryType.LINE_STRING ||
+        type == ngeoGeometryType.POLYGON ||
+        type == ngeoGeometryType.RECTANGLE
+      ) {
         actions.push({
           cls: 'fas fa-undo fa-flip-horizontal',
           label: gettextCatalog.getString('Rotate'),
-          name: 'rotate'
+          name: 'rotate',
         });
       }
     }
@@ -874,15 +824,10 @@ class RuleController {
     if (actions.length) {
       // (4) Create and show menu
       this.menu_ = new ngeoMenu({
-        actions
+        actions,
       });
 
-      olEvents.listen(
-        this.menu_,
-        'actionclick',
-        this.handleMenuActionClick_,
-        this
-      );
+      olEvents.listen(this.menu_, 'actionclick', this.handleMenuActionClick_, this);
       this.map.addOverlay(this.menu_);
 
       this.menu_.open(coordinate);
@@ -900,12 +845,7 @@ class RuleController {
    */
   removeMenu_() {
     if (this.menu_) {
-      olEvents.unlisten(
-        this.menu_,
-        'actionclick',
-        this.handleMenuActionClick_,
-        this
-      );
+      olEvents.unlisten(this.menu_, 'actionclick', this.handleMenuActionClick_, this);
       this.map.removeOverlay(this.menu_);
       this.menu_ = null;
     }
@@ -950,9 +890,7 @@ class RuleController {
     this.translate_.setActive(false);
     this.scope_.$apply();
   }
-
 }
-
 
 /**
  * The rule component is bound to a `import('ngeo/rule/Rule.js').default` object and shows UI
@@ -967,11 +905,10 @@ module.component('ngeoRule', {
     'featureOverlay': '<',
     'map': '<',
     'rule': '<',
-    'toolGroup': '<'
+    'toolGroup': '<',
   },
   controller: RuleController,
-  templateUrl: ngeoRuleTemplateUrl
+  templateUrl: ngeoRuleTemplateUrl,
 });
-
 
 export default module;

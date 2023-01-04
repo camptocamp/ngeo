@@ -1,6 +1,5 @@
 import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
 
-
 /**
  * The options required to create a `OGCGroup`.
  *
@@ -11,19 +10,16 @@ import ngeoDatasourceGroup from 'ngeo/datasource/Group.js';
  * @property {string} title (GroupOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoDatasourceGroup {
-
   /**
    * A OGCGroup data source combines multiple `ngeo.datasource.OGC` objects.
    *
    * @param {OGCGroupOptions} options Options.
    */
   constructor(options) {
-
     super(options);
 
     /**

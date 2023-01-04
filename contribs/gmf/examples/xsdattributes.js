@@ -9,7 +9,6 @@ import {getGeometryAttribute} from 'ngeo/format/XSDAttribute.js';
 import olFeature from 'ol/Feature.js';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
-
 /** @type {!angular.IModule} **/
 const module = angular.module('gmfapp', [
   'gettext',
@@ -18,12 +17,10 @@ const module = angular.module('gmfapp', [
   ngeoEditingAttributesComponent.name,
 ]);
 
-
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -34,7 +31,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController($timeout, gmfThemes, gmfXSDAttributes) {
-
   /**
    * @type {angular.ITimeoutService}
    * @private
@@ -85,28 +81,24 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
         this.layers.push(node);
       }
     });
-
   });
 }
-
 
 /**
  * @param {import('gmf/themes.js').GmfLayer|undefined} value A layer or undefined to get layers.
  * @return {Array.<import('gmf/themes.js').GmfLayer>} All layers in all themes.
  */
-MainController.prototype.getSetLayers = function(value) {
+MainController.prototype.getSetLayers = function (value) {
   if (value !== undefined && value !== null) {
-    this.xsdAttributes_.getAttributes(value.id).then(attr => this.setAttributes_(attr));
+    this.xsdAttributes_.getAttributes(value.id).then((attr) => this.setAttributes_(attr));
   }
   return this.layers;
 };
 
-
 /**
  * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes Attributes.
  */
-MainController.prototype.setAttributes_ = function(attributes) {
-
+MainController.prototype.setAttributes_ = function (attributes) {
   // (1) Reset first
   this.feature = null;
   this.attributes = null;
@@ -118,11 +110,10 @@ MainController.prototype.setAttributes_ = function(attributes) {
   }, 0);
 };
 
-
 /**
  * @return {string} Type of geometry.
  */
-MainController.prototype.getGeomType = function() {
+MainController.prototype.getGeomType = function () {
   let type = 'N/A';
   if (this.attributes) {
     const geomAttr = getGeometryAttribute(this.attributes);
@@ -133,7 +124,6 @@ MainController.prototype.getGeomType = function() {
   return type;
 };
 
-
 /**
  * Just for this example
  * @param {import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node
@@ -141,9 +131,9 @@ MainController.prototype.getGeomType = function() {
  * @param {Array.<import('gmf/themes.js').GmfTheme|import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer>} nodes
  *    An Array of nodes.
  */
-MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
+MainController.prototype.getDistinctFlatNodes_ = function (node, nodes) {
   let i;
-  const children = /** @type {import('gmf/themes.js').GmfGroup} */(node).children;
+  const children = /** @type {import('gmf/themes.js').GmfGroup} */ (node).children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
       this.getDistinctFlatNodes_(children[i], nodes);
@@ -152,7 +142,7 @@ MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   let alreadyAdded = false;
   nodes.some((n) => {
     if (n.id === node.id) {
-      return alreadyAdded = true;
+      return (alreadyAdded = true);
     }
   });
   if (!alreadyAdded) {
@@ -160,8 +150,6 @@ MainController.prototype.getDistinctFlatNodes_ = function(node, nodes) {
   }
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

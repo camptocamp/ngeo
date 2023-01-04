@@ -10,7 +10,6 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  * @hidden
  */
 export const OlcsService = class {
-
   /**
    * @ngInject
    * @param {!import("ngeo/misc/debounce.js").miscDebounce<function(): void>} ngeoDebounce ngeo debounce
@@ -44,7 +43,6 @@ export const OlcsService = class {
      * @type {import("ngeo/statemanager/Service.js").StatemanagerService}
      */
     this.ngeoStateManager_ = ngeoStateManager;
-
   }
 
   /**
@@ -96,21 +94,27 @@ export const OlcsService = class {
     const scene = manager.getOl3d().getCesiumScene();
     const camera = scene.camera;
 
-    camera.moveEnd.addEventListener(this.ngeoDebounce_(() => {
-      const position = camera.positionCartographic;
-      this.ngeoStateManager_.updateState({
-        [Permalink3dParam.ENABLED]: true,
-        // @ts-ignore: Cesium
-        [Permalink3dParam.LON]: Cesium.Math.toDegrees(position.longitude).toFixed(5),
-        // @ts-ignore: Cesium
-        [Permalink3dParam.LAT]: Cesium.Math.toDegrees(position.latitude).toFixed(5),
-        [Permalink3dParam.ELEVATION]: position.height.toFixed(0),
-        // @ts-ignore: Cesium
-        [Permalink3dParam.HEADING]: Cesium.Math.toDegrees(camera.heading).toFixed(3),
-        // @ts-ignore: Cesium
-        [Permalink3dParam.PITCH]: Cesium.Math.toDegrees(camera.pitch).toFixed(3)
-      });
-    }, 1000, true));
+    camera.moveEnd.addEventListener(
+      this.ngeoDebounce_(
+        () => {
+          const position = camera.positionCartographic;
+          this.ngeoStateManager_.updateState({
+            [Permalink3dParam.ENABLED]: true,
+            // @ts-ignore: Cesium
+            [Permalink3dParam.LON]: Cesium.Math.toDegrees(position.longitude).toFixed(5),
+            // @ts-ignore: Cesium
+            [Permalink3dParam.LAT]: Cesium.Math.toDegrees(position.latitude).toFixed(5),
+            [Permalink3dParam.ELEVATION]: position.height.toFixed(0),
+            // @ts-ignore: Cesium
+            [Permalink3dParam.HEADING]: Cesium.Math.toDegrees(camera.heading).toFixed(3),
+            // @ts-ignore: Cesium
+            [Permalink3dParam.PITCH]: Cesium.Math.toDegrees(camera.pitch).toFixed(3),
+          });
+        },
+        1000,
+        true
+      )
+    );
 
     this.manager_.on('toggle', (event) => {
       if (!event.target.is3dEnabled()) {
@@ -127,19 +131,14 @@ export const OlcsService = class {
       this.ngeoStateManager_.deleteParam(key);
     });
   }
-
 };
-
 
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module(name, [
-  ngeoMiscDebounce.name,
-  ngeoStatemanagerLocation.name,
-  ngeoStatemanagerService.name,
-]).service('ngeoOlcsService', OlcsService);
-
+const module = angular
+  .module(name, [ngeoMiscDebounce.name, ngeoStatemanagerLocation.name, ngeoStatemanagerService.name])
+  .service('ngeoOlcsService', OlcsService);
 
 export default module;

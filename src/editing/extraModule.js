@@ -6,6 +6,4 @@ import ngeoEditingExportfeaturesComponent from 'ngeo/editing/exportfeaturesCompo
 /**
  * @type {angular.IModule}
  */
-export default angular.module('ngeoEditingExtraModule', [
-  ngeoEditingExportfeaturesComponent.name,
-]);
+export default angular.module('ngeoEditingExtraModule', [ngeoEditingExportfeaturesComponent.name]);

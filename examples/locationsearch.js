@@ -9,33 +9,25 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /** @type {!angular.IModule} **/
-const appmodule = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoSearchModule.name
-]);
-
+const appmodule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoSearchModule.name]);
 
 /**
  * @type {!angular.IComponentOptions}
  */
 const locationSearchComponent = {
   bindings: {
-    'map': '=appSearchMap'
+    'map': '=appSearchMap',
   },
   controller: 'AppSearchController',
   template:
-      '<input type="text" placeholder="Search…" ' +
-      'ngeo-search="$ctrl.options" ' +
-      'ngeo-search-datasets="$ctrl.datasets" ' +
-      'ngeo-search-listeners="$ctrl.listeners">'
+    '<input type="text" placeholder="Search…" ' +
+    'ngeo-search="$ctrl.options" ' +
+    'ngeo-search-datasets="$ctrl.datasets" ' +
+    'ngeo-search-listeners="$ctrl.listeners">',
 };
 
-
 appmodule.component('appLocationSearch', locationSearchComponent);
-
 
 /**
  * @constructor
@@ -44,7 +36,6 @@ appmodule.component('appLocationSearch', locationSearchComponent);
  * @ngInject
  */
 function SearchController(ngeoCreateLocationSearchBloodhound) {
-
   /**
    * @type {import("ol/Map.js").default}
    */
@@ -52,8 +43,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
 
   const limit = 10;
   /** @type {Bloodhound} */
-  const bloodhoundEngine = this.createAndInitBloodhound_(
-    ngeoCreateLocationSearchBloodhound, limit);
+  const bloodhoundEngine = this.createAndInitBloodhound_(ngeoCreateLocationSearchBloodhound, limit);
 
   /**
    * @type {Twitter.Typeahead.Options}
@@ -61,37 +51,37 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   this.options = /** @type {Twitter.Typeahead.Options} */ ({
     highlight: true,
     hint: undefined,
-    minLength: undefined
+    minLength: undefined,
   });
 
   /**
    * @type {Array.<Twitter.Typeahead.Dataset>}
    */
-  this.datasets = [{
-    source: bloodhoundEngine.ttAdapter(),
-    limit: limit,
-    display: (suggestion) => {
-      const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
-      return feature.get('label_no_html');
-    },
-    templates: {
-      header: () => '<div class="ngeo-header">Locations</div>',
-      suggestion: (suggestion) => {
+  this.datasets = [
+    {
+      source: bloodhoundEngine.ttAdapter(),
+      limit: limit,
+      display: (suggestion) => {
         const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
-        return `<p>${feature.get('label')}</p>`;
-      }
-    }
-  }];
+        return feature.get('label_no_html');
+      },
+      templates: {
+        header: () => '<div class="ngeo-header">Locations</div>',
+        suggestion: (suggestion) => {
+          const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
+          return `<p>${feature.get('label')}</p>`;
+        },
+      },
+    },
+  ];
 
   /**
    * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    */
   this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
-    select: select_.bind(this)
+    select: select_.bind(this),
   });
-
 }
-
 
 /**
  * @param {import("ngeo/search/createLocationSearchBloodhound.js").createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
@@ -100,7 +90,7 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
  * @return {Bloodhound} The bloodhound engine.
  * @private
  */
-SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocationSearchBloodhound, limit) {
+SearchController.prototype.createAndInitBloodhound_ = function (ngeoCreateLocationSearchBloodhound, limit) {
   const epsg3857 = olProj.get('EPSG:3857');
   console.assert(epsg3857 !== null);
   const bloodhound = ngeoCreateLocationSearchBloodhound({
@@ -112,12 +102,11 @@ SearchController.prototype.createAndInitBloodhound_ = function(ngeoCreateLocatio
       const lang = 'fr';
       settings.url += `&lang=${lang}`;
       return settings;
-    }
+    },
   });
   bloodhound.initialize();
   return bloodhound;
 };
-
 
 /**
  * @param {JQueryEventObject} event Event.
@@ -133,9 +122,7 @@ function select_(event, suggestion, dataset) {
   this.map.getView().fit(bbox, {size, maxZoom});
 }
 
-
 appmodule.controller('AppSearchController', SearchController);
-
 
 /**
  * @constructor
@@ -148,19 +135,16 @@ function MainController() {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
-
 }
 
-
 appmodule.controller('MainController', MainController);
-
 
 export default module;

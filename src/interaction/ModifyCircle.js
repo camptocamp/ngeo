@@ -17,7 +17,6 @@ import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 import olStructsRBush from 'ol/structs/RBush.js';
 
-
 /**
  * Interaction for modifying feature geometries.
  * @hidden
@@ -67,8 +66,7 @@ export default class extends olInteractionPointer {
      * @type {number}
      * @private
      */
-    this.pixelTolerance_ = options.pixelTolerance !== undefined ?
-      options.pixelTolerance : 10;
+    this.pixelTolerance_ = options.pixelTolerance !== undefined ? options.pixelTolerance : 10;
 
     /**
      * @type {boolean}
@@ -98,11 +96,11 @@ export default class extends olInteractionPointer {
     this.overlay_ = new olLayerVector({
       source: new olSourceVector({
         useSpatialIndex: false,
-        wrapX: !!options.wrapX
+        wrapX: !!options.wrapX,
       }),
       style: options.style || getDefaultModifyStyleFunction(),
       updateWhileAnimating: true,
-      updateWhileInteracting: true
+      updateWhileInteracting: true,
     });
 
     /**
@@ -111,10 +109,9 @@ export default class extends olInteractionPointer {
      */
     this.features_ = options.features;
 
-    this.features_.forEach(feature => this.addFeature_(feature));
+    this.features_.forEach((feature) => this.addFeature_(feature));
     olEvents.listen(this.features_, 'add', this.handleFeatureAdd_, this);
     olEvents.listen(this.features_, 'remove', this.handleFeatureRemove_, this);
-
   }
 
   /**
@@ -122,8 +119,10 @@ export default class extends olInteractionPointer {
    * @private
    */
   addFeature_(feature) {
-    if (feature.getGeometry().getType() === 'Polygon' &&
-        !!feature.get(ngeoFormatFeatureProperties.IS_CIRCLE)) {
+    if (
+      feature.getGeometry().getType() === 'Polygon' &&
+      !!feature.get(ngeoFormatFeatureProperties.IS_CIRCLE)
+    ) {
       const geometry = /** @type {import("ol/geom/Polygon.js").default}*/ (feature.getGeometry());
       this.writeCircleGeometry_(feature, geometry);
 
@@ -155,7 +154,7 @@ export default class extends olInteractionPointer {
     // Remove the vertex feature if the collection of canditate features
     // is empty.
     if (this.vertexFeature_ && this.features_.getLength() === 0) {
-      /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.vertexFeature_);
+      /** @type {olSourceVector} */ (this.overlay_.getSource()).removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }
@@ -169,13 +168,14 @@ export default class extends olInteractionPointer {
     const /** @type {Array.<import("ol/interaction/Modify.js").SegmentData>} */ nodesToRemove = [];
     rBush.forEach(
       /**
-         * @param {import("ol/interaction/Modify.js").SegmentData} node RTree node.
-         */
+       * @param {import("ol/interaction/Modify.js").SegmentData} node RTree node.
+       */
       (node) => {
         if (feature === node.feature) {
           nodesToRemove.push(node);
         }
-      });
+      }
+    );
     for (let i = nodesToRemove.length - 1; i >= 0; --i) {
       rBush.remove(nodesToRemove[i]);
     }
@@ -225,7 +225,7 @@ export default class extends olInteractionPointer {
           geometry: geometry,
           depth: [j],
           index: i,
-          segment: segment
+          segment: segment,
         });
         this.rBush_.insert(olExtent.boundingExtent(segment), segmentData);
       }
@@ -242,7 +242,7 @@ export default class extends olInteractionPointer {
     if (!vertexFeature) {
       vertexFeature = new olFeature(new olGeomPoint(coordinates));
       this.vertexFeature_ = vertexFeature;
-      /** @type {olSourceVector} */(this.overlay_.getSource()).addFeature(vertexFeature);
+      /** @type {olSourceVector} */ (this.overlay_.getSource()).addFeature(vertexFeature);
     } else {
       const geometry = /** @type {import("ol/geom/Point.js").default} */ (vertexFeature.getGeometry());
       geometry.setCoordinates(coordinates);
@@ -266,15 +266,21 @@ export default class extends olInteractionPointer {
    */
   handlePointerAtPixel_(pixel, map) {
     const pixelCoordinate = map.getCoordinateFromPixel(pixel);
-    const sortByDistance = function(a, b) {
-      return olCoordinate.squaredDistanceToSegment(pixelCoordinate, a.segment) -
-          olCoordinate.squaredDistanceToSegment(pixelCoordinate, b.segment);
+    const sortByDistance = function (a, b) {
+      return (
+        olCoordinate.squaredDistanceToSegment(pixelCoordinate, a.segment) -
+        olCoordinate.squaredDistanceToSegment(pixelCoordinate, b.segment)
+      );
     };
 
-    const lowerLeft = map.getCoordinateFromPixel(
-      [pixel[0] - this.pixelTolerance_, pixel[1] + this.pixelTolerance_]);
-    const upperRight = map.getCoordinateFromPixel(
-      [pixel[0] + this.pixelTolerance_, pixel[1] - this.pixelTolerance_]);
+    const lowerLeft = map.getCoordinateFromPixel([
+      pixel[0] - this.pixelTolerance_,
+      pixel[1] + this.pixelTolerance_,
+    ]);
+    const upperRight = map.getCoordinateFromPixel([
+      pixel[0] + this.pixelTolerance_,
+      pixel[1] - this.pixelTolerance_,
+    ]);
     const box = olExtent.boundingExtent([lowerLeft, upperRight]);
 
     const rBush = this.rBush_;
@@ -283,11 +289,9 @@ export default class extends olInteractionPointer {
       nodes.sort(sortByDistance);
       const node = nodes[0];
       const closestSegment = node.segment;
-      let vertex = (olCoordinate.closestOnSegment(pixelCoordinate,
-        closestSegment));
+      let vertex = olCoordinate.closestOnSegment(pixelCoordinate, closestSegment);
       const vertexPixel = map.getPixelFromCoordinate(vertex);
-      if (Math.sqrt(olCoordinate.squaredDistance(pixel, vertexPixel)) <=
-          this.pixelTolerance_) {
+      if (Math.sqrt(olCoordinate.squaredDistance(pixel, vertexPixel)) <= this.pixelTolerance_) {
         const pixel1 = map.getPixelFromCoordinate(closestSegment[0]);
         const pixel2 = map.getPixelFromCoordinate(closestSegment[1]);
         const squaredDist1 = olCoordinate.squaredDistance(vertexPixel, pixel1);
@@ -295,18 +299,19 @@ export default class extends olInteractionPointer {
         const dist = Math.sqrt(Math.min(squaredDist1, squaredDist2));
         this.snappedToVertex_ = dist <= this.pixelTolerance_;
         if (this.snappedToVertex_) {
-          vertex = squaredDist1 > squaredDist2 ?
-            closestSegment[1] : closestSegment[0];
+          vertex = squaredDist1 > squaredDist2 ? closestSegment[1] : closestSegment[0];
           this.createOrUpdateVertexFeature_(vertex);
           const vertexSegments = {};
           vertexSegments[olUtilGetUid(closestSegment)] = true;
           let segment;
           for (let i = 1, ii = nodes.length; i < ii; ++i) {
             segment = nodes[i].segment;
-            if ((olCoordinate.equals(closestSegment[0], segment[0]) &&
-                olCoordinate.equals(closestSegment[1], segment[1]) ||
-                (olCoordinate.equals(closestSegment[0], segment[1]) &&
-                olCoordinate.equals(closestSegment[1], segment[0])))) {
+            if (
+              (olCoordinate.equals(closestSegment[0], segment[0]) &&
+                olCoordinate.equals(closestSegment[1], segment[1])) ||
+              (olCoordinate.equals(closestSegment[0], segment[1]) &&
+                olCoordinate.equals(closestSegment[1], segment[0]))
+            ) {
               vertexSegments[olUtilGetUid(segment)] = true;
             } else {
               break;
@@ -317,7 +322,7 @@ export default class extends olInteractionPointer {
       }
     }
     if (this.vertexFeature_) {
-      /** @type {olSourceVector} */(this.overlay_.getSource()).removeFeature(this.vertexFeature_);
+      /** @type {olSourceVector} */ (this.overlay_.getSource()).removeFeature(this.vertexFeature_);
       this.vertexFeature_ = null;
     }
   }
@@ -361,12 +366,10 @@ export default class extends olInteractionPointer {
         if (!componentSegments[uid]) {
           componentSegments[uid] = new Array(2);
         }
-        if (olCoordinate.equals(segment[0], vertex) &&
-            !componentSegments[uid][0]) {
+        if (olCoordinate.equals(segment[0], vertex) && !componentSegments[uid][0]) {
           this.dragSegments_.push([segmentDataMatch, 0]);
           componentSegments[uid][0] = segmentDataMatch;
-        } else if (olCoordinate.equals(segment[1], vertex) &&
-            !componentSegments[uid][1]) {
+        } else if (olCoordinate.equals(segment[1], vertex) && !componentSegments[uid][1]) {
           this.dragSegments_.push([segmentDataMatch, 1]);
           componentSegments[uid][1] = segmentDataMatch;
         }
@@ -387,14 +390,12 @@ export default class extends olInteractionPointer {
 
     const line = new olGeomLineString([center, vertex]);
 
-
     /**
      * @type {import("ol/geom/Circle.js").default}
      */
     const circle = new olGeomCircle(center, line.getLength());
     const coordinates = fromCircle(circle, 64).getCoordinates();
     this.setGeometryCoordinates_(geometry, coordinates);
-
 
     const azimut = getAzimut(line);
     this.features_.getArray()[0].set(ngeoFormatFeatureProperties.AZIMUT, azimut);
@@ -409,8 +410,7 @@ export default class extends olInteractionPointer {
    */
   handleUpEvent_(evt) {
     this.rBush_.clear();
-    this.writeCircleGeometry_(this.dragSegments_[0][0].feature,
-      this.dragSegments_[0][0].geometry);
+    this.writeCircleGeometry_(this.dragSegments_[0][0].feature, this.dragSegments_[0][0].geometry);
 
     if (this.modified_) {
       const event = new ngeoCustomEvent('modifyend', {features: this.features_});
@@ -432,8 +432,11 @@ export default class extends olInteractionPointer {
     }
 
     let handled;
-    if (!mapBrowserEvent.map.getView().getInteracting() &&
-        mapBrowserEvent.type == 'pointermove' && !this.handlingDownUpSequence) {
+    if (
+      !mapBrowserEvent.map.getView().getInteracting() &&
+      mapBrowserEvent.type == 'pointermove' &&
+      !this.handlingDownUpSequence
+    ) {
       this.handlePointerMove_(mapBrowserEvent);
     }
 

@@ -7,7 +7,6 @@ import olGeolocation from 'ol/Geolocation.js';
 import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
-
 /**
  * Options for the desktop geolocations directive.
  *
@@ -20,7 +19,6 @@ import olGeomPoint from 'ol/geom/Point.js';
  * the zoom level to set when obtaining a new position.
  */
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -29,7 +27,6 @@ const module = angular.module('ngeoDesktopGeolocation', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMessageNotification.name,
 ]);
-
 
 /**
  * @enum {string}
@@ -40,9 +37,8 @@ const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
-  ERROR: 'desktop-geolocation-error'
+  ERROR: 'desktop-geolocation-error',
 };
-
 
 /**
  * Provide a "desktop geolocation" directive.
@@ -68,15 +64,13 @@ function GeolocationDesktopComponent() {
     restrict: 'A',
     scope: {
       'getDesktopMapFn': '&ngeoDesktopGeolocationMap',
-      'getDesktopGeolocationOptionsFn': '&ngeoDesktopGeolocationOptions'
+      'getDesktopGeolocationOptionsFn': '&ngeoDesktopGeolocationOptions',
     },
-    controller: 'ngeoGeolocationDesktopController'
+    controller: 'ngeoGeolocationDesktopController',
   };
 }
 
-
 module.directive('ngeoDesktopGeolocation', GeolocationDesktopComponent);
-
 
 /**
  * @constructor
@@ -93,7 +87,6 @@ module.directive('ngeoDesktopGeolocation', GeolocationDesktopComponent);
  * @ngname NgeoDesktopGeolocationController
  */
 function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
-
   $element.on('click', this.toggle.bind(this));
 
   const map = $scope['getDesktopMapFn']();
@@ -131,7 +124,7 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
    * @private
    */
   this.geolocation_ = new olGeolocation({
-    projection: map.getView().getProjection()
+    projection: map.getView().getProjection(),
   });
 
   // handle geolocation error.
@@ -178,16 +171,14 @@ function Controller($scope, $element, ngeoFeatureOverlayMgr, ngeoNotification) {
   });
 
   olEvents.listen(this.geolocation_, 'change:position', (evt) => {
-    const event = /** @type {import("ol/events/Event.js").default} */(evt);
+    const event = /** @type {import("ol/events/Event.js").default} */ (evt);
     this.setPosition_(event);
   });
-
 }
-
 
 /**
  */
-Controller.prototype.toggle = function() {
+Controller.prototype.toggle = function () {
   if (this.active_) {
     this.deactivate_();
   } else {
@@ -195,33 +186,30 @@ Controller.prototype.toggle = function() {
   }
 };
 
-
 /**
  * @private
  */
-Controller.prototype.activate_ = function() {
+Controller.prototype.activate_ = function () {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.geolocation_.setTracking(true);
   this.active_ = true;
 };
 
-
 /**
  * @private
  */
-Controller.prototype.deactivate_ = function() {
+Controller.prototype.deactivate_ = function () {
   this.featureOverlay_.clear();
   this.active_ = false;
   this.notification_.clear();
 };
 
-
 /**
  * @param {import("ol/events/Event.js").default} event Event.
  * @private
  */
-Controller.prototype.setPosition_ = function(event) {
+Controller.prototype.setPosition_ = function (event) {
   const position = /** @type {import("ol/coordinate.js").Coordinate} */ (this.geolocation_.getPosition());
   const point = new olGeomPoint(position);
 
@@ -236,6 +224,5 @@ Controller.prototype.setPosition_ = function(event) {
 };
 
 module.controller('ngeoGeolocationDesktopController', Controller);
-
 
 export default module;

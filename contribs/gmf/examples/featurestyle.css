@@ -20,7 +20,7 @@ gmf-featurestyle .col-form-label {
   -webkit-box-shadow: none;
   padding: 0;
 }
-gmf-featurestyle input[type=range] {
+gmf-featurestyle input[type='range'] {
   padding: 6px 12px;
 }
 .ngeo-colorpicker-palette {
@@ -55,9 +55,9 @@ gmf-featurestyle input[type=range] {
   top: -10px;
   left: -10px;
   border: 2px solid #fff;
-  -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
-  -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
-  box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
   z-index: 11;
 }
 .ngeo-colorpicker-palette td.ngeo-colorpicker-selected > div::after {

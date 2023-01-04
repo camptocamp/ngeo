@@ -1,9 +1,8 @@
 #!/bin/bash -ex
 
-if [[ ${GIT_BRANCH} =~ "/" ]]
-then
-  echo "Skipping deploy of external branch ${GIT_BRANCH}"
-  exit
+if [[ ${GIT_BRANCH} =~ "/" ]]; then
+    echo "Skipping deploy of external branch ${GIT_BRANCH}"
+    exit
 fi
 
 # Cloning gh-pages into a local temporary directory

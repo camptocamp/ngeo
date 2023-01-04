@@ -21,7 +21,6 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleFill from 'ol/style/Fill.js';
 import 'angular-sanitize';
 
-
 /** @type {!angular.IModule} **/
 const module = angular.module('app', [
   'gettext',
@@ -31,12 +30,12 @@ const module = angular.module('app', [
   'ngSanitize',
 ]);
 
-
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
+  }
+);
 
 /**
  * App-specific component wrapping the measure tools. The component's
@@ -48,14 +47,13 @@ module.run(/* @ngInject */ ($templateCache) => {
 const measuretoolsComponent = {
   bindings: {
     'map': '=appMeasuretoolsMap',
-    'lang': '=appMeasuretoolsLang'
+    'lang': '=appMeasuretoolsLang',
   },
   controller: 'AppMeasuretoolsController',
-  templateUrl: 'partials/measuretools'
+  templateUrl: 'partials/measuretools',
 };
 
 module.component('appMeasuretools', measuretoolsComponent);
-
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
@@ -66,9 +64,7 @@ module.component('appMeasuretools', measuretoolsComponent);
  * @constructor
  * @ngInject
  */
-function MeasuretoolsController($scope, $compile, $sce,
-  $filter, gettextCatalog) {
-
+function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog) {
   /**
    * @type {import("ol/Map.js").default}
    */
@@ -89,7 +85,6 @@ function MeasuretoolsController($scope, $compile, $sce,
    */
   this.measureLengthContinueMsg = null;
 
-
   /**
    * @type {Object}
    */
@@ -103,66 +98,71 @@ function MeasuretoolsController($scope, $compile, $sce,
   // Translations for the measure tools' tooltips.
   const measureStartMsgs = {
     'en': $sce.trustAsHtml('Click to start drawing.'),
-    'fr': $sce.trustAsHtml('Cliquer pour commencer à dessiner.')
+    'fr': $sce.trustAsHtml('Cliquer pour commencer à dessiner.'),
   };
   const measureLengthContinueMsgs = {
-    'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
-        'Double-click or click last point to finish.'),
-    'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
-        'Double-cliquer ou cliquer sur dernier point pour finir.')
+    'en': $sce.trustAsHtml('Click to continue drawing.<br>' + 'Double-click or click last point to finish.'),
+    'fr': $sce.trustAsHtml(
+      'Cliquer pour continuer le dessin.<br>' + 'Double-cliquer ou cliquer sur dernier point pour finir.'
+    ),
   };
   const measureAreaContinueMsgs = {
-    'en': $sce.trustAsHtml('Click to continue drawing.<br>' +
-        'Double-click or click starting point to finish.'),
-    'fr': $sce.trustAsHtml('Cliquer pour continuer le dessin.<br>' +
-        'Double-cliquer ou cliquer sur point de départ pour finir.')
+    'en': $sce.trustAsHtml(
+      'Click to continue drawing.<br>' + 'Double-click or click starting point to finish.'
+    ),
+    'fr': $sce.trustAsHtml(
+      'Cliquer pour continuer le dessin.<br>' + 'Double-cliquer ou cliquer sur point de départ pour finir.'
+    ),
   };
   const measureAzimutContinueMsgs = {
     'en': $sce.trustAsHtml('Click to finish.'),
-    'fr': $sce.trustAsHtml('Cliquer pour finir.')
+    'fr': $sce.trustAsHtml('Cliquer pour finir.'),
   };
 
   // Create elements for the measure tools' tooltips.
-  let measureStartMsg = angular.element(
-    '<span ng-bind-html="ctrl.measureStartMsg"></span>');
+  let measureStartMsg = angular.element('<span ng-bind-html="ctrl.measureStartMsg"></span>');
   measureStartMsg = $compile(measureStartMsg)($scope);
   let measureLengthContinueMsg = angular.element(
-    '<span ng-bind-html="ctrl.measureLengthContinueMsg"></span>');
+    '<span ng-bind-html="ctrl.measureLengthContinueMsg"></span>'
+  );
   measureLengthContinueMsg = $compile(measureLengthContinueMsg)($scope);
-  let measureAreaContinueMsg = angular.element(
-    '<span ng-bind-html="ctrl.measureAreaContinueMsg"></span>');
+  let measureAreaContinueMsg = angular.element('<span ng-bind-html="ctrl.measureAreaContinueMsg"></span>');
   measureAreaContinueMsg = $compile(measureAreaContinueMsg)($scope);
   let measureAzimutContinueMsg = angular.element(
-    '<span ng-bind-html="ctrl.measureAzimutContinueMsg"></span>');
+    '<span ng-bind-html="ctrl.measureAzimutContinueMsg"></span>'
+  );
   measureAzimutContinueMsg = $compile(measureAzimutContinueMsg)($scope);
 
   // Watch the "lang" property and update the toolip messages
   // based on the selected language.
-  $scope.$watch(() => this.lang, (newVal) => {
-    this.measureStartMsg = measureStartMsgs[newVal];
-    this.measureLengthContinueMsg = measureLengthContinueMsgs[newVal];
-    this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
-    this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
-  });
+  $scope.$watch(
+    () => this.lang,
+    (newVal) => {
+      this.measureStartMsg = measureStartMsgs[newVal];
+      this.measureLengthContinueMsg = measureLengthContinueMsgs[newVal];
+      this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
+      this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
+    }
+  );
 
   const style = new olStyleStyle({
     fill: new olStyleFill({
-      color: 'rgba(255, 255, 255, 0.2)'
+      color: 'rgba(255, 255, 255, 0.2)',
     }),
     stroke: new olStyleStroke({
       color: 'rgba(0, 0, 0, 0.5)',
       lineDash: [10, 10],
-      width: 2
+      width: 2,
     }),
     image: new olStyleCircle({
       radius: 5,
       stroke: new olStyleStroke({
-        color: 'rgba(0, 0, 0, 0.7)'
+        color: 'rgba(0, 0, 0, 0.7)',
       }),
       fill: new olStyleFill({
-        color: 'rgba(255, 255, 255, 0.2)'
-      })
-    })
+        color: 'rgba(255, 255, 255, 0.2)',
+      }),
+    }),
   });
 
   /**
@@ -171,7 +171,7 @@ function MeasuretoolsController($scope, $compile, $sce,
   this.measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
-    continueMsg: measureLengthContinueMsg[0]
+    continueMsg: measureLengthContinueMsg[0],
   });
 
   this.measureLength.setActive(false);
@@ -183,7 +183,7 @@ function MeasuretoolsController($scope, $compile, $sce,
   this.measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, {
     sketchStyle: style,
     startMsg: measureStartMsg[0],
-    continueMsg: measureAreaContinueMsg[0]
+    continueMsg: measureAreaContinueMsg[0],
   });
 
   this.measureArea.setActive(false);
@@ -192,16 +192,14 @@ function MeasuretoolsController($scope, $compile, $sce,
   /**
    * @type {import("ngeo/interaction/MeasureAzimut.js").default}
    */
-  this.measureAzimut = new ngeoInteractionMeasureAzimut(
-    $filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
-      sketchStyle: style,
-      startMsg: measureStartMsg[0],
-      continueMsg: measureAzimutContinueMsg[0]
-    });
+  this.measureAzimut = new ngeoInteractionMeasureAzimut($filter('ngeoUnitPrefix'), $filter('ngeoNumber'), {
+    sketchStyle: style,
+    startMsg: measureStartMsg[0],
+    continueMsg: measureAzimutContinueMsg[0],
+  });
 
   this.measureAzimut.setActive(false);
   interactionDecoration(this.measureAzimut);
-
 
   // the following code shows how one can add additional information to the
   // tooltip. This can be useful to display the elevation offset from the
@@ -214,7 +212,7 @@ function MeasuretoolsController($scope, $compile, $sce,
 
 module.controller('AppMeasuretoolsController', MeasuretoolsController);
 
-MeasuretoolsController.prototype.$onInit = function() {
+MeasuretoolsController.prototype.$onInit = function () {
   this.map.addInteraction(this.measureLength);
   this.map.addInteraction(this.measureArea);
   this.map.addInteraction(this.measureAzimut);
@@ -225,7 +223,6 @@ MeasuretoolsController.prototype.$onInit = function() {
  * @ngInject
  */
 function MainController() {
-
   /**
    * @type {string}
    */
@@ -237,20 +234,18 @@ function MainController() {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [692114.718759744, 5743119.914347709],
-      zoom: 15
-    })
+      zoom: 15,
+    }),
   });
 
   this.map.addControl(new olControlScaleLine());
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

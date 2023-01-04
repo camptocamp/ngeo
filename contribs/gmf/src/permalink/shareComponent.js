@@ -3,7 +3,6 @@ import gmfPermalinkShareService, {URL_MAX_LEN, URL_PATH_MAX_LEN} from 'gmf/perma
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -13,24 +12,24 @@ const module = angular.module('gmfPermalinkShareComponent', [
   ngeoStatemanagerLocation.name,
 ]);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
-});
-
-
-module.value('gmfPermalinkShareTemplateUrl',
+module.value(
+  'gmfPermalinkShareTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['gmfPermalinkShareTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/permalink/shareComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/permalink/shareComponent';
+  }
+);
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -44,7 +43,6 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
   return gmfPermalinkShareTemplateUrl($attrs);
 }
 
-
 /**
  * Component to display a shortened permalink and share it by email Example:
  *
@@ -57,13 +55,12 @@ function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
  */
 const permalinkShareComponent = {
   bindings: {
-    'enableEmail': '<gmfShareEmail'
+    'enableEmail': '<gmfShareEmail',
   },
   controller: 'GmfShareController',
-  templateUrl: gmfPermalinkShareTemplateUrl
+  templateUrl: gmfPermalinkShareTemplateUrl,
 };
 module.component('gmfShare', permalinkShareComponent);
-
 
 /**
  * @private
@@ -84,7 +81,6 @@ class ShareComponentController {
    * @ngname GmfShareController
    */
   constructor($scope, ngeoLocation, gmfShareService, $q, $attrs) {
-
     /**
      * @type {string}
      */
@@ -143,8 +139,8 @@ class ShareComponentController {
     /**
      * @type {boolean}
      */
-    this.showLengthWarning = this.permalink_.length > URL_MAX_LEN ||
-      ngeoLocation.getPath().length > URL_PATH_MAX_LEN;
+    this.showLengthWarning =
+      this.permalink_.length > URL_MAX_LEN || ngeoLocation.getPath().length > URL_PATH_MAX_LEN;
 
     /**
      * @type {boolean}
@@ -168,14 +164,16 @@ class ShareComponentController {
    * Get the short version of the permalink if the email is not provided
    */
   getShortUrl() {
-    this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_))
-      .then((resp) => {
-        this.shortLink = /** @type {angular.IHttpResponse} */(resp).data.short_url;
+    this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_)).then(
+      (resp) => {
+        this.shortLink = /** @type {angular.IHttpResponse} */ (resp).data.short_url;
         this.errorOnGetShortUrl = false;
-      }, (resp) => {
+      },
+      (resp) => {
         this.shortLink = this.permalink_;
         this.errorOnGetShortUrl = true;
-      });
+      }
+    );
   }
 
   /**
@@ -183,17 +181,18 @@ class ShareComponentController {
    */
   sendShortUrl() {
     if (this.$scope_['gmfShareForm'].$valid) {
-      this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message))
-        .then((resp) => {
+      this.$q_.when(this.gmfShareService_.sendShortUrl(this.permalink_, this.email, this.message)).then(
+        (resp) => {
           this.successfullySent = true;
-        }, (resp) => {
+        },
+        (resp) => {
           this.errorOnsend = true;
-        });
+        }
+      );
     }
   }
 }
 
 module.controller('GmfShareController', ShareComponentController);
-
 
 export default module;

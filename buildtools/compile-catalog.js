@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const fs = require('fs');
 const options = require('commander');
 const Compiler = require('angular-gettext-tools').Compiler;
@@ -8,15 +8,17 @@ function main(inputs) {
 
   const promises = [];
   inputs.forEach((input) => {
-    promises.push(new Promise((resolve) => {
-      fs.readFile(input, 'utf-8', (error, content) => {
-        resolve(error ? undefined : content);
-      });
-    }));
+    promises.push(
+      new Promise((resolve) => {
+        fs.readFile(input, 'utf-8', (error, content) => {
+          resolve(error ? undefined : content);
+        });
+      })
+    );
   });
 
   Promise.all(promises).then((contents) => {
-    contents = contents.filter(content => content !== undefined);
+    contents = contents.filter((content) => content !== undefined);
     process.stdout.write(compiler.convertPo(contents));
   });
 }

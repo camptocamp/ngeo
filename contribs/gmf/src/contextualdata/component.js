@@ -7,10 +7,7 @@ import * as olProj from 'ol/proj.js';
  * @type {angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfContextualdata', [
-  gmfRasterRasterService.name,
-]);
-
+const module = angular.module('gmfContextualdata', [gmfRasterRasterService.name]);
 
 /**
  * Provide a directive responsible of displaying contextual data after a right
@@ -56,7 +53,7 @@ function contextualDataComponent() {
     bindToController: {
       'map': '<gmfContextualdataMap',
       'projections': '<gmfContextualdataProjections',
-      'callback': '<gmfContextualdataCallback'
+      'callback': '<gmfContextualdataCallback',
     },
     /**
      * @param {angular.IScope} scope Scope.
@@ -66,12 +63,11 @@ function contextualDataComponent() {
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
-    }
+    },
   };
 }
 
 module.directive('gmfContextualdata', contextualDataComponent);
-
 
 /**
  * @param {angular.ICompileService} $compile Angular compile service.
@@ -86,7 +82,6 @@ module.directive('gmfContextualdata', contextualDataComponent);
  * @ngInject
  */
 export function ContextualdataController($compile, $timeout, $scope, gmfRaster, $injector) {
-
   /**
    * @type {import("ol/Map.js").default}
    */
@@ -136,8 +131,9 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
    * @type {Object}
    * @private
    */
-  this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions') ?
-    $injector.get('gmfContextualdataOptions') : {};
+  this.gmfContextualdataOptions_ = $injector.has('gmfContextualdataOptions')
+    ? $injector.get('gmfContextualdataOptions')
+    : {};
 
   document.body.addEventListener('mousedown', this.hidePopover.bind(this));
 }
@@ -145,7 +141,7 @@ export function ContextualdataController($compile, $timeout, $scope, gmfRaster, 
 /**
  *
  */
-ContextualdataController.prototype.init = function() {
+ContextualdataController.prototype.init = function () {
   this.preparePopover_();
 
   const mapDiv = this.map.getTargetElement();
@@ -159,7 +155,7 @@ ContextualdataController.prototype.init = function() {
  * @param {!Event} event Event.
  * @private
  */
-ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
+ContextualdataController.prototype.handleMapContextMenu_ = function (event) {
   this.$scope_.$apply(() => {
     const pixel = this.map.getEventPixel(event);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
@@ -175,7 +171,7 @@ ContextualdataController.prototype.handleMapContextMenu_ = function(event) {
   });
 };
 
-ContextualdataController.prototype.setContent_ = function(coordinate) {
+ContextualdataController.prototype.setContent_ = function (coordinate) {
   const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
 
@@ -196,18 +192,15 @@ ContextualdataController.prototype.setContent_ = function(coordinate) {
   const getRasterError = () => {
     console.error('Error on getting the raster.');
   };
-  this.gmfRaster_.getRaster(coordinate, this.gmfContextualdataOptions_.rasterParams).then(
-    getRasterSuccess,
-    getRasterError
-  );
+  this.gmfRaster_
+    .getRaster(coordinate, this.gmfContextualdataOptions_.rasterParams)
+    .then(getRasterSuccess, getRasterError);
 };
-
 
 /**
  * @private
  */
-ContextualdataController.prototype.preparePopover_ = function() {
-
+ContextualdataController.prototype.preparePopover_ = function () {
   const container = document.createElement('DIV');
   container.classList.add('popover');
   container.classList.add('bs-popover-bottom');
@@ -226,23 +219,22 @@ ContextualdataController.prototype.preparePopover_ = function() {
     stopEvent: true,
     autoPan: true,
     autoPanAnimation: {
-      duration: 250
+      duration: 250,
     },
-    positioning: 'top-center'
+    positioning: 'top-center',
   });
   this.map.addOverlay(this.overlay_);
 };
 
-ContextualdataController.prototype.showPopover = function() {
+ContextualdataController.prototype.showPopover = function () {
   this.overlay_.getElement().style.display = 'block';
 };
 
-ContextualdataController.prototype.hidePopover = function() {
+ContextualdataController.prototype.hidePopover = function () {
   this.overlay_.getElement().style.display = 'none';
 };
 
 module.controller('GmfContextualdataController', ContextualdataController);
-
 
 /**
  * Provide a directive responsible of formatting the content of the popover for
@@ -277,11 +269,10 @@ function contextualDataComponentContent(gmfContextualdatacontentTemplateUrl) {
   return {
     restrict: 'A',
     scope: true,
-    templateUrl: gmfContextualdatacontentTemplateUrl
+    templateUrl: gmfContextualdatacontentTemplateUrl,
   };
 }
 
 module.directive('gmfContextualdatacontent', contextualDataComponentContent);
-
 
 export default module;

@@ -1,6 +1,8 @@
 import angular from 'angular';
-import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
-  from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {
+  AbstractAppController,
+  getLocationIcon,
+} from 'gmf/controllers/AbstractAppController.js';
 import ngeoQueryBboxQueryComponent from 'ngeo/query/bboxQueryComponent.js';
 import ngeoMapResizemap from 'ngeo/map/resizemap.js';
 import * as olProj from 'ol/proj.js';
@@ -26,34 +28,41 @@ export class AbstractAPIController extends AbstractAppController {
    */
   constructor(config, $scope, $injector) {
     const viewConfig = {
-      projection: olProj.get(`EPSG:${config.srid || 21781}`)
+      projection: olProj.get(`EPSG:${config.srid || 21781}`),
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 
-    super(config, new olMap({
-      pixelRatio: config.mapPixelRatio,
-      layers: [],
-      view: new olView(viewConfig),
-      controls: config.mapControls || [
-        new olControlScaleLine({
-          target: document.getElementById('scaleline')
-        }),
-        new olControlZoom({
-          zoomInTipLabel: '',
-          zoomOutTipLabel: ''
-        }),
-        new olControlRotate({
-          label: getLocationIcon(),
-          tipLabel: ''
-        })
-      ],
-      interactions: config.mapInteractions || olInteraction.defaults({
-        pinchRotate: true,
-        altShiftDragRotate: true
+    super(
+      config,
+      new olMap({
+        pixelRatio: config.mapPixelRatio,
+        layers: [],
+        view: new olView(viewConfig),
+        controls: config.mapControls || [
+          new olControlScaleLine({
+            target: document.getElementById('scaleline'),
+          }),
+          new olControlZoom({
+            zoomInTipLabel: '',
+            zoomOutTipLabel: '',
+          }),
+          new olControlRotate({
+            label: getLocationIcon(),
+            tipLabel: '',
+          }),
+        ],
+        interactions:
+          config.mapInteractions ||
+          olInteraction.defaults({
+            pinchRotate: true,
+            altShiftDragRotate: true,
+          }),
+        loadTilesWhileAnimating: true,
+        loadTilesWhileInteracting: true,
       }),
-      loadTilesWhileAnimating: true,
-      loadTilesWhileInteracting: true
-    }), $scope, $injector);
+      $scope,
+      $injector
+    );
   }
 }
 
@@ -64,7 +73,7 @@ export class AbstractAPIController extends AbstractAppController {
 const module = angular.module('GmfAbstractAPIControllerModule', [
   gmfControllersAbstractAppController.name,
   ngeoMapResizemap.name,
-  ngeoQueryBboxQueryComponent.name
+  ngeoQueryBboxQueryComponent.name,
 ]);
 
 module.controller('AbstractAPIController', AbstractAPIController);
@@ -72,8 +81,7 @@ module.controller('AbstractAPIController', AbstractAPIController);
 module.value('isDesktop', true);
 
 module.value('ngeoQueryOptions', {
-  'limit': 20
+  'limit': 20,
 });
-
 
 export default module;

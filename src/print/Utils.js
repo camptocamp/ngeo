@@ -11,7 +11,6 @@ import {toRadians} from 'ol/math.js';
  * @hidden
  */
 export function PrintUtils() {
-
   /**
    * @type {number}
    * @private
@@ -23,21 +22,17 @@ export function PrintUtils() {
    * @private
    */
   this.extentHalfVerticalDistance_;
-
 }
-
 
 /**
  * @hidden
  */
 export const INCHES_PER_METER = 39.37;
 
-
 /**
  * @hidden
  */
 export const DOTS_PER_INCH = 72;
-
 
 /**
  * Return a function to use as map postcompose listener for drawing a print
@@ -52,14 +47,14 @@ export const DOTS_PER_INCH = 72;
  * @return {function(import('ol/render/Event.js').default)} Function to use as a map postcompose
  * listener.
  */
-PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, opt_rotation) {
+PrintUtils.prototype.createPrintMaskPostcompose = function (getSize, getScale, opt_rotation) {
   const self = this;
 
   return (
     /**
      * @param {import("ol/render/Event.js").default} evt Postcompose event.
      */
-    function(evt) {
+    function (evt) {
       const context = evt.context;
       const frameState = evt.frameState;
 
@@ -78,15 +73,11 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
       const ppi = DOTS_PER_INCH;
       const ipm = INCHES_PER_METER;
 
-      const extentHalfWidth =
-           (((width / ppi) / ipm) * scale / resolution) / 2;
-      self.extentHalfHorizontalDistance_ =
-           (((size[0] / ppi) / ipm) * scale) / 2;
+      const extentHalfWidth = ((width / ppi / ipm) * scale) / resolution / 2;
+      self.extentHalfHorizontalDistance_ = ((size[0] / ppi / ipm) * scale) / 2;
 
-      const extentHalfHeight =
-           (((height / ppi) / ipm) * scale / resolution) / 2;
-      self.extentHalfVerticalDistance_ =
-           (((size[1] / ppi) / ipm) * scale) / 2;
+      const extentHalfHeight = ((height / ppi / ipm) * scale) / resolution / 2;
+      self.extentHalfVerticalDistance_ = ((size[1] / ppi / ipm) * scale) / 2;
 
       // Draw a mask on the whole map.
       context.beginPath();
@@ -99,12 +90,10 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
 
       // Draw the print zone
       if (!opt_rotation) {
-        self.drawPrintZone_(context, center, extentHalfWidth,
-          extentHalfHeight);
+        self.drawPrintZone_(context, center, extentHalfWidth, extentHalfHeight);
       } else {
         const rotation = toRadians(opt_rotation());
-        self.drawPrintZoneWithRotation_(context, center, extentHalfWidth,
-          extentHalfHeight, rotation);
+        self.drawPrintZoneWithRotation_(context, center, extentHalfWidth, extentHalfHeight, rotation);
       }
 
       // Fill the mask
@@ -114,7 +103,6 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
   );
 };
 
-
 /**
  * @param {CanvasRenderingContext2D} context Context of the Postcompose event.
  * @param {Array.<number>} center Center of the viewport (x; y).
@@ -122,8 +110,7 @@ PrintUtils.prototype.createPrintMaskPostcompose = function(getSize, getScale, op
  * @param {number} extentHalfHeight Extent half height.
  * @private
  */
-PrintUtils.prototype.drawPrintZone_ = function(context, center,
-  extentHalfWidth, extentHalfHeight) {
+PrintUtils.prototype.drawPrintZone_ = function (context, center, extentHalfWidth, extentHalfHeight) {
   const minx = center[0] - extentHalfWidth;
   const miny = center[1] - extentHalfHeight;
   const maxx = center[0] + extentHalfWidth;
@@ -137,7 +124,6 @@ PrintUtils.prototype.drawPrintZone_ = function(context, center,
   context.closePath();
 };
 
-
 /**
  * @param {CanvasRenderingContext2D} context Context of the Postcompose event.
  * @param {Array.<number>} center Center of the viewport (x; y).
@@ -146,11 +132,15 @@ PrintUtils.prototype.drawPrintZone_ = function(context, center,
  * @param {number} rotation Rotation value in radians.
  * @private
  */
-PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
-  extentHalfWidth, extentHalfHeight, rotation) {
+PrintUtils.prototype.drawPrintZoneWithRotation_ = function (
+  context,
+  center,
+  extentHalfWidth,
+  extentHalfHeight,
+  rotation
+) {
   // diagonal = distance p1 to center.
-  const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) +
-      Math.pow(extentHalfHeight, 2));
+  const diagonal = Math.sqrt(Math.pow(extentHalfWidth, 2) + Math.pow(extentHalfHeight, 2));
   // gamma = angle between horizontal and diagonal (with rotation).
   const gamma = Math.atan(extentHalfHeight / extentHalfWidth) - rotation;
   // omega = angle between diagonal and vertical (with rotation).
@@ -173,7 +163,6 @@ PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
   context.closePath();
 };
 
-
 /**
  * Get the optimal print scale for a map, the map being defined by its
  * size (in pixels) and resolution (in map units per pixel).
@@ -187,14 +176,12 @@ PrintUtils.prototype.drawPrintZoneWithRotation_ = function(context, center,
  * scale, that is the optimal scale is lower than or equal to the first value
  * in `printMapScales`.
  */
-PrintUtils.prototype.getOptimalScale = function(
-  mapSize, mapResolution, printMapSize, printMapScales) {
-
+PrintUtils.prototype.getOptimalScale = function (mapSize, mapResolution, printMapSize, printMapScales) {
   const mapWidth = mapSize[0] * mapResolution;
   const mapHeight = mapSize[1] * mapResolution;
 
-  const scaleWidth = mapWidth * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[0];
-  const scaleHeight = mapHeight * INCHES_PER_METER * DOTS_PER_INCH / printMapSize[1];
+  const scaleWidth = (mapWidth * INCHES_PER_METER * DOTS_PER_INCH) / printMapSize[0];
+  const scaleHeight = (mapHeight * INCHES_PER_METER * DOTS_PER_INCH) / printMapSize[1];
 
   const scale = Math.min(scaleWidth, scaleHeight);
 
@@ -208,7 +195,6 @@ PrintUtils.prototype.getOptimalScale = function(
   return optimal;
 };
 
-
 /**
  * Get the optimal map resolution for a print scale and a map size.
  * @param {import("ol/size.js").Size} mapSize Size of the map on the screen (px).
@@ -216,8 +202,7 @@ PrintUtils.prototype.getOptimalScale = function(
  * @param {number} printMapScale Map scale on the paper.
  * @return {number} The optimal map resolution.
  */
-PrintUtils.prototype.getOptimalResolution = function(mapSize, printMapSize, printMapScale) {
-
+PrintUtils.prototype.getOptimalResolution = function (mapSize, printMapSize, printMapScale) {
   const dotsPerMeter = DOTS_PER_INCH * INCHES_PER_METER;
 
   const resolutionX = (printMapSize[0] * printMapScale) / (dotsPerMeter * mapSize[0]);
@@ -228,50 +213,41 @@ PrintUtils.prototype.getOptimalResolution = function(mapSize, printMapSize, prin
   return optimalResolution;
 };
 
-
 /**
  * Get the coordinates of the bottom left corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom left corner.
  */
-PrintUtils.prototype.getBottomLeftCorner = function(mapCenter) {
-  return [mapCenter[0] - this.extentHalfHorizontalDistance_,
-    mapCenter[1] - this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getBottomLeftCorner = function (mapCenter) {
+  return [mapCenter[0] - this.extentHalfHorizontalDistance_, mapCenter[1] - this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * Get the coordinates of the bottom right corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.ç
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the bottom right corner.
  */
-PrintUtils.prototype.getBottomRightCorner = function(mapCenter) {
-  return [mapCenter[0] + this.extentHalfHorizontalDistance_,
-    mapCenter[1] - this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getBottomRightCorner = function (mapCenter) {
+  return [mapCenter[0] + this.extentHalfHorizontalDistance_, mapCenter[1] - this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * Get the coordinates of the up left corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up left corner.
  */
-PrintUtils.prototype.getUpLeftCorner = function(mapCenter) {
-  return [mapCenter[0] - this.extentHalfHorizontalDistance_,
-    mapCenter[1] + this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getUpLeftCorner = function (mapCenter) {
+  return [mapCenter[0] - this.extentHalfHorizontalDistance_, mapCenter[1] + this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * Get the coordinates of the up right corner of the printed map.
  * @param {import("ol/coordinate.js").Coordinate} mapCenter Center of the map to print.
  * @return {import("ol/coordinate.js").Coordinate} The coordinates of the up right corner.
  */
-PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
-  return [mapCenter[0] + this.extentHalfHorizontalDistance_,
-    mapCenter[1] + this.extentHalfVerticalDistance_];
+PrintUtils.prototype.getUpRightCorner = function (mapCenter) {
+  return [mapCenter[0] + this.extentHalfHorizontalDistance_, mapCenter[1] + this.extentHalfVerticalDistance_];
 };
-
 
 /**
  * @type {!angular.IModule}
@@ -279,6 +255,5 @@ PrintUtils.prototype.getUpRightCorner = function(mapCenter) {
  */
 const module = angular.module('ngeoPrintUtils', []);
 module.service('ngeoPrintUtils', PrintUtils);
-
 
 export default module;

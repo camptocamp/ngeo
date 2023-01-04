@@ -1,10 +1,9 @@
-
 #map {
   width: 600px;
   height: 400px;
 }
 button[ngeo-mobile-geolocation]:after {
-  content: 'Toggle tracking'
+  content: 'Toggle tracking';
 }
 .ngeo-notification {
   left: 50%;

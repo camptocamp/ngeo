@@ -16,14 +16,8 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /** @type {!angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoMiscBtnComponent.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoMiscBtnComponent.name]);
 
 /**
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr Feature overlay
@@ -32,7 +26,6 @@ const module = angular.module('app', [
  * @ngInject
  */
 function MainController(ngeoFeatureOverlayMgr) {
-
   /**
    * Collection shared between the drawing interactions and the feature
    * overlay used to render the drawn features.
@@ -42,21 +35,23 @@ function MainController(ngeoFeatureOverlayMgr) {
 
   const overlay = ngeoFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
-  overlay.setStyle(new olStyleStyle({
-    fill: new olStyleFill({
-      color: 'rgba(255, 255, 255, 0.2)'
-    }),
-    stroke: new olStyleStroke({
-      color: '#ffcc33',
-      width: 2
-    }),
-    image: new olStyleCircle({
-      radius: 7,
+  overlay.setStyle(
+    new olStyleStyle({
       fill: new olStyleFill({
-        color: '#ffcc33'
-      })
+        color: 'rgba(255, 255, 255, 0.2)',
+      }),
+      stroke: new olStyleStroke({
+        color: '#ffcc33',
+        width: 2,
+      }),
+      image: new olStyleCircle({
+        radius: 7,
+        fill: new olStyleFill({
+          color: '#ffcc33',
+        }),
+      }),
     })
-  }));
+  );
 
   /**
    * @type {import("ol/Map.js").default}
@@ -64,13 +59,13 @@ function MainController(ngeoFeatureOverlayMgr) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [-10997148, 4569099],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   const map = this.map;
@@ -84,8 +79,9 @@ function MainController(ngeoFeatureOverlayMgr) {
   this.drawPolygon = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'Polygon',
-      features: features
-    }));
+      features: features,
+    })
+  );
 
   const drawPolygon = this.drawPolygon;
 
@@ -99,8 +95,9 @@ function MainController(ngeoFeatureOverlayMgr) {
   this.drawPoint = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'Point',
-      features: features
-    }));
+      features: features,
+    })
+  );
 
   const drawPoint = this.drawPoint;
   drawPoint.setActive(false);
@@ -113,18 +110,16 @@ function MainController(ngeoFeatureOverlayMgr) {
   this.drawLine = new olInteractionDraw(
     /** @type {import('ol/interaction/Draw.js').Options} */ ({
       type: 'LineString',
-      features: features
-    }));
+      features: features,
+    })
+  );
 
   const drawLine = this.drawLine;
   drawLine.setActive(false);
   interactionDecoration(drawLine);
   map.addInteraction(drawLine);
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

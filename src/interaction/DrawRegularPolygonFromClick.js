@@ -6,7 +6,6 @@ import olGeomCircle from 'ol/geom/Circle.js';
 import {fromCircle, makeRegular} from 'ol/geom/Polygon.js';
 import olInteractionInteraction from 'ol/interaction/Interaction.js';
 
-
 /**
  * DrawRegularPolygonFromClick Interaction.
  *
@@ -15,7 +14,6 @@ import olInteractionInteraction from 'ol/interaction/Interaction.js';
  * @property {number} radius Radius size in map units.
  * @property {number} [sides=3] The number of sides for the regular polygon.
  */
-
 
 /**
  * This interactions allows drawing regular polygons of a pre-determined number
@@ -29,7 +27,7 @@ export default class extends olInteractionInteraction {
    */
   constructor(options) {
     super({
-      handleEvent: TRUE
+      handleEvent: TRUE,
     });
 
     /**
@@ -90,7 +88,6 @@ export default class extends olInteractionInteraction {
     if (map && active) {
       this.enable_();
     }
-
   }
 
   /**
@@ -100,9 +97,7 @@ export default class extends olInteractionInteraction {
   enable_() {
     const map = this.getMap();
     console.assert(map, 'Map should be set.');
-    this.listenerKeys_.push(
-      olEvents.listen(map, 'click', this.handleMapClick_, this)
-    );
+    this.listenerKeys_.push(olEvents.listen(map, 'click', this.handleMapClick_, this));
   }
 
   /**
@@ -124,9 +119,7 @@ export default class extends olInteractionInteraction {
    */
   handleMapClick_(evt) {
     const center = evt.coordinate;
-    const geometry = fromCircle(
-      new olGeomCircle(center), this.sides_
-    );
+    const geometry = fromCircle(new olGeomCircle(center), this.sides_);
 
     makeRegular(geometry, center, this.radius_, this.angle_);
 

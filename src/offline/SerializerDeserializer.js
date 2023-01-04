@@ -5,7 +5,6 @@ import OlSourceTileWMS from 'ol/source/TileWMS.js';
 import OlSourceWMTS from 'ol/source/WMTS.js';
 import OlLayerTile from 'ol/layer/Tile.js';
 
-
 const SerDes = class {
   /**
    * @param {Object} options The options
@@ -89,7 +88,6 @@ const SerDes = class {
     return new OlTilegridWMTS(options);
   }
 
-
   /**
    * @param {OlSourceTileWMS} source .
    * @return {string} .
@@ -156,7 +154,7 @@ const SerDes = class {
     const options = /** @type {import("ol/source/WMTS").Options} */ (JSON.parse(serialization));
     options.tileLoadFunction = tileLoadFunction;
     if (options.tileGrid) {
-      options.tileGrid = this.deserializeTilegridWMTS(/** @type{any} */(options).tileGrid);
+      options.tileGrid = this.deserializeTilegridWMTS(/** @type{any} */ (options).tileGrid);
     }
     return new OlSourceWMTS(options);
   }
@@ -214,6 +212,5 @@ const SerDes = class {
 };
 
 const exports = SerDes;
-
 
 export default exports;

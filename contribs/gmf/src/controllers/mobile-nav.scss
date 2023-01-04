@@ -40,7 +40,7 @@ main {
     top: 0;
     left: 0;
     cursor: pointer;
-    background-color: rgba($color, .4);
+    background-color: rgba($color, 0.4);
     visibility: hidden;
     opacity: 0;
 
@@ -70,7 +70,7 @@ main {
   transition: opacity $duration, visibility $duration;
   backface-visibility: hidden;
 
-  @media (max-width: map-get($grid-breakpoints, "sm")) {
+  @media (max-width: map-get($grid-breakpoints, 'sm')) {
     .gmf-search-is-active & {
       visibility: visible;
       opacity: 1;
@@ -81,12 +81,12 @@ main {
 $nav-bar-height: 3.12rem;
 
 .gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-right,
-.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-left  {
+.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-left {
   display: none;
 }
 
 .gmf-mobile-nav-left-is-visible nav.gmf-mobile-nav-left,
-.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-right  {
+.gmf-mobile-nav-right-is-visible nav.gmf-mobile-nav-right {
   visibility: visible;
 }
 
@@ -127,7 +127,7 @@ nav.gmf-mobile-nav-right {
       visibility: hidden;
       height: $nav-bar-height;
       width: $nav-back-width;
-      padding-left: 1.50rem;
+      padding-left: 1.5rem;
       color: $back-color;
 
       &.gmf-mobile-nav-active {
@@ -135,12 +135,12 @@ nav.gmf-mobile-nav-right {
         visibility: visible;
       }
 
-      &::before, &::after {
+      &::before,
+      &::after {
         transform-origin: 0.06rem 50%;
         left: $app-margin;
       }
     }
-
 
     > nav {
       position: absolute;
@@ -151,7 +151,6 @@ nav.gmf-mobile-nav-right {
       will-change: transform, opacity;
       opacity: 0;
       text-align: center;
-
 
       &.gmf-mobile-nav-active {
         transform: translateX(-100%);
@@ -180,7 +179,8 @@ nav.gmf-mobile-nav-right {
     position: relative;
     padding-right: $map-tools-size;
 
-    &::before, &::after {
+    &::before,
+    &::after {
       /* arrow goes on the right side - children navigation */
       right: 0;
       transform-origin: 0.56rem 50%;
@@ -188,8 +188,9 @@ nav.gmf-mobile-nav-right {
   }
 
   .gmf-mobile-nav-go-back,
-  a[data-toggle=slide-in] {
-    &::before, &::after {
+  a[data-toggle='slide-in'] {
+    &::before,
+    &::after {
       /* arrow icon in CSS - for element with nested unordered lists */
       content: '';
       position: absolute;
@@ -240,7 +241,7 @@ nav.gmf-mobile-nav-right {
 
 // For small devices (in portrait mode) we want the navigation menus to take
 // 90% of the viewport width
-@media (max-width: map-get($grid-breakpoints, "sm")) {
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
   main {
     .gmf-mobile-nav-left-is-visible & {
       transform: translateX(90vw);
@@ -282,7 +283,8 @@ nav.gmf-mobile-nav-right {
   z-index: $above-search-index;
   height: $map-tools-size;
   border: $border;
-  .fa, svg {
+  .fa,
+  svg {
     font-size: $icon-font-size;
   }
 }
@@ -311,10 +313,9 @@ nav.gmf-mobile-nav-right {
   }
 }
 
-
 //For tablet only
-@media (min-width: map-get($grid-breakpoints, "sm")) {
-  main button:hover{
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
+  main button:hover {
     background-color: $onhover-color;
   }
 

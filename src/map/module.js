@@ -20,5 +20,5 @@ export default angular.module('ngeoMapModule', [
   ngeoMapFeatureOverlayMgr.name,
   ngeoMapRecenter.name,
   ngeoMapResizemap.name,
-  ngeoMapScaleselector.name
+  ngeoMapScaleselector.name,
 ]);

@@ -32,7 +32,7 @@
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, "sm")) {
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
   $fullscreenpopup-tablet-width: 12 * $map-tools-size;
   $fullscreenpopup-topbar-height: 2.81rem; // Same value as the topbar-height in desktop.scss
   $fullscreenpopup-tablet-top: $fullscreenpopup-topbar-height + $app-margin + 2 * $map-tools-size;

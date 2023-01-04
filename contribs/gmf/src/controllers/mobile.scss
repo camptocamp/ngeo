@@ -2,14 +2,14 @@
  * Entry point for all styles required for the mobile application.
  */
 
-$map-tools-size: 2.50rem !default;
+$map-tools-size: 2.5rem !default;
 $border-color: black !default;
 
 @import '~gmf/sass/vars_only.scss';
 
-@import "~bootstrap/scss/_functions.scss";
-@import "~bootstrap/scss/_variables.scss";
-@import "~@fortawesome/fontawesome-free/scss/_variables.scss";
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~@fortawesome/fontawesome-free/scss/_variables.scss';
 
 @import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
@@ -23,13 +23,12 @@ $border-color: black !default;
 
 @import '~gmf/layertree/mobile.scss';
 
-
 /**
  * Mobile specific css only !
  * Please, use shared less files to describe desktop-mobile shared css
  */
 
-main>* {
+main > * {
   position: absolute;
 }
 
@@ -86,7 +85,7 @@ gmf-map {
     border-top: $half-app-margin solid $border-color;
     border-right: $half-app-margin solid transparent;
     border-left: $half-app-margin solid transparent;
-    content: "";
+    content: '';
     position: absolute;
     bottom: -$half-app-margin;
     margin-left: -$half-app-margin;
@@ -111,7 +110,8 @@ gmf-map {
   top: $app-margin + $map-tools-size + $app-margin;
   right: $app-margin;
   left: auto;
-  .ol-zoom-in, .ol-zoom-out {
+  .ol-zoom-in,
+  .ol-zoom-out {
     font-size: $icon-font-size;
     border-radius: $border-radius-base;
   }
@@ -147,7 +147,7 @@ button[ngeo-mobile-geolocation] {
 }
 
 // Overrides for tablet devices and up
-@media (min-width: map-get($grid-breakpoints, "sm")) {
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
   .gmf-mobile-measure {
     right: 2 * $app-margin + $map-tools-size;
   }

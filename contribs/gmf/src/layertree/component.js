@@ -13,9 +13,7 @@ import ngeoDatasourceOGC, {ServerType} from 'ngeo/datasource/OGC.js';
 
 import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
 
-import ngeoLayertreeController, {
-  LayertreeVisitorDecision
-} from 'ngeo/layertree/Controller.js';
+import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper.js';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays.js';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime.js';
@@ -50,7 +48,6 @@ import 'bootstrap/js/src/collapse.js';
  * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
  */
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -69,24 +66,27 @@ const module = angular.module('gmfLayertreeComponent', [
   ngeoMiscWMSTime.name,
 ]);
 
-
 // Overrides the path to the layertree template (used by each node, except
 // the root node that path is defined by the gmfLayertreeTemplate value.
-module.value('ngeoLayertreeTemplateUrl',
+module.value(
+  'ngeoLayertreeTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
    * @return {string} Template URL.
    */
-  (element, attrs) => 'gmf/layertree');
+  (element, attrs) => 'gmf/layertree'
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/layertree', require('./component.html'));
-});
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/layertree', require('./component.html'));
+  }
+);
 
-
-module.value('gmfLayertreeTemplate',
+module.value(
+  'gmfLayertreeTemplate',
   /**
    * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -94,15 +94,16 @@ module.value('gmfLayertreeTemplate',
    */
   ($element, $attrs) => {
     const subTemplateUrl = 'gmf/layertree';
-    return '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
-          'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
-          'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
-          'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
-          `ngeo-layertree-templateurl="${subTemplateUrl}">` +
-          '</div>';
+    return (
+      '<div ngeo-layertree="gmfLayertreeCtrl.root" ' +
+      'ngeo-layertree-map="gmfLayertreeCtrl.map" ' +
+      'ngeo-layertree-nodelayer="gmfLayertreeCtrl.getLayer(treeCtrl)" ' +
+      'ngeo-layertree-listeners="gmfLayertreeCtrl.listeners(treeScope, treeCtrl)" ' +
+      `ngeo-layertree-templateurl="${subTemplateUrl}">` +
+      '</div>'
+    );
   }
 );
-
 
 /**
  * @param {!JQuery} $element Element.
@@ -116,7 +117,6 @@ module.value('gmfLayertreeTemplate',
 function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
   return gmfLayertreeTemplate($element, $attrs);
 }
-
 
 /**
  * This component creates a layertree based on the c2cgeoportal JSON themes
@@ -177,13 +177,12 @@ const layertreeComponent = {
     'map': '=gmfLayertreeMap',
     'dimensions': '=?gmfLayertreeDimensions',
     'openLinksInNewWindow': '<?gmfLayertreeOpenlinksinnewwindow',
-    'isExpanded': '<?gmfLayertreeIsexpanded'
+    'isExpanded': '<?gmfLayertreeIsexpanded',
   },
-  template: gmfLayertreeTemplate
+  template: gmfLayertreeTemplate,
 };
 
 module.component('gmfLayertree', layertreeComponent);
-
 
 /**
  * @param {JQuery} $element Element.
@@ -210,10 +209,19 @@ module.component('gmfLayertree', layertreeComponent);
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */
-function Controller($element, $scope, ngeoLayerHelper,
-  gmfDataSourceBeingFiltered, gmfExternalDataSourcesManager, gmfPermalink,
-  gmfTreeManager, gmfSyncLayertreeMap, ngeoWMSTime, gmfThemes, $injector) {
-
+function Controller(
+  $element,
+  $scope,
+  ngeoLayerHelper,
+  gmfDataSourceBeingFiltered,
+  gmfExternalDataSourcesManager,
+  gmfPermalink,
+  gmfTreeManager,
+  gmfSyncLayertreeMap,
+  ngeoWMSTime,
+  gmfThemes,
+  $injector
+) {
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -328,11 +336,10 @@ function Controller($element, $scope, ngeoLayerHelper,
   });
 }
 
-
 /**
  * Init the controller,
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.openLinksInNewWindow = this.openLinksInNewWindow === true;
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
 
@@ -341,29 +348,33 @@ Controller.prototype.$onInit = function() {
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
-  this.scope_.$watchCollection(() => this.layers,
+  this.scope_.$watchCollection(
+    () => this.layers,
     () => {
       this.map.render();
-    });
+    }
+  );
 
   // watch any change on dimensions object to refresh the layers
-  this.scope_.$watchCollection(() => {
-    if (this.gmfTreeManager_.rootCtrl) {
-      return this.dimensions;
+  this.scope_.$watchCollection(
+    () => {
+      if (this.gmfTreeManager_.rootCtrl) {
+        return this.dimensions;
+      }
+    },
+    (dimensions) => {
+      if (dimensions) {
+        this.updateDimensions_(this.gmfTreeManager_.rootCtrl);
+      }
     }
-  }, (dimensions) => {
-    if (dimensions) {
-      this.updateDimensions_(this.gmfTreeManager_.rootCtrl);
-    }
-  });
+  );
 };
-
 
 /**
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Layer tree controller.
  * @private
  */
-Controller.prototype.updateDimensions_ = function(treeCtrl) {
+Controller.prototype.updateDimensions_ = function (treeCtrl) {
   treeCtrl.traverseDepthFirst((ctrl) => {
     if (ctrl.node.dimensions) {
       const layer = ctrl.layer;
@@ -377,13 +388,12 @@ Controller.prototype.updateDimensions_ = function(treeCtrl) {
   });
 };
 
-
 /**
  * @param {import("ol/layer/Layer.js").default} layer Layer to update.
  * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node Layer tree node.
  * @private
  */
-Controller.prototype.updateLayerDimensions_ = function(layer, node) {
+Controller.prototype.updateLayerDimensions_ = function (layer, node) {
   if (this.dimensions && node.dimensions) {
     const dimensions = {};
     for (const key in node.dimensions) {
@@ -413,7 +423,6 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
   }
 };
 
-
 /**
  * Use the gmfSyncLayertreeMap_ to create and get layer corresponding to this
  * treeCtrl. The layer will be inserted into the map. The layer can be null
@@ -424,17 +433,17 @@ Controller.prototype.updateLayerDimensions_ = function(layer, node) {
  * @return {import("ol/layer/Base.js").default|import("ol/layer/Group.js").default|null} The OpenLayers
  *    layer or group for the node.
  */
-Controller.prototype.getLayer = function(treeCtrl) {
+Controller.prototype.getLayer = function (treeCtrl) {
   let opt_position;
   if (treeCtrl.parent.isRoot) {
     this.gmfTreeManager_.rootCtrl = treeCtrl.parent;
     // Precise the index to add first level groups.
-    opt_position = this.gmfTreeManager_.root.children.length -
-        this.gmfTreeManager_.numberOfGroupsToAddInThisDigestLoop || 0;
+    opt_position =
+      this.gmfTreeManager_.root.children.length - this.gmfTreeManager_.numberOfGroupsToAddInThisDigestLoop ||
+      0;
   }
 
-  const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map,
-    this.dataLayerGroup_, opt_position);
+  const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map, this.dataLayerGroup_, opt_position);
 
   if (layer instanceof olLayerLayer) {
     const node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (
@@ -446,7 +455,6 @@ Controller.prototype.getLayer = function(treeCtrl) {
   return layer;
 };
 
-
 /**
  * Remove layer from this component's layergroup (and then, from the map) on
  * a ngeo layertree destroy event.
@@ -454,7 +462,7 @@ Controller.prototype.getLayer = function(treeCtrl) {
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  */
-Controller.prototype.listeners = function(scope, treeCtrl) {
+Controller.prototype.listeners = function (scope, treeCtrl) {
   const dataLayerGroup = this.dataLayerGroup_;
   scope.$on('$destroy', () => {
     // Remove the layer from the map.
@@ -467,7 +475,7 @@ Controller.prototype.listeners = function(scope, treeCtrl) {
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  */
-Controller.prototype.toggleActive = function(treeCtrl) {
+Controller.prototype.toggleActive = function (treeCtrl) {
   const state = treeCtrl.getState();
   if (treeCtrl.node.metadata && treeCtrl.node.metadata.exclusiveGroup) {
     // If the treeCtrl has 'exclusiveGroup' enabled, then
@@ -478,7 +486,6 @@ Controller.prototype.toggleActive = function(treeCtrl) {
   }
 };
 
-
 /**
  * Return the current state of the given treeCtrl's node.
  * Return a class name that match with the current node activation state.
@@ -486,10 +493,9 @@ Controller.prototype.toggleActive = function(treeCtrl) {
  *    from the current node.
  * @return {string} 'on' or 'off' or 'indeterminate'.
  */
-Controller.prototype.getNodeState = function(treeCtrl) {
+Controller.prototype.getNodeState = function (treeCtrl) {
   return treeCtrl.getState();
 };
-
 
 /**
  * Update the `timeRangeValue` property of the data source bound to the
@@ -505,12 +511,11 @@ Controller.prototype.getNodeState = function(treeCtrl) {
  * @param {{start : number, end : number}} time The start
  * and optionally the end datetime (for time range selection) selected by user
  */
-Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
+Controller.prototype.updateWMSTimeLayerState = function (layertreeCtrl, time) {
   if (!time) {
     return;
   }
-  const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ (
-    layertreeCtrl.getDataSource());
+  const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ (layertreeCtrl.getDataSource());
   if (dataSource) {
     console.assert(dataSource instanceof ngeoDatasourceOGC);
     dataSource.timeRangeValue = time;
@@ -521,7 +526,6 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
   }
 };
 
-
 /**
  * Get the icon image URL for the given treeCtrl's layer. It can only return a
  * string for internal WMS layers without multiple childlayers in the node.
@@ -529,7 +533,7 @@ Controller.prototype.updateWMSTimeLayerState = function(layertreeCtrl, time) {
  *    from the current node.
  * @return {string|undefined} The icon legend URL or undefined.
  */
-Controller.prototype.getLegendIconURL = function(treeCtrl) {
+Controller.prototype.getLegendIconURL = function (treeCtrl) {
   const iconUrl = treeCtrl.node.metadata.iconUrl;
 
   if (iconUrl !== undefined) {
@@ -558,10 +562,14 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
   const layerName = gmfLayerWMS.layers.split(',')[0];
   const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
   return this.layerHelper_.getWMSLegendURL(
-    gmfOgcServer.url, layerName, undefined, legendRule, this.legendIconWidth, this.legendIconHeight
+    gmfOgcServer.url,
+    layerName,
+    undefined,
+    legendRule,
+    this.legendIconWidth,
+    this.legendIconHeight
   );
 };
-
 
 /**
  * Get the legends object (<LayerName: url> for each layer) for the given treeCtrl.
@@ -570,7 +578,7 @@ Controller.prototype.getLegendIconURL = function(treeCtrl) {
  * @return {Object.<string, string>} A <layerName: url> object that provides a
  *     layer for each layer.
  */
-Controller.prototype.getLegendsObject = function(treeCtrl) {
+Controller.prototype.getLegendsObject = function (treeCtrl) {
   const legendsObject = /** @type {Object.<string, string>} */ ({});
   if (/** @type import('gmf/themes.js').GmfGroup */ (treeCtrl.node).children !== undefined) {
     return null;
@@ -587,7 +595,8 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
   if (gmfLayer.type === 'WMTS') {
     console.assert(layer instanceof olLayerTile);
     const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(
-      /** @type {import("ol/layer/Tile.js").default} */ (layer));
+      /** @type {import("ol/layer/Tile.js").default} */ (layer)
+    );
     legendsObject[gmfLayerDefaultName] = wmtsLegendURL;
     return wmtsLegendURL ? legendsObject : null;
   } else {
@@ -610,25 +619,23 @@ Controller.prototype.getLegendsObject = function(treeCtrl) {
   }
 };
 
-
 /**
  * Get the number of legends object for this layertree controller.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  * @return {number} The number of Legends object.
  */
-Controller.prototype.getNumberOfLegendsObject = function(treeCtrl) {
+Controller.prototype.getNumberOfLegendsObject = function (treeCtrl) {
   const legendsObject = this.getLegendsObject(treeCtrl);
   return legendsObject ? Object.keys(legendsObject).length : 0;
 };
-
 
 /**
  * Return the current scale of the map.
  * @return {number} Scale.
  * @private
  */
-Controller.prototype.getScale_ = function() {
+Controller.prototype.getScale_ = function () {
   const view = this.map.getView();
   const resolution = view.getResolution();
   const mpu = view.getProjection().getMetersPerUnit();
@@ -636,13 +643,12 @@ Controller.prototype.getScale_ = function() {
   return resolution * mpu * 39.37 * dpi;
 };
 
-
 /**
  * Opens a openIframePopup with the content of the metadata url of a node.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  */
-Controller.prototype.displayMetadata = function(treeCtrl) {
+Controller.prototype.displayMetadata = function (treeCtrl) {
   const node = treeCtrl.node;
   const metadataURL = node.metadata['metadataUrl'];
   if (metadataURL !== undefined) {
@@ -655,12 +661,11 @@ Controller.prototype.displayMetadata = function(treeCtrl) {
   }
 };
 
-
 /**
  * Update the layers order in the map and the treeCtrl in the treeManager after
  * a reorder of the first-level groups. Then update the permalink.
  */
-Controller.prototype.afterReorder = function() {
+Controller.prototype.afterReorder = function () {
   const groupNodes = this.gmfTreeManager_.rootCtrl.node.children;
   const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
   const treeCtrls = [];
@@ -691,26 +696,23 @@ Controller.prototype.afterReorder = function() {
   this.gmfPermalink_.refreshFirstLevelGroups();
 };
 
-
 /**
  * @param {import('gmf/themes.js').GmfGroup} node Layer tree node to remove.
  */
-Controller.prototype.removeNode = function(node) {
+Controller.prototype.removeNode = function (node) {
   this.gmfTreeManager_.removeGroup(node);
 };
 
-
 /**
  */
-Controller.prototype.removeAllNodes = function() {
+Controller.prototype.removeAllNodes = function () {
   this.gmfTreeManager_.removeAll();
 };
-
 
 /**
  * @return {number} first level node count.
  */
-Controller.prototype.nodesCount = function() {
+Controller.prototype.nodesCount = function () {
   return this.gmfTreeManager_.root.children.length;
 };
 
@@ -723,7 +725,7 @@ Controller.prototype.nodesCount = function() {
  *     on the node).
  * @return {string|undefined} 'out-of-resolution' or undefined.
  */
-Controller.prototype.getResolutionStyle = function(gmfLayer) {
+Controller.prototype.getResolutionStyle = function (gmfLayer) {
   const resolution = this.map.getView().getResolution();
   const minResolution = getNodeMinResolution(gmfLayer);
   if (minResolution !== undefined && resolution < minResolution) {
@@ -736,13 +738,12 @@ Controller.prototype.getResolutionStyle = function(gmfLayer) {
   return undefined;
 };
 
-
 /**
  * Set the resolution of the map with the max or min resolution of the node.
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl ngeo layertree controller,
  *    from the current node.
  */
-Controller.prototype.zoomToResolution = function(treeCtrl) {
+Controller.prototype.zoomToResolution = function (treeCtrl) {
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (treeCtrl.node);
   const view = this.map.getView();
   const resolution = view.getResolution();
@@ -757,34 +758,30 @@ Controller.prototype.zoomToResolution = function(treeCtrl) {
   }
 };
 
-
 /**
  * Toggle the legend for a node
  * @param {string} legendNodeId The DOM node legend id to toggle
  */
-Controller.prototype.toggleNodeLegend = function(legendNodeId) {
+Controller.prototype.toggleNodeLegend = function (legendNodeId) {
   $(legendNodeId).toggle({
-    toggle: true
+    toggle: true,
   });
 };
-
 
 /**
  * @param {import("gmf/datasource/OGC.js").default} ds Data source to filter.
  */
-Controller.prototype.toggleFiltrableDataSource = function(ds) {
+Controller.prototype.toggleFiltrableDataSource = function (ds) {
   this.gmfDataSourceBeingFiltered.dataSource = ds;
 };
-
 
 /**
  * @param {string} legendNodeId The DOM node legend id
  * @return {boolean} Whenever the legend is currently displayed.
  */
-Controller.prototype.isNodeLegendVisible = function(legendNodeId) {
+Controller.prototype.isNodeLegendVisible = function (legendNodeId) {
   return $(legendNodeId).is(':visible');
 };
-
 
 /**
  * Determines whether the layer tree controller supports being customized.
@@ -803,48 +800,34 @@ Controller.prototype.isNodeLegendVisible = function(legendNodeId) {
  * @return {boolean} Whether the layer tree controller supports being
  *     "customized" or not.
  */
-Controller.prototype.supportsCustomization = function(treeCtrl) {
-  return !treeCtrl.isRoot &&
-    (
-      this.supportsLegend(treeCtrl) ||
-      this.supportsOpacityChange(treeCtrl)
-    );
+Controller.prototype.supportsCustomization = function (treeCtrl) {
+  return !treeCtrl.isRoot && (this.supportsLegend(treeCtrl) || this.supportsOpacityChange(treeCtrl));
 };
-
 
 /**
  * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having a
  *     legend being shown.
  */
-Controller.prototype.supportsLegend = function(treeCtrl) {
+Controller.prototype.supportsLegend = function (treeCtrl) {
   const node = /** @type {!import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
-  return !!node.metadata &&
-    !!node.metadata.legend &&
-    !!this.getLegendsObject(treeCtrl);
+  return !!node.metadata && !!node.metadata.legend && !!this.getLegendsObject(treeCtrl);
 };
-
 
 /**
  * @param {!import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl Ngeo tree controller.
  * @return {boolean} Whether the layer tree controller supports having its
  *     layer opacity being changed or not.
  */
-Controller.prototype.supportsOpacityChange = function(treeCtrl) {
+Controller.prototype.supportsOpacityChange = function (treeCtrl) {
   const node = /** @type {!import('gmf/themes.js').GmfGroup} */ (treeCtrl.node);
   const parentNode = /** @type {!import('gmf/themes.js').GmfGroup} */ (treeCtrl.parent.node);
-  return !!treeCtrl.layer &&
-    (
-      (
-        treeCtrl.depth === 1 && !node.mixed
-      ) ||
-      (
-        treeCtrl.depth > 1 && parentNode.mixed
-      )
-    );
+  return (
+    !!treeCtrl.layer && ((treeCtrl.depth === 1 && !node.mixed) || (treeCtrl.depth > 1 && parentNode.mixed))
+  );
 };
 
-Controller.prototype.setLegendOptions = function() {
+Controller.prototype.setLegendOptions = function () {
   if (this.layertreeOptions) {
     if (!this.layertreeOptions.legendIcon || this.layertreeOptions.legendIcon.width === 'auto') {
       this.legendIconWidth = undefined;
@@ -861,6 +844,5 @@ Controller.prototype.setLegendOptions = function() {
 };
 
 module.controller('GmfLayertreeController', Controller);
-
 
 export default module;

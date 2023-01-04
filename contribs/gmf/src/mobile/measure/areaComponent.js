@@ -3,17 +3,14 @@ import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureAreaMobile from 'ngeo/interaction/MeasureAreaMobile.js';
 import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasureArea', [
-  ngeoMiscFilters.name,
-]);
+const module = angular.module('gmfMobileMeasureArea', [ngeoMiscFilters.name]);
 
-
-module.value('gmfMobileMeasureAreaTemplateUrl',
+module.value(
+  'gmfMobileMeasureAreaTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -21,15 +18,16 @@ module.value('gmfMobileMeasureAreaTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasureAreaTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/measure/areaComponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/measure/areaComponent';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/measure/areaComponent', require('./baseComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/measure/areaComponent', require('./baseComponent.html'));
+  }
+);
 
 /**
  * Provide a directive to do a area measure on the mobile devices.
@@ -61,7 +59,7 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
       'active': '=gmfMobileMeasureareaActive',
       'precision': '<?gmfMobileMeasureareaPrecision',
       'map': '=gmfMobileMeasureareaMap',
-      'sketchStyle': '=?gmfMobileMeasureareaSketchstyle'
+      'sketchStyle': '=?gmfMobileMeasureareaSketchstyle',
     },
     controller: 'GmfMobileMeasureAreaController as ctrl',
     bindToController: true,
@@ -74,13 +72,11 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
-    }
+    },
   };
 }
 
-
 module.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
-
 
 /**
  * @private
@@ -108,7 +104,7 @@ class Controller extends MeasueMobileBaseController {
   init() {
     this.measure = new ngeoInteractionMeasureAreaMobile(this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
       precision: this.precision,
-      sketchStyle: this.sketchStyle
+      sketchStyle: this.sketchStyle,
     });
 
     super.init();

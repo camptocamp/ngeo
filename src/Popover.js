@@ -9,7 +9,6 @@ import olOverlay from 'ol/Overlay.js';
  */
 export default class extends olOverlay {
   constructor(options = {}) {
-
     const originalEl = options.element ? options.element : document.createElement('div');
     options.element = document.createElement('div');
 
@@ -52,7 +51,7 @@ export default class extends olOverlay {
           container: element.parentElement,
           placement: 'top',
           content: contentEl,
-          html: true
+          html: true,
         });
         $(element).popover('show');
       }, 0);

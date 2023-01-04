@@ -9,17 +9,14 @@ import olCollection from 'ol/Collection.js';
 import olInteractionModify from 'ol/interaction/Modify.js';
 import olFeature from 'ol/Feature.js';
 
-
 /**
  * @typedef {Object} ModifyEventItem
  * @property {import("ol/Feature.js").default} features
  */
 
-
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<ModifyEventItem>} ModifyEvent
  */
-
 
 /**
  * This interaction combines multiple kind of feature modification interactions
@@ -44,7 +41,7 @@ export default class extends olInteractionInteraction {
    */
   constructor(options) {
     super({
-      handleEvent: TRUE
+      handleEvent: TRUE,
     });
     console.assert(options.features);
 
@@ -72,13 +69,15 @@ export default class extends olInteractionInteraction {
      */
     this.otherFeatures_ = new olCollection();
 
-    this.interactions_.push(new olInteractionModify({
-      deleteCondition: deleteCondition,
-      features: this.otherFeatures_,
-      pixelTolerance: options.pixelTolerance,
-      style: options.style,
-      wrapX: options.wrapX
-    }));
+    this.interactions_.push(
+      new olInteractionModify({
+        deleteCondition: deleteCondition,
+        features: this.otherFeatures_,
+        pixelTolerance: options.pixelTolerance,
+        style: options.style,
+        wrapX: options.wrapX,
+      })
+    );
 
     /**
      * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
@@ -86,12 +85,14 @@ export default class extends olInteractionInteraction {
      */
     this.circleFeatures_ = new olCollection();
 
-    this.interactions_.push(new ngeoInteractionModifyCircle({
-      features: this.circleFeatures_,
-      pixelTolerance: options.pixelTolerance,
-      style: options.style,
-      wrapX: options.wrapX
-    }));
+    this.interactions_.push(
+      new ngeoInteractionModifyCircle({
+        features: this.circleFeatures_,
+        pixelTolerance: options.pixelTolerance,
+        style: options.style,
+        wrapX: options.wrapX,
+      })
+    );
 
     /**
      * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
@@ -99,12 +100,14 @@ export default class extends olInteractionInteraction {
      */
     this.rectangleFeatures_ = new olCollection();
 
-    this.interactions_.push(new ngeoInteractionModifyRectangle({
-      features: this.rectangleFeatures_,
-      pixelTolerance: options.pixelTolerance,
-      style: options.style,
-      wrapX: options.wrapX
-    }));
+    this.interactions_.push(
+      new ngeoInteractionModifyRectangle({
+        features: this.rectangleFeatures_,
+        pixelTolerance: options.pixelTolerance,
+        style: options.style,
+        wrapX: options.wrapX,
+      })
+    );
   }
 
   /**
@@ -163,7 +166,7 @@ export default class extends olInteractionInteraction {
     });
 
     if (active && map) {
-      this.features_.forEach(feature => this.addFeature_(feature));
+      this.features_.forEach((feature) => this.addFeature_(feature));
       keys.push(
         olEvents.listen(this.features_, 'add', this.handleFeaturesAdd_, this),
         olEvents.listen(this.features_, 'remove', this.handleFeaturesRemove_, this)
@@ -171,7 +174,7 @@ export default class extends olInteractionInteraction {
     } else {
       keys.forEach(olEvents.unlistenByKey);
       keys.length = 0;
-      this.features_.forEach(feature => this.removeFeature_(feature));
+      this.features_.forEach((feature) => this.removeFeature_(feature));
     }
   }
 

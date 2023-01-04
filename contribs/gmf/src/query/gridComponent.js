@@ -21,7 +21,6 @@ import olStyleStyle from 'ol/style/Style.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
-
 /**
  * Configuration for a grid tab.
  * @typedef {Object} GridSource
@@ -29,7 +28,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Results of the query
  *    source.
  */
-
 
 /**
  * Configuration option for {@link import("gmf/query/gridComponent.js").default} to merge
@@ -40,7 +38,6 @@ import 'bootstrap/js/src/dropdown.js';
  *
  * @typedef {Object<string, Array.<string>>} GridMergeTabs
  */
-
 
 /**
  * @type {!angular.IModule}
@@ -54,8 +51,8 @@ const module = angular.module('gmfQueryGridComponent', [
   ngeoQueryMapQuerent.name,
 ]);
 
-
-module.value('gmfDisplayquerygridTemplateUrl',
+module.value(
+  'gmfDisplayquerygridTemplateUrl',
   /**
    * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -63,16 +60,16 @@ module.value('gmfDisplayquerygridTemplateUrl',
    */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerygridTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/query/gridComponent';
+    return templateUrl !== undefined ? templateUrl : 'gmf/query/gridComponent';
   }
 );
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -86,7 +83,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTemplateUrl) {
   return gmfDisplayquerygridTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provides a component to display results of the {@link import("ngeo/queryResult.js").default} in a
@@ -140,14 +136,12 @@ const queryGridComponent = {
     'removeEmptyColumnsFn': '&?gmfDisplayquerygridRemoveemptycolumns',
     'maxResultsFn': '&?gmfDisplayquerygridMaxresults',
     'maxRecenterZoomFn': '&?gmfDisplayquerygridMaxrecenterzoom',
-    'mergeTabs': '<?gmfDisplayquerygridMergetabs'
+    'mergeTabs': '<?gmfDisplayquerygridMergetabs',
   },
-  templateUrl: gmfDisplayquerygridTemplateUrl
+  templateUrl: gmfDisplayquerygridTemplateUrl,
 };
 
-
 module.component('gmfDisplayquerygrid', queryGridComponent);
-
 
 /**
  * Controller for the query grid.
@@ -167,12 +161,19 @@ module.component('gmfDisplayquerygrid', queryGridComponent);
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
-export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQuerent,
-  ngeoFeatureOverlayMgr, $timeout, ngeoCsvDownload, $element) {
-
+export function QueryGridController(
+  $injector,
+  $scope,
+  ngeoQueryResult,
+  ngeoMapQuerent,
+  ngeoFeatureOverlayMgr,
+  $timeout,
+  ngeoCsvDownload,
+  $element
+) {
   const queryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ (
-    $injector.has('ngeoQueryOptions') ?
-      $injector.get('ngeoQueryOptions') : {});
+    $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
+  );
 
   /**
    * @type {!angular.IScope}
@@ -290,8 +291,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
    * @type {string}
    * @private
    */
-  this.filename_ = $injector.has('gmfCsvFilename') ?
-    $injector.get('gmfCsvFilename') : 'query-results.csv';
+  this.filename_ = $injector.has('gmfCsvFilename') ? $injector.get('gmfCsvFilename') : 'query-results.csv';
 
   /**
    * @type {import("ol/Map.js").default}
@@ -306,7 +306,8 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
       if (newQueryResult !== oldQueryResult) {
         this.updateData_();
       }
-    });
+    }
+  );
 
   /**
    * An unregister function returned from `$scope.$watchCollection` for
@@ -320,7 +321,7 @@ export function QueryGridController($injector, $scope, ngeoQueryResult, ngeoMapQ
 /**
  * Init the controller
  */
-QueryGridController.prototype.$onInit = function() {
+QueryGridController.prototype.$onInit = function () {
   this.removeEmptyColumns_ = this['removeEmptyColumnsFn'] ? this['removeEmptyColumnsFn']() === true : false;
   this.maxRecenterZoom = this['maxRecenterZoomFn'] ? this['maxRecenterZoomFn']() : undefined;
 
@@ -345,10 +346,10 @@ QueryGridController.prototype.$onInit = function() {
       image: new olStyleCircle({
         fill: fill,
         radius: 5,
-        stroke: stroke
+        stroke: stroke,
       }),
       stroke: stroke,
-      zIndex: 10
+      zIndex: 10,
     });
   }
   highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
@@ -365,21 +366,17 @@ QueryGridController.prototype.$onInit = function() {
  * Returns a list of grid sources in the order they were loaded.
  * @return {Array.<GridSource>} Grid sources.
  */
-QueryGridController.prototype.getGridSources = function() {
-  return this.loadedGridSources.map(sourceLabel => this.gridSources[sourceLabel]);
+QueryGridController.prototype.getGridSources = function () {
+  return this.loadedGridSources.map((sourceLabel) => this.gridSources[sourceLabel]);
 };
-
 
 /**
  * @private
  */
-QueryGridController.prototype.updateData_ = function() {
+QueryGridController.prototype.updateData_ = function () {
   // close if there are no results
   if (
-    (
-      this.ngeoQueryResult.pending ||
-      this.ngeoQueryResult.total === 0
-    ) &&
+    (this.ngeoQueryResult.pending || this.ngeoQueryResult.total === 0) &&
     !this.hasOneWithTooManyResults_()
   ) {
     const oldActive = this.active;
@@ -420,7 +417,7 @@ QueryGridController.prototype.updateData_ = function() {
   }
 
   // keep the first existing navigation tab open
-  if (this.selectedTab === null || !((`${this.selectedTab}`) in this.gridSources)) {
+  if (this.selectedTab === null || !(`${this.selectedTab}` in this.gridSources)) {
     // selecting the tab is done in a timeout, because otherwise in rare cases
     // `ng-class` might set the `active` class on multiple tabs.
     this.$timeout_(() => {
@@ -430,13 +427,12 @@ QueryGridController.prototype.updateData_ = function() {
   }
 };
 
-
 /**
  * @private
  * @return {boolean} If one of the source has too many results.
  */
-QueryGridController.prototype.hasOneWithTooManyResults_ = function() {
-  return this.ngeoQueryResult.sources.some(source => source.tooManyResults);
+QueryGridController.prototype.hasOneWithTooManyResults_ = function () {
+  return this.ngeoQueryResult.sources.some((source) => source.tooManyResults);
 };
 
 /**
@@ -444,7 +440,7 @@ QueryGridController.prototype.hasOneWithTooManyResults_ = function() {
  * @param {string|number} value A value to escape.
  * @returns {string|number} value An escaped value.
  */
-QueryGridController.prototype.escapeValue = function(value) {
+QueryGridController.prototype.escapeValue = function (value) {
   // Work-around for Number.isInteger() when not always getting a number ...
   if (typeof value == 'number') {
     return value;
@@ -458,16 +454,14 @@ QueryGridController.prototype.escapeValue = function(value) {
   }
 };
 
-
 /**
  * Returns if the given grid source is selected?
  * @param {GridSource} gridSource Grid source.
  * @return {boolean} Is selected?
  */
-QueryGridController.prototype.isSelected = function(gridSource) {
+QueryGridController.prototype.isSelected = function (gridSource) {
   return this.selectedTab === gridSource.source.label;
 };
-
 
 /**
  * Try to merge the mergable sources.
@@ -475,7 +469,7 @@ QueryGridController.prototype.isSelected = function(gridSource) {
  * @return {Array.<import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} The merged sources.
  * @private
  */
-QueryGridController.prototype.getMergedSources_ = function(sources) {
+QueryGridController.prototype.getMergedSources_ = function (sources) {
   const allSources = [];
   /** @type {Object.<string, import('ngeo/statemanager/WfsPermalink.js').QueryResultSource>} */
   const mergedSources = {};
@@ -497,7 +491,6 @@ QueryGridController.prototype.getMergedSources_ = function(sources) {
   return allSources;
 };
 
-
 /**
  * Check if the given source should be merged. If so, an artificial source
  * that will contain the features of all mergeable sources is returned. If not,
@@ -509,12 +502,12 @@ QueryGridController.prototype.getMergedSources_ = function(sources) {
  *    source should not be merged.
  * @private
  */
-QueryGridController.prototype.getMergedSource_ = function(source, mergedSources) {
+QueryGridController.prototype.getMergedSource_ = function (source, mergedSources) {
   let mergeSourceId = null;
 
   for (const currentMergeSourceId in this.mergeTabs) {
     const sourceLabels = this.mergeTabs[currentMergeSourceId];
-    const containsSource = sourceLabels.some(sourceLabel => sourceLabel == source.label);
+    const containsSource = sourceLabels.some((sourceLabel) => sourceLabel == source.label);
     if (containsSource) {
       mergeSourceId = currentMergeSourceId;
       break;
@@ -539,7 +532,7 @@ QueryGridController.prototype.getMergedSource_ = function(source, mergedSources)
       pending: false,
       queried: true,
       tooManyResults: false,
-      totalFeatureCount: undefined
+      totalFeatureCount: undefined,
     };
     mergedSources[mergeSourceId] = mergeSource;
   }
@@ -553,25 +546,28 @@ QueryGridController.prototype.getMergedSource_ = function(source, mergedSources)
   // also be marked with `tooManyResults` and will not contain any features.
   mergeSource.tooManyResults = mergeSource.tooManyResults || source.tooManyResults;
   if (mergeSource.tooManyResults) {
-    mergeSource.totalFeatureCount = (mergeSource.totalFeatureCount !== undefined) ?
-      mergeSource.totalFeatureCount + mergeSource.features.length : mergeSource.features.length;
+    mergeSource.totalFeatureCount =
+      mergeSource.totalFeatureCount !== undefined
+        ? mergeSource.totalFeatureCount + mergeSource.features.length
+        : mergeSource.features.length;
     mergeSource.features = [];
   }
   if (source.totalFeatureCount !== undefined) {
-    mergeSource.totalFeatureCount = (mergeSource.totalFeatureCount !== undefined) ?
-      mergeSource.totalFeatureCount + source.totalFeatureCount : source.totalFeatureCount;
+    mergeSource.totalFeatureCount =
+      mergeSource.totalFeatureCount !== undefined
+        ? mergeSource.totalFeatureCount + source.totalFeatureCount
+        : source.totalFeatureCount;
   }
 
   return mergeSource;
 };
-
 
 /**
  * Collect all features in the queryResult object.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Result source.
  * @private
  */
-QueryGridController.prototype.collectData_ = function(source) {
+QueryGridController.prototype.collectData_ = function (source) {
   const features = source.features;
   const allProperties = [];
   const featureGeometriesNames = [];
@@ -601,14 +597,13 @@ QueryGridController.prototype.collectData_ = function(source) {
   }
 };
 
-
 /**
  * Remove all unwanted columns.
  * @param {Array.<Object>} allProperties A row.
  * @param {Array.<string>} featureGeometriesNames Geometry names.
  * @private
  */
-QueryGridController.prototype.cleanProperties_ = function(allProperties, featureGeometriesNames) {
+QueryGridController.prototype.cleanProperties_ = function (allProperties, featureGeometriesNames) {
   allProperties.forEach((properties) => {
     featureGeometriesNames.forEach((featureGeometryName) => {
       delete properties[featureGeometryName];
@@ -622,13 +617,12 @@ QueryGridController.prototype.cleanProperties_ = function(allProperties, feature
   }
 };
 
-
 /**
  * Remove columns that will be completely empty between each properties.
  * @param {Array.<Object>} allProperties A row.
  * @private
  */
-QueryGridController.prototype.removeEmptyColumnsFn_ = function(allProperties) {
+QueryGridController.prototype.removeEmptyColumnsFn_ = function (allProperties) {
   // Keep all keys that correspond to at least one value in a properties object.
   const keysToKeep = [];
   let i, key;
@@ -656,14 +650,13 @@ QueryGridController.prototype.removeEmptyColumnsFn_ = function(allProperties) {
   });
 };
 
-
 /**
  * @param {?Array.<Object>} data Grid rows.
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source Query source.
  * @return {boolean} Returns true if a grid was created.
  * @private
  */
-QueryGridController.prototype.makeGrid_ = function(data, source) {
+QueryGridController.prototype.makeGrid_ = function (data, source) {
   const sourceLabel = `${source.label}`;
   let gridConfig = null;
   if (data !== null) {
@@ -677,18 +670,17 @@ QueryGridController.prototype.makeGrid_ = function(data, source) {
   }
   this.gridSources[sourceLabel] = {
     configuration: gridConfig,
-    source: source
+    source: source,
   };
   return true;
 };
-
 
 /**
  * @param {Array.<!Object>} data Grid rows.
  * @return {?import("ngeo/grid/Config.js").default} Grid config.
  * @private
  */
-QueryGridController.prototype.getGridConfiguration_ = function(data) {
+QueryGridController.prototype.getGridConfiguration_ = function (data) {
   console.assert(data.length > 0);
   const clone = {};
   Object.assign(clone, data[0]);
@@ -698,9 +690,11 @@ QueryGridController.prototype.getGridConfiguration_ = function(data) {
   /** @type {Array.<import('ngeo/download/Csv.js').GridColumnDef>} */
   const columnDefs = [];
   columns.forEach((column) => {
-    columnDefs.push(/** @type {import('ngeo/download/Csv.js').GridColumnDef} */ ({
-      name: column
-    }));
+    columnDefs.push(
+      /** @type {import('ngeo/download/Csv.js').GridColumnDef} */ ({
+        name: column,
+      })
+    );
   });
 
   if (columnDefs.length > 0) {
@@ -711,12 +705,11 @@ QueryGridController.prototype.getGridConfiguration_ = function(data) {
   }
 };
 
-
 /**
  * Remove the current selected feature and source and remove all features
  * from the map.
  */
-QueryGridController.prototype.clear = function() {
+QueryGridController.prototype.clear = function () {
   this.active = false;
   this.pending = false;
   this.gridSources = {};
@@ -732,12 +725,11 @@ QueryGridController.prototype.clear = function() {
   }
 };
 
-
 /**
  * Select the tab for the given grid source.
  * @param {GridSource} gridSource Grid source.
  */
-QueryGridController.prototype.selectTab = function(gridSource) {
+QueryGridController.prototype.selectTab = function (gridSource) {
   const source = gridSource.source;
   this.selectedTab = source.label;
 
@@ -753,18 +745,18 @@ QueryGridController.prototype.selectTab = function(gridSource) {
         if (Object.keys(newSelected) !== Object.keys(oldSelectedRows)) {
           this.onSelectionChanged_();
         }
-      });
+      }
+    );
   }
   this.updateFeatures_(gridSource);
 
   this.reflowGrid_();
 };
 
-
 /**
  * @private
  */
-QueryGridController.prototype.reflowGrid_ = function() {
+QueryGridController.prototype.reflowGrid_ = function () {
   // This is a "work-around" to make sure that the grid is rendered correctly.
   // When a pane is activated by setting `this.selectedTab`, the class `active`
   // is not yet set on the pane. That's why the class is set manually, and
@@ -778,12 +770,11 @@ QueryGridController.prototype.reflowGrid_ = function() {
   });
 };
 
-
 /**
  * Called when the row selection has changed.
  * @private
  */
-QueryGridController.prototype.onSelectionChanged_ = function() {
+QueryGridController.prototype.onSelectionChanged_ = function () {
   if (this.selectedTab === null) {
     return;
   }
@@ -792,12 +783,11 @@ QueryGridController.prototype.onSelectionChanged_ = function() {
   this.updateFeatures_(gridSource);
 };
 
-
 /**
  * @param {GridSource} gridSource Grid source
  * @private
  */
-QueryGridController.prototype.updateFeatures_ = function(gridSource) {
+QueryGridController.prototype.updateFeatures_ = function (gridSource) {
   this.features_.clear();
   this.highlightFeatures_.clear();
 
@@ -819,12 +809,11 @@ QueryGridController.prototype.updateFeatures_ = function(gridSource) {
   }
 };
 
-
 /**
  * Get the currently shown grid source.
  * @return {GridSource|null} Grid source.
  */
-QueryGridController.prototype.getActiveGridSource = function() {
+QueryGridController.prototype.getActiveGridSource = function () {
   if (this.selectedTab === null) {
     return null;
   } else {
@@ -832,12 +821,11 @@ QueryGridController.prototype.getActiveGridSource = function() {
   }
 };
 
-
 /**
  * Returns if a row of the currently active grid is selected?
  * @return {boolean} Is one selected?
  */
-QueryGridController.prototype.isOneSelected = function() {
+QueryGridController.prototype.isOneSelected = function () {
   const source = this.getActiveGridSource();
   if (source === null || source.configuration === null) {
     return false;
@@ -846,12 +834,11 @@ QueryGridController.prototype.isOneSelected = function() {
   }
 };
 
-
 /**
  * Returns the number of selected rows of the currently active grid.
  * @return {number} The number of selected rows.
  */
-QueryGridController.prototype.getSelectedRowCount = function() {
+QueryGridController.prototype.getSelectedRowCount = function () {
   const source = this.getActiveGridSource();
   if (source === null || source.configuration === null) {
     return 0;
@@ -860,44 +847,40 @@ QueryGridController.prototype.getSelectedRowCount = function() {
   }
 };
 
-
 /**
  * Select all rows of the currently active grid.
  */
-QueryGridController.prototype.selectAll = function() {
+QueryGridController.prototype.selectAll = function () {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.selectAll();
   }
 };
 
-
 /**
  * Deselect all rows of the currently active grid.
  */
-QueryGridController.prototype.unselectAll = function() {
+QueryGridController.prototype.unselectAll = function () {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.unselectAll();
   }
 };
 
-
 /**
  * Invert the selection of the currently active grid.
  */
-QueryGridController.prototype.invertSelection = function() {
+QueryGridController.prototype.invertSelection = function () {
   const source = this.getActiveGridSource();
   if (source !== null) {
     source.configuration.invertSelection();
   }
 };
 
-
 /**
  * Zoom to the selected features.
  */
-QueryGridController.prototype.zoomToSelection = function() {
+QueryGridController.prototype.zoomToSelection = function () {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const extent = olExtent.createEmpty();
@@ -911,24 +894,20 @@ QueryGridController.prototype.zoomToSelection = function() {
   }
 };
 
-
 /**
  * Start a CSV download for the selected features.
  */
-QueryGridController.prototype.downloadCsv = function() {
+QueryGridController.prototype.downloadCsv = function () {
   const source = this.getActiveGridSource();
   if (source !== null) {
     const columnDefs = source.configuration.columnDefs;
     console.assert(columnDefs !== undefined);
     const selectedRows = source.configuration.getSelectedRows();
 
-    this.ngeoCsvDownload_.startDownload(
-      selectedRows, columnDefs, this.filename_);
+    this.ngeoCsvDownload_.startDownload(selectedRows, columnDefs, this.filename_);
   }
 };
 
-
 module.controller('GmfDisplayquerygridController', QueryGridController);
-
 
 export default module;

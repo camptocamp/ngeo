@@ -4,13 +4,16 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 const dest = path.resolve(__dirname, '../api/dist/');
 
-const babelPresetEnv = ['@babel/preset-env', {
-  targets: {
-    browsers: ['last 2 versions', 'Firefox ESR', 'ie 11'],
+const babelPresetEnv = [
+  '@babel/preset-env',
+  {
+    targets: {
+      browsers: ['last 2 versions', 'Firefox ESR', 'ie 11'],
+    },
+    modules: false,
+    loose: true,
   },
-  modules: false,
-  loose: true
-}];
+];
 
 module.exports = (env, argv) => {
   const library = argv.library ? argv.library : 'demo';
@@ -18,17 +21,19 @@ module.exports = (env, argv) => {
     entry: './api/index.js',
     devtool: 'source-map',
     module: {
-      rules: [{
-        test: /\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            babelrc: false,
-            comments: false,
-            presets: [babelPresetEnv]
-          }
-        }
-      }]
+      rules: [
+        {
+          test: /\.js$/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              babelrc: false,
+              comments: false,
+              presets: [babelPresetEnv],
+            },
+          },
+        },
+      ],
     },
     output: {
       filename: 'api.js',
@@ -36,7 +41,7 @@ module.exports = (env, argv) => {
       libraryTarget: 'umd',
       globalObject: 'this',
       libraryExport: 'default',
-      library: library
+      library: library,
     },
     optimization: {
       minimizer: [
@@ -44,18 +49,20 @@ module.exports = (env, argv) => {
           parallel: true,
           sourceMap: true,
           terserOptions: {
-            compress: false
-          }
-        })
-      ]
+            compress: false,
+          },
+        }),
+      ],
     },
     plugins: [
       new CopyWebpackPlugin({
-        patterns: [{
-          from: './api/src/api.css',
-          to: dest
-        }]
-      })
-    ]
+        patterns: [
+          {
+            from: './api/src/api.css',
+            to: dest,
+          },
+        ],
+      }),
+    ],
   };
 };

@@ -1,8 +1,8 @@
 @import '~gmf/sass/vars.scss';
-@import "~gmf/sass/typeahead.scss";
+@import '~gmf/sass/typeahead.scss';
 
 gmf-importdatasource {
-  input[type=file] {
+  input[type='file'] {
     display: none;
   }
 
@@ -67,10 +67,10 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
   display: inline-block;
 
   &::before {
-    content: "\f054";
+    content: '\f054';
   }
-  &[aria-expanded="true"]::before {
-    content: "\f078";
+  &[aria-expanded='true']::before {
+    content: '\f078';
   }
 }
 
@@ -139,7 +139,6 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
   display: block;
   text-align: right;
 }
-
 
 gmf-datasourcegrouptree {
   display: block;

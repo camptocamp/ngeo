@@ -3,17 +3,14 @@ import ngeoLayertreeController, {LayertreeController} from 'ngeo/layertree/Contr
 
 import 'bootstrap/js/src/collapse.js'; // needed to collapse a layertree
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoLayertree', [
-  ngeoLayertreeController.name
-]);
+const module = angular.module('ngeoLayertree', [ngeoLayertreeController.name]);
 
-
-module.value('ngeoLayertreeTemplateUrl',
+module.value(
+  'ngeoLayertreeTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -21,15 +18,16 @@ module.value('ngeoLayertreeTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoLayertreeTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/layertree';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/layertree';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/layertree', require('./component.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/layertree', require('./component.html'));
+  }
+);
 
 /**
  * Provides the "ngeoLayertree" directive, a directive for
@@ -123,12 +121,10 @@ function gmfLayertreeComponent(ngeoLayertreeTemplateUrl) {
     restrict: 'A',
     scope: true,
     templateUrl: ngeoLayertreeTemplateUrl,
-    controller: LayertreeController
+    controller: LayertreeController,
   };
 }
 
-
 module.directive('ngeoLayertree', gmfLayertreeComponent);
-
 
 export default module;

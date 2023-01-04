@@ -1,14 +1,12 @@
 import angular from 'angular';
 import ngeoDownloadService from 'ngeo/download/service.js';
 
-
 /**
  * Definition for grid columns.
  *
  * @typedef {Object} GridColumnDef
  * @property {string} name Name of a column.
  */
-
 
 /**
  * Service to generate and download a CSV file from tabular data.
@@ -23,7 +21,6 @@ import ngeoDownloadService from 'ngeo/download/service.js';
  * @hidden
  */
 export function DownloadCsvService($injector, gettextCatalog) {
-
   /**
    * @type {angular.gettext.gettextCatalog}
    * @private
@@ -35,40 +32,35 @@ export function DownloadCsvService($injector, gettextCatalog) {
    * @type {string}
    * @private
    */
-  this.encoding_ = $injector.has('ngeoCsvEncoding') ?
-    $injector.get('ngeoCsvEncoding') : 'utf-8';
+  this.encoding_ = $injector.has('ngeoCsvEncoding') ? $injector.get('ngeoCsvEncoding') : 'utf-8';
 
   /**
    * File extension of the CSV file.
    * @type {string}
    * @private
    */
-  this.extension_ = $injector.has('ngeoCsvExtension') ?
-    $injector.get('ngeoCsvExtension') : '.csv';
+  this.extension_ = $injector.has('ngeoCsvExtension') ? $injector.get('ngeoCsvExtension') : '.csv';
 
   /**
    * Whether to include the header in the exported file or not.
    * @type {boolean}
    * @private
    */
-  this.includeHeader_ = $injector.has('ngeoCsvIncludeHeader') ?
-    $injector.get('ngeoCsvIncludeHeader') : true;
+  this.includeHeader_ = $injector.has('ngeoCsvIncludeHeader') ? $injector.get('ngeoCsvIncludeHeader') : true;
 
   /**
    * Quote character.
    * @type {string}
    * @private
    */
-  this.quote_ = $injector.has('ngeoCsvQuote') ?
-    $injector.get('ngeoCsvQuote') : '"';
+  this.quote_ = $injector.has('ngeoCsvQuote') ? $injector.get('ngeoCsvQuote') : '"';
 
   /**
    * Separator character.
    * @type {string}
    * @private
    */
-  this.separator_ = $injector.has('ngeoCsvSeparator') ?
-    $injector.get('ngeoCsvSeparator') : ',';
+  this.separator_ = $injector.has('ngeoCsvSeparator') ? $injector.get('ngeoCsvSeparator') : ',';
 
   /**
    * Download service.
@@ -78,7 +70,6 @@ export function DownloadCsvService($injector, gettextCatalog) {
   this.download_ = $injector.get('ngeoDownload');
 }
 
-
 /**
  * Generate a CSV.
  *
@@ -86,31 +77,30 @@ export function DownloadCsvService($injector, gettextCatalog) {
  * @param {Array.<GridColumnDef>} columnDefs Column definitions.
  * @return {string} The CSV file as string.
  */
-DownloadCsvService.prototype.generateCsv = function(data, columnDefs) {
+DownloadCsvService.prototype.generateCsv = function (data, columnDefs) {
   if (data.length == 0 || columnDefs.length == 0) {
     return '';
   }
 
-  const translatedColumnHeaders = columnDefs.map(
-    columnHeader => this.gettextCatalog_.getString(columnHeader.name)
+  const translatedColumnHeaders = columnDefs.map((columnHeader) =>
+    this.gettextCatalog_.getString(columnHeader.name)
   );
 
   const header = this.getRow_(translatedColumnHeaders);
   const dataRows = data.map((values) => {
-    const rowValues = columnDefs.map(columnHeader => values[columnHeader.name]);
+    const rowValues = columnDefs.map((columnHeader) => values[columnHeader.name]);
     return this.getRow_(rowValues);
   });
 
   return this.includeHeader_ ? header + dataRows.join('') : dataRows.join('');
 };
 
-
 /**
  * @param {Array.<?>} values Values.
  * @return {string} CSV row.
  * @private
  */
-DownloadCsvService.prototype.getRow_ = function(values) {
+DownloadCsvService.prototype.getRow_ = function (values) {
   const matchAllQuotesRegex = new RegExp(this.quote_, 'g');
   const doubleQuote = this.quote_ + this.quote_;
 
@@ -127,7 +117,6 @@ DownloadCsvService.prototype.getRow_ = function(values) {
   return `${rowValues.join(this.separator_)}\n`;
 };
 
-
 /**
  * Generate a CSV and start a download with the generated file.
  *
@@ -135,20 +124,16 @@ DownloadCsvService.prototype.getRow_ = function(values) {
  * @param {Array.<GridColumnDef>} columnDefs Column definitions.
  * @param {string} fileName The CSV file name, without the extension.
  */
-DownloadCsvService.prototype.startDownload = function(data, columnDefs, fileName) {
+DownloadCsvService.prototype.startDownload = function (data, columnDefs, fileName) {
   const fileContent = this.generateCsv(data, columnDefs);
-  this.download_(
-    fileContent, fileName, `text/csv;charset=${this.encoding_}`);
+  this.download_(fileContent, fileName, `text/csv;charset=${this.encoding_}`);
 };
 
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoCsvDownload', [
-  ngeoDownloadService.name
-]);
+const module = angular.module('ngeoCsvDownload', [ngeoDownloadService.name]);
 module.service('ngeoCsvDownload', DownloadCsvService);
-
 
 export default module;

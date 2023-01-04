@@ -3,7 +3,6 @@ import * as olEvents from 'ol/events.js';
 import olOverlay from 'ol/Overlay.js';
 import olOverlayPositioning from 'ol/OverlayPositioning.js';
 
-
 /**
  * The options for an action item for the contextual menu overlay.
  *
@@ -23,7 +22,6 @@ import olOverlayPositioning from 'ol/OverlayPositioning.js';
  * clicked or not.
  * @property {string} [title] A title to display as header of the contextual menu.
  */
-
 
 /**
  * An OpenLayers overlay that shows a contextual menu with configurable actions
@@ -54,30 +52,29 @@ export default class extends olOverlay {
     this.clickOutListenerKey_ = null;
 
     const contentEl = $('<div/>', {
-      'class': 'panel panel-default'
+      'class': 'panel panel-default',
     });
 
     /**
      * @type {boolean}
      * @private
      */
-    this.autoClose_ = menuOptions.autoClose !== undefined ?
-      menuOptions.autoClose : true;
+    this.autoClose_ = menuOptions.autoClose !== undefined ? menuOptions.autoClose : true;
 
     // titleEl
     if (menuOptions.title) {
       const headerEl = $('<div>', {
-        'class': 'panel-heading'
+        'class': 'panel-heading',
       }).appendTo(contentEl);
 
       $('<span>', {
-        text: menuOptions.title
+        text: menuOptions.title,
       }).appendTo(headerEl);
     }
 
     // actionsEl
     const actionsEl = $('<div>', {
-      'class': 'list-group'
+      'class': 'list-group',
     }).appendTo(contentEl);
 
     /**
@@ -91,15 +88,14 @@ export default class extends olOverlay {
         $('<button>', {
           'class': 'list-group-item btn',
           'data-name': action.name,
-          'text': [
-            ' ',
-            (action.label) !== undefined ? action.label : action.name
-          ].join('')
+          'text': [' ', action.label !== undefined ? action.label : action.name].join(''),
         })
           .appendTo(actionsEl)
-          .prepend($('<span>', {
-            'class': action.cls !== undefined ? action.cls : ''
-          }))
+          .prepend(
+            $('<span>', {
+              'class': action.cls !== undefined ? action.cls : '',
+            })
+          )
       );
     });
 
@@ -123,23 +119,12 @@ export default class extends olOverlay {
       this.actions_.forEach((action) => {
         const data = action.data();
         this.listenerKeys_.push(
-          olEvents.listen(
-            action[0],
-            'click',
-            this.handleActionClick_.bind(this, data.name)
-          )
+          olEvents.listen(action[0], 'click', this.handleActionClick_.bind(this, data.name))
         );
       });
 
       // Autoclose the menu when clicking anywhere else than the menu
-      this.listenerKeys_.push(
-        olEvents.listen(
-          map,
-          'pointermove',
-          this.handleMapPointerMove_,
-          this
-        )
-      );
+      this.listenerKeys_.push(olEvents.listen(map, 'pointermove', this.handleMapPointerMove_, this));
     }
   }
 
@@ -176,10 +161,11 @@ export default class extends olOverlay {
    * @private
    */
   handleActionClick_(action, evt) {
-
-    this.dispatchEvent(new ngeoCustomEvent('actionclick', {
-      action: action
-    }));
+    this.dispatchEvent(
+      new ngeoCustomEvent('actionclick', {
+        action: action,
+      })
+    );
 
     if (this.autoClose_) {
       this.close();

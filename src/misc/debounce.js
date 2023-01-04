@@ -1,6 +1,5 @@
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -12,7 +11,6 @@ const module = angular.module('ngeoDebounce', []);
  * @template {function(?): void} T args
  * @typedef {function(T, number, boolean): T} miscDebounce
  */
-
 
 /**
  * @template {function(?): void} T args
@@ -29,10 +27,10 @@ function debounce(func, wait, invokeApply, $timeout) {
    * @type {?angular.IPromise}
    */
   let timeout = null;
-  return /** @type {T} */(
-    function(...args) {
+  return /** @type {T} */ (
+    function (...args) {
       const context = this;
-      const later = function() {
+      const later = function () {
         timeout = null;
         func.apply(context, args);
       };
@@ -43,7 +41,6 @@ function debounce(func, wait, invokeApply, $timeout) {
     }
   );
 }
-
 
 /**
  * Provides a debounce service. That service is a function

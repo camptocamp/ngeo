@@ -23,7 +23,6 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -41,34 +40,34 @@ const module = angular.module('gmfapp', [
   ngeoQueryMapQueryComponent.name,
 ]);
 
-
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
-
-module.value('gmfExternalOGCServers', [{
-  'name': 'Swiss Topo WMS',
-  'type': 'WMS',
-  'url': 'https://wms.geo.admin.ch/?lang=fr'
-}, {
-  'name': 'ASIT VD',
-  'type': 'WMTS',
-  'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml'
-}, {
-  'name': 'Swiss Topo WMTS',
-  'type': 'WMTS',
-  'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr'
-}]);
+module.value('gmfExternalOGCServers', [
+  {
+    'name': 'Swiss Topo WMS',
+    'type': 'WMS',
+    'url': 'https://wms.geo.admin.ch/?lang=fr',
+  },
+  {
+    'name': 'ASIT VD',
+    'type': 'WMTS',
+    'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
+  },
+  {
+    'name': 'Swiss Topo WMTS',
+    'type': 'WMTS',
+    'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr',
+  },
+]);
 
 module.constant('defaultTheme', 'Filters');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @private
  */
 class MainController {
-
   /**
    * @param {!angular.IScope} $scope Angular scope.
    * @param {import("gmf/datasource/Manager.js").DatasourceManager} gmfDataSourcesManager The gmf
@@ -79,10 +78,7 @@ class MainController {
    * @param {import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources service.
    * @ngInject
    */
-  constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager,
-    ngeoDataSources
-  ) {
-
+  constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager, ngeoDataSources) {
     /**
      * @type {!angular.IScope}
      * @private
@@ -102,15 +98,15 @@ class MainController {
     this.map = new olMap({
       layers: [
         new olLayerTile({
-          source: new olSourceOSM()
-        })
+          source: new olSourceOSM(),
+        }),
       ],
       view: new olView({
         projection: EPSG21781,
         resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
         center: [537635, 152640],
-        zoom: 2
-      })
+        zoom: 2,
+      }),
     });
 
     // Init the datasources with our map.
@@ -136,14 +132,11 @@ class MainController {
     // initialize tooltips
     $('[data-toggle="tooltip"]').tooltip({
       container: 'body',
-      trigger: 'hover'
+      trigger: 'hover',
     });
-
   }
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

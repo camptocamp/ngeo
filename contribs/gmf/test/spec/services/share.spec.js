@@ -2,7 +2,7 @@ import angular from 'angular';
 describe('gmf.permalink.ShareService', () => {
   let $httpBackend;
   const successResponse = {
-    short_url: 'http://fake/gmf'
+    short_url: 'http://fake/gmf',
   };
 
   afterEach(() => {
@@ -24,7 +24,7 @@ describe('gmf.permalink.ShareService', () => {
 
     const permalink = 'htpp://fake/c2c/permalink';
     const params = /** @type {import('gmf/permalink/ShareService.js').ShortenerAPIRequestParams} */ ({
-      url: permalink
+      url: permalink,
     });
 
     $httpBackend.expectPOST(shortenerUrl, $.param(params));
@@ -35,7 +35,6 @@ describe('gmf.permalink.ShareService', () => {
     $httpBackend.expectPOST(shortenerUrl, $.param(params));
     gmfShareService.sendShortUrl(permalink, params.email);
     $httpBackend.flush();
-
   });
 
   it('Should return the permalink if no URL for the shorten service has been provided', () => {
@@ -56,6 +55,5 @@ describe('gmf.permalink.ShareService', () => {
 
     gmfShareService.getShortUrl(shortenerUrl);
     $httpBackend.verifyNoOutstandingExpectation();
-
   });
 });

@@ -1,7 +1,6 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import ngeoRuleRule from 'ngeo/rule/Rule.js';
 
-
 /**
  * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} DateOptions
@@ -17,19 +16,16 @@ import ngeoRuleRule from 'ngeo/rule/Rule.js';
  * @property {number} [upperBoundary] (RuleOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoRuleRule {
-
   /**
    * A date rule.
    *
    * @param {!DateOptions} options Options.
    */
   constructor(options) {
-
     options.type = options.type || ngeoFormatAttributeType.DATE;
 
     super(options);

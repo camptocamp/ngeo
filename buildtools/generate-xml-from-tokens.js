@@ -1,6 +1,6 @@
 // Initially get from https://github.com/tildeio/simple-html-tokenizer/blob/v0.1.1/lib/simple-html-tokenizer/generator.js
 
-const escape = (function() {
+const escape = (function () {
   const test = /[&<>"'`]/;
   const replace = /[&<>"'`]/g;
   const map = {
@@ -8,8 +8,8 @@ const escape = (function() {
     '<': '&lt;',
     '>': '&gt;',
     '"': '&quot;',
-    '\'': '&#x27;',
-    '`': '&#x60;'
+    "'": '&#x27;',
+    '`': '&#x60;',
   };
   function escapeChar(char) {
     return map[char];
@@ -20,14 +20,14 @@ const escape = (function() {
     }
     return string.replace(replace, escapeChar);
   };
-}());
+})();
 
 function Generator() {
   this.escape = escape;
 }
 
 Generator.prototype = {
-  generate: function(tokens) {
+  generate: function (tokens) {
     let buffer = '';
     for (let i = 0; i < tokens.length; i++) {
       const token = tokens[i];
@@ -36,14 +36,14 @@ Generator.prototype = {
     return buffer;
   },
 
-  escape: function(text) {
+  escape: function (text) {
     const unsafeCharsMap = this.unsafeCharsMap;
-    return text.replace(this.unsafeChars, function(char) {
+    return text.replace(this.unsafeChars, function (char) {
       return unsafeCharsMap[char] || char;
     });
   },
 
-  StartTag: function(token) {
+  StartTag: function (token) {
     let out = '<';
     out += token.tagName;
 
@@ -56,19 +56,19 @@ Generator.prototype = {
     return out;
   },
 
-  EndTag: function(token) {
+  EndTag: function (token) {
     return '</' + token.tagName + '>';
   },
 
-  Chars: function(token) {
+  Chars: function (token) {
     return this.escape(token.chars);
   },
 
-  Comment: function(token) {
+  Comment: function (token) {
     return '<!--' + token.chars + '-->';
   },
 
-  Attributes: function(attributes) {
+  Attributes: function (attributes) {
     const out = [];
 
     for (let i = 0, l = attributes.length; i < l; i++) {
@@ -80,7 +80,7 @@ Generator.prototype = {
     return out.join(' ');
   },
 
-  Attribute: function(name, value) {
+  Attribute: function (name, value) {
     let attrString = name;
 
     if (value) {
@@ -89,10 +89,10 @@ Generator.prototype = {
     }
 
     return attrString;
-  }
+  },
 };
 
-module.exports = function(tokens) {
+module.exports = function (tokens) {
   const generator = new Generator();
   return generator.generate(tokens);
 };

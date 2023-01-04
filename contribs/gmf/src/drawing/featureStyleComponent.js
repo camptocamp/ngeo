@@ -7,7 +7,6 @@ import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent.js';
 
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -17,12 +16,12 @@ const module = angular.module('gmfDrawingFeatureStyle', [
   ngeoMiscFeatureHelper.name,
 ]);
 
-
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
+  }
+);
 
 /**
  * Directive used to set the style of a vector feature. The options depend
@@ -43,16 +42,14 @@ function drawingDrawFeatureComponent() {
   return {
     controller: 'GmfFeaturestyleController as fsCtrl',
     scope: {
-      'feature': '=gmfFeaturestyleFeature'
+      'feature': '=gmfFeaturestyleFeature',
     },
     bindToController: true,
-    templateUrl: 'gmf/drawing/featureStyleComponent'
+    templateUrl: 'gmf/drawing/featureStyleComponent',
   };
 }
 
-
 module.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
-
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
@@ -65,7 +62,6 @@ module.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
  * @ngname GmfFeaturestyleController
  */
 function Controller($scope, ngeoFeatureHelper) {
-
   /**
    * @type {string}
    */
@@ -103,10 +99,7 @@ function Controller($scope, ngeoFeatureHelper) {
    */
   this.measure = undefined;
 
-  $scope.$watch(
-    () => this.color,
-    this.handleColorSet_.bind(this)
-  );
+  $scope.$watch(() => this.color, this.handleColorSet_.bind(this));
 
   /**
    * @type {Array.<import("ol/events.js").EventsKey>}
@@ -119,13 +112,8 @@ function Controller($scope, ngeoFeatureHelper) {
    */
   this.type;
 
-  $scope.$watch(
-    () => this.feature,
-    this.handleFeatureSet_.bind(this)
-  );
-
+  $scope.$watch(() => this.feature, this.handleFeatureSet_.bind(this));
 }
-
 
 /**
  * Called when a new feature is set, which can also be null.
@@ -133,8 +121,7 @@ function Controller($scope, ngeoFeatureHelper) {
  * @param {?import("ol/Feature.js").default} previousFeature Previous feature or null value.
  * @private
  */
-Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
-
+Controller.prototype.handleFeatureSet_ = function (newFeature, previousFeature) {
   const keys = this.featureListenerKeys_;
 
   if (previousFeature) {
@@ -155,29 +142,15 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
       ngeoFormatFeatureProperties.OPACITY,
       ngeoFormatFeatureProperties.SHOW_MEASURE,
       ngeoFormatFeatureProperties.SIZE,
-      ngeoFormatFeatureProperties.STROKE
-    ].forEach(function(propName) {
-      keys.push(
-        olEvents.listen(
-          newFeature,
-          `change:${propName}`,
-          this.handleFeatureChange_,
-          this
-        )
-      );
+      ngeoFormatFeatureProperties.STROKE,
+    ].forEach(function (propName) {
+      keys.push(olEvents.listen(newFeature, `change:${propName}`, this.handleFeatureChange_, this));
     }, this);
 
     const geometry = newFeature.getGeometry();
     console.assert(geometry, 'Geometry should be thruthy');
 
-    keys.push(
-      olEvents.listen(
-        geometry,
-        'change',
-        this.handleGeometryChange_,
-        this
-      )
-    );
+    keys.push(olEvents.listen(geometry, 'change', this.handleGeometryChange_, this));
 
     this.type = this.featureHelper_.getType(newFeature);
     this.color = this.featureHelper_.getColorProperty(newFeature);
@@ -185,12 +158,11 @@ Controller.prototype.handleFeatureSet_ = function(newFeature, previousFeature) {
   }
 };
 
-
 /**
  * @param {string|undefined} newColor Color.
  * @private
  */
-Controller.prototype.handleColorSet_ = function(newColor) {
+Controller.prototype.handleColorSet_ = function (newColor) {
   if (this.feature && newColor) {
     const currentColor = this.feature.get(ngeoFormatFeatureProperties.COLOR);
     if (currentColor !== newColor) {
@@ -199,21 +171,19 @@ Controller.prototype.handleColorSet_ = function(newColor) {
   }
 };
 
-
 /**
  * @param {number|undefined} value A name value to set or undefined to get.
  * @return {number} The angle of the feature.
  */
-Controller.prototype.getSetAngle = function(value) {
+Controller.prototype.getSetAngle = function (value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.ANGLE, value));
 };
-
 
 /**
  * @param {string|undefined} value A name value to set or undefined to get.
  * @return {string} The name of the feature.
  */
-Controller.prototype.getSetName = function(value) {
+Controller.prototype.getSetName = function (value) {
   return /** @type string */ (this.getSetProperty_(ngeoFormatFeatureProperties.NAME, value));
 };
 
@@ -222,7 +192,7 @@ Controller.prototype.getSetName = function(value) {
  *     purpose of showing the attribute labels or not.
  * @return {boolean} Whether to show the labels or not.
  */
-Controller.prototype.getSetShowLabel = function(value) {
+Controller.prototype.getSetShowLabel = function (value) {
   return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_LABEL, value));
 };
 
@@ -230,38 +200,34 @@ Controller.prototype.getSetShowLabel = function(value) {
  * @param {number|undefined} value A stroke value to set or undefined to get.
  * @return {number} The stroke of the feature.
  */
-Controller.prototype.getSetOpacity = function(value) {
+Controller.prototype.getSetOpacity = function (value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.OPACITY, value));
 };
-
 
 /**
  * @param {boolean|undefined} value A value to set or undefined to get for the
  *     purpose of showing the geometry measurements or not.
  * @return {boolean} Whether to show the measurements or not.
  */
-Controller.prototype.getSetShowMeasure = function(value) {
+Controller.prototype.getSetShowMeasure = function (value) {
   return /** @type boolean */ (this.getSetProperty_(ngeoFormatFeatureProperties.SHOW_MEASURE, value));
 };
-
 
 /**
  * @param {number|undefined} value A size value to set or undefined to get.
  * @return {number} The size of the feature.
  */
-Controller.prototype.getSetSize = function(value) {
+Controller.prototype.getSetSize = function (value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.SIZE, value));
 };
-
 
 /**
  * @param {number|undefined} value A stroke value to set or undefined to get.
  * @return {number} The stroke of the feature.
  */
-Controller.prototype.getSetStroke = function(value) {
+Controller.prototype.getSetStroke = function (value) {
   return /** @type number */ (this.getSetProperty_(ngeoFormatFeatureProperties.STROKE, value));
 };
-
 
 /**
  * @param {string} key The property name.
@@ -270,18 +236,17 @@ Controller.prototype.getSetStroke = function(value) {
  * @return {boolean|number|string} The property value of the feature.
  * @private
  */
-Controller.prototype.getSetProperty_ = function(key, value) {
+Controller.prototype.getSetProperty_ = function (key, value) {
   if (value !== undefined) {
     this.feature.set(key, value);
   }
   return /** @type {boolean|number|string} */ (this.feature.get(key));
 };
 
-
 /**
  * @private
  */
-Controller.prototype.handleFeatureChange_ = function() {
+Controller.prototype.handleFeatureChange_ = function () {
   const feature = this.feature;
 
   if (!feature) {
@@ -291,11 +256,10 @@ Controller.prototype.handleFeatureChange_ = function() {
   this.featureHelper_.setStyle(feature, true);
 };
 
-
 /**
  * @private
  */
-Controller.prototype.handleGeometryChange_ = function() {
+Controller.prototype.handleGeometryChange_ = function () {
   console.assert(this.feature);
   this.measure = this.featureHelper_.getMeasure(this.feature);
 
@@ -307,8 +271,6 @@ Controller.prototype.handleGeometryChange_ = function() {
   this.scope_.$apply();
 };
 
-
 module.controller('GmfFeaturestyleController', Controller);
-
 
 export default module;

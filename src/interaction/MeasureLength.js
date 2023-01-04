@@ -6,7 +6,6 @@ import {containsXY} from 'ol/extent';
 
 let modifierPressed;
 
-
 /**
  * Interaction dedicated to measure length.
  *
@@ -99,8 +98,8 @@ export default class extends ngeoInteractionMeasure {
       const length = distance(from, to);
       const rotation = viewRotation + Math.round((Math.atan2(dy, dx) - viewRotation) / angle) * angle;
 
-      to[0] = from[0] - (length * Math.cos(rotation));
-      to[1] = from[1] - (length * Math.sin(rotation));
+      to[0] = from[0] - length * Math.cos(rotation);
+      to[1] = from[1] - length * Math.sin(rotation);
 
       if (this.tolerance !== undefined && this.source !== undefined) {
         const delta = this.getMap().getView().getResolution() * this.tolerance;
@@ -109,7 +108,6 @@ export default class extends ngeoInteractionMeasure {
         const layerSource = this.source;
         const featuresInExtent = layerSource.getFeaturesInExtent(bbox);
         featuresInExtent.forEach((feature) => {
-
           let lastIntersection = [];
           let bestIntersection = [];
           let bestDistance = Infinity;
@@ -122,8 +120,8 @@ export default class extends ngeoInteractionMeasure {
           const my = to[1];
           const unitVector = [(mx - ax) / distanceFromTo, (my - ay) / distanceFromTo];
           const b = [
-            (ax + (distanceFromTo + delta) * unitVector[0]),
-            (ay + (distanceFromTo + delta) * unitVector[1])
+            ax + (distanceFromTo + delta) * unitVector[0],
+            ay + (distanceFromTo + delta) * unitVector[1],
           ];
 
           const geom = feature.getGeometry();
@@ -133,8 +131,10 @@ export default class extends ngeoInteractionMeasure {
           geom.forEachSegment((point1, point2) => {
             // intersection calculation
             lastIntersection = this.computeLineSegmentIntersection([from, b], [point1, point2]);
-            if (lastIntersection !== undefined &&
-                containsXY(bbox, lastIntersection[0], lastIntersection[1])) {
+            if (
+              lastIntersection !== undefined &&
+              containsXY(bbox, lastIntersection[0], lastIntersection[1])
+            ) {
               const lastDistance = distance(to, lastIntersection);
               if (lastDistance < bestDistance) {
                 bestDistance = lastDistance;
@@ -186,11 +186,14 @@ export default class extends ngeoInteractionMeasure {
    * @return {Array<number>|undefined} The intersection point, undefined if there is no intersection point or lines are coincident.
    */
   computeLineSegmentIntersection(line1, line2) {
-    const numerator1A = (line2[1][0] - line2[0][0]) * (line1[0][1] - line2[0][1]) -
+    const numerator1A =
+      (line2[1][0] - line2[0][0]) * (line1[0][1] - line2[0][1]) -
       (line2[1][1] - line2[0][1]) * (line1[0][0] - line2[0][0]);
-    const numerator1B = (line1[1][0] - line1[0][0]) * (line1[0][1] - line2[0][1]) -
+    const numerator1B =
+      (line1[1][0] - line1[0][0]) * (line1[0][1] - line2[0][1]) -
       (line1[1][1] - line1[0][1]) * (line1[0][0] - line2[0][0]);
-    const denominator1 = (line2[1][1] - line2[0][1]) * (line1[1][0] - line1[0][0]) -
+    const denominator1 =
+      (line2[1][1] - line2[0][1]) * (line1[1][0] - line1[0][0]) -
       (line2[1][0] - line2[0][0]) * (line1[1][1] - line1[0][1]);
 
     // If denominator = 0, then lines are parallel. If denominator = 0 and both numerators are 0, then coincident

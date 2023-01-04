@@ -1,12 +1,10 @@
 import angular from 'angular';
 import {remove as removeFromArray} from 'ol/array.js';
 
-
 /**
  * @hidden
  */
 export class SavedFilter {
-
   /**
    * The GeoMapFish service responsible of storing filters that can be applied
    * to data sources. A filter consists of:
@@ -26,7 +24,6 @@ export class SavedFilter {
    * @ngname gmfSavedFilters
    */
   constructor($rootScope) {
-
     /**
      * @type {!angular.IScope}
      * @private
@@ -88,7 +85,6 @@ export class SavedFilter {
     if (this.useLocalStorage_) {
       this.loadItemsFromLocalStorage_();
     }
-
   }
 
   /**
@@ -134,7 +130,6 @@ export class SavedFilter {
    * @return {number} The index of the item, if it exists.
    */
   indexOfItem(name, id) {
-
     let item;
     let idx = -1;
     for (let i = 0, ii = this.items_.length; i < ii; i++) {
@@ -152,7 +147,6 @@ export class SavedFilter {
    * @param {!SavedFilterItem} item Item.
    */
   save(item) {
-
     // (1) Add or replace item
     const idx = this.indexOfItem(item.name, item.dataSourceId);
     if (idx !== -1) {
@@ -171,7 +165,6 @@ export class SavedFilter {
    * @param {!SavedFilterItem} item Item.
    */
   remove(item) {
-
     // (1) Remove the item
     const found = removeFromArray(this.items, item);
 
@@ -205,9 +198,7 @@ export class SavedFilter {
       }
     }
   }
-
 }
-
 
 /**
  * @type {!angular.IModule}
@@ -217,7 +208,6 @@ const module = angular.module('gmfSavedFilters', []);
 
 module.service('gmfSavedFilters', SavedFilter);
 
-
 /**
  * The definition of a saved filter item.
  * @constructor
@@ -225,13 +215,11 @@ module.service('gmfSavedFilters', SavedFilter);
  */
 export function SavedFilterItem() {}
 
-
 /**
  * The condition of the saved filter item.
  * @type {string}
  */
 SavedFilterItem.prototype.condition;
-
 
 /**
  * The list of custom rules of the saved filter item.
@@ -239,13 +227,11 @@ SavedFilterItem.prototype.condition;
  */
 SavedFilterItem.prototype.customRules;
 
-
 /**
  * The data source id related to the filter.
  * @type {number}
  */
 SavedFilterItem.prototype.dataSourceId;
-
 
 /**
  * The list of directed rules of the saved filter item.
@@ -253,12 +239,10 @@ SavedFilterItem.prototype.dataSourceId;
  */
 SavedFilterItem.prototype.directedRules;
 
-
 /**
  * A human-readable name given to the saved filter item.
  * @type {string}
  */
 SavedFilterItem.prototype.name;
-
 
 export default module;

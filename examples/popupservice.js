@@ -3,13 +3,8 @@ import 'bootstrap/js/src/tooltip.js';
 import angular from 'angular';
 import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
-
 /** @type {!angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMessagePopup.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMessagePopup.name]);
 
 /**
  * @param {angular.ISCEService} $sce Angular sce service.
@@ -18,7 +13,6 @@ const module = angular.module('app', [
  * @constructor
  */
 function MainController($sce, ngeoCreatePopup) {
-
   /**
    * @private
    * @type {angular.ISCEService}
@@ -34,15 +28,13 @@ function MainController($sce, ngeoCreatePopup) {
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
     container: 'body',
-    trigger: 'hover'
+    trigger: 'hover',
   });
-
 }
-
 
 /**
  */
-MainController.prototype.simplePopup = function() {
+MainController.prototype.simplePopup = function () {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.setTitle('Simple popup');
@@ -53,10 +45,9 @@ MainController.prototype.simplePopup = function() {
   popup.setOpen(true);
 };
 
-
 /**
  */
-MainController.prototype.iframePopup = function() {
+MainController.prototype.iframePopup = function () {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
   popup.addClass('popup-with-iframe');
@@ -66,55 +57,50 @@ MainController.prototype.iframePopup = function() {
   popup.setOpen(true);
 };
 
-
 /**
  */
-MainController.prototype.heavyPopup = function() {
+MainController.prototype.heavyPopup = function () {
   const popup = this.createPopup_();
   popup.setAutoDestroy(true);
-  popup.setTitle(
-    'This is a popup with lots and lots of content and a very long title');
+  popup.setTitle('This is a popup with lots and lots of content and a very long title');
   const content = this.sce_.trustAsHtml(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget' +
-    'quam at ex euismod bibendum et eget enim. Nulla sodales tortor ac' +
-    'sagittis aliquet. Ut malesuada quam vitae pulvinar porta. Nunc id' +
-    'magna id risus malesuada elementum eget id purus. Curabitur vel augue' +
-    'blandit, faucibus nulla quis, consequat tellus. Phasellus commodo,' +
-    'tellus et vulputate ultricies, nulla libero ornare arcu, quis' +
-    'fermentum sem diam quis tellus. Aliquam ut sapien tristique, lacinia' +
-    'ante et, lacinia arcu. Quisque sagittis eros at quam blandit' +
-    'gravida. Nulla sit amet enim semper, efficitur eros sit amet,' +
-    'porttitor libero. Fusce quis tellus est. Quisque ornare, ex eget' +
-    'luctus pharetra, nisl leo lobortis purus, sed tristique neque leo eget' +
-    'odio. Maecenas lobortis nisl ac magna mollis, ac pulvinar risus' +
-    'convallis. Donec ullamcorper sollicitudin maximus. Quisque bibendum' +
-    'elit sit amet ultrices ornare. Donec aliquam felis id urna ultrices' +
-    'scelerisque.'
+      'quam at ex euismod bibendum et eget enim. Nulla sodales tortor ac' +
+      'sagittis aliquet. Ut malesuada quam vitae pulvinar porta. Nunc id' +
+      'magna id risus malesuada elementum eget id purus. Curabitur vel augue' +
+      'blandit, faucibus nulla quis, consequat tellus. Phasellus commodo,' +
+      'tellus et vulputate ultricies, nulla libero ornare arcu, quis' +
+      'fermentum sem diam quis tellus. Aliquam ut sapien tristique, lacinia' +
+      'ante et, lacinia arcu. Quisque sagittis eros at quam blandit' +
+      'gravida. Nulla sit amet enim semper, efficitur eros sit amet,' +
+      'porttitor libero. Fusce quis tellus est. Quisque ornare, ex eget' +
+      'luctus pharetra, nisl leo lobortis purus, sed tristique neque leo eget' +
+      'odio. Maecenas lobortis nisl ac magna mollis, ac pulvinar risus' +
+      'convallis. Donec ullamcorper sollicitudin maximus. Quisque bibendum' +
+      'elit sit amet ultrices ornare. Donec aliquam felis id urna ultrices' +
+      'scelerisque.'
   );
   popup.setContent(content);
   popup.setOpen(true);
 };
 
-
 /**
  */
-MainController.prototype.openPopupWithContent = function() {
+MainController.prototype.openPopupWithContent = function () {
   const popup = this.createPopup_();
-  const content = this.sce_.trustAsHtml(
-    'This popup was opened using the <code>open</code> method.');
+  const content = this.sce_.trustAsHtml('This popup was opened using the <code>open</code> method.');
   popup.open({
     autoDestroy: true,
     content: content,
     height: '200px',
     title: 'Opened with "open"',
-    width: '300px'
+    width: '300px',
   });
 };
 
-
 /**
  */
-MainController.prototype.openPopupWithUrl = function() {
+MainController.prototype.openPopupWithUrl = function () {
   const popup = this.createPopup_();
   popup.open({
     autoDestroy: true,
@@ -122,12 +108,10 @@ MainController.prototype.openPopupWithUrl = function() {
     height: '300px',
     title: 'Opened with "open" and "iframe"',
     url: 'https://geomapfish.org/',
-    width: '400px'
+    width: '400px',
   });
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

@@ -59,7 +59,6 @@ span.twitter-typeahead {
   top: 28px !important;
 }
 
-
 /* CSS for this example */
 
 body {
@@ -84,17 +83,17 @@ gmf-filterselector {
 }
 
 /* GMF Layer Tree */
-gmf-layertree  ul {
+gmf-layertree ul {
   list-style-type: none;
 }
-gmf-layertree a{
+gmf-layertree a {
   color: black;
   text-decoration: none;
   padding-right: 5px;
 }
 gmf-layertree .gmf-layertree-metadata a:before {
   font-family: FontAwesome;
-  content: "\f129";
+  content: '\f129';
 }
 gmf-layertree .gmf-layertree-layer-icon {
   display: inline-flex;
@@ -109,14 +108,14 @@ gmf-layertree .gmf-layertree-zoom:hover {
 }
 gmf-layertree .gmf-layertree-zoom:before {
   font-family: FontAwesome;
-  content: "\f18e";
+  content: '\f18e';
 }
 gmf-layertree .outOfResolution .gmf-layertree-legend {
   display: none;
 }
 gmf-layertree .gmf-layertree-legend-button a:after {
   font-family: FontAwesome;
-  content: "\f036";
+  content: '\f036';
 }
 gmf-layertree .gmf-layertree-legend img {
   padding-left: 15px;
@@ -125,7 +124,7 @@ gmf-layertree .noSource {
   opacity: 0.3;
 }
 gmf-layertree .noSource:after {
-  content: "(source not available)";
+  content: '(source not available)';
 }
 gmf-layertree .outOfResolution {
   opacity: 0.6;
@@ -138,13 +137,13 @@ gmf-layertree .gmf-layertree-state {
   font-weight: lighter;
 }
 gmf-layertree .on .gmf-layertree-state:before {
-  content: "\f14a";
+  content: '\f14a';
 }
 gmf-layertree .off .gmf-layertree-state:before {
-  content: "\f096";
+  content: '\f096';
 }
 gmf-layertree .indeterminate .gmf-layertree-state:before {
-  content: "\f147";
+  content: '\f147';
 }
 gmf-layertree .on {
   color: green;
@@ -159,14 +158,14 @@ gmf-layertree a.gmf-layertree-expand-node.fa {
   display: inline-block;
 }
 gmf-layertree a.gmf-layertree-expand-node.fa::before {
-    content: "\f054";
+  content: '\f054';
 }
-gmf-layertree a.gmf-layertree-expand-node.fa[aria-expanded="true"]::before {
-    content: "\f078";
+gmf-layertree a.gmf-layertree-expand-node.fa[aria-expanded='true']::before {
+  content: '\f078';
 }
 
 /* ImportDataSource */
-gmf-importdatasource input[type=file] {
+gmf-importdatasource input[type='file'] {
   display: none;
 }
 
@@ -208,14 +207,14 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa {
   display: inline-block;
 }
 a.gmf-wmscapabilitylayertreenode-expand-node.fa::before {
-    content: "\f054";
+  content: '\f054';
 }
-a.gmf-wmscapabilitylayertreenode-expand-node.fa[aria-expanded="true"]::before {
-    content: "\f078";
+a.gmf-wmscapabilitylayertreenode-expand-node.fa[aria-expanded='true']::before {
+  content: '\f078';
 }
 
 .gmf-wmscapabilitylayertreenode-group:before {
-  content: "\e600";
+  content: '\e600';
   font-family: gmf-icons;
 }
 

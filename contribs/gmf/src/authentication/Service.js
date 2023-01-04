@@ -2,7 +2,6 @@ import angular from 'angular';
 import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import olEventsEventTarget from 'ol/events/Target.js';
 
-
 /**
  * Availables functionalities.
  * @typedef {Object} AuthenticationFunctionalities
@@ -30,7 +29,6 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @property {string|null} username The name of the user.
  */
 
-
 /**
  * @typedef {Object} AuthenticationEventItem
  * @property {User} user
@@ -40,7 +38,6 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @typedef {import("ngeo/CustomEvent.js").default.<AuthenticationEventItem>} AuthenticationEvent
  */
 
-
 /**
  * @typedef {Object} AuthenticationLoginResponse
  * @property {AuthenticationFunctionalities} [functionalities]
@@ -49,12 +46,10 @@ import olEventsEventTarget from 'ol/events/Target.js';
  * @property {string} [username]
  */
 
-
 /**
  * @typedef {Object} AuthenticationDefaultResponse
  * @property {boolean} success
  */
-
 
 /**
  * @enum {string}
@@ -65,9 +60,8 @@ export const RouteSuffix = {
   IS_LOGGED_IN: 'loginuser',
   LOGIN: 'login',
   LOGOUT: 'logout',
-  RESET_PASSWORD: 'loginresetpassword'
+  RESET_PASSWORD: 'loginresetpassword',
 };
-
 
 /**
  * An "authentication" service for a GeoMapFish application. Upon loading, it
@@ -83,7 +77,6 @@ export const RouteSuffix = {
  * @hidden
  */
 export class AuthenticationService extends olEventsEventTarget {
-
   /**
    * @param {angular.IHttpService} $http Angular http service.
    * @param {angular.auto.IInjectorService} $injector Main injector.
@@ -93,7 +86,6 @@ export class AuthenticationService extends olEventsEventTarget {
    * @ngInject
    */
   constructor($http, $injector, $rootScope, authenticationBaseUrl, gmfUser) {
-
     super();
 
     /**
@@ -122,11 +114,11 @@ export class AuthenticationService extends olEventsEventTarget {
     this.user_ = gmfUser;
 
     /**
-      * Don't request a new user object from the back-end after
-      * logging out if the logged-in user's role has this role.
-      * @type {?string}
-      * @private
-      */
+     * Don't request a new user object from the back-end after
+     * logging out if the logged-in user's role has this role.
+     * @type {?string}
+     * @private
+     */
     this.noReloadRole_ = $injector.has('gmfAuthenticationNoReloadRole')
       ? $injector.get('gmfAuthenticationNoReloadRole')
       : null;
@@ -141,9 +133,7 @@ export class AuthenticationService extends olEventsEventTarget {
    */
   load_() {
     const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
-    this.$http_.get(url, {withCredentials: true}).then(
-      this.handleLogin_.bind(this, true)
-    );
+    this.$http_.get(url, {withCredentials: true}).then(this.handleLogin_.bind(this, true));
   }
 
   /**
@@ -155,16 +145,22 @@ export class AuthenticationService extends olEventsEventTarget {
   changePassword(oldPwd, newPwd, confPwd) {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
 
-    return this.$http_.post(url, $.param({
-      'oldPassword': oldPwd,
-      'newPassword': newPwd,
-      'confirmNewPassword': confPwd
-    }), {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      withCredentials: true
-    }).then(((response) => {
-      this.user_.is_password_changed = true;
-    }));
+    return this.$http_
+      .post(
+        url,
+        $.param({
+          'oldPassword': oldPwd,
+          'newPassword': newPwd,
+          'confirmNewPassword': confPwd,
+        }),
+        {
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          withCredentials: true,
+        }
+      )
+      .then((response) => {
+        this.user_.is_password_changed = true;
+      });
   }
 
   /**
@@ -175,11 +171,12 @@ export class AuthenticationService extends olEventsEventTarget {
   login(login, pwd) {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
 
-    return this.$http_.post(url, $.param({'login': login, 'password': pwd}), {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-      withCredentials: true
-    }).then(
-      this.handleLogin_.bind(this, false));
+    return this.$http_
+      .post(url, $.param({'login': login, 'password': pwd}), {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        withCredentials: true,
+      })
+      .then(this.handleLogin_.bind(this, false));
   }
 
   /**
@@ -204,15 +201,16 @@ export class AuthenticationService extends olEventsEventTarget {
      * @param {angular.IHttpResponse} resp Ajax response.
      * @return {AuthenticationDefaultResponse} Response.
      */
-    const successFn = function(resp) {
-      const respData = /** @type AuthenticationDefaultResponse} */ (
-        resp.data);
+    const successFn = function (resp) {
+      const respData = /** @type AuthenticationDefaultResponse} */ (resp.data);
       return respData;
     }.bind(this);
 
-    return this.$http_.post(url, $.param({'login': login}), {
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-    }).then(successFn);
+    return this.$http_
+      .post(url, $.param({'login': login}), {
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      })
+      .then(successFn);
   }
 
   /**
@@ -291,7 +289,6 @@ export class AuthenticationService extends olEventsEventTarget {
   }
 }
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -303,8 +300,7 @@ module.value('gmfUser', {
   functionalities: null,
   is_password_changed: null,
   roles: null,
-  username: null
+  username: null,
 });
-
 
 export default module;

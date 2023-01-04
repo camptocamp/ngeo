@@ -1,6 +1,5 @@
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 
-
 /**
  * geomType: Set only if the attribute is a geometry type. Determines the type of geometry.
  *
@@ -13,7 +12,6 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @property {string} [numType]
  * @property {string} [type]
  */
-
 
 /**
  * A feature attribute definition.
@@ -36,7 +34,6 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @property {string} [mask] The mask used in the date, time and datetime type.
  */
 
-
 /**
  * Set the `type` and `geomType` properties of an attribute if the given
  * type is a geometry one.
@@ -47,8 +44,7 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
  * @hidden
  */
 export function setGeometryType(attribute, type) {
-  const geomRegex =
-    /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
+  const geomRegex = /gml:((Multi)?(Point|Line|Polygon|Curve|Surface|Geometry)).*/;
   if (geomRegex.exec(type)) {
     attribute.type = ngeoFormatAttributeType.GEOMETRY;
     if (/^gml:Point/.exec(type)) {

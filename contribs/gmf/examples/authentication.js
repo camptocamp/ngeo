@@ -3,23 +3,15 @@ import appURL from './url.js';
 import './authentication.css';
 import gmfAuthenticationModule from 'gmf/authentication/module.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
-  'gettext',
-  gmfAuthenticationModule.name
-]);
+const module = angular.module('gmfapp', ['gettext', gmfAuthenticationModule.name]);
 
-
-module.value(
-  'authenticationBaseUrl',
-  appURL.GMF_DEMO);
+module.value('authenticationBaseUrl', appURL.GMF_DEMO);
 
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -37,20 +29,18 @@ function MainController(gettextCatalog) {
    * @type {import('gmf/authentication/component.js').PasswordValidator} the password validator
    */
   this.passwordValidator = {
-    isPasswordValid: function(value) {
+    isPasswordValid: function (value) {
       return (
-        value.length > 8 && /\d/.test(value) &&
-        /[a-z]/.test(value) && /[A-Z]/.test(value) &&
-        /\W/.test(value)
+        value.length > 8 && /\d/.test(value) && /[a-z]/.test(value) && /[A-Z]/.test(value) && /\W/.test(value)
       );
     },
-    notValidMessage: gettextCatalog.getString('The new password must have at least 8 characters,'
-                             + 'including capital letter, small letter, digit and special character.')
+    notValidMessage: gettextCatalog.getString(
+      'The new password must have at least 8 characters,' +
+        'including capital letter, small letter, digit and special character.'
+    ),
   };
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

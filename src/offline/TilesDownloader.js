@@ -5,7 +5,7 @@
 function blobToDataUrl(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = function() {
+    reader.onload = function () {
       resolve(/** @type String */ (reader.result));
     };
     reader.onerror = reject;
@@ -14,7 +14,6 @@ function blobToDataUrl(blob) {
 }
 
 const exports = class {
-
   /**
    * @param {Array<import("./index.js").OfflineTile>} tiles An array of tiles to download.
    * @param {import("./index.js").OfflineOnTileDownload} callbacks The callbacks.
@@ -128,7 +127,8 @@ const exports = class {
        * @type {Blob}
        */
       const response = e.target.response;
-      if (response && response.size !== 0) { // non-empty tile
+      if (response && response.size !== 0) {
+        // non-empty tile
         blobToDataUrl(response).then(
           (dataUrl) => {
             if (this.cancel_) {
@@ -153,8 +153,9 @@ const exports = class {
         }
         ++this.allCount_;
         ++this.okCount_;
-        this.callbacks_.onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile).then(
-          onTileDownloaded, onTileDownloaded);
+        this.callbacks_
+          .onTileDownloadSuccess(this.allCount_ / this.tiles_.length, tile)
+          .then(onTileDownloaded, onTileDownloaded);
       }
     };
 
@@ -191,6 +192,5 @@ const exports = class {
     return this.promise_;
   }
 };
-
 
 export default exports;

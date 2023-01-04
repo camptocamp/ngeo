@@ -22,7 +22,8 @@
       margin: 0;
       border-bottom: $border;
 
-      &:hover, &.tt-cursor {
+      &:hover,
+      &.tt-cursor {
         cursor: pointer;
         background-color: $onhover-color;
       }
