@@ -287,6 +287,7 @@ export function createWMTSLayer(config) {
     const layer = new TileLayer({
       preload: Infinity,
       source: source,
+      className: 'canvas3d',
     });
     layer.set('title', translations[config.name] || config.name);
     layer.set('config.name', config.name);

@@ -288,6 +288,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
     preload: this.tilesPreloadingLimit_,
     minResolution: opt_minResolution,
     maxResolution: opt_maxResolution,
+    className: 'canvas3d',
   });
   const $q = this.$q_;
 
@@ -346,6 +347,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   const options = optionsFromCapabilities(capabilities, {
     crossOrigin: 'anonymous',
     layer: layerCap.Identifier,
+    className: 'canvas3d',
   });
 
   console.assert(options);
@@ -358,6 +360,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   const result = new olLayerTile({
     preload: Infinity,
     source: source,
+    className: 'canvas3d',
   });
   result.set('capabilitiesStyles', layerCap.Style);
   return result;
