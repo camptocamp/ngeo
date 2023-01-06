@@ -447,7 +447,7 @@ export class DrawFeatureOptionsController {
    */
   snapInteractionHandleEvent_(evt) {
     const result = this.snapInteraction_.snapTo(evt.pixel, evt.coordinate, evt.map);
-    if (result.snapped) {
+    if (result) {
       evt.coordinate = result.vertex.slice(0, 2);
       evt.pixel = result.vertexPixel;
 
