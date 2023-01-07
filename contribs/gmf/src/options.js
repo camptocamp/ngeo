@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2022 Camptocamp SA
+// Copyright (c) 2020-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -330,7 +330,7 @@
  */
 
 /**
- * The display querry grid component options.
+ * The display query grid component options.
  * @typedef {Object} gmfDisplayQueryGridOptions
  * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
  * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
@@ -341,11 +341,12 @@
  */
 
 /**
- * The display querry grid component options.
+ * The display query window component options.
  * @typedef {Object} gmfDisplayQueryWindowOptions
  * @property {import('ngeo/options.js').StyleLike} featuresStyle A style object for all features from the result of the query.
  * @property {import('ngeo/options.js').StyleLike} selectedFeatureStyle A style object for the currently selected features.
  * @property {boolean} [collapsed] If the query result window is collapsed.
+ * @property {boolean} [displayNullAttributes] If the attributes with null values should be displayed.
  */
 
 /**
