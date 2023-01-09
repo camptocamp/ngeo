@@ -1,0 +1,88 @@
+# https://pre-commit.com/hooks.html
+repos:
+  - repo: https://github.com/pre-commit/pre-commit
+    rev: v2.21.0
+    hooks:
+      - id: validate_manifest
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: detect-private-key
+        exclude: ^private.key$
+      - id: check-merge-conflict
+      - id: check-ast
+      - id: debug-statements
+      - id: name-tests-test
+      - id: check-json
+        exclude: ^tsconfig.json$
+      - id: check-toml
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+  - repo: https://github.com/psf/black
+    rev: 22.12.0
+    hooks:
+      - id: black
+        args:
+          - --line-length=110
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.11.4
+    hooks:
+      - id: isort
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.2
+    hooks:
+      - id: codespell
+        args:
+          - --ignore-words=spell-ignore-words.txt
+        exclude: ^(contribs/gmf/test/spec/data/themescapabilities\.js|contribs/gmf/test/spec/data/themes\.js|buildtools/asitvd.capabilities\.xml|examples/measure\.js|src/bootstrap-custom\.css\.map)$
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.3.1
+    hooks:
+      - id: pyupgrade
+        args: [--py310-plus]
+  # - repo: https://github.com/pre-commit/mirrors-eslint
+  #   rev: v8.31.0
+  #   hooks:
+  #     - id: eslint
+  #       additional_dependencies:
+  #         - '@typescript-eslint/eslint-plugin@5.48.0'
+  #         - '@typescript-eslint/parser@5.48.0'
+  #         - eslint@8.31.0
+  #         - eslint-plugin-jsdoc@39.6.4
+  #         - eslint-plugin-lit@1.7.2
+  #         - eslint-plugin-wc@1.4.0
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.7.1
+    hooks:
+      - id: prettier
+        additional_dependencies:
+          - prettier@2.8.1
+          - '@prettier/plugin-xml@0.12.0'
+          - 'prettier-plugin-sh@0.12.8'
+          - 'prettier-plugin-toml@0.3.1'
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.2
+    hooks:
+      - id: shellcheck
+  - repo: https://github.com/jumanjihouse/pre-commit-hooks
+    rev: 3.0.0
+    hooks:
+      - id: git-check
+  - repo: https://github.com/gruntwork-io/pre-commit
+    rev: v0.1.17
+    hooks:
+      - id: helmlint
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.20.0
+    hooks:
+      - id: check-github-actions
+      - id: check-github-workflows
+      - id: check-renovate
+        additional_dependencies: ['pyjson5']
+  - repo: https://github.com/sirwart/ripsecrets.git
+    rev: v0.1.5
+    hooks:
+      - id: ripsecrets
+        exclude: ^(private.key|contribs/gmf/apps/desktop_alt/index.html.ejs|examples/googlestreetview.html|examples/mapillarystreetview.js)$

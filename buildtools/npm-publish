@@ -24,7 +24,12 @@
 PACKAGE_VERSION=$(buildtools/get-version version)
 echo "Trying to publish tag ${GITHUB_REF} from package ${PACKAGE_VERSION} on ${GITHUB_REPOSITORY}"
 
-if [[ $@ =~ "--dry-run" ]]; then RUN="echo "; fi
+for arg in "$@"; do
+    if [[ "$arg" =~ "--dry-run" ]]; then
+        echo "Dry run"
+        RUN="echo "
+    fi
+done
 
 if [ "${GITHUB_REPOSITORY}" = "camptocamp/ngeo" ]; then
     if [[ "${GITHUB_REF}" =~ ^refs/tags/.* ]]; then

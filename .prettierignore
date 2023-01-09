@@ -3,3 +3,4 @@ contribs/gmf/apps/*/index.html.ejs
 src/bootstrap-custom.css
 # New line brake the i18n
 src/query/panelComponent.html
+buildtools/asitvd.capabilities.xml
