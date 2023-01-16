@@ -53,7 +53,7 @@
           <table>
             <tr
               ng-repeat="(key, value) in ctrl.getFeatureValues()"
-              ng-if="value !== undefined">
+              ng-if="value !== undefined || ctrl.options.displayNullAttributes == true">
               <td
                 class="details-key"
                 ng-bind-html="key | translate | ngeoTrustHtml"
