@@ -20,6 +20,8 @@ jobs:
           - '2.7'
 
     steps:
+      # Remove Python packages with wriong version
+      - run: sudo apt-get remove python3-debian python3-distro-info
       - run: sudo npm install -g npm@6
 
       - run: |
