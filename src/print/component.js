@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -445,6 +445,14 @@ export class PrintController {
      * @type {number}
      */
     this.rotation = 0;
+
+    /**
+     * The username of the logged-in user. Obtained from the
+     * authentication service.
+     *
+     * @type {?string}
+     */
+    this.username = null;
 
     /**
      * The email of the user to which send the file. Obtained from the
@@ -1100,6 +1108,7 @@ export class PrintController {
       this.layoutInfo.dpi,
       this.layoutInfo.layout,
       format,
+      gmfAuthenticationService.getUsername(),
       customAttributes,
       email,
       this.options.goodnessOfFit

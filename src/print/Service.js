@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -141,6 +141,7 @@ PrintService.prototype.cancel = function (ref, opt_httpConfig) {
  * @param {number} dpi DPI.
  * @param {string} layout Layout.
  * @param {string} format Formats.
+ * @param {string} username Username.
  * @param {Object<string, *>} customAttributes Custom attributes.
  * @param {string} [email] Email to send the file to.
  * @param {number} [goodnessOfFit] Goodness of fit.
@@ -153,6 +154,7 @@ PrintService.prototype.createSpec = function (
   dpi,
   layout,
   format,
+  username,
   customAttributes,
   email,
   goodnessOfFit
@@ -171,6 +173,7 @@ PrintService.prototype.createSpec = function (
   /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintAttributes} */
   const attributes = {
     map: specMap,
+    username: username,
   };
   Object.assign(attributes, customAttributes);
 
