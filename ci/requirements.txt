@@ -3,3 +3,4 @@ urllib3==1.26.13 # not directly required, pinned by Snyk to avoid a vulnerabilit
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
 wheel==0.38.4
 certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
+pre-commit==2.21.0

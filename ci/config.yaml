@@ -1,10 +1,4 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/camptocamp/c2cciutils/master/c2cciutils/schema.json
 
 checks:
-  codespell:
-    ignore_re:
-      - ^contribs/gmf/test/spec/data/themescapabilities\.js$
-      - ^contribs/gmf/test/spec/data/themes\.js$
-      - ^buildtools/asitvd.capabilities\.xml$
-      - ^examples/measure\.js$
-      - ^src/bootstrap-custom\.css\.map$
+  codespell: false
