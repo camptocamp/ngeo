@@ -1,16 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Capabilities xmlns="http://www.opengis.net/wmts/1.0" xmlns:ows="http://www.opengis.net/ows/1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gml="http://www.opengis.net/gml" xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd" version="1.0.0">
+<?xml version="1.0" encoding="UTF-8" ?>
+<Capabilities
+    xmlns="http://www.opengis.net/wmts/1.0"
+    xmlns:ows="http://www.opengis.net/ows/1.1"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gml="http://www.opengis.net/gml"
+    xsi:schemaLocation="http://www.opengis.net/wmts/1.0 http://schemas.opengis.net/wmts/1.0/wmtsGetCapabilities_response.xsd"
+    version="1.0.0"
+>
   <!-- mapcache : wmts-ssl.xml -->
   <ows:ServiceIdentification>
     <ows:Title>ASITVD-WMTS-FONDS</ows:Title>
-    <ows:Abstract>Ce service permet l affichage d'un fond de plan homogène et harmonieux sur tout le canton. Ce fond de plan pourra avantageusement mettre en valeur vos données dans un guichet cartographique ou une application métier.
+    <ows:Abstract
+        >Ce service permet l affichage d'un fond de plan homogène et harmonieux sur tout le canton. Ce fond de plan pourra avantageusement mettre en valeur vos données dans un guichet cartographique ou une application métier.
       </ows:Abstract>
     <ows:ServiceType>OGC WMTS</ows:ServiceType>
     <ows:ServiceTypeVersion>1.0.0</ows:ServiceTypeVersion>
   </ows:ServiceIdentification>
   <ows:ServiceProvider>
     <ows:ServiceContact>
-      <ows:ContactInfo/>
+      <ows:ContactInfo />
     </ows:ServiceContact>
   </ows:ServiceProvider>
   <ows:OperationsMetadata>
@@ -79,11 +88,16 @@
       <TileMatrixSetLink>
         <TileMatrixSet>21781</TileMatrixSet>
       </TileMatrixSetLink>
-      <ResourceURL format="image/png" resourceType="tile" template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_couleur/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+      <ResourceURL
+                format="image/png"
+                resourceType="tile"
+                template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_couleur/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+            />
     </Layer>
     <Layer>
       <ows:Title>Fond ASIT VD - transparent pour photos</ows:Title>
-      <ows:Abstract>Service de fond de plan WMTS ASIT VD: données OSM et Etat de Vaud - transparent pour orthophotos</ows:Abstract>
+      <ows:Abstract
+            >Service de fond de plan WMTS ASIT VD: données OSM et Etat de Vaud - transparent pour orthophotos</ows:Abstract>
       <ows:Identifier>asitvd.fond_pourortho</ows:Identifier>
       <Style isDefault="true">
         <ows:Identifier>default</ows:Identifier>
@@ -105,11 +119,16 @@
       <TileMatrixSetLink>
         <TileMatrixSet>21781</TileMatrixSet>
       </TileMatrixSetLink>
-      <ResourceURL format="image/png" resourceType="tile" template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_pourortho/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+      <ResourceURL
+                format="image/png"
+                resourceType="tile"
+                template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_pourortho/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+            />
     </Layer>
     <Layer>
       <ows:Title>Fond ASIT VD - niveaux de gris</ows:Title>
-      <ows:Abstract>Service de fond de plan WMTS ASIT VD: données OSM et Etat de Vaud - tons de gris</ows:Abstract>
+      <ows:Abstract
+            >Service de fond de plan WMTS ASIT VD: données OSM et Etat de Vaud - tons de gris</ows:Abstract>
       <ows:Identifier>asitvd.fond_gris</ows:Identifier>
       <Style isDefault="true">
         <ows:Identifier>default</ows:Identifier>
@@ -131,11 +150,16 @@
       <TileMatrixSetLink>
         <TileMatrixSet>21781</TileMatrixSet>
       </TileMatrixSetLink>
-      <ResourceURL format="image/png" resourceType="tile" template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_gris/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+      <ResourceURL
+                format="image/png"
+                resourceType="tile"
+                template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_gris/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+            />
     </Layer>
     <Layer>
       <ows:Title>Fond ASIT VD - niveaux de gris sans labels</ows:Title>
-      <ows:Abstract>Service de fond de plan WMTS ASIT VD: données OSM et Etat de Vaud - tons de gris, sans étiquettes de noms et adresses</ows:Abstract>
+      <ows:Abstract
+            >Service de fond de plan WMTS ASIT VD: données OSM et Etat de Vaud - tons de gris, sans étiquettes de noms et adresses</ows:Abstract>
       <ows:Identifier>asitvd.fond_gris_sans_labels</ows:Identifier>
       <Style isDefault="true">
         <ows:Identifier>default</ows:Identifier>
@@ -157,7 +181,11 @@
       <TileMatrixSetLink>
         <TileMatrixSet>21781</TileMatrixSet>
       </TileMatrixSetLink>
-      <ResourceURL format="image/png" resourceType="tile" template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_gris_sans_labels/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+      <ResourceURL
+                format="image/png"
+                resourceType="tile"
+                template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_gris_sans_labels/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+            />
     </Layer>
     <Layer>
       <ows:Title>Fond ASIT VD - cadastral</ows:Title>
@@ -183,7 +211,11 @@
       <TileMatrixSetLink>
         <TileMatrixSet>21781</TileMatrixSet>
       </TileMatrixSetLink>
-      <ResourceURL format="image/png" resourceType="tile" template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_cadastral/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"/>
+      <ResourceURL
+                format="image/png"
+                resourceType="tile"
+                template="https://ows.asitvd.ch/wmts/1.0.0/asitvd.fond_cadastral/default/{DIM1}/{ELEVATION}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.png"
+            />
     </Layer>
     <TileMatrixSet>
       <ows:Identifier>2056</ows:Identifier>
