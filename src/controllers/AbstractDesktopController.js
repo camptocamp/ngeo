@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -52,7 +52,7 @@ import olStyleText from 'ol/style/Text';
 
 import 'gmfapi/index';
 import panels from 'gmfapi/store/panels';
-import user, {loginMessageRequired} from 'gmfapi/store/user';
+import user from 'gmfapi/store/user';
 
 import 'gmf/controllers/vars_desktop.scss';
 import 'gmf/controllers/desktop.scss';
