@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -27,6 +27,7 @@ import gmfMobileMeasureModule from 'gmf/mobile/measure/module';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
+import user from 'gmfapi/store/user';
 
 import 'gmf/controllers/vars_mobile.scss';
 import 'gmf/controllers/mobile.scss';
@@ -132,6 +133,17 @@ export class AbstractMobileController extends AbstractAppController {
         }
       }
     );
+
+    user.getLoginMessage().subscribe({
+      next: (message) => {
+        this.loginInfoMessage = message;
+        if (message) {
+          // Open the right panel if a message is displayed
+          this.rightNavVisible = true;
+          this.openNavMenu('#login');
+        }
+      },
+    });
 
     /**
      * @constant {string}
