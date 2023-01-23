@@ -1089,7 +1089,7 @@ export type gmfDisplayQueryGridOptions = {
 };
 
 /**
- * The display query grid component options.
+ * The display query window component options.
  */
 export type gmfDisplayQueryWindowOptions = {
   /**
@@ -1104,6 +1104,10 @@ export type gmfDisplayQueryWindowOptions = {
    * If the query result window is collapsed.
    */
   collapsed?: boolean;
+  /**
+   * If the attributes with null values should be displayed.
+   */
+  displayNullAttributes?: boolean;
 };
 
 export type LayerConfig = {
