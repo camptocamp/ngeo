@@ -2,7 +2,28 @@
 
 This document provides information for developers working on ngeo.
 
-## Run our code.
+## Pre-commit
+
+To activate the pre-commit run:
+
+```shell
+pip install pre-commit
+pre-commit install --allow-missing-config
+```
+
+Don't worry about the time take on the first run
+
+Careful: If the pre-commit fail the commit will be aborted.
+
+Commit without pre-commit
+
+```shell
+git commit (-n|--no-verify)
+```
+
+More information on [pre-commit](https://pre-commit.com/).
+
+## Run our code
 
 Type `make help` to display available targets.
 
@@ -23,7 +44,7 @@ Makefile provides a `gh-pages` target for exactly this.
 To publish the current branch's examples to GitHub Pages:
 
 ```shell
-$ make gh-pages GITHUB_USERNAME=<your_github_username>
+make gh-pages GITHUB_USERNAME=<your_github_username>
 ```
 
 The `GITHUB_USERNAME` variable is used to specify the user/organization name to
@@ -32,14 +53,14 @@ publish to on GitHub.
 For example
 
 ```shell
-$ make gh-pages GITHUB_USERNAME=camptocamp
+make gh-pages GITHUB_USERNAME=camptocamp
 ```
 
-will publish the examples to `https://camptocamp.github.io/ngeo/<branchname>/`.
+Will publish the examples to `https://camptocamp.github.io/ngeo/<branchname>/`.
 
 The published examples use the `ngeo.js` standalone build.
 
-Example: https://camptocamp.github.io/ngeo/master/examples/simple.html.
+[Simple example](https://camptocamp.github.io/ngeo/master/examples/simple.html).
 
 ## Unit tests
 
@@ -73,7 +94,7 @@ fdescribe('...', function() {
 
 Checkout the latest version
 
-```
+```bash
 git checkout <release-branch>
 git fetch origin
 git reset --hard origin/<release-branch>
@@ -84,7 +105,7 @@ Where `<release-branch>` stand for `2.x`.
 Verify that the `<version>` (`2.x.x`) in package.json match with the tag you'll
 create. Then create a tag named the same as the version.
 
-```
+```bash
 git tag <version>
 git push origin <version>
 ```
@@ -93,7 +114,7 @@ GitHub Actions will create a new package on npm.
 
 If you create a new release, bump version in the package.json file:
 
-```
+```bash
 git checkout -b bump
 vi package.json
 git add package.json

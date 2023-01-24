@@ -22,11 +22,12 @@
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 function set_return() {
-    return ${1}
+    return "${1}"
 }
 
+# shellcheck disable=SC2034  # Unused variable i
 for i in {1..5}; do
     "$@" && result=0 && break || result=$? && sleep 1
 done
 
-set_return ${result}
+set_return "${result}"

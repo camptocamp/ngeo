@@ -9,7 +9,12 @@
   prConcurrentLimit: 0,
   lockFileMaintenance: {enabled: true, automerge: true, schedule: 'on the first day of the month'},
   baseBranches: ['master', '2.7', '2.6', '2.4'],
+  'pre-commit': {enabled: true},
   regexManagers: [
+    {
+      fileMatch: ['^.pre-commit-config.yaml$'],
+      matchStrings: [" +- '?(?<depName>[^' @=]+)(@|==)(?<currentValue>[^' @=]+)'? # (?<datasource>.+)"],
+    },
     {
       fileMatch: ['^ci/applications-versions.yaml$'],
       matchStrings: ['(?<depName>[^\\s]+): (?<currentValue>[^\\s]+) # (?<datasource>[^\\s]+)'],
