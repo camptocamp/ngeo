@@ -115,8 +115,8 @@ jobs:
       - run: npm run build-storybook
         env:
           NODE_OPTIONS: --openssl-legacy-provider
-      #- run: make check-examples
-      #  if: github.event_name != 'pull_request_target'
+      - run: make check-examples
+        if: github.event_name != 'pull_request_target'
       - uses: actions/upload-artifact@v3
         with:
           name: Examples
