@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@ import OlTilegridWMTS from 'ol/tilegrid/WMTS';
 import * as olProj from 'ol/proj';
 import OlSourceTileWMS from 'ol/source/TileWMS';
 import OlSourceWMTS from 'ol/source/WMTS';
-import OlLayerTile from 'ol/layer/Tile';
+import OlLayerTile from 'ol/layer/WebGLTile';
 
 const SerDes = class {
   /**
@@ -223,7 +223,7 @@ const SerDes = class {
   }
 
   /**
-   * @param {!import('ol/layer/Tile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} layer .
+   * @param {!import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} layer .
    * @param {import('ol/source/Source').default} [source] .
    * @returns {string} .
    */
@@ -248,7 +248,7 @@ const SerDes = class {
   /**
    * @param {string} serialization .
    * @param {function(import('ol/ImageTile').default, string): void} [tileLoadFunction] .
-   * @returns {!import('ol/layer/Tile').default<import('ol/source/Tile').default>} .
+   * @returns {!import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} .
    */
   deserializeTileLayer(serialization, tileLoadFunction) {
     /**

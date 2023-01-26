@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -43,7 +43,7 @@ import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerLayer from 'ol/layer/Layer';
 import {isEmpty} from 'ol/obj';
 import olSourceImageWMS from 'ol/source/ImageWMS';

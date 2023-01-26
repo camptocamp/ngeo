@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2022 Camptocamp SA
+// Copyright (c) 2014-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -29,7 +29,7 @@ import {interactionDecoration} from 'ngeo/misc/decorate';
 import ngeoStatemanagerModule from 'ngeo/statemanager/module';
 import olMap from 'ol/Map';
 import olInteractionDraw from 'ol/interaction/Draw';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceOSM from 'ol/source/OSM';
 import olSourceVector from 'ol/source/Vector';

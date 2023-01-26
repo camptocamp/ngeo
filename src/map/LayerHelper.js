@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@ import olFormatMVT from 'ol/format/MVT';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities';
 import olLayerGroup from 'ol/layer/Group';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerLayer from 'ol/layer/Layer';
 import olLayerVectorTile from 'ol/layer/VectorTile';
 import {isEmpty} from 'ol/obj';
@@ -269,7 +269,7 @@ LayerHelper.prototype.fixResolution_ = function (opt_maxResolution) {
  * @param {number} [opt_minResolution] WMTS minimum resolution.
  * @param {number} [opt_maxResolution] WMTS maximum resolution.
  * @param {number} [opt_opacity] The opacity.
- * @returns {angular.IPromise<import('ol/layer/Tile').default<import('ol/source/Tile').default>>} A Promise with a layer (with source) on
+ * @returns {angular.IPromise<import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>>} A Promise with a layer (with source) on
  *    success, no layer else.
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
@@ -288,6 +288,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
     preload: this.tilesPreloadingLimit_,
     minResolution: opt_minResolution,
     maxResolution: opt_maxResolution,
+    className: 'canvas3d',
   });
   const $q = this.$q_;
 
@@ -336,7 +337,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
  * @param {Object<string, any>} capabilities The complete capabilities object of the service
  * @param {Object<string, any>} layerCap The layer capability object
  * @param {Object<string, string>} [opt_dimensions] WMTS dimensions.
- * @returns {import('ol/layer/Tile').default<import('ol/source/Tile').default>} WMTS layer
+ * @returns {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} WMTS layer
  */
 LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   capabilities,
@@ -346,6 +347,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   const options = optionsFromCapabilities(capabilities, {
     crossOrigin: 'anonymous',
     layer: layerCap.Identifier,
+    className: 'canvas3d',
   });
 
   console.assert(options);
@@ -358,6 +360,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   const result = new olLayerTile({
     preload: Infinity,
     source: source,
+    className: 'canvas3d',
   });
   result.set('capabilitiesStyles', layerCap.Style);
   return result;
@@ -535,7 +538,7 @@ LayerHelper.prototype.getLayerByNodeName = function (nodeName, layers) {
 /**
  * Get the WMTS legend URL for the given layer.
  *
- * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Tile layer as returned by the
+ * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Tile layer as returned by the
  * ngeo layerHelper service.
  * @returns {string|undefined} The legend URL or undefined.
  */
@@ -651,7 +654,7 @@ LayerHelper.prototype.isLayerVisible = function (layer, map) {
 /**
  * Force a WMS layer to refresh using a random value.
  *
- * @param {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer Layer to refresh.
+ * @param {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Layer to refresh.
  */
 LayerHelper.prototype.refreshWMSLayer = function (layer) {
   const source_ = layer.getSource();

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2022 Camptocamp SA
+// Copyright (c) 2019-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,7 +24,7 @@ import angular from 'angular';
 import ngeoMapswipeModule from 'ngeo/map/swipe';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import olMap from 'ol/Map';
 import olSourceOSM, {ATTRIBUTION} from 'ol/source/OSM';
 import olView from 'ol/View';
@@ -42,7 +42,7 @@ function MainController() {
   });
 
   /**
-   * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
+   * @type {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>}
    */
   this.openSeaMapLayer = new olLayerTile({
     source: new olSourceOSM({

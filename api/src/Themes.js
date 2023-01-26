@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +22,7 @@
 import WMTSCapabilities from 'ol/format/WMTSCapabilities';
 import ImageWMS from 'ol/source/ImageWMS';
 import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS';
-import TileLayer from 'ol/layer/Tile';
+import TileLayer from 'ol/layer/WebGLTile';
 import ImageLayer from 'ol/layer/Image';
 import GroupLayer from 'ol/layer/Group';
 
@@ -287,6 +287,7 @@ export function createWMTSLayer(config) {
     const layer = new TileLayer({
       preload: Infinity,
       source: source,
+      className: 'canvas3d',
     });
     layer.set('title', translations[config.name] || config.name);
     layer.set('config.name', config.name);

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -149,6 +149,7 @@ export class LidarprofileManager {
      * The hovered point geometry (point) in D3 profile highlighted on the 2D map
      */
     this.lidarPointHighlight = new olLayerVector({
+      className: 'canvas2d',
       source: new olSourceVector({}),
       style: new olStyleStyle({
         image: new olStyleCircle({
@@ -165,6 +166,7 @@ export class LidarprofileManager {
      * with real mapunites stroke width
      */
     this.lidarBuffer = new olLayerVector({
+      className: 'canvas2d',
       source: new olSourceVector({}),
     });
 

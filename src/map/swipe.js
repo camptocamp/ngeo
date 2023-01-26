@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,6 +22,7 @@
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events';
 import RenderEvent from 'ol/render/Event';
+import {getRenderPixel} from 'ol/render.js';
 
 import ResizeObserver from 'resize-observer-polyfill';
 import 'jquery-ui/ui/widgets/draggable';
@@ -87,7 +88,7 @@ export class SwipeController {
     this.map;
 
     /**
-     * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
+     * @type {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>}
      */
     this.layer;
 
@@ -182,11 +183,19 @@ export class SwipeController {
     if (!ctx) {
       return;
     }
+
     const width = ctx.canvas.width * this.swipeValue;
-    ctx.save();
-    ctx.beginPath();
-    ctx.rect(0, 0, width, ctx.canvas.height);
-    ctx.clip();
+    const height = ctx.canvas.height;
+    if (ctx instanceof CanvasRenderingContext2D) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, width, height);
+      ctx.clip();
+    } else {
+      // ctx instanceof WebGLRenderingContext
+      ctx.enable(ctx.SCISSOR_TEST);
+      ctx.scissor(0, 0, width, height);
+    }
   }
 
   /**
@@ -199,7 +208,12 @@ export class SwipeController {
       if (!ctx) {
         return;
       }
-      ctx.restore();
+      if (ctx instanceof CanvasRenderingContext2D) {
+        ctx.restore();
+      } else {
+        // ctx instanceof WebGLRenderingContext
+        ctx.disable(ctx.SCISSOR_TEST);
+      }
     }
   }
 

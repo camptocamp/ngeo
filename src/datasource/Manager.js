@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -36,7 +36,7 @@ import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {getUid as olUtilGetUid} from 'ol/util';
 import {listen} from 'ol/events';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import {clear as clearObject} from 'ol/obj';
 import olLayerImage from 'ol/layer/Image';
 import olSourceImageWMS from 'ol/source/ImageWMS';

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -26,7 +26,7 @@ import {DATASOURCE_ID, LAYER_NODE_NAME_KEY, NODE_IS_LEAF} from 'ngeo/map/LayerHe
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {getUid as olUtilGetUid} from 'ol/util';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/Tile';
+import olLayerTile from 'ol/layer/WebGLTile';
 import Group from 'ol/layer/Group';
 
 /**
@@ -123,7 +123,7 @@ SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
     const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
     if (treeCtrl.layer && !gmfGroup.mixed) {
       this.updateLayerState_(
-        /** @type {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/Tile').default<import('ol/source/Tile').default>} */ (
+        /** @type {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} */ (
           treeCtrl.layer
         ),
         treeCtrl
@@ -136,7 +136,7 @@ SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
 /**
  * Set the active state of a layer based on its treeCtrl state.
  *
- * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} layer A layer.
+ * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} layer A layer.
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  */
 SyncLayertreeMap.prototype.updateLayerState_ = function (layer, treeCtrl) {
@@ -307,7 +307,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
  *
  * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl ngeo layertree controller.
  * @param {import('ol/Map').default} map A map that contains the group to insert the layer.
- * @returns {import('ol/layer/Tile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} a new layer.
+ * @returns {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>|import('ol/layer/Image').default<import('ol/source/Image').default>} a new layer.
  */
 SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
   const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
@@ -403,7 +403,7 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function (treeCtrl, m
  * Create and return a Tile layer.
  *
  * @param {import('gmf/themes').GmfLayerWMTS} gmfLayerWMTS A leaf node.
- * @returns {import('ol/layer/Tile').default<import('ol/source/Tile').default>} a Tile WMTS layer. (Source and capabilities can come
+ * @returns {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} a Tile WMTS layer. (Source and capabilities can come
  *     later).
  */
 SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {

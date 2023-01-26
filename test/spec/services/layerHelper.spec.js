@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -68,7 +68,7 @@ describe('ngeo.map.LayerHelper', () => {
 
     expect(spy.calls.count()).toBe(1);
     /**
-     * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
+     * @type {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>}
      */
     const layer = spy.calls.mostRecent().args[0];
     /**
@@ -126,7 +126,7 @@ describe('ngeo.map.LayerHelper', () => {
 
     expect(spy.calls.count()).toBe(1);
     /**
-     * @type {import('ol/layer/Tile').default<import('ol/source/Tile').default>}
+     * @type {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>}
      */
     const layer = spy.calls.mostRecent().args[0];
     const capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -45,7 +45,7 @@ import {CollectionEvent} from 'ol/Collection';
 
 /**
  * @typedef {Object} ExternalDataSourcesManagerWMTSCacheItem
- * @property {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layerObj
+ * @property {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layerObj
  * @property {Function} unregister
  */
 
@@ -612,7 +612,7 @@ export class ExternalDatSourcesManager {
   }
 
   /**
-   * @param {import('ol/layer/Tile').default<import('ol/source/Tile').default>} layer WMTS layer
+   * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer WMTS layer
    * @param {boolean|undefined} value Current visible property of the DS
    * @param {boolean|undefined} oldValue Old visible property of the DS
    * @private

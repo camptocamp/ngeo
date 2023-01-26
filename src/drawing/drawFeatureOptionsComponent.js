@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2022 Camptocamp SA
+// Copyright (c) 2019-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -189,6 +189,7 @@ export class DrawFeatureOptionsController {
      * @private
      */
     this.snapSource_ = new OLSourceVector({
+      className: 'canvas2d',
       features: [this.snapFeature_],
     });
 
@@ -446,7 +447,7 @@ export class DrawFeatureOptionsController {
    */
   snapInteractionHandleEvent_(evt) {
     const result = this.snapInteraction_.snapTo(evt.pixel, evt.coordinate, evt.map);
-    if (result.snapped) {
+    if (result) {
       evt.coordinate = result.vertex.slice(0, 2);
       evt.pixel = result.vertexPixel;
 
