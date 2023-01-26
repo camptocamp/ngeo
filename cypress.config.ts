@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,6 +40,6 @@ export default defineConfig({
       login: 'demo',
       password: 'democ2c',
     },
-    serverUrl: 'https://geomapfish-demo-2-7.camptocamp.com',
+    serverUrl: 'https://geomapfish-demo-2-8.camptocamp.com',
   },
 });
