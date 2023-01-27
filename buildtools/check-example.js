@@ -158,7 +158,7 @@ function loaded(page, browser) {
       return;
     }
     if (url.startsWith('http://localhost:8080/')) {
-      url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-7.camptocamp.com/');
+      url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-8.camptocamp.com/');
     }
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
