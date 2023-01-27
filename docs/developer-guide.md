@@ -172,7 +172,9 @@ make transifex-get
 Update the `Makefile`:
 
 ```diff
+- MAJOR_VERSION ?= x.y
 - DEMO_BRANCH ?= prod-x-y
++ MAJOR_VERSION ?= x.y+1
 + DEMO_BRANCH ?= prod-x-y+1
 ```
 

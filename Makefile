@@ -381,6 +381,7 @@ locales/en/app.json:
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
 	.build/locale/ngeo.pot \
+	$(addprefix locales/, $(addsuffix /app.json, $(LANGUAGES))) \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/apps.po, $(L10N_LANGUAGES)))
 
 .PHONY: transifex-send
