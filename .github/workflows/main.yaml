@@ -107,9 +107,11 @@ jobs:
         if: github.event_name != 'pull_request_target'
       - run: make check-examples-checker
         if: github.event_name != 'pull_request_target'
+
         # Cypress tests
       - run: make serve-gmf-apps &
         if: github.event_name != 'pull_request_target'
+      - run: cat locales/en/app.json
       - run: npm run test-cli
         env:
           NODE_OPTIONS: --openssl-legacy-provider
@@ -172,6 +174,7 @@ jobs:
           retention-days: 5
         if: failure()
 
+      - run: cat locales/en/app.json
       - run: make transifex-send
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.head_ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: git diff
