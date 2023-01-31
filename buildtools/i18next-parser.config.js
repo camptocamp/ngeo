@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2022 Camptocamp SA
+// Copyright (c) 2021-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -28,7 +28,8 @@ module.exports = {
     '../api/src/**/*.{js,ts}',
     '../contribs/gmf/apps/**/*.{js,ts,html*}',
   ],
-  useKeysAsDefaultValue: true,
+  // eslint-disable-next-line no-unused-vars
+  defaultValue: (locale, namespace, key, value) => key,
   keySeparator: false,
   namespaceSeparator: false,
   lexers: {
