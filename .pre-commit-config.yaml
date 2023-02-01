@@ -64,7 +64,7 @@ repos:
       - id: ripsecrets
         exclude: ^(private.key|contribs/gmf/apps/desktop_alt/index.html.ejs|examples/googlestreetview.html|examples/mapillarystreetview.js)$
   - repo: https://github.com/psf/black
-    rev: 22.12.0
+    rev: 23.1.0
     hooks:
       - id: black
   - repo: https://github.com/PyCQA/isort
