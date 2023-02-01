@@ -116,7 +116,7 @@
     "chokidar": "3.5.3",
     "chromatic": "6.15.0",
     "co": "4.6.0",
-    "commander": "9.5.0",
+    "commander": "10.0.0",
     "console-control-strings": "1.1.0",
     "copy-webpack-plugin": "6.4.1",
     "core-js": "3.27.1",
