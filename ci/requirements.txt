@@ -1,5 +1,5 @@
-c2cciutils==1.1.17
-urllib3==1.26.13
+c2cciutils==1.1.18
+urllib3==1.26.14
 pip>=21.1 # not directly required, pinned by Snyk to avoid a vulnerability
 pipenv>=2022.1.8 # not directly required, pinned by Snyk to avoid a vulnerability
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
