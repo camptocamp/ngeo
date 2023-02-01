@@ -26,7 +26,6 @@ import bs4
 from mako.template import Template
 
 if __name__ == "__main__":
-
     examples = []
 
     parser = ArgumentParser()

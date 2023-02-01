@@ -7,7 +7,6 @@ import polib
 
 
 def main() -> None:
-
     parser = argparse.ArgumentParser(
         description="""
 Script to convert .po and .pot translation files to .json files for i18next.
@@ -32,7 +31,6 @@ To convert all .po and .pot files in the project:
     i18n = {}
 
     for input_file in input_files:
-
         print(f"Reading Login {input_file}")
         pofile = polib.pofile(input_file)
         lang = pofile.metadata.get("Language") or "en"
