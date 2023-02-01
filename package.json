@@ -197,7 +197,7 @@
     "style-loader": "2.0.0",
     "svg-inline-loader": "0.8.2",
     "svgo": "3.0.2",
-    "svgo-loader": "3.0.3",
+    "svgo-loader": "4.0.0",
     "terser": "5.16.2",
     "terser-webpack-plugin": "4.2.3",
     "tinycolor2": "1.5.2",
