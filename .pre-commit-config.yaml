@@ -1,0 +1,9 @@
+ci:
+  skip:
+    - copyright
+
+repos:
+  - repo: https://github.com/sbrunner/pre-commit-hooks
+    rev: 0.2.3
+    hooks:
+      - id: copyright
