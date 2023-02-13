@@ -1,6 +1,7 @@
 # https://pre-commit.com/hooks.html
 
 ci:
+  autoupdate_schedule: quarterly
   skip:
     - copyright
 
