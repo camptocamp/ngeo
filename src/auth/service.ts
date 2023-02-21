@@ -128,7 +128,7 @@ export class AuthenticationService {
    * @private
    */
   checkConnection_(): void {
-    if (this.user_.username && this.user_.is_password_changed) {
+    if (this.user_.username && this.user_.is_password_changed !== false) {
       const url = `${this.baseUrl_}/${RouteSuffix.IS_LOGGED_IN}`;
       const options: RequestInit = {method: 'GET', credentials: 'include'};
       fetch(url, options)
