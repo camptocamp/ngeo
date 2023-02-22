@@ -239,7 +239,7 @@
  * @property {string} [legendImage] The URL to the image used as a legend in the layer tree. For WMS and
  *      WMTS layers.
  * @property {Object<string, string>} [hiDPILegendImages] The URLs to the hi DPI images used as a legend
- *      in the layer tree. For WMS and WMTS layers.
+ *      in the print. For WMS and WMTS layers.
  * @property {string} [legendRule] The WMS 'RULE' parameter used to display the icon in the layer tree.
  *      "Short version" of the 'iconURL' metadata for WMS layers. For WMS layers.
  * @property {number} [maxQueryResolution] The max resolution where the layer is queryable. For WMTS and
