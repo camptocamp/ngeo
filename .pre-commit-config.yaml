@@ -12,4 +12,4 @@ repos:
     hooks:
       - id: prettier
         additional_dependencies:
-          - prettier@2.8.3 # npm
+          - prettier@2.8.4 # npm
