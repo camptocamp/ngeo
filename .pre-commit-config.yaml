@@ -13,3 +13,10 @@ repos:
       - id: prettier
         additional_dependencies:
           - prettier@2.8.4 # npm
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.1.0
+    hooks:
+      - id: codespell
+        exclude: (^contribs/gmf/test/spec/data/themescapabilities\.js$|^contribs/gmf/test/spec/data/themes\.js$|^buildtools/asitvd.capabilities\.xml$|^examples/measure\.js$|^src/bootstrap-custom\.css\.map$)
+        args:
+          - --ignore-words=spell-ignore-words.txt
