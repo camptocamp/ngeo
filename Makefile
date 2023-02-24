@@ -401,7 +401,12 @@ transifex-init: .build/applications.timestamp \
 		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
-		.build/locale/apps.pot
+		.build/locale/apps.pot \
+		locales/en/app.json
+	mv /home/sbrunner/workspace/ngeo/locales/en/app.json /home/sbrunner/workspace/ngeo/locales/en/app.json_
+	buildtools/clean-json /home/sbrunner/workspace/ngeo/locales/*/app.json
+	mv /home/sbrunner/workspace/ngeo/locales/en/app.json_ /home/sbrunner/workspace/ngeo/locales/en/app.json
+
 	tx push --branch=$(MAJOR_VERSION) --source --force
 	tx push --branch=$(MAJOR_VERSION) --translation --force
 
@@ -409,7 +414,7 @@ transifex-init: .build/applications.timestamp \
 	cd contribs/gmf/apps/; tx push --branch=$(MAJOR_VERSION) --translation --force
 
 .build/locale/fr/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
-	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.ngeo --force --mode=reviewed
+	tx pull --translations --all --branch=$(MAJOR_VERSION) --resources=ngeo.ngeo --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .build/locale/en/LC_MESSAGES/ngeo.po: .build/locale/ngeo.pot
@@ -418,13 +423,13 @@ transifex-init: .build/applications.timestamp \
 
 locales/fr/app.json: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
 	mkdir -p $(dir $@)
-	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.webcomponent --force --mode=reviewed
+	tx pull --translations --all --branch=$(MAJOR_VERSION) --resources=ngeo.webcomponent --force --mode=reviewed
 	touch $@
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/fr/LC_MESSAGES/apps.po
 .build/locale/fr/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/applications.timestamp
-	(cd contribs/gmf/apps/; tx pull --translations --branch=$(MAJOR_VERSION) --force --mode=reviewed)
+	(cd contribs/gmf/apps/; tx pull --all --translations --branch=$(MAJOR_VERSION) --force --mode=reviewed)
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
