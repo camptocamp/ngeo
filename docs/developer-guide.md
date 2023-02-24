@@ -200,11 +200,9 @@ Update the `.github/workflows/audit.yaml`, in the branch matrix:
 +          - 'x.y+1'
 ```
 
-Create the tag `backport x.y`.
+Create the label `backport x.y`.
 
 Protect the branch x.y.
-
-Run `c2cciutils-checks` to check that everything is in place.
 
 Commit and push the changes:
 

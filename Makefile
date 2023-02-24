@@ -1,5 +1,5 @@
-MAJOR_VERSION = 2.8
-DEMO_BRANCH ?= prod-2-8
+MAJOR_VERSION = 2.9
+DEMO_BRANCH ?= prod-2-9
 
 ANGULAR_VERSION := $(shell buildtools/get-version angular)
 

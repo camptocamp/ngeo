@@ -8,4 +8,5 @@
 | 2.4     | Best effort     |
 | 2.5     | Unsupported     |
 | 2.6     | Best effort     |
-| 2.7     | To be defined   |
+| 2.7     | 23/06/2025      |
+| 2.8     | To be defined   |
