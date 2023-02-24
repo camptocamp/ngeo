@@ -43,7 +43,7 @@ export GIT_REMOTE_NAME
 # i18n
 L10N_LANGUAGES = fr de it
 L10N_PO_FILES = \
-	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/ngeo.po, $(L10N_LANGUAGES))) \
+	.build/locale/fr/LC_MESSAGES/ngeo.po \
 	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/demo.po, $(L10N_LANGUAGES)))
 LANGUAGES = en $(L10N_LANGUAGES)
 ANGULAR_LOCALES_FILES = $(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
@@ -251,8 +251,8 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/examples-hosted-gmf-apps-deps.timestamp: \
-		$(addprefix locales/, $(addsuffix /app.json, $(LANGUAGES))) \
-		$(addprefix contribs/gmf/build/gmf-, $(addsuffix .json, $(LANGUAGES))) \
+		locales/fr/app.json \
+		contribs/gmf/build/gmf-fr.json \
 		$(addprefix contribs/gmf/build/angular-locale_, $(addsuffix .js, $(LANGUAGES)))
 	mkdir -p .build/examples-hosted/contribs/gmf/apps/desktop
 	cp ./contribs/gmf/apps/desktop/header.html .build/examples-hosted/contribs/gmf/apps/desktop
@@ -381,8 +381,8 @@ locales/en/app.json:
 .PHONY: transifex-get
 transifex-get: $(L10N_PO_FILES) \
 	.build/locale/ngeo.pot \
-	$(addprefix locales/, $(addsuffix /app.json, $(LANGUAGES))) \
-	$(addprefix .build/locale/,$(addsuffix /LC_MESSAGES/apps.po, $(L10N_LANGUAGES)))
+	locales/fr/app.json \
+	.build/locale/fr/LC_MESSAGES/apps.po
 
 .PHONY: transifex-send
 transifex-send: \
@@ -408,23 +408,23 @@ transifex-init: .build/applications.timestamp \
 	cd contribs/gmf/apps/; tx push --branch=$(MAJOR_VERSION) --source --force
 	cd contribs/gmf/apps/; tx push --branch=$(MAJOR_VERSION) --translation --force
 
-.build/locale/%/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
-	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.ngeo --languages=$* --force --mode=reviewed
+.build/locale/fr/LC_MESSAGES/ngeo.po: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
+	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.ngeo --force --mode=reviewed
 	$(TOUCHBACK_TXRC)
 
 .build/locale/en/LC_MESSAGES/ngeo.po: .build/locale/ngeo.pot
 	mkdir -p $(dir $@)
 	msginit -i $< -o $@
 
-locales/%/app.json: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
+locales/fr/app.json: .tx/config $(HOME)/.transifexrc .build/applications.timestamp
 	mkdir -p $(dir $@)
-	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.webcomponent --languages=$* --force --mode=reviewed
+	tx pull --translations --branch=$(MAJOR_VERSION) --resources=ngeo.webcomponent --force --mode=reviewed
 	touch $@
 	$(TOUCHBACK_TXRC)
 
-.PRECIOUS: .build/locale/%/LC_MESSAGES/apps.po
-.build/locale/%/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/applications.timestamp
-	(cd contribs/gmf/apps/; tx pull --translations --branch=$(MAJOR_VERSION) --languages=$* --force --mode=reviewed)
+.PRECIOUS: .build/locale/fr/LC_MESSAGES/apps.po
+.build/locale/fr/LC_MESSAGES/apps.po: contribs/gmf/apps/.tx/config $(HOME)/.transifexrc .build/applications.timestamp
+	(cd contribs/gmf/apps/; tx pull --translations --branch=$(MAJOR_VERSION) --force --mode=reviewed)
 	$(TOUCHBACK_TXRC)
 
 .PRECIOUS: .build/locale/%/LC_MESSAGES/demo.po
