@@ -180,7 +180,7 @@ function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
  *
  * Used metadata:
  *
- *  - hiDPILegendImages: The URLs to the hi DPI images used as a legend in the layer tree. For WMS and
+ *  - hiDPILegendImages: The URLs to the hi DPI images used as a legend in the print. For WMS and
  *      WMTS layers.
  *  - printNativeAngle: Whether the print should rotate the symbols. For layer groups (only).
  *
