@@ -192,7 +192,7 @@
     "sass-loader": "10.4.1",
     "simple-html-tokenizer": "0.5.11",
     "sinon": "15.0.1",
-    "start-server-and-test": "1.15.3",
+    "start-server-and-test": "2.0.0",
     "strip-bom": "5.0.0",
     "style-loader": "2.0.0",
     "svg-inline-loader": "0.8.2",
