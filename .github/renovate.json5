@@ -43,6 +43,10 @@
       groupName: 'all minor versions',
       automerge: true,
     },
+    {
+      matchUpdateTypes: ['major'],
+      enabled: false,
+    },
     /** Accept only the patch on the stabilization branches */
     {
       matchBaseBranches: ['/2\\..*/'],
