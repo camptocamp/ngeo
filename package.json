@@ -142,7 +142,7 @@
     "file-saver": "2.0.5",
     "floatthead": "2.2.4",
     "fs-extra": "11.1.0",
-    "glob": "8.1.0",
+    "glob": "9.2.1",
     "html-webpack-plugin": "4.5.2",
     "i18next": "22.4.9",
     "i18next-browser-languagedetector": "7.0.1",
