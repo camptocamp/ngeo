@@ -87,8 +87,6 @@ jobs:
           retention-days: 5
         if: failure()
 
-      - run: make transifex-send
-        if: github.repository == 'camptocamp/ngeo' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: buildtools/publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
