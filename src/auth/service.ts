@@ -32,6 +32,17 @@ type AuthenticationDefaultResponse = {
   success: boolean;
 };
 
+let userTransformer = (user: User) => user;
+
+/**
+ * Method defined in the aim to be overridden.
+ *
+ * @param fn The callback function to apply after login.
+ */
+export function setOnSuccessfulLoginFunction(fn: typeof userTransformer): void {
+  userTransformer = fn;
+}
+
 export enum RouteSuffix {
   CHANGE_PASSWORD = 'loginchangepassword',
   IS_LOGGED_IN = 'loginuser',
@@ -231,7 +242,7 @@ export class AuthenticationService {
     return fetch(url, options)
       .then((resp) => resp.json())
       .then((data: User) => this.checkUser_(data))
-      .then((data: User) => this.onSuccessfulLogin(data))
+      .then((data: User) => userTransformer(data))
       .then(
         (data) => this.handleLogin_(false, data),
         () => {
@@ -252,16 +263,6 @@ export class AuthenticationService {
     }
     const emptyUserProperties = user.getEmptyUserProperties();
     data = {...emptyUserProperties, ...data};
-    return data;
-  }
-
-  /**
-   * Method defined in the aim to be replaced.
-   *
-   * @param data Ajax response.
-   * @returns Response.
-   */
-  onSuccessfulLogin(data: User): User {
     return data;
   }
 
