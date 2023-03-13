@@ -316,6 +316,20 @@ export function AbstractAppController($scope, $injector, mobile) {
    */
   this.loginRedirectUrl = null;
 
+  /**
+   * Listeners passed to searchDirective.
+   *
+   * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>}
+   */
+  this.searchListeners = {
+    select: function (event, feature, dataset) {
+      const params = feature.get('params') || {};
+      for (const key in params) {
+        this.dimensions[key] = params[key].toString();
+      }
+    }.bind(this),
+  };
+
   $scope.$on('authenticationrequired', (event, args) => {
     this.loginRedirectUrl = args.url;
     this.loginActive = true;

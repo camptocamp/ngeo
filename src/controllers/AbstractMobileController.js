@@ -109,17 +109,14 @@ export class AbstractMobileController extends AbstractAppController {
     const measureLengthActivate = new ngeoMiscToolActivate(this, 'measureLengthActive');
     ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
-    /**
-     * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<never>}
-     */
-    this.searchListeners = {
+    Object.assign(this.searchListeners, {
       open: () => {
         this.searchOverlayVisible = true;
       },
       close: () => {
         this.searchOverlayVisible = false;
       },
-    };
+    });
 
     this.manageResize = true;
     this.resizeTransition = 500;
