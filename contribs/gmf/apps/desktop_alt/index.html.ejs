@@ -276,7 +276,7 @@
         </button>
       </span>
 
-      <gmf-search slot="map" gmf-search-map="::mainCtrl.map"></gmf-search>
+      <gmf-search slot="map" gmf-search-map="::mainCtrl.map" gmf-search-listeners="::mainCtrl.searchListeners"></gmf-search>
       <ngeo-mapswipe
         slot="map"
         ng-if="mainCtrl.gmfLayerBeingSwipe.layer != null"
