@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -258,6 +258,20 @@ export function AbstractAppController($scope, $injector, mobile) {
    * @type {?string}
    */
   this.loginInfoMessage = null;
+
+  /**
+   * Listeners passed to searchDirective.
+   *
+   * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<olFeature<import('ol/geom/Geometry').default>>}
+   */
+  this.searchListeners = {
+    select: function (event, feature, dataset) {
+      const params = feature.get('params') || {};
+      for (const key in params) {
+        this.dimensions[key] = params[key].toString();
+      }
+    }.bind(this),
+  };
 
   $scope.$on('authenticationrequired', (event, args) => {
     this.loginInfoMessage = loginMessageRequired;
