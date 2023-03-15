@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -108,17 +108,14 @@ export class AbstractMobileController extends AbstractAppController {
     const measureLengthActivate = new ngeoMiscToolActivate(this, 'measureLengthActive');
     ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
 
-    /**
-     * @type {import('ngeo/search/searchDirective').SearchDirectiveListeners<never>}
-     */
-    this.searchListeners = {
+    Object.assign(this.searchListeners, {
       open: () => {
         this.searchOverlayVisible = true;
       },
       close: () => {
         this.searchOverlayVisible = false;
       },
-    };
+    });
 
     this.manageResize = true;
     this.resizeTransition = 500;
