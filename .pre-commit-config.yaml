@@ -4,6 +4,7 @@ ci:
   autoupdate_schedule: quarterly
   skip:
     - copyright
+    - ripsecrets
 
 exclude: ^src/bootstrap-custom\.css\.map$
 
@@ -59,6 +60,15 @@ repos:
       - id: check-renovate
         additional_dependencies:
           - pyjson5==1.6.2 # pypi
+      - id: check-github-actions
+      - id: check-jsonschema
+        name: Check GitHub Workflows set timeout-minutes
+        files: ^\.github/workflows/[^/]+$
+        types:
+          - yaml
+        args:
+          - --builtin-schema
+          - github-workflows-require-timeout
   - repo: https://github.com/sirwart/ripsecrets
     rev: v0.1.5
     hooks:
@@ -82,14 +92,19 @@ repos:
       - id: pyupgrade
         args:
           - --py38-plus
-  # - repo: https://github.com/pre-commit/mirrors-eslint
-  #   rev: v8.31.0
-  #   hooks:
-  #     - id: eslint
-  #       additional_dependencies:
-  #         - '@typescript-eslint/eslint-plugin@5.48.0'
-  #         - '@typescript-eslint/parser@5.48.0'
-  #         - eslint@8.31.0
-  #         - eslint-plugin-jsdoc@39.6.4
-  #         - eslint-plugin-lit@1.7.2
-  #         - eslint-plugin-wc@1.4.0
+    # - repo: https://github.com/pre-commit/mirrors-eslint
+    #   rev: v8.31.0
+    #   hooks:
+    #     - id: eslint
+    #       additional_dependencies:
+    #         - '@typescript-eslint/eslint-plugin@5.48.0'
+    #         - '@typescript-eslint/parser@5.48.0'
+    #         - eslint@8.31.0
+    #         - eslint-plugin-jsdoc@39.6.4
+    #         - eslint-plugin-lit@1.7.2
+    #         - eslint-plugin-wc@1.4.0
+  - repo: https://github.com/sbrunner/hooks
+    rev: 0.3.2
+    hooks:
+      - id: copyright
+      - id: workflows-require-timeout
