@@ -561,7 +561,7 @@ export class ThemesService extends olEventsEventTarget {
         (response) => {
           if (response.data.errors.length != 0) {
             const message = `The themes contain some errors:\n${response.data.errors.join('\n')}`;
-            console.error(message);
+            console.warn(message);
             if (this.ngeoLocation_ !== null && this.ngeoLocation_.hasParam('debug')) {
               window.alert(message);
             }
