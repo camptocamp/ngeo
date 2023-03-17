@@ -4,6 +4,7 @@ ci:
   autoupdate_schedule: quarterly
   skip:
     - copyright
+    - ripsecrets
 
 exclude: ^src/bootstrap-custom\.css\.map$
 
