@@ -338,6 +338,11 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
     serverType = params.SERVERTYPE;
   }
 
+  // Add empty styles if needed
+  if (!params.STYLES) {
+    params.STYLES = '';
+  }
+
   // Get the same amount of styles than layers to print
   while (params.LAYERS.split(',').length > params.STYLES.split(',').length) {
     params.STYLES += ',';
