@@ -15,7 +15,6 @@ import {select as d3select} from 'd3';
  * @property {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes} [selectedOption]
  */
 
-
 /**
  * The object containing all points in profile
  * @typedef {Object} LidarprofileClientConfig
@@ -25,7 +24,6 @@ import {select as d3select} from 'd3';
  * @property {number} [pointSum]
  * @property {number} [tolerance]
  */
-
 
 /**
  * The object containing all points in profile
@@ -37,7 +35,6 @@ import {select as d3select} from 'd3';
  * @property {Array.<number>} [classification]
  * @property {Array.<Array<number>>} [coords]
  */
-
 
 /**
  * Profile point after measure or after parsing of the binary array returned by Pytree
@@ -52,7 +49,6 @@ import {select as d3select} from 'd3';
  * @property {number} [classification]
  * @property {boolean} [set]
  */
-
 
 /**
  * @hidden
@@ -74,7 +70,6 @@ export default class {
    * }} Object with clipped lined coordinates and left domain value
    */
   clipLineByMeasure(config, map_resolution, linestring, dLeft, dRight) {
-
     const clippedLine = new olGeomLineString([]);
     let mileage_start = 0;
     let mileage_end = 0;
@@ -110,19 +105,18 @@ export default class {
       }
 
       mileage_start += segLine.getLength();
-
     });
 
     const feat = new olFeature({
-      geometry: clippedLine
+      geometry: clippedLine,
     });
 
     const lineStyle = new olStyleStyle({
       stroke: new olStyleStroke({
         color: 'rgba(255,0,0,1)',
         width: 2,
-        lineCap: 'square'
-      })
+        lineCap: 'square',
+      }),
     });
 
     let firstSegmentAngle = 0;
@@ -145,8 +139,6 @@ export default class {
         lastSegementAngle = Math.atan2(dx, dy);
       }
       segCounter += 1;
-
-
     });
 
     const styles = [lineStyle];
@@ -158,35 +150,35 @@ export default class {
         geometry: new olGeomPoint(lineStart),
         image: new olStyleRegularShape({
           fill: new olStyleFill({
-            color: 'rgba(255, 0, 0, 1)'
+            color: 'rgba(255, 0, 0, 1)',
           }),
           stroke: new olStyleStroke({
             color: 'rgba(255,0,0,1)',
             width: 1,
-            lineCap: 'square'
+            lineCap: 'square',
           }),
           points: 3,
           radius: 5,
           rotation: firstSegmentAngle,
-          angle: Math.PI / 3
-        })
+          angle: Math.PI / 3,
+        }),
       }),
       new olStyleStyle({
         geometry: new olGeomPoint(lineEnd),
         image: new olStyleRegularShape({
           fill: new olStyleFill({
-            color: 'rgba(255, 0, 0, 1)'
+            color: 'rgba(255, 0, 0, 1)',
           }),
           stroke: new olStyleStroke({
             color: 'rgba(255,0,0,1)',
             width: 1,
-            lineCap: 'square'
+            lineCap: 'square',
           }),
           points: 3,
           radius: 5,
           rotation: lastSegementAngle,
-          angle: 4 * Math.PI / 3
-        })
+          angle: (4 * Math.PI) / 3,
+        }),
       })
     );
 
@@ -194,11 +186,9 @@ export default class {
       clippedLine: clippedLine.getCoordinates(),
       distanceOffset: dLeft,
       bufferGeom: feat,
-      bufferStyle: styles
+      bufferStyle: styles,
     };
-
   }
-
 
   /**
    * Get a Level Of Details and with for a given chart span
@@ -220,10 +210,9 @@ export default class {
     }
     return {
       maxLOD,
-      width
+      width,
     };
   }
-
 
   /**
    * Create a image file by combining SVG and canvas elements and let the user downloads it.
@@ -247,8 +236,13 @@ export default class {
     // Draw the profile canvas (the points) into the new canvas.
     const profileCanvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
     const profileCanvasEl = /** @type {HTMLCanvasElement} */ (profileCanvas.node());
-    ctx.drawImage(profileCanvasEl, margin.left, margin.top,
-      w - (margin.left + margin.right), h - (margin.top + margin.bottom));
+    ctx.drawImage(
+      profileCanvasEl,
+      margin.left,
+      margin.top,
+      w - (margin.left + margin.right),
+      h - (margin.top + margin.bottom)
+    );
 
     // Add transforms the profile into an image.
     const exportImage = new Image();
@@ -274,7 +268,6 @@ export default class {
     body.appendChild(exportImage);
   }
 
-
   /**
    * Transforms a lidarprofile into multiple single points sorted by distance.
    * @param {LidarprofilePoints} profilePoints in the profile
@@ -289,14 +282,13 @@ export default class {
         color_packed: profilePoints.color_packed[i],
         intensity: profilePoints.intensity[i],
         classification: profilePoints.classification[i],
-        coords: profilePoints.coords[i]
+        coords: profilePoints.coords[i],
       };
       points.push(p);
     }
-    points.sort((a, b) => (a.distance - b.distance));
+    points.sort((a, b) => a.distance - b.distance);
     return points;
   }
-
 
   /**
    * Get the data for a CSV export of the profile.
@@ -320,7 +312,6 @@ export default class {
     });
   }
 
-
   /**
    * Find the maximum value in am array of numbers
    * @param {(Array.<number>|undefined)} array of number
@@ -329,7 +320,6 @@ export default class {
   arrayMax(array) {
     return array.reduce((a, b) => Math.max(a, b));
   }
-
 
   /**
    * Find the minimum value in am array of numbers
@@ -346,7 +336,6 @@ export default class {
     return minVal;
   }
 
-
   /**
    * Transform Openlayers linestring into a cPotree compatible definition
    * @param {import("ol/geom/LineString.js").default} line the profile 2D line
@@ -362,7 +351,6 @@ export default class {
     }
     return pytreeLineString.substr(0, pytreeLineString.length - 1);
   }
-
 
   /**
    * Find the profile's closest point in profile data to the chart mouse position
@@ -383,26 +371,26 @@ export default class {
     const hP = [];
 
     for (let i = 0; i < d.distance.length; i++) {
-
-      if (sx(d.distance[i]) < xs + tol && sx(d.distance[i]) > xs - tol && sy(d.altitude[i]) <
-        ys + tol && sy(d.altitude[i]) > ys - tol
+      if (
+        sx(d.distance[i]) < xs + tol &&
+        sx(d.distance[i]) > xs - tol &&
+        sy(d.altitude[i]) < ys + tol &&
+        sy(d.altitude[i]) > ys - tol
       ) {
         const pDistance = Math.sqrt(
-          Math.pow((sx(d.distance[i]) - xs), 2) + Math.pow((sy(d.altitude[i]) - ys), 2)
+          Math.pow(sx(d.distance[i]) - xs, 2) + Math.pow(sy(d.altitude[i]) - ys, 2)
         );
         const cClassif = classification_colors[d.classification[i]];
         if (cClassif && cClassif.visible == 1) {
-
           hP.push({
             distance: d.distance[i],
             altitude: d.altitude[i],
             classification: d.classification[i],
             color_packed: d.color_packed[i],
             intensity: d.intensity[i],
-            coords: d.coords[i]
+            coords: d.coords[i],
           });
           distances.push(pDistance);
-
         }
       }
     }

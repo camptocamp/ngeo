@@ -9,20 +9,16 @@ import {WfsPermalinkService} from 'ngeo/statemanager/WfsPermalink.js';
 import ngeoTestDataMsGMLOutputFuel from '../data/msGMLOutputFuel.js';
 
 describe('ngeo.statemanager.WfsPermalink', () => {
-
   let ngeoWfsPermalink;
   let ngeoQueryResult;
 
   beforeEach(() => {
     angular.mock.module('ngeo', ($provide) => {
-      $provide.value(
-        'ngeoPermalinkOgcserverUrl',
-        'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy'
-      );
+      $provide.value('ngeoPermalinkOgcserverUrl', 'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy');
       $provide.value('ngeoWfsPermalinkOptions', {
         wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
         defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
-        defaultFeaturePrefix: 'ms'
+        defaultFeaturePrefix: 'ms',
       });
     });
 
@@ -37,7 +33,6 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   });
 
   describe('#issue', () => {
-
     let $httpBackend;
     let map;
 
@@ -57,8 +52,8 @@ describe('ngeo.statemanager.WfsPermalink', () => {
           projection: projection,
           resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
           center: [537635, 152640],
-          zoom: 0
-        })
+          zoom: 0,
+        }),
       });
     });
 
@@ -73,11 +68,9 @@ describe('ngeo.statemanager.WfsPermalink', () => {
         'showFeatures': true,
         'filterGroups': [
           {
-            'filters': [
-              {'property': 'osm_id', 'condition': '1420918679'}
-            ]
-          }
-        ]
+            'filters': [{'property': 'osm_id', 'condition': '1420918679'}],
+          },
+        ],
       };
 
       ngeoWfsPermalink.issue(queryData, map);
@@ -89,7 +82,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
   });
 
   describe('#createFilters_', () => {
-    const expectFiltersToEqual = function(filter1, filter2) {
+    const expectFiltersToEqual = function (filter1, filter2) {
       expect(filter1.constructor).toBe(filter2.constructor, 'same filter type');
       if (filter1 instanceof olFormatFilterLogicalNary) {
         expectFiltersToEqual(filter1.conditions.length, filter2.conditions.length);
@@ -110,47 +103,30 @@ describe('ngeo.statemanager.WfsPermalink', () => {
           {
             'filters': [
               {'property': 'osm_id', 'condition': '12345'},
-              {'property': 'type', 'condition': ['diesel', 'gas']}
-            ]
+              {'property': 'type', 'condition': ['diesel', 'gas']},
+            ],
           },
           {
-            'filters': [
-              {'property': 'payment', 'condition': ['card', 'cash']}
-            ]
+            'filters': [{'property': 'payment', 'condition': ['card', 'cash']}],
           },
           {
-            'filters': [
-              {'property': 'open_7_24', 'condition': '1'}
-            ]
-          }
-        ]
+            'filters': [{'property': 'open_7_24', 'condition': '1'}],
+          },
+        ],
       };
       const f = olFormatFilter;
       const expectedFilters = f.or(
         f.or(
-          f.and(
-            f.equalTo('osm_id', '12345'),
-            f.or(
-              f.equalTo('type', 'diesel'),
-              f.equalTo('type', 'gas')
-            )
-          ),
-          f.or(
-            f.equalTo('payment', 'card'),
-            f.equalTo('payment', 'cash')
-          )
+          f.and(f.equalTo('osm_id', '12345'), f.or(f.equalTo('type', 'diesel'), f.equalTo('type', 'gas'))),
+          f.or(f.equalTo('payment', 'card'), f.equalTo('payment', 'cash'))
         ),
         f.equalTo('open_7_24', '1')
       );
-      expectFiltersToEqual(
-        ngeoWfsPermalink.createFilters_(queryData['filterGroups']),
-        expectedFilters
-      );
+      expectFiltersToEqual(ngeoWfsPermalink.createFilters_(queryData['filterGroups']), expectedFilters);
     });
 
     it('handles 0 filter groups', () => {
       expect(ngeoWfsPermalink.createFilters_([])).toBe(null);
     });
   });
-
 });

@@ -1,12 +1,10 @@
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoBtnComponent', []);
-
 
 /**
  * Provides two directives: ngeo-btn-group and ngeo-btn.
@@ -57,19 +55,17 @@ function buttonGroupComponent($parse) {
       if (setActive) {
         scope.$watch(
           // return true if at least one button is active otherwise false
-          () => controller.buttons_.some(buttonModel => buttonModel(scope) === true),
+          () => controller.buttons_.some((buttonModel) => buttonModel(scope) === true),
           (newValue) => {
             setActive(scope, newValue);
           }
         );
       }
-    }
+    },
   };
 }
 
-
 module.directive('ngeoBtnGroup', buttonGroupComponent);
-
 
 /**
  * @param {!angular.IScope} $scope Scope.
@@ -94,11 +90,10 @@ function BtnGroupController($scope) {
   this.scope_ = $scope;
 }
 
-
 /**
  * @param {number} index Index of the button in buttons array.
  */
-BtnGroupController.prototype.activate = function(index) {
+BtnGroupController.prototype.activate = function (index) {
   this.buttons_.forEach((expressionFn, i) => {
     if (i != index) {
       expressionFn.assign(this.scope_, false);
@@ -106,20 +101,16 @@ BtnGroupController.prototype.activate = function(index) {
   });
 };
 
-
 /**
  * @param {angular.ICompiledExpression} expressionFn Expression function.
  * @return {number} Index of the pushed setter.
  */
-BtnGroupController.prototype.addButton = function(expressionFn) {
+BtnGroupController.prototype.addButton = function (expressionFn) {
   this.buttons_.push(expressionFn);
   return this.buttons_.length - 1;
 };
 
-
-module.controller('ngeoBtnGroupController',
-  BtnGroupController);
-
+module.controller('ngeoBtnGroupController', BtnGroupController);
 
 /**
  * The ngeo-btn allows creating toggle buttons working with ng-model. It is
@@ -174,18 +165,16 @@ function buttonComponent($parse) {
       });
 
       // model -> UI
-      ngModelCtrl.$render = function() {
+      ngModelCtrl.$render = function () {
         if (ngModelCtrl.$viewValue && buttonsCtrl !== null) {
           buttonsCtrl.activate(indexInGroup);
         }
         element.toggleClass('active', ngModelCtrl.$viewValue);
       };
-    }
+    },
   };
 }
 
-
 module.directive('ngeoBtn', buttonComponent);
-
 
 export default module;

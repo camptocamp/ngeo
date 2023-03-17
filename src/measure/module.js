@@ -11,5 +11,5 @@ import ngeoMeasureLength from 'ngeo/measure/length.js';
 export default angular.module('ngeoMeasureModule', [
   ngeoMeasureArea.name,
   ngeoMeasureAzimut.name,
-  ngeoMeasureLength.name
+  ngeoMeasureLength.name,
 ]);

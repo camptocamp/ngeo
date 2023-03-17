@@ -6,7 +6,6 @@ import restorer from 'ngeo/offline/Restorer.js';
 import mode from 'ngeo/offline/Mode.js';
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  */
@@ -16,10 +15,9 @@ const exports = angular.module('ngeoOfflineModule', [
   ngeoOfflineServiceManager.module.name,
   downloader.module.name,
   restorer.module.name,
-  mode.module.name
+  mode.module.name,
 ]);
 
 exports.value('ngeoOfflineGutter', 96);
-
 
 export default exports;

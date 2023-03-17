@@ -30,5 +30,5 @@ export const Permalink3dParam = {
   /**
    * @type {string}
    */
-  PREFIX: '3d_'
+  PREFIX: '3d_',
 };

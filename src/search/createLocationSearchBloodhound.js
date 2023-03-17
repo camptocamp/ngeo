@@ -10,7 +10,6 @@ import olFeature from 'ol/Feature.js';
 
 import 'corejs-typeahead';
 
-
 /**
  * @typedef {Object} LocationSearchOptions
  * @property {number} [limit=50] The maximum number of results to retrieve per request.
@@ -25,7 +24,6 @@ import 'corejs-typeahead';
  * @property {function(string, JQueryAjaxSettings): JQueryAjaxSettings} [prepare] Optional function to
  * prepare the request.
  */
-
 
 /**
  * @param {LocationSearchOptions=} opt_options Options.
@@ -48,18 +46,13 @@ function createLocationSearchBloodhound(opt_options) {
     const regex = /BOX\((.*?) (.*?),(.*?) (.*?)\)/g;
     const match = regex.exec(bbox);
     if (match !== null) {
-      return [
-        parseFloat(match[1]),
-        parseFloat(match[2]),
-        parseFloat(match[3]),
-        parseFloat(match[4])
-      ];
+      return [parseFloat(match[1]), parseFloat(match[2]), parseFloat(match[3]), parseFloat(match[4])];
     } else {
       return null;
     }
   };
 
-  const removeHtmlTags = label => label.replace(/<\/?[ib]>/g, '');
+  const removeHtmlTags = (label) => label.replace(/<\/?[ib]>/g, '');
 
   const extractName = (label) => {
     const regex = /<b>(.*?)<\/b>/g;
@@ -83,8 +76,7 @@ function createLocationSearchBloodhound(opt_options) {
           settings.url += `&origins=${options.origins}`;
         }
 
-        return (options.prepare !== undefined) ?
-          options.prepare(query, settings) : settings;
+        return options.prepare !== undefined ? options.prepare(query, settings) : settings;
       },
       transform: (parsedResponse) => {
         const features = parsedResponse.results.map((result) => {
@@ -115,24 +107,27 @@ function createLocationSearchBloodhound(opt_options) {
         });
 
         return features;
-      }
+      },
     },
     // datumTokenizer is required by the Bloodhound constructor but it
     // is not used when only a remote is passsed to Bloodhound.
     datumTokenizer: (datum) => {
       return [];
     },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
   });
 
   // The options objects are cloned to avoid updating the passed object
   /** @type {Bloodhound.BloodhoundOptions} */
-  const bhOptions = Object.assign({}, options.options || {
-    datumTokenizer: (datum) => {
-      return [];
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
-  });
+  const bhOptions = Object.assign(
+    {},
+    options.options || {
+      datumTokenizer: (datum) => {
+        return [];
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+    }
+  );
   const remoteOptions = Object.assign({}, options.remoteOptions || {});
 
   if (bhOptions.remote) {
@@ -147,7 +142,6 @@ function createLocationSearchBloodhound(opt_options) {
   return new Bloodhound(bloodhoundOptions);
 }
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -155,7 +149,6 @@ function createLocationSearchBloodhound(opt_options) {
 const module = angular.module('ngeoCreateLocationSearchBloodhound', []);
 
 module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhound);
-
 
 /**
  * Provides a function that creates a Bloodhound engine
@@ -178,6 +171,5 @@ module.value('ngeoCreateLocationSearchBloodhound', createLocationSearchBloodhoun
  * @private
  */
 export function createLocationSearchBloodhoundFunction() {}
-
 
 export default module;

@@ -2,7 +2,6 @@ import angular from 'angular';
 import 'jquery-ui/ui/widgets/draggable.js';
 import 'bootstrap/js/src/modal.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -55,19 +54,18 @@ const messageModalComponent = {
     </div>
   </div>`,
   require: {
-    'ngModel': 'ngModel'
+    'ngModel': 'ngModel',
   },
   transclude: true,
   controller: 'ngeoModalController',
   bindings: {
     'draggableHandle': '=?ngeodraggableHandle',
     'resizable': '<ngeoModalResizable',
-    'closable': '<ngeoModalClosable'
-  }
+    'closable': '<ngeoModalClosable',
+  },
 };
 
 module.component('ngeoModal', messageModalComponent);
-
 
 /**
  * @private
@@ -135,10 +133,9 @@ class Controller {
       this.modal_.attr('data-backdrop', 'static');
     }
 
-
     const dialog = this.modal_.find('.modal-dialog');
     dialog.draggable({
-      handle: this.draggableHandle
+      handle: this.draggableHandle,
     });
     if (this.resizable) {
       dialog.resizable();
@@ -168,6 +165,5 @@ class Controller {
 }
 
 module.controller('ngeoModalController', Controller);
-
 
 export default module;

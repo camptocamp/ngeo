@@ -15,13 +15,11 @@ import olFeature from 'ol/Feature.js';
 import olGeomLineString from 'ol/geom/LineString.js';
 import 'ngeo/sass/font.scss';
 
-
 /**
  * @typedef {Object} RoutingVia
  * @property {?import("ol/Feature.js").default} feature
  * @property {function(import('ngeo/routing/NominatimService').NominatimSearchResult)} onSelect
  */
-
 
 /**
  * @type {!angular.IModule}
@@ -32,28 +30,27 @@ const module = angular.module('ngeoRoutingComponent', [
   ngeoMiscFilters.name,
   ngeoRoutingNominatimService.name,
   ngeoRoutingRoutingService.name,
-  ngeoRoutingRoutingFeatureComponent.name
+  ngeoRoutingRoutingFeatureComponent.name,
 ]);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/routing/routing', require('./routing.html'));
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/routing/routing', require('./routing.html'));
-});
-
-
-module.value('ngeoRoutingTemplateUrl',
+module.value(
+  'ngeoRoutingTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoRoutingTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/routing/routing';
+    return templateUrl !== undefined ? templateUrl : 'ngeo/routing/routing';
   }
 );
-
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -66,7 +63,6 @@ module.value('ngeoRoutingTemplateUrl',
 function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
   return ngeoRoutingTemplateUrl($attrs);
 }
-
 
 /**
  * The controller for the routing directive.
@@ -86,7 +82,6 @@ function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
  * @ngname NgeoRoutingController
  */
 function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce) {
-
   /**
    * @type {angular.IScope}
    * @private
@@ -128,10 +123,7 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
    */
   this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
 
-  $scope.$watch(
-    () => this.selectedRoutingProfile,
-    this.calculateRoute.bind(this)
-  );
+  $scope.$watch(() => this.selectedRoutingProfile, this.calculateRoute.bind(this));
 
   /**
    * @type {angular.IQService}
@@ -173,7 +165,7 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
     'destination.fill': '#FF3E13',
     'destination.stroke': '#CD3412',
     'via.fill': '#767676',
-    'via.stroke': '#000000'
+    'via.stroke': '#000000',
   };
 
   /**
@@ -181,7 +173,7 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
    * @private
    */
   this.routeSource_ = new olSourceVector({
-    features: []
+    features: [],
   });
 
   /**
@@ -192,13 +184,13 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
     source: this.routeSource_,
     style: new olStyleStyle({
       fill: new olStyleFill({
-        color: 'rgba(16, 112, 29, 0.6)'
+        color: 'rgba(16, 112, 29, 0.6)',
       }),
       stroke: new olStyleStroke({
         color: 'rgba(16, 112, 29, 0.6)',
-        width: 5
-      })
-    })
+        width: 5,
+      }),
+    }),
   });
 
   /**
@@ -238,14 +230,14 @@ function Controller($injector, $scope, ngeoRoutingService, ngeoNominatimService,
 /**
  * Init the controller
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.map.addLayer(this.routeLayer_);
 };
 
 /**
  * Clears start, end and vias. Removes features from map.
  */
-Controller.prototype.clearRoute = function() {
+Controller.prototype.clearRoute = function () {
   this.startFeature_ = null;
   this.targetFeature_ = null;
   this.viaArray = [];
@@ -261,7 +253,7 @@ Controller.prototype.clearRoute = function() {
  * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
  * @private
  */
-Controller.prototype.getLonLatFromPoint_ = function(point) {
+Controller.prototype.getLonLatFromPoint_ = function (point) {
   const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
@@ -271,7 +263,7 @@ Controller.prototype.getLonLatFromPoint_ = function(point) {
 /**
  * Flip start and target and re-calculate route.
  */
-Controller.prototype.reverseRoute = function() {
+Controller.prototype.reverseRoute = function () {
   // swap start and target
   const tmpFeature = this.startFeature_;
   this.startFeature_ = this.targetFeature_;
@@ -288,22 +280,27 @@ Controller.prototype.reverseRoute = function() {
  * @returns {Array<import("ol/Feature.js").default>} parsed route features
  * @private
  */
-Controller.prototype.parseRoute_ = function(route) {
+Controller.prototype.parseRoute_ = function (route) {
   let parsedRoutes = [];
   const format = new olFormatGeoJSON();
   const formatConfig = {
     dataProjection: 'EPSG:4326',
-    featureProjection: this.map.getView().getProjection()
+    featureProjection: this.map.getView().getProjection(),
   };
   // if there are is useful "legs" data, parse this
   if (route.legs) {
-    parsedRoutes = route.legs.map(leg => leg.steps.map(step => new olFeature({
-      geometry: format.readGeometry(step.geometry, formatConfig)
-    })));
+    parsedRoutes = route.legs.map((leg) =>
+      leg.steps.map(
+        (step) =>
+          new olFeature({
+            geometry: format.readGeometry(step.geometry, formatConfig),
+          })
+      )
+    );
     // flatten
     parsedRoutes = [].concat(...parsedRoutes);
   } else if (route.geometry) {
-  // otherwise parse (overview) geometry
+    // otherwise parse (overview) geometry
     parsedRoutes.push(new olFeature({geometry: format.readGeometry(route.geometry, formatConfig)}));
   }
   return parsedRoutes;
@@ -311,19 +308,19 @@ Controller.prototype.parseRoute_ = function(route) {
 
 /**
  */
-Controller.prototype.calculateRoute = function() {
+Controller.prototype.calculateRoute = function () {
   if (this.startFeature_ && this.targetFeature_) {
     // remove rendered routes
     this.routeSource_.clear();
 
     const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
     const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
-    const vias = this.viaArray.filter(via => via.feature !== null).map(
-      via => this.getLonLatFromPoint_(via.feature)
-    );
+    const vias = this.viaArray
+      .filter((via) => via.feature !== null)
+      .map((via) => this.getLonLatFromPoint_(via.feature));
     const route = [coordFrom].concat(vias, [coordTo]);
 
-    const onSuccess_ = (function(resp) {
+    const onSuccess_ = function (resp) {
       const features = this.parseRoute_(resp.data.routes[0]);
       if (features.length === 0) {
         console.log('No route or not supported format.');
@@ -338,33 +335,37 @@ Controller.prototype.calculateRoute = function() {
       this.routeDuration = resp.data.routes[0].duration;
 
       // get first and last coordinate of route
-      const startRoute = /** @type{import("ol/geom/LineString.js").default} */(
+      const startRoute = /** @type{import("ol/geom/LineString.js").default} */ (
         features[0].getGeometry()
       ).getCoordinateAt(0);
-      const endRoute = /** @type{import("ol/geom/LineString.js").default} */(
+      const endRoute = /** @type{import("ol/geom/LineString.js").default} */ (
         features[features.length - 1].getGeometry()
       ).getCoordinateAt(1);
 
       // build geometries to connect route to start and end point of query
-      const startToRoute = [/** @type {import("ol/geom/Point.js").default} */(
-        this.startFeature_.getGeometry()
-      ).getCoordinates(), startRoute];
-      const routeToEnd = [endRoute, /** @type {import("ol/geom/Point.js").default} */(
-        this.targetFeature_.getGeometry()
-      ).getCoordinates()];
+      const startToRoute = [
+        /** @type {import("ol/geom/Point.js").default} */ (this.startFeature_.getGeometry()).getCoordinates(),
+        startRoute,
+      ];
+      const routeToEnd = [
+        endRoute,
+        /** @type {import("ol/geom/Point.js").default} */ (
+          this.targetFeature_.getGeometry()
+        ).getCoordinates(),
+      ];
       const routeConnections = [
         new olFeature(new olGeomLineString(startToRoute)),
-        new olFeature(new olGeomLineString(routeToEnd))
+        new olFeature(new olGeomLineString(routeToEnd)),
       ];
 
       // add them to the source
       this.routeSource_.addFeatures(routeConnections);
-    }).bind(this);
+    }.bind(this);
 
-    const onError_ = (function(resp) {
+    const onError_ = function (resp) {
       this.errorMessage = 'Error: routing server not responding.';
       console.log(resp);
-    }).bind(this);
+    }.bind(this);
 
     const options = {};
     options['steps'] = true;
@@ -378,38 +379,39 @@ Controller.prototype.calculateRoute = function() {
       config['instance'] = this.selectedRoutingProfile['profile'];
     }
 
-    this.$q_.when(this.ngeoRoutingService_.getRoute(route, config))
+    this.$q_
+      .when(this.ngeoRoutingService_.getRoute(route, config))
       .then(onSuccess_.bind(this), onError_.bind(this));
   }
 };
 
 /**
  */
-Controller.prototype.addVia = function() {
-  this.viaArray.push(/** @type{RoutingVia} */({
-    feature: null,
-    onSelect: null
-  }));
+Controller.prototype.addVia = function () {
+  this.viaArray.push(
+    /** @type{RoutingVia} */ ({
+      feature: null,
+      onSelect: null,
+    })
+  );
 };
 
 /**
  * @param {number} index Array index.
  */
-Controller.prototype.deleteVia = function(index) {
+Controller.prototype.deleteVia = function (index) {
   if (this.viaArray.length > index) {
     this.viaArray.splice(index, 1);
     this.calculateRoute();
   }
 };
 
-
 module.component('ngeoRouting', {
   controller: Controller,
   bindings: {
-    'map': '<ngeoRoutingMap'
+    'map': '<ngeoRoutingMap',
   },
-  templateUrl: ngeoRoutingTemplateUrl
+  templateUrl: ngeoRoutingTemplateUrl,
 });
-
 
 export default module;

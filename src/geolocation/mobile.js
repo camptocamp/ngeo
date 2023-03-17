@@ -8,7 +8,6 @@ import olGeolocation from 'ol/Geolocation.js';
 import olMap from 'ol/Map.js';
 import olGeomPoint from 'ol/geom/Point.js';
 
-
 /**
  * Options for the mobile geolocations directive.
  *
@@ -21,7 +20,6 @@ import olGeomPoint from 'ol/geom/Point.js';
  * the zoom level to set when obtaining a new position
  * @property {boolean} [autorotate] Autorotate.
  */
-
 
 /**
  * @type {!angular.IModule}
@@ -41,7 +39,7 @@ const GeolocationEventType = {
   /**
    * Triggered when an error occurs.
    */
-  ERROR: 'mobile-geolocation-error'
+  ERROR: 'mobile-geolocation-error',
 };
 
 /**
@@ -68,15 +66,13 @@ function geolocationMobileComponent() {
     restrict: 'A',
     scope: {
       'getMobileMapFn': '&ngeoMobileGeolocationMap',
-      'getMobileGeolocationOptionsFn': '&ngeoMobileGeolocationOptions'
+      'getMobileGeolocationOptionsFn': '&ngeoMobileGeolocationOptions',
     },
-    controller: 'ngeoGeolocationMobileController'
+    controller: 'ngeoGeolocationMobileController',
   };
 }
 
-
 module.directive('ngeoMobileGeolocation', geolocationMobileComponent);
-
 
 /**
  * @constructor
@@ -94,7 +90,6 @@ module.directive('ngeoMobileGeolocation', geolocationMobileComponent);
  * @ngname NgeoMobileGeolocationController
  */
 function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, ngeoNotification) {
-
   $element.on('click', this.toggleTracking.bind(this));
 
   const map = $scope['getMobileMapFn']();
@@ -134,8 +129,8 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   this.geolocation_ = new olGeolocation({
     projection: map.getView().getProjection(),
     trackingOptions: /** @type {PositionOptions} */ ({
-      enableHighAccuracy: true
-    })
+      enableHighAccuracy: true,
+    }),
   });
 
   if (options.autorotate) {
@@ -219,13 +214,11 @@ function Controller($scope, $element, gettextCatalog, ngeoFeatureOverlayMgr, nge
   olEvents.listen(view, 'change:center', this.handleViewChange_, this);
 
   olEvents.listen(view, 'change:resolution', this.handleViewChange_, this);
-
 }
-
 
 /**
  */
-Controller.prototype.toggleTracking = function() {
+Controller.prototype.toggleTracking = function () {
   if (this.geolocation_.getTracking()) {
     // if map center is different than geolocation position, then track again
     const currentPosition = this.geolocation_.getPosition();
@@ -251,33 +244,30 @@ Controller.prototype.toggleTracking = function() {
   }
 };
 
-
 /**
  * @private
  */
-Controller.prototype.track_ = function() {
+Controller.prototype.track_ = function () {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.follow_ = true;
   this.geolocation_.setTracking(true);
 };
 
-
 /**
  * @private
  */
-Controller.prototype.untrack_ = function() {
+Controller.prototype.untrack_ = function () {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
   this.notification_.clear();
 };
 
-
 /**
  * @private
  */
-Controller.prototype.setPosition_ = function() {
+Controller.prototype.setPosition_ = function () {
   const position = /** @type {import("ol/coordinate.js").Coordinate} */ (this.geolocation_.getPosition());
   const point = new olGeomPoint(position);
 
@@ -297,36 +287,44 @@ Controller.prototype.setPosition_ = function() {
   }
 };
 
-
 /**
  * @param {import("ol/events/Event.js").default} event Event.
  * @private
  */
-Controller.prototype.handleViewChange_ = function(event) {
+Controller.prototype.handleViewChange_ = function (event) {
   if (this.follow_ && !this.viewChangedByMe_) {
     this.follow_ = false;
   }
 };
 
-
 // Orientation control events
-Controller.prototype.autorotateListener = function() {
+Controller.prototype.autorotateListener = function () {
   let currentAlpha = 0;
   if (window.hasOwnProperty('ondeviceorientationabsolute')) {
-    window.addEventListener('deviceorientationabsolute', (evt) => {
-      const event = /** @type {DeviceOrientationEvent} */(evt);
-      currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
-    }, true);
+    window.addEventListener(
+      'deviceorientationabsolute',
+      (evt) => {
+        const event = /** @type {DeviceOrientationEvent} */ (evt);
+        currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
+      },
+      true
+    );
   } else if (window.hasOwnProperty('ondeviceorientation')) {
-    window.addEventListener('deviceorientation', (evt) => {
-      // @ts-ignore: ios only
-      if (evt.webkitCompassHeading) { // check for iOS property
+    window.addEventListener(
+      'deviceorientation',
+      (evt) => {
         // @ts-ignore: ios only
-        currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
-      } else { // non iOS
-        currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
-      }
-    }, true);
+        if (evt.webkitCompassHeading) {
+          // check for iOS property
+          // @ts-ignore: ios only
+          currentAlpha = this.handleRotate_(-evt.webkitCompassHeading, currentAlpha);
+        } else {
+          // non iOS
+          currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
+        }
+      },
+      true
+    );
   } else {
     console.error('Orientation is not supported on this device');
   }
@@ -339,21 +337,19 @@ Controller.prototype.autorotateListener = function() {
  * @return {number} .
  * @private
  */
-Controller.prototype.handleRotate_ = function(eventAlpha, currentAlpha) {
+Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   if (this.geolocation_.getTracking() && Math.abs(eventAlpha - currentAlpha) > 0.2) {
     currentAlpha = eventAlpha;
-    const radAlpha = currentAlpha * Math.PI / 180;
+    const radAlpha = (currentAlpha * Math.PI) / 180;
     this.map_.getView().animate({
       rotation: radAlpha,
       duration: 350,
-      easing: olEasing.linear
+      easing: olEasing.linear,
     });
   }
   return currentAlpha;
 };
 
-
 module.controller('ngeoGeolocationMobileController', Controller);
-
 
 export default module;

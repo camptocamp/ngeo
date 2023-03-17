@@ -19,7 +19,6 @@ import olLayerImage from 'ol/layer/Image.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -31,13 +30,11 @@ const module = angular.module('gmfapp', [
   gmfMapComponent.name,
 ]);
 
-
 module.value('authenticationBaseUrl', appURL.GMF_DEMO);
 module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
@@ -47,7 +44,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController($scope, gmfEditFeature, gmfUser) {
-
   /**
    * @type {!angular.IScope}
    * @private
@@ -71,7 +67,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   this.wmsSource_ = new olSourceImageWMS({
     projection: undefined, // should be removed in next OL version
     url: appURL.MAPSERVER_PROXY,
-    params: {'LAYERS': 'point'}
+    params: {'LAYERS': 'point'},
   });
 
   /**
@@ -79,7 +75,7 @@ function MainController($scope, gmfEditFeature, gmfUser) {
    * @private
    */
   this.wmsLayer_ = new olLayerImage({
-    source: this.wmsSource_
+    source: this.wmsSource_,
   });
 
   /**
@@ -110,16 +106,16 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
+        source: new olSourceOSM(),
       }),
-      this.wmsLayer_
+      this.wmsLayer_,
     ],
     view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
-      zoom: 2
-    })
+      zoom: 2,
+    }),
   });
 
   this.map.on('singleclick', this.handleMapSingleClick_.bind(this));
@@ -127,30 +123,24 @@ function MainController($scope, gmfEditFeature, gmfUser) {
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
     container: 'body',
-    trigger: 'hover'
+    trigger: 'hover',
   });
 }
-
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-MainController.prototype.handleMapSingleClick_ = function(evt) {
-
+MainController.prototype.handleMapSingleClick_ = function (evt) {
   // (1) Launch query to fetch new features
   const coordinate = evt.coordinate;
   const map = this.map;
   const view = map.getView();
   const resolution = view.getResolution();
   const buffer = resolution * this.pixelBuffer_;
-  const extent = olExtent.buffer(
-    [coordinate[0], coordinate[1], coordinate[0], coordinate[1]],
-    buffer
-  );
+  const extent = olExtent.buffer([coordinate[0], coordinate[1], coordinate[0], coordinate[1]], buffer);
 
-  this.editFeature_.getFeaturesInExtent([this.layerId_], extent).then(
-    this.handleGetFeatures_.bind(this));
+  this.editFeature_.getFeaturesInExtent([this.layerId_], extent).then(this.handleGetFeatures_.bind(this));
 
   // (2) Clear any previously selected feature
   this.feature = null;
@@ -161,12 +151,11 @@ MainController.prototype.handleMapSingleClick_ = function(evt) {
   this.scope_.$apply();
 };
 
-
 /**
  * @param {Array.<import("ol/Feature.js").default>} features Features.
  * @private
  */
-MainController.prototype.handleGetFeatures_ = function(features) {
+MainController.prototype.handleGetFeatures_ = function (features) {
   this.pending = false;
 
   if (features.length) {
@@ -174,12 +163,10 @@ MainController.prototype.handleGetFeatures_ = function(features) {
   }
 };
 
-
 /**
  * Insert a new feature at a random location.
  */
-MainController.prototype.insertFeature = function() {
-
+MainController.prototype.insertFeature = function () {
   this.pending = true;
 
   // (1) Create a randomly located feature
@@ -188,10 +175,7 @@ MainController.prototype.insertFeature = function() {
   const resolution = view.getResolution();
   const buffer = resolution * -50; // 50 pixel buffer inside the extent
   const size = /** @type {!Array.<number>} */ (map.getSize());
-  const extent = olExtent.buffer(
-    view.calculateExtent(size),
-    buffer
-  );
+  const extent = olExtent.buffer(view.calculateExtent(size), buffer);
   const bottomLeft = olExtent.getBottomLeft(extent);
   const topRight = olExtent.getTopRight(extent);
   const left = bottomLeft[0];
@@ -200,33 +184,23 @@ MainController.prototype.insertFeature = function() {
   const top = topRight[1];
   const deltaX = right - left;
   const deltaY = top - bottom;
-  const coordinate = [
-    left + Math.random() * deltaX,
-    bottom + Math.random() * deltaY
-  ];
+  const coordinate = [left + Math.random() * deltaX, bottom + Math.random() * deltaY];
 
   const feature = new olFeature({
     'geometry': new olGeomMultiPoint([coordinate]),
-    'name': 'New point'
+    'name': 'New point',
   });
 
   this.feature = null; // clear selected feature
 
   // (2) Launch request
-  this.editFeature_.insertFeatures(
-    this.layerId_,
-    [feature]
-  ).then(
-    this.handleEditFeature_.bind(this)
-  );
+  this.editFeature_.insertFeatures(this.layerId_, [feature]).then(this.handleEditFeature_.bind(this));
 };
-
 
 /**
  * Update the currently selected feature with a new name.
  */
-MainController.prototype.updateFeature = function() {
-
+MainController.prototype.updateFeature = function () {
   console.assert(this.feature);
 
   this.pending = true;
@@ -235,57 +209,41 @@ MainController.prototype.updateFeature = function() {
   this.feature.set('name', 'Updated name');
 
   // (2) Launch request
-  this.editFeature_.updateFeature(
-    this.layerId_,
-    this.feature
-  ).then(
-    this.handleEditFeature_.bind(this)
-  );
+  this.editFeature_.updateFeature(this.layerId_, this.feature).then(this.handleEditFeature_.bind(this));
 };
-
 
 /**
  * Delete currently selected feature.
  */
-MainController.prototype.deleteFeature = function() {
-
+MainController.prototype.deleteFeature = function () {
   console.assert(this.feature);
 
   // (1) Launch request
-  this.editFeature_.deleteFeature(
-    this.layerId_,
-    this.feature
-  ).then(
-    this.handleEditFeature_.bind(this)
-  );
+  this.editFeature_.deleteFeature(this.layerId_, this.feature).then(this.handleEditFeature_.bind(this));
 
   // (2) Reset selected feature
   this.feature = null;
 };
-
 
 /**
  * Called after an insert, update or delete request.
  * @param {angular.IHttpResponse} resp Ajax response.
  * @private
  */
-MainController.prototype.handleEditFeature_ = function(resp) {
+MainController.prototype.handleEditFeature_ = function (resp) {
   this.pending = false;
   this.refreshWMSLayer_();
 };
 
-
 /**
  * @private
  */
-MainController.prototype.refreshWMSLayer_ = function() {
+MainController.prototype.refreshWMSLayer_ = function () {
   this.wmsSource_.updateParams({
-    'random': Math.random()
+    'random': Math.random(),
   });
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

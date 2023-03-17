@@ -5,7 +5,6 @@ import olLayerLayer from 'ol/layer/Layer.js';
 import olSourceImage from 'ol/source/Image.js';
 import olSourceTile from 'ol/source/Tile.js';
 
-
 /**
  * Provides a function that adds an "active" property (using
  * `Object.defineProperty`) to an interaction, making it possible to use ngModel
@@ -24,10 +23,9 @@ export function interactionDecoration(interaction) {
     get: () => interaction.getActive(),
     set: (val) => {
       interaction.setActive(val);
-    }
+    },
   });
 }
-
 
 /**
  * Provides a function that adds properties (using
@@ -54,7 +52,7 @@ export function layerDecoration(layer) {
      */
     set: (val) => {
       layer.setVisible(val);
-    }
+    },
   });
 
   Object.defineProperty(layer, 'opacity', {
@@ -68,10 +66,9 @@ export function layerDecoration(layer) {
      */
     set: (val) => {
       layer.setOpacity(val);
-    }
+    },
   });
 }
-
 
 /**
  * Provides a function that adds a 'loading 'property (using
@@ -87,7 +84,6 @@ export function layerDecoration(layer) {
  * @param {angular.IScope} $scope Scope.
  */
 export function layerLoading(layer, $scope) {
-
   let source;
 
   /**
@@ -148,7 +144,7 @@ export function layerLoading(layer, $scope) {
 
   Object.defineProperty(layer, 'loading', {
     configurable: true,
-    get: () => /** @type {number} */ (layer.get('load_count')) > 0
+    get: () => /** @type {number} */ (layer.get('load_count')) > 0,
   });
 
   /**

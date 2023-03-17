@@ -39,7 +39,7 @@
 
 .fa-close:before {
   font-family: FontAwesome;
-  content: "\f00d";
+  content: '\f00d';
 }
 
 .ui-resizable-se {
@@ -52,7 +52,7 @@
 
 .ui-resizable-se:before {
   font-family: FontAwesome;
-  content: "\f0c9";
+  content: '\f0c9';
 }
 
 #textBindingOutput {

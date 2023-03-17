@@ -5,7 +5,6 @@ import ngeoFormatWFSAttribute from 'ngeo/format/WFSAttribute.js';
 import ngeoQueryQuerent from 'ngeo/query/Querent.js';
 import * as olEvents from 'ol/events.js';
 
-
 /**
  * @hidden
  */
@@ -22,7 +21,6 @@ export class DatasourceHelper {
    * @ngInject
    */
   constructor($q, ngeoDataSources, ngeoQuerent) {
-
     // === Injected properties ===
 
     /**
@@ -42,7 +40,6 @@ export class DatasourceHelper {
      * @private
      */
     this.ngeoQuerent_ = ngeoQuerent;
-
 
     // === Other properties ===
 
@@ -86,15 +83,12 @@ export class DatasourceHelper {
    * @return {angular.IPromise} Promise.
    */
   getDataSourceAttributes(dataSource) {
-
     const wfsDescribeFeatureTypeDefer = this.q_.defer();
 
     if (dataSource.attributes) {
       wfsDescribeFeatureTypeDefer.resolve(dataSource.attributes);
     } else {
-      this.ngeoQuerent_.wfsDescribeFeatureType(
-        dataSource
-      ).then((featureType) => {
+      this.ngeoQuerent_.wfsDescribeFeatureType(dataSource).then((featureType) => {
         // We know, at this point, that there's only one definition that
         // was returned.  Just to be sure, let's do a bunch of assertions.
         const ogcLayerName = dataSource.getWFSLayerNames()[0];
@@ -143,9 +137,7 @@ export class DatasourceHelper {
     const dataSource = evt.element;
     delete this.cache_[dataSource.id];
   }
-
 }
-
 
 /**
  * @type {!angular.IModule}
@@ -156,6 +148,5 @@ const module = angular.module('ngeoDataSourcesHelper', [
   ngeoQueryQuerent.name,
 ]);
 module.service('ngeoDataSourcesHelper', DatasourceHelper);
-
 
 export default module;

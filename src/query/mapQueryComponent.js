@@ -2,21 +2,13 @@ import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent.js';
 import ngeoQueryKeyboard from 'ngeo/query/Keyboard.js';
 
-import {
-  listen as olEventsListen,
-  unlistenByKey as olEventsUnlistenByKey
-} from 'ol/events.js';
-
+import {listen as olEventsListen, unlistenByKey as olEventsUnlistenByKey} from 'ol/events.js';
 
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMapQuery', [
-  ngeoQueryKeyboard.name,
-  ngeoQueryMapQuerent.name,
-]);
-
+const module = angular.module('ngeoMapQuery', [ngeoQueryKeyboard.name, ngeoQueryMapQuerent.name]);
 
 /**
  * Provides a "map query" directive.
@@ -62,13 +54,13 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
        * a request to the query service using the coordinate that was clicked.
        * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
        */
-      const handleMapClick_ = function(evt) {
+      const handleMapClick_ = function (evt) {
         const action = ngeoQueryKeyboard.action;
         const coordinate = evt.coordinate;
         ngeoMapQuerent.issue({
           action,
           coordinate,
-          map
+          map,
         });
       };
 
@@ -78,10 +70,10 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
        * map.
        * @param {import("ol/MapBrowserEvent.js").default} evt The map browser event being fired.
        */
-      const handlePointerMove_ = function(evt) {
+      const handlePointerMove_ = function (evt) {
         if (!evt.dragging) {
           const pixel = map.getEventPixel(evt.originalEvent);
-          const queryable = function(layer) {
+          const queryable = function (layer) {
             const visible = layer.get('visible');
             const sourceids = layer.get('querySourceIds');
             return visible && !!sourceids;
@@ -94,24 +86,20 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
       /**
        * Listen to the map events.
        */
-      const activate_ = function() {
-        listenerKeys_.push(
-          olEventsListen(map, 'singleclick', handleMapClick_)
-        );
+      const activate_ = function () {
+        listenerKeys_.push(olEventsListen(map, 'singleclick', handleMapClick_));
         const queryOptions = /** @type {import('ngeo/query/MapQuerent.js').QueryOptions} */ (
           $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
         );
         if (queryOptions.cursorHover) {
-          listenerKeys_.push(
-            olEventsListen(map, 'pointermove', handlePointerMove_)
-          );
+          listenerKeys_.push(olEventsListen(map, 'pointermove', handlePointerMove_));
         }
       };
 
       /**
        * Unlisten the map events.
        */
-      const deactivate_ = function() {
+      const deactivate_ = function () {
         for (const lk of listenerKeys_) {
           olEventsUnlistenByKey(lk);
         }
@@ -122,20 +110,17 @@ function queryMapComponent(ngeoMapQuerent, ngeoQueryKeyboard, $injector) {
       };
 
       // watch 'active' property -> activate/deactivate accordingly
-      scope.$watch(attrs['ngeoMapQueryActive'],
-        (newVal, oldVal) => {
-          if (newVal) {
-            activate_();
-          } else {
-            deactivate_();
-          }
+      scope.$watch(attrs['ngeoMapQueryActive'], (newVal, oldVal) => {
+        if (newVal) {
+          activate_();
+        } else {
+          deactivate_();
         }
-      );
-    }
+      });
+    },
   };
 }
 
 module.directive('ngeoMapQuery', queryMapComponent);
-
 
 export default module;

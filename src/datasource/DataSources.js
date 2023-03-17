@@ -3,12 +3,10 @@ import olCollection from 'ol/Collection.js';
 import * as olEvents from 'ol/events.js';
 import olView from 'ol/View.js';
 
-
 /**
  * @hidden
  */
 export class DataSource {
-
   /**
    * This service is responsible of the synchronization between the ngeo
    * collection of data sources and a specific map. It listens to events
@@ -25,7 +23,6 @@ export class DataSource {
    * @ngInject
    */
   constructor() {
-
     /**
      * @type {import('ngeo/datasource/DataSource.js').DataSources}
      * @private
@@ -77,7 +74,6 @@ export class DataSource {
    * @private
    */
   bindMap_(map) {
-
     // (1) Event listeners
     const view = map.getView();
     this.listenerKeys_.push(
@@ -142,12 +138,8 @@ export class DataSource {
     const maxResolution = dataSource.maxResolution;
     const minResolution = dataSource.minResolution;
 
-    const inMinRange = minResolution === null ||
-        minResolution === undefined ||
-        resolution >= minResolution;
-    const inMaxRange = maxResolution === null ||
-        maxResolution === undefined ||
-        resolution <= maxResolution;
+    const inMinRange = minResolution === null || minResolution === undefined || resolution >= minResolution;
+    const inMaxRange = maxResolution === null || maxResolution === undefined || resolution <= maxResolution;
     const inRange = inMinRange && inMaxRange;
 
     dataSource.inRange = inRange;
@@ -167,9 +159,7 @@ export class DataSource {
       this.syncDataSourceToResolution_(dataSource, resolution);
     }
   }
-
 }
-
 
 /**
  * @type {!angular.IModule}
@@ -178,6 +168,5 @@ export class DataSource {
 const module = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.
 module.service('ngeoDataSources', DataSource);
-
 
 export default module;

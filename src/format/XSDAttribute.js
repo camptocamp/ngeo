@@ -2,7 +2,6 @@ import {setGeometryType} from 'ngeo/format/Attribute.js';
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType.js';
 import olFormatXML from 'ol/format/XML.js';
 
-
 /**
  * @enum {string}
  * @hidden
@@ -15,9 +14,8 @@ export const FormatNumberType = {
   /**
    * @type {string}
    */
-  INTEGER: 'integer'
+  INTEGER: 'integer',
 };
-
 
 /**
  * Reads attributes that are defined in XSD format and return them as a list.
@@ -35,13 +33,11 @@ class XSDAttribute extends olFormatXML {
    * @override
    */
   read(source) {
-    return (
-      /** @type {Array.<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(
-        this, source
-      )
+    return /** @type {Array.<import('ngeo/format/Attribute.js').Attribute>} */ olFormatXML.prototype.read.call(
+      this,
+      source
     );
   }
-
 
   /**
    * @param {Document} doc Document.
@@ -50,14 +46,13 @@ class XSDAttribute extends olFormatXML {
    */
   readFromDocument(doc) {
     console.assert(doc.nodeType == Node.DOCUMENT_NODE, 'doc.nodeType should be DOCUMENT');
-    for (let n = /** @type {Node} */(doc.firstChild); n; n = n.nextSibling) {
+    for (let n = /** @type {Node} */ (doc.firstChild); n; n = n.nextSibling) {
       if (n.nodeType == Node.ELEMENT_NODE) {
-        return this.readFromNode(/** @type {Element} */(n));
+        return this.readFromNode(/** @type {Element} */ (n));
       }
     }
     return null;
   }
-
 
   /**
    * @param {Element} node Node.
@@ -91,7 +86,7 @@ class XSDAttribute extends olFormatXML {
    */
   readFromElementNode_(node) {
     console.assert(node.nodeType == Node.ELEMENT_NODE, 'node.nodeType should be ELEMENT');
-    const elementNode = /** @type {Element} */(node);
+    const elementNode = /** @type {Element} */ (node);
 
     const name = elementNode.getAttribute('name');
     console.assert(typeof name == 'string', 'name should be defined in element node.');
@@ -101,9 +96,7 @@ class XSDAttribute extends olFormatXML {
     const required = nillable !== 'true';
 
     const readonlyEls = elementNode.getElementsByTagName('readonly');
-    const readonly = readonlyEls[0] ?
-      readonlyEls[0].getAttribute('value') === 'true' :
-      false;
+    const readonly = readonlyEls[0] ? readonlyEls[0].getAttribute('value') === 'true' : false;
 
     /** @type {import('ngeo/format/Attribute.js').Attribute} */
     const attribute = {
@@ -111,7 +104,7 @@ class XSDAttribute extends olFormatXML {
       name,
       alias,
       readonly,
-      required
+      required,
     };
 
     const type = elementNode.getAttribute('type');
@@ -120,7 +113,6 @@ class XSDAttribute extends olFormatXML {
         this.setAttributeByXsdType_(attribute, type);
       }
     } else {
-
       // Attribute has no type defined on 'element' node.  Try:
 
       // (1) Enumerations
@@ -143,10 +135,7 @@ class XSDAttribute extends olFormatXML {
         }
         if (restrictions.length && restrictions[0]) {
           const restrictionNode = restrictions[0];
-          this.setAttributeByXsdType_(
-            attribute,
-            restrictionNode.getAttribute('base')
-          );
+          this.setAttributeByXsdType_(attribute, restrictionNode.getAttribute('base'));
           // MaxLength
           let maxLengths = elementNode.getElementsByTagName('maxLength');
           if (!maxLengths.length) {
@@ -167,7 +156,6 @@ class XSDAttribute extends olFormatXML {
 
     return attribute;
   }
-
 
   /**
    * Set the `type` and `numType` properties of an attribute depending on the
@@ -198,7 +186,6 @@ class XSDAttribute extends olFormatXML {
   }
 }
 
-
 /**
  * Returns the first geometry attribute among a given list of attributes.
  * @param {Array.<import('ngeo/format/Attribute.js').Attribute>} attributes The list of attributes.
@@ -215,6 +202,5 @@ export function getGeometryAttribute(attributes) {
   }
   return geomAttribute;
 }
-
 
 export default XSDAttribute;

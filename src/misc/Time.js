@@ -15,7 +15,7 @@ export function Time() {}
  * @param {Date} defaultValue The default value
  * @return {Date} the date
  */
-Time.prototype.createDate = function(value, defaultValue = null) {
+Time.prototype.createDate = function (value, defaultValue = null) {
   return value !== null ? new Date(value) : defaultValue;
 };
 
@@ -24,7 +24,7 @@ Time.prototype.createDate = function(value, defaultValue = null) {
  * @param {number|null=} defaultValue The default value
  * @return {number|null} the time
  */
-Time.prototype.getTime = function(date, defaultValue = null) {
+Time.prototype.getTime = function (date, defaultValue = null) {
   return date ? date.getTime() : defaultValue;
 };
 
@@ -38,25 +38,24 @@ Time.prototype.getTime = function(date, defaultValue = null) {
  *  values : (Array<number>|number)
  * }} - Configuration for the UI components
  */
-Time.prototype.getOptions = function(time) {
-
+Time.prototype.getOptions = function (time) {
   const minDate = this.createDate(time.minValue);
   const maxDate = this.createDate(time.maxValue);
 
   const minDefaultDate = this.createDate(time.minDefValue, minDate);
   const maxDefaultDate = this.createDate(time.maxDefValue, maxDate);
 
-  const defaultValues = (time.mode === 'range') ?
-    [this.getTime(minDefaultDate), this.getTime(maxDefaultDate)] :
-    this.getTime(minDefaultDate);
+  const defaultValues =
+    time.mode === 'range'
+      ? [this.getTime(minDefaultDate), this.getTime(maxDefaultDate)]
+      : this.getTime(minDefaultDate);
 
   return {
     minDate: this.getTime(minDate),
     maxDate: this.getTime(maxDate),
-    values: defaultValues
+    values: defaultValues,
   };
 };
-
 
 /**
  * Time.prototype.getUTCDate - Get UTC date from a local date object
@@ -64,13 +63,9 @@ Time.prototype.getOptions = function(time) {
  * @param  {Object} localDate loacl date object in
  * @return {Object} UTC date
  */
-Time.prototype.getUTCDate = function(localDate) {
-  return new Date(
-    localDate.getUTCFullYear(),
-    localDate.getUTCMonth(),
-    localDate.getUTCDate());
+Time.prototype.getUTCDate = function (localDate) {
+  return new Date(localDate.getUTCFullYear(), localDate.getUTCMonth(), localDate.getUTCDate());
 };
-
 
 /**
  * @type {!angular.IModule}
@@ -78,6 +73,5 @@ Time.prototype.getUTCDate = function(localDate) {
  */
 const module = angular.module('ngeoTime', []);
 module.service('ngeoTime', Time);
-
 
 export default module;

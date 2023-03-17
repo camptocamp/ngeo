@@ -1,12 +1,10 @@
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoGetBrowserLanguage', []);
-
 
 /**
  * Provides a function that returns the most appropriate 2-letter
@@ -14,7 +12,6 @@ const module = angular.module('ngeoGetBrowserLanguage', []);
  * languages settings.
  * @typedef {function(Array.<string>):string} miscGetBrowserLanguage
  */
-
 
 /**
  * Provides a function that returns the most appropriate 2-letter
@@ -36,18 +33,18 @@ function factory($window) {
      * @param {Array.<string>} availableLanguages Available languages.
      * @return {string} The "best" language code.
      */
-    function(availableLanguages) {
+    function (availableLanguages) {
       const nav = $window.navigator;
       let browserLanguages = nav.languages || [nav.language];
-      browserLanguages = browserLanguages.map(item => item.substring(0, 2));
+      browserLanguages = browserLanguages.map((item) => item.substring(0, 2));
       // remove duplicated language codes
       browserLanguages = browserLanguages.filter((item, index, arr) => arr.indexOf(item) == index);
-      const supportedLanguages = browserLanguages.filter(item => availableLanguages.indexOf(item) != -1);
+      const supportedLanguages = browserLanguages.filter((item) => availableLanguages.indexOf(item) != -1);
       return supportedLanguages[0];
-    });
+    }
+  );
 }
 
 module.factory('ngeoGetBrowserLanguage', factory);
-
 
 export default module;

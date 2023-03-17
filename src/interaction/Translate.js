@@ -10,7 +10,6 @@ import olInteractionTranslate from 'ol/interaction/Translate.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
-
 /**
  * @typedef {Object} TranslateOptions
  * @property {import("ol/Collection.js").default.<import("ol/Feature.js").default>} [features] Only features
@@ -19,7 +18,6 @@ import olSourceVector from 'ol/source/Vector.js';
  * @property {import("ol/style/Style.js").StyleLike} [style] Style for the center features added by the
  *    translate interaction to to show that features can be moved.
  */
-
 
 /**
  * An extension of the OpenLayers Translate interaction that adds the following
@@ -66,7 +64,7 @@ export default class extends olInteractionTranslate {
      * @private
      */
     this.vectorSource_ = new olSourceVector({
-      useSpatialIndex: false
+      useSpatialIndex: false,
     });
 
     /**
@@ -77,7 +75,7 @@ export default class extends olInteractionTranslate {
       source: this.vectorSource_,
       style: options.style,
       updateWhileAnimating: true,
-      updateWhileInteracting: true
+      updateWhileInteracting: true,
     });
 
     /**
@@ -93,7 +91,6 @@ export default class extends olInteractionTranslate {
    * @override
    */
   setActive(active) {
-
     if (this.keyPressListenerKey_) {
       olEvents.unlistenByKey(this.keyPressListenerKey_);
       this.keyPressListenerKey_ = null;
@@ -102,12 +99,7 @@ export default class extends olInteractionTranslate {
     olInteractionTranslate.prototype.setActive.call(this, active);
 
     if (active) {
-      this.keyPressListenerKey_ = olEvents.listen(
-        document,
-        'keyup',
-        this.handleKeyUp_,
-        this
-      );
+      this.keyPressListenerKey_ = olEvents.listen(document, 'keyup', this.handleKeyUp_, this);
     }
 
     this.setState_();
@@ -121,7 +113,6 @@ export default class extends olInteractionTranslate {
    * @override
    */
   setMap(map) {
-
     const currentMap = this.getMap();
     if (currentMap) {
       this.vectorLayer_.setMap(null);
@@ -149,13 +140,12 @@ export default class extends olInteractionTranslate {
     const keys = this.listenerKeys_;
 
     if (map && active && features) {
-      features.forEach(feature => this.addFeature_(feature));
+      features.forEach((feature) => this.addFeature_(feature));
       keys.push(
         olEvents.listen(features, 'add', this.handleFeaturesAdd_, this),
         olEvents.listen(features, 'remove', this.handleFeaturesRemove_, this)
       );
     } else {
-
       if (map) {
         const elem = map.getTargetElement();
         elem.style.cursor = 'default';
@@ -163,7 +153,7 @@ export default class extends olInteractionTranslate {
 
       keys.forEach(olEvents.unlistenByKey);
       keys.length = 0;
-      features.forEach(feature => this.removeFeature_(feature));
+      features.forEach((feature) => this.removeFeature_(feature));
     }
   }
 
@@ -228,8 +218,7 @@ export default class extends olInteractionTranslate {
    * @param {import("ol/events/Event.js").default} evt Event.
    * @private
    */
-  handleGeometryChange_(feature,
-    evt) {
+  handleGeometryChange_(feature, evt) {
     const geometry = evt.target;
     console.assert(geometry instanceof olGeomGeometry);
 
@@ -243,9 +232,7 @@ export default class extends olInteractionTranslate {
    * @return {import("ol/geom/Point.js").default} The center point of the geometry.
    * @private
    */
-  getGeometryCenterPoint_(
-    geometry) {
-
+  getGeometryCenterPoint_(geometry) {
     let center;
     let point;
 

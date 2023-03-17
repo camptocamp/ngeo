@@ -5,8 +5,8 @@ That forced us to redesign our manner to organize the code. The following "how t
 understand what we have changed, why, and will help you report these changes in your project. This will
 be explained in two sections:
 
- - [One before the switch to ngeo 2.3](#prepare-your-code-for-ngeo-23)
- - [And one to complete the work after the upgrade to ngeo 2.3](#use-ngeo-23)
+-   [One before the switch to ngeo 2.3](#prepare-your-code-for-ngeo-23)
+-   [And one to complete the work after the upgrade to ngeo 2.3](#use-ngeo-23)
 
 Note:
 You must know that now in ngeo, the code is organized in modules. There is no more `directive` or `service`
@@ -15,16 +15,15 @@ folders. Instead we have a folder for each module. A module is a part of the app
 authentication. The folder also contains a `module.js` file that can be included in your
 application to load directly all what is required for this module to work.
 
-
 ## Prepare your code for ngeo 2.3
 
 Here are the steps to complete before switching to use ngeo 2.3. We encourage you to build and test
 your application after each step. You should not see any difference when using your application.
 
- 1. [Remove dependencies on the goog library](#remove-dependencies-on-the-goog-library)
- 1. [Use only one goog.provide per file](#one-googprovide-per-file)
- 1. [Integrate eslint googshift and activate check](#integrate-eslint-googshift-and-activate-check)
- 1. [Transform the code to ES6 modules via googshift](#transform-the-code-via-googshift)
+1.  [Remove dependencies on the goog library](#remove-dependencies-on-the-goog-library)
+1.  [Use only one goog.provide per file](#one-googprovide-per-file)
+1.  [Integrate eslint googshift and activate check](#integrate-eslint-googshift-and-activate-check)
+1.  [Transform the code to ES6 modules via googshift](#transform-the-code-via-googshift)
 
 If you have **no custom elements** in you application you may **start directly with the third point**.
 
@@ -46,9 +45,9 @@ In a GeoMapFish project, `path_to_apps_folder` is the path to your `static-ngeo`
 To know how to replace a `goog` function, it can help to search the same function in `ngeo`
 2.1 and compare the line with the same line in ngeo 2.2 or upper. Examples:
 
- - `goog.getUid` becomes `ol.getUid`.
- - `goog.object.extend` becomes `ol.obj.assign`.
- - ...
+-   `goog.getUid` becomes `ol.getUid`.
+-   `goog.object.extend` becomes `ol.obj.assign`.
+-   ...
 
 Test, then commit your changes.
 
@@ -70,9 +69,9 @@ the `<a_folder>` value later.)
 
 If you have multiple different entities in one file you can:
 
- - Split your file to have one class (and provide) per file.
- - Or if you don't use this entity out of the file, assign this entity to a variable inside the
-   file (typically for a component controller).
+-   Split your file to have one class (and provide) per file.
+-   Or if you don't use this entity out of the file, assign this entity to a variable inside the
+    file (typically for a component controller).
 
 It can help to see how `component`, `service`, `factory`, etc. are made in ngeo 2.3.
 
@@ -127,10 +126,10 @@ rules:
 Where `an_app_name` matches what you chose in the previous step for the same value.
 and for the path on the line `replace`:
 
-  - `../../` is because the script will be read from `node_modules/eslint-plugin-googshift`.
-  - `<path_to_this_folder/>` for the path to the top folder of this file.
-  - `a_folder` is the top folder of this file.
-  - `|<an_app_name>` to refer this path at this name. This final value will be used as base name for what
+-   `../../` is because the script will be read from `node_modules/eslint-plugin-googshift`.
+-   `<path_to_this_folder/>` for the path to the top folder of this file.
+-   `a_folder` is the top folder of this file.
+-   `|<an_app_name>` to refer this path at this name. This final value will be used as base name for what
     you provide in your .js files (the `<an_app_name>` part in `<an_app_name>.module.component`).
 
 Then run the linter, and fix the errors (and warnings when it's possible). The main errors will be missing
@@ -159,7 +158,6 @@ revert the changes, correct your files and run the script again.
 
 Test, then commit your changes.
 
-
 ## Use ngeo 2.3
 
 At this point you can update your application to use ngeo 2.3. It's recommended to work on a branch, because
@@ -169,10 +167,10 @@ the changes can't be easily tested before the end of the transformation.
 
 If you have no custom AngularJS element in your code, you may start directly with the second points.
 
- 1. [Transform your components to modules](#transform-your-components-to-modules)
- 1. [Transform your applications to modules](#transform-your-applications-to-modules)
- 1. [Adapt paths for 'less'](#Adapt-paths-for-less)
- 1. [Test your application](#test-your-application)
+1.  [Transform your components to modules](#transform-your-components-to-modules)
+1.  [Transform your applications to modules](#transform-your-applications-to-modules)
+1.  [Adapt paths for 'less'](#Adapt-paths-for-less)
+1.  [Test your application](#test-your-application)
 
 ### Transform your components to modules
 
@@ -300,7 +298,7 @@ You must import your `<interface.scss>` in each application controller you have 
 like: `import '../../sass/<interface>.scss'`.
 
 With Webpack (`less-loader`), to reference a file by it's relative URL, the beginning of the path must be the
-current file. That means that, if in a file `a/b/c/d.js` you want to import the `.scss` file  located
+current file. That means that, if in a file `a/b/c/d.js` you want to import the `.scss` file located
 in `a/x/y/z.scss`, the import must be written like this: `import '../../x/y/z.scss'`. Paths must also be
 adapted for url in each `.scss` file (for instance, for a `background-image: url("../../images/office.svg");`
 

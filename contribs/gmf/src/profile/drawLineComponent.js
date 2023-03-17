@@ -7,15 +7,11 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 import {interactionDecoration} from 'ngeo/misc/decorate.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfDrawProfileLine', [
-  ngeoMapFeatureOverlayMgr.name,
-]);
-
+const module = angular.module('gmfDrawProfileLine', [ngeoMapFeatureOverlayMgr.name]);
 
 /**
  * Simple directive that can be put on any element. The directive listen on
@@ -50,11 +46,10 @@ function profileDarwLineComponent() {
       'getMapFn': '&gmfDrawprofilelineMap',
       'line': '=gmfDrawprofilelineLine',
       'active': '=gmfDrawprofilelineActive',
-      'getStyleFn': '&?gmfDrawprofilelineStyle'
-    }
+      'getStyleFn': '&?gmfDrawprofilelineStyle',
+    },
   };
 }
-
 
 module.directive('gmfDrawprofileline', profileDarwLineComponent);
 
@@ -71,7 +66,6 @@ module.directive('gmfDrawprofileline', profileDarwLineComponent);
  * @ngname gmfDrawprofilelineController
  */
 function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
-
   /**
    * @type {?import("ol/geom/LineString.js").default}
    */
@@ -106,8 +100,8 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
     style = new olStyleStyle({
       stroke: new olStyleStroke({
         color: '#ffcc33',
-        width: 2
-      })
+        width: 2,
+      }),
     });
   }
   overlay.setStyle(style);
@@ -117,7 +111,7 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
    */
   this.interaction = new olInteractionDraw({
     type: /** @type {import("ol/geom/GeometryType.js").default} */ ('LineString'),
-    features: this.features_
+    features: this.features_,
   });
 
   interactionDecoration(this.interaction);
@@ -146,7 +140,8 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
       if (newLine === null) {
         this.clear_();
       }
-    });
+    }
+  );
 
   $scope.$watch(
     () => this.active,
@@ -160,29 +155,25 @@ function Controller($scope, $timeout, ngeoFeatureOverlayMgr) {
   );
 }
 
-
 /**
  * Initialise the controller.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   const map = this['getMapFn']();
   console.assert(map instanceof olMap);
   this.map_ = map;
   this.map_.addInteraction(this.interaction);
 };
 
-
 /**
  * Clear the overlay and profile line.
  * @private
  */
-Controller.prototype.clear_ = function() {
+Controller.prototype.clear_ = function () {
   this.features_.clear();
   this.line = null;
 };
 
-
 module.controller('GmfDrawprofilelineController', Controller);
-
 
 export default module;

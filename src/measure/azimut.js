@@ -8,16 +8,11 @@ import olFeature from 'ol/Feature.js';
 import {fromCircle} from 'ol/geom/Polygon.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasureazimut', [
-  ngeoDrawController.name,
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('ngeoMeasureazimut', [ngeoDrawController.name, ngeoMiscFilters.name]);
 
 /**
  * @param {!angular.ICompileService} $compile Angular compile service.
@@ -40,19 +35,16 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
      * @param {import("ngeo/draw/Controller.js").DrawController} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
-
       const helpMsg = gettextCatalog.getString('Click to start drawing circle');
       const contMsg = gettextCatalog.getString('Click to finish');
 
-      const measureAzimut = new ngeoInteractionMeasureAzimut(
-        $filter('ngeoUnitPrefix'), $filter('number'), {
-          style: new olStyleStyle(),
-          startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
-          continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
-          precision: $injector.has('ngeoMeasurePrecision') ?
-            $injector.get('ngeoMeasurePrecision') : undefined,
-          decimals: $injector.has('ngeoMeasureDecimals') ? $injector.get('ngeoMeasureDecimals') : undefined
-        });
+      const measureAzimut = new ngeoInteractionMeasureAzimut($filter('ngeoUnitPrefix'), $filter('number'), {
+        style: new olStyleStyle(),
+        startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
+        continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
+        precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined,
+        decimals: $injector.has('ngeoMeasureDecimals') ? $injector.get('ngeoMeasureDecimals') : undefined,
+      });
 
       drawFeatureCtrl.registerInteraction(measureAzimut);
       drawFeatureCtrl.measureAzimut = measureAzimut;
@@ -68,10 +60,10 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
           // geometry is actually a collection (line + circle)
           // For our purpose here, we only need the circle, which gets
           // transformed into a polygon with 64 sides.
-          const geometry = /** @type {import("ol/geom/GeometryCollection.js").default} */
-                (event.detail.feature.getGeometry());
-          const circle = /** @type {import("ol/geom/Circle.js").default} */ (
-            geometry.getGeometries()[1]);
+          const geometry =
+            /** @type {import("ol/geom/GeometryCollection.js").default} */
+            (event.detail.feature.getGeometry());
+          const circle = /** @type {import("ol/geom/Circle.js").default} */ (geometry.getGeometries()[1]);
           const polygon = fromCircle(circle, 64);
           event.detail.feature = new olFeature(polygon);
           const azimut = getAzimut(
@@ -84,18 +76,11 @@ function measureAzimutComponent($compile, gettextCatalog, $filter, $injector) {
         drawFeatureCtrl
       );
 
-      olEvents.listen(
-        measureAzimut,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
-    }
+      olEvents.listen(measureAzimut, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
+    },
   };
 }
 
-
 module.directive('ngeoMeasureazimut', measureAzimutComponent);
-
 
 export default module;

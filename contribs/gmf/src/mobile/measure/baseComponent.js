@@ -7,15 +7,11 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasureBase', [
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('gmfMobileMeasureBase', [ngeoMiscFilters.name]);
 
 /**
  * Base controller class for Length and Area components.
@@ -30,7 +26,6 @@ const module = angular.module('gmfMobileMeasureBase', [
  * @hidden
  */
 export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
-
   /**
    * @type {angular.IScope}
    * @protected
@@ -59,9 +54,12 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
    */
   this.active;
 
-  this.scope.$watch(() => this.active, (newVal) => {
-    this.measure.setActive(newVal);
-  });
+  this.scope.$watch(
+    () => this.active,
+    (newVal) => {
+      this.measure.setActive(newVal);
+    }
+  );
 
   /**
    * @type {number|undefined}
@@ -73,23 +71,23 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
    */
   this.sketchStyle = new olStyleStyle({
     fill: new olStyleFill({
-      color: 'rgba(255, 255, 255, 0.2)'
+      color: 'rgba(255, 255, 255, 0.2)',
     }),
     stroke: new olStyleStroke({
       color: 'rgba(0, 0, 0, 0.5)',
       lineDash: [10, 10],
-      width: 2
+      width: 2,
     }),
     image: new olStyleRegularShape({
       stroke: new olStyleStroke({
         color: 'rgba(0, 0, 0, 0.7)',
-        width: 2
+        width: 2,
       }),
       points: 4,
       radius: 8,
       radius2: 0,
-      angle: 0
-    })
+      angle: 0,
+    }),
   });
 
   /**
@@ -118,17 +116,16 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
   this.valid = false;
 }
 
-
 /**
  * Initialise the controller.
  */
-MeasueMobileBaseController.prototype.init = function() {
-
+MeasueMobileBaseController.prototype.init = function () {
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
 
   this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
-    this.measure.getDrawInteraction());
+    this.measure.getDrawInteraction()
+  );
 
   const drawInteraction = this.drawInteraction;
   interactionDecoration(drawInteraction);
@@ -136,7 +133,7 @@ MeasueMobileBaseController.prototype.init = function() {
   Object.defineProperty(this, 'hasPoints', {
     get() {
       return this.drawInteraction.getFeature() !== null;
-    }
+    },
   });
 
   olEvents.listen(

@@ -3,13 +3,11 @@ import ngeoInteractionDrawRegularPolygonFromClick from 'ngeo/interaction/DrawReg
 import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoCreateregularpolygonfromclick', []);
-
 
 /**
  * A directive used to draw vector features of a single geometry type using
@@ -66,13 +64,12 @@ function editingCreateRegularPolygonFromClickComponent() {
       'features': '=ngeoCreateregularpolygonfromclickFeatures',
       'map': '=ngeoCreateregularpolygonfromclickMap',
       'radius': '<ngeoCreateregularpolygonfromclickRadius',
-      'sides': '<?ngeoCreateregularpolygonfromclickSides'
-    }
+      'sides': '<?ngeoCreateregularpolygonfromclickSides',
+    },
   };
 }
 
 module.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygonFromClickComponent);
-
 
 /**
  * @param {!angular.IScope} $scope Scope.
@@ -84,7 +81,6 @@ module.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygo
  * @ngname ngeoCreateregularpolygonfromclickController
  */
 function Controller($scope) {
-
   // == Scope properties ==
 
   /**
@@ -124,7 +120,6 @@ function Controller($scope) {
    */
   this.sides;
 
-
   // == Other properties ==
 
   /**
@@ -142,29 +137,21 @@ function Controller($scope) {
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
-
 /**
  * Initialize the directive.
  */
-Controller.prototype.$onInit = function() {
-
+Controller.prototype.$onInit = function () {
   this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick({
     angle: this.angle,
     radius: this.radius,
-    sides: this.sides
+    sides: this.sides,
   });
   this.interaction_.setActive(this.active);
 
-  this.interactionListenerKey_ = olEvents.listen(
-    this.interaction_,
-    'drawend',
-    this.handleDrawEnd_,
-    this
-  );
+  this.interactionListenerKey_ = olEvents.listen(this.interaction_, 'drawend', this.handleDrawEnd_, this);
 
   this.map.addInteraction(this.interaction_);
 };
-
 
 /**
  * Called when a feature is finished being drawn. Add the feature to the
@@ -172,25 +159,22 @@ Controller.prototype.$onInit = function() {
  * @param {import('ol/events/Event.js').default} evt Event.
  * @private
  */
-Controller.prototype.handleDrawEnd_ = function(evt) {
+Controller.prototype.handleDrawEnd_ = function (evt) {
   // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   const feature = new olFeature(evt.detail.feature.getGeometry());
   this.features.push(feature);
 };
 
-
 /**
  * Cleanup event listeners and remove the interaction from the map.
  * @private
  */
-Controller.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function () {
   olEvents.unlistenByKey(this.interactionListenerKey_);
   this.interaction_.setActive(false);
   this.map.removeInteraction(this.interaction_);
 };
 
-
 module.controller('ngeoCreateregularpolygonfromclickController', Controller);
-
 
 export default module;

@@ -20,7 +20,6 @@ import * as olMath from 'ol/math.js';
 
 import 'bootstrap/js/src/dropdown.js';
 
-
 /**
  * @typedef {Object} PrintSimpleAttributes
  * @property {string|boolean|number} [default] Default value of the form field.
@@ -28,7 +27,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {string} value
  * @property {string} type Type of the field. Can be 'String', 'Boolean' or 'Number'.
  */
-
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
@@ -46,7 +44,6 @@ import 'bootstrap/js/src/dropdown.js';
  * @property {Array<number>} [scales] The list of 'scales'
  */
 
-
 /**
  * Object that can be used to generate a form field.
  * @typedef {Object}
@@ -55,20 +52,17 @@ import 'bootstrap/js/src/dropdown.js';
  * @protected type {string} Type of the field. Can be `String`, `Boolean` or `Number`.
  */
 
-
 /**
  * @typedef {Object} DataSourceTableObject
  * @property {Array.<string>} columns
  * @property {Array.<Array.<string|number|boolean>>} data
  */
 
-
 /**
  * @typedef {Object} DataSourcePrintReportObject
  * @property {string} title
  * @property {DataSourceTableObject} table
  */
-
 
 /**
  * @type {!angular.IModule}
@@ -85,8 +79,8 @@ const module = angular.module('gmfPrintComponent', [
   ngeoQueryMapQuerent.name,
 ]);
 
-
-module.value('gmfPrintTemplateUrl',
+module.value(
+  'gmfPrintTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -94,22 +88,22 @@ module.value('gmfPrintTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['gmfPrintTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/print';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/print';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/print', require('./component.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/print', require('./component.html'));
+  }
+);
 
 /**
  * @enum {string}
  * @hidden
  */
 const PrintStateEnum = {
-
   /**
    * @type {string}
    */
@@ -133,20 +127,17 @@ const PrintStateEnum = {
   /**
    * @type {string}
    */
-  ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities'
+  ERROR_ON_GETCAPABILITIES: 'errorOnGetCapabilities',
 };
-
 
 /**
  * @typedef {Object} PrintState
  * @property {PrintStateEnum} state
  */
 
-
 module.value('gmfPrintState', {
-  state: PrintStateEnum.CAPABILITIES_NOT_LOADED
+  state: PrintStateEnum.CAPABILITIES_NOT_LOADED,
 });
-
 
 /**
  * @param {!JQuery} $element Element.
@@ -160,7 +151,6 @@ module.value('gmfPrintState', {
 function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
   return gmfPrintTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a component that display a print panel. This panel is populated with
@@ -222,16 +212,14 @@ const printComponent = {
     'rotateMask': '<?gmfPrintRotatemask',
     'fieldValues': '<?gmfPrintFieldvalues',
     'hiddenAttributeNames': '<?gmfPrintHiddenattributes',
-    'attributesOut': '=?gmfPrintAttributesOut'
+    'attributesOut': '=?gmfPrintAttributesOut',
   },
   controller: 'GmfPrintController',
   templateUrl: gmfPrintTemplateUrl,
-  transclude: true
+  transclude: true,
 };
 
-
 module.component('gmfPrint', printComponent);
-
 
 /**
  * @typedef {Object} OptionsLegendType
@@ -239,7 +227,6 @@ module.component('gmfPrint', printComponent);
  * @property {Object.<string, boolean>} label
  * @property {Object.<string, Object.<string, string>>} params
  */
-
 
 /**
  * @typedef {Object} OptionsType
@@ -249,13 +236,11 @@ module.component('gmfPrint', printComponent);
  * @property {number} [goodnessOfFit]
  */
 
-
 /**
  * @private
  * @hidden
  */
 class PrintController {
-
   /**
    * @param {JQuery} $element Element.
    * @param {angular.IScope} $rootScope Angular root scope.
@@ -280,11 +265,25 @@ class PrintController {
    * @ngdoc controller
    * @ngname GmfPrintController
    */
-  constructor($element, $rootScope, $scope, $timeout, $q, $injector,
-    gettextCatalog, ngeoLayerHelper, ngeoFeatureOverlayMgr, ngeoPrintUtils,
-    ngeoCreatePrint, gmfPrintUrl, gmfAuthenticationService, ngeoQueryResult,
-    $filter, gmfPrintState, gmfThemes) {
-
+  constructor(
+    $element,
+    $rootScope,
+    $scope,
+    $timeout,
+    $q,
+    $injector,
+    gettextCatalog,
+    ngeoLayerHelper,
+    ngeoFeatureOverlayMgr,
+    ngeoPrintUtils,
+    ngeoCreatePrint,
+    gmfPrintUrl,
+    gmfAuthenticationService,
+    ngeoQueryResult,
+    $filter,
+    gmfPrintState,
+    gmfThemes
+  ) {
     /**
      * @type {PrintState}
      * @private
@@ -611,7 +610,6 @@ class PrintController {
     this.currentThemes_;
   }
 
-
   /**
    * Init the controller
    */
@@ -621,19 +619,28 @@ class PrintController {
     });
 
     // Clear the capabilities if the roles changes
-    this.$scope_.$watch(() => this.gmfAuthenticationService_.getRolesIds().join(','), () => {
-      this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
-      this.capabilities_ = null;
-    });
+    this.$scope_.$watch(
+      () => this.gmfAuthenticationService_.getRolesIds().join(','),
+      () => {
+        this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
+        this.capabilities_ = null;
+      }
+    );
 
     // Store user email
-    this.$scope_.$watch(() => this.gmfAuthenticationService_.getEmail(), (newValue) => {
-      this.smtpEmail = newValue;
-    });
+    this.$scope_.$watch(
+      () => this.gmfAuthenticationService_.getEmail(),
+      (newValue) => {
+        this.smtpEmail = newValue;
+      }
+    );
 
-    this.$scope_.$watch(() => this.active, (active) => {
-      this.togglePrintPanel_(active);
-    });
+    this.$scope_.$watch(
+      () => this.active,
+      (active) => {
+        this.togglePrintPanel_(active);
+      }
+    );
 
     // Print on event.
     this.$rootScope_.$on('gmfStartPrint', (event, format) => {
@@ -667,9 +674,11 @@ class PrintController {
     }
 
     this.postcomposeListener_ = this.ngeoPrintUtils_.createPrintMaskPostcompose(
-      getSizeFn, this.getScaleFn.bind(this), getRotationFn);
+      getSizeFn,
+      this.getScaleFn.bind(this),
+      getRotationFn
+    );
   }
-
 
   /**
    * @param {import('ol/PluggableMap.js').FrameState} frameState Frame state.
@@ -680,15 +689,16 @@ class PrintController {
     // the pre-defined scales. (`scaleInput` in `gmfPrintOptions`).
     console.assert(this.layoutInfo.scales);
     console.assert(this.layoutInfo.scale !== undefined);
-    if (!this.scaleManuallySelected_ &&
-        (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))) {
+    if (
+      !this.scaleManuallySelected_ &&
+      (this.layoutInfo.scale === -1 || this.layoutInfo.scales.includes(this.layoutInfo.scale))
+    ) {
       const mapSize = frameState.size;
       const viewResolution = frameState.viewState.resolution;
       this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
     }
     return this.layoutInfo.scale;
   }
-
 
   /**
    * @param {boolean} active True to listen events related to the print and get
@@ -700,28 +710,31 @@ class PrintController {
       if (!this.capabilities_) {
         this.getCapabilities_(this.gmfAuthenticationService_.getRolesIds().join(','));
       }
-      this.capabilities_.then((resp) => {
-        // make sure the panel is still open
-        if (!this.active) {
-          return;
+      this.capabilities_.then(
+        (resp) => {
+          // make sure the panel is still open
+          if (!this.active) {
+            return;
+          }
+          this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
+          // Get capabilities - On success
+          this.parseCapabilities_(resp);
+          if (this.defaultLayout) {
+            this.setLayout(this.defaultLayout);
+          }
+          this.postComposeListenerKey_ = olEvents.listen(this.map, 'postcompose', this.postcomposeListener_);
+          this.pointerDragListenerKey_ = olEvents.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
+          this.mapViewResolutionChangeKey_ = olEvents.listen(this.map.getView(), 'change:resolution', () => {
+            this.scaleManuallySelected_ = false;
+          });
+          this.map.render();
+        },
+        (resp) => {
+          // Get capabilities - On error
+          this.gmfPrintState_.state = PrintStateEnum.ERROR_ON_GETCAPABILITIES;
+          this.capabilities_ = null;
         }
-        this.gmfPrintState_.state = PrintStateEnum.NOT_IN_USE;
-        // Get capabilities - On success
-        this.parseCapabilities_(resp);
-        if (this.defaultLayout) {
-          this.setLayout(this.defaultLayout);
-        }
-        this.postComposeListenerKey_ = olEvents.listen(this.map, 'postcompose', this.postcomposeListener_);
-        this.pointerDragListenerKey_ = olEvents.listen(this.map, 'pointerdrag', this.onPointerDrag_, this);
-        this.mapViewResolutionChangeKey_ = olEvents.listen(this.map.getView(), 'change:resolution', () => {
-          this.scaleManuallySelected_ = false;
-        });
-        this.map.render();
-      }, (resp) => {
-        // Get capabilities - On error
-        this.gmfPrintState_.state = PrintStateEnum.ERROR_ON_GETCAPABILITIES;
-        this.capabilities_ = null;
-      });
+      );
     } else {
       olEvents.unlistenByKey(this.postComposeListenerKey_);
       olEvents.unlistenByKey(this.pointerDragListenerKey_);
@@ -730,7 +743,6 @@ class PrintController {
       this.map.render(); // Redraw (remove) post compose mask;
     }
   }
-
 
   /**
    * Gets the print capabilities.
@@ -743,11 +755,11 @@ class PrintController {
         withCredentials: true,
         params: {
           'role': roleId,
-          'cache_version': this.cacheVersion_
-        }
-      }));
+          'cache_version': this.cacheVersion_,
+        },
+      })
+    );
   }
-
 
   /**
    * Create the list of layouts, get the formats, get the first layout in
@@ -771,7 +783,6 @@ class PrintController {
     this.updateFields_();
   }
 
-
   /**
    * Update layout information with the user values if there are always available in the
    * current layout otherwise use the defaults values of the layout.
@@ -791,8 +802,8 @@ class PrintController {
 
     this.updateCustomFields_();
 
-    this.layoutInfo.legend = this.layoutInfo.attributes.indexOf('legend') >= 0 ?
-      this.fieldValues['legend'] !== false : undefined;
+    this.layoutInfo.legend =
+      this.layoutInfo.attributes.indexOf('legend') >= 0 ? this.fieldValues['legend'] !== false : undefined;
     this.layoutInfo.scales = clientInfo['scales'] || [];
     this.layoutInfo.dpis = clientInfo['dpiSuggestions'] || [];
 
@@ -801,8 +812,9 @@ class PrintController {
     this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
 
     this.layoutInfo.dpi =
-        (this.layoutInfo.dpi && this.layoutInfo.dpis.indexOf(this.layoutInfo.dpi) > 0) ?
-          this.layoutInfo.dpi : this.layoutInfo.dpis[0];
+      this.layoutInfo.dpi && this.layoutInfo.dpis.indexOf(this.layoutInfo.dpi) > 0
+        ? this.layoutInfo.dpi
+        : this.layoutInfo.dpis[0];
 
     this.layoutInfo.formats = {};
     this.formats_.forEach((format) => {
@@ -814,7 +826,6 @@ class PrintController {
     // Force the update of the mask
     this.map.render();
   }
-
 
   /**
    * Update simple attributes information with Customfield to be able to generate a form
@@ -837,14 +848,13 @@ class PrintController {
       if (!attribute['clientParams']) {
         name = `${attribute.name}`;
         const defaultValue = attribute.default;
-        value = (defaultValue !== undefined && defaultValue !== '') ?
-          defaultValue : this.fieldValues[name];
+        value = defaultValue !== undefined && defaultValue !== '' ? defaultValue : this.fieldValues[name];
 
         // Try to use existing form field type
         rawType = `${attribute.type}`;
         switch (rawType) {
           case 'String':
-            type = (name === 'comments') ? 'textarea' : 'text';
+            type = name === 'comments' ? 'textarea' : 'text';
             break;
           case 'Boolean':
             type = 'checkbox';
@@ -861,19 +871,18 @@ class PrintController {
         // If it exists use the value of previous same field.
         previousAttributes.forEach((c) => {
           if (c.name === name && c.type === type) {
-            return value = c.value;
+            return (value = c.value);
           }
         });
 
         this.layoutInfo.simpleAttributes.push({
           name,
           type,
-          value
+          value,
         });
       }
     });
   }
-
 
   /**
    * Return a capabilities 'attribute' object corresponding to the given name.
@@ -885,12 +894,11 @@ class PrintController {
     let attr = null;
     this.layout_.attributes.forEach((attribute) => {
       if (attribute.name === name) {
-        return attr = attribute;
+        return (attr = attribute);
       }
     });
     return attr;
   }
-
 
   /**
    * Set the current rotation value.
@@ -925,7 +933,7 @@ class PrintController {
    * @private
    */
   onPointerDrag_(e) {
-    const originalEvent = /** @type {KeyboardEvent} */(e.originalEvent);
+    const originalEvent = /** @type {KeyboardEvent} */ (e.originalEvent);
     const mapCenter = this.map.getView().getCenter();
     if (this.active && originalEvent.altKey && originalEvent.shiftKey && mapCenter) {
       const center = this.map.getPixelFromCoordinate(mapCenter);
@@ -943,7 +951,7 @@ class PrintController {
         const p1y = pixel[1] - center[1];
         const centerToP0 = Math.sqrt(Math.pow(p0x, 2) + Math.pow(p0y, 2));
         const centerToP1 = Math.sqrt(Math.pow(p1x, 2) + Math.pow(p1y, 2));
-        const sense = (p0x * p1y - p0y * p1x) > 0 ? 1 : -1;
+        const sense = p0x * p1y - p0y * p1x > 0 ? 1 : -1;
         let angle = (p0x * p1x + p0y * p1y) / (centerToP0 * centerToP1);
         angle = angle <= 1 ? sense * Math.acos(angle) : 0;
         const boost = centerToP1 / 200;
@@ -961,7 +969,6 @@ class PrintController {
       this.onDragPreviousMousePosition_ = pixel;
     }
   }
-
 
   /**
    * Create a print report based on the values of the 'layoutInfo' values.
@@ -995,14 +1002,9 @@ class PrintController {
 
     if (this.layoutInfo.legend) {
       const center = this.map.getView().getCenter();
-      const deltaX = this.paperSize_[0] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
-      const deltaY = this.paperSize_[1] * scale / 2 / INCHES_PER_METER / DOTS_PER_INCH;
-      const bbox = [
-        center[0] - deltaX,
-        center[1] - deltaY,
-        center[0] + deltaX,
-        center[1] + deltaY,
-      ];
+      const deltaX = (this.paperSize_[0] * scale) / 2 / INCHES_PER_METER / DOTS_PER_INCH;
+      const deltaY = (this.paperSize_[1] * scale) / 2 / INCHES_PER_METER / DOTS_PER_INCH;
+      const bbox = [center[0] - deltaX, center[1] - deltaY, center[0] + deltaX, center[1] + deltaY];
       const legend = this.getLegend_(scale, this.layoutInfo.dpi, bbox);
       if (legend !== null) {
         customAttributes['legend'] = legend;
@@ -1061,28 +1063,36 @@ class PrintController {
 
     const email = this.smtpSupported && this.smtpEmail && this.smtpEnabled ? this.smtpEmail : undefined;
 
-    const spec = this.ngeoPrint_.createSpec(map, scale, this.layoutInfo.dpi,
-      this.layoutInfo.layout, format, customAttributes, email, this.goodnessOfFit_);
+    const spec = this.ngeoPrint_.createSpec(
+      map,
+      scale,
+      this.layoutInfo.dpi,
+      this.layoutInfo.layout,
+      format,
+      customAttributes,
+      email,
+      this.goodnessOfFit_
+    );
 
     // Add feature overlay layer to print spec.
     const layers = [];
-    this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_,
-      viewResolution);
+    this.ngeoPrint_.encodeLayer(layers, this.featureOverlayLayer_, viewResolution);
     if (layers.length > 0) {
       spec.attributes.map.layers.unshift(layers[0]);
     }
 
-    this.ngeoPrint_.createReport(spec, /** @type {angular.IRequestShortcutConfig} */ ({
-      timeout: this.requestCanceler_.promise
-    })).then(
-      this.handleCreateReportSuccess_.bind(this),
-      this.handleCreateReportError_.bind(this)
-    );
+    this.ngeoPrint_
+      .createReport(
+        spec,
+        /** @type {angular.IRequestShortcutConfig} */ ({
+          timeout: this.requestCanceler_.promise,
+        })
+      )
+      .then(this.handleCreateReportSuccess_.bind(this), this.handleCreateReportError_.bind(this));
 
     // remove temporary map
     map.setTarget(null);
   }
-
 
   /**
    * Cancel the current print and reset its state.
@@ -1106,7 +1116,6 @@ class PrintController {
     this.resetPrintStates_();
   }
 
-
   /**
    * @param {PrintStateEnum=} opt_printState the print state.
    * @private
@@ -1115,7 +1124,6 @@ class PrintController {
     this.gmfPrintState_.state = opt_printState || PrintStateEnum.NOT_IN_USE;
     this.curRef_ = '';
   }
-
 
   /**
    * Get datasource object for print report
@@ -1127,10 +1135,10 @@ class PrintController {
     let datasourceObj, data, columns;
     const datasourceArr = [];
     const sources = this.ngeoQueryResult_.sources;
-    sources.forEach(function(source) {
+    sources.forEach(function (source) {
       data = [];
       columns = [];
-      source.features.forEach(function(feature, i) {
+      source.features.forEach(function (feature, i) {
         console.assert(feature);
         const properties = getFilteredFeatureValues(feature);
         if (i === 0) {
@@ -1138,23 +1146,21 @@ class PrintController {
             return this.translate_(prop);
           }, this);
         }
-        data.push(Object.keys(properties).map(key => properties[key]));
+        data.push(Object.keys(properties).map((key) => properties[key]));
       }, this);
       if (columns.length) {
-        datasourceObj =
-          /** @type {DataSourcePrintReportObject} */({
-            title: this.translate_(source.label),
-            table: {
-              columns,
-              data
-            }
-          });
+        datasourceObj = /** @type {DataSourcePrintReportObject} */ ({
+          title: this.translate_(source.label),
+          table: {
+            columns,
+            data,
+          },
+        });
         datasourceArr.push(datasourceObj);
       }
     }, this);
     return datasourceArr;
   }
-
 
   /**
    * Get the optimal scale to display the print mask. Return the lowest scale if
@@ -1167,15 +1173,18 @@ class PrintController {
   getOptimalScale_(mapSize, viewResolution) {
     const scales = this.layoutInfo.scales.slice();
     if (mapSize !== undefined && viewResolution !== undefined) {
-      const scale = this.ngeoPrintUtils_.getOptimalScale(mapSize, viewResolution,
-        this.paperSize_, scales.reverse());
+      const scale = this.ngeoPrintUtils_.getOptimalScale(
+        mapSize,
+        viewResolution,
+        this.paperSize_,
+        scales.reverse()
+      );
       if (scale > 0) {
         return scale;
       }
     }
     return this.layoutInfo.scales[this.layoutInfo.scales.length - 1];
   }
-
 
   /**
    * @param {!angular.IHttpResponse} resp Response.
@@ -1189,7 +1198,8 @@ class PrintController {
       this.resetPrintStates_();
     } else {
       const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintReportResponse} */ (
-        resp.data);
+        resp.data
+      );
       const ref = mfResp.ref;
       console.assert(ref.length > 0);
       this.curRef_ = ref;
@@ -1197,21 +1207,21 @@ class PrintController {
     }
   }
 
-
   /**
    * @param {string} ref Ref.
    * @private
    */
   getStatus_(ref) {
     this.requestCanceler_ = this.$q_.defer();
-    this.ngeoPrint_.getStatus(ref, /** @type {angular.IRequestShortcutConfig} */ ({
-      timeout: this.requestCanceler_.promise
-    })).then(
-      this.handleGetStatusSuccess_.bind(this, ref),
-      this.handleCreateReportError_.bind(this)
-    );
+    this.ngeoPrint_
+      .getStatus(
+        ref,
+        /** @type {angular.IRequestShortcutConfig} */ ({
+          timeout: this.requestCanceler_.promise,
+        })
+      )
+      .then(this.handleGetStatusSuccess_.bind(this, ref), this.handleCreateReportError_.bind(this));
   }
-
 
   /**
    * @param {string} ref Ref.
@@ -1220,7 +1230,8 @@ class PrintController {
    */
   handleGetStatusSuccess_(ref, resp) {
     const mfResp = /** @type {import('ngeo/print/mapfish-print-v3.js').MapFishPrintStatusResponse} */ (
-      resp.data);
+      resp.data
+    );
     const done = mfResp.done;
     if (done) {
       if (mfResp.status != 'error') {
@@ -1233,12 +1244,15 @@ class PrintController {
       }
     } else {
       // The report is not ready yet. Check again in 1s.
-      this.statusTimeoutPromise_ = this.$timeout_(() => {
-        this.getStatus_(ref);
-      }, 1000, false);
+      this.statusTimeoutPromise_ = this.$timeout_(
+        () => {
+          this.getStatus_(ref);
+        },
+        1000,
+        false
+      );
     }
   }
-
 
   /**
    * @private
@@ -1246,7 +1260,6 @@ class PrintController {
   handleCreateReportError_() {
     this.resetPrintStates_(PrintStateEnum.ERROR_ON_REPORT);
   }
-
 
   /**
    * @param {number} scale The scale to get the legend (for wms layers only).
@@ -1276,7 +1289,7 @@ class PrintController {
             if (url) {
               icon_dpi = {
                 'url': this.ngeoLayerHelper_.getWMTSLegendURL(layer),
-                'dpi': 72
+                'dpi': 72,
               };
             }
           }
@@ -1284,7 +1297,7 @@ class PrintController {
           if (icon_dpi) {
             classes.push({
               'name': gettextCatalog.getString(layerName),
-              'icons': [icon_dpi.url]
+              'icons': [icon_dpi.url],
             });
           }
         } else {
@@ -1296,8 +1309,15 @@ class PrintController {
             const type = icon_dpi ? 'image' : source.serverType_;
             if (!icon_dpi) {
               icon_dpi = {
-                'url': this.ngeoLayerHelper_.getWMSLegendURL(source.getUrl(), name,
-                  scale, undefined, undefined, undefined, source.serverType_, dpi,
+                'url': this.ngeoLayerHelper_.getWMSLegendURL(
+                  source.getUrl(),
+                  name,
+                  scale,
+                  undefined,
+                  undefined,
+                  undefined,
+                  source.serverType_,
+                  dpi,
                   this.gmfLegendOptions_.useBbox ? bbox : undefined,
                   this.map.getView().getProjection().getCode(),
                   this.gmfLegendOptions_.params[source.serverType_]
@@ -1309,13 +1329,20 @@ class PrintController {
             // Don't add classes without legend url or from layers without any
             // active name.
             if (icon_dpi && name.length !== 0) {
-              classes.push(Object.assign({
-                'name': this.gmfLegendOptions_.label[type] === false ? '' :
-                  gettextCatalog.getString(name),
-                'icons': [icon_dpi.url]
-              }, icon_dpi.dpi != 72 ? {
-                'dpi': icon_dpi.dpi,
-              } : {}));
+              classes.push(
+                Object.assign(
+                  {
+                    'name':
+                      this.gmfLegendOptions_.label[type] === false ? '' : gettextCatalog.getString(name),
+                    'icons': [icon_dpi.url],
+                  },
+                  icon_dpi.dpi != 72
+                    ? {
+                        'dpi': icon_dpi.dpi,
+                      }
+                    : {}
+                )
+              );
             }
           });
         }
@@ -1325,7 +1352,6 @@ class PrintController {
       if (classes.length > 0) {
         legend['classes'].push({'classes': classes});
       }
-
     });
 
     return legend['classes'].length > 0 ? legend : null;
@@ -1382,7 +1408,6 @@ class PrintController {
     }
   }
 
-
   /**
    * Set the current layout and update all layout information with this new layout parameters.
    * @param {string!} layoutName A layout name as existing in the list of
@@ -1399,7 +1424,6 @@ class PrintController {
     this.layout_ = layout;
     this.updateFields_();
   }
-
 
   /**
    * Get or set the print scale value and adapt the zoom to match with this new scale.
@@ -1420,7 +1444,6 @@ class PrintController {
     return this.layoutInfo.scale;
   }
 
-
   /**
    * Set the print dpi value.
    * @param {number} dpi A dpi value as existing in the dpis list field.
@@ -1428,7 +1451,6 @@ class PrintController {
   setDpi(dpi) {
     this.layoutInfo.dpi = dpi;
   }
-
 
   /**
    * Check the current state of the print.
@@ -1449,6 +1471,5 @@ class PrintController {
 }
 
 module.controller('GmfPrintController', PrintController);
-
 
 export default module;

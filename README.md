@@ -17,24 +17,23 @@ standalone builds of ngeo can be created.
 
 To know more about ngeo take a look at:
 
-* The [examples](https://camptocamp.github.io/ngeo/master/examples)
-* The [simple API help](https://camptocamp.github.io/ngeo/master/api/apihelp/apihelp.html)
-* The documentation can be found in each file. There is currently no API web-documentation for this
-  version (you may also use [API documentation](https://camptocamp.github.io/ngeo/master/apidoc/index.html)).
+-   The [examples](https://camptocamp.github.io/ngeo/master/examples)
+-   The [simple API help](https://camptocamp.github.io/ngeo/master/api/apihelp/apihelp.html)
+-   The documentation can be found in each file. There is currently no API web-documentation for this
+    version (you may also use [API documentation](https://camptocamp.github.io/ngeo/master/apidoc/index.html)).
 
 ngeo also includes a [contribs](contribs) directory where non-core
-contributions may be placed. ngeo currently includes one contrib: `gmf`.  That
+contributions may be placed. ngeo currently includes one contrib: `gmf`. That
 contrib includes components specific to the
 [GeoMapFish](https://geomapfish.org/) project, that is components that rely on
 GeoMapFish-specific web services. The `gmf` contrib examples are also available
 [online](https://camptocamp.github.io/ngeo/master/examples/contribs/gmf/).
 
-
 ## Requirements
 
-* [make](https://www.gnu.org/software/make/) – GNU Make.
-* [node](https://www.nodejs.org/) – nodejs JS runtime environment.
-* [npm](https://www.npmjs.com/) – npm package manager.
+-   [make](https://www.gnu.org/software/make/) – GNU Make.
+-   [node](https://www.nodejs.org/) – nodejs JS runtime environment.
+-   [npm](https://www.npmjs.com/) – npm package manager.
 
 ## How to start
 
@@ -68,7 +67,6 @@ then visit them using
 https://localhost:3000/contribs/gmf/apps/<app_name>.html, for example:
 https://localhost:3000/contribs/gmf/apps/desktop.html
 
-
 ### Run the Simple API Help
 
 To run the Simple API Help:
@@ -81,16 +79,16 @@ Then visit https://localhost:3000/apihelp.html
 
 ### Go further
 
-* [Developer guide](docs/developer-guide.md) – This guide is for ngeo developers.
-* [Application development guidelines](docs/guidelines.md) – This guide is for
-  application developers using ngeo.
-
+-   [Developer guide](docs/developer-guide.md) – This guide is for ngeo developers.
+-   [Application development guidelines](docs/guidelines.md) – This guide is for
+    application developers using ngeo.
 
 ## How to migrate from ngeo 2.2 to ngeo 2.3 ?
-* [The migration guide - from 2.2 to 2.3](docs/how_to_migrate_from_2.2_to_2.3.md) – This guide is for
-  integrators **still** on ngeo 2.2 and wanting to use ngeo 2.3.
 
+-   [The migration guide - from 2.2 to 2.3](docs/how_to_migrate_from_2.2_to_2.3.md) – This guide is for
+    integrators **still** on ngeo 2.2 and wanting to use ngeo 2.3.
 
 ## Other docs related to ngeo:
-* [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
-* [Travis](https://travis-ci.org/camptocamp/ngeo) – Continuous integration.
+
+-   [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
+-   [Travis](https://travis-ci.org/camptocamp/ngeo) – Continuous integration.

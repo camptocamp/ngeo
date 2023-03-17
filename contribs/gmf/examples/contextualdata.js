@@ -11,7 +11,6 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -23,16 +22,12 @@ const module = angular.module('gmfapp', [
   ngeoMiscFilters.name,
 ]);
 
-
 module.value('gmfRasterUrl', appURL.RASTER);
 
-module.value(
-  'gmfContextualdatacontentTemplateUrl',
-  'partials/contextualdata.html');
+module.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.html');
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -45,18 +40,17 @@ function MainController() {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 }
-
 
 /**
  * @param {import("ol/coordinate.js").Coordinate} coordinate The coordinate for the right-clicked
@@ -65,13 +59,12 @@ function MainController() {
  * @return {Object} The additional data to add to the scope for the
  *     contextualdata popover.
  */
-MainController.prototype.onRasterData = function(coordinate, data) {
+MainController.prototype.onRasterData = function (coordinate, data) {
   return {
-    'elelvation_diff': data['srtm'] - data['aster']
+    'elelvation_diff': data['srtm'] - data['aster'],
   };
 };
 
 module.controller('MainController', MainController);
-
 
 export default MainController;

@@ -4,18 +4,15 @@ export default {
   'themes': [
     {
       'name': 'Enseignement 2',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 38,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement.jpeg',
       'children': [
         {
           'name': 'Enseignement 2',
           'id': 35,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -28,8 +25,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'bus_stop',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -39,8 +36,8 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'legendRule': 'Arr\u00eat de bus',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'information',
@@ -51,8 +48,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'information',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -63,33 +60,28 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Informations',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
           'metadata': {
-            'isExpanded': true
-          }
-        }
+            'isExpanded': true,
+          },
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'Transport',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 37,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/transports.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/transports.jpeg',
       'children': [
         {
           'name': 'Transport',
           'id': 36,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -102,8 +94,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'fuel',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -114,8 +106,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Station service',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'parking',
@@ -126,8 +118,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'parking',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -137,8 +129,8 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'legendRule': 'Parking',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'bus_stop',
@@ -149,8 +141,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'bus_stop',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -160,47 +152,42 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'legendRule': 'Arr\u00eat de bus',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
           'metadata': {
-            'isExpanded': true
-          }
-        }
+            'isExpanded': true,
+          },
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'Cadastre',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 29,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
       'children': [
         {
           'mixed': true,
           'metadata': {
-            'isExpanded': true
+            'isExpanded': true,
           },
           'children': [
             {
               'layers': 'ch.swisstopo.dreiecksvermaschung',
               'minResolutionHint': 0.0,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'ch.swisstopo.dreiecksvermaschung',
               'childLayers': [
                 {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.dreiecksvermaschung',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'WMS CH topo fr',
               'maxResolutionHint': 26458.32,
@@ -209,23 +196,22 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
             },
             {
               'layers': 'ch.swisstopo.geologie-gravimetrischer_atlas',
               'minResolutionHint': 0.0,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'ch.swisstopo.geologie-gravimetrischer_atlas',
               'childLayers': [
                 {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.geologie-gravimetrischer_atlas',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'WMS CH topo fr',
               'maxResolutionHint': 26458.32,
@@ -234,23 +220,22 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
             },
             {
               'layers': 'ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen',
               'minResolutionHint': 0.0,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen',
               'childLayers': [
                 {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'WMS CH topo fr',
               'maxResolutionHint': 26458.32,
@@ -260,23 +245,22 @@ export default {
               'metadata': {
                 'isChecked': true,
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
             },
             {
               'layers': 'ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung',
               'minResolutionHint': 0.0,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung',
               'childLayers': [
                 {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'WMS CH topo fr',
               'maxResolutionHint': 26458.32,
@@ -285,14 +269,13 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
             },
             {
               'layer': 'ch.are.alpenkonvention',
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr',
               'matrixSet': '21781_26',
               'name': 'ch.are.alpenkonvention',
@@ -305,15 +288,16 @@ export default {
                 'minResolutionHint': 10.0,
                 'maxResolutionHint': 1000.0,
                 'maxResolution': 1000.0,
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>',
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
                 'legend': 'true',
-                'minResolution': 100.0
-              }
+                'minResolution': 100.0,
+              },
             },
             {
               'style': 'ch.astra.ausnahmetransportrouten',
               'dimensions': {
-                'Time': '20141003'
+                'Time': '20141003',
               },
               'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr',
               'matrixSet': '21781_26',
@@ -326,48 +310,44 @@ export default {
                 'wmsUrl': 'https://wms.geo.admin.ch/',
                 'queryLayers': 'ch.astra.ausnahmetransportrouten',
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
-            }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
+            },
           ],
           'id': 30,
-          'name': 'Cadastre'
-        }
+          'name': 'Cadastre',
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'OSM',
       'functionalities': {
-        'default_basemap': [
-          'map'
-        ]
+        'default_basemap': ['map'],
       },
       'id': 64,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/osm.png',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/osm.png',
       'children': [
         {
           'mixed': true,
           'metadata': {
-            'isExpanded': true
+            'isExpanded': true,
           },
           'children': [
             {
               'layers': 'osm_scale',
               'minResolutionHint': 0.53,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'osm_scale',
               'childLayers': [
                 {
                   'minResolutionHint': 0.53,
                   'name': 'osm_scale',
                   'maxResolutionHint': 1.41,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'Main PNG',
               'maxResolutionHint': 1.41,
@@ -379,94 +359,77 @@ export default {
                 'isChecked': true,
                 'legendRule': 'OSM',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'osm_open',
               'minResolutionHint': 0.0,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'osm_open',
               'childLayers': [
                 {
                   'minResolutionHint': 0.0,
                   'name': 'osm_open',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'Main PNG',
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 139,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'layers': 'bank',
               'minResolutionHint': 0.0,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'Layer with very very very very very long name',
               'childLayers': [
                 {
                   'minResolutionHint': 0.0,
                   'name': 'bank',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'Main PNG',
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 140,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'mixed': true,
-              'metadata': {
-
-              },
+              'metadata': {},
               'children': [
                 {
                   'layers': 'osm_time',
                   'minResolutionHint': 0.0,
-                  'dimensions': {
-
-                  },
+                  'dimensions': {},
                   'name': 'osm_time_r_s',
                   'childLayers': [
                     {
                       'minResolutionHint': 0.0,
                       'name': 'osm_time',
                       'maxResolutionHint': 999999999.0,
-                      'queryable': true
-                    }
+                      'queryable': true,
+                    },
                   ],
                   'ogcServer': 'Main PNG',
                   'maxResolutionHint': 999999999.0,
                   'time': {
                     'widget': 'slider',
-                    'interval': [
-                      0,
-                      1,
-                      0,
-                      0
-                    ],
+                    'interval': [0, 1, 0, 0],
                     'maxValue': '2013-12-01T00:00:00Z',
                     'minValue': '2006-01-01T00:00:00Z',
                     'maxDefValue': null,
                     'minDefValue': null,
                     'resolution': 'month',
-                    'mode': 'range'
+                    'mode': 'range',
                   },
                   'type': 'WMS',
                   'id': 110,
@@ -476,118 +439,93 @@ export default {
                     'isChecked': true,
                     'legendRule': 'Dans les temps',
                     'legend': 'true',
-                    'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-                  }
+                    'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+                  },
                 },
                 {
                   'layers': 'osm_time',
                   'minResolutionHint': 0.0,
-                  'dimensions': {
-
-                  },
+                  'dimensions': {},
                   'name': 'osm_time_v_s',
                   'childLayers': [
                     {
                       'minResolutionHint': 0.0,
                       'name': 'osm_time',
                       'maxResolutionHint': 999999999.0,
-                      'queryable': true
-                    }
+                      'queryable': true,
+                    },
                   ],
                   'ogcServer': 'Main PNG',
                   'maxResolutionHint': 999999999.0,
                   'time': {
                     'widget': 'slider',
-                    'interval': [
-                      0,
-                      1,
-                      0,
-                      0
-                    ],
+                    'interval': [0, 1, 0, 0],
                     'maxValue': '2013-12-01T00:00:00Z',
                     'minValue': '2006-01-01T00:00:00Z',
                     'maxDefValue': null,
                     'minDefValue': null,
                     'resolution': 'month',
-                    'mode': 'value'
+                    'mode': 'value',
                   },
                   'type': 'WMS',
                   'id': 143,
                   'imageType': 'image/png',
-                  'metadata': {
-
-                  }
+                  'metadata': {},
                 },
                 {
                   'layers': 'osm_time',
                   'minResolutionHint': 0.0,
-                  'dimensions': {
-
-                  },
+                  'dimensions': {},
                   'name': 'osm_time_v_dp',
                   'childLayers': [
                     {
                       'minResolutionHint': 0.0,
                       'name': 'osm_time',
                       'maxResolutionHint': 999999999.0,
-                      'queryable': true
-                    }
+                      'queryable': true,
+                    },
                   ],
                   'ogcServer': 'Main PNG',
                   'maxResolutionHint': 999999999.0,
                   'time': {
                     'widget': 'datepicker',
-                    'interval': [
-                      0,
-                      1,
-                      0,
-                      0
-                    ],
+                    'interval': [0, 1, 0, 0],
                     'maxValue': '2013-12-01T00:00:00Z',
                     'minValue': '2006-01-01T00:00:00Z',
                     'maxDefValue': null,
                     'minDefValue': null,
                     'resolution': 'month',
-                    'mode': 'value'
+                    'mode': 'value',
                   },
                   'type': 'WMS',
                   'id': 144,
                   'imageType': 'image/png',
-                  'metadata': {
-
-                  }
+                  'metadata': {},
                 },
                 {
                   'layers': 'osm_time',
                   'minResolutionHint': 0.0,
-                  'dimensions': {
-
-                  },
+                  'dimensions': {},
                   'name': 'osm_time_r_dp',
                   'childLayers': [
                     {
                       'minResolutionHint': 0.0,
                       'name': 'osm_time',
                       'maxResolutionHint': 999999999.0,
-                      'queryable': true
-                    }
+                      'queryable': true,
+                    },
                   ],
                   'ogcServer': 'Main PNG',
                   'maxResolutionHint': 999999999.0,
                   'time': {
                     'widget': 'datepicker',
-                    'interval': [
-                      0,
-                      1,
-                      0,
-                      0
-                    ],
+                    'interval': [0, 1, 0, 0],
                     'maxValue': '2013-12-01T00:00:00Z',
                     'minValue': '2006-01-01T00:00:00Z',
                     'maxDefValue': null,
                     'minDefValue': null,
                     'resolution': 'month',
-                    'mode': 'range'
+                    'mode': 'range',
                   },
                   'type': 'WMS',
                   'id': 126,
@@ -595,47 +533,43 @@ export default {
                   'metadata': {
                     'identifierAttributeField': 'name',
                     'legend': 'true',
-                    'legendRule': 'Dans les temps'
-                  }
-                }
+                    'legendRule': 'Dans les temps',
+                  },
+                },
               ],
               'id': 145,
-              'name': 'osm_time'
+              'name': 'osm_time',
             },
             {
               'layers': 'sustenance,entertainment',
               'minResolutionHint': 0.0,
-              'dimensions': {
-
-              },
+              'dimensions': {},
               'name': 'two_layers',
               'childLayers': [
                 {
                   'minResolutionHint': 0.0,
                   'name': 'sustenance',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
+                  'queryable': true,
                 },
                 {
                   'minResolutionHint': 0.0,
                   'name': 'entertainment',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'ogcServer': 'Main PNG',
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 141,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'style': 'ch.astra.ausnahmetransportrouten',
               'dimensions': {
-                'Time': '20141003'
+                'Time': '20141003',
               },
               'url': 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr',
               'matrixSet': '21781_26',
@@ -648,19 +582,18 @@ export default {
                 'wmsUrl': 'https://wms.geo.admin.ch/',
                 'queryLayers': 'ch.astra.ausnahmetransportrouten',
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
-            }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
+            },
           ],
           'id': 68,
-          'name': 'OSM functions mixed'
+          'name': 'OSM functions mixed',
         },
         {
           'name': 'Layers',
           'id': 63,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -673,8 +606,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'cinema',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -685,8 +618,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Cin\u00e9mas',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'police',
@@ -697,8 +630,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'police',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -709,8 +642,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Poste de police',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'post_office',
@@ -721,8 +654,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'post_office',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -733,8 +666,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Office de poste',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'osm_time',
@@ -745,24 +678,19 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'osm_time',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'time': {
                 'widget': 'datepicker',
-                'interval': [
-                  0,
-                  1,
-                  0,
-                  0
-                ],
+                'interval': [0, 1, 0, 0],
                 'maxValue': '2013-12-01T00:00:00Z',
                 'minValue': '2006-01-01T00:00:00Z',
                 'maxDefValue': null,
                 'minDefValue': null,
                 'resolution': 'month',
-                'mode': 'range'
+                'mode': 'range',
               },
               'type': 'WMS',
               'id': 126,
@@ -770,14 +698,12 @@ export default {
               'metadata': {
                 'identifierAttributeField': 'name',
                 'legend': 'true',
-                'legendRule': 'Dans les temps'
-              }
+                'legendRule': 'Dans les temps',
+              },
             },
             {
               'mixed': false,
-              'metadata': {
-
-              },
+              'metadata': {},
               'children': [
                 {
                   'layers': 'entertainment',
@@ -788,8 +714,8 @@ export default {
                       'minResolutionHint': 0.0,
                       'name': 'entertainment',
                       'maxResolutionHint': 999999999.0,
-                      'queryable': true
-                    }
+                      'queryable': true,
+                    },
                   ],
                   'maxResolutionHint': 999999999.0,
                   'type': 'WMS',
@@ -800,8 +726,8 @@ export default {
                     'isChecked': true,
                     'legendRule': 'Caf\u00e9s',
                     'legend': 'true',
-                    'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-                  }
+                    'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+                  },
                 },
                 {
                   'layers': 'sustenance',
@@ -812,8 +738,8 @@ export default {
                       'minResolutionHint': 0.0,
                       'name': 'sustenance',
                       'maxResolutionHint': 999999999.0,
-                      'queryable': true
-                    }
+                      'queryable': true,
+                    },
                   ],
                   'maxResolutionHint': 999999999.0,
                   'type': 'WMS',
@@ -824,12 +750,12 @@ export default {
                     'isChecked': true,
                     'legendRule': 'Restaurant',
                     'legend': 'true',
-                    'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-                  }
-                }
+                    'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+                  },
+                },
               ],
               'id': 137,
-              'name': 'Loisirs'
+              'name': 'Loisirs',
             },
             {
               'layers': 'hospitals',
@@ -840,8 +766,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'hospitals',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -852,20 +778,16 @@ export default {
                 'isChecked': true,
                 'legendRule': 'H\u00f4pital',
                 'legend': 'false',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
-          'metadata': {
-
-          }
+          'metadata': {},
         },
         {
           'name': 'Group',
           'id': 66,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -878,20 +800,20 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'hotel',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
+                  'queryable': true,
                 },
                 {
                   'minResolutionHint': 0.0,
                   'name': 'bank',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
+                  'queryable': true,
                 },
                 {
                   'minResolutionHint': 0.0,
                   'name': 'place_of_worship',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -901,34 +823,25 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'isLegendExpanded': true,
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
-          'metadata': {
-
-          }
+          'metadata': {},
         },
         {
           'name': 'OSM functions',
           'id': 146,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'time': {
             'widget': 'datepicker',
-            'interval': [
-              0,
-              1,
-              0,
-              0
-            ],
+            'interval': [0, 1, 0, 0],
             'maxValue': '2013-12-01T00:00:00Z',
             'minValue': '2006-01-01T00:00:00Z',
             'maxDefValue': null,
             'minDefValue': null,
             'resolution': 'month',
-            'mode': 'range'
+            'mode': 'range',
           },
           'mixed': false,
           'ogcServer': 'Main PNG',
@@ -942,8 +855,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'osm_time',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -952,8 +865,8 @@ export default {
               'metadata': {
                 'identifierAttributeField': 'name',
                 'legend': 'true',
-                'legendRule': 'Dans les temps'
-              }
+                'legendRule': 'Dans les temps',
+              },
             },
             {
               'layers': 'osm_time2',
@@ -964,8 +877,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'osm_time2',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -973,8 +886,8 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'identifierAttributeField': 'name',
-                'legendRule': 'Dans les temps'
-              }
+                'legendRule': 'Dans les temps',
+              },
             },
             {
               'layers': 'osm_scale',
@@ -985,8 +898,8 @@ export default {
                   'minResolutionHint': 0.53,
                   'name': 'osm_scale',
                   'maxResolutionHint': 1.41,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 1.41,
               'type': 'WMS',
@@ -997,8 +910,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'OSM',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'osm_open',
@@ -1009,16 +922,14 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'osm_open',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 139,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'layers': 'bank',
@@ -1029,16 +940,14 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'bank',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 140,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'layers': 'sustenance,entertainment',
@@ -1049,22 +958,20 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'sustenance',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
+                  'queryable': true,
                 },
                 {
                   'minResolutionHint': 0.0,
                   'name': 'entertainment',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 141,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'layers': 'half_query',
@@ -1075,22 +982,20 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'aster',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': false
+                  'queryable': false,
                 },
                 {
                   'minResolutionHint': 0.0,
                   'name': 'cinema',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 150,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'layers': 'srtm',
@@ -1101,16 +1006,14 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'srtm',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': false
-                }
+                  'queryable': false,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 151,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
+              'metadata': {},
             },
             {
               'layers': 'aster',
@@ -1121,28 +1024,22 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'aster',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': false
-                }
+                  'queryable': false,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 152,
               'imageType': 'image/png',
-              'metadata': {
-
-              }
-            }
+              'metadata': {},
+            },
           ],
-          'metadata': {
-
-          }
+          'metadata': {},
         },
         {
           'name': 'External',
           'id': 153,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'WMS CH topo fr',
           'children': [
@@ -1155,8 +1052,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.dreiecksvermaschung',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 26458.32,
               'type': 'WMS',
@@ -1164,8 +1061,9 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
             },
             {
               'layers': 'ch.swisstopo.geologie-gravimetrischer_atlas',
@@ -1176,8 +1074,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.geologie-gravimetrischer_atlas',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 26458.32,
               'type': 'WMS',
@@ -1185,8 +1083,9 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
             },
             {
               'layers': 'ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen',
@@ -1197,8 +1096,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.geologie-geotechnik-gk500-lithologie_hauptgruppen',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 26458.32,
               'type': 'WMS',
@@ -1207,8 +1106,9 @@ export default {
               'metadata': {
                 'isChecked': true,
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
             },
             {
               'layers': 'ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung',
@@ -1219,8 +1119,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'ch.swisstopo.geologie-geotechnik-gk500-gesteinsklassierung',
                   'maxResolutionHint': 26458.32,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 26458.32,
               'type': 'WMS',
@@ -1228,33 +1128,27 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'legend': 'true',
-                'disclaimer': '<a href=\'http://www.geo.admin.ch/\'>Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>'
-              }
-            }
+                'disclaimer':
+                  "<a href='http://www.geo.admin.ch/'>Donn\u00e9es publiques de l'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>",
+              },
+            },
           ],
-          'metadata': {
-
-          }
-        }
+          'metadata': {},
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'Edit',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 73,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/edit.png',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/edit.png',
       'children': [
         {
           'name': 'Edit',
           'id': 72,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1268,8 +1162,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'line',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1279,8 +1173,8 @@ export default {
                 'identifierAttributeField': 'name',
                 'isChecked': true,
                 'legend': 'true',
-                'legendRule': 'Line'
-              }
+                'legendRule': 'Line',
+              },
             },
             {
               'layers': 'polygon',
@@ -1292,8 +1186,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'polygon',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1303,8 +1197,8 @@ export default {
                 'identifierAttributeField': 'name',
                 'isChecked': true,
                 'legend': 'true',
-                'legendRule': 'Polygon'
-              }
+                'legendRule': 'Polygon',
+              },
             },
             {
               'layers': 'point',
@@ -1316,33 +1210,32 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'point',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 113,
               'imageType': 'image/png',
               'metadata': {
-                'metadataUrl': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/htdocs/example.html',
+                'metadataUrl':
+                  'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/htdocs/example.html',
                 'isChecked': true,
                 'identifierAttributeField': 'name',
                 'legend': 'true',
-                'legendRule': 'Point'
-              }
-            }
+                'legendRule': 'Point',
+              },
+            },
           ],
           'metadata': {
             'isExpanded': true,
-            'disclaimer': 'Editing theme'
-          }
+            'disclaimer': 'Editing theme',
+          },
         },
         {
           'name': 'Snapping',
           'id': 164,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1355,18 +1248,16 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'point',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 154,
               'imageType': 'image/png',
               'metadata': {
-                'snappingConfig': {
-
-                }
-              }
+                'snappingConfig': {},
+              },
             },
             {
               'layers': 'line',
@@ -1377,18 +1268,16 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'line',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 155,
               'imageType': 'image/png',
               'metadata': {
-                'snappingConfig': {
-
-                }
-              }
+                'snappingConfig': {},
+              },
             },
             {
               'layers': 'polygon',
@@ -1399,30 +1288,24 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'polygon',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
               'id': 163,
               'imageType': 'image/png',
               'metadata': {
-                'snappingConfig': {
-
-                }
-              }
-            }
+                'snappingConfig': {},
+              },
+            },
           ],
-          'metadata': {
-
-          }
+          'metadata': {},
         },
         {
           'name': 'Snapping tollerance',
           'id': 165,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1435,8 +1318,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'point',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1444,9 +1327,9 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'snappingConfig': {
-                  'tolerance': 50
-                }
-              }
+                  'tolerance': 50,
+                },
+              },
             },
             {
               'layers': 'line',
@@ -1457,8 +1340,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'line',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1466,9 +1349,9 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'snappingConfig': {
-                  'tolerance': 50
-                }
-              }
+                  'tolerance': 50,
+                },
+              },
             },
             {
               'layers': 'polygon',
@@ -1479,8 +1362,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'polygon',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1488,21 +1371,17 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'snappingConfig': {
-                  'tolerance': 50
-                }
-              }
-            }
+                  'tolerance': 50,
+                },
+              },
+            },
           ],
-          'metadata': {
-
-          }
+          'metadata': {},
         },
         {
           'name': 'Snapping no edge',
           'id': 166,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1515,8 +1394,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'line',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1524,9 +1403,9 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'snappingConfig': {
-                  'edge': false
-                }
-              }
+                  'edge': false,
+                },
+              },
             },
             {
               'layers': 'polygon',
@@ -1537,8 +1416,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'polygon',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1546,21 +1425,17 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'snappingConfig': {
-                  'edge': false
-                }
-              }
-            }
+                  'edge': false,
+                },
+              },
+            },
           ],
-          'metadata': {
-
-          }
+          'metadata': {},
         },
         {
           'name': 'Snapping no vertex',
           'id': 167,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1573,8 +1448,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'line',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1582,9 +1457,9 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'snappingConfig': {
-                  'vertex': false
-                }
-              }
+                  'vertex': false,
+                },
+              },
             },
             {
               'layers': 'polygon',
@@ -1595,8 +1470,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'polygon',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1604,34 +1479,29 @@ export default {
               'imageType': 'image/png',
               'metadata': {
                 'snappingConfig': {
-                  'vertex': false
-                }
-              }
-            }
+                  'vertex': false,
+                },
+              },
+            },
           ],
-          'metadata': {
-
-          }
-        }
+          'metadata': {},
+        },
       ],
       'metadata': {
-        'disclaimer': 'Editing theme'
-      }
+        'disclaimer': 'Editing theme',
+      },
     },
     {
       'name': 'Administration',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 5,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/administration.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/administration.jpeg',
       'children': [
         {
           'name': 'Administration',
           'id': 6,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1644,8 +1514,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'hospitals',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1656,8 +1526,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'H\u00f4pital',
                 'legend': 'false',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'firestations',
@@ -1668,8 +1538,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'firestations',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1679,33 +1549,28 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'legendRule': 'Casernes de pompiers',
                 'legend': 'false',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
           'metadata': {
-            'isExpanded': true
-          }
-        }
+            'isExpanded': true,
+          },
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'Enseignement',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 92,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement2.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/enseignement2.jpeg',
       'children': [
         {
           'name': 'Enseignement',
           'id': 93,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1718,8 +1583,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'bus_stop',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1729,33 +1594,26 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'legendRule': 'Arr\u00eat de bus',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
-          'metadata': {
-
-          }
-        }
+          'metadata': {},
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'Patrimoine',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 4,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/patrimoine.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/patrimoine.jpeg',
       'children': [
         {
           'name': 'Patrimoine',
           'id': 7,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1768,8 +1626,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'bank',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1780,8 +1638,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Banques',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'place_of_worship',
@@ -1792,8 +1650,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'place_of_worship',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1804,33 +1662,28 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Autre lieux de culte',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
           'metadata': {
-            'isExpanded': true
-          }
-        }
+            'isExpanded': true,
+          },
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'Gestion des eaux',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 3,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/gestion_eaux.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/gestion_eaux.jpeg',
       'children': [
         {
           'name': 'Gestion des eaux',
           'id': 8,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1843,8 +1696,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'tourism_activity',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1855,8 +1708,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Mus\u00e9e',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'fuel',
@@ -1867,8 +1720,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'fuel',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1879,33 +1732,28 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Station service',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
           'metadata': {
-            'isExpanded': true
-          }
-        }
+            'isExpanded': true,
+          },
+        },
       ],
-      'metadata': {
-
-      }
+      'metadata': {},
     },
     {
       'name': 'Paysage',
-      'functionalities': {
-
-      },
+      'functionalities': {},
       'id': 2,
-      'icon': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/paysage.jpeg',
+      'icon':
+        'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/paysage.jpeg',
       'children': [
         {
           'name': 'Paysage',
           'id': 9,
-          'dimensions': {
-
-          },
+          'dimensions': {},
           'mixed': false,
           'ogcServer': 'Main PNG',
           'children': [
@@ -1918,8 +1766,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'accommodation',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1930,8 +1778,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'H\u00f4tel',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'tourism_activity',
@@ -1942,8 +1790,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'tourism_activity',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1954,8 +1802,8 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Mus\u00e9e',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
             },
             {
               'layers': 'information',
@@ -1966,8 +1814,8 @@ export default {
                   'minResolutionHint': 0.0,
                   'name': 'information',
                   'maxResolutionHint': 999999999.0,
-                  'queryable': true
-                }
+                  'queryable': true,
+                },
               ],
               'maxResolutionHint': 999999999.0,
               'type': 'WMS',
@@ -1978,39 +1826,37 @@ export default {
                 'isChecked': true,
                 'legendRule': 'Informations',
                 'legend': 'true',
-                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap'
-              }
-            }
+                'disclaimer': '\u00a9 les contributeurs d\u2019OpenStreetMap',
+              },
+            },
           ],
           'metadata': {
-            'isExpanded': true
-          }
-        }
+            'isExpanded': true,
+          },
+        },
       ],
-      'metadata': {
-
-      }
-    }
+      'metadata': {},
+    },
   ],
   'background_layers': [
     {
       'layer': 'map',
-      'dimensions': {
-      },
+      'dimensions': {},
       'url': 'https://geomapfish-demo-2-4.camptocamp.com//tiles/1.0.0/WMTSCapabilities.xml?',
       'name': 'OSM',
       'type': 'WMTS',
       'id': 134,
       'imageType': 'image/jpeg',
       'metadata': {
-        'thumbnail': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
-      }
+        'thumbnail':
+          'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
+      },
     },
     {
       'layer': 'asitvd.fond_gris',
       'dimensions': {
         'DIM1': 'default',
-        'ELEVATION': '0'
+        'ELEVATION': '0',
       },
       'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
       'name': 'asitvd fond gris',
@@ -2018,14 +1864,15 @@ export default {
       'id': 132,
       'imageType': 'image/jpeg',
       'metadata': {
-        'thumbnail': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
-      }
+        'thumbnail':
+          'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
+      },
     },
     {
       'layer': 'asitvd.fond_couleur',
       'dimensions': {
         'DIM1': 'default',
-        'ELEVATION': '0'
+        'ELEVATION': '0',
       },
       'url': 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml',
       'name': 'asitvd fond couleur',
@@ -2033,12 +1880,12 @@ export default {
       'id': 133,
       'imageType': 'image/jpeg',
       'metadata': {
-        'thumbnail': 'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg'
-      }
-    }
+        'thumbnail':
+          'https://geomapfish-demo-2-4.camptocamp.com/static-cgxp/276bcfffd75a40debc73e47936bfe884/img/cadastre.jpeg',
+      },
+    },
   ],
-  'errors': [
-  ],
+  'errors': [],
   'ogcServers': {
     'WMS CH topo fr': {
       'url': 'https://wms.geo.admin.ch?lang=fr',
@@ -2046,23 +1893,27 @@ export default {
       'wfsSupport': false,
       'urlWfs': 'https://wms.geo.admin.ch?lang=fr',
       'type': 'mapserver',
-      'imageType': 'image/png'
+      'imageType': 'image/png',
     },
     'Main Jpeg': {
-      'url': 'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'url':
+        'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
       'isSingleTile': false,
       'wfsSupport': true,
-      'urlWfs': 'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'urlWfs':
+        'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+Jpeg&cache_version=276bcfffd75a40debc73e47936bfe884',
       'type': 'mapserver',
-      'imageType': 'image/jpeg'
+      'imageType': 'image/jpeg',
     },
     'Main PNG': {
-      'url': 'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'url':
+        'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
       'isSingleTile': false,
       'wfsSupport': true,
-      'urlWfs': 'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
+      'urlWfs':
+        'https://geomapfish-demo-2-4.camptocamp.com/mapserv_proxy?username=admin&ogcserver=Main+PNG&cache_version=276bcfffd75a40debc73e47936bfe884',
       'type': 'mapserver',
-      'imageType': 'image/png'
-    }
-  }
+      'imageType': 'image/png',
+    },
+  },
 };

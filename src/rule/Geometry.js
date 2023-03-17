@@ -4,7 +4,6 @@ import * as olEvents from 'ol/events.js';
 import olFeature from 'ol/Feature.js';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 
-
 /**
  * extends import('ngeo/rule/Rule.js').RuleOptions
  * @typedef {Object} GeometryOptions
@@ -21,12 +20,10 @@ import olFormatGeoJSON from 'ol/format/GeoJSON.js';
  * @property {number} [upperBoundary] (RuleOptions)
  */
 
-
 /**
  * @hidden
  */
 export default class extends ngeoRuleRule {
-
   /**
    * A rule bound to the geometry of a `ol.Feature` object. Changes made
    * to the geometry are applied to the `expression` property of the rule.
@@ -34,7 +31,6 @@ export default class extends ngeoRuleRule {
    * @param {!GeometryOptions} options Options.
    */
   constructor(options) {
-
     options.type = ngeoFormatAttributeType.GEOMETRY;
 
     super(options);
@@ -83,7 +79,6 @@ export default class extends ngeoRuleRule {
     );
 
     this.setGeometryFromExpression_();
-
   }
 
   // === Static property getters/setters ===
@@ -186,7 +181,6 @@ export default class extends ngeoRuleRule {
    * @private
    */
   registerGeometryChange_() {
-
     // (1) Unlisten
     if (this.geometryChangeListenerKey_ !== null) {
       olEvents.unlistenByKey(this.geometryChangeListenerKey_);
@@ -196,13 +190,7 @@ export default class extends ngeoRuleRule {
     // (2) Listen, if geom
     const geometry = this.feature_.getGeometry();
     if (geometry) {
-      this.geometryChangeListenerKey_ = olEvents.listen(
-        geometry,
-        'change',
-        this.handleGeometryChange_,
-        this
-      );
+      this.geometryChangeListenerKey_ = olEvents.listen(geometry, 'change', this.handleGeometryChange_, this);
     }
   }
-
 }

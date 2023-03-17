@@ -5,7 +5,6 @@ import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent.js';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -19,13 +18,11 @@ const module = angular.module('gmfapp', [
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 module.constant('gmfShortenerCreateUrl', appURL.SHORT_CREATE);
 
-
 /**
  * @constructor
  * @ngInject
  */
 function MainController() {
-
   /**
    * Model attached to the modal to toggle it
    * @type {boolean}
@@ -37,11 +34,8 @@ function MainController() {
    * @type {boolean}
    */
   this.modalShareShown = false;
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

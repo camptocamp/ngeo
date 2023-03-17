@@ -1,30 +1,30 @@
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('gmfLidarprofile', []);
 
-
-module.value('gmfLidarprofileTemplateUrl',
+module.value(
+  'gmfLidarprofileTemplateUrl',
   /**
-     * @param {!JQuery} $element Element.
-     * @param {!angular.IAttributes} $attrs Attributes.
-     * @return {string} Template.
-     */
+   * @param {!JQuery} $element Element.
+   * @param {!angular.IAttributes} $attrs Attributes.
+   * @return {string} Template.
+   */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfLidarprofileTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/lidarprofile';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/lidarprofile';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/lidarprofile', require('./component.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/lidarprofile', require('./component.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -38,7 +38,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function gmfLidarprofileTemplateUrl($element, $attrs, gmfLidarprofileTemplateUrl) {
   return gmfLidarprofileTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a component that display a lidar profile panel.
@@ -58,29 +57,26 @@ const lidarprofileComponent = {
   controller: 'GmfLidarprofileController',
   bindings: {
     'active': '=gmfLidarprofileActive',
-    'line': '=gmfLidarprofileLine'
+    'line': '=gmfLidarprofileLine',
   },
-  templateUrl: gmfLidarprofileTemplateUrl
+  templateUrl: gmfLidarprofileTemplateUrl,
 };
 
 module.component('gmfLidarprofile', lidarprofileComponent);
-
 
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @private
    * @ngInject
    * @ngdo controller
    * @ngname GmfLidarprofileController
-  */
+   */
   constructor($scope) {
-
     /**
      * The Openlayer LineStringt that defines the profile
      * @type {import("ol/geom/LineString.js").default}
@@ -100,12 +96,11 @@ class Controller {
         if (oldLine !== newLine) {
           this.active = !!this.line;
         }
-      });
+      }
+    );
   }
 }
 
-
 module.controller('GmfLidarprofileController', Controller);
-
 
 export default module;

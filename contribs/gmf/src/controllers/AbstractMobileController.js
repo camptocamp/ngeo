@@ -1,6 +1,8 @@
 import angular from 'angular';
-import gmfControllersAbstractAppController, {AbstractAppController, getLocationIcon}
-  from 'gmf/controllers/AbstractAppController.js';
+import gmfControllersAbstractAppController, {
+  AbstractAppController,
+  getLocationIcon,
+} from 'gmf/controllers/AbstractAppController.js';
 import gmfMobileMeasureModule from 'gmf/mobile/measure/module.js';
 import gmfMobileNavigationModule from 'gmf/mobile/navigation/module.js';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent.js';
@@ -34,53 +36,55 @@ export class AbstractMobileController extends AbstractAppController {
    */
   constructor(config, $scope, $injector) {
     const viewConfig = {
-      projection: olProj.get(`EPSG:${config.srid || 21781}`)
+      projection: olProj.get(`EPSG:${config.srid || 21781}`),
     };
     Object.assign(viewConfig, config.mapViewConfig || {});
 
-    super(config, new olMap({
-      pixelRatio: config.mapPixelRatio,
-      layers: [],
-      view: new olView(viewConfig),
-      controls: config.mapControls || [
-        new olControlScaleLine(),
-        new olControlZoom({
-          zoomInTipLabel: '',
-          zoomOutTipLabel: ''
-        }),
-        new olControlRotate({
-          label: getLocationIcon(),
-          tipLabel: ''
-        })
-      ],
-      interactions:
-          config.mapInteractions ||
-          olInteraction.defaults({pinchRotate: true})
-    }), $scope, $injector);
-
+    super(
+      config,
+      new olMap({
+        pixelRatio: config.mapPixelRatio,
+        layers: [],
+        view: new olView(viewConfig),
+        controls: config.mapControls || [
+          new olControlScaleLine(),
+          new olControlZoom({
+            zoomInTipLabel: '',
+            zoomOutTipLabel: '',
+          }),
+          new olControlRotate({
+            label: getLocationIcon(),
+            tipLabel: '',
+          }),
+        ],
+        interactions: config.mapInteractions || olInteraction.defaults({pinchRotate: true}),
+      }),
+      $scope,
+      $injector
+    );
 
     /**
      * @type {import("ol/style/Style.js").default}
      */
     this.customMeasureStyle = new olStyleStyle({
       fill: new olStyleFill({
-        color: 'rgba(255, 128, 128, 0.2)'
+        color: 'rgba(255, 128, 128, 0.2)',
       }),
       stroke: new olStyleStroke({
         color: 'rgba(255, 0, 0, 0.5)',
         lineDash: [10, 10],
-        width: 2
+        width: 2,
       }),
       image: new olStyleRegularShape({
         stroke: new olStyleStroke({
           color: 'rgba(255, 0, 0, 0.7)',
-          width: 2
+          width: 2,
         }),
         points: 4,
         radius: 8,
         radius2: 0,
-        angle: 0
-      })
+        angle: 0,
+      }),
     });
 
     /**
@@ -102,26 +106,30 @@ export class AbstractMobileController extends AbstractAppController {
      * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
      */
     this.searchListeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
-      open: function() {
+      open: function () {
         this.searchOverlayVisible = true;
       }.bind(this),
-      close: function() {
+      close: function () {
         this.searchOverlayVisible = false;
-      }.bind(this)
+      }.bind(this),
     });
 
-    const positionFeatureStyle = config.positionFeatureStyle || new olStyleStyle({
-      image: new olStyleCircle({
-        radius: 6,
-        fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
-        stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2})
-      })
-    });
+    const positionFeatureStyle =
+      config.positionFeatureStyle ||
+      new olStyleStyle({
+        image: new olStyleCircle({
+          radius: 6,
+          fill: new olStyleFill({color: 'rgba(230, 100, 100, 1)'}),
+          stroke: new olStyleStroke({color: 'rgba(230, 40, 40, 1)', width: 2}),
+        }),
+      });
 
-    const accuracyFeatureStyle = config.accuracyFeatureStyle || new olStyleStyle({
-      fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
-      stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2})
-    });
+    const accuracyFeatureStyle =
+      config.accuracyFeatureStyle ||
+      new olStyleStyle({
+        fill: new olStyleFill({color: 'rgba(100, 100, 230, 0.3)'}),
+        stroke: new olStyleStroke({color: 'rgba(40, 40, 230, 1)', width: 2}),
+      });
 
     /**
      * @type {import('ngeo/geolocation/mobile.js').MobileGeolocationDirectiveOptions}
@@ -130,18 +138,21 @@ export class AbstractMobileController extends AbstractAppController {
       positionFeatureStyle: positionFeatureStyle,
       accuracyFeatureStyle: accuracyFeatureStyle,
       zoom: config.geolocationZoom,
-      autorotate: config.autorotate
+      autorotate: config.autorotate,
     };
 
     this.manageResize = true;
     this.resizeTransition = 500;
 
     // Close right nave on successful login.
-    $scope.$watch(() => this.gmfUser.username, (newVal) => {
-      if (newVal !== null && this.navIsVisible()) {
-        this.rightNavVisible = false;
+    $scope.$watch(
+      () => this.gmfUser.username,
+      (newVal) => {
+        if (newVal !== null && this.navIsVisible()) {
+          this.rightNavVisible = false;
+        }
       }
-    });
+    );
 
     /**
      * @const {string}
@@ -208,8 +219,7 @@ module.controller('AbstractMobileController', AbstractMobileController);
 module.value('isMobile', true);
 
 module.value('ngeoQueryOptions', {
-  'tolerance': 10
+  'tolerance': 10,
 });
-
 
 export default module;

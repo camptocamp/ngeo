@@ -1,22 +1,16 @@
 import olFormatXML from 'ol/format/XML.js';
 import * as olXml from 'ol/xml.js';
 
-
 /**
  * @private
  * @hidden
  * @type {Array.<string>}
  */
-const NAMESPACE_URIS_ = [
-  null,
-  'http://www.w3.org/2001/XMLSchema'
-];
-
+const NAMESPACE_URIS_ = [null, 'http://www.w3.org/2001/XMLSchema'];
 
 /**
  * @typedef {Object.<string, import("ol/xml.js").Parser>} parserStructure
  */
-
 
 /**
  * typedef {Object.<string, parserStructure>} parsersStructure
@@ -31,7 +25,9 @@ const NAMESPACE_URIS_ = [
  * @hidden
  */
 function makeStructureNS(namespaceURIs, structure) {
-  return /** @type {parsersStructure} */(/** @type {any} */(olXml.makeStructureNS(namespaceURIs, structure)));
+  return /** @type {parsersStructure} */ (
+    /** @type {any} */ (olXml.makeStructureNS(namespaceURIs, structure))
+  );
 }
 
 /**
@@ -39,61 +35,46 @@ function makeStructureNS(namespaceURIs, structure) {
  * @private
  * @hidden
  */
-const PARSERS_ = makeStructureNS(
-  NAMESPACE_URIS_, {
-    element: olXml.makeObjectPropertyPusher(readElement_),
-    complexType: olXml.makeObjectPropertyPusher(readComplexType_)
-  }
-);
-
+const PARSERS_ = makeStructureNS(NAMESPACE_URIS_, {
+  element: olXml.makeObjectPropertyPusher(readElement_),
+  complexType: olXml.makeObjectPropertyPusher(readComplexType_),
+});
 
 /**
  * @type {parsersStructure}
  * @private
  * @hidden
  */
-const COMPLEX_TYPE_PARSERS_ = makeStructureNS(
-  NAMESPACE_URIS_, {
-    complexContent: olXml.makeObjectPropertySetter(readComplexContent_)
-  }
-);
-
+const COMPLEX_TYPE_PARSERS_ = makeStructureNS(NAMESPACE_URIS_, {
+  complexContent: olXml.makeObjectPropertySetter(readComplexContent_),
+});
 
 /**
  * @type {parsersStructure}
  * @private
  * @hidden
  */
-const COMPLEX_CONTENT_PARSERS_ = makeStructureNS(
-  NAMESPACE_URIS_, {
-    extension: olXml.makeObjectPropertySetter(readExtension_)
-  }
-);
-
+const COMPLEX_CONTENT_PARSERS_ = makeStructureNS(NAMESPACE_URIS_, {
+  extension: olXml.makeObjectPropertySetter(readExtension_),
+});
 
 /**
  * @type {parsersStructure}
  * @private
  * @hidden
  */
-const EXTENSION_PARSERS_ = makeStructureNS(
-  NAMESPACE_URIS_, {
-    sequence: olXml.makeObjectPropertySetter(readSequence_)
-  }
-);
-
+const EXTENSION_PARSERS_ = makeStructureNS(NAMESPACE_URIS_, {
+  sequence: olXml.makeObjectPropertySetter(readSequence_),
+});
 
 /**
  * @type {parsersStructure}
  * @private
  * @hidden
  */
-const SEQUENCE_PARSERS_ = makeStructureNS(
-  NAMESPACE_URIS_, {
-    element: olXml.makeObjectPropertyPusher(readElement_)
-  }
-);
-
+const SEQUENCE_PARSERS_ = makeStructureNS(NAMESPACE_URIS_, {
+  element: olXml.makeObjectPropertyPusher(readElement_),
+});
 
 /**
  * Format for reading WFS DescribeFeatureType data.
@@ -106,7 +87,6 @@ class WFSDescribeFeatureType extends olFormatXML {
   }
 }
 
-
 /**
  * Read a WFS DescribeFeatureType document.
  *
@@ -116,11 +96,10 @@ class WFSDescribeFeatureType extends olFormatXML {
  */
 WFSDescribeFeatureType.prototype.read;
 
-
 /**
  * @inheritDoc
  */
-WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
+WFSDescribeFeatureType.prototype.readFromDocument = function (doc) {
   for (let n = doc.firstChild; n; n = n.nextSibling) {
     if (n.nodeType == Node.ELEMENT_NODE) {
       return this.readFromNode(n);
@@ -129,21 +108,14 @@ WFSDescribeFeatureType.prototype.readFromDocument = function(doc) {
   return null;
 };
 
-
 /**
  * @inheritDoc
  */
-WFSDescribeFeatureType.prototype.readFromNode = function(node) {
+WFSDescribeFeatureType.prototype.readFromNode = function (node) {
   let result = {};
-  result = olXml.pushParseAndPop(
-    result,
-    PARSERS_,
-    node,
-    []
-  );
+  result = olXml.pushParseAndPop(result, PARSERS_, node, []);
   return result;
 };
-
 
 /**
  * @private
@@ -166,7 +138,6 @@ function readElement_(node, objectStack) {
   return attributes;
 }
 
-
 /**
  * @private
  * @hidden
@@ -176,17 +147,11 @@ function readElement_(node, objectStack) {
  */
 function readComplexType_(node, objectStack) {
   const name = node.getAttribute('name');
-  const object = olXml.pushParseAndPop(
-    {'name': name},
-    COMPLEX_TYPE_PARSERS_,
-    node, objectStack
-  );
+  const object = olXml.pushParseAndPop({'name': name}, COMPLEX_TYPE_PARSERS_, node, objectStack);
   // flatten
-  object['complexContent'] =
-    object['complexContent']['extension']['sequence']['element'];
+  object['complexContent'] = object['complexContent']['extension']['sequence']['element'];
   return object;
 }
-
 
 /**
  * @private
@@ -195,17 +160,9 @@ function readComplexType_(node, objectStack) {
  * @param {Array.<*>} objectStack Object stack.
  * @return {!Object.<string, string>} Object.
  */
-function readComplexContent_(
-  node, objectStack
-) {
-  return olXml.pushParseAndPop(
-    {},
-    COMPLEX_CONTENT_PARSERS_,
-    node,
-    objectStack
-  );
+function readComplexContent_(node, objectStack) {
+  return olXml.pushParseAndPop({}, COMPLEX_CONTENT_PARSERS_, node, objectStack);
 }
-
 
 /**
  * @private
@@ -215,14 +172,8 @@ function readComplexContent_(
  * @return {!Object.<string, string>} Object.
  */
 function readExtension_(node, objectStack) {
-  return olXml.pushParseAndPop(
-    {},
-    EXTENSION_PARSERS_,
-    node,
-    objectStack
-  );
+  return olXml.pushParseAndPop({}, EXTENSION_PARSERS_, node, objectStack);
 }
-
 
 /**
  * @private
@@ -232,13 +183,7 @@ function readExtension_(node, objectStack) {
  * @return {!Object.<string, string>} Object.
  */
 function readSequence_(node, objectStack) {
-  return olXml.pushParseAndPop(
-    {},
-    SEQUENCE_PARSERS_,
-    node,
-    objectStack
-  );
+  return olXml.pushParseAndPop({}, SEQUENCE_PARSERS_, node, objectStack);
 }
-
 
 export default WFSDescribeFeatureType;

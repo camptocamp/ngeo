@@ -1,4 +1,4 @@
-@import "search.scss";
+@import 'search.scss';
 
 gmf-search {
   font-size: 1rem;
@@ -8,14 +8,14 @@ gmf-search {
 }
 
 // Overrides for tablet devices and up
-@media (min-width: map-get($grid-breakpoints, "sm")) {
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
   gmf-search {
     left: 2 * $app-margin + $map-tools-size;
   }
 }
 
 // Overrides for phone devices only
-@media (max-width: map-get($grid-breakpoints, "sm")) {
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
   gmf-search {
     left: 0;
     right: 0;

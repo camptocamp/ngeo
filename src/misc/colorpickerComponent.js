@@ -1,14 +1,13 @@
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoColorpicker', []);
 
-
-module.value('ngeoColorpickerTemplateUrl',
+module.value(
+  'ngeoColorpickerTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -16,15 +15,16 @@ module.value('ngeoColorpickerTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoColorpickerTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/misc/colorpickerComponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/misc/colorpickerComponent';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
+  }
+);
 
 /**
  * Provides the "ngeoColorpicker" directive, a widget for
@@ -48,11 +48,11 @@ function colorPickerComponent(ngeoColorpickerTemplateUrl) {
     restrict: 'A',
     scope: {
       colors: '<?ngeoColorpicker',
-      color: '=?ngeoColorpickerColor'
+      color: '=?ngeoColorpickerColor',
     },
     controller: 'NgeoColorpickerController as ctrl',
     bindToController: true,
-    templateUrl: ngeoColorpickerTemplateUrl
+    templateUrl: ngeoColorpickerTemplateUrl,
   };
 }
 
@@ -66,14 +66,36 @@ module.directive('ngeoColorpicker', colorPickerComponent);
  */
 const DEFAULT_COLORS = [
   [
-    '#F4EB37', '#CDDC39', '#62AF44', '#009D57', '#0BA9CC', '#4186F0', '#3F5BA9', '#7C3592', '#A61B4A',
-    '#DB4436', '#F8971B', '#F4B400', '#795046'
+    '#F4EB37',
+    '#CDDC39',
+    '#62AF44',
+    '#009D57',
+    '#0BA9CC',
+    '#4186F0',
+    '#3F5BA9',
+    '#7C3592',
+    '#A61B4A',
+    '#DB4436',
+    '#F8971B',
+    '#F4B400',
+    '#795046',
   ],
   [
-    '#F9F7A6', '#E6EEA3', '#B7DBAB', '#7CCFA9', '#93D7E8', '#9FC3FF', '#A7B5D7', '#C6A4CF', '#D698AD',
-    '#EE9C96', '#FAD199', '#FFDD5E', '#B29189'
+    '#F9F7A6',
+    '#E6EEA3',
+    '#B7DBAB',
+    '#7CCFA9',
+    '#93D7E8',
+    '#9FC3FF',
+    '#A7B5D7',
+    '#C6A4CF',
+    '#D698AD',
+    '#EE9C96',
+    '#FAD199',
+    '#FFDD5E',
+    '#B29189',
   ],
-  ['#ffffff', '#CCCCCC', '#777', '#000000']
+  ['#ffffff', '#CCCCCC', '#777', '#000000'],
 ];
 
 /**
@@ -85,7 +107,6 @@ const DEFAULT_COLORS = [
  * @ngname NgeoScaleselectorController
  */
 function Controller() {
-
   /**
    * The set of color
    * @type {Array.<Array.<string>>}
@@ -102,11 +123,10 @@ function Controller() {
 /**
  * @param {string} color The color to select.
  */
-Controller.prototype.setColor = function(color) {
+Controller.prototype.setColor = function (color) {
   this.color = color;
 };
 
 module.controller('NgeoColorpickerController', Controller);
-
 
 export default module;

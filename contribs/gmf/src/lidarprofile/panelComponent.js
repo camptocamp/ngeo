@@ -7,7 +7,6 @@ import ngeoDownloadCsv from 'ngeo/download/Csv.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -21,8 +20,8 @@ const module = angular.module('gmfLidarprofilePanel', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-
-module.value('gmfLidarprofilePanelTemplateUrl',
+module.value(
+  'gmfLidarprofilePanelTemplateUrl',
   /**
    * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -30,15 +29,16 @@ module.value('gmfLidarprofilePanelTemplateUrl',
    */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfLidarprofilePanelTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/lidarprofilePanel';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/lidarprofilePanel';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/lidarprofilePanel', require('./panelComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/lidarprofilePanel', require('./panelComponent.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -53,7 +53,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function gmfLidarprofilePanelTemplateUrl($element, $attrs, gmfLidarprofilePanelTemplateUrl) {
   return gmfLidarprofilePanelTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a component that display a lidar profile panel.
@@ -78,21 +77,18 @@ const lidarprofilePanelComponent = {
   bindings: {
     'active': '=gmfLidarprofilePanelActive',
     'map': '<gmfLidarprofilePanelMap',
-    'line': '=gmfLidarprofilePanelLine'
+    'line': '=gmfLidarprofilePanelLine',
   },
-  templateUrl: gmfLidarprofilePanelTemplateUrl
+  templateUrl: gmfLidarprofilePanelTemplateUrl,
 };
 
-
 module.component('gmfLidarprofilePanel', lidarprofilePanelComponent);
-
 
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {angular.IScope} $scope Angular scope.
    * @param {import("gmf/lidarprofile/Manager.js").LidarprofileManager} gmfLidarprofileManager gmf
@@ -107,9 +103,7 @@ class Controller {
    * @ngdoc controller
    * @ngname gmfLidarprofilePanelController
    */
-  constructor($scope, gmfLidarprofileManager, gmfLidarprofileConfig, ngeoToolActivateMgr,
-    ngeoCsvDownload) {
-
+  constructor($scope, gmfLidarprofileManager, gmfLidarprofileConfig, ngeoToolActivateMgr, ngeoCsvDownload) {
     /**
      * @type {boolean}
      */
@@ -171,7 +165,8 @@ class Controller {
         if (oldValue !== newValue) {
           this.updateEventsListening_(newValue);
         }
-      });
+      }
+    );
 
     // Watch the line to update the profileData (data for the chart).
     $scope.$watch(
@@ -180,9 +175,9 @@ class Controller {
         if (oldLine !== newLine) {
           this.update_();
         }
-      });
+      }
+    );
   }
-
 
   /**
    * @private
@@ -190,7 +185,6 @@ class Controller {
   $onInit() {
     this.profile.init(this.profileConfig_, this.map);
   }
-
 
   /**
    * @private
@@ -201,7 +195,6 @@ class Controller {
       this.ngeoToolActivateMgr_.activateTool(this.tool);
     });
   }
-
 
   /**
    * @param {boolean} activate Activation state of the plugin
@@ -219,7 +212,6 @@ class Controller {
       this.ngeoToolActivateMgr_.deactivateTool(this.tool);
     }
   }
-
 
   /**
    * @private
@@ -245,7 +237,6 @@ class Controller {
     this.resetPlot();
   }
 
-
   /**
    * Activate the measure tool
    */
@@ -255,7 +246,6 @@ class Controller {
     this.profile.measure.setMeasureActive();
   }
 
-
   /**
    * Clear the current measure
    */
@@ -263,7 +253,6 @@ class Controller {
     this.measureActive = false;
     this.profile.measure.clearMeasure();
   }
-
 
   /**
    * Reload and reset the plot for the current profile (reloads data)
@@ -275,7 +264,6 @@ class Controller {
     }
   }
 
-
   /**
    * Get all available point attributes.
    * @return {Array<import("gmf/lidarprofile/Config.js").LidarprofileServerConfigPointAttributes>|undefined}
@@ -284,7 +272,6 @@ class Controller {
   getAvailablePointAttributes() {
     return this.profileConfig_.clientConfig.pointAttributes.availableOptions;
   }
-
 
   /**
    * Get / Set the selected point attribute
@@ -301,7 +288,6 @@ class Controller {
     return this.profileConfig_.clientConfig.pointAttributes.selectedOption;
   }
 
-
   /**
    * Get the available classifications for this dataset
    * @return {import("gmf/lidarprofile/Config.js").LidarprofileServerConfigClassifications}
@@ -310,7 +296,6 @@ class Controller {
   getClassification() {
     return this.profileConfig_.serverConfig.classification_colors;
   }
-
 
   /**
    * Sets the visible classification in the profile
@@ -321,11 +306,12 @@ class Controller {
   setClassification(classification, key) {
     this.profileConfig_.serverConfig.classification_colors[key].visible = classification.visible;
     if (this.line) {
-      this.profile.plot.setClassActive(this.profileConfig_.serverConfig.classification_colors,
-        this.profileConfig_.serverConfig.default_attribute);
+      this.profile.plot.setClassActive(
+        this.profileConfig_.serverConfig.classification_colors,
+        this.profileConfig_.serverConfig.default_attribute
+      );
     }
   }
-
 
   /**
    * Export the profile data to CSV file
@@ -342,7 +328,6 @@ class Controller {
     }
   }
 
-
   /**
    * Export the current d3 chart to PNG file
    */
@@ -353,8 +338,6 @@ class Controller {
   }
 }
 
-
 module.controller('gmfLidarprofilePanelController', Controller);
-
 
 export default module;

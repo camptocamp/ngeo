@@ -7,12 +7,10 @@
  * @property {MapFishPrintSMTP} [smtp] STMP object definition
  */
 
-
 /**
  * @typedef {Object} MapFishPrintAttributes
  * @property {MapFishPrintMap} map
  */
-
 
 /**
  * @typedef {Object} MapFishPrintMap
@@ -27,13 +25,11 @@
  *    equal to one of those defined in the configuration file.
  */
 
-
 /**
  * @typedef {Object} MapFishPrintLayer
  * @property {string} type
  * @property {number} opacity
  */
-
 
 /**
  * extends {MapFishPrintLayer}
@@ -44,12 +40,10 @@
  * @property {MapFishPrintVectorStyle} style
  */
 
-
 /**
  * @typedef {Object} MapFishPrintVectorStyle
  * @property {number} version
  */
-
 
 /**
  * extends {MapFishPrintLayer}
@@ -66,7 +60,6 @@
  * @property {string} imageFormat
  */
 
-
 /**
  * @typedef {Object} MapFishPrintWmtsMatrix
  * @property {string} identifier
@@ -75,7 +68,6 @@
  * @property {Array.<number>} topLeftCorner
  * @property {Array.<number>} matrixSize
  */
-
 
 /**
  * extends {MapFishPrintLayer}
@@ -94,14 +86,12 @@
  * @property {string} version
  */
 
-
 /**
  * @typedef {Object} MapFishPrintReportResponse
  * @property {string} ref
  * @property {string} [statusURL]
  * @property {string} [downloadURL]
  */
-
 
 /**
  * @typedef {Object} MapFishPrintStatusResponse
@@ -111,18 +101,15 @@
  * @property {string} [downloadURL]
  */
 
-
 /**
  * @typedef {Object} MapFishPrintSymbolizers
  * @property {Array.<MapFishPrintSymbolizer>} symbolizers
  */
 
-
 /**
  * @typedef {Object} MapFishPrintSymbolizer
  * @property {string} type
  */
-
 
 /**
  * extends {MapFishPrintSymbolizer}
@@ -134,7 +121,6 @@
  * @property {string} strokeDashstyle
  * @property {string} strokeLinecap
  */
-
 
 /**
  * extends {MapFishPrintSymbolizer}
@@ -155,7 +141,6 @@
  * @property {string} graphicName
  */
 
-
 /**
  * extends {MapFishPrintSymbolizer}
  * @typedef {Object} MapFishPrintSymbolizerPolygon
@@ -167,7 +152,6 @@
  * @property {number} strokeWidth
  * @property {string} strokeDashstyle
  */
-
 
 /**
  * extends {MapFishPrintSymbolizer}
@@ -188,12 +172,10 @@
  * @property {number} goodnessOfFit
  */
 
-
 /**
  * @typedef {Object} MapFishPrintSMTP
  * @property {string} to Email address
  */
-
 
 /**
  * @hidden

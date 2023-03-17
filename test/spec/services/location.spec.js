@@ -6,7 +6,7 @@ describe('ngeo.statemanager.Location', () => {
   beforeEach(() => {
     win = {
       'location': new URL('http://domain.com/some/path?some=param'),
-      'history': {'replaceState': function() {}}
+      'history': {'replaceState': function () {}},
     };
     spyOn(win.history, 'replaceState');
     angular.mock.module(($provide) => {
@@ -114,7 +114,10 @@ describe('ngeo.statemanager.Location', () => {
     it('calls history.replaceState with expected args', () => {
       ngeoLocation.refresh();
       expect(win.history.replaceState).toHaveBeenCalledWith(
-        null, '', 'http://domain.com/some/path?some=param');
+        null,
+        '',
+        'http://domain.com/some/path?some=param'
+      );
     });
   });
 
@@ -123,7 +126,7 @@ describe('ngeo.statemanager.Location', () => {
       // change url to 'http://domain.com/some/path?some=param#key1=value1&key2=2'
       ngeoLocation.updateFragmentParams({
         'key1': 'value1',
-        'key2': '2'
+        'key2': '2',
       });
     });
 

@@ -3,7 +3,6 @@ import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes.js';
 import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
 
-
 /**
  * @enum {string}
  * @hidden
@@ -12,9 +11,8 @@ export const ThemeEventType = {
   /**
    * Triggered when the theme name change.
    */
-  THEME_NAME_SET: 'gmf-thememanager-theme_name_set'
+  THEME_NAME_SET: 'gmf-thememanager-theme_name_set',
 };
-
 
 /**
  * Manage a tree with children. This service can be used in mode 'flush'
@@ -40,9 +38,13 @@ export const ThemeEventType = {
  * @ngname gmfTreeManager
  * @hidden
  */
-export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlush,
-  gmfTreeManager, ngeoStateManager) {
-
+export function ThemeManagerService(
+  $rootScope,
+  gmfThemes,
+  gmfTreeManagerModeFlush,
+  gmfTreeManager,
+  ngeoStateManager
+) {
   /**
    * @type {angular.IScope}
    * @private
@@ -79,7 +81,6 @@ export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlu
   this.themeName_ = '';
 }
 
-
 /**
  * Set the current theme name (mode 'flush' only) and add its children. Add
  * only groups that are not already in the tree.
@@ -87,10 +88,10 @@ export function ThemeManagerService($rootScope, gmfThemes, gmfTreeManagerModeFlu
  * @param {boolean=} opt_silent if true it will be no user message if
  *     the theme should be added but it's already added.
  */
-ThemeManagerService.prototype.addTheme = function(theme, opt_silent) {
+ThemeManagerService.prototype.addTheme = function (theme, opt_silent) {
   if (this.modeFlush) {
     this.ngeoStateManager_.updateState({
-      'theme': theme.name
+      'theme': theme.name,
     });
     this.setThemeName(theme.name);
     this.gmfTreeManager_.setFirstLevelGroups(theme.children);
@@ -99,22 +100,19 @@ ThemeManagerService.prototype.addTheme = function(theme, opt_silent) {
   }
 };
 
-
 /**
  * @return {string} The theme name. Will be empty on 'not flush' mode.
  */
-ThemeManagerService.prototype.getThemeName = function() {
+ThemeManagerService.prototype.getThemeName = function () {
   return this.themeName_;
 };
-
 
 /**
  * @return {boolean} true if the theme is loading.
  */
-ThemeManagerService.prototype.isLoading = function() {
+ThemeManagerService.prototype.isLoading = function () {
   return !this.gmfThemes_.loaded;
 };
-
 
 /**
  * @param {string} themeName wanted theme name.
@@ -122,7 +120,7 @@ ThemeManagerService.prototype.isLoading = function() {
  * @param {boolean=} opt_silent if true notifyCantAddGroups_ is not called.
  * @export
  */
-ThemeManagerService.prototype.updateCurrentTheme = function(themeName, fallbackThemeName, opt_silent) {
+ThemeManagerService.prototype.updateCurrentTheme = function (themeName, fallbackThemeName, opt_silent) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     if (!themeName && this.modeFlush) {
       // In flush mode load current theme private groups
@@ -143,26 +141,23 @@ ThemeManagerService.prototype.updateCurrentTheme = function(themeName, fallbackT
   });
 };
 
-
 /**
  * @param {string} name The new theme name.
  * @param {boolean=} opt_silent Don't emit a theme change event, default is false.
  */
-ThemeManagerService.prototype.setThemeName = function(name, opt_silent) {
+ThemeManagerService.prototype.setThemeName = function (name, opt_silent) {
   this.themeName_ = name;
   if (!opt_silent) {
     this.$rootScope_.$emit(ThemeEventType.THEME_NAME_SET, name);
   }
 };
 
-
 /**
  * Remove all groups.
  */
-ThemeManagerService.prototype.removeAll = function() {
+ThemeManagerService.prototype.removeAll = function () {
   this.gmfTreeManager_.removeAll();
 };
-
 
 /**
  * @type {!angular.IModule}
@@ -180,6 +175,5 @@ const module = angular.module('gmfThemeManager', [
 module.value('gmfTreeManagerModeFlush', true);
 
 module.service('gmfThemeManager', ThemeManagerService);
-
 
 export default module;

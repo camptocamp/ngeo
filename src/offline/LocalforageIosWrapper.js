@@ -23,12 +23,11 @@ const exports = class IosWrapper extends AbstractWrapper {
    */
   receiveFromIos(actionString) {
     const action = JSON.parse(actionString);
-    action['args'] = (action['args'] || []).map(item => JSON.parse(item));
+    action['args'] = (action['args'] || []).map((item) => JSON.parse(item));
     this.receiveMessage({
-      'data': action
+      'data': action,
     });
   }
 };
-
 
 export default exports;
