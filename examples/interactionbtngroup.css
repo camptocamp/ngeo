@@ -1,10 +1,9 @@
-
 #map {
   width: 800px;
   height: 400px;
 }
 
 [ngeo-btn] {
-    width: 100px;
-    margin: 5px;
+  width: 100px;
+  margin: 5px;
 }

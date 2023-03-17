@@ -30,55 +30,57 @@
  * @hidden
  */
 function syncArrays(arr1, arr2, reverse, scope, filter) {
-
-
   // Update arr2 when elements are added to, or removed from, arr1.
 
-  const dereg1 = scope.$watchCollection(() => arr1, () => {
-    let i, ii, j;
-    if (reverse) {
-      for (i = arr1.length - 1, j = 0; i >= 0; --i) {
-        if (filter(arr1[i])) {
-          arr2[j++] = arr1[i];
+  const dereg1 = scope.$watchCollection(
+    () => arr1,
+    () => {
+      let i, ii, j;
+      if (reverse) {
+        for (i = arr1.length - 1, j = 0; i >= 0; --i) {
+          if (filter(arr1[i])) {
+            arr2[j++] = arr1[i];
+          }
+        }
+      } else {
+        for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
+          if (filter(arr1[i])) {
+            arr2[j++] = arr1[i];
+          }
         }
       }
-    } else {
-      for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
-        if (filter(arr1[i])) {
-          arr2[j++] = arr1[i];
-        }
-      }
+      arr2.length = j;
     }
-    arr2.length = j;
-  });
-
+  );
 
   // Update arr1 when the order of elements changes in arr2.
 
-  const dereg2 = scope.$watchCollection(() => arr2, () => {
-    let i, ii, j;
-    if (reverse) {
-      for (i = 0, ii = arr1.length, j = arr2.length - 1; i < ii; ++i) {
-        if (filter(arr1[i])) {
-          arr1[i] = arr2[j--];
+  const dereg2 = scope.$watchCollection(
+    () => arr2,
+    () => {
+      let i, ii, j;
+      if (reverse) {
+        for (i = 0, ii = arr1.length, j = arr2.length - 1; i < ii; ++i) {
+          if (filter(arr1[i])) {
+            arr1[i] = arr2[j--];
+          }
         }
-      }
-      console.assert(j == -1);
-    } else {
-      for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
-        if (filter(arr1[i])) {
-          arr1[i] = arr2[j++];
+        console.assert(j == -1);
+      } else {
+        for (i = 0, ii = arr1.length, j = 0; i < ii; ++i) {
+          if (filter(arr1[i])) {
+            arr1[i] = arr2[j++];
+          }
         }
+        console.assert(j == arr2.length);
       }
-      console.assert(j == arr2.length);
     }
-  });
+  );
 
-  return function() {
+  return function () {
     dereg1();
     dereg2();
   };
 }
-
 
 export default syncArrays;

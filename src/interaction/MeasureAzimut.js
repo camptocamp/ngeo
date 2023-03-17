@@ -1,7 +1,6 @@
 import ngeoInteractionDrawAzimut from 'ngeo/interaction/DrawAzimut.js';
 import ngeoInteractionMeasure, {getFormattedLength} from 'ngeo/interaction/Measure.js';
 
-
 /**
  * Interaction dedicated to measure length.
  *
@@ -45,12 +44,10 @@ export default class extends ngeoInteractionMeasure {
   /**
    * @inheritDoc
    */
-  createDrawInteraction(style,
-    source) {
-
+  createDrawInteraction(style, source) {
     return new ngeoInteractionDrawAzimut({
       source,
-      style
+      style,
     });
   }
 
@@ -59,15 +56,19 @@ export default class extends ngeoInteractionMeasure {
    */
   handleMeasure(callback) {
     const geom = this.sketchFeature.getGeometry();
-    const line = /** @type {import('ol/geom/LineString.js').default} */(
-      /** @type {import('ol/geom/GeometryCollection.js').default} */(geom).getGeometries()[0]
+    const line = /** @type {import('ol/geom/LineString.js').default} */ (
+      /** @type {import('ol/geom/GeometryCollection.js').default} */ (geom).getGeometries()[0]
     );
     const output = getFormattedAzimutRadius(
-      line, this.getMap().getView().getProjection(),
-      this.decimals, this.precision, this.unitPrefixFormat, this.numberFormat);
+      line,
+      this.getMap().getView().getProjection(),
+      this.decimals,
+      this.precision,
+      this.unitPrefixFormat,
+      this.numberFormat
+    );
     callback(output, line.getLastCoordinate());
   }
-
 }
 
 /**
@@ -82,9 +83,8 @@ export function getAzimut(line) {
   const dy = coords[1][1] - coords[0][1];
   const rad = Math.acos(dy / Math.sqrt(dx * dx + dy * dy));
   const factor = dx > 0 ? 1 : -1;
-  return (factor * rad * 180 / Math.PI) % 360;
+  return ((factor * rad * 180) / Math.PI) % 360;
 }
-
 
 /**
  * Format measure output of azimut.
@@ -111,9 +111,7 @@ function getFormattedAzimut(line, decimals, format) {
  * @return {string} Formatted measure.
  * @hidden
  */
-export function getFormattedAzimutRadius(
-  line, projection, decimals, precision, formatLength, formatAzimut) {
-
+export function getFormattedAzimutRadius(line, projection, decimals, precision, formatLength, formatAzimut) {
   let output = getFormattedAzimut(line, decimals, formatAzimut);
 
   output += `, ${getFormattedLength(line, projection, precision, formatLength)}`;

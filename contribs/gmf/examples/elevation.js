@@ -10,23 +10,16 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfapp', [
-  'gettext',
-  gmfMapComponent.name,
-  gmfRasterModule.name,
-]);
-
+const module = angular.module('gmfapp', ['gettext', gmfMapComponent.name, gmfRasterModule.name]);
 
 module.value('gmfRasterUrl', appURL.RASTER);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -49,19 +42,18 @@ function MainController() {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [600000, 200000],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

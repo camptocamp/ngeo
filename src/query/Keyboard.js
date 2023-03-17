@@ -3,12 +3,10 @@ import ngeoQueryAction from 'ngeo/query/Action.js';
 
 import {listen as olEventsListen} from 'ol/events.js';
 
-
 /**
  * @hidden
  */
 export class QueryKeyboard {
-
   /**
    * Listens to the keyboard `keydown` and `keyup` events to keep
    * track of the query action to do depending on the key being
@@ -16,7 +14,6 @@ export class QueryKeyboard {
    * @param {angular.IScope} $rootScope .
    */
   constructor($rootScope) {
-
     // Constants
 
     /**
@@ -112,14 +109,11 @@ export class QueryKeyboard {
   }
 }
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoQueryKeyboard', [
-]);
+const module = angular.module('ngeoQueryKeyboard', []);
 module.service('ngeoQueryKeyboard', QueryKeyboard);
-
 
 export default module;

@@ -2,34 +2,33 @@ import angular from 'angular';
 import ngeoSearchSearchDirective from 'ngeo/search/searchDirective.js';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRoutingNominatimInputComponent', [
   ngeoSearchSearchDirective.name,
-  ngeoRoutingNominatimService.name
+  ngeoRoutingNominatimService.name,
 ]);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
-});
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
+  }
+);
 
-
-module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
+module.value(
+  'ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoRoutingNominatimInputComponentTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/routing/nominatiminput';
+    return templateUrl !== undefined ? templateUrl : 'ngeo/routing/nominatiminput';
   }
 );
-
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -41,11 +40,11 @@ module.value('ngeoRoutingNominatimInputComponentTemplateUrl',
  * @hidden
  */
 function ngeoRoutingNominatimInputComponentTemplateUrl(
-  $attrs, ngeoRoutingNominatimInputComponentTemplateUrl
+  $attrs,
+  ngeoRoutingNominatimInputComponentTemplateUrl
 ) {
   return ngeoRoutingNominatimInputComponentTemplateUrl($attrs);
 }
-
 
 /**
  * @param {!JQuery} $element Element.
@@ -60,7 +59,6 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
  * @ngname NgeoNominatimInputController
  */
 function Controller($element, $scope, ngeoNominatimService) {
-
   /**
    * @type {!JQuery}
    * @private
@@ -91,30 +89,30 @@ function Controller($element, $scope, ngeoNominatimService) {
   /**
    * @type {Twitter.Typeahead.Options}
    */
-  this.options = /** @type {Twitter.Typeahead.Options} */ ({
-  });
+  this.options = /** @type {Twitter.Typeahead.Options} */ ({});
 
   /**
    * @type {Array.<Twitter.Typeahead.Dataset>}
    */
-  this.datasets = [/** @type {Twitter.Typeahead.Dataset} */({
-    name: 'nominatim',
-    display: 'name',
-    source: this.ngeoNominatimService.typeaheadSourceDebounced,
-  })];
+  this.datasets = [
+    /** @type {Twitter.Typeahead.Dataset} */ ({
+      name: 'nominatim',
+      display: 'name',
+      source: this.ngeoNominatimService.typeaheadSourceDebounced,
+    }),
+  ];
 
   /**
    * @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners}
    */
-  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */({
-    select: this.select_.bind(this)
+  this.listeners = /** @type {import('ngeo/search/searchDirective.js').SearchDirectiveListeners} */ ({
+    select: this.select_.bind(this),
   });
 
   /**
    * @type {string}
    */
   this.placeholder = '';
-
 }
 
 /**
@@ -124,7 +122,7 @@ function Controller($element, $scope, ngeoNominatimService) {
  * @private
  * @hidden
  */
-Controller.prototype.select_ = function(event, suggestion, dataset) {
+Controller.prototype.select_ = function (event, suggestion, dataset) {
   if (this.onSelect) {
     this.onSelect(suggestion);
   }
@@ -159,12 +157,11 @@ const routingNominatimInputComponent = {
   bindings: {
     'onSelect': '=?ngeoNominatimInputOnSelect',
     'inputValue': '=?ngeoNominatimInputValue',
-    'placeholder': '@?ngeoNominatimInputPlaceholder'
+    'placeholder': '@?ngeoNominatimInputPlaceholder',
   },
-  templateUrl: ngeoRoutingNominatimInputComponentTemplateUrl
+  templateUrl: ngeoRoutingNominatimInputComponentTemplateUrl,
 };
 
 module.component('ngeoNominatimInput', routingNominatimInputComponent);
-
 
 export default module;

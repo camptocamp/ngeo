@@ -2,70 +2,64 @@ import angular from 'angular';
 import GridConfig from 'ngeo/grid/Config.js';
 
 describe('ngeo.grid.component', () => {
-
   let gridController;
   let $scope;
   let $rootScope;
 
-  beforeEach(angular.mock.inject((_$controller_, _$rootScope_) => {
-    const $controller = _$controller_;
-    $rootScope = _$rootScope_;
-    $scope = $rootScope.$new();
+  beforeEach(
+    angular.mock.inject((_$controller_, _$rootScope_) => {
+      const $controller = _$controller_;
+      $rootScope = _$rootScope_;
+      $scope = $rootScope.$new();
 
-    const gridConfigData = [
-      {
-        'name': 'row_1',
-        'display_name': 'Row 1',
-        'type': 12,
-        'timestamp': '2010-11-09T22:56:26Z'
-      },
-      {
-        'name': 'row_2',
-        'display_name': 'Row 2',
-        'type': 121,
-        'timestamp': '2010-11-07T22:56:26Z'
-      },
-      {
-        'name': 'row_3',
-        'display_name': 'Row 3',
-        'type': 7,
-        'timestamp': '2010-11-03T22:56:26Z'
-      },
-      {
-        'name': 'row_4',
-        'display_name': 'Row 3',
-        'type': 7,
-        'timestamp': '2010-11-03T22:56:26Z'
-      },
-      {
-        'name': 'row_4',
-        'display_name': 'Row 4',
-        'type': 5,
-        'timestamp': '2010-11-19T22:56:26Z'
-      },
-      {
-        'name': 'row_5',
-        'display_name': 'Row 5',
-        'type': 23,
-        'timestamp': '2010-11-23T22:56:26Z'
-      }
-    ];
-    const columnDefs = [
-      {name: 'name'},
-      {name: 'display_name'},
-      {name: 'timestamp'},
-      {name: 'type'}
-    ];
+      const gridConfigData = [
+        {
+          'name': 'row_1',
+          'display_name': 'Row 1',
+          'type': 12,
+          'timestamp': '2010-11-09T22:56:26Z',
+        },
+        {
+          'name': 'row_2',
+          'display_name': 'Row 2',
+          'type': 121,
+          'timestamp': '2010-11-07T22:56:26Z',
+        },
+        {
+          'name': 'row_3',
+          'display_name': 'Row 3',
+          'type': 7,
+          'timestamp': '2010-11-03T22:56:26Z',
+        },
+        {
+          'name': 'row_4',
+          'display_name': 'Row 3',
+          'type': 7,
+          'timestamp': '2010-11-03T22:56:26Z',
+        },
+        {
+          'name': 'row_4',
+          'display_name': 'Row 4',
+          'type': 5,
+          'timestamp': '2010-11-19T22:56:26Z',
+        },
+        {
+          'name': 'row_5',
+          'display_name': 'Row 5',
+          'type': 23,
+          'timestamp': '2010-11-23T22:56:26Z',
+        },
+      ];
+      const columnDefs = [{name: 'name'}, {name: 'display_name'}, {name: 'timestamp'}, {name: 'type'}];
 
-    const data = {
-      configuration: new GridConfig(gridConfigData, columnDefs)
-    };
-    gridController = $controller(
-      'ngeoGridController', {$scope}, data);
-  }));
+      const data = {
+        configuration: new GridConfig(gridConfigData, columnDefs),
+      };
+      gridController = $controller('ngeoGridController', {$scope}, data);
+    })
+  );
 
   describe('#sort', () => {
-
     it('sorts a column', () => {
       const data = gridController.configuration.data;
 
@@ -77,11 +71,9 @@ describe('ngeo.grid.component', () => {
       gridController.sort('type');
       expect(data[0]['name']).toBe('row_2');
     });
-
   });
 
   describe('#selectRow_', () => {
-
     it('selects a row', () => {
       const data = gridController.configuration.data;
 
@@ -282,7 +274,6 @@ describe('ngeo.grid.component', () => {
   });
 
   describe('#selectAll', () => {
-
     it('selects and unselects all rows', () => {
       const data = gridController.configuration.data;
 
@@ -296,11 +287,9 @@ describe('ngeo.grid.component', () => {
         expect(gridController.configuration.isRowSelected(row)).toBe(false);
       });
     });
-
   });
 
   describe('#invertSelection', () => {
-
     it('inverts a selection', () => {
       const data = gridController.configuration.data;
 
@@ -310,6 +299,5 @@ describe('ngeo.grid.component', () => {
       expect(gridController.configuration.isRowSelected(data[1])).toBe(true);
       expect(gridController.configuration.isRowSelected(data[2])).toBe(true);
     });
-
   });
 });

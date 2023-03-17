@@ -1,6 +1,5 @@
 import angular from 'angular';
 
-
 /**
  * @typedef {Object.<number, !LidarprofileServerConfigClassification>}
  *     LidarprofileServerConfigClassifications
@@ -64,7 +63,6 @@ import angular from 'angular';
  * @property {number} [width] Width
  */
 
-
 /**
  * @hidden
  */
@@ -80,7 +78,6 @@ export class LidarprofileConfigService {
    * @ngname gmfLidarprofileConfig
    */
   constructor($http, pytreeLidarprofileJsonUrl) {
-
     /**
      * @type {angular.IHttpService}
      * @private
@@ -107,11 +104,11 @@ export class LidarprofileConfigService {
         'left': 40,
         'top': 10,
         'right': 200,
-        'bottom': 40
+        'bottom': 40,
       },
       pointAttributes: {},
       pointSum: 0,
-      tolerance: 5
+      tolerance: 5,
     };
 
     /**
@@ -121,14 +118,12 @@ export class LidarprofileConfigService {
     this.serverConfig = null;
   }
 
-
   /**
    * Initialize the service variables from Pytree profile_config_gmf2 route
    * @return {angular.IPromise} configuration values
    */
   initProfileConfig() {
     return this.$http_.get(`${this.pytreeLidarprofileJsonUrl}/profile/config`).then((resp) => {
-
       this.serverConfig = /** @type {import("gmf/lidarprofile/Config.js").LidarprofileServerConfig} */ ({
         classification_colors: resp.data['classification_colors'] || null,
         debug: !!resp.data['debug'],
@@ -142,7 +137,7 @@ export class LidarprofileConfigService {
         minLOD: resp.data['minLOD'] || 0,
         point_attributes: resp.data['point_attributes'] || null,
         point_size: resp.data['point_size'] || 0,
-        width: resp.data['width'] || 0
+        width: resp.data['width'] || 0,
       });
 
       const attr = [];
@@ -156,12 +151,11 @@ export class LidarprofileConfigService {
 
       this.clientConfig.pointAttributes = {
         availableOptions: attr,
-        selectedOption: selectedMat
+        selectedOption: selectedMat,
       };
     });
   }
 }
-
 
 /**
  * @type {!angular.IModule}

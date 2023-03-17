@@ -35,8 +35,7 @@ function factory() {
     // do a manual download with "Save as".
     // See also: https://github.com/eligrey/FileSaver.js/issues/12
     /** @type {string} */
-    const fileType = opt_fileType !== undefined && !isSafari() ?
-      opt_fileType : 'text/plain;charset=utf-8';
+    const fileType = opt_fileType !== undefined && !isSafari() ? opt_fileType : 'text/plain;charset=utf-8';
 
     const blob = new Blob(
       [
@@ -52,6 +51,5 @@ function factory() {
 }
 
 module.factory('ngeoDownload', factory);
-
 
 export default module;

@@ -8,6 +8,4 @@ import './contextualdata.scss';
 /**
  * @type {!angular.IModule}
  */
-export default angular.module('gmfContextualdataModule', [
-  gmfContextualdataComponent.name,
-]);
+export default angular.module('gmfContextualdataModule', [gmfContextualdataComponent.name]);

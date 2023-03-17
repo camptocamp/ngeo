@@ -1,11 +1,9 @@
 import angular from 'angular';
 
-
 /**
  * @hidden
  */
 export class EditingEnumerateAttributeService {
-
   /**
    * The EnumerateAttribute is responsible of fetching all possible of a given
    * attribute of a given data source (gmf layer).
@@ -17,7 +15,6 @@ export class EditingEnumerateAttributeService {
    * @ngname gmfEnumerateAttribute
    */
   constructor($http, gmfLayersUrl) {
-
     // === Injected services ===
 
     /**
@@ -49,8 +46,7 @@ export class EditingEnumerateAttributeService {
     const name = dataSource.name;
     if (!this.promises_[promiseId]) {
       const url = `${this.baseUrl_}/${name}/values/${attribute}`;
-      this.promises_[promiseId] = this.http_.get(url).then(
-        this.handleGetAttributeValues_.bind(this));
+      this.promises_[promiseId] = this.http_.get(url).then(this.handleGetAttributeValues_.bind(this));
     }
     return this.promises_[promiseId];
   }
@@ -61,13 +57,10 @@ export class EditingEnumerateAttributeService {
    *     values.
    */
   handleGetAttributeValues_(resp) {
-    const data = /** @type {import('gmf/themes.js').GmfLayerAttributeValuesResponse} */ (
-      resp.data);
+    const data = /** @type {import('gmf/themes.js').GmfLayerAttributeValuesResponse} */ (resp.data);
     return data.items;
   }
-
 }
-
 
 /**
  * @type {!angular.IModule}
@@ -75,6 +68,5 @@ export class EditingEnumerateAttributeService {
  */
 const module = angular.module('gmfEnumerateAttribute', []);
 module.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);
-
 
 export default module;

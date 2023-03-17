@@ -1,6 +1,5 @@
 import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
 
-
 /**
  * The options required to create a `gmf.datasource.OGC`.
  * @typedef {Object} OGCOptions
@@ -77,13 +76,11 @@ import ngeoDatasourceOGC from 'ngeo/datasource/OGC.js';
  * @property {boolean} [visible=false] (DataSourceOptions)
  */
 
-
 /**
  * @private
  * @hidden
  */
 class gmfDatasourceOGC extends ngeoDatasourceOGC {
-
   /**
    * A `gmf.datasource.OGC` extends a `ngeo.datasource.OGC` and
    * adds some properties that are proper to GMF only.
@@ -91,7 +88,6 @@ class gmfDatasourceOGC extends ngeoDatasourceOGC {
    * @param {OGCOptions} options Options.
    */
   constructor(options) {
-
     super(options);
 
     // === STATIC properties (i.e. that never change) ===
@@ -101,7 +97,6 @@ class gmfDatasourceOGC extends ngeoDatasourceOGC {
      * @private
      */
     this.gmfLayer_ = options.gmfLayer;
-
   }
 
   // === Static property getters/setters ===
@@ -112,7 +107,6 @@ class gmfDatasourceOGC extends ngeoDatasourceOGC {
   get gmfLayer() {
     return this.gmfLayer_;
   }
-
 }
 
 export default gmfDatasourceOGC;

@@ -2,9 +2,7 @@ import angular from 'angular';
 import ngeoTestDataGeoAdminLocationSearch from '../data/geoAdminLocationSearch.js';
 import * as olProj from 'ol/proj.js';
 
-
 describe('ngeo.search.createLocationSearchBloodhound', () => {
-
   let ngeoCreateLocationSearchBloodhound;
 
   beforeEach(() => {
@@ -16,7 +14,7 @@ describe('ngeo.search.createLocationSearchBloodhound', () => {
   it('Parses the features correctly', () => {
     const bloodhound = ngeoCreateLocationSearchBloodhound({
       targetProjection: olProj.get('EPSG:3857'),
-      limit: 5
+      limit: 5,
     });
     const transform = bloodhound.remote.transform;
 
@@ -30,10 +28,8 @@ describe('ngeo.search.createLocationSearchBloodhound', () => {
     expect(feature.get('label_simple')).toBe('Lausanne');
 
     // @ts-ignore: arrayToBeCloseTo is a custom matcher
-    expect(feature.getGeometry().getCoordinates()).arrayToBeCloseTo(
-      [745348.9689, 5869543.2550]);
+    expect(feature.getGeometry().getCoordinates()).arrayToBeCloseTo([745348.9689, 5869543.255]);
     // @ts-ignore: arrayToBeCloseTo is a custom matcher
-    expect(feature.get('bbox')).arrayToBeCloseTo(
-      [732811.7205, 5861483.7511, 748269.0879, 5877508.3355]);
+    expect(feature.get('bbox')).arrayToBeCloseTo([732811.7205, 5861483.7511, 748269.0879, 5877508.3355]);
   });
 });

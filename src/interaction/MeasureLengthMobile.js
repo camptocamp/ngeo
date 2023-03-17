@@ -29,7 +29,7 @@ export default class extends ngeoInteractionMeasureLength {
     return new ngeoInteractionMobileDraw({
       type: 'LineString',
       style: style,
-      source: source
+      source: source,
     });
   }
 }

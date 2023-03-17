@@ -8,32 +8,31 @@ apply when you want to add a new feature.
 You are free to read and fork this library. But you must know that we have currently no time to handle issues
 or PR from persons outside of Camptocamp customers or developers.
 
-
 ## Table of content
 
-- [Main principle](#main-principle)
-- [Coding style guide](#coding-style-guide)
-- [Main changes in the code between ngeo 2.2 and 2.3](#main-changes-in-the-code-between-ngeo-22-and-23)
-- [AngularJS names ](#angularJS-names)
-- [Module management](#module-management)
-- [Good practices on components creation](#good-practices-on-components-creation)
-- [Limit the use of ng-controller](#limit-the-use-of-ng-controller)
-- [Templating](#templating)
-  - [In `ngeo` avoid template when not needed](#in-ngeo-avoid-template-when-not-needed)
-  - [Template vs templateUrl](#template-vs-templateUrl)
-  - [Template URL](#template-url)
-- [Watch your watchers!](#watch-your-watchers)
-- [Declaring an event](#declaring-an-event)
-- [Styling](#styling)
-  - [CSS class names convention](#css-class-names-convention)
-  - [Styling with sass](#styling-with-sass)
-- [Property renaming](#property-renaming)
-  - [Exports vs private elements](#exports-vs-private-elements)
-  - [Object typing](#object-typing)
-- [API documentation](#api-documentation)
-
+-   [Main principle](#main-principle)
+-   [Coding style guide](#coding-style-guide)
+-   [Main changes in the code between ngeo 2.2 and 2.3](#main-changes-in-the-code-between-ngeo-22-and-23)
+-   [AngularJS names ](#angularJS-names)
+-   [Module management](#module-management)
+-   [Good practices on components creation](#good-practices-on-components-creation)
+-   [Limit the use of ng-controller](#limit-the-use-of-ng-controller)
+-   [Templating](#templating)
+    -   [In `ngeo` avoid template when not needed](#in-ngeo-avoid-template-when-not-needed)
+    -   [Template vs templateUrl](#template-vs-templateUrl)
+    -   [Template URL](#template-url)
+-   [Watch your watchers!](#watch-your-watchers)
+-   [Declaring an event](#declaring-an-event)
+-   [Styling](#styling)
+    -   [CSS class names convention](#css-class-names-convention)
+    -   [Styling with sass](#styling-with-sass)
+-   [Property renaming](#property-renaming)
+    -   [Exports vs private elements](#exports-vs-private-elements)
+    -   [Object typing](#object-typing)
+-   [API documentation](#api-documentation)
 
 ## Main principle
+
 Before starting to code a new feature in `gmf`, you must determine if this feature
 is 100% `gmf` specific, or if the feature is generic and could be added to `ngeo`
 core. You also need to check in `ngeo` core and examples if you don't find
@@ -52,7 +51,6 @@ In `ngeo`, we want to have very generic code that is shared between `gmf` and
 other web map applications. When you add some code in `ngeo`, you need to follow
 some rules that helps the code to be easily usable and customisable.
 
-
 ## Coding style guide
 
 We more or less follow the [AngularJS Style Guide for Closure Users at
@@ -60,25 +58,22 @@ Google](https://google.github.io/styleguide/angularjs-google-style.html).
 
 We also use ES6 coding standards.
 
-
 ## Main changes in the code between ngeo 2.2 and 2.3
 
 With Webpack, some things have changed between the current ngeo 2.3 version, and the last ones.
 
-- Functions from the goog library are no more allowed.
-- We export only one object per file. (That also means that we have split some files in multiple files).
-- We must have no more global value in the attached to the window (except in some very rare cases).
-- All AngularJS elements are now in a small module (see below in this documentation).
-- All modules import only what they need to work. No less, no more.
-
+-   Functions from the goog library are no more allowed.
+-   We export only one object per file. (That also means that we have split some files in multiple files).
+-   We must have no more global value in the attached to the window (except in some very rare cases).
+-   All AngularJS elements are now in a small module (see below in this documentation).
+-   All modules import only what they need to work. No less, no more.
 
 ## AngularJS names
 
-Be as logical as possible.  In the previous example, the AngularJS name should be `ngeoExampleSearch`. For
+Be as logical as possible. In the previous example, the AngularJS name should be `ngeoExampleSearch`. For
 a service in `contribs/gmf/src/sample/MyService.js`, the name must be `GmfSampleMyservice`.
 
 Don't change a name after it's chosen. Because that change the html in the code of all user of ngeo !
-
 
 ## Module management
 
@@ -91,14 +86,12 @@ AngularJS module, and this module must require all modules it needs to work. And
 AngularJS `component`, `service`, etc from this module. Example:
 
 ```js
-import ngeoMyRequiredService from 'ngeo/myrequired/service.js'
+import ngeoMyRequiredService from 'ngeo/myrequired/service.js';
 
 /**
  * @type {!angular.IModule}
  */
-const module = angular.module('ngeoExampleService', [
-  ngeoMyRequiredService.name
-]);
+const module = angular.module('ngeoExampleService', [ngeoMyRequiredService.name]);
 module.service('ngeoExampleService', exports);
 export default module;
 ```
@@ -121,14 +114,13 @@ export default module;
 To be able to require a whole functionality at once, we always create a `module.js` file in each directories.
 This file always create and provide a module that require all the modules of folder.
 
-
 ## Good practices on components creation
 
- - Never create an old `directive` element, use `component` instead.
- - Don't name your controller, in your partial, use the `$ctrl` notation instead.
- - Don't use the `&` binding notation to have a one-time binding. In your html, use `::` instead.
- - Don't forget to initialize your component's bindings in the $onInit function.
- - Use a function that takes an url as argument to provide your templateUrl.
+-   Never create an old `directive` element, use `component` instead.
+-   Don't name your controller, in your partial, use the `$ctrl` notation instead.
+-   Don't use the `&` binding notation to have a one-time binding. In your html, use `::` instead.
+-   Don't forget to initialize your component's bindings in the $onInit function.
+-   Use a function that takes an url as argument to provide your templateUrl.
 
 Example of a component:
 
@@ -196,22 +188,25 @@ When we use a template URL it should be overwritten by an attribute.
 For that we should use this kind of code:
 
 ```js
-module.value('ngeoModuleComponentTemplateUrl',
+module.value(
+    'ngeoModuleComponentTemplateUrl',
     /**
      * @param {JQuery} element Element.
      * @param {angular.IAttributes} attrs Attributes.
      * @return {string} Template URL.
      */
-    function($element, $attrs) {
-      const templateUrl = $attrs['ngeoNameComponentTemplateurl'];
-      return templateUrl !== undefined ? templateUrl :
-        'ngeo/module/component';
-    });
+    function ($element, $attrs) {
+        const templateUrl = $attrs['ngeoNameComponentTemplateurl'];
+        return templateUrl !== undefined ? templateUrl : 'ngeo/module/component';
+    }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/module/component', require('./component.html'));
-});
+module.run(
+    /* @ngInject */ ($templateCache) => {
+        // @ts-ignore: webpack
+        $templateCache.put('ngeo/module/component', require('./component.html'));
+    }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -222,7 +217,7 @@ module.run(/* @ngInject */ ($templateCache) => {
  * @hidden
  */
 function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentTemplateUrl) {
-  return gmfDisplayquerywindowTemplateUrl($element, $attrs);
+    return gmfDisplayquerywindowTemplateUrl($element, $attrs);
 }
 
 /*
@@ -230,19 +225,18 @@ function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentT
  * @ngname ngeoModuleComponent
  */
 module.component_ = {
-  templateUrl: ngeoModuleComponentTemplateUrl
-}
-
+    templateUrl: ngeoModuleComponentTemplateUrl,
+};
 ```
 
 It can be adapted for `contrib/gmf` by replacing `ngeo` by `gmf`, module by the right one, and so on.
 
 Note that the default template of a `ngeo` component can be overloaded in 2 ways:
-- Send the template url via dom attributes. This will overload the template for
-  the instance of the component that is defined in the HTML.
-- Overload the angular value `ngeoModuleComponentTemplateUrl`. This will have effect on
-  all instances of the component.
 
+-   Send the template url via dom attributes. This will overload the template for
+    the instance of the component that is defined in the HTML.
+-   Overload the angular value `ngeoModuleComponentTemplateUrl`. This will have effect on
+    all instances of the component.
 
 ## Watch your watchers!
 
@@ -276,19 +270,19 @@ See [AnguarJs doc](https://docs.angularjs.org/guide/expression#one-time-binding)
 The is the one-binding syntax:
 
 ```html
-<ngeo-bar-foo="::a_property"></ngeo-bar-foo>
+<ngeo-bar-foo ="::a_property"></ngeo-bar-foo>
 ```
 
 There are other techniques to reduce the number of watchers in Angular applications. [This blog
 post](http://www.binpress.com/tutorial/speeding-up-angular-js-with-simple-optimizations/135)
 provides a very good overview.
 
-
 ## Declaring an event
 
 When you declare an event on ol3 object, please use
-- the `ol.events.listen` function
-- the ol3 constant to identify the event
+
+-   the `ol.events.listen` function
+-   the ol3 constant to identify the event
 
 This is wrong:
 
@@ -312,7 +306,6 @@ olEvents.listen(this.geolocation_,
   }, this);
 ```
 
-
 ## Custom `ol.Object` properties
 
 OpenLayers allows passing custom properties to classes inheriting from
@@ -320,9 +313,9 @@ OpenLayers allows passing custom properties to classes inheriting from
 
 ```js
 let layer = new olLayerTile({
-  maxResolution: 5000,
-  title: 'A title',
-  source: new olSourceOSM()
+    maxResolution: 5000,
+    title: 'A title',
+    source: new olSourceOSM(),
 });
 ```
 
@@ -342,13 +335,12 @@ the construction of the layer:
 
 ```js
 let layer = new olLayerTile({
-  maxResolution: 5000,
-  source: new olSourceOSM()
+    maxResolution: 5000,
+    source: new olSourceOSM(),
 });
 // use `set` to set custom layer properties
 layer.set('title', 'A title');
 ```
-
 
 ## Styling
 
@@ -358,12 +350,12 @@ component, leave this to the final application.
 
 ### CSS class names convention
 
-CSS class names, in both ngeo and gmf, follow a set of rules that determines their value.  A CSS class name:
+CSS class names, in both ngeo and gmf, follow a set of rules that determines their value. A CSS class name:
 
- * always begins with the `ngeo-` or `gmf-` prefix depending on its origin
- * always begins with the name of the component in which it is defined, for example in a layer tree
-   component in gmf, a name starts with `gmf-layertree`, like `gmf-layertree-name`, `gmf-layertree-node`,
-   `gmf-layertree` (for the main `<div>`), etc.
+-   always begins with the `ngeo-` or `gmf-` prefix depending on its origin
+-   always begins with the name of the component in which it is defined, for example in a layer tree
+    component in gmf, a name starts with `gmf-layertree`, like `gmf-layertree-name`, `gmf-layertree-node`,
+    `gmf-layertree` (for the main `<div>`), etc.
 
 In the gmf applications, CSS class names should begins with `gmf-app`.
 
@@ -377,14 +369,13 @@ to get the element needed.
 To be able to do calculations directly with sass we encourage to use a subset of the CSS units.
 We choose units that don't depend on parent tags and are relative.
 
- * rem: 1 rem is the font size of the root element (<html>).
- * vw: 1 vw is 1/100th of the width of the viewport.
- * vh: 1 vh is 1/100th of the height of the viewport.
-
+-   rem: 1 rem is the font size of the root element (<html>).
+-   vw: 1 vw is 1/100th of the width of the viewport.
+-   vh: 1 vh is 1/100th of the height of the viewport.
 
 ## Property renaming
 
-:warning: The ngeo code **was** compiled with Closure Compiler in *advanced* mode. We don't use it anymore but we want to keep the same restrictions imposed by the compiler for now.
+:warning: The ngeo code **was** compiled with Closure Compiler in _advanced_ mode. We don't use it anymore but we want to keep the same restrictions imposed by the compiler for now.
 
 ### Exports vs private elements
 
@@ -394,9 +385,10 @@ referenced by their names in HTML pages and templates. So it is required to
 prevent the compiler from renaming these properties.
 
 The way to do that is to add the right tag on each variable, function and class.
- -  `@private`: With a final underscore (`this.my_private_variable_`) tell the compilier to rename it with a
+
+-   `@private`: With a final underscore (`this.my_private_variable_`) tell the compilier to rename it with a
     name not understainable outside of the current file.
- -  And nothing, without final underscore, if the element is used freely in the code, but never in the html.
+-   And nothing, without final underscore, if the element is used freely in the code, but never in the html.
 
 ### Object typing
 
@@ -409,7 +401,6 @@ That's an `extern` and it can be defined in the `externs/<source>.js`.
 Provided class or function with `@constructor` are usable as a type.
 
 Take a look to these file to know how to write your owns.
-
 
 ## API documentation
 
@@ -428,6 +419,7 @@ For components the used HTML attributes are declared with `@htmlAttribute {<type
 The usage of a component should be shown with an example.
 
 For example:
+
 ```js
 /**
  * Description.
@@ -443,8 +435,8 @@ For example:
  * @ngdoc component
  * @ngname ngeoControl
  */
-const my_component = function() {
-  // …
+const my_component = function () {
+    // …
 };
 module.component('ngeoMisc', my_component);
 ```

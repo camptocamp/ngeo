@@ -38,11 +38,11 @@ function getLoaderConfig(ctx) {
     transformers: transformers,
     baseEntryDir: path.dirname(ctx.resourcePath),
     root: options.root,
-    data: options.data
+    data: options.data,
   };
 }
 
-module.exports = function(content) {
+module.exports = function (content) {
   entries[this.resourcePath] = {
     'content': content,
     'options': getLoaderConfig(this),

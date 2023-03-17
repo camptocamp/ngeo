@@ -13,8 +13,8 @@ const module = angular.module('gmfBackgroundlayerselector', [
   ngeoMapBackgroundLayerMgr.name,
 ]);
 
-
-module.value('gmfBackgroundlayerselectorTemplateUrl',
+module.value(
+  'gmfBackgroundlayerselectorTemplateUrl',
   /**
    * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -22,17 +22,16 @@ module.value('gmfBackgroundlayerselectorTemplateUrl',
    */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfBackgroundlayerselectorTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/backgroundlayerselector';
+    return templateUrl !== undefined ? templateUrl : 'gmf/backgroundlayerselector';
   }
 );
 
-
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -47,7 +46,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundlayerselectorTemplateUrl) {
   return gmfBackgroundlayerselectorTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a "background layer selector" component.
@@ -81,14 +79,12 @@ const backgroundlayerselectorComponent = {
   bindings: {
     'map': '=gmfBackgroundlayerselectorMap',
     'opacityOptions': '=gmfBackgroundlayerOpacityOptions',
-    'select': '&?gmfBackgroundlayerselectorSelect'
+    'select': '&?gmfBackgroundlayerselectorSelect',
   },
-  templateUrl: gmfBackgroundlayerselectorTemplateUrl
+  templateUrl: gmfBackgroundlayerselectorTemplateUrl,
 };
 
-
 module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent);
-
 
 /**
  * @constructor
@@ -103,7 +99,6 @@ module.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent)
  * @ngname GmfBackgroundlayerselectorController
  */
 function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
-
   /**
    * @type {?import("ol/Map.js").default}
    */
@@ -155,42 +150,45 @@ function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes) {
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
 
-  this.listenerKeys_.push(olEvents.listen(this.backgroundLayerMgr_, 'change',
-    /**
-     * @param {!import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} event Event.
-     */
-    (event) => {
-      this.bgLayer = event.detail.current;
-    }));
+  this.listenerKeys_.push(
+    olEvents.listen(
+      this.backgroundLayerMgr_,
+      'change',
+      /**
+       * @param {!import('ngeo/map/BackgroundLayerMgr.js').BackgroundEvent} event Event.
+       */
+      (event) => {
+        this.bgLayer = event.detail.current;
+      }
+    )
+  );
 
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
-
 /**
  * Initialise the controller.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.handleThemesChange_();
 };
-
 
 /**
  * Called when the themes changes. Set (or reset) the background layers.
  * @private
  */
-Controller.prototype.handleThemesChange_ = function() {
+Controller.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
 
     if (this.opacityOptions !== undefined) {
-      const opacityLayer = layers.find(layer => layer.get('label') === this.opacityOptions);
+      const opacityLayer = layers.find((layer) => layer.get('label') === this.opacityOptions);
       if (opacityLayer !== undefined) {
         this.setOpacityBgLayer(opacityLayer);
 
         // Reorder for the UI the bgArray copy with the opacity layer at the end
         this.bgLayers = this.bgLayers.slice();
-        const indexOpa = this.bgLayers.findIndex(layer => layer === this.opacityLayer);
+        const indexOpa = this.bgLayers.findIndex((layer) => layer === this.opacityLayer);
         this.bgLayers.splice(indexOpa, 1);
         this.bgLayers.push(opacityLayer);
       }
@@ -203,7 +201,7 @@ Controller.prototype.handleThemesChange_ = function() {
  * @param {?number} val The opacity.
  * @returns {number} The background layer opacity.
  */
-Controller.prototype.getSetBgLayerOpacity = function(val) {
+Controller.prototype.getSetBgLayerOpacity = function (val) {
   if (val !== undefined) {
     this.opacityLayer.setOpacity(val);
     this.opacityLayer.setVisible(val !== 0);
@@ -216,7 +214,7 @@ Controller.prototype.getSetBgLayerOpacity = function(val) {
  * @param {import("ol/layer/Base.js").default} layer Layer.
  * @param {boolean=} opt_silent Do not notify listeners.
  */
-Controller.prototype.setLayer = function(layer, opt_silent) {
+Controller.prototype.setLayer = function (layer, opt_silent) {
   gmfBackgroundlayerStatus.touchedByUser = true;
   const opacity = this.opacityLayer ? this.opacityLayer.getOpacity() : 0;
   this.bgLayer = layer;
@@ -235,7 +233,7 @@ Controller.prototype.setLayer = function(layer, opt_silent) {
  * Set a background layer overlay, used by the opacity slider.
  * @param {import("ol/layer/Base.js").default} layer The opacity background layer.
  */
-Controller.prototype.setOpacityBgLayer = function(layer) {
+Controller.prototype.setOpacityBgLayer = function (layer) {
   const opacity = this.opacityLayer ? this.opacityLayer.getOpacity() : layer.getOpacity();
   layer.setOpacity(opacity);
   this.opacityLayer = layer;
@@ -247,13 +245,11 @@ Controller.prototype.setOpacityBgLayer = function(layer) {
 /**
  * @private
  */
-Controller.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function () {
   this.listenerKeys_.forEach(olEvents.unlistenByKey);
   this.listenerKeys_.length = 0;
 };
 
-
 module.controller('GmfBackgroundlayerselectorController', Controller);
-
 
 export default module;

@@ -3,9 +3,9 @@
  */
 
 @import '~gmf/sass/vars_only.scss';
-@import "~bootstrap/scss/_functions.scss";
-@import "~bootstrap/scss/_variables.scss";
-@import "~@fortawesome/fontawesome-free/scss/_variables.scss";
+@import '~bootstrap/scss/_functions.scss';
+@import '~bootstrap/scss/_variables.scss';
+@import '~@fortawesome/fontawesome-free/scss/_variables.scss';
 
 @import '~gmf/sass/font.scss';
 @import '~gmf/sass/base.scss';
@@ -17,7 +17,6 @@
 @import '~gmf/sass/loading-mask.scss';
 
 @import '~gmf/layertree/desktop.scss';
-
 
 $map-tools-size: 1.9rem !default;
 $left-panel-width: 20rem !default;
@@ -32,11 +31,13 @@ $theme-selector-height: 1.5 * $left-panel-width !default;
 $padding-base-vertical: $half-app-margin !default;
 $padding-base-horizontal: $app-margin !default;
 $form-group-margin-bottom: $app-margin !default;
-$search-results-max-height: calc(100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})) !default;
+$search-results-max-height: calc(
+  100vh - #{$topbar-height} + #{$map-tools-size} + (2 * #{$app-margin})
+) !default;
 $border-color: darken($brand-primary, $standard-variation) !default;
 
-
-html, body {
+html,
+body {
   position: relative;
   height: 100%;
   li {
@@ -74,7 +75,7 @@ main {
 }
 
 .btn {
-  padding: $half-app-margin $app-margin
+  padding: $half-app-margin $app-margin;
 }
 
 .close {
@@ -124,10 +125,10 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
     padding: $padding-small-vertical;
     position: absolute;
     z-index: 2;
-    bottom:  -$footer-height;
+    bottom: -$footer-height;
     // prevent footer to be displayed on 2 lines when screen width is small
     max-height: $footer-height;
-    background-color: rgba($main-bg-color, .9);
+    background-color: rgba($main-bg-color, 0.9);
     width: 100%;
     /* cancel default navbar bottom margin */
     margin-bottom: 0;
@@ -149,10 +150,10 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
       border-top-right-radius: $border-radius-base;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      background-color: rgba($main-bg-color, .8);
+      background-color: rgba($main-bg-color, 0.8);
       padding: 0;
       left: 50%;
-      $width: 2.50rem;
+      $width: 2.5rem;
       width: $width;
       margin-left: -($width / 2);
       border-bottom: none;
@@ -168,7 +169,8 @@ $footer-height: $input-height-base + 2 * $padding-base-vertical;
 
   #scaleline {
     vertical-align: middle;
-    .ol-scale-line, .ol-scale-line-inner {
+    .ol-scale-line,
+    .ol-scale-line-inner {
       background-color: transparent;
       bottom: auto;
       position: relative;
@@ -430,7 +432,6 @@ gmf-backgroundlayerselector {
   position: relative;
 }
 
-
 ::-webkit-scrollbar-track {
   background: $main-bg-color;
 }
@@ -441,7 +442,6 @@ gmf-backgroundlayerselector {
 ::-webkit-scrollbar-thumb {
   background: $brand-primary;
 }
-
 
 /**
  * GMF DrawFeature directive
@@ -462,7 +462,6 @@ hr.gmf-drawfeature-separator {
 .gmf-drawfeature-featurelist {
   margin-top: $app-margin;
 }
-
 
 /**
  * NGEO DrawFeature directive & map tooltips
@@ -494,7 +493,7 @@ hr.gmf-drawfeature-separator {
     border-top: $half-app-margin solid rgba(0, 0, 0, 0.5);
     border-right: $half-app-margin solid transparent;
     border-left: $half-app-margin solid transparent;
-    content: "";
+    content: '';
     position: absolute;
     bottom: -$half-app-margin;
     margin-left: -$half-app-margin;
@@ -505,7 +504,6 @@ hr.gmf-drawfeature-separator {
   }
 }
 
-
 /**
  * GMF FeatureStyle directive
  */
@@ -513,7 +511,6 @@ gmf-featurestyle {
   display: block;
   margin-top: $app-margin;
 }
-
 
 /**
  * Color palette within GMF FeatureStyle directive
@@ -570,7 +567,6 @@ gmf-featurestyle {
   }
 }
 
-
 /**
  * Notifications
  */
@@ -583,7 +579,6 @@ gmf-featurestyle {
   width: $notification-width;
   z-index: $above-all;
 }
-
 
 /**
  * Controls at the bottom of the map
@@ -619,7 +614,6 @@ gmf-featurestyle {
   gmf-backgroundlayerselector {
     box-shadow: $eavy-box-shadow;
   }
-
 }
 
 div.gmf-displayquerywindow {
@@ -634,17 +628,16 @@ div.gmf-displayquerywindow {
 main div.ngeo-displaywindow {
   top: $topbar-height + 2 * $app-margin + 2 * $map-tools-size;
   left: $nav-width + $app-margin;
-  right: inherit
+  right: inherit;
 }
 
 /** Disclaimer */
-$bgselector-image-size: 3.00rem;
+$bgselector-image-size: 3rem;
 .gmf-app-map-messages {
   position: absolute;
   vertical-align: bottom;
   left: calc(2 * #{$app-margin} + #{$bgselector-image-size} + 2 * #{$padding-small-vertical});
 }
-
 
 /**
  * GMF EditFeature directive
@@ -655,7 +648,6 @@ gmf-editfeature > div {
   padding-top: $app-margin;
 }
 
-
 /**
  * GMF ObjectEditingTools directive
  */
@@ -665,7 +657,6 @@ gmf-objecteditingtools {
   margin: 0 0 $app-margin 0;
   padding: 0 0 $app-margin 0;
 }
-
 
 /**
  * GMF FilterSelector component
@@ -733,7 +724,6 @@ gmf-objecteditingtools {
     }
   }
 }
-
 
 /**
  * Ngeo Filter component
@@ -839,7 +829,6 @@ ngeo-rule {
     margin: $half-app-margin;
   }
 }
-
 
 /**
  * Ngeo Google Street View Component

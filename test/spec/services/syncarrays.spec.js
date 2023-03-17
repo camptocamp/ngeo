@@ -18,7 +18,7 @@ describe('ngeo.misc.syncArrays', () => {
       const ngeoSyncArrays = ngeoMiscSyncArrays;
       arr1 = [0, 10, 1, 20, 2, 30, 3];
       arr2 = [];
-      const filter = function(n) {
+      const filter = function (n) {
         return n < 10;
       };
       dereg = ngeoSyncArrays(arr1, arr2, false, $rootScope, filter);
@@ -56,7 +56,6 @@ describe('ngeo.misc.syncArrays', () => {
       $rootScope.$digest();
       expect(arr1).toEqual([0, 10, 1, 20, 2, 30, 3]);
     });
-
   });
 
   describe('arr1 and arr2 in reverse order', () => {
@@ -68,7 +67,7 @@ describe('ngeo.misc.syncArrays', () => {
         const ngeoSyncArrays = ngeoMiscSyncArrays;
         arr1 = [0, 10, 1, 20, 2, 30, 3];
         arr2 = [];
-        const filter = function(n) {
+        const filter = function (n) {
           return n < 10;
         };
         dereg = ngeoSyncArrays(arr1, arr2, true, $rootScope, filter);
@@ -107,6 +106,5 @@ describe('ngeo.misc.syncArrays', () => {
       $rootScope.$digest();
       expect(arr1).toEqual([0, 10, 1, 20, 2, 30, 3]);
     });
-
   });
 });

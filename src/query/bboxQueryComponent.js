@@ -7,16 +7,11 @@ import olInteractionDragBox from 'ol/interaction/DragBox.js';
 import {platformModifierKeyOnly} from 'ol/events/condition.js';
 import {VOID} from 'ol/functions.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoBboxQuery', [
-  ngeoQueryKeyboard.name,
-  ngeoQueryMapQuerent.name,
-]);
-
+const module = angular.module('ngeoBboxQuery', [ngeoQueryKeyboard.name, ngeoQueryMapQuerent.name]);
 
 /**
  * Provides a "bbox query" directive.
@@ -63,7 +58,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
 
       const interaction = new olInteractionDragBox({
         condition: platformModifierKeyOnly,
-        onBoxEnd: VOID
+        onBoxEnd: VOID,
       });
 
       /**
@@ -71,7 +66,7 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
        * a request to the query service using the extent that was drawn.
        * @param {!olInteractionDragBox} interaction Drag box interaction
        */
-      const handleBoxEnd = function(interaction) {
+      const handleBoxEnd = function (interaction) {
         const action = ngeoQueryKeyboard.action;
         const extent = interaction.getGeometry().getExtent();
         const limit = scope.$eval(attrs['ngeoBboxQueryLimit']);
@@ -79,37 +74,34 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
           action,
           extent,
           limit,
-          map
+          map,
         });
       };
       interaction.on('boxend', handleBoxEnd.bind(this, interaction));
 
       // watch 'active' property -> activate/deactivate accordingly
-      scope.$watch(attrs['ngeoBboxQueryActive'],
-        (newVal, oldVal) => {
-          active = newVal;
+      scope.$watch(attrs['ngeoBboxQueryActive'], (newVal, oldVal) => {
+        active = newVal;
 
-          if (newVal) {
-            // activate
-            map.addInteraction(interaction);
-          } else {
-            // deactivate
-            map.removeInteraction(interaction);
-            if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
-              ngeoMapQuerent.clear();
-            }
+        if (newVal) {
+          // activate
+          map.addInteraction(interaction);
+        } else {
+          // deactivate
+          map.removeInteraction(interaction);
+          if (scope.$eval(attrs['ngeoBboxQueryAutoclear']) !== false) {
+            ngeoMapQuerent.clear();
           }
         }
-      );
+      });
 
       // This second interaction is not given any condition and is
       // automatically added to the map while the user presses the
       // keys to either ADD or REMOVE
       const interactionWithoutCondition = new olInteractionDragBox({
-        onBoxEnd: VOID
+        onBoxEnd: VOID,
       });
-      interactionWithoutCondition.on(
-        'boxend', handleBoxEnd.bind(this, interactionWithoutCondition));
+      interactionWithoutCondition.on('boxend', handleBoxEnd.bind(this, interactionWithoutCondition));
       let added = false;
       $rootScope.$watch(
         () => ngeoQueryKeyboard.action,
@@ -131,11 +123,10 @@ function queryBboxComponent($rootScope, ngeoMapQuerent, ngeoQueryKeyboard) {
           }
         }
       );
-    }
+    },
   };
 }
 
 module.directive('ngeoBboxQuery', queryBboxComponent);
-
 
 export default module;

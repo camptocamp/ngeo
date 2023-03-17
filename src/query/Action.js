@@ -1,5 +1,5 @@
 export default {
   ADD: 'add',
   REMOVE: 'remove',
-  REPLACE: 'replace'
+  REPLACE: 'replace',
 };

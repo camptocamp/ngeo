@@ -9,18 +9,14 @@ import olStyleRegularShape from 'ol/style/RegularShape.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasurePoint', [
-  gmfRasterRasterService.name,
-  ngeoMiscDebounce.name,
-]);
+const module = angular.module('gmfMobileMeasurePoint', [gmfRasterRasterService.name, ngeoMiscDebounce.name]);
 
-
-module.value('gmfMobileMeasurePointTemplateUrl',
+module.value(
+  'gmfMobileMeasurePointTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -28,15 +24,16 @@ module.value('gmfMobileMeasurePointTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasurePointTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/measure/pointComponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/measure/pointComponent';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
+  }
+);
 
 /**
  * Provide a directive to do a point (coordinate and elevation) measure on the
@@ -84,7 +81,7 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
       'getLayersConfigFn': '&gmfMobileMeasurepointLayersconfig',
       'map': '=gmfMobileMeasurepointMap',
       'sketchStyle': '=?gmfMobileMeasurepointSketchstyle',
-      'format': '<gmfMobileMeasurepointFormat'
+      'format': '<gmfMobileMeasurepointFormat',
     },
     controller: 'GmfMobileMeasurePointController as ctrl',
     bindToController: true,
@@ -97,13 +94,11 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
-    }
+    },
   };
 }
 
-
 module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
-
 
 /**
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
@@ -118,7 +113,6 @@ module.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
  * @ngname GmfMobileMeasurePointController
  */
 export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gmfRaster, ngeoDebounce) {
-
   /**
    * @type {import("gmf/raster/RasterService.js").RasterService}
    * @private
@@ -153,10 +147,13 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
    */
   this.active;
 
-  $scope.$watch(() => this.active, (newVal) => {
-    this.measure.setActive(newVal);
-    this.handleMeasureActiveChange_();
-  });
+  $scope.$watch(
+    () => this.active,
+    (newVal) => {
+      this.measure.setActive(newVal);
+      this.handleMeasureActiveChange_();
+    }
+  );
 
   const coordinateDecimalsFn = this['getCoordinateDecimalsFn'];
 
@@ -180,23 +177,23 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   if (this.sketchStyle === undefined) {
     this.sketchStyle = new olStyleStyle({
       fill: new olStyleFill({
-        color: 'rgba(255, 255, 255, 0.2)'
+        color: 'rgba(255, 255, 255, 0.2)',
       }),
       stroke: new olStyleStroke({
         color: 'rgba(0, 0, 0, 0.5)',
         lineDash: [10, 10],
-        width: 2
+        width: 2,
       }),
       image: new olStyleRegularShape({
         stroke: new olStyleStroke({
           color: 'rgba(0, 0, 0, 0.7)',
-          width: 2
+          width: 2,
         }),
         points: 4,
         radius: 8,
         radius2: 0,
-        angle: 0
-      })
+        angle: 0,
+      }),
     });
   }
 
@@ -223,23 +220,23 @@ export function MobileMeasurePointController(gettextCatalog, $scope, $filter, gm
   this.mapViewPropertyChangeEventKey_ = null;
 }
 
-
 /**
  * Initialise the controller.
  */
-MobileMeasurePointController.prototype.init = function() {
+MobileMeasurePointController.prototype.init = function () {
   this.measure = new ngeoInteractionMeasurePointMobile(
     /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
     this.format || '{x}, {y}',
     {
       decimals: this.coordinateDecimals,
-      sketchStyle: this.sketchStyle
+      sketchStyle: this.sketchStyle,
     }
   );
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
   this.drawInteraction = /** @type {import("ngeo/interaction/MobileDraw.js").default} */ (
-    this.measure.getDrawInteraction());
+    this.measure.getDrawInteraction()
+  );
   interactionDecoration(this.drawInteraction);
 
   const layersConfig = this['getLayersConfigFn']();
@@ -249,23 +246,20 @@ MobileMeasurePointController.prototype.init = function() {
   this.map.addInteraction(this.measure);
 };
 
-
 /**
  * Deactivate the directive.
  */
-MobileMeasurePointController.prototype.deactivate = function() {
+MobileMeasurePointController.prototype.deactivate = function () {
   this.active = false;
 };
-
 
 /**
  * @param {string} str String to translate.
  * @return {string} The translated text.
  */
-MobileMeasurePointController.prototype.translate = function(str) {
+MobileMeasurePointController.prototype.translate = function (str) {
   return this.gettextCatalog_.getString(str);
 };
-
 
 /**
  * Called when the measure becomes active or inactive. Act accordingly:
@@ -275,15 +269,15 @@ MobileMeasurePointController.prototype.translate = function(str) {
  * @private
  * @hidden
  */
-MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
+MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () {
   if (this.measure.getActive()) {
     const view = this.map.getView();
     this.mapViewPropertyChangeEventKey_ = olEvents.listen(
       view,
       'propertychange',
-      this.ngeoDebounce_(
-        this.getMeasure_.bind(this), 300, /* invokeApply */ true),
-      this);
+      this.ngeoDebounce_(this.getMeasure_.bind(this), 300, /* invokeApply */ true),
+      this
+    );
     this.getMeasure_();
   } else if (this.mapViewPropertyChangeEventKey_) {
     olEvents.unlistenByKey(this.mapViewPropertyChangeEventKey_);
@@ -291,18 +285,17 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function() {
   }
 };
 
-
 /**
  * Call the elevation service to get information about the measure at
  * the current map center location.
  * @private
  * @hidden
  */
-MobileMeasurePointController.prototype.getMeasure_ = function() {
+MobileMeasurePointController.prototype.getMeasure_ = function () {
   const center = this.map.getView().getCenter();
   console.assert(Array.isArray(center));
   const params = {
-    'layers': this.layersConfig.map(config => config.name).join(',')
+    'layers': this.layersConfig.map((config) => config.name).join(','),
   };
   this.gmfRaster_.getRaster(center, params).then((object) => {
     const el = this.measure.getTooltipElement();
@@ -329,10 +322,8 @@ MobileMeasurePointController.prototype.getMeasure_ = function() {
       previousCtn[0].remove();
     }
     el.appendChild(ctn);
-
   });
 };
-
 
 module.controller('GmfMobileMeasurePointController', MobileMeasurePointController);
 
@@ -342,6 +333,5 @@ module.controller('GmfMobileMeasurePointController', MobileMeasurePointControlle
  * @property {number} [decimals]
  * @property {string} [unit]
  */
-
 
 export default module;

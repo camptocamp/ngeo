@@ -13,12 +13,14 @@ import {decodeQueryString} from 'ngeo/utils.js';
  */
 const module = angular.module('app', []);
 
-module.config(['$compileProvider', function($compileProvider) {
-  if (!('debug' in decodeQueryString(window.location.search))) {
-    // Disable the debug info
-    $compileProvider.debugInfoEnabled(false);
-  }
-}]);
-
+module.config([
+  '$compileProvider',
+  function ($compileProvider) {
+    if (!('debug' in decodeQueryString(window.location.search))) {
+      // Disable the debug info
+      $compileProvider.debugInfoEnabled(false);
+    }
+  },
+]);
 
 export default module;

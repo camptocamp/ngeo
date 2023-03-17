@@ -1,4 +1,4 @@
-$fa-font-path: "~@fortawesome/fontawesome-free/webfonts" !default;
+$fa-font-path: '~@fortawesome/fontawesome-free/webfonts' !default;
 
 $brand-primary: #94ac9a !default;
 $brand-secondary: #d3e5d7 !default;
@@ -41,7 +41,7 @@ $above-all: 9999;
 
 // Bootstrap 3 compatibility layer
 $gray-base: #000 !default;
-$gray-dark: lighten($gray-base, 20%) !default;   // #333
+$gray-dark: lighten($gray-base, 20%) !default; // #333
 $padding-small-vertical: 0.36rem !default;
 $padding-small-horizontal: 0.72rem !default;
 $input-height-base: 1.88rem !default;

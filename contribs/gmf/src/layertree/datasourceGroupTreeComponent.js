@@ -2,35 +2,33 @@ import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
-  ngeoDatasourceDataSources.name,
-]);
+const module = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [ngeoDatasourceDataSources.name]);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    $templateCache.put(
+      // @ts-ignore: webpack
+      'gmf/layertree/datasourceGroupTreeComponent',
+      require('./datasourceGroupTreeComponent.html')
+    );
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    // @ts-ignore: webpack
-    'gmf/layertree/datasourceGroupTreeComponent', require('./datasourceGroupTreeComponent.html')
-  );
-});
-
-
-module.value('gmfLayertreeDatasourceGroupTreeTemplateUrl',
+module.value(
+  'gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['gmfLayertreeDatasourceGroupTreeTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/layertree/datasourceGroupTreeComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/layertree/datasourceGroupTreeComponent';
+  }
+);
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -50,7 +48,6 @@ function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasour
  * @hidden
  */
 class Controller {
-
   /**
    * @param {!angular.IScope} $scope Angular scope.
    * @param {!import("ngeo/datasource/DataSources.js").DataSource} ngeoDataSources Ngeo data sources
@@ -61,14 +58,12 @@ class Controller {
    * @ngname GmfDatasourcegrouptreeController
    */
   constructor($scope, ngeoDataSources) {
-
     // Binding properties
 
     /**
      * @type {!import("ngeo/datasource/Group.js").default}
      */
     this.group;
-
 
     // Injected properties
 
@@ -128,14 +123,12 @@ class Controller {
   }
 }
 
-
 module.component('gmfDatasourcegrouptree', {
   bindings: {
-    'group': '<'
+    'group': '<',
   },
   controller: Controller,
-  templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl
+  templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl,
 });
-
 
 export default module;

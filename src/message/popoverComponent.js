@@ -2,13 +2,11 @@ import angular from 'angular';
 import 'bootstrap/js/src/tooltip.js';
 import 'bootstrap/js/src/popover.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoPopover', []);
-
 
 /**
  * Provides a directive used to display a Bootstrap popover.
@@ -35,7 +33,6 @@ function messagePopoverComponent() {
     scope: true,
     controller: 'NgeoPopoverController as popoverCtrl',
     link: (scope, elem, attrs, ngeoPopoverCtrl) => {
-
       ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', () => {
         ngeoPopoverCtrl.bodyElm.show();
         ngeoPopoverCtrl.shown = true;
@@ -46,7 +43,7 @@ function messagePopoverComponent() {
         html: true,
         content: ngeoPopoverCtrl.bodyElm,
         boundary: 'viewport',
-        placement: attrs['ngeoPopoverPlacement'] || 'right'
+        placement: attrs['ngeoPopoverPlacement'] || 'right',
       });
 
       if (attrs['ngeoPopoverDismiss']) {
@@ -60,7 +57,7 @@ function messagePopoverComponent() {
         ngeoPopoverCtrl.anchorElm.unbind('inserted.bs.popover');
         ngeoPopoverCtrl.anchorElm.unbind('hidden.bs.popover');
       });
-    }
+    },
   };
 }
 
@@ -76,7 +73,7 @@ function messagePopoverAnchorComponent() {
     require: '^^ngeoPopover',
     link: (scope, elem, attrs, ngeoPopoverCtrl) => {
       ngeoPopoverCtrl.anchorElm = elem;
-    }
+    },
   };
 }
 
@@ -93,7 +90,7 @@ function messagePopoverContentComponent() {
     link: (scope, elem, attrs, ngeoPopoverCtrl) => {
       ngeoPopoverCtrl.bodyElm = elem;
       elem.hide();
-    }
+    },
   };
 }
 
@@ -125,9 +122,12 @@ function PopoverController($scope) {
   this.bodyElm = undefined;
 
   function onClick(clickEvent) {
-    if (this.anchorElm[0] !== clickEvent.target &&
+    if (
+      this.anchorElm[0] !== clickEvent.target &&
       this.bodyElm.parent()[0] !== clickEvent.target &&
-      this.bodyElm.parent().find(clickEvent.target).length === 0 && this.shown) {
+      this.bodyElm.parent().find(clickEvent.target).length === 0 &&
+      this.shown
+    ) {
       this.dismissPopover();
     }
   }
@@ -141,20 +141,17 @@ function PopoverController($scope) {
   });
 }
 
-
 /**
  * Dismiss popover function
  */
-PopoverController.prototype.dismissPopover = function() {
+PopoverController.prototype.dismissPopover = function () {
   this.shown = false;
   this.anchorElm.popover('hide');
 };
-
 
 module.controller('NgeoPopoverController', PopoverController);
 module.directive('ngeoPopover', messagePopoverComponent);
 module.directive('ngeoPopoverAnchor', messagePopoverAnchorComponent);
 module.directive('ngeoPopoverContent', messagePopoverContentComponent);
-
 
 export default module;

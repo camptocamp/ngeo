@@ -15,31 +15,31 @@ import olInteractionModify from 'ol/interaction/Modify.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 import 'ngeo/sass/font.scss';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimService.name,
-  ngeoRoutingNominatimInputComponent.name
+  ngeoRoutingNominatimInputComponent.name,
 ]);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
-});
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
+  }
+);
 
-
-module.value('ngeoRoutingFeatureTemplateUrl',
+module.value(
+  'ngeoRoutingFeatureTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoRoutingFeatureTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/routing/routingfeature';
+    return templateUrl !== undefined ? templateUrl : 'ngeo/routing/routingfeature';
   }
 );
 
@@ -55,7 +55,6 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
   return ngeoRoutingFeatureTemplateUrl($attrs);
 }
 
-
 /**
  * @param {!angular.IScope} $scope Angular scope.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -70,7 +69,6 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  * @ngname NgeoRoutingFeatureController
  */
 function Controller($scope, $timeout, $q, ngeoNominatimService) {
-
   /**
    * @type {!angular.IScope}
    * @private
@@ -137,7 +135,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
    * @private
    */
   this.vectorSource_ = new olSourceVector({
-    features: this.vectorFeatures_
+    features: this.vectorFeatures_,
   });
 
   /**
@@ -146,22 +144,24 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
    */
   this.vectorLayer_ = new olLayerVector({
     source: this.vectorSource_,
-    style: (function(feature, resolution) {
-      return [new olStyleStyle({
-        text: new olStyleText({
-          fill: new olStyleFill({
-            color: this.fillColor || '#000000'
+    style: function (feature, resolution) {
+      return [
+        new olStyleStyle({
+          text: new olStyleText({
+            fill: new olStyleFill({
+              color: this.fillColor || '#000000',
+            }),
+            font: '900 30px "Font Awesome 5 Free"',
+            offsetY: -15,
+            stroke: new olStyleStroke({
+              width: 3,
+              color: this.strokeColor || '#000000',
+            }),
+            text: '\uf041',
           }),
-          font: '900 30px "Font Awesome 5 Free"',
-          offsetY: -15,
-          stroke: new olStyleStroke({
-            width: 3,
-            color: this.strokeColor || '#000000'
-          }),
-          text: '\uf041'
-        })
-      })];
-    }).bind(this)
+        }),
+      ];
+    }.bind(this),
   });
 
   /**
@@ -170,7 +170,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
    * @private
    */
   this.modifyFeature_ = new olInteractionModify({
-    features: this.vectorFeatures_
+    features: this.vectorFeatures_,
   });
 
   /**
@@ -190,7 +190,7 @@ function Controller($scope, $timeout, $q, ngeoNominatimService) {
   this.errorMessage = '';
 }
 
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.map.addLayer(this.vectorLayer_);
 
   // setup modify interaction
@@ -220,7 +220,7 @@ Controller.prototype.$onInit = function() {
 /**
  * Cleanup, mostly relevant for vias.
  */
-Controller.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function () {
   this.map.removeLayer(this.vectorLayer_);
   this.modifyFeature_.setActive(false);
   this.map.removeInteraction(this.modifyFeature_);
@@ -228,14 +228,14 @@ Controller.prototype.$onDestroy = function() {
 
 /**
  */
-Controller.prototype.set = function() {
+Controller.prototype.set = function () {
   if (this.draw_) {
     this.map.removeInteraction(this.draw_);
   }
 
   this.draw_ = new olInteractionDraw({
     features: this.vectorFeatures_,
-    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point')
+    type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Point'),
   });
 
   this.draw_.on('drawstart', () => {
@@ -261,20 +261,20 @@ Controller.prototype.set = function() {
  * @param {string} label Feature name/label.
  * @private
  */
-Controller.prototype.setFeature_ = function(coordinate, label) {
+Controller.prototype.setFeature_ = function (coordinate, label) {
   const transformedCoordinate = olProj.fromLonLat(coordinate, this.map.getView().getProjection());
   if (label === '') {
     label = transformedCoordinate.join('/');
   }
   this.feature = new olFeature({
     geometry: new olGeomPoint(transformedCoordinate),
-    name: label
+    name: label,
   });
 };
 
-Controller.prototype.onFeatureChange_ = function() {
+Controller.prototype.onFeatureChange_ = function () {
   // update label
-  this.featureLabel = /** @type{string} */(this.feature.get('name') || '');
+  this.featureLabel = /** @type{string} */ (this.feature.get('name') || '');
 
   //update vector source
   this.vectorSource_.clear();
@@ -292,13 +292,14 @@ Controller.prototype.onFeatureChange_ = function() {
  * @param {import('ngeo/routing/NominatimService').NominatimSearchResult} selected Selected result.
  * @private
  */
-Controller.prototype.onSelect_ = function(selected) {
+Controller.prototype.onSelect_ = function (selected) {
   // @ts-ignore: If types are not respected
   const coordinate = selected.coordinate.map(parseFloat);
   const label = selected.label;
   this.setFeature_(coordinate, label);
-  const newCoordinates = /** @type{import("ol/geom/Point.js").default} */(this.feature.getGeometry())
-    .getCoordinates();
+  const newCoordinates = /** @type{import("ol/geom/Point.js").default} */ (
+    this.feature.getGeometry()
+  ).getCoordinates();
   this.map.getView().setCenter(newCoordinates);
 };
 
@@ -308,24 +309,25 @@ Controller.prototype.onSelect_ = function(selected) {
  * @param {import("ol/Feature.js").default} feature Feature to snap
  * @private
  */
-Controller.prototype.snapFeature_ = function(feature) {
+Controller.prototype.snapFeature_ = function (feature) {
   const coord = this.getLonLatFromPoint_(feature);
   const config = {};
 
-  const onSuccess = (function(resp) {
+  const onSuccess = function (resp) {
     const lon = parseFloat(resp['data']['lon']);
     const lat = parseFloat(resp['data']['lat']);
     const coordinate = [lon, lat];
     const label = resp['data']['display_name'];
     this.setFeature_(coordinate, label);
-  }).bind(this);
+  }.bind(this);
 
-  const onError = (function(resp) {
+  const onError = function (resp) {
     this.errorMessage = 'Error: nominatim server not responding.';
     console.log(resp);
-  }).bind(this);
+  }.bind(this);
 
-  this.$q_.when(this.ngeoNominatimService_.reverse(coord, config))
+  this.$q_
+    .when(this.ngeoNominatimService_.reverse(coord, config))
     .then(onSuccess.bind(this), onError.bind(this));
 };
 
@@ -335,13 +337,12 @@ Controller.prototype.snapFeature_ = function(feature) {
  * @return {import("ol/coordinate.js").Coordinate} LonLat coordinate
  * @private
  */
-Controller.prototype.getLonLatFromPoint_ = function(point) {
+Controller.prototype.getLonLatFromPoint_ = function (point) {
   const geometry = /** @type {import("ol/geom/Point.js").default} */ (point.getGeometry());
   const coords = geometry.getCoordinates();
   const projection = this.map.getView().getProjection();
   return olProj.toLonLat(coords, projection);
 };
-
 
 /**
  * Provides a text input and draw interaction to allow a user to create and modify a ol.Feature
@@ -379,12 +380,11 @@ const routingFeatureComponent = {
     'feature': '=ngeoRoutingFeatureFeature',
     'fillColor': '<?ngeoRoutingFeatureFillColor',
     'strokeColor': '<?ngeoRoutingFeatureStrokeColor',
-    'onChange': '=?ngeoRoutingFeatureOnChange'
+    'onChange': '=?ngeoRoutingFeatureOnChange',
   },
-  templateUrl: ngeoRoutingFeatureTemplateUrl
+  templateUrl: ngeoRoutingFeatureTemplateUrl,
 };
 
 module.component('ngeoRoutingFeature', routingFeatureComponent);
-
 
 export default module;

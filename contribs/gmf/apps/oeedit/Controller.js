@@ -10,8 +10,9 @@ import 'gmf/controllers/desktop.scss';
 import './sass/oeedit.scss';
 
 import angular from 'angular';
-import gmfControllersAbstractDesktopController, {AbstractDesktopController}
-  from 'gmf/controllers/AbstractDesktopController.js';
+import gmfControllersAbstractDesktopController, {
+  AbstractDesktopController,
+} from 'gmf/controllers/AbstractDesktopController.js';
 import appBase from '../appmodule.js';
 import gmfObjecteditingModule from 'gmf/objectediting/module.js';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate.js';
@@ -24,14 +25,15 @@ import Raven from 'raven-js/src/raven.js';
 import RavenPluginsAngular from 'raven-js/plugins/angular.js';
 
 if (!window.requestAnimationFrame) {
-  alert('Your browser is not supported, please update it or use another one. You will be redirected.\n\n'
-    + 'Votre navigateur n\'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. '
-    + 'Vous allez être redirigé.\n\n'
-    + 'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. '
-    + 'Sie werden weitergeleitet.');
+  alert(
+    'Your browser is not supported, please update it or use another one. You will be redirected.\n\n' +
+      "Votre navigateur n'est pas supporté, veuillez le mettre à jour ou en utiliser un autre. " +
+      'Vous allez être redirigé.\n\n' +
+      'Ihr Browser wird nicht unterstützt, bitte aktualisieren Sie ihn oder verwenden Sie einen anderen. ' +
+      'Sie werden weitergeleitet.'
+  );
   window.location.href = 'https://geomapfish.org/';
 }
-
 
 /**
  * @private
@@ -44,14 +46,18 @@ class Controller extends AbstractDesktopController {
    * @ngInject
    */
   constructor($scope, $injector, $timeout) {
-    super({
-      srid: 21781,
-      mapViewConfig: {
-        center: [632464, 185457],
-        zoom: 3,
-        resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05]
-      }
-    }, $scope, $injector);
+    super(
+      {
+        srid: 21781,
+        mapViewConfig: {
+          center: [632464, 185457],
+          zoom: 3,
+          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
+        },
+      },
+      $scope,
+      $injector
+    );
 
     /**
      * @type {boolean}
@@ -82,7 +88,7 @@ class Controller extends AbstractDesktopController {
      * @private
      */
     this.vectorSource_ = new olSourceVector({
-      wrapX: false
+      wrapX: false,
     });
 
     /**
@@ -90,7 +96,7 @@ class Controller extends AbstractDesktopController {
      * @private
      */
     this.vectorLayer_ = new olLayerVector({
-      source: this.vectorSource_
+      source: this.vectorSource_,
     });
 
     /**
@@ -105,8 +111,8 @@ class Controller extends AbstractDesktopController {
     this.sketchLayer_ = new olLayerVector({
       source: new olSourceVector({
         features: this.sketchFeatures,
-        wrapX: false
-      })
+        wrapX: false,
+      }),
     });
 
     /**
@@ -175,25 +181,29 @@ class Controller extends AbstractDesktopController {
      */
     this.profileLinesconfiguration = {
       'aster': {color: '#0000A0'},
-      'srtm': {color: '#00A000'}
+      'srtm': {color: '#00A000'},
     };
 
     /**
      * @type {Array<import('gmf/map/mousepositionComponent.js').MousePositionProjection>}
      */
-    this.mousePositionProjections = [{
-      code: EPSG2056,
-      label: 'CH1903+ / LV95',
-      filter: 'ngeoNumberCoordinates::{x}, {y} m'
-    }, {
-      code: EPSG21781,
-      label: 'CH1903 / LV03',
-      filter: 'ngeoNumberCoordinates::{x}, {y} m'
-    }, {
-      code: 'EPSG:4326',
-      label: 'WGS84',
-      filter: 'ngeoDMSCoordinates:2'
-    }];
+    this.mousePositionProjections = [
+      {
+        code: EPSG2056,
+        label: 'CH1903+ / LV95',
+        filter: 'ngeoNumberCoordinates::{x}, {y} m',
+      },
+      {
+        code: EPSG21781,
+        label: 'CH1903 / LV03',
+        filter: 'ngeoNumberCoordinates::{x}, {y} m',
+      },
+      {
+        code: 'EPSG:4326',
+        label: 'WGS84',
+        filter: 'ngeoDMSCoordinates:2',
+      },
+    ];
 
     // Allow angular-gettext-tools to collect the strings to translate
     /** @type {angular.gettext.gettextCatalog} */
@@ -205,9 +215,7 @@ class Controller extends AbstractDesktopController {
     if ($injector.has('sentryUrl')) {
       const options = $injector.has('sentryOptions') ? $injector.get('sentryOptions') : undefined;
       const raven = new Raven();
-      raven.config($injector.get('sentryUrl'), options)
-        .addPlugin(RavenPluginsAngular)
-        .install();
+      raven.config($injector.get('sentryUrl'), options).addPlugin(RavenPluginsAngular).install();
     }
   }
 }
@@ -222,14 +230,19 @@ const module = angular.module('Appoeedit', [
 ]);
 
 module.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
-});
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
+  }
+);
 
-module.value('gmfPermalinkOptions', /** @type {PermalinkOptions} */ ({
-  pointRecenterZoom: 10
-}));
+module.value(
+  'gmfPermalinkOptions',
+  /** @type {PermalinkOptions} */ ({
+    pointRecenterZoom: 10,
+  })
+);
 
 module.controller('OEEditController', Controller);
 

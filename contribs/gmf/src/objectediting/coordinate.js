@@ -2,7 +2,6 @@
  * @typedef {import("ol/coordinate.js").Coordinate} Coordinate
  */
 
-
 /**
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
@@ -13,11 +12,10 @@
  */
 export function coordinatesToXY0(coordinates) {
   if (coordinates.length >= 2) {
-    const coord = /** @type{import("ol/coordinate.js").Coordinate} */(coordinates);
+    const coord = /** @type{import("ol/coordinate.js").Coordinate} */ (coordinates);
     return [coord[0], coord[1]];
   }
 }
-
 
 /**
  * Convert a given coordinate or list of coordinates of any 'nesting' level
@@ -32,7 +30,7 @@ export function coordinatesToXY0(coordinates) {
  */
 function toXY(coordinates, nesting) {
   if (nesting === 0) {
-    return /** @type {Array<T>} */(coordinatesToXY0(/** @type {Coordinate} */(coordinates)));
+    return /** @type {Array<T>} */ (coordinatesToXY0(/** @type {Coordinate} */ (coordinates)));
   } else {
     for (let i = 0, ii = coordinates.length; i < ii; i++) {
       // @ts-ignore: TypeScript is not able to do recurtion with deferent type in generic
@@ -41,7 +39,6 @@ function toXY(coordinates, nesting) {
   }
   return coordinates;
 }
-
 
 /**
  * Convert a given coordinate or list of coordinates of any 'nesting' level
@@ -55,7 +52,6 @@ export function coordinatesToXY1(coordinates) {
   return toXY(coordinates, 1);
 }
 
-
 /**
  * Convert a given coordinate or list of coordinates of any 'nesting' level
  * to XY, i.e. remove any extra dimensions to the coordinates and keep only 2.
@@ -67,7 +63,6 @@ export function coordinatesToXY1(coordinates) {
 export function coordinatesToXY2(coordinates) {
   return toXY(coordinates, 2);
 }
-
 
 /**
  * Convert a given coordinate or list of coordinates of any 'nesting' level

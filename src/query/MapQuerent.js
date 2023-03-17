@@ -5,7 +5,6 @@ import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources.js';
 import ngeoDatasourceHelper from 'ngeo/datasource/Helper.js';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
 
-
 /**
  * Results of the query source.
  *
@@ -15,7 +14,6 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  * @property {number} total The number of results for all sources.
  * @property {boolean} pending If at least one source is pending.
  */
-
 
 /**
  * The options for the query service.
@@ -41,12 +39,10 @@ import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper.js';
  *    requests.
  */
 
-
 /**
  * @hidden
  */
 export class MapQuerent {
-
   /**
    * The ngeo Map Querent is the service bound to a map that issues
    * queries using the Querent service. The result is stored inside this
@@ -64,12 +60,17 @@ export class MapQuerent {
    * @ngname ngeoQuerent
    * @ngInject
    */
-  constructor($injector, ngeoDataSources, ngeoDataSourcesHelper,
-    ngeoFeatureHelper, ngeoQuerent, ngeoQueryResult) {
-
+  constructor(
+    $injector,
+    ngeoDataSources,
+    ngeoDataSourcesHelper,
+    ngeoFeatureHelper,
+    ngeoQuerent,
+    ngeoQueryResult
+  ) {
     const options = /** @type {QueryOptions} */ (
-      $injector.has('ngeoQueryOptions') ?
-        $injector.get('ngeoQueryOptions') : {});
+      $injector.has('ngeoQueryOptions') ? $injector.get('ngeoQueryOptions') : {}
+    );
 
     /**
      * @type {import("ngeo/datasource/DataSource.js").DataSources}
@@ -116,15 +117,13 @@ export class MapQuerent {
      * @type {boolean}
      * @private
      */
-    this.queryCountFirst_ = options.queryCountFirst !== undefined ?
-      options.queryCountFirst : false;
+    this.queryCountFirst_ = options.queryCountFirst !== undefined ? options.queryCountFirst : false;
 
     /**
      * @type {number}
      * @private
      */
-    this.tolerancePx_ = options.tolerance !== undefined ?
-      options.tolerance : 3;
+    this.tolerancePx_ = options.tolerance !== undefined ? options.tolerance : 3;
 
     /**
      * @type {boolean}
@@ -158,9 +157,7 @@ export class MapQuerent {
 
     // (2) Get queryable data sources, unless they are already set
     let queryableDataSources;
-    if (options.dataSources === undefined &&
-        options.queryableDataSources === undefined
-    ) {
+    if (options.dataSources === undefined && options.queryableDataSources === undefined) {
       queryableDataSources = this.ngeoQuerent_.getQueryableDataSources(
         this.dataSources_.getArray(),
         options.map
@@ -175,11 +172,10 @@ export class MapQuerent {
       limit: limit,
       tolerancePx: this.tolerancePx_,
       wfsCount: this.queryCountFirst_,
-      bboxAsGETParam: this.bboxAsGETParam_
+      bboxAsGETParam: this.bboxAsGETParam_,
     });
     this.result_.pending = true;
-    this.ngeoQuerent_.issue(options).then(
-      this.handleResult_.bind(this, action));
+    this.ngeoQuerent_.issue(options).then(this.handleResult_.bind(this, action));
   }
 
   /**
@@ -188,7 +184,6 @@ export class MapQuerent {
    * @param {boolean} keep Whether to keep the existing features and sources
    */
   clear(keep = false) {
-
     if (this.cleared_) {
       return;
     }
@@ -277,10 +272,10 @@ export class MapQuerent {
 
           if (existingSource) {
             for (const newFeature of featuresByType) {
-              const existingFeatureIndex =
-                this.featureHelper_.findFeatureIndexByFid(
-                  existingSource.features, newFeature.getId()
-                );
+              const existingFeatureIndex = this.featureHelper_.findFeatureIndexByFid(
+                existingSource.features,
+                newFeature.getId()
+              );
               if (existingFeatureIndex === -1) {
                 if (action === ngeoQueryAction.ADD) {
                   existingSource.features.push(newFeature);
@@ -309,7 +304,7 @@ export class MapQuerent {
             pending: false,
             queried: true,
             tooManyResults: tooManyResults,
-            totalFeatureCount: totalFeatureCount
+            totalFeatureCount: totalFeatureCount,
           });
           total += features.length;
         }
@@ -321,9 +316,7 @@ export class MapQuerent {
     this.result_.pending = false;
     this.cleared_ = false;
   }
-
 }
-
 
 /**
  * @type {!angular.IModule}
@@ -337,16 +330,17 @@ const module = angular.module('ngeoMapQuerent', [
 ]);
 module.service('ngeoMapQuerent', MapQuerent);
 
-
 /**
  * The `ngeoQueryResult` is the value service where the features of the query
  * result are added.
  */
-module.value('ngeoQueryResult', /** @type {QueryResult} */ ({
-  sources: [],
-  total: 0,
-  pending: false
-}));
-
+module.value(
+  'ngeoQueryResult',
+  /** @type {QueryResult} */ ({
+    sources: [],
+    total: 0,
+    pending: false,
+  })
+);
 
 export default module;

@@ -27,7 +27,7 @@ gmf-filterselector {
 /* drawfeature */
 
 .gmf-icon-circle:before {
-  content: "Circle";
+  content: 'Circle';
 }
 .gmf-icon-line:after {
   content: 'Line';
@@ -66,7 +66,7 @@ gmf-filterselector {
   border-top: 6px solid rgba(0, 0, 0, 0.5);
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
-  content: "";
+  content: '';
   position: absolute;
   bottom: -6px;
   margin-left: -7px;
@@ -85,7 +85,6 @@ gmf-filterselector {
 .gmf-filterselector-savefilter-desc {
   color: #999999;
 }
-
 
 .ngeo-filter-condition-button,
 .ngeo-filter-condition-button:hover,
@@ -113,7 +112,6 @@ hr.ngeo-filter-separator-rules {
 hr.ngeo-filter-separator-criteria {
   margin: 0.5rem 0;
 }
-
 
 ngeo-rule {
   display: block;

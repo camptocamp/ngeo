@@ -4,7 +4,6 @@ import olSourceWMTS from 'ol/source/WMTS.js';
 import TilesDownloader from 'ngeo/offline/TilesDownloader.js';
 import angular from 'angular';
 
-
 /**
  * @param {import("ol/coordinate.js").Coordinate} a Some coordinates.
  * @param {import("ol/coordinate.js").Coordinate} b Some other coordinates.
@@ -18,9 +17,7 @@ function magnitude2(a, b) {
   return magnitudeSquared;
 }
 
-
 const Downloader = class {
-
   /**
    * @ngInject
    * @param {import("ngeo/offline/Configuration.js").default} ngeoOfflineConfiguration
@@ -134,7 +131,7 @@ const Downloader = class {
     const persistentObject = {
       extent: extent,
       layers: persistentLayers,
-      zooms: zooms.sort((a, b) => (a < b ? -1 : 1))
+      zooms: zooms.sort((a, b) => (a < b ? -1 : 1)),
     };
     const setOfflineContentPromise = this.configuration_.setItem('offline_content', persistentObject);
 
@@ -153,6 +150,5 @@ const name = 'offlineDownloader';
 Downloader.module = angular.module(name, []).service(name, Downloader);
 
 const exports = Downloader;
-
 
 export default exports;

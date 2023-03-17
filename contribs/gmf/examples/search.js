@@ -18,7 +18,6 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -39,7 +38,6 @@ module.value('gmfLayersUrl', appURL.GMF_LAYERS);
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
 
-
 /**
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
  * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo
@@ -50,7 +48,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
-
   gmfThemes.loadThemes();
 
   ngeoFeatureOverlayMgr.init(this.map);
@@ -58,19 +55,21 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   /**
    * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
    */
-  this.searchDatasources = [{
-    datasetTitle: 'test',
-    groupValues: ['osm', 'district'],
-    groupActions: [],
-    labelKey: 'label',
-    projection: EPSG21781,
-    bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<any>} */({
-      remote: {
-        rateLimitWait: 250
-      }
-    }),
-    url: appURL.SEARCH
-  }];
+  this.searchDatasources = [
+    {
+      datasetTitle: 'test',
+      groupValues: ['osm', 'district'],
+      groupActions: [],
+      labelKey: 'label',
+      projection: EPSG21781,
+      bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<any>} */ ({
+        remote: {
+          rateLimitWait: 250,
+        },
+      }),
+      url: appURL.SEARCH,
+    },
+  ];
 
   const fill = new olStyleFill({color: [255, 255, 255, 0.6]});
   const stroke = new olStyleStroke({color: [255, 0, 0, 1], width: 2});
@@ -83,17 +82,17 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
       image: new olStyleCircle({
         fill: fill,
         radius: 5,
-        stroke: stroke
+        stroke: stroke,
       }),
-      stroke: stroke
-    })
+      stroke: stroke,
+    }),
   };
 
   /**
    * @type {Twitter.Typeahead.Options}
    */
   this.searchOptions = {
-    minLength: 2
+    minLength: 2,
   };
 
   /**
@@ -107,13 +106,13 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   /**
@@ -123,12 +122,11 @@ function MainController(gmfThemes, ngeoFeatureOverlayMgr, ngeoNotification) {
     ngeoNotification.notify({
       msg: 'gmf-search initialized',
       target: '#message',
-      type: MessageType.SUCCESS
+      type: MessageType.SUCCESS,
     });
   };
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

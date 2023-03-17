@@ -6,7 +6,6 @@ import ngeoMessagePopup from 'ngeo/message/Popup.js';
 
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -16,26 +15,27 @@ const module = angular.module('gmfWmtscapabilitylayertree', [
   ngeoMessagePopup.name,
 ]);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    $templateCache.put(
+      // @ts-ignore: webpack
+      'ngeo/import/wmtsCapabilityLayertreeComponent',
+      require('./wmtsCapabilityLayertreeComponent.html')
+    );
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    // @ts-ignore: webpack
-    'ngeo/import/wmtsCapabilityLayertreeComponent', require('./wmtsCapabilityLayertreeComponent.html')
-  );
-});
-
-
-module.value('gmfWmtscapabilitylayertreTemplateUrl',
+module.value(
+  'gmfWmtscapabilitylayertreTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['gmfWmtscapabilitylayertreTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/import/wmtsCapabilityLayertreeComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'ngeo/import/wmtsCapabilityLayertreeComponent';
+  }
+);
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -49,13 +49,11 @@ function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreT
   return gmfWmtscapabilitylayertreTemplateUrl($attrs);
 }
 
-
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
@@ -66,7 +64,6 @@ class Controller {
    * @ngname GmfWmtscapabilitylayertreeController
    */
   constructor(gmfExternalDataSourcesManager) {
-
     // Binding properties
 
     /**
@@ -88,7 +85,6 @@ class Controller {
      */
     this.url;
 
-
     // Injected properties
 
     /**
@@ -103,11 +99,7 @@ class Controller {
    */
   createAndAddDataSource(layer) {
     const manager = this.gmfExternalDataSourcesManager_;
-    manager.createAndAddDataSourceFromWMTSCapability(
-      layer,
-      this.capabilities,
-      this.url
-    );
+    manager.createAndAddDataSourceFromWMTSCapability(layer, this.capabilities, this.url);
   }
 
   /**
@@ -119,16 +111,14 @@ class Controller {
   }
 }
 
-
 module.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
     'layers': '<',
-    'url': '<'
+    'url': '<',
   },
   controller: Controller,
-  templateUrl: gmfWmtscapabilitylayertreTemplateUrl
+  templateUrl: gmfWmtscapabilitylayertreTemplateUrl,
 });
-
 
 export default module;

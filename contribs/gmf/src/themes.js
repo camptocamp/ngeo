@@ -2,7 +2,6 @@
  * The GeoMapFish "themes" web service.
  */
 
-
 /**
  * @typedef {Object} GmfThemes
  */
@@ -15,12 +14,10 @@
  * @property {!Array.<!GmfTheme>} themes
  */
 
-
 /**
  * @typedef {Object} GmfRootNode
  * @property {!Array.<!GmfGroup>} children
  */
-
 
 /**
  * Contains the common element of all the elements of the GeoMapFish layer tree.
@@ -29,7 +26,6 @@
  * @property {!GmfMetaData} metadata The related metadata.
  * @property {string} name
  */
-
 
 /**
  * The element we can select in the theme selector.
@@ -41,7 +37,6 @@
  * @property {!Array.<!GmfGroup>} children The first level layer groups.
  * @property {!GmfFunctionalities} functionalities
  */
-
 
 /**
  * A GeoMapFish group
@@ -69,7 +64,6 @@
  *      then one time layer, it is the time information.
  */
 
-
 /**
  * A GeoMapFish layer
  * not an OpenLayers layer
@@ -92,7 +86,6 @@
  * @property {string} [ogcServer]
  */
 
-
 /**
  * extends GmfLayer
  * @typedef {Object} GmfLayerWMS
@@ -113,7 +106,6 @@
  *      directly manage it, see also `{GmfGroup.time}`.
  */
 
-
 /**
  * extends GmfLayer
  * @typedef {Object} GmfLayerWMTS
@@ -131,7 +123,6 @@
  * @property {string} url
  */
 
-
 /**
  * Additional attributes related on a WMS layers (or WFS features type).
  * @typedef {Object} GmfLayerChildLayer
@@ -140,7 +131,6 @@
  * @property {string} name
  * @property {boolean} queryable
  */
-
 
 /**
  * @typedef {!Object<string, !GmfOgcServer>} GmfOgcServers
@@ -177,7 +167,6 @@
  *      in the filter tool upon loading an application.
  *      Note: although this is a list, only one can be defined.
  */
-
 
 /**
  * @typedef {Object} GmfMetaData
@@ -230,7 +219,6 @@
  *      granularity). For WMTS Layers.
  */
 
-
 /**
  * @typedef {Object} GmfSnappingConfig
  * @property {boolean} [edge=true] Determines whethers the edges of features from the node layer can be
@@ -241,12 +229,10 @@
  * @property {boolean} [invertXY=false] Switches coordinates while reading a GML getFeature request
  */
 
-
 /**
  * @typedef {Object} GmfLayerAttributeValuesResponse
  * @property {Array.<GmfLayerAttributeValue>} items
  */
-
 
 /**
  * @typedef {Object} GmfLayerAttributeValue
