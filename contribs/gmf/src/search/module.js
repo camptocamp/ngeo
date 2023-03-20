@@ -9,7 +9,4 @@ import './search.scss';
 /**
  * @type {!angular.IModule}
  */
-export default angular.module('gmfSearchModule', [
-  gmfSearchComponent.name,
-  gmfSearchFulltextSearch.name
-]);
+export default angular.module('gmfSearchModule', [gmfSearchComponent.name, gmfSearchFulltextSearch.name]);

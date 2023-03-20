@@ -7,32 +7,28 @@ import 'floatthead';
 import 'angular-float-thead';
 import 'ngeo/sass/font.scss';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoGrid', [
-  ngeoMiscFilters.name,
-  'floatThead',
-]);
+const module = angular.module('ngeoGrid', [ngeoMiscFilters.name, 'floatThead']);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/grid', require('./component.html'));
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/grid', require('./component.html'));
-});
-
-
-module.value('ngeoGridTemplateUrl',
+module.value(
+  'ngeoGridTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} Template URL.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoGridTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/grid';
+    return templateUrl !== undefined ? templateUrl : 'ngeo/grid';
   }
 );
 
@@ -47,7 +43,6 @@ module.value('ngeoGridTemplateUrl',
 function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
   return ngeoGridTemplateUrl($attrs);
 }
-
 
 /**
  * A grid component for displaying tabular data. The columns of the grid
@@ -69,13 +64,12 @@ function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
 const gridComponent = {
   controller: Controller,
   bindings: {
-    'configuration': '=ngeoGridConfiguration'
+    'configuration': '=ngeoGridConfiguration',
   },
-  templateUrl: ngeoGridTemplateUrl
+  templateUrl: ngeoGridTemplateUrl,
 };
 
 module.component('ngeoGrid', gridComponent);
-
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
@@ -87,7 +81,6 @@ module.component('ngeoGrid', gridComponent);
  * @ngname ngeoGridController
  */
 function Controller($scope) {
-
   /**
    * @type {!angular.IScope}
    * @private
@@ -120,20 +113,18 @@ function Controller($scope) {
    * @type {Object}
    */
   this.floatTheadConfig = {
-    'scrollContainer': function($table) {
+    'scrollContainer': function ($table) {
       return $table.closest('.ngeo-grid-table-container');
-    }
+    },
   };
 }
-
 
 /**
  * Init the controller
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.selectedRows = this.configuration.selectedRows;
 };
-
 
 /**
  * Sort function that always puts undefined values to the bottom of the grid.
@@ -142,7 +133,7 @@ Controller.prototype.$onInit = function() {
  * @param {string} columnName The name of the column that should be used to
  *    sort the data.
  */
-Controller.prototype.sort = function(columnName) {
+Controller.prototype.sort = function (columnName) {
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
   this.sortedBy = columnName;
 
@@ -158,19 +149,17 @@ Controller.prototype.sort = function(columnName) {
   });
 };
 
-
 /**
  * Handler for clicks on a row.
  * @param {Object} attributes An entry/row.
  * @param {JQueryEventObject} event Event.
  */
-Controller.prototype.clickRow = function(attributes, event) {
+Controller.prototype.clickRow = function (attributes, event) {
   const shiftKey = isShiftKeyOnly(event);
   const platformModifierKey = isPlatformModifierKeyOnly(event);
 
   this.clickRow_(attributes, shiftKey, platformModifierKey);
 };
-
 
 /**
  * @param {Object} attributes An entry/row.
@@ -178,9 +167,7 @@ Controller.prototype.clickRow = function(attributes, event) {
  * @param {boolean} platformModifierKey CTRL/Meta pressed?
  * @private
  */
-Controller.prototype.clickRow_ = function(
-  attributes, shiftKey, platformModifierKey) {
-
+Controller.prototype.clickRow_ = function (attributes, shiftKey, platformModifierKey) {
   if (shiftKey && !platformModifierKey) {
     this.selectRange_(attributes);
   } else if (!shiftKey && platformModifierKey) {
@@ -194,13 +181,12 @@ Controller.prototype.clickRow_ = function(
   }
 };
 
-
 /**
  * Selects all rows between the given row and the closest already selected row.
  * @param {Object} attributes An entry/row.
  * @private
  */
-Controller.prototype.selectRange_ = function(attributes) {
+Controller.prototype.selectRange_ = function (attributes) {
   const targetUid = getRowUid(attributes);
   const data = this.configuration.data;
 
@@ -243,21 +229,20 @@ Controller.prototype.selectRange_ = function(attributes) {
   }
 
   // then select all rows between the clicked one and the closest
-  const rangeStart = (posClickedRow < posClosestRow) ? posClickedRow : posClosestRow;
-  const rangeEnd = (posClickedRow > posClosestRow) ? posClickedRow : posClosestRow;
+  const rangeStart = posClickedRow < posClosestRow ? posClickedRow : posClosestRow;
+  const rangeEnd = posClickedRow > posClosestRow ? posClickedRow : posClosestRow;
 
   for (let l = rangeStart; l <= rangeEnd; l++) {
     this.configuration.selectRow(data[l]);
   }
 };
 
-
 /**
  * Prevent the default browser behaviour of selecting text
  * when selecting multiple rows with SHIFT or CTRL/Meta.
  * @param {JQueryEventObject} event Event.
  */
-Controller.prototype.preventTextSelection = function(event) {
+Controller.prototype.preventTextSelection = function (event) {
   const shiftKey = isShiftKeyOnly(event);
   const platformModifierKey = isPlatformModifierKeyOnly(event);
 
@@ -266,7 +251,6 @@ Controller.prototype.preventTextSelection = function(event) {
   }
 };
 
-
 /**
  * Same as `ol.events.condition.platformModifierKeyOnly`.
  * @param {JQueryEventObject} event Event.
@@ -274,11 +258,8 @@ Controller.prototype.preventTextSelection = function(event) {
  * @private
  */
 function isPlatformModifierKeyOnly(event) {
-  return !event.altKey &&
-    (olHas.MAC ? event.metaKey : event.ctrlKey) &&
-    !event.shiftKey;
+  return !event.altKey && (olHas.MAC ? event.metaKey : event.ctrlKey) && !event.shiftKey;
 }
-
 
 /**
  * Same as `ol.events.condition.shiftKeyOnly`.
@@ -287,14 +268,9 @@ function isPlatformModifierKeyOnly(event) {
  * @private
  */
 function isShiftKeyOnly(event) {
-  return (
-    !event.altKey &&
-      !(event.metaKey || event.ctrlKey) &&
-      event.shiftKey);
+  return !event.altKey && !(event.metaKey || event.ctrlKey) && event.shiftKey;
 }
 
-
 module.controller('ngeoGridController', Controller);
-
 
 export default module;

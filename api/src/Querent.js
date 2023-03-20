@@ -4,13 +4,11 @@ import olFormatGML2 from 'ol/format/GML2.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import {buffer, createOrUpdateFromCoordinate} from 'ol/extent.js';
 
-
 /**
  * Click tolerance in pixel
  * @type {number}
  */
 const TOLERANCE = 10;
-
 
 /**
  * @param {import('./Themes.js').overlayDefinition} def Overlay definition.
@@ -19,7 +17,6 @@ const TOLERANCE = 10;
 function querable(def) {
   return def.layer.type === 'WMS' && !!def.ogcServer.wfsSupport && !!def.ogcServer.urlWfs;
 }
-
 
 /**
  * Issues a simple WFS GetFeature request for a single layer to fetch
@@ -39,7 +36,6 @@ function querable(def) {
 export function getFeaturesFromIds(layer, ids) {
   return new Promise((resolve, reject) => {
     getOverlayDefs().then((overlayDefs) => {
-
       /** Array<import('ol/Feature.js').default> */
       let features = [];
       const overlayDef = overlayDefs.get(layer);
@@ -59,7 +55,7 @@ export function getFeaturesFromIds(layer, ids) {
       let featureIds = [];
       for (const childLayer of gmfLayer.childLayers) {
         childLayerNames.push(childLayer.name);
-        featureIds = featureIds.concat(ids.map(id => `${childLayer.name}.${id}`));
+        featureIds = featureIds.concat(ids.map((id) => `${childLayer.name}.${id}`));
       }
 
       const params = {
@@ -68,18 +64,20 @@ export function getFeaturesFromIds(layer, ids) {
         'REQUEST': 'GetFeature',
         'SERVICE': 'WFS',
         'TYPENAME': childLayerNames.join(','),
-        'VERSION': '1.0.0'
+        'VERSION': '1.0.0',
       };
       const url = olUriAppendParams(overlayDef.ogcServer.urlWfs, params);
 
       fetch(url)
-        .then(response => response.text().then((responseText) => {
-          const wfsFormat = new olFormatWFS({
-            featureNS: overlayDef.ogcServer.namespace,
-            gmlFormat: new olFormatGML2()
-          });
-          features = wfsFormat.readFeatures(responseText);
-        }))
+        .then((response) =>
+          response.text().then((responseText) => {
+            const wfsFormat = new olFormatWFS({
+              featureNS: overlayDef.ogcServer.namespace,
+              gmlFormat: new olFormatGML2(),
+            });
+            features = wfsFormat.readFeatures(responseText);
+          })
+        )
         .catch((response) => {
           console.error(`WFS GetFeature request failed, response: ${response}`);
         })
@@ -89,7 +87,6 @@ export function getFeaturesFromIds(layer, ids) {
     });
   });
 }
-
 
 /**
  * @param {!string} layer Name of the layer to query
@@ -102,7 +99,6 @@ export function getFeaturesFromIds(layer, ids) {
 export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
   return new Promise((resolve, reject) => {
     getOverlayDefs().then((overlayDefs) => {
-
       const overlayDef = overlayDefs.get(layer);
 
       if (!overlayDef) {
@@ -123,19 +119,21 @@ export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
         'REQUEST': 'GetFeature',
         'SERVICE': 'WFS',
         'TYPENAME': layer,
-        'VERSION': '1.0.0'
+        'VERSION': '1.0.0',
       };
       const url = olUriAppendParams(overlayDef.ogcServer.urlWfs, params);
 
       let feature;
       fetch(url)
-        .then(response => response.text().then((responseText) => {
-          const wfsFormat = new olFormatWFS({
-            featureNS: overlayDef.ogcServer.namespace,
-            gmlFormat: new olFormatGML2()
-          });
-          feature = wfsFormat.readFeature(responseText);
-        }))
+        .then((response) =>
+          response.text().then((responseText) => {
+            const wfsFormat = new olFormatWFS({
+              featureNS: overlayDef.ogcServer.namespace,
+              gmlFormat: new olFormatGML2(),
+            });
+            feature = wfsFormat.readFeature(responseText);
+          })
+        )
         .catch((response) => {
           console.error(`WFS GetFeature request failed, response: ${response}`);
         })

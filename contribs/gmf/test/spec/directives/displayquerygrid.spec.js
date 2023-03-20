@@ -10,16 +10,14 @@ import olFeature from 'ol/Feature.js';
  * @param {Array} data The data.
  * @param {Array} expectedData Expected data.
  */
-const compareGridData = function(data, expectedData) {
+const compareGridData = function (data, expectedData) {
   expect(data.length).toBe(expectedData.length);
   for (let i = 0; i < data.length; i++) {
     expect(data[i]).toEqual(jasmine.objectContaining(expectedData[i]));
   }
 };
 
-
 describe('gmf.query.gridComponent', () => {
-
   let queryGridController;
   let ngeoQueryResult;
   let $scope;
@@ -48,21 +46,24 @@ describe('gmf.query.gridComponent', () => {
           return new olMap({
             view: new olView({
               center: [0, 0],
-              zoom: 0
-            })
+              zoom: 0,
+            }),
           });
-        }
+        },
       };
-      queryGridController = $controller('GmfDisplayquerygridController', {
-        $scope: $scope,
-        $element: $('<div></div>')
-      }, data);
+      queryGridController = $controller(
+        'GmfDisplayquerygridController',
+        {
+          $scope: $scope,
+          $element: $('<div></div>'),
+        },
+        data
+      );
       $rootScope.$digest();
     });
   });
 
   describe('#updateData_', () => {
-
     it('deals with no sources', () => {
       ngeoQueryResult.total = 0;
       ngeoQueryResult.sources = [];
@@ -72,24 +73,26 @@ describe('gmf.query.gridComponent', () => {
 
     it('deals with a single source', () => {
       ngeoQueryResult.total = 2;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'osm_id': 1234,
-            'name': 'A',
-            'empty_column': undefined
-          }),
-          new olFeature({
-            'osm_id': 12345,
-            'name': 'B',
-            'empty_column': undefined
-          })
-        ],
-        id: 123,
-        label: 'Test',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'osm_id': 1234,
+              'name': 'A',
+              'empty_column': undefined,
+            }),
+            new olFeature({
+              'osm_id': 12345,
+              'name': 'B',
+              'empty_column': undefined,
+            }),
+          ],
+          id: 123,
+          label: 'Test',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
@@ -106,21 +109,17 @@ describe('gmf.query.gridComponent', () => {
         {
           'osm_id': 1234,
           'name': 'A',
-          'empty_column': undefined
+          'empty_column': undefined,
         },
         {
           'osm_id': 12345,
           'name': 'B',
-          'empty_column': undefined
-        }
+          'empty_column': undefined,
+        },
       ];
       compareGridData(gridConfig.data, expectedGridData);
 
-      const expectedColumnDefs = [
-        {'name': 'osm_id'},
-        {'name': 'name'},
-        {'name': 'empty_column'}
-      ];
+      const expectedColumnDefs = [{'name': 'osm_id'}, {'name': 'name'}, {'name': 'empty_column'}];
       expect(gridConfig.columnDefs).toEqual(expectedColumnDefs);
     });
 
@@ -128,24 +127,26 @@ describe('gmf.query.gridComponent', () => {
       queryGridController.removeEmptyColumns_ = true;
 
       ngeoQueryResult.total = 2;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'osm_id': 1234,
-            'name': 'A',
-            'empty_column': undefined
-          }),
-          new olFeature({
-            'osm_id': 12345,
-            'name': 'B',
-            'empty_column': undefined
-          })
-        ],
-        id: 123,
-        label: 'Test',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'osm_id': 1234,
+              'name': 'A',
+              'empty_column': undefined,
+            }),
+            new olFeature({
+              'osm_id': 12345,
+              'name': 'B',
+              'empty_column': undefined,
+            }),
+          ],
+          id: 123,
+          label: 'Test',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
@@ -157,19 +158,16 @@ describe('gmf.query.gridComponent', () => {
       const expectedGridData = [
         {
           'osm_id': 1234,
-          'name': 'A'
+          'name': 'A',
         },
         {
           'osm_id': 12345,
-          'name': 'B'
-        }
+          'name': 'B',
+        },
       ];
       compareGridData(gridConfig.data, expectedGridData);
 
-      const expectedColumnDefs = [
-        {'name': 'osm_id'},
-        {'name': 'name'}
-      ];
+      const expectedColumnDefs = [{'name': 'osm_id'}, {'name': 'name'}];
       expect(gridConfig.columnDefs).toEqual(expectedColumnDefs);
     });
 
@@ -177,22 +175,24 @@ describe('gmf.query.gridComponent', () => {
       queryGridController.removeEmptyColumns_ = true;
 
       ngeoQueryResult.total = 2;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'empty_column': undefined,
-            '2n-empty_column': undefined
-          }),
-          new olFeature({
-            'empty_column': undefined,
-            '2n-empty_column': undefined
-          })
-        ],
-        id: 123,
-        label: 'Test',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'empty_column': undefined,
+              '2n-empty_column': undefined,
+            }),
+            new olFeature({
+              'empty_column': undefined,
+              '2n-empty_column': undefined,
+            }),
+          ],
+          id: 123,
+          label: 'Test',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       $timeout.flush();
       expect(queryGridController.active).toBe(false);
@@ -203,39 +203,43 @@ describe('gmf.query.gridComponent', () => {
 
     it('deals with multiple sources', () => {
       ngeoQueryResult.total = 3;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'osm_id': 1234,
-            'name': 'A'
-          }),
-          new olFeature({
-            'osm_id': 12345,
-            'name': 'B'
-          })
-        ],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true
-      }, {
-        features: [],
-        id: 234,
-        label: 'Test 2',
-        pending: false,
-        queried: true
-      }, {
-        features: [
-          new olFeature({
-            'id': 1234,
-            'label': 'C'
-          })
-        ],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'osm_id': 1234,
+              'name': 'A',
+            }),
+            new olFeature({
+              'osm_id': 12345,
+              'name': 'B',
+            }),
+          ],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [],
+          id: 234,
+          label: 'Test 2',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [
+            new olFeature({
+              'id': 1234,
+              'label': 'C',
+            }),
+          ],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
@@ -248,19 +252,16 @@ describe('gmf.query.gridComponent', () => {
       const expectedGridData1 = [
         {
           'osm_id': 1234,
-          'name': 'A'
+          'name': 'A',
         },
         {
           'osm_id': 12345,
-          'name': 'B'
-        }
+          'name': 'B',
+        },
       ];
       compareGridData(gridConfig1.data, expectedGridData1);
 
-      const expectedColumnDefs1 = [
-        {'name': 'osm_id'},
-        {'name': 'name'}
-      ];
+      const expectedColumnDefs1 = [{'name': 'osm_id'}, {'name': 'name'}];
       expect(gridConfig1.columnDefs).toEqual(expectedColumnDefs1);
 
       // grid source 2
@@ -275,44 +276,44 @@ describe('gmf.query.gridComponent', () => {
       const expectedGridData3 = [
         {
           'id': 1234,
-          'label': 'C'
-        }
+          'label': 'C',
+        },
       ];
       compareGridData(gridConfig3.data, expectedGridData3);
 
-      const expectedColumnDefs3 = [
-        {'name': 'id'},
-        {'name': 'label'}
-      ];
+      const expectedColumnDefs3 = [{'name': 'id'}, {'name': 'label'}];
       expect(gridConfig3.columnDefs).toEqual(expectedColumnDefs3);
     });
 
     it('deals with sources with too many features', () => {
       ngeoQueryResult.total = 2;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'osm_id': 1234,
-            'name': 'A'
-          }),
-          new olFeature({
-            'osm_id': 12345,
-            'name': 'B'
-          })
-        ],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true
-      }, {
-        features: [],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true,
-        tooManyResults: true,
-        totalFeatureCount: 351
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'osm_id': 1234,
+              'name': 'A',
+            }),
+            new olFeature({
+              'osm_id': 12345,
+              'name': 'B',
+            }),
+          ],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+          tooManyResults: true,
+          totalFeatureCount: 351,
+        },
+      ];
       $rootScope.$digest();
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
@@ -329,23 +330,26 @@ describe('gmf.query.gridComponent', () => {
 
     it('deals with sources that all have too many features', () => {
       ngeoQueryResult.total = 0;
-      ngeoQueryResult.sources = [{
-        features: [],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true,
-        tooManyResults: true,
-        totalFeatureCount: 123
-      }, {
-        features: [],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true,
-        tooManyResults: true,
-        totalFeatureCount: 351
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+          tooManyResults: true,
+          totalFeatureCount: 123,
+        },
+        {
+          features: [],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+          tooManyResults: true,
+          totalFeatureCount: 351,
+        },
+      ];
       $rootScope.$digest();
       $timeout.flush();
       expect(queryGridController.active).toBe(true);
@@ -363,47 +367,51 @@ describe('gmf.query.gridComponent', () => {
 
     it('merges sources', () => {
       ngeoQueryResult.total = 4;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'osm_id': 1234,
-            'name': 'A'
-          }),
-          new olFeature({
-            'osm_id': 12345,
-            'name': 'B'
-          })
-        ],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true
-      }, {
-        features: [
-          new olFeature({
-            'osm_id': 123456,
-            'name': 'C'
-          })
-        ],
-        id: 234,
-        label: 'Test 2',
-        pending: false,
-        queried: true
-      }, {
-        features: [
-          new olFeature({
-            'id': 1234,
-            'label': 'D'
-          })
-        ],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'osm_id': 1234,
+              'name': 'A',
+            }),
+            new olFeature({
+              'osm_id': 12345,
+              'name': 'B',
+            }),
+          ],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [
+            new olFeature({
+              'osm_id': 123456,
+              'name': 'C',
+            }),
+          ],
+          id: 234,
+          label: 'Test 2',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [
+            new olFeature({
+              'id': 1234,
+              'label': 'D',
+            }),
+          ],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+        },
+      ];
 
       queryGridController.mergeTabs = {
-        'merged_source': ['Test 1', 'Test 2']
+        'merged_source': ['Test 1', 'Test 2'],
       };
 
       $rootScope.$digest();
@@ -418,23 +426,20 @@ describe('gmf.query.gridComponent', () => {
       const expectedGridData1 = [
         {
           'osm_id': 1234,
-          'name': 'A'
+          'name': 'A',
         },
         {
           'osm_id': 12345,
-          'name': 'B'
+          'name': 'B',
         },
         {
           'osm_id': 123456,
-          'name': 'C'
-        }
+          'name': 'C',
+        },
       ];
       compareGridData(gridConfig1.data, expectedGridData1);
 
-      const expectedColumnDefs1 = [
-        {'name': 'osm_id'},
-        {'name': 'name'}
-      ];
+      const expectedColumnDefs1 = [{'name': 'osm_id'}, {'name': 'name'}];
       expect(gridConfig1.columnDefs).toEqual(expectedColumnDefs1);
 
       // grid source 3
@@ -445,58 +450,59 @@ describe('gmf.query.gridComponent', () => {
       const expectedGridData3 = [
         {
           'id': 1234,
-          'label': 'D'
-        }
+          'label': 'D',
+        },
       ];
       compareGridData(gridConfig3.data, expectedGridData3);
 
-      const expectedColumnDefs3 = [
-        {'name': 'id'},
-        {'name': 'label'}
-      ];
+      const expectedColumnDefs3 = [{'name': 'id'}, {'name': 'label'}];
       expect(gridConfig3.columnDefs).toEqual(expectedColumnDefs3);
     });
 
     it('merges sources with too many features', () => {
       ngeoQueryResult.total = 4;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'osm_id': 1234,
-            'name': 'A'
-          }),
-          new olFeature({
-            'osm_id': 12345,
-            'name': 'B'
-          })
-        ],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true
-      }, {
-        features: [],
-        id: 234,
-        label: 'Test 2',
-        pending: false,
-        queried: true,
-        tooManyResults: true,
-        totalFeatureCount: 351
-      }, {
-        features: [
-          new olFeature({
-            'id': 1234,
-            'label': 'D'
-          })
-        ],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'osm_id': 1234,
+              'name': 'A',
+            }),
+            new olFeature({
+              'osm_id': 12345,
+              'name': 'B',
+            }),
+          ],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [],
+          id: 234,
+          label: 'Test 2',
+          pending: false,
+          queried: true,
+          tooManyResults: true,
+          totalFeatureCount: 351,
+        },
+        {
+          features: [
+            new olFeature({
+              'id': 1234,
+              'label': 'D',
+            }),
+          ],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+        },
+      ];
 
       queryGridController.mergeTabs = {
-        'merged_source': ['Test 1', 'Test 2']
+        'merged_source': ['Test 1', 'Test 2'],
       };
 
       $rootScope.$digest();
@@ -515,36 +521,37 @@ describe('gmf.query.gridComponent', () => {
       const gridSource3 = queryGridController.gridSources['Test 3'];
       expect(gridSource3).toBeDefined();
     });
-
   });
 
   describe('#selectTab', () => {
-
     beforeEach(() => {
       ngeoQueryResult.total = 5;
-      ngeoQueryResult.sources = [{
-        features: [
-          new olFeature({
-            'osm_id': 1234,
-            'name': 'A'
-          })
-        ],
-        id: 123,
-        label: 'Test 1',
-        pending: false,
-        queried: true
-      }, {
-        features: [
-          new olFeature({
-            'id': 2345,
-            'label': 'C'
-          })
-        ],
-        id: 345,
-        label: 'Test 3',
-        pending: false,
-        queried: true
-      }];
+      ngeoQueryResult.sources = [
+        {
+          features: [
+            new olFeature({
+              'osm_id': 1234,
+              'name': 'A',
+            }),
+          ],
+          id: 123,
+          label: 'Test 1',
+          pending: false,
+          queried: true,
+        },
+        {
+          features: [
+            new olFeature({
+              'id': 2345,
+              'label': 'C',
+            }),
+          ],
+          id: 345,
+          label: 'Test 3',
+          pending: false,
+          queried: true,
+        },
+      ];
       $rootScope.$digest();
       expect(queryGridController.active).toBe(true);
     });

@@ -16,12 +16,10 @@ import ngeoCustomEvent from 'ngeo/CustomEvent.js';
 import utils from 'ngeo/offline/utils.js';
 import localforage from 'localforage/src/localforage.js';
 
-
 /**
  * @implements {ngeox.OfflineOnTileDownload}
  */
 const exports = class extends olObservable {
-
   /**
    * @ngInject
    * @param {!angular.IScope} $rootScope The rootScope provider.
@@ -72,16 +70,18 @@ const exports = class extends olObservable {
    * @param {number} progress new progress.
    */
   dispatchProgress_(progress) {
-    this.dispatchEvent(new ngeoCustomEvent('progress', {
-      'progress': progress
-    }));
+    this.dispatchEvent(
+      new ngeoCustomEvent('progress', {
+        'progress': progress,
+      })
+    );
   }
 
   /**
    * @protected
    */
   initializeHasOfflineData() {
-    this.getItem('offline_content').then(value => this.setHasOfflineData(!!value));
+    this.getItem('offline_content').then((value) => this.setHasOfflineData(!!value));
   }
 
   /**
@@ -132,7 +132,7 @@ const exports = class extends olObservable {
     this.localforage_.config({
       'name': 'ngeoOfflineStorage',
       'version': 1.0,
-      'storeName': 'offlineStorage'
+      'storeName': 'offlineStorage',
     });
   }
 
@@ -211,11 +211,11 @@ const exports = class extends olObservable {
   }
 
   /**
-    * @param {import("ol/Map.js").default} map A map
-    * @param {import("ol/layer/Layer.js").default} layer A layer
-    * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
-    * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
-    * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
+   * @param {import("ol/Map.js").default} map A map
+   * @param {import("ol/layer/Layer.js").default} layer A layer
+   * @param {Array<import("ol/layer/Group.js").default>} ancestors The ancestors of that layer
+   * @param {import("ol/extent.js").Extent} userExtent The extent selected by the user.
+   * @return {Array<import("./index.js").OfflineExtentByZoom>} The extent to download per zoom level
    */
   getExtentByZoom(map, layer, ancestors, userExtent) {
     const currentZoom = map.getView().getZoom();
@@ -225,7 +225,7 @@ const exports = class extends olObservable {
     [0, 1, 2, 3, 4].forEach((dz) => {
       results.push({
         zoom: currentZoom + dz,
-        extent: userExtent
+        extent: userExtent,
       });
     });
     return results;
@@ -238,8 +238,11 @@ const exports = class extends olObservable {
    * @return {import("ol/source/Source.js").default} A tiled equivalent source
    */
   sourceImageWMSToTileWMS(source, projection) {
-    if (source instanceof olSourceImageWMS && source.getUrl()
-        && source.getImageLoadFunction() === defaultImageLoadFunction) {
+    if (
+      source instanceof olSourceImageWMS &&
+      source.getUrl() &&
+      source.getImageLoadFunction() === defaultImageLoadFunction
+    ) {
       const tileGrid = createTileGridForProjection(source.getProjection() || projection, 42, 256);
       source = new olSourceTileWMS({
         gutter: this.gutter_,
@@ -247,7 +250,7 @@ const exports = class extends olObservable {
         tileGrid: tileGrid,
         attributions: source.getAttributions(),
         projection: source.getProjection(),
-        params: source.getParams()
+        params: source.getParams(),
       });
     }
     return source;
@@ -289,7 +292,7 @@ const exports = class extends olObservable {
           layerSerialization,
           layer,
           source,
-          ancestors
+          ancestors,
         });
       }
       return true;
@@ -312,12 +315,13 @@ const exports = class extends olObservable {
      * @param {import("ol/ImageTile.js").default} imageTile The image tile
      * @param {string} src The tile URL
      */
-    const tileLoadFunction = function(imageTile, src) {
+    const tileLoadFunction = function (imageTile, src) {
       that.getItem(utils.normalizeURL(src)).then((content) => {
         if (!content) {
           // use a transparent 1x1 image to make the map consistent
           /* eslint-disable-next-line */
-          content = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+          content =
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         }
         /** @type {HTMLImageElement} */ (imageTile.getImage()).src = content;
       });
@@ -346,6 +350,5 @@ const exports = class extends olObservable {
     return 11;
   }
 };
-
 
 export default exports;

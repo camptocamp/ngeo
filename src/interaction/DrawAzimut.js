@@ -11,13 +11,11 @@ import olInteractionPointer from 'ol/interaction/Draw.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceVector from 'ol/source/Vector.js';
 
-
 /**
  * @typedef {Object} Options
  * @property {olSourceVector} source
  * @property {import('ol/style/Style.js').StyleLike} style
  */
-
 
 /**
  * Interaction dedicated to measure azimut.
@@ -30,7 +28,7 @@ class DrawAzimut extends olInteractionPointer {
    */
   constructor(options) {
     super({
-      type: undefined
+      type: undefined,
     });
 
     this.shouldStopEvent = FALSE;
@@ -69,7 +67,6 @@ class DrawAzimut extends olInteractionPointer {
      */
     this.sketchPoint_ = null;
 
-
     /**
      * Squared tolerance for handling up events.  If the squared distance
      * between a down and up event is greater than this tolerance, up events
@@ -79,7 +76,6 @@ class DrawAzimut extends olInteractionPointer {
      */
     this.squaredClickTolerance_ = 4;
 
-
     /**
      * Vector layer where our sketch features are drawn.
      * @type {import("ol/layer/Vector.js").default}
@@ -88,9 +84,9 @@ class DrawAzimut extends olInteractionPointer {
     this.sketchLayer_ = new olLayerVector({
       source: new olSourceVector({
         useSpatialIndex: false,
-        wrapX: false
+        wrapX: false,
       }),
-      style: options.style || getDefaultDrawStyleFunction()
+      style: options.style || getDefaultDrawStyleFunction(),
     });
 
     olEvents.listen(this, 'change:active', this.updateState_, this);
@@ -140,7 +136,7 @@ class DrawAzimut extends olInteractionPointer {
     if (this.sketchPoint_ !== null) {
       sketchFeatures.push(this.sketchPoint_);
     }
-    const source = /** @type {olSourceVector} */(this.sketchLayer_.getSource());
+    const source = /** @type {olSourceVector} */ (this.sketchLayer_.getSource());
     source.clear(true);
     source.addFeatures(sketchFeatures);
   }
@@ -172,7 +168,7 @@ class DrawAzimut extends olInteractionPointer {
    */
   modifyDrawing_(event) {
     const coordinate = event.coordinate;
-    const geometry = /** @type {import('ol/geom/GeometryCollection.js').default} */(
+    const geometry = /** @type {import('ol/geom/GeometryCollection.js').default} */ (
       this.sketchFeature_.getGeometry()
     );
     const geometries = geometry.getGeometriesArray();
@@ -207,7 +203,7 @@ class DrawAzimut extends olInteractionPointer {
     if (sketchFeature !== null) {
       this.sketchFeature_ = null;
       this.sketchPoint_ = null;
-      /** @type {olSourceVector} */(this.sketchLayer_.getSource()).clear(true);
+      /** @type {olSourceVector} */ (this.sketchLayer_.getSource()).clear(true);
     }
     return sketchFeature;
   }

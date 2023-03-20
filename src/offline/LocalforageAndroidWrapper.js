@@ -21,10 +21,9 @@ const exports = class AndroidWrapper extends AbstractWrapper {
   receiveFromAndroid(actionString) {
     const action = JSON.parse(actionString);
     this.receiveMessage({
-      'data': action
+      'data': action,
     });
   }
 };
-
 
 export default exports;

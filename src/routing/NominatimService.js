@@ -1,7 +1,6 @@
 import angular from 'angular';
 import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
 
-
 /**
  * @typedef {Object} NominatimSearchResult
  * @property {string} name
@@ -9,14 +8,12 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @property {import("ol/coordinate.js").Coordinate} coordinate
  */
 
-
 /**
  * @typedef {Object} NominatimSearchResponseResult
  * @property {string} display_name
  * @property {number} lon
  * @property {number} lat
  */
-
 
 /**
  * Service to provide access to Nominatim, which allows to search for
@@ -33,7 +30,6 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce.js';
  * @hidden
  */
 export function NominatimService($http, $injector, ngeoDebounce) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -85,8 +81,11 @@ export function NominatimService($http, $injector, ngeoDebounce) {
   /**
    * @type {function(string, function(Array<Object>): void, function(Array<NominatimSearchResult>): void): void}
    */
-  this.typeaheadSourceDebounced =
-    this.ngeoDebounce_(this.typeaheadSource_.bind(this), this.typeaheadDebounceDelay_, true);
+  this.typeaheadSourceDebounced = this.ngeoDebounce_(
+    this.typeaheadSource_.bind(this),
+    this.typeaheadDebounceDelay_,
+    true
+  );
 }
 
 /**
@@ -96,7 +95,7 @@ export function NominatimService($http, $injector, ngeoDebounce) {
  * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Search
  */
-NominatimService.prototype.search = function(query, params) {
+NominatimService.prototype.search = function (query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
 
   params = params || {};
@@ -124,7 +123,7 @@ NominatimService.prototype.search = function(query, params) {
  * @return {!angular.IHttpPromise<Object>} promise of the Nominatim API request
  * @see https://wiki.openstreetmap.org/wiki/Nominatim#Reverse_Geocoding
  */
-NominatimService.prototype.reverse = function(coordinate, params) {
+NominatimService.prototype.reverse = function (coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;
 
   params = Object.assign({}, params);
@@ -154,39 +153,35 @@ NominatimService.prototype.reverse = function(coordinate, params) {
  * @param {function(Array<NominatimSearchResult>): void} asyncResults Callback for asynchronous execution
  * @private
  */
-NominatimService.prototype.typeaheadSource_ = function(query, syncResults, asyncResults) {
-  const onSuccess_ = function(resp) {
+NominatimService.prototype.typeaheadSource_ = function (query, syncResults, asyncResults) {
+  const onSuccess_ = function (resp) {
     /**
      * Parses result response.
      * @param {NominatimSearchResponseResult} result Result
      * @return {NominatimSearchResult} Parsed result
      */
-    const parse = function(result) {
-      return /** @type {NominatimSearchResult} */({
+    const parse = function (result) {
+      return /** @type {NominatimSearchResult} */ ({
         coordinate: [result.lon, result.lat],
-        name: result.display_name
+        name: result.display_name,
       });
     };
     asyncResults(resp.data.map(parse));
   };
 
-  const onError_ = function(resp) {
+  const onError_ = function (resp) {
     asyncResults([]);
   };
 
   this.search(query, {}).then(onSuccess_, onError_);
 };
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoNominatimService', [
-  ngeoMiscDebounce.name
-]);
+const module = angular.module('ngeoNominatimService', [ngeoMiscDebounce.name]);
 
 module.service('ngeoNominatimService', NominatimService);
-
 
 export default module;

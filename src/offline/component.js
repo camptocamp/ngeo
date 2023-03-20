@@ -12,12 +12,10 @@ import angular from 'angular';
 /**
  * @type {!angular.IModule}
  */
-const module = angular.module('ngeoOffline', [
-  ngeoMapFeatureOverlayMgr.name,
-  ngeoMessageModalComponent.name
-]);
+const module = angular.module('ngeoOffline', [ngeoMapFeatureOverlayMgr.name, ngeoMessageModalComponent.name]);
 
-module.value('ngeoOfflineTemplateUrl',
+module.value(
+  'ngeoOfflineTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -25,14 +23,16 @@ module.value('ngeoOfflineTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoOfflineTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/offline/component.html';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/offline/component.html';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/offline/component.html', require('./component.html'));
-});
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/offline/component.html', require('./component.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -44,7 +44,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
   return ngeoOfflineTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provides the "offline" component.
@@ -76,15 +75,12 @@ const component = {
     'maxZoom': '<?ngeoOfflineMaxZoom',
   },
   controller: 'ngeoOfflineController',
-  templateUrl: ngeoOfflineTemplateUrl
+  templateUrl: ngeoOfflineTemplateUrl,
 };
-
 
 module.component('ngeoOffline', component);
 
-
 export const Controller = class {
-
   /**
    * @private
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -100,9 +96,14 @@ export const Controller = class {
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */
-  constructor($timeout, ngeoFeatureOverlayMgr, ngeoOfflineServiceManager, ngeoOfflineConfiguration,
-    ngeoOfflineMode, ngeoNetworkStatus) {
-
+  constructor(
+    $timeout,
+    ngeoFeatureOverlayMgr,
+    ngeoOfflineServiceManager,
+    ngeoOfflineConfiguration,
+    ngeoOfflineMode,
+    ngeoNetworkStatus
+  ) {
     /**
      * @type {angular.ITimeoutService}
      * @private
@@ -171,7 +172,6 @@ export const Controller = class {
      * @private
      */
     this.postComposeListenerKey_ = null;
-
 
     /**
      * @type {OlGeomPolygon}
@@ -347,7 +347,6 @@ export const Controller = class {
     this.ngeoOfflineServiceManager_.save(extent, this.map);
   }
 
-
   /**
    * @private
    */
@@ -500,9 +499,9 @@ export const Controller = class {
       const viewportWidth = frameState.size[0] * frameState.pixelRatio;
       const viewportHeight = frameState.size[1] * frameState.pixelRatio;
 
-      const extentLength = this.extentSize ?
-        this.extentSize / resolution * DEVICE_PIXEL_RATIO :
-        Math.min(viewportWidth, viewportHeight) - this.maskMargin * 2;
+      const extentLength = this.extentSize
+        ? (this.extentSize / resolution) * DEVICE_PIXEL_RATIO
+        : Math.min(viewportWidth, viewportHeight) - this.maskMargin * 2;
 
       const extentHalfLength = Math.ceil(extentLength / 2);
 
@@ -540,10 +539,10 @@ export const Controller = class {
    */
   createPolygonFromExtent_(extent) {
     const projExtent = this.map.getView().getProjection().getExtent();
-    return new OlGeomPolygon([
-      extentToRectangle(projExtent),
-      extentToRectangle(extent),
-    ], olGeomGeometryLayout.XY);
+    return new OlGeomPolygon(
+      [extentToRectangle(projExtent), extentToRectangle(extent)],
+      olGeomGeometryLayout.XY
+    );
   }
 
   /**
@@ -565,7 +564,7 @@ export const Controller = class {
    * @private
    */
   getDowloadExtent_() {
-    const center = /** @type {import("ol/coordinate.js").Coordinate}*/(this.map.getView().getCenter());
+    const center = /** @type {import("ol/coordinate.js").Coordinate}*/ (this.map.getView().getCenter());
     const halfLength = Math.ceil(this.extentSize || this.getExtentSize_()) / 2;
     return this.createExtent_(center, halfLength);
   }
@@ -573,13 +572,11 @@ export const Controller = class {
   getExtentSize_() {
     const mapSize = this.map.getSize();
     const maskSizePixel = DEVICE_PIXEL_RATIO * Math.min(mapSize[0], mapSize[1]) - this.maskMargin * 2;
-    const maskSizeMeter = maskSizePixel * this.map.getView().getResolution() / DEVICE_PIXEL_RATIO;
+    const maskSizeMeter = (maskSizePixel * this.map.getView().getResolution()) / DEVICE_PIXEL_RATIO;
     return maskSizeMeter;
   }
 };
 
-
 module.controller('ngeoOfflineController', Controller);
-
 
 export default module;

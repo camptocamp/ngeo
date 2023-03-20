@@ -6,6 +6,4 @@ import './routing.scss';
 /**
  * @type {angular.IModule}
  */
-export default angular.module('ngeoRoutingModule', [
-  ngeoRoutingRoutingComponent.name
-]);
+export default angular.module('ngeoRoutingModule', [ngeoRoutingRoutingComponent.name]);

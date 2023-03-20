@@ -1,5 +1,5 @@
 @import '~gmf/sass/vars.scss';
-@import "~gmf/sass/typeahead.scss";
+@import '~gmf/sass/typeahead.scss';
 
 gmf-search {
   top: $app-margin;
@@ -103,7 +103,7 @@ gmf-search {
 }
 
 // Overrides for small browser widths only
-@media (max-width: map-get($grid-breakpoints, "sm")) {
+@media (max-width: map-get($grid-breakpoints, 'sm')) {
   gmf-search {
     .gmf-search {
       width: 100%;
@@ -115,7 +115,7 @@ gmf-search {
 }
 
 // Overrides for tablet devices and up
-@media (min-width: map-get($grid-breakpoints, "sm")) {
+@media (min-width: map-get($grid-breakpoints, 'sm')) {
   gmf-search {
     .gmf-search {
       width: $search-width;

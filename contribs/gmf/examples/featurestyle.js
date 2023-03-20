@@ -14,13 +14,12 @@ import olGeomLineString from 'ol/geom/LineString.js';
 import olGeomPoint from 'ol/geom/Point.js';
 import olGeomPolygon, {
   fromCircle as olGeomPolygonFromCircle,
-  fromExtent as olGeomPolygonFromExtent
+  fromExtent as olGeomPolygonFromExtent,
 } from 'ol/geom/Polygon.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olLayerVector from 'ol/layer/Vector.js';
 import olSourceOSM from 'ol/source/OSM.js';
 import olSourceVector from 'ol/source/Vector.js';
-
 
 /**
  * @type {!angular.IModule}
@@ -33,12 +32,10 @@ const module = angular.module('gmfapp', [
   ngeoMiscFeatureHelper.name,
 ]);
 
-
 module.value('ngeoMeasureDecimals', 2);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -47,7 +44,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController($scope, ngeoFeatureHelper) {
-
   /**
    * @type {!angular.IScope}
    * @private
@@ -64,7 +60,7 @@ function MainController($scope, ngeoFeatureHelper) {
   const features = [];
 
   const pointProperties = {
-    geometry: new olGeomPoint([-8458215, 6672646])
+    geometry: new olGeomPoint([-8458215, 6672646]),
   };
   pointProperties[ngeoFormatFeatureProperties.COLOR] = '#009D57';
   pointProperties[ngeoFormatFeatureProperties.NAME] = 'Point1';
@@ -72,7 +68,7 @@ function MainController($scope, ngeoFeatureHelper) {
   features.push(new olFeature(pointProperties));
 
   const textProperties = {
-    geometry: new olGeomPoint([-8007848, 6209744])
+    geometry: new olGeomPoint([-8007848, 6209744]),
   };
   textProperties[ngeoFormatFeatureProperties.ANGLE] = '0';
   textProperties[ngeoFormatFeatureProperties.COLOR] = '#000000';
@@ -87,8 +83,8 @@ function MainController($scope, ngeoFeatureHelper) {
       [-8321240, 6523441],
       [-8103547, 6726458],
       [-8091318, 6408480],
-      [-7973910, 6631065]
-    ])
+      [-7973910, 6631065],
+    ]),
   };
   lineProperties[ngeoFormatFeatureProperties.COLOR] = '#0BA9CC';
   lineProperties[ngeoFormatFeatureProperties.NAME] = 'LineString 1';
@@ -102,9 +98,9 @@ function MainController($scope, ngeoFeatureHelper) {
         [-8531595, 6080718],
         [-8267428, 6031798],
         [-8238077, 6247045],
-        [-8512027, 6359560]
-      ]
-    ])
+        [-8512027, 6359560],
+      ],
+    ]),
   };
   poly1Properties[ngeoFormatFeatureProperties.COLOR] = '#4186F0';
   poly1Properties[ngeoFormatFeatureProperties.NAME] = 'Polygon 1';
@@ -120,9 +116,9 @@ function MainController($scope, ngeoFeatureHelper) {
         [-8051570, 5959642],
         [-7848554, 5926621],
         [-7754383, 6025683],
-        [-7952508, 6096617]
-      ]
-    ])
+        [-7952508, 6096617],
+      ],
+    ]),
   };
   poly2Properties[ngeoFormatFeatureProperties.COLOR] = '#CCCCCC';
   poly2Properties[ngeoFormatFeatureProperties.NAME] = 'Polygon 2';
@@ -131,7 +127,7 @@ function MainController($scope, ngeoFeatureHelper) {
   features.push(new olFeature(poly2Properties));
 
   const rectProperties = {
-    geometry: olGeomPolygonFromExtent([-7874848, 6496535, -7730535, 6384020])
+    geometry: olGeomPolygonFromExtent([-7874848, 6496535, -7730535, 6384020]),
   };
   rectProperties[ngeoFormatFeatureProperties.COLOR] = '#000000';
   rectProperties[ngeoFormatFeatureProperties.IS_RECTANGLE] = true;
@@ -141,8 +137,7 @@ function MainController($scope, ngeoFeatureHelper) {
   features.push(new olFeature(rectProperties));
 
   const circleProperties = {
-    geometry: olGeomPolygonFromCircle(
-      new olGeomCircle([-7691093, 6166327], 35000), 64)
+    geometry: olGeomPolygonFromCircle(new olGeomCircle([-7691093, 6166327], 35000), 64),
   };
   circleProperties[ngeoFormatFeatureProperties.COLOR] = '#000000';
   circleProperties[ngeoFormatFeatureProperties.IS_CIRCLE] = true;
@@ -153,7 +148,7 @@ function MainController($scope, ngeoFeatureHelper) {
 
   const view = new olView({
     center: [-8174482, 6288627],
-    zoom: 6
+    zoom: 6,
   });
 
   ngeoFeatureHelper.setProjection(view.getProjection());
@@ -169,16 +164,16 @@ function MainController($scope, ngeoFeatureHelper) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
+        source: new olSourceOSM(),
       }),
       new olLayerVector({
         source: new olSourceVector({
           wrapX: false,
-          features: features
-        })
-      })
+          features: features,
+        }),
+      }),
     ],
-    view: view
+    view: view,
   });
 
   /**
@@ -191,17 +186,16 @@ function MainController($scope, ngeoFeatureHelper) {
   });
 }
 
-
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-MainController.prototype.handleMapSingleClick_ = function(evt) {
+MainController.prototype.handleMapSingleClick_ = function (evt) {
   const pixel = evt.pixel;
 
-  const feature = /** @type {import("ol/Feature.js").default} */(this.map.forEachFeatureAtPixel(
-    pixel, feature => feature
-  ));
+  const feature = /** @type {import("ol/Feature.js").default} */ (
+    this.map.forEachFeatureAtPixel(pixel, (feature) => feature)
+  );
 
   if (this.selectedFeature) {
     this.featureHelper_.setStyle(this.selectedFeature);
@@ -217,11 +211,8 @@ MainController.prototype.handleMapSingleClick_ = function(evt) {
   }
 
   this.scope_.$apply();
-
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

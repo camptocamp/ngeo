@@ -6,6 +6,4 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent.js';
 /**
  * @type {!angular.IModule}
  */
-export default angular.module('ngeoProfileModule', [
-  ngeoProfileElevationComponent.name,
-]);
+export default angular.module('ngeoProfileModule', [ngeoProfileElevationComponent.name]);

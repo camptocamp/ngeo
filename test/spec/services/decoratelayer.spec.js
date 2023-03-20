@@ -6,7 +6,7 @@ describe('ngeo.misc.DecorateLayer', () => {
   it('can change the visibility', () => {
     const layer = new olLayerTile({
       source: new olSourceOSM(),
-      visible: false
+      visible: false,
     });
     ngeoMiscDecorateLayer(layer);
     layer.set('visible', true);
@@ -18,7 +18,7 @@ describe('ngeo.misc.DecorateLayer', () => {
   it('can change the opacity', () => {
     const layer = new olLayerTile({
       source: new olSourceOSM(),
-      opacity: 0.5
+      opacity: 0.5,
     });
     ngeoMiscDecorateLayer(layer);
     layer.set('opacity', 0.7);

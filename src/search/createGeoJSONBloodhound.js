@@ -17,8 +17,14 @@ import 'corejs-typeahead';
  * @return {Bloodhound} The Bloodhound object.
  * @hidden
  */
-export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
-  opt_dataProjection, opt_options, opt_remoteOptions) {
+export function createGeoJSONBloodhound(
+  url,
+  opt_filter,
+  opt_featureProjection,
+  opt_dataProjection,
+  opt_options,
+  opt_remoteOptions
+) {
   const geojsonFormat = new olFormatGeoJSON();
   const bloodhoundOptions = /** @type {Bloodhound.BloodhoundOptions} */ ({
     remote: {
@@ -33,36 +39,42 @@ export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
         if (opt_filter !== undefined) {
           featureCollection = {
             type: 'FeatureCollection',
-            features: featureCollection.features.filter(opt_filter)
+            features: featureCollection.features.filter(opt_filter),
           };
         }
 
         return geojsonFormat.readFeatures(featureCollection, {
           featureProjection: opt_featureProjection,
-          dataProjection: opt_dataProjection
+          dataProjection: opt_dataProjection,
         });
-      }
+      },
     },
     // datumTokenizer is required by the Bloodhound constructor but it
     // is not used when only a remote is passsed to Bloodhound.
     datumTokenizer: (datum) => {
       return [];
     },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
   });
 
   // The options objects are cloned to avoid updating the passed object
   /** @type {Bloodhound.BloodhoundOptions} */
-  const options = Object.assign({}, opt_options || {
-    datumTokenizer: (datum) => {
-      return [];
-    },
-    queryTokenizer: Bloodhound.tokenizers.whitespace
-  });
+  const options = Object.assign(
+    {},
+    opt_options || {
+      datumTokenizer: (datum) => {
+        return [];
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+    }
+  );
   /** @type {Bloodhound.RemoteOptions} */
-  const remoteOptions = Object.assign({}, opt_remoteOptions || {
-    url: ''
-  });
+  const remoteOptions = Object.assign(
+    {},
+    opt_remoteOptions || {
+      url: '',
+    }
+  );
 
   if (options.remote) {
     // Move the remote options to opt_remoteOptions
@@ -76,7 +88,6 @@ export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
   return new Bloodhound(bloodhoundOptions);
 }
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -84,7 +95,6 @@ export function createGeoJSONBloodhound(url, opt_filter, opt_featureProjection,
 const module = angular.module('ngeoSearchCreategeojsonbloodhound', []);
 
 module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
-
 
 /**
  * Provides a function that creates a Bloodhound engine
@@ -119,6 +129,5 @@ module.value('ngeoSearchCreateGeoJSONBloodhound', createGeoJSONBloodhound);
  *
  * @typedef {function(string, (function(import("geojson").Feature): boolean)=, import("ol/proj/Projection.js").default=, import("ol/proj/Projection.js").default=, Bloodhound.Options=, Bloodhound.RemoteOptions=):Bloodhound}
  */
-
 
 export default module;

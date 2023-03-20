@@ -1,10 +1,9 @@
-
 #map {
   width: 600px;
   height: 400px;
 }
 button[ngeo-desktop-geolocation]:after {
-  content: 'Toggle'
+  content: 'Toggle';
 }
 .ngeo-notification {
   left: 50%;

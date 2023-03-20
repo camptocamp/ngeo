@@ -37,5 +37,5 @@ export default {
   /**
    * @type {string}
    */
-  TEXT: 'Text'
+  TEXT: 'Text',
 };

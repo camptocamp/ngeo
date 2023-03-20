@@ -4,16 +4,15 @@ describe('ngeo.misc.filereaderComponent', () => {
   let element, rootScope;
 
   beforeEach(() => {
-    element = angular.element(
-      '<input type="file" ngeo-filereader="fileContent" />');
+    element = angular.element('<input type="file" ngeo-filereader="fileContent" />');
 
     angular.mock.module(($provide) => {
-      const FileReader = function() {};
-      FileReader.prototype.readAsText = function(file) {
+      const FileReader = function () {};
+      FileReader.prototype.readAsText = function (file) {
         const progressEvent = {
           target: {
-            result: '<kml></kml>'
-          }
+            result: '<kml></kml>',
+          },
         };
         // @ts-ignore
         this.onload(progressEvent);

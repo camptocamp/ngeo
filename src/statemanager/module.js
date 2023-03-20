@@ -7,5 +7,5 @@ import ngeoStatemanagerService from 'ngeo/statemanager/Service.js';
  */
 export default angular.module('ngeoStatemanagerModule', [
   ngeoStatemanagerLocation.name,
-  ngeoStatemanagerService.name
+  ngeoStatemanagerService.name,
 ]);

@@ -34,7 +34,7 @@
 /**
  * Only affects webkit desktop browsers
  */
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
   .ol-rotate,
   .ol-zoom {
     button {
@@ -47,10 +47,11 @@
 }
 
 .ol-attribution {
-  display:none;
+  display: none;
 }
 
-.ol-scale-line, .ol-scale-line-inner {
+.ol-scale-line,
+.ol-scale-line-inner {
   background-color: $map-tools-bg-color;
   border-color: $border-color;
   border-width: 0.12rem;
@@ -99,7 +100,7 @@ button[ngeo-mobile-geolocation] {
       }
     }
 
-    &.gmf-backgroundlayerselector-disabled{
+    &.gmf-backgroundlayerselector-disabled {
       border-top-color: $map-tools-color;
       pointer-events: none;
     }

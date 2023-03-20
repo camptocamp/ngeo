@@ -9,14 +9,8 @@ import ngeoOlcsOlcsModule from 'ngeo/olcs/olcsModule.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoOlcsManager from 'ngeo/olcs/Manager.js';
 
-
 /** @type {!angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMapModule.name,
-  ngeoOlcsOlcsModule.name
-]);
-
+const module = angular.module('app', ['gettext', ngeoMapModule.name, ngeoOlcsOlcsModule.name]);
 
 /**
  * @constructor
@@ -25,20 +19,19 @@ const module = angular.module('app', [
  * @param {import("ngeo/olcs/Service.js").OlcsService} ngeoOlcsService The service.
  */
 function MainController($rootScope, ngeoOlcsService) {
-
   /**
    * @type {import("ol/Map.js").default}
    */
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       center: [0, 0],
-      zoom: 4
-    })
+      zoom: 4,
+    }),
   });
 
   // TODO: detect and use different URL for DEBUG MODE
@@ -48,7 +41,7 @@ function MainController($rootScope, ngeoOlcsService) {
    * @type {import('olcs/contrib/Manager.js').default}
    */
   this.ol3dm = new ngeoOlcsManager(cesiumUrl, $rootScope, {
-    map: this.map
+    map: this.map,
   });
 
   // Optionally, the manager can be registered into the olcs service
@@ -56,6 +49,5 @@ function MainController($rootScope, ngeoOlcsService) {
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

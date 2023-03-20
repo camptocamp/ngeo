@@ -23,7 +23,6 @@ import olFeature from 'ol/Feature.js';
  * @hidden
  */
 export function DrawController($scope, gettextCatalog, ngeoFeatureHelper, ngeoFeatures) {
-
   /**
    * @type {boolean}
    */
@@ -111,7 +110,6 @@ export function DrawController($scope, gettextCatalog, ngeoFeatureHelper, ngeoFe
    */
   this.drawText;
 
-
   // Watch the "active" property, and disable the draw interactions
   // when "active" gets set to false.
   $scope.$watch(
@@ -124,23 +122,19 @@ export function DrawController($scope, gettextCatalog, ngeoFeatureHelper, ngeoFe
       }
     }
   );
-
 }
-
 
 /**
  * Register a draw|measure interaction by setting it inactive, decorating it
  * and adding it to the map
  * @param {import("ol/interaction/Interaction.js").default} interaction Interaction to register.
  */
-DrawController.prototype.registerInteraction = function(
-  interaction) {
+DrawController.prototype.registerInteraction = function (interaction) {
   this.interactions_.push(interaction);
   interaction.setActive(false);
   ngeoMiscDecorateInteraction(interaction);
   this.map.addInteraction(interaction);
 };
-
 
 /**
  * Called when any of the draw or measure interaction active property changes.
@@ -148,10 +142,9 @@ DrawController.prototype.registerInteraction = function(
  * one of the draw or measure is active then the active property is set to true.
  * @param {import("ol/events/Event.js").default} event Event.
  */
-DrawController.prototype.handleActiveChange = function(event) {
-  this.active = this.interactions_.some(interaction => interaction.getActive(), this);
+DrawController.prototype.handleActiveChange = function (event) {
+  this.active = this.interactions_.some((interaction) => interaction.getActive(), this);
 };
-
 
 /**
  * Called when a feature is finished being drawn. Set the default properties
@@ -160,14 +153,14 @@ DrawController.prototype.handleActiveChange = function(event) {
  * @param {import('ol/events/Event.js').default|import('ngeo/interaction/Measure.js').MeasureEvent} event
  *    Event.
  */
-DrawController.prototype.handleDrawEnd = function(type, event) {
+DrawController.prototype.handleDrawEnd = function (type, event) {
   let sketch;
   // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
   if (event.feature) {
     // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     sketch = event.feature;
   } else {
-    sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */(event).detail.feature;
+    sketch = /** @type {import('ngeo/interaction/Measure.js').MeasureEvent} */ (event).detail.feature;
   }
   console.assert(sketch);
 
@@ -222,7 +215,6 @@ DrawController.prototype.handleDrawEnd = function(type, event) {
   features.push(feature);
 };
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -233,6 +225,5 @@ const module = angular.module('ngeoDrawfeatureController', [
   ngeoMiscFeatureHelper.name,
 ]);
 module.controller('ngeoDrawfeatureController', DrawController);
-
 
 export default module;

@@ -2,15 +2,11 @@ import angular from 'angular';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query.js';
 import * as olEvents from 'ol/events.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [
-  gmfObjecteditingQuery.name,
-]);
-
+const module = angular.module('gmfObjecteditingGetWMSFeatureComponent', [gmfObjecteditingQuery.name]);
 
 /**
  * When activated, this directive registers clicks on an OL3 map and use the
@@ -45,14 +41,13 @@ function objectEditingGetWMSFeatureComponent() {
       'active': '=gmfObjecteditinggetwmsfeatureActive',
       'features': '<gmfObjecteditinggetwmsfeatureFeatures',
       'layerInfo': '=gmfObjecteditinggetwmsfeatureLayerinfo',
-      'map': '<gmfObjecteditinggetwmsfeatureMap'
+      'map': '<gmfObjecteditinggetwmsfeatureMap',
     },
-    bindToController: true
+    bindToController: true,
   };
 }
 
 module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComponent);
-
 
 /**
  * @param {!angular.IScope} $scope Scope.
@@ -66,7 +61,6 @@ module.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComp
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
 function Controller($scope, gmfObjectEditingQuery) {
-
   // Scope properties
 
   /**
@@ -74,10 +68,7 @@ function Controller($scope, gmfObjectEditingQuery) {
    */
   this.active;
 
-  $scope.$watch(
-    () => this.active,
-    this.handleActiveChange_.bind(this)
-  );
+  $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   /**
    * @type {import("ol/Collection.js").default}
@@ -94,7 +85,6 @@ function Controller($scope, gmfObjectEditingQuery) {
    */
   this.map;
 
-
   // Injected properties
 
   /**
@@ -102,43 +92,26 @@ function Controller($scope, gmfObjectEditingQuery) {
    * @private
    */
   this.gmfObjectEditingQuery_ = gmfObjectEditingQuery;
-
 }
-
 
 /**
  * @param {boolean} active Active.
  * @private
  */
-Controller.prototype.handleActiveChange_ = function(active) {
+Controller.prototype.handleActiveChange_ = function (active) {
   if (active) {
-    olEvents.listen(
-      this.map,
-      'click',
-      this.handleMapClick_,
-      this
-    );
+    olEvents.listen(this.map, 'click', this.handleMapClick_, this);
   } else {
-    olEvents.unlisten(
-      this.map,
-      'click',
-      this.handleMapClick_,
-      this
-    );
+    olEvents.unlisten(this.map, 'click', this.handleMapClick_, this);
   }
 };
-
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt Event.
  * @private
  */
-Controller.prototype.handleMapClick_ = function(evt) {
-  this.gmfObjectEditingQuery_.getFeatureInfo(
-    this.layerInfo,
-    evt.coordinate,
-    this.map
-  ).then((feature) => {
+Controller.prototype.handleMapClick_ = function (evt) {
+  this.gmfObjectEditingQuery_.getFeatureInfo(this.layerInfo, evt.coordinate, this.map).then((feature) => {
     if (feature) {
       this.features.push(feature);
     }
@@ -146,6 +119,5 @@ Controller.prototype.handleMapClick_ = function(evt) {
 };
 
 module.controller('gmfObjecteditinggetwmsfeatureController', Controller);
-
 
 export default module;

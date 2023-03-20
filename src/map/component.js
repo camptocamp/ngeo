@@ -2,13 +2,11 @@ import angular from 'angular';
 import * as olEvents from 'ol/events.js';
 import olMap from 'ol/Map.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoMap', []);
-
 
 /**
  * Provides a directive used to insert a user-defined OpenLayers
@@ -70,41 +68,35 @@ function mapComponent($window) {
         const resizeTransitionAttr = 'ngeoMapResizeTransition';
         const resizeTransitionProp = attrs[resizeTransitionAttr];
 
-        const resizeTransition = /** @type {number|undefined} */ (
-          scope.$eval(resizeTransitionProp));
+        const resizeTransition = /** @type {number|undefined} */ (scope.$eval(resizeTransitionProp));
 
-        olEvents.listen(
-          $window,
-          'resize',
-          () => {
-            if (resizeTransition) {
-              // Resize with transition
-              const start = Date.now();
-              let loop = true;
-              const adjustSize = function() {
-                map.updateSize();
-                map.renderSync();
-                if (loop) {
-                  $window.requestAnimationFrame(adjustSize);
-                }
-                if (Date.now() - start > resizeTransition) {
-                  loop = false;
-                }
-              };
-              adjustSize();
-            } else {
-              // A single plain resize
+        olEvents.listen($window, 'resize', () => {
+          if (resizeTransition) {
+            // Resize with transition
+            const start = Date.now();
+            let loop = true;
+            const adjustSize = function () {
               map.updateSize();
-            }
+              map.renderSync();
+              if (loop) {
+                $window.requestAnimationFrame(adjustSize);
+              }
+              if (Date.now() - start > resizeTransition) {
+                loop = false;
+              }
+            };
+            adjustSize();
+          } else {
+            // A single plain resize
+            map.updateSize();
           }
-        );
+        });
       }
-    }
+    },
   };
 }
 
 // Register the directive in the module
 module.directive('ngeoMap', mapComponent);
-
 
 export default module;

@@ -42,7 +42,7 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
     expect(layer.getSource().getFeatures().length).toBe(0);
   });
 
-  it('doesn\'t remove features from other overlays', () => {
+  it("doesn't remove features from other overlays", () => {
     const overlay1 = ngeoFeatureOverlayMgr.getFeatureOverlay();
     const feature1 = new olFeature();
     overlay1.addFeature(feature1);
@@ -134,7 +134,5 @@ describe('ngeo.map.FeatureOverlayMgr', () => {
         expect(layer.getSource().getFeatures().length).toBe(1);
       });
     });
-
   });
-
 });

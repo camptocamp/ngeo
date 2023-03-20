@@ -1,9 +1,7 @@
 ---
-
 name: Clean GitHub pages
 
-on:
-  delete
+on: delete
 
 jobs:
   clean:

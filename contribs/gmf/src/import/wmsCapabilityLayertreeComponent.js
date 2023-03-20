@@ -8,7 +8,6 @@ import {getUid as olUtilGetUid} from 'ol/util.js';
 
 import 'bootstrap/js/src/collapse.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -18,26 +17,27 @@ const module = angular.module('gmfWmscapabilitylayertreenode', [
   ngeoMessagePopup.name,
 ]);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    $templateCache.put(
+      // @ts-ignore: webpack
+      'gmf/import/wmsCapabilityLayertreeComponent',
+      require('./wmsCapabilityLayertreeComponent.html')
+    );
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  $templateCache.put(
-    // @ts-ignore: webpack
-    'gmf/import/wmsCapabilityLayertreeComponent', require('./wmsCapabilityLayertreeComponent.html')
-  );
-});
-
-
-module.value('gmfWmscapabilitylayertreenodeTemplateUrl',
+module.value(
+  'gmfWmscapabilitylayertreenodeTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['gmfWmscapabilitylayertreenodeTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/import/wmsCapabilityLayertreeComponent';
-  });
-
+    return templateUrl !== undefined ? templateUrl : 'gmf/import/wmsCapabilityLayertreeComponent';
+  }
+);
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -52,13 +52,11 @@ function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayert
   return gmfWmscapabilitylayertreenodeTemplateUrl($attrs);
 }
 
-
 /**
  * @private
  * @hidden
  */
 class Controller {
-
   /**
    * @param {!import("gmf/datasource/ExternalDataSourcesManager.js").ExternalDatSourcesManager}
    *     gmfExternalDataSourcesManager GMF service responsible of managing
@@ -69,7 +67,6 @@ class Controller {
    * @ngname GmfWmscapabilitylayertreenodeController
    */
   constructor(gmfExternalDataSourcesManager) {
-
     // Binding properties
 
     /**
@@ -90,7 +87,6 @@ class Controller {
      * @type {string}
      */
     this.url;
-
 
     // Injected properties
 
@@ -121,16 +117,14 @@ class Controller {
   }
 }
 
-
 module.component('gmfWmscapabilitylayertreenode', {
   bindings: {
     'capabilities': '<',
     'layer': '<',
-    'url': '<'
+    'url': '<',
   },
   controller: Controller,
-  templateUrl: gmfWmscapabilitylayertreenodeTemplateUrl
+  templateUrl: gmfWmscapabilitylayertreenodeTemplateUrl,
 });
-
 
 export default module;

@@ -4,7 +4,6 @@ import * as olEvents from 'ol/events.js';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper.js';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -14,23 +13,24 @@ const module = angular.module('ngeoAttributes', [
   ngeoMiscEventHelper.name,
 ]);
 
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
-});
-
-
-module.value('ngeoAttributesTemplateUrl',
+module.value(
+  'ngeoAttributesTemplateUrl',
   /**
    * @param {!angular.IAttributes} $attrs Attributes.
    * @return {string} The template url.
    */
   ($attrs) => {
     const templateUrl = $attrs['ngeoAttributesTemplateUrl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/editing/attributescomponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/editing/attributescomponent';
+  }
+);
 
 /**
  * @param {!angular.IAttributes} $attrs Attributes.
@@ -43,7 +43,6 @@ module.value('ngeoAttributesTemplateUrl',
 function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
   return ngeoAttributesTemplateUrl($attrs);
 }
-
 
 /**
  * Component used to render the attributes of a feature into a form.
@@ -69,16 +68,15 @@ const editingAttributeComponent = {
   bindings: {
     'attributes': '=ngeoAttributesAttributes',
     'disabled': '<ngeoAttributesDisabled',
-    'feature': '=ngeoAttributesFeature'
+    'feature': '=ngeoAttributesFeature',
   },
   require: {
-    'form': '^'
+    'form': '^',
   },
-  templateUrl: ngeoAttributesTemplateUrl
+  templateUrl: ngeoAttributesTemplateUrl,
 };
 
 module.component('ngeoAttributes', editingAttributeComponent);
-
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
@@ -91,7 +89,6 @@ module.component('ngeoAttributes', editingAttributeComponent);
  * @ngname ngeoAttributesController
  */
 function Controller($scope, ngeoEventHelper) {
-
   /**
    * The list of attributes to create the form with.
    * @type {Array.<import('ngeo/format/Attribute.js').Attribute>}
@@ -142,11 +139,10 @@ function Controller($scope, ngeoEventHelper) {
   this.updating_ = false;
 }
 
-
 /**
  * Initialise the component.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.properties = this.feature.getProperties();
 
   // Listen to the feature inner properties change and apply them to the form
@@ -163,18 +159,16 @@ Controller.prototype.$onInit = function() {
   );
 };
 
-
 /**
  * Called when an input node value changes
  * @param {string} name Attribute name
  */
-Controller.prototype.handleInputChange = function(name) {
+Controller.prototype.handleInputChange = function (name) {
   this.updating_ = true;
   const attribute = this.attributes.find((attr) => attr.name === name);
   this.sanitize_(attribute);
   this.updating_ = false;
 };
-
 
 /**
  * Never keep a undefined values, use null.
@@ -183,7 +177,7 @@ Controller.prototype.handleInputChange = function(name) {
  * @param {import('ngeo/format/Attribute.js').Attribute} attribute
  * @private
  */
-Controller.prototype.sanitize_ = function(attribute) {
+Controller.prototype.sanitize_ = function (attribute) {
   let value = this.properties[attribute.name];
   if (value === undefined) {
     value = null;
@@ -202,17 +196,16 @@ Controller.prototype.sanitize_ = function(attribute) {
 /**
  * Cleanup event listeners.
  */
-Controller.prototype.$onDestroy = function() {
+Controller.prototype.$onDestroy = function () {
   const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.clearListenerKey(uid);
 };
-
 
 /**
  * @param {import("ol/Object.js").ObjectEvent} evt Event.
  * @private
  */
-Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
+Controller.prototype.handleFeaturePropertyChange_ = function (evt) {
   if (this.updating_) {
     return;
   }
@@ -220,8 +213,6 @@ Controller.prototype.handleFeaturePropertyChange_ = function(evt) {
   this.scope_.$apply();
 };
 
-
 module.controller('ngeoAttributesController', Controller);
-
 
 export default module;

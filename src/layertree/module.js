@@ -8,6 +8,4 @@ import ngeoLayertreeComponent from 'ngeo/layertree/component.js';
  *  - ngeo.layertree.Controller (already required by ngeo.layertree.component)
  * @type {!angular.IModule}
  */
-export default angular.module('ngeoLayertreeModule', [
-  ngeoLayertreeComponent.name
-]);
+export default angular.module('ngeoLayertreeModule', [ngeoLayertreeComponent.name]);

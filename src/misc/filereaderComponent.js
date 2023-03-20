@@ -1,6 +1,5 @@
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -36,7 +35,7 @@ function filereaderComponent($window) {
     restrict: 'A',
     scope: {
       'fileContent': '=ngeoFilereader',
-      'supported': '=?ngeoFilereaderSupported'
+      'supported': '=?ngeoFilereaderSupported',
     },
     /**
      * @param {angular.IScope} scope Scope.
@@ -56,25 +55,23 @@ function filereaderComponent($window) {
       const ce = (changeEvent) => {
         /** @type {!FileReader} */
         const fileReader = new $window.FileReader();
-        fileReader.onload = (
+        fileReader.onload =
           /**
            * @param {!ProgressEvent} evt Event.
            */
-          function(evt) {
-            const target = /** @type {FileReader} */(evt.target);
+          function (evt) {
+            const target = /** @type {FileReader} */ (evt.target);
             scope.$apply(() => {
               scope['fileContent'] = target.result;
             });
-          });
+          };
         fileReader.readAsText(changeEvent.target.files[0]);
       };
       element.on({change: ce});
-    }
+    },
   };
 }
 
-
 module.directive('ngeoFilereader', filereaderComponent);
-
 
 export default module;

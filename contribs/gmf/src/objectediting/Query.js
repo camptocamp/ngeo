@@ -4,7 +4,6 @@ import {WMSInfoFormat} from 'ngeo/datasource/OGC.js';
 import olFormatWMSGetFeatureInfo from 'ol/format/WMSGetFeatureInfo.js';
 import olSourceImageWMS from 'ol/source/ImageWMS.js';
 
-
 /**
  * A service that collects all queryable layer nodes from all themes, stores
  * them and use them to make WMS GetFeatureInfo queries. Queries can be made
@@ -19,7 +18,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS.js';
  * @hidden
  */
 export function ObjectEditingQuery($http, $q, gmfThemes) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -45,12 +43,10 @@ export function ObjectEditingQuery($http, $q, gmfThemes) {
   this.getQueryableLayerNodesDefered_ = null;
 }
 
-
 /**
  * @return {angular.IPromise} Promise.
  */
-ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
-
+ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
   if (!this.getQueryableLayerNodesDefered_) {
     this.getQueryableLayerNodesDefered_ = this.q_.defer();
     this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
@@ -60,11 +56,7 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
         }
 
         // Get all queryable nodes
-        const allQueryableLayersInfo =
-            getQueryableLayersInfoFromThemes(
-              themes,
-              ogcServers
-            );
+        const allQueryableLayersInfo = getQueryableLayersInfoFromThemes(themes, ogcServers);
 
         // Narrow down to only those that have the 'copyable' metadata set
         const queryableLayersInfo = [];
@@ -80,9 +72,7 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
   }
 
   return this.getQueryableLayerNodesDefered_.promise;
-
 };
-
 
 /**
  * From a list of theme nodes, collect all WMS layer nodes that are queryable.
@@ -96,9 +86,7 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function() {
  * @private
  * @hidden
  */
-function getQueryableLayersInfoFromThemes(
-  themes, ogcServers
-) {
+function getQueryableLayersInfoFromThemes(themes, ogcServers) {
   const queryableLayersInfo = [];
   let theme;
   let group;
@@ -126,13 +114,10 @@ function getQueryableLayersInfoFromThemes(
 
         const nodeWMS = /** @type {import('gmf/themes.js').GmfLayerWMS} */ (nodes[k]);
 
-        if (nodeWMS.childLayers &&
-          nodeWMS.childLayers[0] &&
-          nodeWMS.childLayers[0].queryable
-        ) {
+        if (nodeWMS.childLayers && nodeWMS.childLayers[0] && nodeWMS.childLayers[0].queryable) {
           queryableLayersInfo.push({
             layerNode: nodeWMS,
-            ogcServer: ogcServers[group.ogcServer]
+            ogcServer: ogcServers[group.ogcServer],
           });
         }
       }
@@ -141,7 +126,6 @@ function getQueryableLayersInfoFromThemes(
 
   return queryableLayersInfo;
 }
-
 
 /**
  * From a queryable layer (WMS layer node), use its associated OGC server
@@ -155,52 +139,46 @@ function getQueryableLayersInfoFromThemes(
  * @param {import("ol/Map.js").default} map Map.
  * @return {angular.IPromise} Promise.
  */
-ObjectEditingQuery.prototype.getFeatureInfo = function(layerInfo, coordinate, map) {
+ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, map) {
   const view = map.getView();
   const projCode = view.getProjection().getCode();
-  const resolution = /** @type {number} */(view.getResolution());
+  const resolution = /** @type {number} */ (view.getResolution());
   const infoFormat = WMSInfoFormat.GML;
   const layerNode = layerInfo.layerNode;
   const layersParam = layerNode.layers.split(',');
   const ogcServer = layerInfo.ogcServer;
 
   const format = new olFormatWMSGetFeatureInfo({
-    layers: layersParam
+    layers: layersParam,
   });
 
   const wmsSource = new olSourceImageWMS({
     url: ogcServer.url,
     projection: undefined, // should be removed in next OL version
     params: {
-      layers: layersParam
-    }
+      layers: layersParam,
+    },
   });
 
   const url = /** @type {string} */ (
     wmsSource.getGetFeatureInfoUrl(coordinate, resolution, projCode, {
       'INFO_FORMAT': infoFormat,
       'FEATURE_COUNT': 1,
-      'QUERY_LAYERS': layersParam
+      'QUERY_LAYERS': layersParam,
     })
   );
 
-  return this.http_.get(url).then(
-    (response) => {
-      const features = format.readFeatures(response.data);
-      return (features && features[0]) ? features[0] : null;
-    }
-  );
+  return this.http_.get(url).then((response) => {
+    const features = format.readFeatures(response.data);
+    return features && features[0] ? features[0] : null;
+  });
 };
-
 
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfObjectEditingQuery', [
-  gmfThemeThemes.name,
-]);
+const module = angular.module('gmfObjectEditingQuery', [gmfThemeThemes.name]);
 module.service('gmfObjectEditingQuery', ObjectEditingQuery);
-
 
 export default module;

@@ -1,8 +1,6 @@
 import angular from 'angular';
 
-
 class ServiceManager {
-
   /**
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @struct
@@ -11,7 +9,6 @@ class ServiceManager {
    * @ngname ngeoOfflineServiceManager
    */
   constructor($injector) {
-
     /**
      * @type {angular.auto.IInjectorService}
      * @private
@@ -111,6 +108,5 @@ class ServiceManager {
 
 ServiceManager.module = angular.module('ngeoOfflineServiceManager', []);
 ServiceManager.module.service('ngeoOfflineServiceManager', ServiceManager);
-
 
 export default ServiceManager;

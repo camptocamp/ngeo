@@ -2,7 +2,6 @@ import angular from 'angular';
 import olFormatGeoJSON from 'ol/format/GeoJSON.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
-
 /**
  * @typedef {Object} ComparisonFilter
  * @property {string} property The type of operator for the comparison filter.
@@ -10,7 +9,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @property {string} value The value for the comparison filter that must match the combinaison of
  * the operator and property.
  */
-
 
 /**
  * Service that provides methods to get, insert, update and delete vector
@@ -25,7 +23,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @hidden
  */
 export function EditingEditFeature($http, gmfLayersUrl) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -41,9 +38,7 @@ export function EditingEditFeature($http, gmfLayersUrl) {
    * @private
    */
   this.baseUrl_ = gmfLayersUrl;
-
 }
-
 
 /**
  * Build a query to the MapFish protocol to fetch features from a list
@@ -53,13 +48,12 @@ export function EditingEditFeature($http, gmfLayersUrl) {
  * @param {import("ol/extent.js").Extent} extent The extent where to get the features from.
  * @return {angular.IPromise} Promise.
  */
-EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
+EditingEditFeature.prototype.getFeaturesInExtent = function (layerIds, extent) {
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
-    'bbox': extent.join(',')
+    'bbox': extent.join(','),
   });
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
-
 
 /**
  * Build a query to the MapFish protocol to fetch features from a list
@@ -74,7 +68,7 @@ EditingEditFeature.prototype.getFeaturesInExtent = function(layerIds, extent) {
  * @param {!Array.<!ComparisonFilter>} filters List of comparison filters
  * @return {angular.IPromise} Promise.
  */
-EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(layerIds, filters) {
+EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function (layerIds, filters) {
   const properties = [];
   const params = {};
 
@@ -89,59 +83,54 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function(layerId
   return this.http_.get(url).then(this.handleGetFeatures_.bind(this));
 };
 
-
 /**
  * @param {angular.IHttpResponse} resp Ajax response.
  * @return {Array.<import("ol/Feature.js").default>} List of features.
  * @private
  */
-EditingEditFeature.prototype.handleGetFeatures_ = function(resp) {
+EditingEditFeature.prototype.handleGetFeatures_ = function (resp) {
   return new olFormatGeoJSON().readFeatures(resp.data);
 };
-
 
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {Array.<import("ol/Feature.js").default>} features List of features to insert.
  * @return {angular.IPromise} Promise.
  */
-EditingEditFeature.prototype.insertFeatures = function(layerId, features) {
+EditingEditFeature.prototype.insertFeatures = function (layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
   const geoJSON = new olFormatGeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
     headers: {'Content-Type': 'application/geo+json'},
-    withCredentials: true
+    withCredentials: true,
   });
 };
-
 
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {import("ol/Feature.js").default} feature The feature to update.
  * @return {angular.IPromise} Promise.
  */
-EditingEditFeature.prototype.updateFeature = function(layerId, feature) {
+EditingEditFeature.prototype.updateFeature = function (layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   const geoJSON = new olFormatGeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
     headers: {'Content-Type': 'application/geo+json'},
-    withCredentials: true
+    withCredentials: true,
   });
 };
-
 
 /**
  * @param {number} layerId The layer id that contains the feature.
  * @param {import("ol/Feature.js").default} feature The feature to delete.
  * @return {angular.IPromise} Promise.
  */
-EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
+EditingEditFeature.prototype.deleteFeature = function (layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   return this.http_.delete(url, {
-    withCredentials: true
+    withCredentials: true,
   });
 };
-
 
 /**
  * @type {!angular.IModule}
@@ -149,6 +138,5 @@ EditingEditFeature.prototype.deleteFeature = function(layerId, feature) {
  */
 const module = angular.module('gmfEditFeature', []);
 module.service('gmfEditFeature', EditingEditFeature);
-
 
 export default module;

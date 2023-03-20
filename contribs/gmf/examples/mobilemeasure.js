@@ -16,7 +16,6 @@ import olControlScaleLine from 'ol/control/ScaleLine.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -31,12 +30,10 @@ const module = angular.module('gmfapp', [
   ngeoMiscBtnComponent.name,
 ]);
 
-
 module.value('gmfRasterUrl', appURL.RASTER);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {import("gmf/permalink/Permalink.js").PermalinkService} gmfPermalink The gmf permalink service.
@@ -44,7 +41,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController(gmfPermalink) {
-
   const center = gmfPermalink.getMapCenter() || [537635, 152640];
   const zoom = gmfPermalink.getMapZoom() || 3;
 
@@ -54,15 +50,15 @@ function MainController(gmfPermalink) {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: center,
-      zoom: zoom
-    })
+      zoom: zoom,
+    }),
   });
 
   this.map.addControl(new olControlScaleLine());
@@ -82,18 +78,15 @@ function MainController(gmfPermalink) {
    */
   this.measurePointLayersConfig = [
     {name: 'aster', unit: 'm', decimals: 2},
-    {name: 'srtm', unit: 'm'}
+    {name: 'srtm', unit: 'm'},
   ];
 
   /**
    * @type {boolean}
    */
   this.measurePointActive = false;
-
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

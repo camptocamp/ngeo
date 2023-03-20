@@ -1,10 +1,10 @@
 @import '~gmf/sass/vars.scss';
 
-$popover-nb-col : 12;
-$popover-icon-max-width : ($popover-max-width / $popover-nb-col) * 3;
-$popover-action-name-max-width : ($popover-max-width / $popover-nb-col) * 5;
-$popover-action-max-width : ($popover-max-width / $popover-nb-col) * 4;
-$popover-text-color : $color-light;
+$popover-nb-col: 12;
+$popover-icon-max-width: ($popover-max-width / $popover-nb-col) * 3;
+$popover-action-name-max-width: ($popover-max-width / $popover-nb-col) * 5;
+$popover-action-max-width: ($popover-max-width / $popover-nb-col) * 4;
+$popover-text-color: $color-light;
 
 .popover {
   border-radius: 0;

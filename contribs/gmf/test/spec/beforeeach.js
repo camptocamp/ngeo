@@ -9,7 +9,6 @@ import gmfPrintComponent from 'gmf/print/component.js';
 import gmfProfileModule from 'gmf/profile/module.js';
 import gmfQueryExtraModule from 'gmf/query/extraModule.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden

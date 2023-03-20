@@ -11,12 +11,10 @@ import olStyleCircle from 'ol/style/Circle.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {select as d3select} from 'd3';
 
-
 /**
  * @hidden
  */
 export class LidarprofileManager {
-
   /**
    * Provides a service to manage a D3js component to be used to draw an lidar point cloud profile chart.
    * Requires access to a Pytree webservice: https://github.com/sitn/pytree
@@ -31,7 +29,6 @@ export class LidarprofileManager {
    * @ngname gmflidarprofileManager
    */
   constructor($http, $filter, gettextCatalog, ngeoDebounce) {
-
     /**
      * @type {angular.IHttpService}
      */
@@ -86,7 +83,7 @@ export class LidarprofileManager {
      */
     this.cartoHighlight = new olOverlay({
       offset: [0, -15],
-      positioning: 'bottom-center'
+      positioning: 'bottom-center',
     });
 
     /**
@@ -98,11 +95,11 @@ export class LidarprofileManager {
       style: new olStyleStyle({
         image: new olStyleCircle({
           fill: new olStyleFill({
-            color: 'rgba(0, 0, 255, 1)'
+            color: 'rgba(0, 0, 255, 1)',
           }),
-          radius: 3
-        })
-      })
+          radius: 3,
+        }),
+      }),
     });
 
     /**
@@ -111,9 +108,8 @@ export class LidarprofileManager {
      * @type {import("ol/layer/Vector.js").default}
      */
     this.lidarBuffer = new olLayerVector({
-      source: new olSourceVector({})
+      source: new olSourceVector({}),
     });
-
 
     /**
      * The variable where all points of the profile are stored
@@ -155,10 +151,9 @@ export class LidarprofileManager {
    */
   clearBuffer() {
     if (this.lidarBuffer) {
-      /** @type {olSourceVector} */(this.lidarBuffer.getSource()).clear();
+      /** @type {olSourceVector} */ (this.lidarBuffer.getSource()).clear();
     }
   }
-
 
   /**
    * Set the line for the profile
@@ -190,10 +185,9 @@ export class LidarprofileManager {
       color_packed: [],
       intensity: [],
       classification: [],
-      coords: []
+      coords: [],
     };
   }
-
 
   /**
    * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests
@@ -203,7 +197,6 @@ export class LidarprofileManager {
    * @param {number} minLOD minimum Level Of Detail
    */
   getProfileByLOD(clippedLine, distanceOffset, resetPlot, minLOD) {
-
     const gettextCatalog = this.gettextCatalog;
     this.profilePoints = this.getEmptyProfilePoints_();
 
@@ -227,7 +220,6 @@ export class LidarprofileManager {
       }
       pytreeLinestring = pytreeLinestring.substr(0, pytreeLinestring.length - 1);
       maxLODWith = this.utils.getNiceLOD(domain[1] - domain[0], max_levels);
-
     }
 
     let lastLOD = false;
@@ -246,23 +238,42 @@ export class LidarprofileManager {
     for (let i = 0; i < maxLODWith.maxLOD; i++) {
       if (i == 0) {
         this.queryPytree_(
-          minLOD, this.config.serverConfig.initialLOD, i, pytreeLinestring, distanceOffset, lastLOD,
-          profileWidth, resetPlot
+          minLOD,
+          this.config.serverConfig.initialLOD,
+          i,
+          pytreeLinestring,
+          distanceOffset,
+          lastLOD,
+          profileWidth,
+          resetPlot
         );
         i += this.config.serverConfig.initialLOD - 1;
       } else if (i < maxLODWith.maxLOD - 1) {
         this.queryPytree_(
-          minLOD + i, minLOD + i + 1, i, pytreeLinestring, distanceOffset, lastLOD, profileWidth, false
+          minLOD + i,
+          minLOD + i + 1,
+          i,
+          pytreeLinestring,
+          distanceOffset,
+          lastLOD,
+          profileWidth,
+          false
         );
       } else {
         lastLOD = true;
         this.queryPytree_(
-          minLOD + i, minLOD + i + 1, i, pytreeLinestring, distanceOffset, lastLOD, profileWidth, false
+          minLOD + i,
+          minLOD + i + 1,
+          i,
+          pytreeLinestring,
+          distanceOffset,
+          lastLOD,
+          profileWidth,
+          false
         );
       }
     }
   }
-
 
   /**
    * Request to Pytree service for a range of Level Of Detail (LOD)
@@ -290,23 +301,28 @@ export class LidarprofileManager {
     const hurl = `${this.config.pytreeLidarprofileJsonUrl}/profile/get?minLOD=${minLOD}
       &maxLOD=${maxLOD}&width=${width}&coordinates=${coordinates}&pointCloud=${pointCloudName}&attributes=`;
 
-    this.$http.get(hurl, {
-      headers: {
-        'Content-Type': 'text/plain; charset=x-user-defined'
-      },
-      responseType: 'arraybuffer'
-    }).then((response) => {
-      if (this.config.serverConfig.debug) {
-        let html = lodInfo.html();
-        const lodTxt = gettextCatalog.getString('LOD: ');
-        const loadedTxt = gettextCatalog.getString('loaded');
-        html += `${lodTxt} ${minLOD}-${maxLOD} ${loadedTxt}<br>`;
-        lodInfo.html(html);
-      }
-      this.processBuffer_(response.data, iter, distanceOffset, lastLOD, resetPlot);
-    }, (response) => {
-      console.error(response);
-    });
+    this.$http
+      .get(hurl, {
+        headers: {
+          'Content-Type': 'text/plain; charset=x-user-defined',
+        },
+        responseType: 'arraybuffer',
+      })
+      .then(
+        (response) => {
+          if (this.config.serverConfig.debug) {
+            let html = lodInfo.html();
+            const lodTxt = gettextCatalog.getString('LOD: ');
+            const loadedTxt = gettextCatalog.getString('loaded');
+            html += `${lodTxt} ${minLOD}-${maxLOD} ${loadedTxt}<br>`;
+            lodInfo.html(html);
+          }
+          this.processBuffer_(response.data, iter, distanceOffset, lastLOD, resetPlot);
+        },
+        (response) => {
+          console.error(response);
+        }
+      );
   }
 
   /**
@@ -331,9 +347,7 @@ export class LidarprofileManager {
     }
 
     try {
-
       JSON.parse(strHeaderLocal);
-
     } catch (e) {
       if (!this.isPlotSetup_) {
         const canvas = d3select('#gmf-lidarprofile-container .lidar-canvas');
@@ -355,8 +369,7 @@ export class LidarprofileManager {
     // If number of points return is higher than Pytree configuration max value,
     // stop sending requests.
     this.config.clientConfig.pointSum += jHeader['points'];
-    if (this.config.clientConfig.pointSum >
-        this.config.serverConfig.max_point_number) {
+    if (this.config.clientConfig.pointSum > this.config.serverConfig.max_point_number) {
       console.warn('Number of points is higher than Pytree configuration max value !');
     }
 
@@ -377,35 +390,29 @@ export class LidarprofileManager {
     const bytesPerPoint = jHeader['bytesPerPoint'];
     const buffer = profile.slice(4 + headerSize);
     for (let i = 0; i < jHeader['points']; i++) {
-
       const byteOffset = bytesPerPoint * i;
       const view = new DataView(buffer, byteOffset, bytesPerPoint);
       let aoffset = 0;
       for (let k = 0; k < attributes.length; k++) {
-
         if (attributes[k]['value'] == 'POSITION_PROJECTED_PROFILE') {
           const udist = view.getUint32(aoffset, true);
           const dist = udist * scale;
           points.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
           this.profilePoints.distance.push(Math.round(100 * (distanceOffset + dist)) / 100);
-
         } else if (attributes[k]['value'] == 'CLASSIFICATION') {
           const classif = view.getUint8(aoffset);
           points.classification.push(classif);
           this.profilePoints.classification.push(classif);
-
         } else if (attributes[k]['value'] == 'INTENSITY') {
           const intensity = view.getUint8(aoffset);
           points.intensity.push(intensity);
           this.profilePoints.intensity.push(intensity);
-
         } else if (attributes[k]['value'] == 'COLOR_PACKED') {
           const r = view.getUint8(aoffset);
           const g = view.getUint8(aoffset + 1);
           const b = view.getUint8(aoffset + 2);
           points.color_packed.push([r, g, b]);
           this.profilePoints.color_packed.push([r, g, b]);
-
         } else if (attributes[k]['value'] == 'POSITION_CARTESIAN') {
           const x = view.getInt32(aoffset, true) * scale + jHeader['boundingBox']['lx'];
           const y = view.getInt32(aoffset + 4, true) * scale + jHeader['boundingBox']['ly'];
@@ -423,7 +430,7 @@ export class LidarprofileManager {
 
     const rangeY = [this.utils.arrayMin(points.altitude), this.utils.arrayMax(points.altitude)];
 
-    if (iter == 0 && resetPlot || !this.isPlotSetup_) {
+    if ((iter == 0 && resetPlot) || !this.isPlotSetup_) {
       this.plot.setupPlot(rangeX, rangeY);
       this.isPlotSetup_ = true;
     }
@@ -468,28 +475,32 @@ export class LidarprofileManager {
     const domainX = this.plot.updateScaleX['domain']();
     let map_resolution = this.map_ ? this.map_.getView().getResolution() : 0;
     map_resolution = map_resolution || 0;
-    const clip = this.utils.clipLineByMeasure(this.config, map_resolution,
-      this.line_, domainX[0], domainX[1]);
+    const clip = this.utils.clipLineByMeasure(
+      this.config,
+      map_resolution,
+      this.line_,
+      domainX[0],
+      domainX[1]
+    );
 
-    /** @type {olSourceVector} */(this.lidarBuffer.getSource()).clear();
-    /** @type {olSourceVector} */(this.lidarBuffer.getSource()).addFeature(clip.bufferGeom);
+    /** @type {olSourceVector} */ (this.lidarBuffer.getSource()).clear();
+    /** @type {olSourceVector} */ (this.lidarBuffer.getSource()).addFeature(clip.bufferGeom);
     this.lidarBuffer.setStyle(clip.bufferStyle);
 
     const span = domainX[1] - domainX[0];
     const maxLODWidth = this.utils.getNiceLOD(span, this.config.serverConfig.max_levels);
     const xTolerance = 0.2;
 
-    if (Math.abs(domainX[0] - this.plot.previousDomainX[0]) < xTolerance &&
-        Math.abs(domainX[1] - this.plot.previousDomainX[1]) < xTolerance) {
-
+    if (
+      Math.abs(domainX[0] - this.plot.previousDomainX[0]) < xTolerance &&
+      Math.abs(domainX[1] - this.plot.previousDomainX[1]) < xTolerance
+    ) {
       this.plot.drawPoints(this.profilePoints);
-
     } else {
       if (maxLODWidth.maxLOD <= this.config.serverConfig.initialLOD) {
         this.plot.drawPoints(this.profilePoints);
       } else {
         this.getProfileByLOD(clip.clippedLine, clip.distanceOffset, false, 0);
-
       }
     }
 
@@ -497,14 +508,11 @@ export class LidarprofileManager {
   }
 }
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfLidarprofileManager', [
-  ngeoMiscDebounce.name,
-]);
+const module = angular.module('gmfLidarprofileManager', [ngeoMiscDebounce.name]);
 module.service('gmfLidarprofileManager', LidarprofileManager);
 
 export default module;

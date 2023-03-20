@@ -23,21 +23,18 @@ import olStyleText from 'ol/style/Text.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olTilegridWMTS from 'ol/tilegrid/WMTS.js';
 
-
 /**
  * @typedef {import('ngeo/print/mapfish-print-v3').MapFishPrintStatusResponse} MapFishPrintStatusResponse
  * @typedef {import('ngeo/print/mapfish-print-v3').MapFishPrintReportResponse} MapFishPrintReportResponse
  */
 
 describe('ngeo.print.Service', () => {
-
   let ngeoCreatePrint;
 
   beforeEach(() => {
     angular.mock.inject((_ngeoCreatePrint_) => {
       ngeoCreatePrint = _ngeoCreatePrint_;
     });
-
   });
 
   it('creates an ngeo.print.Service instance', () => {
@@ -46,7 +43,6 @@ describe('ngeo.print.Service', () => {
   });
 
   describe('#createSpec', () => {
-
     let print;
     let map;
 
@@ -55,13 +51,12 @@ describe('ngeo.print.Service', () => {
       map = new olMap({
         view: new olView({
           center: [3000, 4000],
-          zoom: 0
-        })
+          zoom: 0,
+        }),
       });
     });
 
     describe('rotation', () => {
-
       beforeEach(() => {
         const view = map.getView();
         view.rotate(Math.PI);
@@ -74,37 +69,35 @@ describe('ngeo.print.Service', () => {
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format,
-          customAttributes);
+        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
         expect(spec.attributes.map.rotation).toEqual(180);
       });
     });
 
     describe('ImageWMS', () => {
-
       beforeEach(() => {
-        map.addLayer(new olLayerImage({
-          source: new olSourceImageWMS({
-            projection: undefined, // should be removed in next OL version
-            url: 'http://example.com/wms',
-            params: {
-              'LAYERS': 'foo,bar',
-              'FORMAT': 'image/jpeg'
-            }
+        map.addLayer(
+          new olLayerImage({
+            source: new olSourceImageWMS({
+              projection: undefined, // should be removed in next OL version
+              url: 'http://example.com/wms',
+              params: {
+                'LAYERS': 'foo,bar',
+                'FORMAT': 'image/jpeg',
+              },
+            }),
           })
-        }));
+        );
       });
 
       it('creates a valid spec object', () => {
-
         const scale = 500;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format,
-          customAttributes);
+        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -115,59 +108,57 @@ describe('ngeo.print.Service', () => {
               rotation: 0,
               scale: 500,
               useNearestScale: false,
-              layers: [{
-                baseURL: 'http://example.com/wms',
-                imageFormat: 'image/jpeg',
-                customParams: {
-                  TRANSPARENT: 'true'
+              layers: [
+                {
+                  baseURL: 'http://example.com/wms',
+                  imageFormat: 'image/jpeg',
+                  customParams: {
+                    TRANSPARENT: 'true',
+                  },
+                  layers: ['foo', 'bar'],
+                  type: 'wms',
+                  opacity: 1,
+                  serverType: undefined,
+                  version: undefined,
+                  useNativeAngle: true,
+                  styles: [''],
                 },
-                layers: ['foo', 'bar'],
-                type: 'wms',
-                opacity: 1,
-                serverType: undefined,
-                version: undefined,
-                useNativeAngle: true,
-                styles: ['']
-              }]
+              ],
             },
             foo: 'fooval',
-            bar: 'barval'
+            bar: 'barval',
           },
           lang: 'en',
           format: 'pdf',
-          layout: 'foo layout'
+          layout: 'foo layout',
         });
-
       });
-
     });
 
-
     describe('TileWMS', () => {
-
       beforeEach(() => {
-        map.addLayer(new olLayerTile({
-          source: new olSourceTileWMS({
-            projection: undefined, // should be removed in next OL version
-            url: 'http://example.com/wms',
-            params: {
-              'LAYERS': 'foo,bar',
-              'FORMAT': 'image/jpeg'
-            }
+        map.addLayer(
+          new olLayerTile({
+            source: new olSourceTileWMS({
+              projection: undefined, // should be removed in next OL version
+              url: 'http://example.com/wms',
+              params: {
+                'LAYERS': 'foo,bar',
+                'FORMAT': 'image/jpeg',
+              },
+            }),
           })
-        }));
+        );
       });
 
       it('creates a valid spec object', () => {
-
         const scale = 500;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format,
-          customAttributes);
+        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
         expect(spec).toEqual({
           attributes: {
             map: {
@@ -177,72 +168,72 @@ describe('ngeo.print.Service', () => {
               scale: 500,
               useNearestScale: false,
               rotation: 0,
-              layers: [{
-                baseURL: 'http://example.com/wms',
-                imageFormat: 'image/jpeg',
-                customParams: {
-                  TRANSPARENT: 'true'
+              layers: [
+                {
+                  baseURL: 'http://example.com/wms',
+                  imageFormat: 'image/jpeg',
+                  customParams: {
+                    TRANSPARENT: 'true',
+                  },
+                  layers: ['foo', 'bar'],
+                  type: 'wms',
+                  opacity: 1,
+                  serverType: undefined,
+                  version: undefined,
+                  useNativeAngle: true,
+                  styles: [''],
                 },
-                layers: ['foo', 'bar'],
-                type: 'wms',
-                opacity: 1,
-                serverType: undefined,
-                version: undefined,
-                useNativeAngle: true,
-                styles: ['']
-              }]
+              ],
             },
             foo: 'fooval',
-            bar: 'barval'
+            bar: 'barval',
           },
           lang: 'en',
           format: 'pdf',
-          layout: 'foo layout'
+          layout: 'foo layout',
         });
-
       });
-
     });
 
     describe('WMTS', () => {
-
       beforeEach(() => {
         const projection = olProj.get('EPSG:3857');
         const extent = projection.getExtent();
-        map.addLayer(new olLayerTile({
-          opacity: 0.5,
-          source: new olSourceWMTS({
-            dimensions: {'TIME': 'time'},
-            format: 'image/jpeg',
-            layer: 'layer',
-            matrixSet: 'matrixset',
-            projection: projection,
-            requestEncoding: 'REST',
-            style: 'style',
-            tileGrid: new olTilegridWMTS({
-              matrixIds: ['00', '01', '02'],
-              extent: extent,
-              origin: olExtent.getTopLeft(extent),
-              resolutions: [2000, 1000, 500],
-              tileSize: 512
-            }),
-            url: 'http://example.com/wmts/{Layer}/{Style}/{TileMatrixSet}/' +
+        map.addLayer(
+          new olLayerTile({
+            opacity: 0.5,
+            source: new olSourceWMTS({
+              dimensions: {'TIME': 'time'},
+              format: 'image/jpeg',
+              layer: 'layer',
+              matrixSet: 'matrixset',
+              projection: projection,
+              requestEncoding: 'REST',
+              style: 'style',
+              tileGrid: new olTilegridWMTS({
+                matrixIds: ['00', '01', '02'],
+                extent: extent,
+                origin: olExtent.getTopLeft(extent),
+                resolutions: [2000, 1000, 500],
+                tileSize: 512,
+              }),
+              url:
+                'http://example.com/wmts/{Layer}/{Style}/{TileMatrixSet}/' +
                 '{TileMatrix}/{TileRow}/{TileCol}.jpeg',
-            version: '1.1.0'
+              version: '1.1.0',
+            }),
           })
-        }));
+        );
       });
 
       it('creates a valid spec object', () => {
-
         const scale = 500;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format,
-          customAttributes);
+        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
 
         expect(spec).toEqual({
           attributes: {
@@ -253,95 +244,106 @@ describe('ngeo.print.Service', () => {
               rotation: 0,
               scale: 500,
               useNearestScale: false,
-              layers: [{
-                baseURL: 'http://example.com/wmts/{Layer}/{Style}/' +
+              layers: [
+                {
+                  baseURL:
+                    'http://example.com/wmts/{Layer}/{Style}/' +
                     '{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpeg',
-                dimensions: ['TIME'],
-                dimensionParams: {'TIME': 'time'},
-                imageFormat: 'image/jpeg',
-                layer: 'layer',
-                matrices: [{
-                  identifier: '00',
-                  scaleDenominator: 7142857.142857144,
-                  tileSize: [512, 512],
-                  topLeftCorner: olExtent.getTopLeft(
-                    olProj.get('EPSG:3857').getExtent()),
-                  matrixSize: [39, 39]
-                }, {
-                  identifier: '01',
-                  scaleDenominator: 3571428.571428572,
-                  tileSize: [512, 512],
-                  topLeftCorner: olExtent.getTopLeft(
-                    olProj.get('EPSG:3857').getExtent()),
-                  matrixSize: [78, 78]
-                }, {
-                  identifier: '02',
-                  scaleDenominator: 1785714.285714286,
-                  tileSize: [512, 512],
-                  topLeftCorner: olExtent.getTopLeft(
-                    olProj.get('EPSG:3857').getExtent()),
-                  matrixSize: [156, 156]
-                }],
-                matrixSet: 'matrixset',
-                opacity: 0.5,
-                requestEncoding: 'REST',
-                style: 'style',
-                type: 'WMTS',
-                version: '1.1.0'
-              }]
+                  dimensions: ['TIME'],
+                  dimensionParams: {'TIME': 'time'},
+                  imageFormat: 'image/jpeg',
+                  layer: 'layer',
+                  matrices: [
+                    {
+                      identifier: '00',
+                      scaleDenominator: 7142857.142857144,
+                      tileSize: [512, 512],
+                      topLeftCorner: olExtent.getTopLeft(olProj.get('EPSG:3857').getExtent()),
+                      matrixSize: [39, 39],
+                    },
+                    {
+                      identifier: '01',
+                      scaleDenominator: 3571428.571428572,
+                      tileSize: [512, 512],
+                      topLeftCorner: olExtent.getTopLeft(olProj.get('EPSG:3857').getExtent()),
+                      matrixSize: [78, 78],
+                    },
+                    {
+                      identifier: '02',
+                      scaleDenominator: 1785714.285714286,
+                      tileSize: [512, 512],
+                      topLeftCorner: olExtent.getTopLeft(olProj.get('EPSG:3857').getExtent()),
+                      matrixSize: [156, 156],
+                    },
+                  ],
+                  matrixSet: 'matrixset',
+                  opacity: 0.5,
+                  requestEncoding: 'REST',
+                  style: 'style',
+                  type: 'WMTS',
+                  version: '1.1.0',
+                },
+              ],
             },
             foo: 'fooval',
-            bar: 'barval'
+            bar: 'barval',
           },
           lang: 'en',
           format: 'pdf',
-          layout: 'foo layout'
+          layout: 'foo layout',
         });
-
       });
-
     });
 
     describe('Vector', () => {
       let style0, style1, style2, style3, style4;
 
       beforeEach(() => {
-
         const feature0 = new olFeature({
           geometry: new olGeomPoint([0, 0]),
-          foo: '0'
+          foo: '0',
         });
 
         const feature1 = new olFeature({
-          geometry: new olGeomLineString([[0, 0], [1, 1]]),
-          foo: '1'
+          geometry: new olGeomLineString([
+            [0, 0],
+            [1, 1],
+          ]),
+          foo: '1',
         });
 
         const feature2 = new olFeature({
-          geometry: new olGeomPolygon([[[0, 0], [1, 1], [1, 0], [0, 0]]]),
-          foo: '2'
+          geometry: new olGeomPolygon([
+            [
+              [0, 0],
+              [1, 1],
+              [1, 0],
+              [0, 0],
+            ],
+          ]),
+          foo: '2',
         });
 
         const feature3 = new olFeature({
           geometry: new olGeomPoint([0, 0]),
-          foo: '3'
+          foo: '3',
         });
 
         style0 = new olStyleStyle({
           fill: new olStyleFill({
-            color: [1, 1, 1, 0.1]
+            color: [1, 1, 1, 0.1],
           }),
           image: new olStyleCircle({
             radius: 1,
             stroke: new olStyleStroke({
               width: 1,
-              color: [1, 1, 1, 0.1]
-            })
+              color: [1, 1, 1, 0.1],
+            }),
           }),
           stroke: new olStyleStroke({
             width: 1,
-            color: [1, 1, 1, 0.1]
-          })
+            color: [1, 1, 1, 0.1],
+          }),
         });
 
         // styles for feature0
@@ -350,8 +352,8 @@ describe('ngeo.print.Service', () => {
         style1 = new olStyleStyle({
           stroke: new olStyleStroke({
             width: 2,
-            color: [2, 2, 2, 0.2]
-          })
+            color: [2, 2, 2, 0.2],
+          }),
         });
 
         // styles for feature1
@@ -359,12 +361,12 @@ describe('ngeo.print.Service', () => {
 
         style2 = new olStyleStyle({
           fill: new olStyleFill({
-            color: [3, 3, 3, 0.3]
+            color: [3, 3, 3, 0.3],
           }),
           stroke: new olStyleStroke({
             width: 3,
-            color: [3, 3, 3, 0.3]
-          })
+            color: [3, 3, 3, 0.3],
+          }),
         });
 
         // styles for features2
@@ -378,9 +380,9 @@ describe('ngeo.print.Service', () => {
             offsetX: 42,
             offsetY: -42,
             fill: new olStyleFill({
-              color: [3, 3, 3, 0.3]
-            })
-          })
+              color: [3, 3, 3, 0.3],
+            }),
+          }),
         });
 
         // Here to check that textAlign default value is set.
@@ -391,15 +393,15 @@ describe('ngeo.print.Service', () => {
             offsetX: 42,
             offsetY: -42,
             fill: new olStyleFill({
-              color: [3, 3, 3, 0.3]
-            })
-          })
+              color: [3, 3, 3, 0.3],
+            }),
+          }),
         });
 
         // styles for features3
         const styles3 = [style3, style4];
 
-        const styleFunction = function(feature, resolution) {
+        const styleFunction = function (feature, resolution) {
           const v = feature.get('foo');
           if (v == '0') {
             return styles0;
@@ -412,25 +414,25 @@ describe('ngeo.print.Service', () => {
           }
         };
 
-        map.addLayer(new olLayerVector({
-          opacity: 0.8,
-          source: new olSourceVector({
-            features: [feature0, feature1, feature2, feature3]
-          }),
-          style: styleFunction
-        }));
+        map.addLayer(
+          new olLayerVector({
+            opacity: 0.8,
+            source: new olSourceVector({
+              features: [feature0, feature1, feature2, feature3],
+            }),
+            style: styleFunction,
+          })
+        );
       });
 
       it('creates a valid spec object', () => {
-
         const scale = 500;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format,
-          customAttributes);
+        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
 
         const styleId0 = getUid(style0);
         const styleId1 = getUid(style1);
@@ -439,78 +441,92 @@ describe('ngeo.print.Service', () => {
         const styleId4 = getUid(style4);
 
         const expectedStyle = {
-          version: 2
+          version: 2,
         };
         expectedStyle[`[_ngeo_style_0 = '${styleId0}-Point']`] = {
-          symbolizers: [{
-            type: 'point',
-            pointRadius: 1,
-            strokeColor: '#010101',
-            strokeOpacity: 0.1,
-            strokeWidth: 1
-          }]
+          symbolizers: [
+            {
+              type: 'point',
+              pointRadius: 1,
+              strokeColor: '#010101',
+              strokeOpacity: 0.1,
+              strokeWidth: 1,
+            },
+          ],
         };
         expectedStyle[`[_ngeo_style_0 = '${styleId0}-LineString']`] = {
-          symbolizers: [{
-            type: 'line',
-            strokeColor: '#010101',
-            strokeOpacity: 0.1,
-            strokeWidth: 1
-          }]
+          symbolizers: [
+            {
+              type: 'line',
+              strokeColor: '#010101',
+              strokeOpacity: 0.1,
+              strokeWidth: 1,
+            },
+          ],
         };
         expectedStyle[`[_ngeo_style_1 = '${styleId1}-LineString']`] = {
-          symbolizers: [{
-            type: 'line',
-            strokeColor: '#020202',
-            strokeOpacity: 0.2,
-            strokeWidth: 2
-          }]
+          symbolizers: [
+            {
+              type: 'line',
+              strokeColor: '#020202',
+              strokeOpacity: 0.2,
+              strokeWidth: 2,
+            },
+          ],
         };
         expectedStyle[`[_ngeo_style_0 = '${styleId0}-Polygon']`] = {
-          symbolizers: [{
-            type: 'polygon',
-            fillColor: '#010101',
-            fillOpacity: 0.1,
-            strokeColor: '#010101',
-            strokeOpacity: 0.1,
-            strokeWidth: 1
-          }]
+          symbolizers: [
+            {
+              type: 'polygon',
+              fillColor: '#010101',
+              fillOpacity: 0.1,
+              strokeColor: '#010101',
+              strokeOpacity: 0.1,
+              strokeWidth: 1,
+            },
+          ],
         };
         expectedStyle[`[_ngeo_style_1 = '${styleId2}-Polygon']`] = {
-          symbolizers: [{
-            type: 'polygon',
-            fillColor: '#030303',
-            fillOpacity: 0.3,
-            strokeColor: '#030303',
-            strokeOpacity: 0.3,
-            strokeWidth: 3
-          }]
+          symbolizers: [
+            {
+              type: 'polygon',
+              fillColor: '#030303',
+              fillOpacity: 0.3,
+              strokeColor: '#030303',
+              strokeOpacity: 0.3,
+              strokeWidth: 3,
+            },
+          ],
         };
         expectedStyle[`[_ngeo_style_0 = '${styleId3}-Point']`] = {
-          symbolizers: [{
-            type: 'Text',
-            fontColor: '#030303',
-            fontWeight: '900',
-            fontSize: '16px',
-            fontFamily: '"sans serif"',
-            label: 'Ngeo',
-            labelAlign: 'lm',
-            labelXOffset: 42,
-            labelYOffset: 42
-          }]
+          symbolizers: [
+            {
+              type: 'Text',
+              fontColor: '#030303',
+              fontWeight: '900',
+              fontSize: '16px',
+              fontFamily: '"sans serif"',
+              label: 'Ngeo',
+              labelAlign: 'lm',
+              labelXOffset: 42,
+              labelYOffset: 42,
+            },
+          ],
         };
         expectedStyle[`[_ngeo_style_1 = '${styleId4}-Point']`] = {
-          symbolizers: [{
-            type: 'Text',
-            fontColor: '#030303',
-            fontWeight: '900',
-            fontSize: '16px',
-            fontFamily: '"sans serif"',
-            label: 'Ngeo',
-            labelAlign: 'cm',
-            labelXOffset: 42,
-            labelYOffset: 42
-          }]
+          symbolizers: [
+            {
+              type: 'Text',
+              fontColor: '#030303',
+              fontWeight: '900',
+              fontSize: '16px',
+              fontFamily: '"sans serif"',
+              label: 'Ngeo',
+              labelAlign: 'cm',
+              labelXOffset: 42,
+              labelYOffset: 42,
+            },
+          ],
         };
 
         // the expected properties of feature0
@@ -549,105 +565,118 @@ describe('ngeo.print.Service', () => {
               rotation: 0,
               scale: 500,
               useNearestScale: false,
-              layers: [{
-                geoJson: {
-                  type: 'FeatureCollection',
-                  features: [{
-                    type: 'Feature',
-                    geometry: {
-                      type: 'Point',
-                      coordinates: [0, 0]
-                    },
-                    properties: properties0
-                  }, {
-                    type: 'Feature',
-                    geometry: {
-                      type: 'LineString',
-                      coordinates: [[0, 0], [1, 1]]
-                    },
-                    properties: properties1
-                  }, {
-                    type: 'Feature',
-                    geometry: {
-                      type: 'Polygon',
-                      coordinates: [[[0, 0], [1, 1], [1, 0], [0, 0]]]
-                    },
-                    properties: properties2
-                  }, {
-                    type: 'Feature',
-                    geometry: {
-                      type: 'Point',
-                      coordinates: [0, 0]
-                    },
-                    properties: properties3
-                  }]
+              layers: [
+                {
+                  geoJson: {
+                    type: 'FeatureCollection',
+                    features: [
+                      {
+                        type: 'Feature',
+                        geometry: {
+                          type: 'Point',
+                          coordinates: [0, 0],
+                        },
+                        properties: properties0,
+                      },
+                      {
+                        type: 'Feature',
+                        geometry: {
+                          type: 'LineString',
+                          coordinates: [
+                            [0, 0],
+                            [1, 1],
+                          ],
+                        },
+                        properties: properties1,
+                      },
+                      {
+                        type: 'Feature',
+                        geometry: {
+                          type: 'Polygon',
+                          coordinates: [
+                            [
+                              [0, 0],
+                              [1, 1],
+                              [1, 0],
+                              [0, 0],
+                            ],
+                          ],
+                        },
+                        properties: properties2,
+                      },
+                      {
+                        type: 'Feature',
+                        geometry: {
+                          type: 'Point',
+                          coordinates: [0, 0],
+                        },
+                        properties: properties3,
+                      },
+                    ],
+                  },
+                  opacity: 0.8,
+                  style: expectedStyle,
+                  type: 'geojson',
                 },
-                opacity: 0.8,
-                style: expectedStyle,
-                type: 'geojson'
-              }]
+              ],
             },
             foo: 'fooval',
-            bar: 'barval'
+            bar: 'barval',
           },
           lang: 'en',
           format: 'pdf',
-          layout: 'foo layout'
+          layout: 'foo layout',
         });
       });
-
     });
 
     describe('layer order', () => {
-
       beforeEach(() => {
-        map.addLayer(new olLayerImage({
-          source: new olSourceImageWMS({
-            projection: undefined, // should be removed in next OL version
-            url: 'http://example.com/wms/bottom',
-            params: {
-              'LAYERS': 'foo,bar',
-              'FORMAT': 'image/jpeg'
-            }
+        map.addLayer(
+          new olLayerImage({
+            source: new olSourceImageWMS({
+              projection: undefined, // should be removed in next OL version
+              url: 'http://example.com/wms/bottom',
+              params: {
+                'LAYERS': 'foo,bar',
+                'FORMAT': 'image/jpeg',
+              },
+            }),
           })
-        }));
+        );
 
-        map.addLayer(new olLayerImage({
-          source: new olSourceImageWMS({
-            projection: undefined, // should be removed in next OL version
-            url: 'http://example.com/wms/top',
-            params: {
-              'LAYERS': 'foo,bar',
-              'FORMAT': 'image/jpeg'
-            }
+        map.addLayer(
+          new olLayerImage({
+            source: new olSourceImageWMS({
+              projection: undefined, // should be removed in next OL version
+              url: 'http://example.com/wms/top',
+              params: {
+                'LAYERS': 'foo,bar',
+                'FORMAT': 'image/jpeg',
+              },
+            }),
           })
-        }));
-
+        );
       });
 
       it('reverses the layer order', () => {
-
         const scale = 500;
         const dpi = 72;
         const layout = 'foo layout';
         const format = 'pdf';
         const customAttributes = {'foo': 'fooval', 'bar': 'barval'};
 
-        const spec = print.createSpec(map, scale, dpi, layout, format,
-          customAttributes);
+        const spec = print.createSpec(map, scale, dpi, layout, format, customAttributes);
 
         const layers = spec.attributes.map.layers;
         expect(layers.length).toBe(2);
         expect(layers[0].baseURL).toBe('http://example.com/wms/top');
         expect(layers[1].baseURL).toBe('http://example.com/wms/bottom');
       });
-
     });
-
   });
 
   describe('#createReport', () => {
-
     let print;
     let spec;
     let $httpBackend;
@@ -663,27 +692,28 @@ describe('ngeo.print.Service', () => {
             projection: 'EPSG:3857',
             scale: 500,
             useNearestScale: false,
-            layers: [{
-              baseURL: 'http://example.com/wms',
-              imageFormat: 'image/jpeg',
-              layers: ['foo', 'bar'],
-              type: 'wms'
-            }]
+            layers: [
+              {
+                baseURL: 'http://example.com/wms',
+                imageFormat: 'image/jpeg',
+                layers: ['foo', 'bar'],
+                type: 'wms',
+              },
+            ],
           },
           foo: 'fooval',
-          bar: 'barval'
+          bar: 'barval',
         },
-        layout: 'foo layout'
+        layout: 'foo layout',
       };
 
       angular.mock.inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
-        $httpBackend.when('POST', 'http://example.com/print/report.pdf')
-          .respond({
-            ref: 'deadbeef',
-            statusURL: '/print/status/deadbeef.json',
-            downloadURL: '/print/report/deadbeef.json'
-          });
+        $httpBackend.when('POST', 'http://example.com/print/report.pdf').respond({
+          ref: 'deadbeef',
+          statusURL: '/print/status/deadbeef.json',
+          downloadURL: '/print/report/deadbeef.json',
+        });
       });
     });
 
@@ -702,12 +732,13 @@ describe('ngeo.print.Service', () => {
       $httpBackend.flush();
 
       expect(spy.calls.count()).toBe(1);
-      const response = /** @type {angular.IHttpResponse<MapFishPrintReportResponse>} */(
-        spy.calls.mostRecent().args[0]).data;
+      const response = /** @type {angular.IHttpResponse<MapFishPrintReportResponse>} */ (
+        spy.calls.mostRecent().args[0]
+      ).data;
       expect(response).toEqual({
         ref: 'deadbeef',
         statusURL: '/print/status/deadbeef.json',
-        downloadURL: '/print/report/deadbeef.json'
+        downloadURL: '/print/report/deadbeef.json',
       });
     });
 
@@ -729,7 +760,6 @@ describe('ngeo.print.Service', () => {
   });
 
   describe('#getStatus', () => {
-
     let print;
     let $httpBackend;
 
@@ -738,10 +768,9 @@ describe('ngeo.print.Service', () => {
 
       angular.mock.inject(($injector) => {
         $httpBackend = $injector.get('$httpBackend');
-        $httpBackend.when('GET',
-          'http://example.com/print/status/deadbeef.json').respond({
+        $httpBackend.when('GET', 'http://example.com/print/status/deadbeef.json').respond({
           done: false,
-          downloadURL: '/print/report/deadbeef.json'
+          downloadURL: '/print/report/deadbeef.json',
         });
       });
     });
@@ -761,14 +790,14 @@ describe('ngeo.print.Service', () => {
       $httpBackend.flush();
 
       expect(spy.calls.count()).toBe(1);
-      const response = /** @type {angular.IHttpResponse<MapFishPrintStatusResponse>} */(
-        spy.calls.mostRecent().args[0]).data;
+      const response = /** @type {angular.IHttpResponse<MapFishPrintStatusResponse>} */ (
+        spy.calls.mostRecent().args[0]
+      ).data;
       expect(response).toEqual({
         done: false,
-        downloadURL: '/print/report/deadbeef.json'
+        downloadURL: '/print/report/deadbeef.json',
       });
     });
-
   });
 
   describe('#getReportUrl', () => {
@@ -790,17 +819,17 @@ describe('ngeo.print.Service', () => {
     // Only used to test that getCapabilities fetch the json from the proper url
     let capabilities;
 
-    beforeEach(angular.mock.inject((_$httpBackend_) => {
+    beforeEach(
+      angular.mock.inject((_$httpBackend_) => {
+        $httpBackend = _$httpBackend_;
 
-      $httpBackend = _$httpBackend_;
+        capabilities = {
+          'test': true,
+        };
 
-      capabilities = {
-        'test': true
-      };
-
-      $httpBackend.when('GET', 'http://example.com/print/capabilities.json')
-        .respond(capabilities);
-    }));
+        $httpBackend.when('GET', 'http://example.com/print/capabilities.json').respond(capabilities);
+      })
+    );
 
     beforeEach(() => {
       print = ngeoCreatePrint('http://example.com/print');
@@ -820,12 +849,13 @@ describe('ngeo.print.Service', () => {
     let print;
     let $httpBackend;
 
-    beforeEach(angular.mock.inject((_$httpBackend_) => {
-      print = ngeoCreatePrint('http://example.com/print');
-      $httpBackend = _$httpBackend_;
-      $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef')
-        .respond(200);
-    }));
+    beforeEach(
+      angular.mock.inject((_$httpBackend_) => {
+        print = ngeoCreatePrint('http://example.com/print');
+        $httpBackend = _$httpBackend_;
+        $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef').respond(200);
+      })
+    );
 
     afterEach(() => {
       $httpBackend.verifyNoOutstandingExpectation();
@@ -842,8 +872,9 @@ describe('ngeo.print.Service', () => {
       $httpBackend.flush();
 
       expect(spy.calls.count()).toBe(1);
-      const response = /** @type {angular.IHttpResponse<MapFishPrintStatusResponse>} */(
-        spy.calls.mostRecent().args[0]);
+      const response = /** @type {angular.IHttpResponse<MapFishPrintStatusResponse>} */ (
+        spy.calls.mostRecent().args[0]
+      );
       expect(response.status).toEqual(200);
     });
   });

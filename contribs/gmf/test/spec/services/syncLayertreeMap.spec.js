@@ -7,7 +7,6 @@ import olView from 'ol/View.js';
 import olLayerGroup from 'ol/layer/Group.js';
 import olLayerImage from 'ol/layer/Image.js';
 
-
 describe('gmf.layertree.SyncLayertreeMap', () => {
   let $httpBackend_;
   let gmfSyncLayertreeMap_;
@@ -19,8 +18,8 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     map = new olMap({
       view: new olView({
         center: [0, 0],
-        zoom: 0
-      })
+        zoom: 0,
+      }),
     });
 
     const group = new olLayerGroup();
@@ -30,7 +29,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
       '<div ngeo-layertree="tree"' +
         'ngeo-layertree-map="map"' +
         'ngeo-layertree-nodelayer="getLayer(treeCtrl)"' +
-      '</div>'
+        '</div>'
     );
 
     angular.mock.inject(($rootScope, $compile, $httpBackend, gmfSyncLayertreeMap, gmfThemes, gmfTreeUrl) => {
@@ -40,7 +39,8 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
       const reGmfTreeUrl = new RegExp(`^${gmfTreeUrl}`);
       // Prepare request simulation
       $httpBackend.when('GET', reGmfTreeUrl).respond(gmfTestDataThemes);
-      $httpBackend.when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr')
+      $httpBackend
+        .when('GET', 'https://wmts.geo.admin.ch/1.0.0/WMTSCapabilities.xml?lang=fr')
         .respond(gmfTestDataThemescapabilities.swisstopo);
 
       // Prepare themes
@@ -49,7 +49,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
       $httpBackend.flush();
 
       // Prepare layertree
-      getLayer = function(treeCtrl) {
+      getLayer = function (treeCtrl) {
         const layer = gmfSyncLayertreeMap.createLayer(treeCtrl, map, group);
         return layer;
       };
@@ -110,8 +110,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     const roottreeCtrl = element.scope().layertreeCtrl;
     const treeGroup = roottreeCtrl.children[1]; // Group 'Layers'
     const wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    const checkedLayers = ['cinema', 'police', 'post_office', 'entertainment',
-      'sustenance', 'hospitals']; // order count !
+    const checkedLayers = ['cinema', 'police', 'post_office', 'entertainment', 'sustenance', 'hospitals']; // order count !
 
     expect(wmsParamLayers).toEqual(checkedLayers.reverse().join(','));
   });
@@ -189,8 +188,9 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     treeGroup.setState('on');
     gmfSyncLayertreeMap_.sync_(treeGroup);
     wmsParamLayers = treeGroup.layer.getSource().getParams()['LAYERS'];
-    expect(wmsParamLayers).toEqual('hospitals,sustenance,entertainment,' +
-            'osm_time,post_office,police,cinema');
+    expect(wmsParamLayers).toEqual(
+      'hospitals,sustenance,entertainment,' + 'osm_time,post_office,police,cinema'
+    );
   });
 
   it('Sync WMTS Layer (in a mixed group)', () => {

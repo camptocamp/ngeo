@@ -1,6 +1,5 @@
 import angular from 'angular';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -54,7 +53,7 @@ function mapResenterComponent() {
       }
 
       // if the children is a link or button
-      $element.on('click', '*', function(event) {
+      $element.on('click', '*', function (event) {
         recenter(angular.element($(this)));
       });
 
@@ -67,12 +66,11 @@ function mapResenterComponent() {
         recenter(angular.element(selected));
       };
       $element.on({change: ce});
-    }
+    },
   };
 }
 
 // Register the directive in the module
 module.directive('ngeoRecenter', mapResenterComponent);
-
 
 export default module;

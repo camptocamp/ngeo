@@ -12,14 +12,14 @@ for (const filename of ls('contribs/gmf/examples/*.html')) {
   entry[name] = [
     './contribs/gmf/examples/common_dependencies.js', // Should be first
     'gmf/mainmodule.js', // To have a big commons part
-    `./contribs/gmf/examples/${name}.js`
+    `./contribs/gmf/examples/${name}.js`,
   ];
   plugins.push(
     new HtmlWebpackPlugin({
       template: `contribs/gmf/examples/${name}.html`,
       chunksSortMode: 'manual',
       filename: `${exampleFilenamePrefix}${name}.html`,
-      chunks: ['commons', name]
+      chunks: ['commons', name],
     })
   );
 }
@@ -30,7 +30,7 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
       name: 'commons',
-    }
+    },
   },
   plugins: plugins,
 };

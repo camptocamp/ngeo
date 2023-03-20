@@ -10,7 +10,6 @@ import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 import olMap from 'ol/Map.js';
 import olView from 'ol/View.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -22,11 +21,9 @@ const module = angular.module('gmfapp', [
   gmfThemeThemes.name,
 ]);
 
-
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes Themes service.
@@ -34,7 +31,6 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController(gmfThemes) {
-
   gmfThemes.loadThemes();
 
   /**
@@ -46,13 +42,11 @@ function MainController(gmfThemes) {
       center: [632464, 185457],
       projection: EPSG21781,
       minZoom: 3,
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

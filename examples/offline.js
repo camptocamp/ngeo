@@ -17,7 +17,6 @@ import ngeoOfflineConfiguration from 'ngeo/offline/Configuration.js';
 import NgeoOfflineServiceManager from 'ngeo/offline/ServiceManager.js';
 import angular from 'angular';
 
-
 /** @type {!angular.IModule} **/
 exports.module = angular.module('app', [
   'gettext',
@@ -32,7 +31,6 @@ exports.module.value('ngeoOfflineTestUrl', '../../src/offline/component.html');
 ngeoOfflineModule.service('ngeoOfflineConfiguration', ngeoOfflineConfiguration);
 
 class MainController {
-
   /**
    * @param {import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr
    * ngeo feature overlay manager service.
@@ -41,7 +39,6 @@ class MainController {
    * @ngInject
    */
   constructor(ngeoFeatureOverlayMgr, ngeoNetworkStatus, ngeoOfflineServiceManager) {
-
     /**
      * Save a square of 10 km sideways (Map's unit is the meter).
      * @type {number}
@@ -62,13 +59,13 @@ class MainController {
     this.map = new olMap({
       layers: [
         new olLayerTile({
-          source: new olSourceOSM()
-        })
+          source: new olSourceOSM(),
+        }),
       ],
       view: new olView({
         center: [352379, 5172733],
-        zoom: 4
-      })
+        zoom: 4,
+      }),
     });
 
     ngeoFeatureOverlayMgr.init(this.map);
@@ -78,8 +75,6 @@ class MainController {
   }
 }
 
-
 exports.module.controller('MainController', MainController);
-
 
 export default exports;

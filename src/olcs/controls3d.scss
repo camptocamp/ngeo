@@ -36,20 +36,23 @@ ngeo-olcs-controls3d {
       cursor: default;
     }
   }
-  .ngeo-tools, .ngeo-zoom {
+  .ngeo-tools,
+  .ngeo-zoom {
     display: table-cell;
     text-align: center;
   }
   .ngeo-tools {
     margin: 0;
     width: 74px;
-    .ngeo-angle, .ngeo-rotation {
+    .ngeo-angle,
+    .ngeo-rotation {
       margin: 5px 3px 3px;
       height: 64px;
       width: 64px;
       position: relative;
       overflow: hidden;
-      .ngeo-angle3d, .ngeo-rotation3d {
+      .ngeo-angle3d,
+      .ngeo-rotation3d {
         position: absolute;
         width: 100%;
         height: 100%;
@@ -78,7 +81,8 @@ ngeo-olcs-controls3d {
     }
   }
 
-  .ol-zoom-in, .ol-zoom-out {
+  .ol-zoom-in,
+  .ol-zoom-out {
     display: block;
     width: 40px;
     height: 32px;
