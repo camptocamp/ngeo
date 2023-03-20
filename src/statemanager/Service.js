@@ -11,7 +11,6 @@ import ngeoStatemanagerLocation from 'ngeo/statemanager/Location.js';
  * @hidden
  */
 export function StatemanagerService(ngeoLocation, ngeoUsedKeyRegexp) {
-
   /**
    * Object representing the application's initial state.
    * @type {!Object.<string, string>}
@@ -22,7 +21,6 @@ export function StatemanagerService(ngeoLocation, ngeoUsedKeyRegexp) {
    * @type {!import("ngeo/statemanager/Location.js").StatemanagerLocation}
    */
   this.ngeoLocation = ngeoLocation;
-
 
   /**
    * @type {!Array.<!RegExp>}
@@ -41,7 +39,7 @@ export function StatemanagerService(ngeoLocation, ngeoUsedKeyRegexp) {
   // state is read from the location URL, or from the local storage if there
   // is no state in the location URL.
 
-  const paramKeys = ngeoLocation.getParamKeys().filter(key => key != 'debug' && key != 'no_redirect');
+  const paramKeys = ngeoLocation.getParamKeys().filter((key) => key != 'debug' && key != 'no_redirect');
 
   if (paramKeys.length === 0) {
     if (this.useLocalStorage_) {
@@ -76,12 +74,11 @@ export function StatemanagerService(ngeoLocation, ngeoUsedKeyRegexp) {
   }
 }
 
-
 /**
  * @param {boolean} value Use localStorage
  * @return {boolean} localStorage will be used.
  */
-StatemanagerService.prototype.setUseLocalStorage = function(value) {
+StatemanagerService.prototype.setUseLocalStorage = function (value) {
   this.useLocalStorage_ = value;
 
   // check if localStorage is supported
@@ -106,27 +103,25 @@ StatemanagerService.prototype.setUseLocalStorage = function(value) {
  * @param {string} key State key.
  * @return {string|undefined} State value.
  */
-StatemanagerService.prototype.getInitialValue = function(key) {
+StatemanagerService.prototype.getInitialValue = function (key) {
   return this.initialState[key];
 };
-
 
 /**
  * Get the state value for `key`.
  * @param {string} key State key.
  * @return {string|undefined} State value.
  */
-StatemanagerService.prototype.getInitialStringValue = function(key) {
+StatemanagerService.prototype.getInitialStringValue = function (key) {
   return this.initialState[key];
 };
-
 
 /**
  * Get the state value for `key`.
  * @param {string} key State key.
  * @return {number|undefined} State value.
  */
-StatemanagerService.prototype.getInitialNumberValue = function(key) {
+StatemanagerService.prototype.getInitialNumberValue = function (key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -134,13 +129,12 @@ StatemanagerService.prototype.getInitialNumberValue = function(key) {
   return parseFloat(value);
 };
 
-
 /**
  * Get the state value for `key`.
  * @param {string} key State key.
  * @return {boolean|undefined} State value.
  */
-StatemanagerService.prototype.getInitialBooleanValue = function(key) {
+StatemanagerService.prototype.getInitialBooleanValue = function (key) {
   const value = this.initialState[key];
   if (value === undefined) {
     return undefined;
@@ -148,12 +142,11 @@ StatemanagerService.prototype.getInitialBooleanValue = function(key) {
   return value === 'true';
 };
 
-
 /**
  * Update the application state with the values in `object`.
  * @param {!Object.<string, string>} object Object.
  */
-StatemanagerService.prototype.updateState = function(object) {
+StatemanagerService.prototype.updateState = function (object) {
   this.ngeoLocation.updateParams(object);
   if (this.useLocalStorage_) {
     for (const key in object) {
@@ -165,28 +158,23 @@ StatemanagerService.prototype.updateState = function(object) {
   }
 };
 
-
 /**
  * Delete a parameter
  * @param {string} key Key.
  */
-StatemanagerService.prototype.deleteParam = function(key) {
+StatemanagerService.prototype.deleteParam = function (key) {
   this.ngeoLocation.deleteParam(key);
   if (this.useLocalStorage_) {
     delete window.localStorage[key];
   }
 };
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoStateManager', [
-  ngeoStatemanagerLocation.name
-]);
+const module = angular.module('ngeoStateManager', [ngeoStatemanagerLocation.name]);
 module.service('ngeoStateManager', StatemanagerService);
 module.value('ngeoUsedKeyRegexp', [new RegExp('.*')]);
-
 
 export default module;

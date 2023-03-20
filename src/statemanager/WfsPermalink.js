@@ -3,7 +3,6 @@ import * as olExtent from 'ol/extent.js';
 import {equalTo, and, or} from 'ol/format/filter.js';
 import olFormatWFS from 'ol/format/WFS.js';
 
-
 /**
  * @typedef {import('ngeo/query/MapQuerent.js').QueryResult} QueryResult
  */
@@ -23,7 +22,6 @@ import olFormatWFS from 'ol/format/WFS.js';
  *    features.
  */
 
-
 /**
  * A WFS type. To be used with {@link WfsPermalinkOptions}.
  *
@@ -40,7 +38,6 @@ import olFormatWFS from 'ol/format/WFS.js';
  *    if no custom prefix is given for a WFS type.
  */
 
-
 /**
  * The options for the WFS query service (permalink).
  *
@@ -52,7 +49,6 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @property {string} defaultFeatureNS
  * @property {string} defaultFeaturePrefix
  */
-
 
 /**
  * @typedef {Object} WfsPermalinkData
@@ -122,9 +118,11 @@ import olFormatWFS from 'ol/format/WFS.js';
  * @ngInject
  */
 export function WfsPermalinkService(
-  $http, ngeoPermalinkOgcserverUrl, ngeoQueryResult, ngeoWfsPermalinkOptions
+  $http,
+  ngeoPermalinkOgcserverUrl,
+  ngeoQueryResult,
+  ngeoWfsPermalinkOptions
 ) {
-
   const options = ngeoWfsPermalinkOptions;
 
   /**
@@ -181,14 +179,12 @@ export function WfsPermalinkService(
   this.result_ = ngeoQueryResult;
 }
 
-
 /**
  * Clear the results.
  */
-WfsPermalinkService.prototype.clear = function() {
+WfsPermalinkService.prototype.clear = function () {
   this.clearResult_();
 };
-
 
 /**
  * Build a WFS GetFeature request for the given query parameter data, send the
@@ -198,10 +194,11 @@ WfsPermalinkService.prototype.clear = function() {
  * @param {import("ol/Map.js").default} map The ol3 map object to get the current projection from.
  * @param {number} [zoomLevel] The level to zoom on when recentering on features.
  */
-WfsPermalinkService.prototype.issue = function(queryData, map, zoomLevel = undefined) {
-  console.assert(this.url_,
-    'url is not set. to use the wfs permalink service, ' +
-      'set the value `ngeoWfsPermalinkOptions`');
+WfsPermalinkService.prototype.issue = function (queryData, map, zoomLevel = undefined) {
+  console.assert(
+    this.url_,
+    'url is not set. to use the wfs permalink service, ' + 'set the value `ngeoWfsPermalinkOptions`'
+  );
   this.clearResult_();
 
   const typeName = queryData.wfsType;
@@ -218,7 +215,6 @@ WfsPermalinkService.prototype.issue = function(queryData, map, zoomLevel = undef
   this.issueRequest_(wfsType, filters, map, queryData.showFeatures, zoomLevel);
 };
 
-
 /**
  * @param {WfsType} wfsType Type.
  * @param {import("ol/format/filter/Filter.js").default} filter Filter.
@@ -227,7 +223,7 @@ WfsPermalinkService.prototype.issue = function(queryData, map, zoomLevel = undef
  * @param {number} [zoomLevel] The level to zoom on when recentering on features.
  * @private
  */
-WfsPermalinkService.prototype.issueRequest_ = function(
+WfsPermalinkService.prototype.issueRequest_ = function (
   wfsType,
   filter,
   map,
@@ -237,19 +233,17 @@ WfsPermalinkService.prototype.issueRequest_ = function(
   const wfsFormat = new olFormatWFS();
   const featureRequestXml = wfsFormat.writeGetFeature({
     srsName: map.getView().getProjection().getCode(),
-    featureNS: (wfsType.featureNS !== undefined) ?
-      wfsType.featureNS : this.defaultFeatureNS_,
-    featurePrefix: (wfsType.featurePrefix !== undefined) ?
-      wfsType.featurePrefix : this.defaultFeaturePrefix_,
+    featureNS: wfsType.featureNS !== undefined ? wfsType.featureNS : this.defaultFeatureNS_,
+    featurePrefix: wfsType.featurePrefix !== undefined ? wfsType.featurePrefix : this.defaultFeaturePrefix_,
     featureTypes: [wfsType.featureType],
     outputFormat: 'GML3',
     filter: filter,
-    maxFeatures: this.maxFeatures_
+    maxFeatures: this.maxFeatures_,
   });
 
   const featureRequest = new XMLSerializer().serializeToString(featureRequestXml);
   const config = {
-    headers: {'Content-Type': 'text/xml; charset=UTF-8'}
+    headers: {'Content-Type': 'text/xml; charset=UTF-8'},
   };
   this.$http_.post(this.url_, featureRequest, config).then((response) => {
     const features = wfsFormat.readFeatures(response.data);
@@ -272,7 +266,7 @@ WfsPermalinkService.prototype.issueRequest_ = function(
         'id': wfsType.featureType,
         'identifierAttributeField': wfsType.label,
         'label': wfsType.featureType,
-        'pending': false
+        'pending': false,
       });
 
       this.result_.sources.push(resultSource);
@@ -281,15 +275,15 @@ WfsPermalinkService.prototype.issueRequest_ = function(
   });
 };
 
-
 /**
  * @param {Array.<import("ol/Feature.js").default>} features Features.
  * @return {import("ol/extent.js").Extent} The extent of all features.
  * @private
  */
-WfsPermalinkService.prototype.getExtent_ = function(features) {
+WfsPermalinkService.prototype.getExtent_ = function (features) {
   return features.reduce(
-    (extent, feature) => olExtent.extend(extent, feature.getGeometry().getExtent()), olExtent.createEmpty()
+    (extent, feature) => olExtent.extend(extent, feature.getGeometry().getExtent()),
+    olExtent.createEmpty()
   );
 };
 
@@ -300,15 +294,15 @@ WfsPermalinkService.prototype.getExtent_ = function(features) {
  * @return {import("ol/format/filter/Filter.js").default} OGC filters.
  * @private
  */
-WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
+WfsPermalinkService.prototype.createFilters_ = function (filterGroups) {
   if (filterGroups.length == 0) {
     return null;
   }
-  const createFiltersForGroup = function(filterGroup) {
+  const createFiltersForGroup = function (filterGroup) {
     const filters = filterGroup.filters.map((filterDef) => {
       const condition = filterDef.condition;
       if (Array.isArray(condition)) {
-        return WfsPermalinkService.or_(condition.map(cond => equalTo(filterDef.property, cond)));
+        return WfsPermalinkService.or_(condition.map((cond) => equalTo(filterDef.property, cond)));
       } else {
         return equalTo(filterDef.property, filterDef.condition);
       }
@@ -318,7 +312,6 @@ WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
   return WfsPermalinkService.or_(filterGroups.map(createFiltersForGroup));
 };
 
-
 /**
  * Join a list of filters with `and(...)`.
  *
@@ -326,10 +319,9 @@ WfsPermalinkService.prototype.createFilters_ = function(filterGroups) {
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  * @private
  */
-WfsPermalinkService.and_ = function(filters) {
+WfsPermalinkService.and_ = function (filters) {
   return WfsPermalinkService.joinFilters_(filters, and);
 };
-
 
 /**
  * Join a list of filters with `or(...)`.
@@ -338,10 +330,9 @@ WfsPermalinkService.and_ = function(filters) {
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  * @private
  */
-WfsPermalinkService.or_ = function(filters) {
+WfsPermalinkService.or_ = function (filters) {
   return WfsPermalinkService.joinFilters_(filters, or);
 };
-
 
 /**
  * Join a list of filters with a given join function.
@@ -352,7 +343,7 @@ WfsPermalinkService.or_ = function(filters) {
  * @return {import("ol/format/filter/Filter.js").default} The joined filters.
  * @private
  */
-WfsPermalinkService.joinFilters_ = function(filters, joinFn) {
+WfsPermalinkService.joinFilters_ = function (filters, joinFn) {
   return filters.reduce((combinedFilters, currentFilter) => {
     if (combinedFilters === null) {
       return currentFilter;
@@ -363,19 +354,17 @@ WfsPermalinkService.joinFilters_ = function(filters, joinFn) {
   }, null);
 };
 
-
 /**
  * Clear every features for all result sources and reset the total counter
  * as well.
  * @private
  */
-WfsPermalinkService.prototype.clearResult_ = function() {
+WfsPermalinkService.prototype.clearResult_ = function () {
   this.result_.total = 0;
   this.result_.sources.forEach((source) => {
     source.features.length = 0;
   });
 };
-
 
 /**
  * @type {!angular.IModule}
@@ -385,28 +374,25 @@ const module = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies
 ]);
 
-
 /**
  * Set this value to enable WFS permalink.
  */
 module.value('ngeoPermalinkOgcserverUrl', '');
 
-
 /**
  * Value that is supposed to be set in applications to enable the WFS
  * permalink functionality.
  */
-module.value('ngeoWfsPermalinkOptions',
+module.value(
+  'ngeoWfsPermalinkOptions',
   /** @type {WfsPermalinkOptions} */ ({
     url: '',
     wfsTypes: [],
     defaultFeatureNS: '',
-    defaultFeaturePrefix: ''
+    defaultFeaturePrefix: '',
   })
 );
 
-
 module.service('ngeoWfsPermalink', WfsPermalinkService);
-
 
 export default module;

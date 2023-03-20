@@ -50,7 +50,7 @@ const exports = class AbstractLocalforageWrapper {
       'plugin': 'localforage',
       'command': command,
       'args': args,
-      'id': id
+      'id': id,
     };
     const waitingPromise = {};
     const promise = new Promise((resolve, reject) => {
@@ -97,9 +97,7 @@ const exports = class AbstractLocalforageWrapper {
    * @protected
    * @param {Action} action .
    */
-  postToBackend(action) {
-  }
+  postToBackend(action) {}
 };
-
 
 export default exports;

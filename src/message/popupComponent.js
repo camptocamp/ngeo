@@ -1,17 +1,14 @@
 import angular from 'angular';
 import 'angular-sanitize';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoPopup', [
-  'ngSanitize',
-]);
+const module = angular.module('ngeoPopup', ['ngSanitize']);
 
-
-module.value('ngeoPopupTemplateUrl',
+module.value(
+  'ngeoPopupTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -19,15 +16,16 @@ module.value('ngeoPopupTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['ngeoPopupTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'ngeo/message/popupcomponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'ngeo/message/popupcomponent';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
+  }
+);
 
 /**
  * Provides a directive used to show a popup over the page with
@@ -65,7 +63,7 @@ function messagePopopComponent(ngeoPopupTemplateUrl) {
       /**
        * @param {JQueryEventObject} evt Event.
        */
-      scope['close'] = function(evt) {
+      scope['close'] = function (evt) {
         if (evt) {
           evt.stopPropagation();
           evt.preventDefault();
@@ -77,11 +75,10 @@ function messagePopopComponent(ngeoPopupTemplateUrl) {
       scope.$watch('open', (newVal, oldVal) => {
         element.css('display', newVal ? 'block' : 'none');
       });
-    }
+    },
   };
 }
 
 module.directive('ngeoPopup', messagePopopComponent);
-
 
 export default module;

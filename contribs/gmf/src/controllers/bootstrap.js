@@ -1,8 +1,6 @@
-
 import $ from 'jquery';
 import angular from 'angular';
 import {TOUCH} from 'ol/has.js';
-
 
 /**
  * @private
@@ -14,7 +12,7 @@ function bootstrap(module) {
   // Hack to make the bootstrap type check working with polyfill.io
   const oldObjectToString = Object.prototype.toString;
   if (oldObjectToString.toString().indexOf('[native code]') < 0) {
-    Object.prototype.toString = function() {
+    Object.prototype.toString = function () {
       if (this === null) {
         return '[object Null]';
       }
@@ -29,14 +27,12 @@ function bootstrap(module) {
   const dynamicUrl_ = $('meta[name=dynamicUrl]')[0].getAttribute('content');
   const dynamicUrl = `${dynamicUrl_}?interface=${interface_}&query=${encodeURIComponent(
     document.location.search
-  )}&path=${encodeURIComponent(
-    document.location.pathname
-  )}`;
+  )}&path=${encodeURIComponent(document.location.pathname)}`;
   const request = $.ajax(dynamicUrl, {
     'dataType': 'json',
     'xhrFields': {
-      withCredentials: false
-    }
+      withCredentials: false,
+    },
   });
   request.fail((jqXHR, textStatus) => {
     window.alert(`Failed to get the dynamic: ${textStatus}`);

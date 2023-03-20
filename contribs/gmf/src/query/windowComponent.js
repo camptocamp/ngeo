@@ -19,7 +19,6 @@ import 'angular-touch';
 import 'bootstrap/js/src/collapse.js';
 import 'bootstrap/js/src/dropdown.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -33,20 +32,20 @@ const module = angular.module('gmfQueryWindowComponent', [
   'ngTouch',
 ]);
 
-
-module.config(['$animateProvider',
+module.config([
+  '$animateProvider',
   /**
    * For performance reason, only perform animation on elements that have the
    * `gmf-animatable` css class.
    * @param {angular.animate.IAnimateProvider} $animateProvider animate provider.
    */
-  function($animateProvider) {
+  function ($animateProvider) {
     $animateProvider.classNameFilter(/gmf-animatable/);
-  }
+  },
 ]);
 
-
-module.value('gmfDisplayquerywindowTemplateUrl',
+module.value(
+  'gmfDisplayquerywindowTemplateUrl',
   /**
    * @param {!JQuery} $element Element.
    * @param {!angular.IAttributes} $attrs Attributes.
@@ -54,15 +53,16 @@ module.value('gmfDisplayquerywindowTemplateUrl',
    */
   ($element, $attrs) => {
     const templateUrl = $attrs['gmfDisplayquerywindowTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/query/windowComponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/query/windowComponent';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -77,7 +77,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindowTemplateUrl) {
   return gmfDisplayquerywindowTemplateUrl($element, $attrs);
 }
-
 
 /**
  * Provide a component to display results of the {@link import("ngeo/queryResult.js").default}
@@ -119,14 +118,12 @@ const queryWindowComponent = {
     'selectedFeatureStyleFn': '&gmfDisplayquerywindowSelectedfeaturestyle',
     'defaultCollapsedFn': '&?gmfDisplayquerywindowDefaultcollapsed',
     'desktop': '=gmfDisplayquerywindowDesktop',
-    'showUnqueriedLayers': '=gmfDisplayquerywindowShowunqueriedlayers'
+    'showUnqueriedLayers': '=gmfDisplayquerywindowShowunqueriedlayers',
   },
-  templateUrl: gmfDisplayquerywindowTemplateUrl
+  templateUrl: gmfDisplayquerywindowTemplateUrl,
 };
 
-
 module.component('gmfDisplayquerywindow', queryWindowComponent);
-
 
 /**
  * @param {!JQuery} $element Element.
@@ -142,8 +139,12 @@ module.component('gmfDisplayquerywindow', queryWindowComponent);
  * @ngname GmfDisplayquerywindowController
  */
 export function QueryWindowController(
-  $element, $scope, ngeoQueryResult, ngeoMapQuerent, ngeoFeatureOverlayMgr) {
-
+  $element,
+  $scope,
+  ngeoQueryResult,
+  ngeoMapQuerent,
+  ngeoFeatureOverlayMgr
+) {
   /**
    * @type {Element|string}
    */
@@ -179,7 +180,7 @@ export function QueryWindowController(
   this.ngeoQueryResult = {
     sources: [],
     total: 0,
-    pending: false
+    pending: false,
   };
 
   /**
@@ -257,20 +258,19 @@ export function QueryWindowController(
         this.open = false;
         this.clear();
       }
-    });
+    }
+  );
 }
 
 /**
  * Initialise the controller.
  */
-QueryWindowController.prototype.$onInit = function() {
+QueryWindowController.prototype.$onInit = function () {
   this.draggableContainment = this.draggableContainment || 'document';
   this.desktop = this.desktop;
-  this.collapsed = this['defaultCollapsedFn'] ?
-    this['defaultCollapsedFn']() === true : !this.desktop;
+  this.collapsed = this['defaultCollapsedFn'] ? this['defaultCollapsedFn']() === true : !this.desktop;
 
-  this.showUnqueriedLayers_ = this['showUnqueriedLayers'] ?
-    this['showUnqueriedLayers'] === true : false;
+  this.showUnqueriedLayers_ = this['showUnqueriedLayers'] ? this['showUnqueriedLayers'] === true : false;
 
   this.sourcesFilter = this.showUnqueriedLayers_ ? {} : {'queried': true};
 
@@ -295,9 +295,9 @@ QueryWindowController.prototype.$onInit = function() {
       image: new olStyleCircle({
         fill: fill,
         radius: 5,
-        stroke: stroke
+        stroke: stroke,
       }),
-      stroke: stroke
+      stroke: stroke,
     });
   }
   highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
@@ -306,32 +306,30 @@ QueryWindowController.prototype.$onInit = function() {
   if (this.desktop) {
     windowContainer.draggable({
       handle: '.header',
-      containment: this.draggableContainment
+      containment: this.draggableContainment,
     });
     windowContainer.resizable({
       handles: 'all',
       minHeight: 240,
-      minWidth: 240
+      minWidth: 240,
     });
   }
 };
-
 
 /**
  * Remove current displayed results then get new results from the
  * ngeoQueryResult service. Display all results on the map and display,
  * highlight the first feature.
  */
-QueryWindowController.prototype.show = function() {
+QueryWindowController.prototype.show = function () {
   this.clear();
   this.updateFeatures_();
 };
 
-
 /**
  * @private
  */
-QueryWindowController.prototype.updateFeatures_ = function() {
+QueryWindowController.prototype.updateFeatures_ = function () {
   this.setCurrentResult_(0, false);
   if (this.source !== null) {
     this.collectFeatures_();
@@ -348,8 +346,7 @@ QueryWindowController.prototype.updateFeatures_ = function() {
  * @return {boolean} True if result has changed. False else.
  * @private
  */
-QueryWindowController.prototype.setCurrentResult_ = function(
-  position, setHighlight) {
+QueryWindowController.prototype.setCurrentResult_ = function (position, setHighlight) {
   let hasChanged = false;
   if (position !== this.currentResult) {
     let i, source, features;
@@ -379,12 +376,11 @@ QueryWindowController.prototype.setCurrentResult_ = function(
   return hasChanged;
 };
 
-
 /**
  * Select the logical previous source and feature then highlight this feature on
  * the map.
  */
-QueryWindowController.prototype.previous = function() {
+QueryWindowController.prototype.previous = function () {
   let position = this.currentResult - 1;
   if (position < 0) {
     position = this.getResultLength() - 1;
@@ -395,12 +391,11 @@ QueryWindowController.prototype.previous = function() {
   }
 };
 
-
 /**
  * Select the logical next source and feature then highlight this feature on
  * the map.
  */
-QueryWindowController.prototype.next = function() {
+QueryWindowController.prototype.next = function () {
   let position = this.currentResult + 1;
   const positionMax = this.getResultLength() - 1;
   if (position > positionMax) {
@@ -412,13 +407,12 @@ QueryWindowController.prototype.next = function() {
   }
 };
 
-
 /**
  * Remove features without properties from the query result.
  * @param {import('ngeo/query/MapQuerent.js').QueryResult} queryResult ngeo query result.
  * @private
  */
-QueryWindowController.prototype.updateQueryResult_ = function(queryResult) {
+QueryWindowController.prototype.updateQueryResult_ = function (queryResult) {
   this.ngeoQueryResult.total = 0;
   this.ngeoQueryResult.sources.length = 0;
   for (let i = 0; i < queryResult.sources.length; i++) {
@@ -437,7 +431,7 @@ QueryWindowController.prototype.updateQueryResult_ = function(queryResult) {
  * has been select, only the number of features of that source are returned.
  * @return {number} Total number of features.
  */
-QueryWindowController.prototype.getResultLength = function() {
+QueryWindowController.prototype.getResultLength = function () {
   if (this.selectedSource === null) {
     return this.ngeoQueryResult.total;
   } else {
@@ -445,35 +439,31 @@ QueryWindowController.prototype.getResultLength = function() {
   }
 };
 
-
 /**
  * @return {boolean} If the first result is active.
  */
-QueryWindowController.prototype.isFirst = function() {
+QueryWindowController.prototype.isFirst = function () {
   return this.currentResult == 0;
 };
-
 
 /**
  * @return {boolean} If the last result is active.
  */
-QueryWindowController.prototype.isLast = function() {
+QueryWindowController.prototype.isLast = function () {
   return this.currentResult == this.getResultLength() - 1;
 };
-
 
 /**
  * Delete the unwanted ol3 properties from the current feature then return the
  * properties.
  * @return {Object?} Filtered properties of the current feature or null.
  */
-QueryWindowController.prototype.getFeatureValues = function() {
+QueryWindowController.prototype.getFeatureValues = function () {
   if (!this.feature) {
     return null;
   }
   return getFilteredFeatureValues(this.feature);
 };
-
 
 /**
  * Special function that's used to set the "animation" value after to set the
@@ -484,17 +474,16 @@ QueryWindowController.prototype.getFeatureValues = function() {
  * or the previous result.
  * @private
  */
-QueryWindowController.prototype.animate_ = function(isNext) {
+QueryWindowController.prototype.animate_ = function (isNext) {
   this.isNext = isNext;
   this.animate++;
 };
-
 
 /**
  * Collect all features in the queryResult object.
  * @private
  */
-QueryWindowController.prototype.collectFeatures_ = function() {
+QueryWindowController.prototype.collectFeatures_ = function () {
   const sources = this.ngeoQueryResult.sources;
   this.features_.clear();
   for (let i = 0; i < sources.length; i++) {
@@ -510,14 +499,13 @@ QueryWindowController.prototype.collectFeatures_ = function() {
   }
 };
 
-
 /**
  * Highlight the current displayed feature.
  * @param {import("ol/Feature.js").default=} opt_lastFeature last highlighted feature. Require if
  * it exists because it must be added to the 'non-selected' features collection.
  * @private
  */
-QueryWindowController.prototype.highlightCurrentFeature_ = function(opt_lastFeature) {
+QueryWindowController.prototype.highlightCurrentFeature_ = function (opt_lastFeature) {
   this.highlightFeatures_.clear();
   this.features_.remove(this.feature);
   this.highlightFeatures_.push(this.feature);
@@ -526,23 +514,21 @@ QueryWindowController.prototype.highlightCurrentFeature_ = function(opt_lastFeat
   }
 };
 
-
 /**
  * Remove the current selected feature and source and remove all features
  * from the map.
  */
-QueryWindowController.prototype.close = function() {
+QueryWindowController.prototype.close = function () {
   this.open = false;
   this.clear();
   this.ngeoMapQuerent_.clear();
 };
 
-
 /**
  * Remove the current selected feature and source and remove all features
  * from the map.
  */
-QueryWindowController.prototype.clear = function() {
+QueryWindowController.prototype.clear = function () {
   this.feature = null;
   this.source = null;
   this.currentResult = -1;
@@ -551,11 +537,10 @@ QueryWindowController.prototype.clear = function() {
   this.selectedSource = null;
 };
 
-
 /**
  * @param {import('ngeo/statemanager/WfsPermalink.js').QueryResultSource} source The source to select.
  */
-QueryWindowController.prototype.setSelectedSource = function(source) {
+QueryWindowController.prototype.setSelectedSource = function (source) {
   if (source !== null && source.features.length <= 0) {
     // sources with no results can not be selected
     return;
@@ -565,8 +550,6 @@ QueryWindowController.prototype.setSelectedSource = function(source) {
   this.updateFeatures_();
 };
 
-
 module.controller('GmfDisplayquerywindowController', QueryWindowController);
-
 
 export default module;

@@ -9,25 +9,21 @@ import olSourceTileWMS from 'ol/source/TileWMS.js';
 import olSourceWMTS from 'ol/source/WMTS.js';
 import ngeoLayerHelper from 'ngeo/map/LayerHelper.js';
 
-
 /**
  * @typedef {Object} BackgroundEventDetails
  * @property {import("ol/layer/Base.js").default} current
  * @property {import("ol/layer/Base.js").default} previous
  */
 
-
 /**
  * @typedef {import("ngeo/CustomEvent.js").default.<BackgroundEventDetails>} BackgroundEvent
  */
-
 
 /**
  * @private
  * @hidden
  */
 const BACKGROUNDLAYERGROUP_NAME = 'background';
-
 
 /**
  * Provides a service for setting/unsetting background layers
@@ -98,8 +94,9 @@ export class MapBackgroundLayerManager extends olObservable {
    */
   get(map) {
     const mapUid = olUtilGetUid(map).toString();
-    return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
-      BACKGROUNDLAYERGROUP_NAME).getLayers().item(0) : null;
+    return mapUid in this.mapUids_
+      ? this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME).getLayers().item(0)
+      : null;
   }
 
   /**
@@ -135,7 +132,7 @@ export class MapBackgroundLayerManager extends olObservable {
     /** @type {BackgroundEvent} */
     const event = new ngeoCustomEvent('change', {
       current: layer,
-      previous: previous
+      previous: previous,
     });
     this.dispatchEvent(event);
 
@@ -150,8 +147,9 @@ export class MapBackgroundLayerManager extends olObservable {
    */
   getOpacityBgLayer(map) {
     const mapUid = olUtilGetUid(map).toString();
-    return mapUid in this.mapUids_ ? this.ngeoLayerHelper_.getGroupFromMap(map,
-      BACKGROUNDLAYERGROUP_NAME).getLayers().item(1) : null;
+    return mapUid in this.mapUids_
+      ? this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME).getLayers().item(1)
+      : null;
   }
 
   /**
@@ -218,10 +216,7 @@ export class MapBackgroundLayerManager extends olObservable {
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoBackgroundLayerMgr', [
-  ngeoLayerHelper.name
-]);
+const module = angular.module('ngeoBackgroundLayerMgr', [ngeoLayerHelper.name]);
 module.service('ngeoBackgroundLayerMgr', MapBackgroundLayerManager);
-
 
 export default module;

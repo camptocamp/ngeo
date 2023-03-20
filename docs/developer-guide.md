@@ -75,6 +75,7 @@ Where `<release-branch>` stand for `2.x`.
 
 Verify that the `<version>` (`2.x.x`) in package.json match with the tag you'll
 create. Then create a tag named the same as the version.
+
 ```
 git tag <version>
 git push origin <version>
@@ -83,6 +84,7 @@ git push origin <version>
 Travis will create a new package on npm.
 
 If you create a new release, bump version in the package.json file:
+
 ```
 git checkout -b bump
 vi package.json
@@ -98,17 +100,20 @@ Do the pull request on branch `<release-branche>`
 When we create a new stabilisation branch we should also duplicate the localisation.
 
 Go on master:
+
 ```bash
 git checkout master
 git pull origin master
 ```
 
 Create the new branch:
+
 ```bash
 git checkout -b x.y
 ```
 
 Update the `.travis.yml`:
+
 ```diff
  - provider: script
    script: make transifex-send
@@ -120,6 +125,7 @@ Update the `.travis.yml`:
 ```
 
 Commit and push the changes:
+
 ```bash
 git add .travis.yml
 git commit -m "Update the branch"
@@ -127,16 +133,19 @@ git push origin x.y
 ```
 
 Back on master:
+
 ```bash
 git checkout master
 ```
 
 Do the merge to prepare the future merges:
+
 ```bash
 git merge x.y
 ```
 
 Restore the `.travis.yml`:
+
 ```diff
  - provider: script
    script: make transifex-send
@@ -148,17 +157,20 @@ Restore the `.travis.yml`:
 ```
 
 Get the actual localisation:
+
 ```bash
 make transifex-get
 ```
 
 Update the `Makefile`:
+
 ```diff
 - TX_VERSION ?= x_y
 + TX_VERSION ?= x_y+1
 ```
 
 Commit and push the changes:
+
 ```bash
 git add Makefile .travis.yml
 git commit -m "Start the version x.y+1"
@@ -166,6 +178,7 @@ git push origin master
 ```
 
 Create the new localisation resource:
+
 ```bash
 rm .tx/config
 make transifex-init

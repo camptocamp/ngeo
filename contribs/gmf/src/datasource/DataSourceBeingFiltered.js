@@ -1,11 +1,9 @@
 import angular from 'angular';
 
-
 /**
  * @typedef {Object} DataSourceBeingFiltered
  * @property {gmf.datasource.OGC|null} dataSource
  */
-
 
 /**
  * @type {!angular.IModule}
@@ -14,8 +12,7 @@ import angular from 'angular';
 const module = angular.module('gmfDataSourceBeingFiltered', []);
 // type DataSourceBeingFiltered
 module.value('gmfDataSourceBeingFiltered', {
-  dataSource: null
+  dataSource: null,
 });
-
 
 export default module;

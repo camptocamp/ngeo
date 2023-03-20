@@ -24,7 +24,6 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {appendParams as olUriAppendParams} from 'ol/uri.js';
 
-
 /**
  * Datasource configuration options for the search directive.
  * @typedef {Object} SearchComponentDatasource
@@ -44,7 +43,6 @@ import {appendParams as olUriAppendParams} from 'ol/uri.js';
  * @property {string} [datasetTitle]
  */
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -60,7 +58,6 @@ const module = angular.module('gmfSearch', [
   ngeoMessagePopoverComponent.name,
 ]);
 
-
 /**
  * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
@@ -70,15 +67,15 @@ const module = angular.module('gmfSearch', [
  */
 function gmfSearchTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfSearchTemplateurl'];
-  return templateUrl !== undefined ? templateUrl :
-    'gmf/search';
+  return templateUrl !== undefined ? templateUrl : 'gmf/search';
 }
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/search', require('./component.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/search', require('./component.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -92,7 +89,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
   return gmfSearchTemplateUrl($element, $attrs);
 }
-
 
 /**
  * A component that allows to search and recenter on a selected
@@ -201,26 +197,22 @@ const searchComponent = {
     'maxZoom': '<?gmfSearchMaxzoom',
     'delay': '<?gmfSearchDelay',
     'onInitCallback': '<?gmfSearchOnInit',
-    'searchActionCallback': '&?gmfSearchAction'
+    'searchActionCallback': '&?gmfSearchAction',
   },
   controller: 'gmfSearchController',
-  templateUrl: gmfSearchTemplateUrl
+  templateUrl: gmfSearchTemplateUrl,
 };
-
 
 module.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 
-
 // Register the controller in the module
 module.component('gmfSearch', searchComponent);
-
 
 /**
  * @private
  * @hidden
  */
 class SearchController {
-
   /**
    * @private
    * @param {JQuery} $element Element.
@@ -244,11 +236,20 @@ class SearchController {
    * @ngdoc controller
    * @ngname GmfSearchController
    */
-  constructor($element, $scope, $compile, $timeout, $injector,
-    gettextCatalog, ngeoAutoProjection, ngeoSearchCreateGeoJSONBloodhound,
-    ngeoFeatureOverlayMgr, gmfThemes, gmfTreeManager, gmfSearchFulltextSearch) {
-
-
+  constructor(
+    $element,
+    $scope,
+    $compile,
+    $timeout,
+    $injector,
+    gettextCatalog,
+    ngeoAutoProjection,
+    ngeoSearchCreateGeoJSONBloodhound,
+    ngeoFeatureOverlayMgr,
+    gmfThemes,
+    gmfTreeManager,
+    gmfSearchFulltextSearch
+  ) {
     /**
      * @type {JQuery}
      * @private
@@ -406,7 +407,7 @@ class SearchController {
      * @type {Twitter.Typeahead.Options}
      */
     this.options = /** @type {Twitter.Typeahead.Options} */ ({
-      highlight: true
+      highlight: true,
     });
 
     /**
@@ -445,7 +446,6 @@ class SearchController {
     this.additionalListeners;
   }
 
-
   /**
    * Called on initialization of the controller.
    */
@@ -456,13 +456,14 @@ class SearchController {
     if (this.delay === undefined) {
       this.delay = 50;
     }
-    this.placeholder = this.placeholder !== undefined ? this.placeholder :
-      gettextCatalog.getString('Search…');
+    this.placeholder =
+      this.placeholder !== undefined ? this.placeholder : gettextCatalog.getString('Search…');
 
     // Init coordinates projections instances
-    this.coordinatesProjectionsInstances = this.coordinatesProjections === undefined ?
-      [this.map.getView().getProjection()] :
-      this.ngeoAutoProjection_.getProjectionList(this.coordinatesProjections);
+    this.coordinatesProjectionsInstances =
+      this.coordinatesProjections === undefined
+        ? [this.map.getView().getProjection()]
+        : this.ngeoAutoProjection_.getProjectionList(this.coordinatesProjections);
 
     if (!this.clearButton) {
       // Empty the search field on focus and blur.
@@ -485,10 +486,7 @@ class SearchController {
 
     this.initDatasets_();
 
-    this.scope_.$watch(
-      () => this.color,
-      this.setStyleColor.bind(this)
-    );
+    this.scope_.$watch(() => this.color, this.setStyleColor.bind(this));
 
     this.listeners = this.mergeListeners_(
       this.additionalListeners,
@@ -496,7 +494,7 @@ class SearchController {
         select: this.select_.bind(this),
         change: this.handleChange_.bind(this),
         close: this.close_.bind(this),
-        datasetsempty: this.datasetsempty_.bind(this)
+        datasetsempty: this.datasetsempty_.bind(this),
       })
     );
 
@@ -518,7 +516,6 @@ class SearchController {
     }
   }
 
-
   /**
    * Merges the custom listeners received via the component attributes and the
    * listeners that are needed for this controller to function (close and select).
@@ -534,23 +531,26 @@ class SearchController {
     }
     return {
       open: additionalListeners.open,
-      close: additionalListeners.close === undefined ?
-        listeners.close : function() {
-          listeners.close();
-          additionalListeners.close();
-        },
+      close:
+        additionalListeners.close === undefined
+          ? listeners.close
+          : function () {
+              listeners.close();
+              additionalListeners.close();
+            },
       change: additionalListeners.change,
       cursorchange: additionalListeners.cursorchange,
       datasetsempty: additionalListeners.datasetsempty,
-      select: additionalListeners.select === undefined ?
-        listeners.select : function(evt, obj, dataset) {
-          listeners.select(evt, obj, dataset);
-          additionalListeners.select(evt, obj, dataset);
-        },
-      autocomplete: additionalListeners.autocomplete
+      select:
+        additionalListeners.select === undefined
+          ? listeners.select
+          : function (evt, obj, dataset) {
+              listeners.select(evt, obj, dataset);
+              additionalListeners.select(evt, obj, dataset);
+            },
+      autocomplete: additionalListeners.autocomplete,
     };
   }
-
 
   /**
    * Initialize datasets for the search
@@ -570,34 +570,39 @@ class SearchController {
       if (groupValues.length === 0) {
         filters.push({
           'title': '',
-          'filter': this.filterLayername_()
+          'filter': this.filterLayername_(),
         });
       } else {
-        groupValues.forEach(function(layerName) {
+        groupValues.forEach(function (layerName) {
           filters.push({
             'title': layerName,
-            'filter': this.filterLayername_(layerName)
+            'filter': this.filterLayername_(layerName),
           });
         }, this);
       }
 
-      groupActions.forEach(function(action) {
+      groupActions.forEach(function (action) {
         filters.push({
           'title': gettextCatalog.getString(action['title']),
-          'filter': this.filterAction_(action['action'])
+          'filter': this.filterAction_(action['action']),
         });
       }, this);
 
-      filters.forEach(function(filter) {
-        this.datasets.push(this.createDataset_({
-          bloodhoundOptions: datasource.bloodhoundOptions,
-          datasetTitle: filter['title'],
-          groupsKey: 'layer_name',
-          labelKey: datasource.labelKey,
-          projection: datasource.projection,
-          typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
-          url: datasource.url
-        }, filter['filter']));
+      filters.forEach(function (filter) {
+        this.datasets.push(
+          this.createDataset_(
+            {
+              bloodhoundOptions: datasource.bloodhoundOptions,
+              datasetTitle: filter['title'],
+              groupsKey: 'layer_name',
+              labelKey: datasource.labelKey,
+              projection: datasource.projection,
+              typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
+              url: datasource.url,
+            },
+            filter['filter']
+          )
+        );
       }, this);
     }
 
@@ -617,11 +622,10 @@ class SearchController {
           let html = `<p class="gmf-search-label">${coordinates}</p>`;
           html = `<div class="gmf-search-datum">${html}</div>`;
           return html;
-        }
-      }
+        },
+      },
     });
   }
-
 
   /**
    * @param {SearchComponentDatasource} config The config of the dataset.
@@ -642,7 +646,7 @@ class SearchController {
         const feature = /** @type {import("ol/Feature.js").default} */ (suggestion);
         return feature.get(config.labelKey);
       },
-      templates: /* Twitter.Typeahead.Templates */ ({
+      templates: /* Twitter.Typeahead.Templates */ {
         header: () => {
           if (!config.datasetTitle) {
             return '';
@@ -657,21 +661,20 @@ class SearchController {
           const scope = componentScope.$new(true);
           scope['feature'] = feature;
 
-          let html = `<p class="gmf-search-label" translate>${
-            feature.get(config.labelKey)}</p>`;
-          html += `<p class="gmf-search-group" translate>${feature.get('layer_name') ||
-                  config.datasetTitle}</p>`;
+          let html = `<p class="gmf-search-label" translate>${feature.get(config.labelKey)}</p>`;
+          html += `<p class="gmf-search-group" translate>${
+            feature.get('layer_name') || config.datasetTitle
+          }</p>`;
           html = `<div class="gmf-search-datum">${html}</div>`;
           return compile(html)(scope).html();
-        }
-      })
+        },
+      },
     });
     if (config.typeaheadDatasetOptions) {
       Object.assign(typeaheadDataset, config.typeaheadDatasetOptions);
     }
     return typeaheadDataset;
   }
-
 
   /**
    * @param {string} action The action to keep.
@@ -681,23 +684,22 @@ class SearchController {
    */
   filterAction_(action) {
     return (
-    /**
-         * @param {import("geojson").Feature} feature
-         * @return {boolean}
-         */
-      function(feature) {
+      /**
+       * @param {import("geojson").Feature} feature
+       * @return {boolean}
+       */
+      function (feature) {
         const properties = feature['properties'];
         if (properties['actions']) {
           // result is an action (add_theme, add_group, ...)
           // add it to the corresponding group
-          return !properties['layer_name'] && properties['actions'].some(act => act.action === action);
+          return !properties['layer_name'] && properties['actions'].some((act) => act.action === action);
         } else {
           return false;
         }
       }
     );
   }
-
 
   /**
    * @param {string=} opt_layerName The layerName to keep. If null, keep all layers
@@ -708,11 +710,11 @@ class SearchController {
    */
   filterLayername_(opt_layerName) {
     return (
-    /**
-         * @param {import("geojson").Feature} feature
-         * @return {boolean}
-         */
-      function(feature) {
+      /**
+       * @param {import("geojson").Feature} feature
+       * @return {boolean}
+       */
+      function (feature) {
         const featureLayerName = feature['properties']['layer_name'];
         // Keep only layers with layer_name (don't keep action layers).
         if (featureLayerName === undefined) {
@@ -726,7 +728,6 @@ class SearchController {
     );
   }
 
-
   /**
    * @param {SearchComponentDatasource} config The config of the dataset.
    * @param {(function(import("geojson").Feature): boolean)=} opt_filter Afilter function
@@ -737,13 +738,17 @@ class SearchController {
   createAndInitBloodhound_(config, opt_filter) {
     const mapProjectionCode = this.map.getView().getProjection().getCode();
     const remoteOptions = this.getBloodhoudRemoteOptions_();
-    const bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(config.url, opt_filter,
-      olProj.get(mapProjectionCode), olProj.get(config.projection),
-      config.bloodhoundOptions, remoteOptions);
+    const bloodhound = this.ngeoSearchCreateGeoJSONBloodhound_(
+      config.url,
+      opt_filter,
+      olProj.get(mapProjectionCode),
+      olProj.get(config.projection),
+      config.bloodhoundOptions,
+      remoteOptions
+    );
     bloodhound.initialize();
     return bloodhound;
   }
-
 
   /**
    * @return {Bloodhound.RemoteOptions} Options.
@@ -757,17 +762,16 @@ class SearchController {
         const url = settings.url;
         const lang = gettextCatalog.getCurrentLanguage();
         settings.xhrFields = {
-          withCredentials: true
+          withCredentials: true,
         };
         settings.url = olUriAppendParams(url, {
           query: query,
           lang: lang,
         });
         return settings;
-      }
+      },
     });
   }
-
 
   /**
    * @param {import("ol/View.js").default} view View.
@@ -777,26 +781,29 @@ class SearchController {
   createSearchCoordinates_(view) {
     const viewProjection = view.getProjection();
     const extent = viewProjection.getExtent();
-    return function(query, callback) {
+    return function (query, callback) {
       const suggestions = [];
       const coordinates = this.ngeoAutoProjection_.stringToCoordinates(query);
       if (coordinates === null) {
         return;
       }
-      const position = this.ngeoAutoProjection_.tryProjectionsWithInversion(coordinates,
-        extent, viewProjection, this.coordinatesProjections);
+      const position = this.ngeoAutoProjection_.tryProjectionsWithInversion(
+        coordinates,
+        extent,
+        viewProjection,
+        this.coordinatesProjections
+      );
       if (position === null) {
         return;
       }
       suggestions.push({
         label: coordinates.join(' '),
         position: position,
-        'tt_source': 'coordinates'
+        'tt_source': 'coordinates',
       });
       callback(suggestions);
     }.bind(this);
   }
-
 
   /**
    * Init the style object for the search results. It set defaults for the
@@ -812,24 +819,24 @@ class SearchController {
         points: 4,
         radius: 8,
         radius2: 0,
-        angle: 0
-      })
+        angle: 0,
+      }),
     });
     const fill = new olStyleFill({
-      color: [65, 134, 240, 0.5]
+      color: [65, 134, 240, 0.5],
     });
     const stroke = new olStyleStroke({
       color: [65, 134, 240, 1],
-      width: 2
+      width: 2,
     });
     this.styles_['default'] = new olStyleStyle({
       fill: fill,
       image: new olStyleCircle({
         fill: fill,
         radius: 5,
-        stroke: stroke
+        stroke: stroke,
       }),
-      stroke: stroke
+      stroke: stroke,
     });
     const customStyles = this.featuresStyles || {};
     Object.assign(this.styles_, customStyles);
@@ -898,10 +905,9 @@ class SearchController {
   setTTDropdownVisibility_() {
     if (this.clearButton) {
       const ttDropdown = this.element_.find('.twitter-typeahead .tt-menu');
-      (this.inputValue) ? ttDropdown.show() : ttDropdown.hide();
+      this.inputValue ? ttDropdown.show() : ttDropdown.hide();
     }
   }
-
 
   /**
    */
@@ -909,7 +915,6 @@ class SearchController {
     this.featureOverlay_.clear();
     this.clear();
   }
-
 
   /**
    */
@@ -925,7 +930,6 @@ class SearchController {
     this.displayColorPicker = false;
   }
 
-
   /**
    */
   blur() {
@@ -936,7 +940,6 @@ class SearchController {
       $(inputs[1]).blur();
     });
   }
-
 
   /**
    * @param {JQueryEventObject} event Event.
@@ -949,10 +952,12 @@ class SearchController {
       const geom = new olGeomPoint(suggestion['position']);
 
       this.featureOverlay_.clear();
-      this.featureOverlay_.addFeature(new olFeature({
-        geometry: geom,
-        'layer_name': COORDINATES_LAYER_NAME
-      }));
+      this.featureOverlay_.addFeature(
+        new olFeature({
+          geometry: geom,
+          'layer_name': COORDINATES_LAYER_NAME,
+        })
+      );
       this.map.getView().setCenter(suggestion['position']);
       this.leaveSearch_();
     } else {
@@ -960,7 +965,6 @@ class SearchController {
       this.selectFromGMF_(event, suggestion, dataset);
     }
   }
-
 
   /**
    * @param {JQueryEventObject} event Event.
@@ -970,8 +974,9 @@ class SearchController {
    */
   selectFromGMF_(event, feature, dataset) {
     const actions = feature.get('actions');
-    const featureGeometry = /** @type {import("ol/geom/SimpleGeometry.js").default} */
-        (feature.getGeometry());
+    const featureGeometry =
+      /** @type {import("ol/geom/SimpleGeometry.js").default} */
+      (feature.getGeometry());
     if (actions) {
       for (let i = 0, ii = actions.length; i < ii; i++) {
         const action = actions[i];
@@ -988,12 +993,11 @@ class SearchController {
         } else if (actionName == 'add_group') {
           this.gmfTreeManager_.addGroupByName(actionData, true);
         } else if (actionName == 'add_layer') {
-          const groupActions = /** @type {Array.<string>} */ (
-            this.datasources[0].groupActions);
+          const groupActions = /** @type {Array.<string>} */ (this.datasources[0].groupActions);
           let datasourcesActionsHaveAddLayer;
           groupActions.forEach((groupAction) => {
             if (groupAction['action'] === 'add_layer') {
-              return datasourcesActionsHaveAddLayer = true;
+              return (datasourcesActionsHaveAddLayer = true);
             }
           });
           if (datasourcesActionsHaveAddLayer) {
@@ -1014,16 +1018,15 @@ class SearchController {
       this.featureOverlay_.clear();
       this.featureOverlay_.addFeature(feature);
       this.displayColorPicker = true;
-      const fitArray = featureGeometry.getType() === 'GeometryCollection' ?
-        featureGeometry.getExtent() : featureGeometry;
+      const fitArray =
+        featureGeometry.getType() === 'GeometryCollection' ? featureGeometry.getExtent() : featureGeometry;
       view.fit(fitArray, {
         size: size,
-        maxZoom: this.maxZoom
+        maxZoom: this.maxZoom,
       });
     }
     this.leaveSearch_();
   }
-
 
   /**
    * @private
@@ -1035,7 +1038,6 @@ class SearchController {
     this.blur();
   }
 
-
   /**
    * @param {JQueryEventObject} event Event.
    * @private
@@ -1045,7 +1047,6 @@ class SearchController {
       this.setTTDropdownVisibility_();
     }
   }
-
 
   /**
    * @param {JQueryEventObject} event Event.
@@ -1076,7 +1077,6 @@ class SearchController {
     }
   }
 
-
   /**
    * Performs a full-text search and centers the map on the first search result.
    * @param {string} query Search query.
@@ -1085,24 +1085,24 @@ class SearchController {
    * @private
    */
   fulltextsearch_(query, resultIndex, opt_zoom) {
-    if (resultIndex < 1) { // can't be lower than one
+    if (resultIndex < 1) {
+      // can't be lower than one
       resultIndex = 1;
     }
-    this.fullTextSearch_.search(query, {limit: `${resultIndex}`})
-      .then((data) => {
-        if (data && data.features[resultIndex - 1]) {
-          const format = new olFormatGeoJSON();
-          const feature = format.readFeature(data.features[resultIndex - 1]);
-          this.featureOverlay_.addFeature(feature);
-          const fitOptions = /** @type {import('ol/View.js').FitOptions} */ ({});
-          if (opt_zoom !== undefined) {
-            fitOptions.maxZoom = opt_zoom;
-            fitOptions.size = this.map.getSize();
-          }
-          this.map.getView().fit(feature.getGeometry().getExtent(), fitOptions);
-          this.inputValue = /** @type {string} */ (feature.get('label'));
+    this.fullTextSearch_.search(query, {limit: `${resultIndex}`}).then((data) => {
+      if (data && data.features[resultIndex - 1]) {
+        const format = new olFormatGeoJSON();
+        const feature = format.readFeature(data.features[resultIndex - 1]);
+        this.featureOverlay_.addFeature(feature);
+        const fitOptions = /** @type {import('ol/View.js').FitOptions} */ ({});
+        if (opt_zoom !== undefined) {
+          fitOptions.maxZoom = opt_zoom;
+          fitOptions.size = this.map.getSize();
         }
-      });
+        this.map.getView().fit(feature.getGeometry().getExtent(), fitOptions);
+        this.inputValue = /** @type {string} */ (feature.get('label'));
+      }
+    });
   }
 
   /**
@@ -1121,9 +1121,7 @@ class SearchController {
   }
 }
 
-
 // Register the controller in the module
 module.controller('gmfSearchController', SearchController);
-
 
 export default module;

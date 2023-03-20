@@ -14,5 +14,4 @@ const exports = class CordovaWrapper extends AbstractWrapper {
   }
 };
 
-
 export default exports;

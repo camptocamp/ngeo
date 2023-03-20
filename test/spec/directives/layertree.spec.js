@@ -5,40 +5,44 @@ import olLayerImage from 'ol/layer/Image.js';
 import {getFirstParentTree, LayertreeVisitorDecision} from 'ngeo/layertree/Controller.js';
 
 describe('ngeo.layertree.component', () => {
-
   let roottreeCtrl;
 
   beforeEach(() => {
-
     const map = new olMap({
       view: new olView({
         center: [0, 0],
-        zoom: 0
-      })
+        zoom: 0,
+      }),
     });
 
     const element = angular.element(
       '<div ngeo-layertree="tree"' +
         'ngeo-layertree-map="map"' +
         'ngeo-layertree-nodelayer="getLayer(node)"' +
-      '</div>'
+        '</div>'
     );
 
     const tree = {
       'name': 'Root',
-      'children': [{
-        'name': 'Node 0',
-        'children': [{
-          'name': 'Leaf 00'
-        }, {
-          'name': 'Leaf 01'
-        }]
-      }, {
-        'name': 'Leaf 1'
-      }]
+      'children': [
+        {
+          'name': 'Node 0',
+          'children': [
+            {
+              'name': 'Leaf 00',
+            },
+            {
+              'name': 'Leaf 01',
+            },
+          ],
+        },
+        {
+          'name': 'Leaf 1',
+        },
+      ],
     };
 
-    const getLayer = function(node) {
+    const getLayer = function (node) {
       return new olLayerImage();
     };
 

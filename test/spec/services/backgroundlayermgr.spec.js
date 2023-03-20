@@ -20,7 +20,6 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
   });
 
   describe('#set', () => {
-
     it('sets the background layer #1', () => {
       const layer = new olLayerTile();
       ngeoBackgroundLayerMgr.set(map, layer);
@@ -111,11 +110,9 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
       const bgGroup = ngeoLayerHelper.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
       expect(bgGroup.getLayers().getLength()).toBe(0);
     });
-
   });
 
   describe('#get', () => {
-
     it('returns `null` if no background layer', () => {
       const layer = ngeoBackgroundLayerMgr.get(map);
       expect(layer).toBe(null);
@@ -142,5 +139,4 @@ describe('ngeo.map.BackgroundLayerMgr', () => {
       expect(layer).toBe(opacityBgLayer);
     });
   });
-
 });

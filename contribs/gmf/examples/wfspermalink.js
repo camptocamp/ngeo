@@ -16,7 +16,6 @@ import olStyleStyle from 'ol/style/Style.js';
 import olStyleFill from 'ol/style/Fill.js';
 import olStyleCircle from 'ol/style/Circle.js';
 
-
 /** @type {!angular.IModule} **/
 const module = angular.module('gmfapp', [
   'gettext',
@@ -25,20 +24,21 @@ const module = angular.module('gmfapp', [
   ngeoStatemanagerWfsPermalink.name,
 ]);
 
-module.value('ngeoWfsPermalinkOptions',
+module.value(
+  'ngeoWfsPermalinkOptions',
   /** @type {import('ngeo/statemanager/WfsPermalink.js').WfsPermalinkOptions} */ ({
     wfsTypes: [
       {featureType: 'fuel', label: 'display_name'},
-      {featureType: 'osm_scale', label: 'display_name'}
+      {featureType: 'osm_scale', label: 'display_name'},
     ],
     defaultFeatureNS: appURL.MAPSERVER_WFS_FEATURE_NS,
-    defaultFeaturePrefix: 'feature'
-  }));
+    defaultFeaturePrefix: 'feature',
+  })
+);
 
 module.constant('ngeoPermalinkOgcserverUrl', appURL.MAPSERVER_PROXY);
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -51,15 +51,15 @@ function MainController() {
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
     view: new olView({
       projection: EPSG21781,
       resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
       center: [537635, 152640],
-      zoom: 3
-    })
+      zoom: 3,
+    }),
   });
 
   const fill = new olStyleFill({color: [255, 170, 0, 0.6]});
@@ -74,13 +74,12 @@ function MainController() {
     image: new olStyleCircle({
       fill: fill,
       radius: 5,
-      stroke: stroke
+      stroke: stroke,
     }),
-    stroke: stroke
+    stroke: stroke,
   });
 }
 
 module.controller('MainController', MainController);
-
 
 export default module;

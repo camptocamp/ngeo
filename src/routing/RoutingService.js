@@ -1,19 +1,16 @@
 import angular from 'angular';
 
-
 /**
  * @typedef {Object} RoutingProfile
  * @property {string} label
  * @property {string} profile
  */
 
-
 /**
  * @typedef {Object} RoutingOptions
  * @property {string} [backendUrl]
  * @property {Array.<RoutingProfile>} [profiles]
  */
-
 
 /**
  * Service to provide access to a
@@ -28,7 +25,6 @@ import angular from 'angular';
  * @hidden
  */
 export function RoutingService($http, $injector) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -61,7 +57,6 @@ export function RoutingService($http, $injector) {
    * @private
    */
   this.protocolVersion_ = 'v1';
-
 }
 
 /**
@@ -70,8 +65,7 @@ export function RoutingService($http, $injector) {
  * @param {?Object} config optional configuration
  * @return {!angular.IHttpPromise<Object>} promise of the OSRM API request
  */
-RoutingService.prototype.getRoute = function(coordinates, config) {
-
+RoutingService.prototype.getRoute = function (coordinates, config) {
   config = config || {};
 
   // Service
@@ -102,7 +96,7 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
   url += `${config['service']}/${this.protocolVersion_}/${config['profile']}/`;
 
   // [ [a,b] , [c,d] ] -> 'a,b;c,d'
-  const coordinateString = coordinates.map(c => c.join(',')).join(';');
+  const coordinateString = coordinates.map((c) => c.join(',')).join(';');
 
   url += coordinateString;
 
@@ -127,7 +121,7 @@ RoutingService.prototype.getRoute = function(coordinates, config) {
  * @return {!angular.IHttpPromise<Object>} promise of the OSRM API request
  * @see https://github.com/Project-OSRM/osrm-backend/blob/master/docs/http.md#nearest-service
  */
-RoutingService.prototype.getNearest = function(coordinate, config) {
+RoutingService.prototype.getNearest = function (coordinate, config) {
   config = config || {};
 
   // service is always nearest
@@ -167,15 +161,12 @@ RoutingService.prototype.getNearest = function(coordinate, config) {
   return this.$http_.get(url);
 };
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoRoutingService', [
-]);
+const module = angular.module('ngeoRoutingService', []);
 
 module.service('ngeoRoutingService', RoutingService);
-
 
 export default module;

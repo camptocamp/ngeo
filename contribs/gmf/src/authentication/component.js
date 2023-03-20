@@ -6,7 +6,6 @@ import ngeoMessageNotification from 'ngeo/message/Notification.js';
 
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
 
-
 /**
  * Password validator function with an error message.
  * Configuration options for the permalink service.
@@ -14,7 +13,6 @@ import ngeoMessageModalComponent from 'ngeo/message/modalComponent.js';
  * @property {function(string): boolean} isPasswordValid
  * @property {string} notValidMessage
  */
-
 
 /**
  * @type {angular.IModule}
@@ -26,7 +24,6 @@ const module = angular.module('gmfAuthentication', [
   ngeoMessageModalComponent.name,
 ]);
 
-
 /**
  * @param {JQuery} element Element.
  * @param {angular.IAttributes} attrs Attributes.
@@ -36,16 +33,15 @@ const module = angular.module('gmfAuthentication', [
  */
 function gmfAuthenticationTemplateUrl_(element, attrs) {
   const templateUrl = attrs['gmfAuthenticationTemplateurl'];
-  return templateUrl !== undefined ? templateUrl :
-    'gmf/authentication';
+  return templateUrl !== undefined ? templateUrl : 'gmf/authentication';
 }
 
-
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/authentication', require('./component.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/authentication', require('./component.html'));
+  }
+);
 
 /**
  * @param {!JQuery} $element Element.
@@ -59,7 +55,6 @@ module.run(/* @ngInject */ ($templateCache) => {
 function gmfAuthenticationTemplateUrl($element, $attrs, gmfAuthenticationTemplateUrl) {
   return gmfAuthenticationTemplateUrl($element, $attrs);
 }
-
 
 /**
  * An "authentication" component for a GeoMapFish application. With the
@@ -123,17 +118,15 @@ const authenticationComponent = {
     'allowPasswordChange': '<?gmfAuthenticationAllowPasswordChange',
     'passwordValidator': '<?gmfAuthenticationPasswordValidator',
     'forcePasswordChange': '<?gmfAuthenticationForcePasswordChange',
-    'infoMessage': '=?gmfAuthenticationInfoMessage'
+    'infoMessage': '=?gmfAuthenticationInfoMessage',
   },
   controller: 'GmfAuthenticationController',
-  templateUrl: gmfAuthenticationTemplateUrl
+  templateUrl: gmfAuthenticationTemplateUrl,
 };
 
-module.value('gmfAuthenticationTemplateUrl',
-  gmfAuthenticationTemplateUrl_);
+module.value('gmfAuthenticationTemplateUrl', gmfAuthenticationTemplateUrl_);
 
 module.component('gmfAuthentication', authenticationComponent);
-
 
 /**
  * @private
@@ -153,7 +146,6 @@ class AuthenticationController {
    * @ngname GmfAuthenticationController
    */
   constructor($element, gettextCatalog, gmfAuthenticationService, gmfUser, ngeoNotification) {
-
     /**
      * @type {!JQuery}
      * @private
@@ -268,9 +260,8 @@ class AuthenticationController {
     if (this.forcePasswordChange) {
       this.changingPassword = true;
     }
-    this.userMustChangeItsPassword = (this.gmfUser.is_password_changed === false && this.forcePasswordChange);
+    this.userMustChangeItsPassword = this.gmfUser.is_password_changed === false && this.forcePasswordChange;
   }
-
 
   // METHODS THAT CALL THE AUTHENTICATION SERVICE METHODS
 
@@ -304,7 +295,7 @@ class AuthenticationController {
         errors.push(gettextCatalog.getString('The old and new passwords are the same.'));
       }
       if (newPwd !== confPwd) {
-        errors.push(gettextCatalog.getString('The passwords don\'t match.'));
+        errors.push(gettextCatalog.getString("The passwords don't match."));
       }
       // Custom validation - If a passwordValidator is set, use it to validate the new password.
       if (this.passwordValidator) {
@@ -317,7 +308,8 @@ class AuthenticationController {
         this.setError_(errors);
       } else {
         // Send request with current credentials, which may fail if the old password given is incorrect.
-        this.gmfAuthenticationService_.changePassword(oldPwd, newPwd, confPwd)
+        this.gmfAuthenticationService_
+          .changePassword(oldPwd, newPwd, confPwd)
           .then(() => {
             this.changePasswordReset();
             this.setError_(
@@ -348,7 +340,8 @@ class AuthenticationController {
     if (errors.length) {
       this.setError_(errors);
     } else {
-      this.gmfAuthenticationService_.login(this.loginVal, this.pwdVal)
+      this.gmfAuthenticationService_
+        .login(this.loginVal, this.pwdVal)
         .then(() => {
           this.resetError_();
         })
@@ -364,7 +357,8 @@ class AuthenticationController {
   logout() {
     this.manualLoginLogout_();
     const gettextCatalog = this.gettextCatalog;
-    this.gmfAuthenticationService_.logout()
+    this.gmfAuthenticationService_
+      .logout()
       .then(() => {
         this.resetError_();
       })
@@ -392,7 +386,8 @@ class AuthenticationController {
       return;
     }
 
-    this.gmfAuthenticationService_.resetPassword(this.loginVal)
+    this.gmfAuthenticationService_
+      .resetPassword(this.loginVal)
       .then(() => {
         this.resetPasswordShown = true;
         this.resetError_();
@@ -400,9 +395,7 @@ class AuthenticationController {
       .catch(() => {
         this.setError_(gettextCatalog.getString('An error occurred while resetting the password.'));
       });
-
   }
-
 
   // OTHER METHODS
 
@@ -438,11 +431,11 @@ class AuthenticationController {
       errors = [errors];
     }
 
-    errors.forEach(function(error) {
+    errors.forEach(function (error) {
       this.notification_.notify({
         msg: error,
         target: container,
-        type: messageType
+        type: messageType,
       });
     }, this);
   }
@@ -457,6 +450,5 @@ class AuthenticationController {
 }
 
 module.controller('GmfAuthenticationController', AuthenticationController);
-
 
 export default module;

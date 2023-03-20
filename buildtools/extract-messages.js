@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 const fs = require('fs');
 const options = require('commander');
 const Extractor = require('angular-gettext-tools').Extractor;
@@ -8,15 +8,17 @@ function main(inputs) {
 
   const promises = [];
   inputs.forEach((input) => {
-    promises.push(new Promise((resolve) => {
-      fs.readFile(input, 'utf-8', (error, content) => {
-        resolve(error ? undefined : {input, content});
-      });
-    }));
+    promises.push(
+      new Promise((resolve) => {
+        fs.readFile(input, 'utf-8', (error, content) => {
+          resolve(error ? undefined : {input, content});
+        });
+      })
+    );
   });
 
   Promise.all(promises).then((contents) => {
-    contents = contents.filter(content => content !== undefined);
+    contents = contents.filter((content) => content !== undefined);
     contents.forEach(({input, content}) => extractor.parse(input, content));
 
     process.stdout.write(extractor.toString());

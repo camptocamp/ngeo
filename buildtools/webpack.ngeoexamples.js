@@ -13,7 +13,7 @@ for (const filename of ls('examples/*.html')) {
   entry[name] = [
     './examples/common_dependencies.js', // Should be first
     'ngeo/mainmodule.js', // To have a big commons part
-    `./examples/${name}.js`
+    `./examples/${name}.js`,
   ];
 
   plugins.push(
@@ -27,15 +27,17 @@ for (const filename of ls('examples/*.html')) {
 }
 
 // move data folder
-plugins.push(new CopyWebpackPlugin({
-  patterns: [
-    {
-      from: 'examples/data/*',
-      to: 'data',
-      flatten: true
-    },
-  ]
-}));
+plugins.push(
+  new CopyWebpackPlugin({
+    patterns: [
+      {
+        from: 'examples/data/*',
+        to: 'data',
+        flatten: true,
+      },
+    ],
+  })
+);
 
 module.exports = {
   entry: entry,
@@ -43,7 +45,7 @@ module.exports = {
     splitChunks: {
       chunks: 'all',
       name: 'commons',
-    }
+    },
   },
   plugins: plugins,
 };

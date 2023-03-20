@@ -10,7 +10,6 @@
  * @property {string} [type='info'] The type of message.
  */
 
-
 /**
  * @enum {string}
  * @hidden
@@ -31,9 +30,8 @@ export const MessageType = {
   /**
    * @type {string}
    */
-  WARNING: 'warning'
+  WARNING: 'warning',
 };
-
 
 /**
  * Abstract class for services that display messages.
@@ -117,18 +115,18 @@ export default class {
 
     if (typeof object === 'string') {
       msgObjects.push({
-        msg: /** @type {string} */(object),
-        type: opt_type !== undefined ? opt_type : defaultType
+        msg: /** @type {string} */ (object),
+        type: opt_type !== undefined ? opt_type : defaultType,
       });
     } else if (Array.isArray(object)) {
-      /** @type {Array<string|Message>} */(object).forEach((msg) => {
+      /** @type {Array<string|Message>} */ (object).forEach((msg) => {
         if (typeof object === 'string') {
           msgObjects.push({
-            msg: /** @type {string} */(msg),
-            type: opt_type !== undefined ? opt_type : defaultType
+            msg: /** @type {string} */ (msg),
+            type: opt_type !== undefined ? opt_type : defaultType,
           });
         } else {
-          const msgObject = /** @type {Message} */(msg);
+          const msgObject = /** @type {Message} */ (msg);
           if (opt_type !== undefined) {
             msgObject.type = opt_type;
           }
@@ -136,7 +134,7 @@ export default class {
         }
       });
     } else {
-      const msgObject = /** @type {Message} */(object);
+      const msgObject = /** @type {Message} */ (object);
       if (opt_type !== undefined) {
         msgObject.type = opt_type;
       }

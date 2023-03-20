@@ -4,7 +4,6 @@ import gmfEditingSnapping from 'gmf/editing/Snapping.js';
 import ngeoMapModule from 'ngeo/map/module.js';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -16,12 +15,12 @@ const module = angular.module('gmfMapComponent', [
   ngeoMapFeatureOverlayMgr.name,
 ]);
 
-
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/map', require('./component.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/map', require('./component.html'));
+  }
+);
 
 /**
  * A "map" directive for a GeoMapFish application.
@@ -47,16 +46,15 @@ function gmfMapComponent() {
     scope: {
       'map': '<gmfMapMap',
       'manageResize': '<gmfMapManageResize',
-      'resizeTransition': '<gmfMapResizeTransition'
+      'resizeTransition': '<gmfMapResizeTransition',
     },
     controller: 'GmfMapController as ctrl',
     bindToController: true,
-    templateUrl: 'gmf/map'
+    templateUrl: 'gmf/map',
   };
 }
 
 module.directive('gmfMap', gmfMapComponent);
-
 
 /**
  * @param {!import("ngeo/map/FeatureOverlayMgr.js").FeatureOverlayMgr} ngeoFeatureOverlayMgr The ngeo feature
@@ -70,7 +68,6 @@ module.directive('gmfMap', gmfMapComponent);
  * @ngname GmfMapController
  */
 function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
-
   // Scope properties
 
   /**
@@ -87,7 +84,6 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
    * @type {boolean|undefined}
    */
   this.resizeTransition;
-
 
   // Injected properties
 
@@ -110,18 +106,15 @@ function Controller(ngeoFeatureOverlayMgr, gmfPermalink, gmfSnapping) {
   this.gmfSnapping_ = gmfSnapping;
 }
 
-
 /**
  * Called on initialization of the controller.
  */
-Controller.prototype.$onInit = function() {
+Controller.prototype.$onInit = function () {
   this.ngeoFeatureOverlayMgr_.init(this.map);
   this.gmfPermalink_.setMap(this.map);
   this.gmfSnapping_.setMap(this.map);
 };
 
-
 module.controller('GmfMapController', Controller);
-
 
 export default module;

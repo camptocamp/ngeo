@@ -2,7 +2,6 @@ import angular from 'angular';
 import 'jquery-ui/ui/widgets/sortable.js';
 import 'jquery-ui-touch-punch';
 
-
 /**
  * @typedef {Object} miscSortableOptions
  * @property {string} [handleClassName]
@@ -10,13 +9,11 @@ import 'jquery-ui-touch-punch';
  * @property {string} [placeholderClassName]
  */
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
 const module = angular.module('ngeoSortable', []);
-
 
 /**
  * Provides a directive that allows drag-and-dropping DOM items between them.
@@ -69,14 +66,15 @@ function sortableComponent($timeout) {
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
-
-      const sortable = /** @type {Array} */
-              (scope.$eval(attrs['ngeoSortable'])) || [];
+      const sortable = /** @type {Array} */ (scope.$eval(attrs['ngeoSortable'])) || [];
       console.assert(Array.isArray(sortable));
 
-      scope.$watchCollection(() => sortable, () => {
-        sortable.length && $timeout(resetUpDragDrop, 0);
-      });
+      scope.$watchCollection(
+        () => sortable,
+        () => {
+          sortable.length && $timeout(resetUpDragDrop, 0);
+        }
+      );
 
       const optionsObject = scope.$eval(attrs['ngeoSortableOptions']);
       const options = getOptions(optionsObject);
@@ -107,8 +105,8 @@ function sortableComponent($timeout) {
         const sortableOptions = {
           'axis': 'y',
           'classes': {
-            'ui-sortable-helper': options['draggerClassName']
-          }
+            'ui-sortable-helper': options['draggerClassName'],
+          },
         };
 
         // CSS class of the handle
@@ -163,12 +161,10 @@ function sortableComponent($timeout) {
         }
         return ret;
       }
-
-    }
+    },
   };
 }
 
 module.directive('ngeoSortable', sortableComponent);
-
 
 export default module;

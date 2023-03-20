@@ -7,64 +7,64 @@ const resourcesRule = {
   use: {
     loader: 'file-loader',
     options: {
-      name: '[name].[ext]'
+      name: '[name].[ext]',
     },
-  }
+  },
 };
 
 const svgRule = {
   test: /\.svg$/,
-  oneOf: [{
-    resourceQuery: /url/,
-    use: [
-      {
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]'
+  oneOf: [
+    {
+      resourceQuery: /url/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          },
         },
-      },
-      'svgo-loader',
-    ]
-  }, {
-    resourceQuery: /viewbox/,
-    use: [
-      {
-        loader: 'svg-inline-loader',
-        options: {
-          removeSVGTagAttrs: false,
+        'svgo-loader',
+      ],
+    },
+    {
+      resourceQuery: /viewbox/,
+      use: [
+        {
+          loader: 'svg-inline-loader',
+          options: {
+            removeSVGTagAttrs: false,
+          },
         },
-      },
-      './buildtools/svg-viewbox-loader',
-      'svgo-loader',
-    ]
-  }, {
-    use: [
-      {
-        loader: 'svg-inline-loader',
-        options: {
-          removeSVGTagAttrs: false,
+        './buildtools/svg-viewbox-loader',
+        'svgo-loader',
+      ],
+    },
+    {
+      use: [
+        {
+          loader: 'svg-inline-loader',
+          options: {
+            removeSVGTagAttrs: false,
+          },
         },
-      },
-      'svgo-loader',
-    ]
-  }]
+        'svgo-loader',
+      ],
+    },
+  ],
 };
 
 new webpack.LoaderOptionsPlugin({
-  debug: false
+  debug: false,
 });
-
 
 module.exports = {
   mode: 'development',
   devtool: 'inline-cheap-source-map', // 'cheap-eval-source-map',
   output: {
-    filename: '[name].js'
+    filename: '[name].js',
   },
   module: {
-    rules: [
-      resourcesRule,
-      svgRule,
-    ]
+    rules: [resourcesRule, svgRule],
   },
 };

@@ -1,7 +1,6 @@
 import ngeoInteractionMeasure, {getFormattedArea} from 'ngeo/interaction/Measure.js';
 import olInteractionDraw from 'ol/interaction/Draw.js';
 
-
 /**
  * Interaction dedicated to measure length.
  *
@@ -48,7 +47,7 @@ export default class extends ngeoInteractionMeasure {
     return new olInteractionDraw({
       type: /** @type {import("ol/geom/GeometryType.js").default} */ ('Polygon'),
       source: source,
-      style: style
+      style: style,
     });
   }
 
@@ -56,7 +55,7 @@ export default class extends ngeoInteractionMeasure {
    * @inheritDoc
    */
   handleMeasure(callback) {
-    const geom = /** @type {import('ol/geom/Polygon').default} */(this.sketchFeature.getGeometry());
+    const geom = /** @type {import('ol/geom/Polygon').default} */ (this.sketchFeature.getGeometry());
     const proj = this.getMap().getView().getProjection();
     console.assert(proj);
     const output = getFormattedArea(geom, proj, this.precision, this.format);

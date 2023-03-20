@@ -1,6 +1,5 @@
 import EPSG21781 from '@geoblocks/proj/src/EPSG_21781.js';
 
-
 export default {
   themesUrl: undefined,
   localeUrl: undefined,
@@ -17,5 +16,5 @@ export default {
   /**
    *  The list of layers (names) declared as queryable.
    */
-  queryableLayers: ['osm_open', 'many_attributes', 'polygon']
+  queryableLayers: ['osm_open', 'many_attributes', 'polygon'],
 };

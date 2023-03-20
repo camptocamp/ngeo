@@ -26,7 +26,6 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import olStyleText from 'ol/style/Text.js';
 
-
 /**
  * The radius, in pixels, of the regular shape rendered as style for
  * the vertex of a feature while it's being edited.
@@ -34,7 +33,6 @@ import olStyleText from 'ol/style/Text.js';
  * @hidden
  */
 const VertexStyleRegularShapeRadius = 6;
-
 
 /**
  * Format types
@@ -49,7 +47,7 @@ export const FeatureFormatType = {
   /**
    * @type {string}
    */
-  KML: 'KML'
+  KML: 'KML',
 };
 
 /**
@@ -67,7 +65,6 @@ export const FeatureFormatType = {
  * @hidden
  */
 export function FeatureHelper($injector, $filter) {
-
   /**
    * @type {!angular.IFilterService}
    * @private
@@ -82,7 +79,6 @@ export function FeatureHelper($injector, $filter) {
   if ($injector.has('ngeoMeasureDecimals')) {
     this.decimals_ = $injector.get('ngeoMeasureDecimals');
   }
-
 
   /**
    * @type {number|undefined}
@@ -101,14 +97,16 @@ export function FeatureHelper($injector, $filter) {
   /**
    * @type {!import('ngeo/misc/filters.js').unitPrefix}
    */
-  this.unitPrefixFormat_ =
-    /** @type {import('ngeo/misc/filters.js').unitPrefix} */ ($filter('ngeoUnitPrefix'));
+  this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters.js').unitPrefix} */ (
+    $filter('ngeoUnitPrefix')
+  );
 
   /**
    * @type {!import('ngeo/misc/filters.js').numberCoordinates}
    */
-  this.ngeoNumberCoordinates_ =
-    /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ ($filter('ngeoNumberCoordinates'));
+  this.ngeoNumberCoordinates_ = /** @type {import('ngeo/misc/filters.js').numberCoordinates} */ (
+    $filter('ngeoNumberCoordinates')
+  );
 
   /**
    * Filter function to display point coordinates or null to don't use any filter.
@@ -147,20 +145,16 @@ export function FeatureHelper($injector, $filter) {
    * @private
    */
   this.download_ = $injector.get('ngeoDownload');
-
 }
-
 
 /**
  * @param {!import("ol/proj/Projection.js").default} projection Projection.
  */
-FeatureHelper.prototype.setProjection = function(projection) {
+FeatureHelper.prototype.setProjection = function (projection) {
   this.projection_ = projection;
 };
 
-
 // === STYLE METHODS ===
-
 
 /**
  * Set the style of a feature using its inner properties and depending on
@@ -169,7 +163,7 @@ FeatureHelper.prototype.setProjection = function(projection) {
  * @param {boolean=} opt_select Whether the feature should be rendered as
  *     selected, which includes additional vertex and halo styles.
  */
-FeatureHelper.prototype.setStyle = function(feature, opt_select) {
+FeatureHelper.prototype.setStyle = function (feature, opt_select) {
   const styles = this.getStyle(feature);
   if (opt_select) {
     if (this.supportsVertex_(feature)) {
@@ -180,14 +174,13 @@ FeatureHelper.prototype.setStyle = function(feature, opt_select) {
   feature.setStyle(styles);
 };
 
-
 /**
  * Create and return a style object from a given feature using its inner
  * properties and depending on its geometry type.
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!Array.<!import("ol/style/Style.js").default>} The style object.
  */
-FeatureHelper.prototype.getStyle = function(feature) {
+FeatureHelper.prototype.getStyle = function (feature) {
   const type = this.getType(feature);
   let style;
 
@@ -217,30 +210,31 @@ FeatureHelper.prototype.getStyle = function(feature) {
   if (style.constructor === Array) {
     styles = /** @type {!Array.<!import("ol/style/Style.js").default>}*/ (style);
   } else {
-    styles = [/** @type {!import("ol/style/Style.js").default}*/(style)];
+    styles = [/** @type {!import("ol/style/Style.js").default}*/ (style)];
   }
 
   return styles;
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature with linestring geometry.
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
-FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
+FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
   const strokeWidth = this.getStrokeProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
   const color = this.getRGBAColorProperty(feature);
 
-  const styles = [new olStyleStyle({
-    stroke: new olStyleStroke({
-      color: color,
-      width: strokeWidth
-    })
-  })];
+  const styles = [
+    new olStyleStyle({
+      stroke: new olStyleStroke({
+        color: color,
+        width: strokeWidth,
+      }),
+    }),
+  ];
   //Label Style
   const textLabelValues = [];
   if (showMeasure) {
@@ -252,36 +246,39 @@ FeatureHelper.prototype.getLineStringStyle_ = function(feature) {
   if (showLabel || showMeasure) {
     // display both label using \n
     const textLabelValue = textLabelValues.join('\n');
-    styles.push(new olStyleStyle({
-      text: this.createTextStyle_({
-        propertyName: '',
-        name: '',
-        text: textLabelValue
+    styles.push(
+      new olStyleStyle({
+        text: this.createTextStyle_({
+          propertyName: '',
+          name: '',
+          text: textLabelValue,
+        }),
       })
-    }));
+    );
   }
   return styles;
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature with point geometry.
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
-FeatureHelper.prototype.getPointStyle_ = function(feature) {
+FeatureHelper.prototype.getPointStyle_ = function (feature) {
   const size = this.getSizeProperty(feature);
   const color = this.getRGBAColorProperty(feature);
   const showLabel = this.getShowLabelProperty(feature);
   const showMeasure = this.getShowMeasureProperty(feature);
-  const styles = [new olStyleStyle({
-    image: new olStyleCircle({
-      radius: size,
-      fill: new olStyleFill({
-        color: color
-      })
-    })
-  })];
+  const styles = [
+    new olStyleStyle({
+      image: new olStyleCircle({
+        radius: size,
+        fill: new olStyleFill({
+          color: color,
+        }),
+      }),
+    }),
+  ];
   // Label Style
   const textLabelValues = [];
   if (showMeasure) {
@@ -296,19 +293,20 @@ FeatureHelper.prototype.getPointStyle_ = function(feature) {
     const font_size = 10;
     // https://reeddesign.co.uk/test/points-pixels.html
     const point_to_px = 1.3;
-    styles.push(new olStyleStyle({
-      text: this.createTextStyle_({
-        propertyName: '',
-        name: '',
-        text: textLabelValue,
-        size: font_size,
-        offsetY: -(size + (font_size / 2) * textLabelValues.length * point_to_px + 4)
+    styles.push(
+      new olStyleStyle({
+        text: this.createTextStyle_({
+          propertyName: '',
+          name: '',
+          text: textLabelValue,
+          size: font_size,
+          offsetY: -(size + (font_size / 2) * textLabelValues.length * point_to_px + 4),
+        }),
       })
-    }));
+    );
   }
   return styles;
 };
-
 
 /**
  * Get an optional number feature attribute.
@@ -317,7 +315,7 @@ FeatureHelper.prototype.getPointStyle_ = function(feature) {
  * @param {string} attrib The attribute name.
  * @return {number|undefined}, The attribute value
  */
-FeatureHelper.prototype.optNumber = function(feature, attrib) {
+FeatureHelper.prototype.optNumber = function (feature, attrib) {
   const value = feature.get(attrib);
   if (value !== undefined) {
     if (typeof value == 'string') {
@@ -330,7 +328,6 @@ FeatureHelper.prototype.optNumber = function(feature, attrib) {
   }
 };
 
-
 /**
  * Get a number feature attribute.
  *
@@ -338,7 +335,7 @@ FeatureHelper.prototype.optNumber = function(feature, attrib) {
  * @param {string} attrib The attribute name.
  * @return {number}, The attribute value
  */
-FeatureHelper.prototype.getNumber = function(feature, attrib) {
+FeatureHelper.prototype.getNumber = function (feature, attrib) {
   const value = feature.get(attrib);
   if (typeof value == 'string') {
     return +value;
@@ -347,13 +344,12 @@ FeatureHelper.prototype.getNumber = function(feature, attrib) {
   }
 };
 
-
 /**
  * @param {!import("ol/Feature.js").default} feature Feature with polygon geometry.
  * @return {!Array.<!import("ol/style/Style.js").default>} Style.
  * @private
  */
-FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
+FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
   const strokeWidth = this.getStrokeProperty(feature);
   const opacity = this.getOpacityProperty(feature);
   const color = this.getRGBAColorProperty(feature);
@@ -366,63 +362,70 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
 
   const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
 
-  const styles = [new olStyleStyle({
-    fill: new olStyleFill({
-      color: fillColor
+  const styles = [
+    new olStyleStyle({
+      fill: new olStyleFill({
+        color: fillColor,
+      }),
+      stroke: new olStyleStroke({
+        color: color,
+        width: strokeWidth,
+      }),
     }),
-    stroke: new olStyleStroke({
-      color: color,
-      width: strokeWidth
-    })
-  })];
+  ];
   if (showMeasure || showLabel) {
     if (showMeasure && azimut !== undefined) {
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
-      const length = getFormattedLength(
-        line, this.projection_, this.precision_, this.unitPrefixFormat_);
+      const length = getFormattedLength(line, this.projection_, this.precision_, this.unitPrefixFormat_);
 
-      styles.push(new olStyleStyle({
-        geometry: line,
-        fill: new olStyleFill({
-          color: fillColor
-        }),
-        stroke: new olStyleStroke({
-          color: color,
-          width: strokeWidth
-        }),
-        text: this.createTextStyle_({
-          propertyName: '',
-          name: '',
-          text: length,
-          angle: ((azimut % 180) + 180) % 180 - 90
-        })
-      }));
-
-      // Azimut style
-      styles.push(new olStyleStyle({
-        geometry: new olGeomPoint(line.getLastCoordinate()),
-        text: this.createTextStyle_({
-          propertyName: '',
-          name: '',
-          text: `${this.numberFormat_(azimut, this.decimals_)}°`,
-          size: 10,
-          offsetX: Math.cos((azimut - 90) * Math.PI / 180) * 20,
-          offsetY: Math.sin((azimut - 90) * Math.PI / 180) * 20
-        })
-      }));
-
-      //Label Style
-      if (showLabel) {
-        styles.push(new olStyleStyle({
+      styles.push(
+        new olStyleStyle({
+          geometry: line,
+          fill: new olStyleFill({
+            color: fillColor,
+          }),
+          stroke: new olStyleStroke({
+            color: color,
+            width: strokeWidth,
+          }),
           text: this.createTextStyle_({
             propertyName: '',
             name: '',
-            text: this.getNameProperty(feature),
-            offsetY: -8,
-            exceedLength: true,
+            text: length,
+            angle: (((azimut % 180) + 180) % 180) - 90,
+          }),
+        })
+      );
+
+      // Azimut style
+      styles.push(
+        new olStyleStyle({
+          geometry: new olGeomPoint(line.getLastCoordinate()),
+          text: this.createTextStyle_({
+            propertyName: '',
+            name: '',
+            text: `${this.numberFormat_(azimut, this.decimals_)}°`,
+            size: 10,
+            offsetX: Math.cos(((azimut - 90) * Math.PI) / 180) * 20,
+            offsetY: Math.sin(((azimut - 90) * Math.PI) / 180) * 20,
+          }),
+        })
+      );
+
+      //Label Style
+      if (showLabel) {
+        styles.push(
+          new olStyleStyle({
+            text: this.createTextStyle_({
+              propertyName: '',
+              name: '',
+              text: this.getNameProperty(feature),
+              offsetY: -8,
+              exceedLength: true,
+            }),
           })
-        }));
+        );
       }
     } else {
       //Label Style
@@ -436,28 +439,28 @@ FeatureHelper.prototype.getPolygonStyle_ = function(feature) {
       if (showLabel || showMeasure) {
         // display both label using \n
         const textLabelValue = textLabelValues.join('\n');
-        styles.push(new olStyleStyle({
-          text: this.createTextStyle_({
-            propertyName: '',
-            name: '',
-            text: textLabelValue,
-            exceedLength: true
+        styles.push(
+          new olStyleStyle({
+            text: this.createTextStyle_({
+              propertyName: '',
+              name: '',
+              text: textLabelValue,
+              exceedLength: true,
+            }),
           })
-        }));
+        );
       }
     }
   }
   return styles;
 };
 
-
 /**
  * @param {!import("ol/Feature.js").default} feature Feature with point geometry, rendered as text.
  * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
-FeatureHelper.prototype.getTextStyle_ = function(feature) {
-
+FeatureHelper.prototype.getTextStyle_ = function (feature) {
   return new olStyleStyle({
     text: this.createTextStyle_({
       propertyName: '',
@@ -467,17 +470,16 @@ FeatureHelper.prototype.getTextStyle_ = function(feature) {
       size: this.getSizeProperty(feature),
       angle: this.getAngleProperty(feature),
       color: this.getRGBAColorProperty(feature),
-      width: this.getStrokeProperty(feature)
-    })
+      width: this.getStrokeProperty(feature),
+    }),
   });
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature to create the editing styles with.
  * @return {!Array.<!import("ol/style/Style.js").default>} List of style.
  */
-FeatureHelper.prototype.createEditingStyles = function(feature) {
+FeatureHelper.prototype.createEditingStyles = function (feature) {
   // (1) Style definition depends on geometry type
   const white = [255, 255, 255, 1];
   const blue = [0, 153, 255, 1];
@@ -494,14 +496,14 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
         image: new olStyleCircle({
           radius: width * 2,
           fill: new olStyleFill({
-            color: blue
+            color: blue,
           }),
           stroke: new olStyleStroke({
             color: white,
-            width: width / 2
-          })
+            width: width / 2,
+          }),
         }),
-        zIndex: Infinity
+        zIndex: Infinity,
       })
     );
   } else {
@@ -510,16 +512,16 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
         new olStyleStyle({
           stroke: new olStyleStroke({
             color: white,
-            width: width + 2
-          })
+            width: width + 2,
+          }),
         })
       );
       styles.push(
         new olStyleStyle({
           stroke: new olStyleStroke({
             color: blue,
-            width: width
-          })
+            width: width,
+          }),
         })
       );
     } else {
@@ -527,11 +529,11 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
         new olStyleStyle({
           stroke: new olStyleStroke({
             color: blue,
-            width: width / 2
+            width: width / 2,
           }),
           fill: new olStyleFill({
-            color: [255, 255, 255, 0.5]
-          })
+            color: [255, 255, 255, 0.5],
+          }),
         })
       );
     }
@@ -542,7 +544,6 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
 
   return styles;
 };
-
 
 /**
  * For a given feature, if its geometry supports vertice that can be
@@ -565,13 +566,10 @@ FeatureHelper.prototype.createEditingStyles = function(feature) {
  * @param {number} resolution Current map view resolution.
  * @return {?Array.<number>} The indexes of the vertex (coordinate) that hits.
  */
-FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
-  feature, coordinate, resolution
-) {
+FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinate, resolution) {
   let info = null;
 
   if (this.supportsVertexRemoval_(feature)) {
-
     const buffer = resolution * VertexStyleRegularShapeRadius;
     let coordinates = null;
     let coordinatess = null;
@@ -595,8 +593,7 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
 
     if (coordinates) {
       // Array of ol.Coordinate - 1 index
-      const index = this.getCoordinateIndexThatHitsAt_(
-        coordinates, coordinate, minNumCoordinates, buffer);
+      const index = this.getCoordinateIndexThatHitsAt_(coordinates, coordinate, minNumCoordinates, buffer);
       if (index !== -1) {
         info = [index];
       }
@@ -605,7 +602,11 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
       const ii = coordinatess.length;
       for (let i = 0; i < ii; i++) {
         const index = this.getCoordinateIndexThatHitsAt_(
-          coordinatess[i], coordinate, minNumCoordinates, buffer);
+          coordinatess[i],
+          coordinate,
+          minNumCoordinates,
+          buffer
+        );
         if (index !== -1) {
           info = [i, index];
           break;
@@ -619,7 +620,11 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
         const jj = coordinatess.length;
         for (let j = 0; j < jj; j++) {
           const index = this.getCoordinateIndexThatHitsAt_(
-            coordinatess[j], coordinate, minNumCoordinates, buffer);
+            coordinatess[j],
+            coordinate,
+            minNumCoordinates,
+            buffer
+          );
           if (index !== -1) {
             info = [i, j, index];
             break;
@@ -634,7 +639,6 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
 
   return info;
 };
-
 
 /**
  * Loop in the given coordinates and look one that hits an other given
@@ -651,19 +655,14 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function(
  *     is returned.
  * @private
  */
-FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function(
-  coordinates, coordinate, min, buffer
-) {
+FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function (coordinates, coordinate, min, buffer) {
   let index = -1;
   const ii = coordinates.length;
 
   if (ii > min) {
     for (let i = 0; i < ii; i++) {
       const hits = olExtent.containsCoordinate(
-        olExtent.buffer(
-          olExtent.createOrUpdateFromCoordinate(coordinates[i]),
-          buffer
-        ),
+        olExtent.buffer(olExtent.createOrUpdateFromCoordinate(coordinates[i]), buffer),
         coordinate
       );
       if (hits) {
@@ -676,7 +675,6 @@ FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function(
   return index;
 };
 
-
 /**
  * Create and return a style object to be used for vertex.
  * @param {boolean=} opt_incGeomFunc Whether to include the geometry function
@@ -687,7 +685,7 @@ FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function(
  *     geometries. Defaults to `true`.
  * @return {!import("ol/style/Style.js").default} Style.
  */
-FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
+FeatureHelper.prototype.getVertexStyle = function (opt_incGeomFunc) {
   const incGeomFunc = opt_incGeomFunc !== undefined ? opt_incGeomFunc : true;
 
   const options = {
@@ -696,16 +694,16 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
       points: 4,
       angle: Math.PI / 4,
       fill: new olStyleFill({
-        color: [255, 255, 255, 0.5]
+        color: [255, 255, 255, 0.5],
       }),
       stroke: new olStyleStroke({
-        color: [0, 0, 0, 1]
-      })
-    })
+        color: [0, 0, 0, 1],
+      }),
+    }),
   };
 
   if (incGeomFunc) {
-    options.geometry = function(feature) {
+    options.geometry = function (feature) {
       const geom = feature.getGeometry();
 
       if (!geom || geom.getType() == 'Point') {
@@ -746,7 +744,6 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
   return new olStyleStyle(options);
 };
 
-
 /**
  * Remove a vertex from a feature using the given information (indexes).
  *
@@ -754,10 +751,10 @@ FeatureHelper.prototype.getVertexStyle = function(opt_incGeomFunc) {
  * @param {!Array.<number>} vertexInfo The indexes of the vertex
  *     (coordinate) to remove.
  */
-FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
+FeatureHelper.prototype.removeVertex = function (feature, vertexInfo) {
   let deleted = false;
 
-  const geometry = /** @type {olGeomSimpleGeometry} */(feature.getGeometry());
+  const geometry = /** @type {olGeomSimpleGeometry} */ (feature.getGeometry());
   console.assert(geometry instanceof olGeomSimpleGeometry);
   const coordinates = geometry.getCoordinates();
 
@@ -812,24 +809,22 @@ FeatureHelper.prototype.removeVertex = function(feature, vertexInfo) {
   }
 };
 
-
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {boolean} Whether the feature supports vertex or not.
  * @private
  */
-FeatureHelper.prototype.supportsVertex_ = function(feature) {
+FeatureHelper.prototype.supportsVertex_ = function (feature) {
   const supported = [
     ngeoGeometryType.LINE_STRING,
     ngeoGeometryType.MULTI_LINE_STRING,
     ngeoGeometryType.MULTI_POLYGON,
     ngeoGeometryType.POLYGON,
-    ngeoGeometryType.RECTANGLE
+    ngeoGeometryType.RECTANGLE,
   ];
   const type = this.getType(feature);
   return supported.includes(type);
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
@@ -837,24 +832,23 @@ FeatureHelper.prototype.supportsVertex_ = function(feature) {
  *     removed or not. Does not validate the number of coordinates.
  * @private
  */
-FeatureHelper.prototype.supportsVertexRemoval_ = function(feature) {
+FeatureHelper.prototype.supportsVertexRemoval_ = function (feature) {
   const supported = [
     ngeoGeometryType.LINE_STRING,
     ngeoGeometryType.MULTI_LINE_STRING,
     ngeoGeometryType.MULTI_POLYGON,
-    ngeoGeometryType.POLYGON
+    ngeoGeometryType.POLYGON,
   ];
   const type = this.getType(feature);
   return supported.includes(type);
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!import("ol/style/Style.js").default} Style.
  * @private
  */
-FeatureHelper.prototype.getHaloStyle_ = function(feature) {
+FeatureHelper.prototype.getHaloStyle_ = function (feature) {
   const type = this.getType(feature);
   let style;
   const haloSize = 3;
@@ -866,9 +860,9 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
         image: new olStyleCircle({
           radius: size + haloSize,
           fill: new olStyleFill({
-            color: [255, 255, 255, 1]
-          })
-        })
+            color: [255, 255, 255, 1],
+          }),
+        }),
       });
       break;
     case ngeoGeometryType.LINE_STRING:
@@ -879,8 +873,8 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
       style = new olStyleStyle({
         stroke: new olStyleStroke({
           color: [255, 255, 255, 1],
-          width: strokeWidth + haloSize * 2
-        })
+          width: strokeWidth + haloSize * 2,
+        }),
       });
       break;
     case ngeoGeometryType.TEXT:
@@ -891,8 +885,8 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
           text: this.getNameProperty(feature),
           size: this.getSizeProperty(feature),
           angle: this.getAngleProperty(feature),
-          width: haloSize * 3
-        })
+          width: haloSize * 3,
+        }),
       });
       break;
     default:
@@ -903,7 +897,6 @@ FeatureHelper.prototype.getHaloStyle_ = function(feature) {
 
   return style;
 };
-
 
 // === PROPERTY GETTERS ===
 
@@ -926,65 +919,59 @@ export function getFilteredFeatureValues(feature) {
  * @param {import("ol/Feature.js").default} feature Feature.
  * @return {number} Angle.
  */
-FeatureHelper.prototype.getAngleProperty = function(feature) {
-  const angle = +(/** @type {string} */ (
-    feature.get(ngeoFormatFeatureProperties.ANGLE)));
+FeatureHelper.prototype.getAngleProperty = function (feature) {
+  const angle = +(/** @type {string} */ (feature.get(ngeoFormatFeatureProperties.ANGLE)));
   console.assert(typeof angle == 'number');
   return angle;
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string|undefined} Color.
  */
-FeatureHelper.prototype.getColorProperty = function(feature) {
+FeatureHelper.prototype.getColorProperty = function (feature) {
   return feature.get(ngeoFormatFeatureProperties.COLOR);
 };
-
 
 /**
  * @param {!import('ol/Feature.js').default} feature Feature.
  * @return {import('ol/color.js').Color} Color.
  */
-FeatureHelper.prototype.getRGBAColorProperty = function(feature) {
+FeatureHelper.prototype.getRGBAColorProperty = function (feature) {
   const color = this.getColorProperty(feature);
   if (color) {
     return colorFromString(color);
   }
 };
 
-
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} Name.
  */
-FeatureHelper.prototype.getNameProperty = function(feature) {
+FeatureHelper.prototype.getNameProperty = function (feature) {
   const name = feature.get(ngeoFormatFeatureProperties.NAME);
   console.assert(typeof name == 'string');
   return name;
 };
 
-
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {number} Opacity.
  */
-FeatureHelper.prototype.getOpacityProperty = function(feature) {
+FeatureHelper.prototype.getOpacityProperty = function (feature) {
   return this.getNumber(feature, ngeoFormatFeatureProperties.OPACITY);
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {boolean} Show measure.
  */
-FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
+FeatureHelper.prototype.getShowMeasureProperty = function (feature) {
   let showMeasure = feature.get(ngeoFormatFeatureProperties.SHOW_MEASURE);
   if (showMeasure === undefined) {
     showMeasure = false;
   } else if (typeof showMeasure === 'string') {
-    showMeasure = (showMeasure === 'true') ? true : false;
+    showMeasure = showMeasure === 'true' ? true : false;
   }
   return showMeasure;
 };
@@ -993,12 +980,12 @@ FeatureHelper.prototype.getShowMeasureProperty = function(feature) {
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {boolean} Show feature label.
  */
-FeatureHelper.prototype.getShowLabelProperty = function(feature) {
+FeatureHelper.prototype.getShowLabelProperty = function (feature) {
   let showLabel = feature.get(ngeoFormatFeatureProperties.SHOW_LABEL);
   if (showLabel === undefined) {
     showLabel = false;
   } else if (typeof showLabel === 'string') {
-    showLabel = (showLabel === 'true') ? true : false;
+    showLabel = showLabel === 'true' ? true : false;
   }
   return showLabel;
 };
@@ -1007,22 +994,19 @@ FeatureHelper.prototype.getShowLabelProperty = function(feature) {
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {number} Size.
  */
-FeatureHelper.prototype.getSizeProperty = function(feature) {
+FeatureHelper.prototype.getSizeProperty = function (feature) {
   return this.getNumber(feature, ngeoFormatFeatureProperties.SIZE);
 };
-
 
 /**
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {number} Stroke.
  */
-FeatureHelper.prototype.getStrokeProperty = function(feature) {
+FeatureHelper.prototype.getStrokeProperty = function (feature) {
   return this.getNumber(feature, ngeoFormatFeatureProperties.STROKE);
 };
 
-
 // === EXPORT ===
-
 
 /**
  * Export features in the given format. The projection of the exported features
@@ -1030,7 +1014,7 @@ FeatureHelper.prototype.getStrokeProperty = function(feature) {
  * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  * @param {string} formatType Format type to export the features.
  */
-FeatureHelper.prototype.export = function(features, formatType) {
+FeatureHelper.prototype.export = function (features, formatType) {
   switch (formatType) {
     case FeatureFormatType.GPX:
       this.exportGPX(features);
@@ -1043,32 +1027,29 @@ FeatureHelper.prototype.export = function(features, formatType) {
   }
 };
 
-
 /**
  * Export features in GPX and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
  * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  */
-FeatureHelper.prototype.exportGPX = function(features) {
+FeatureHelper.prototype.exportGPX = function (features) {
   const format = new olFormatGPX();
   const mimeType = 'application/gpx+xml';
   const fileName = 'export.gpx';
   this.export_(features, format, fileName, mimeType);
 };
 
-
 /**
  * Export features in KML and download the result to the browser. The
  * projection of the exported features is: `EPSG:4326`.
  * @param {!Array.<!import("ol/Feature.js").default>} features Array of vector features.
  */
-FeatureHelper.prototype.exportKML = function(features) {
+FeatureHelper.prototype.exportKML = function (features) {
   const format = new olFormatKML();
   const mimeType = 'application/vnd.google-earth.kml+xml';
   const fileName = 'export.kml';
   this.export_(features, format, fileName, mimeType);
 };
-
 
 /**
  * Export features using a given format to a specific filename and download
@@ -1080,7 +1061,7 @@ FeatureHelper.prototype.exportKML = function(features) {
  * @param {string=} opt_mimeType Mime type. Defaults to 'text/plain'.
  * @private
  */
-FeatureHelper.prototype.export_ = function(features, format, fileName, opt_mimeType) {
+FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mimeType) {
   const mimeType = opt_mimeType !== undefined ? opt_mimeType : 'text/plain';
 
   // clone the features to apply the original style to the clone
@@ -1093,31 +1074,30 @@ FeatureHelper.prototype.export_ = function(features, format, fileName, opt_mimeT
     clones.push(clone);
   });
 
-  const writeOptions = this.projection_ ? {
-    dataProjection: 'EPSG:4326',
-    featureProjection: this.projection_
-  } : {};
+  const writeOptions = this.projection_
+    ? {
+        dataProjection: 'EPSG:4326',
+        featureProjection: this.projection_,
+      }
+    : {};
 
   const data = format.writeFeatures(clones, writeOptions);
-  this.download_(
-    data, fileName, `${mimeType};charset=utf-8`);
+  this.download_(data, fileName, `${mimeType};charset=utf-8`);
 };
 
-
 // === OTHER UTILITY METHODS ===
-
 
 /**
  * @param {!import('ngeo/rule/Text.js').TextOptions} options Options.
  * @return {!import('ol/style/Text.js').default} Style.
  * @private
  */
-FeatureHelper.prototype.createTextStyle_ = function(options) {
+FeatureHelper.prototype.createTextStyle_ = function (options) {
   /** @type {import('ol/style/Text.js').Options} */
   const text_options = options;
   if (options.angle) {
     const angle = options.angle !== undefined ? options.angle : 0;
-    const rotation = angle * Math.PI / 180;
+    const rotation = (angle * Math.PI) / 180;
     text_options.rotation = rotation;
     delete options.angle;
   }
@@ -1131,13 +1111,12 @@ FeatureHelper.prototype.createTextStyle_ = function(options) {
 
   text_options.stroke = new olStyleStroke({
     color: [255, 255, 255, 1],
-    width: options.width || 3
+    width: options.width || 3,
   });
   delete options.width;
 
   return new olStyleText(text_options);
 };
-
 
 /**
  * Get the measure of the given feature as a string. For points, you can format
@@ -1146,8 +1125,7 @@ FeatureHelper.prototype.createTextStyle_ = function(options) {
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} Measure.
  */
-FeatureHelper.prototype.getMeasure = function(feature) {
-
+FeatureHelper.prototype.getMeasure = function (feature) {
   const geometry = feature.getGeometry();
   console.assert(geometry, 'Geometry should be truthy');
 
@@ -1160,22 +1138,27 @@ FeatureHelper.prototype.getMeasure = function(feature) {
       const line = this.getRadiusLine(feature, azimut);
 
       measure = getFormattedAzimutRadius(
-        line, this.projection_, this.decimals_, this.precision_, this.unitPrefixFormat_, this.numberFormat_);
+        line,
+        this.projection_,
+        this.decimals_,
+        this.precision_,
+        this.unitPrefixFormat_,
+        this.numberFormat_
+      );
     } else {
       measure = getFormattedArea(geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
     }
   } else if (geometry instanceof olGeomLineString) {
-    measure = getFormattedLength(
-      geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
+    measure = getFormattedLength(geometry, this.projection_, this.precision_, this.unitPrefixFormat_);
   } else if (geometry instanceof olGeomPoint) {
     if (this.pointFilterFn_ === null) {
       measure = getFormattedPoint(geometry, this.decimals_, this.ngeoNumberCoordinates_);
     } else {
       const coordinates = geometry.getCoordinates();
       if (this.pointFilterArgs_.length > 1) {
-        measure = this.pointFilterFn_(
-          coordinates, this.pointFilterArgs_[0], this.pointFilterArgs_[1]
-        ).join(', ');
+        measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0], this.pointFilterArgs_[1]).join(
+          ', '
+        );
       } else {
         measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0]).join(', ');
       }
@@ -1185,14 +1168,13 @@ FeatureHelper.prototype.getMeasure = function(feature) {
   return measure;
 };
 
-
 /**
  * Return the type of geometry of a feature using its geometry property and
  * some inner properties.
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {string} The type of geometry.
  */
-FeatureHelper.prototype.getType = function(feature) {
+FeatureHelper.prototype.getType = function (feature) {
   const geometry = feature.getGeometry();
   console.assert(geometry, 'Geometry should be thruthy');
 
@@ -1227,7 +1209,6 @@ FeatureHelper.prototype.getType = function(feature) {
   return type;
 };
 
-
 /**
  * This methods will try to fit a feature into a map view.
  *
@@ -1244,8 +1225,7 @@ FeatureHelper.prototype.getType = function(feature) {
  * @param {!import("ol/Map.js").default} map Map.
  * @param {number=} opt_duration Aimation duration. Defaults to `250`.
  */
-FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
-
+FeatureHelper.prototype.fitMapToFeature = function (feature, map, opt_duration) {
   const duration = opt_duration !== undefined ? opt_duration : 250;
   const size = map.getSize();
   console.assert(Array.isArray(size));
@@ -1261,34 +1241,32 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
   const featureExtent = geometry.getExtent();
 
   if (geomIsVisible) {
-
     if (!(geometry instanceof olGeomPoint)) {
       // == Action: Zoom out ==
       // if the geometry is visible
       const featureResolution = view.getResolutionForExtent(featureExtent);
-      const featureZoom = Math.floor(
-        view.getZoomForResolution(featureResolution));
+      const featureZoom = Math.floor(view.getZoomForResolution(featureResolution));
       const zoom = view.getZoom();
       if (featureZoom < zoom) {
-        view.animate({
-          center: mapCenter,
-          duration: duration
-        }, {
-          center: mapCenter,
-          duration: duration,
-          zoom: featureZoom
-        });
+        view.animate(
+          {
+            center: mapCenter,
+            duration: duration,
+          },
+          {
+            center: mapCenter,
+            duration: duration,
+            zoom: featureZoom,
+          }
+        );
       }
     }
-
   } else {
-
     const featureExtentHeight = olExtent.getHeight(featureExtent);
     const featureExtentWidth = olExtent.getWidth(featureExtent);
     const viewExtentHeight = olExtent.getHeight(viewExtent);
     const viewExtentWidth = olExtent.getWidth(viewExtent);
-    const geomFitsInExtent = viewExtentHeight >= featureExtentHeight &&
-          viewExtentWidth >= featureExtentWidth;
+    const geomFitsInExtent = viewExtentHeight >= featureExtentHeight && viewExtentWidth >= featureExtentWidth;
 
     if (geomFitsInExtent) {
       // == Action: Pan ==
@@ -1304,24 +1282,26 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
         featureCenter = olExtent.getCenter(geometry.getExtent());
       }
 
-      view.animate({
-        center: mapCenter,
-        duration: duration
-      }, {
-        center: featureCenter,
-        duration: duration
-      });
+      view.animate(
+        {
+          center: mapCenter,
+          duration: duration,
+        },
+        {
+          center: featureCenter,
+          duration: duration,
+        }
+      );
     } else {
       // == Action: Fit ==
       // if geometry is not visible and doesn't fit in current map extent
       view.fit(featureExtent, {
         duration,
-        size
+        size,
       });
     }
   }
 };
-
 
 /**
  * This method generates a line string geometry that represents the radius for
@@ -1330,7 +1310,7 @@ FeatureHelper.prototype.fitMapToFeature = function(feature, map, opt_duration) {
  * @param {number} azimut Azimut in degrees.
  * @return {!import("ol/geom/LineString.js").default} The line geometry.
  */
-FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
+FeatureHelper.prototype.getRadiusLine = function (feature, azimut) {
   const geometry = feature.getGeometry();
   // Determine the radius for the circle
   const extent = geometry.getExtent();
@@ -1338,19 +1318,18 @@ FeatureHelper.prototype.getRadiusLine = function(feature, azimut) {
 
   const center = olExtent.getCenter(geometry.getExtent());
 
-  const x = Math.cos((azimut - 90) * Math.PI / 180) * radius;
-  const y = -Math.sin((azimut - 90) * Math.PI / 180) * radius;
+  const x = Math.cos(((azimut - 90) * Math.PI) / 180) * radius;
+  const y = -Math.sin(((azimut - 90) * Math.PI) / 180) * radius;
   const endPoint = [x + center[0], y + center[1]];
   return new olGeomLineString([center, endPoint]);
 };
-
 
 /**
  * Return the properties of a feature, with the exception of the geometry.
  * @param {!import("ol/Feature.js").default} feature Feature.
  * @return {!Object.<string, *>} Object.
  */
-FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
+FeatureHelper.prototype.getNonSpatialProperties = function (feature) {
   const geometryName = feature.getGeometryName();
   const nonSpatialProperties = {};
   const properties = feature.getProperties();
@@ -1362,12 +1341,11 @@ FeatureHelper.prototype.getNonSpatialProperties = function(feature) {
   return nonSpatialProperties;
 };
 
-
 /**
  * Clear all properties of a feature, with the exception of the geometry.
  * @param {!import("ol/Feature.js").default} feature Feature.
  */
-FeatureHelper.prototype.clearNonSpatialProperties = function(feature) {
+FeatureHelper.prototype.clearNonSpatialProperties = function (feature) {
   const geometryName = feature.getGeometryName();
   const properties = feature.getProperties();
   for (const key in properties) {
@@ -1377,13 +1355,12 @@ FeatureHelper.prototype.clearNonSpatialProperties = function(feature) {
   }
 };
 
-
 /**
  * @param {!Array.<!import("ol/Feature.js").default>} features Features.
  * @param {string} fid Feature id
  * @return {number} Index of found feature
  */
-FeatureHelper.prototype.findFeatureIndexByFid = function(features, fid) {
+FeatureHelper.prototype.findFeatureIndexByFid = function (features, fid) {
   let index = -1;
   for (let i = 0, ii = features.length; i < ii; i++) {
     if (features[i].getId() == fid) {
@@ -1394,16 +1371,11 @@ FeatureHelper.prototype.findFeatureIndexByFid = function(features, fid) {
   return index;
 };
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoFeatureHelper', [
-  ngeoDownloadService.name,
-  ngeoMiscFilters.name,
-]);
+const module = angular.module('ngeoFeatureHelper', [ngeoDownloadService.name, ngeoMiscFilters.name]);
 module.service('ngeoFeatureHelper', FeatureHelper);
-
 
 export default module;

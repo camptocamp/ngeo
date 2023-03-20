@@ -2,7 +2,6 @@
 @import '~gmf/sass/input-range.scss';
 
 .gmf-time-slider {
-
   // 1.75rem come from bootstrap popover class .popover-content { padding: 0.56rem 0.87rem; }
   min-width: calc(#{$popover-max-width} - 1.75rem);
 
@@ -11,7 +10,7 @@
   }
 
   .ui-slider-handle {
-    top: -(($gmf-input-range-thumb-height / 2) - $gmf-input-range-track-height / 2) ;
+    top: -(($gmf-input-range-thumb-height / 2) - $gmf-input-range-track-height / 2);
     cursor: $gmf-input-range-cursor;
     margin-left: -$gmf-input-range-thumb-width / 2;
     box-shadow: $gmf-input-range-thumb-box-shadow;
@@ -46,6 +45,6 @@
 
 .gmf-time-slider-start-date,
 .gmf-time-slider-end-date {
-  font-size : $font-size-small;
+  font-size: $font-size-small;
   margin-top: $half-app-margin;
 }

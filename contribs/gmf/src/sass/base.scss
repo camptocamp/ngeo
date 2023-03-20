@@ -5,8 +5,8 @@
 @import '~gmf/css/reset.css';
 @import '~bootstrap/scss/bootstrap.scss';
 
-
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -23,7 +23,9 @@ a {
   text-decoration: none;
 }
 
-[ng\:cloak], [ng-cloak], .ng-cloak {
+[ng\:cloak],
+[ng-cloak],
+.ng-cloak {
   display: none !important;
 }
 
@@ -34,10 +36,12 @@ a {
 .btn.prime {
   background-color: $brand-primary;
   border-color: $input-border-focus;
-   &.active {
+  &.active {
     box-shadow: inset $light-box-shadow;
-  } color: white;
-  &:hover, &.active {
+  }
+  color: white;
+  &:hover,
+  &.active {
     background-color: $input-border-focus;
     border-color: darken($input-border-focus, $standard-variation);
   }
@@ -50,13 +54,14 @@ a {
   &.active {
     box-shadow: inset $light-box-shadow;
   }
-  &:hover, &.active {
+  &:hover,
+  &.active {
     background-color: $onhover-color;
     border-color: darken($onhover-color, $standard-variation);
   }
 }
 
-html [type="button"] {
+html [type='button'] {
   -webkit-appearance: none;
 }
 
@@ -72,12 +77,18 @@ html [type="button"] {
   padding: $padding-small-vertical $padding-small-horizontal;
 }
 
-.input-sm, select.input-sm {
+.input-sm,
+select.input-sm {
   height: inherit;
   line-height: inherit;
 }
 
-i, cite, em, var, address, dfn {
+i,
+cite,
+em,
+var,
+address,
+dfn {
   font-style: italic;
 }
 
@@ -99,7 +110,8 @@ i, cite, em, var, address, dfn {
   border-radius: 0;
 }
 
-.modal-body, .modal-header {
+.modal-body,
+.modal-header {
   padding: 0.62rem;
 }
 
@@ -111,7 +123,7 @@ i, cite, em, var, address, dfn {
 .ui-draggable-handle {
   cursor: grab;
   cursor: -webkit-grab;
-  cursor:-moz-grab;
+  cursor: -moz-grab;
 }
 
 .ui-draggable-dragging {

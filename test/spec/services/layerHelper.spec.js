@@ -43,8 +43,8 @@ describe('ngeo.map.LayerHelper', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const layer = /** @type {import("ol/layer/Tile.js").default} */(spy.calls.mostRecent().args[0]);
-    const source = /** @type {import("ol/source/WMTS.js").default} */(layer.getSource());
+    const layer = /** @type {import("ol/layer/Tile.js").default} */ (spy.calls.mostRecent().args[0]);
+    const source = /** @type {import("ol/source/WMTS.js").default} */ (layer.getSource());
     expect(source.getLayer()).toBe(wmtsName);
   });
 
@@ -70,7 +70,8 @@ describe('ngeo.map.LayerHelper', () => {
     const layerName = 'wmsLayer';
     const scale = 0;
     const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, scale);
-    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
+    const expectedResult =
+      `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
       `REQUEST=GetLegendGraphic&LAYER=${layerName}&SCALE=${scale}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });
@@ -80,7 +81,8 @@ describe('ngeo.map.LayerHelper', () => {
     const layerName = 'wmsLayer';
     const legendRule = 'legendRule';
     const wmsLegendURL = ngeoLayerHelper.getWMSLegendURL(url, layerName, undefined, legendRule);
-    const expectedResult = `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
+    const expectedResult =
+      `${url}?FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&` +
       `REQUEST=GetLegendGraphic&LAYER=${layerName}&RULE=${legendRule}`;
     expect(expectedResult).toBe(wmsLegendURL);
   });
@@ -93,7 +95,7 @@ describe('ngeo.map.LayerHelper', () => {
     $httpBackend.flush();
 
     expect(spy.calls.count()).toBe(1);
-    const layer = /** @type {import("ol/layer/Tile.js").default} */(spy.calls.mostRecent().args[0]);
+    const layer = /** @type {import("ol/layer/Tile.js").default} */ (spy.calls.mostRecent().args[0]);
     const capabilitiesStyles = [{legendURL: [{href: 'http://legendURL'}]}];
     layer.set('capabilitiesStyles', capabilitiesStyles);
     const legend = ngeoLayerHelper.getWMTSLegendURL(layer);

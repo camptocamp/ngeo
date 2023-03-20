@@ -6,16 +6,11 @@ import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength.js';
 import * as olEvents from 'ol/events.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoMeasurelength', [
-  ngeoDrawController.name,
-  ngeoMiscFilters.name,
-]);
-
+const module = angular.module('ngeoMeasurelength', [ngeoDrawController.name, ngeoMiscFilters.name]);
 
 /**
  * @param {!angular.ICompileService} $compile Angular compile service.
@@ -38,18 +33,19 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
      * @param {import('ngeo/draw/Controller.js').DrawController} drawFeatureCtrl Controller.
      */
     link: ($scope, element, attrs, drawFeatureCtrl) => {
-
       const helpMsg = gettextCatalog.getString('Click to start drawing line');
-      const contMsg = gettextCatalog.getString('Click to continue drawing<br>' +
-          'Double-click or click last point to finish');
+      const contMsg = gettextCatalog.getString(
+        'Click to continue drawing<br>' + 'Double-click or click last point to finish'
+      );
 
       const measureLength = new ngeoInteractionMeasureLength($filter('ngeoUnitPrefix'), gettextCatalog, {
         style: new olStyleStyle(),
         startMsg: $compile(`<div translate>${helpMsg}</div>`)($scope)[0],
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
         precision: $injector.has('ngeoMeasurePrecision') ? $injector.get('ngeoMeasurePrecision') : undefined,
-        tolerance: $injector.has('ngeoSnappingTolerance') ? $injector.get('ngeoSnappingTolerance') :
-          undefined,
+        tolerance: $injector.has('ngeoSnappingTolerance')
+          ? $injector.get('ngeoSnappingTolerance')
+          : undefined,
         source: $injector.has('ngeoSnappingSource') ? $injector.get('ngeoSnappingSource') : undefined,
       });
 
@@ -59,22 +55,14 @@ function measureLengthComponent($compile, gettextCatalog, $filter, $injector) {
       olEvents.listen(
         measureLength,
         'measureend',
-        drawFeatureCtrl.handleDrawEnd.bind(
-          drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
+        drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
         drawFeatureCtrl
       );
-      olEvents.listen(
-        measureLength,
-        'change:active',
-        drawFeatureCtrl.handleActiveChange,
-        drawFeatureCtrl
-      );
-    }
+      olEvents.listen(measureLength, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
+    },
   };
 }
 
-
 module.directive('ngeoMeasurelength', measureLengthComponent);
-
 
 export default module;

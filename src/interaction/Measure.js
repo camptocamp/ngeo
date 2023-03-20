@@ -11,7 +11,6 @@ import olStyleFill from 'ol/style/Fill.js';
 import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 
-
 /**
  * Interactions for measure tools.
  *
@@ -32,16 +31,14 @@ import olStyleStyle from 'ol/style/Style.js';
  * @property {import('ol/source/Vector.js').default} [source] The source.
  */
 
-
 /**
-  * @typedef {Object} MeasureEventItem
-  * @property {import("ol/Feature.js").default} feature
-  */
+ * @typedef {Object} MeasureEventItem
+ * @property {import("ol/Feature.js").default} feature
+ */
 
 /**
  * @typedef {import('ngeo/CustomEvent.js').default<MeasureEventItem>} MeasureEvent
  */
-
 
 /**
  * Interaction that allows measuring (length, area, ...).
@@ -54,7 +51,7 @@ class Measure extends olInteractionInteraction {
    */
   constructor(options = {}) {
     super({
-      handleEvent: handleEvent_
+      handleEvent: handleEvent_,
     });
 
     /**
@@ -71,14 +68,12 @@ class Measure extends olInteractionInteraction {
      */
     this.helpTooltipOverlay_ = null;
 
-
     /**
      * The measure tooltip element.
      * @type {HTMLElement}
      * @private
      */
     this.measureTooltipElement_ = null;
-
 
     /**
      * Overlay to show the measurement.
@@ -87,14 +82,12 @@ class Measure extends olInteractionInteraction {
      */
     this.measureTooltipOverlay_ = null;
 
-
     /**
      * The measurement overlay coordinate.
      * @type {import("ol/coordinate.js").Coordinate}
      * @private
      */
     this.measureTooltipOverlayCoord_ = null;
-
 
     /**
      * The sketch feature.
@@ -158,25 +151,28 @@ class Measure extends olInteractionInteraction {
      */
     this.postcomposeEventKey_ = null;
 
-    const style = options.style !== undefined ? options.style : [
-      new olStyleStyle({
-        fill: new olStyleFill({
-          color: 'rgba(255, 255, 255, 0.2)'
-        })
-      }),
-      new olStyleStyle({
-        stroke: new olStyleStroke({
-          color: 'white',
-          width: 5
-        })
-      }),
-      new olStyleStyle({
-        stroke: new olStyleStroke({
-          color: '#ffcc33',
-          width: 3
-        })
-      })
-    ];
+    const style =
+      options.style !== undefined
+        ? options.style
+        : [
+            new olStyleStyle({
+              fill: new olStyleFill({
+                color: 'rgba(255, 255, 255, 0.2)',
+              }),
+            }),
+            new olStyleStyle({
+              stroke: new olStyleStroke({
+                color: 'white',
+                width: 5,
+              }),
+            }),
+            new olStyleStyle({
+              stroke: new olStyleStroke({
+                color: '#ffcc33',
+                width: 3,
+              }),
+            }),
+          ];
 
     /**
      * The vector layer used to show final measure features.
@@ -185,7 +181,7 @@ class Measure extends olInteractionInteraction {
      */
     this.vectorLayer_ = new olLayerVector({
       source: new olSourceVector(),
-      style: style
+      style: style,
     });
 
     /**
@@ -193,8 +189,10 @@ class Measure extends olInteractionInteraction {
      * @type {import("ol/interaction/Draw.js").default|import("ngeo/interaction/DrawAzimut.js").default|import("ngeo/interaction/MobileDraw.js").default}
      * @private
      */
-    this.drawInteraction_ = this.createDrawInteraction(options.sketchStyle,
-      /** @type {olSourceVector} */(this.vectorLayer_.getSource()));
+    this.drawInteraction_ = this.createDrawInteraction(
+      options.sketchStyle,
+      /** @type {olSourceVector} */ (this.vectorLayer_.getSource())
+    );
 
     /**
      * @type {boolean}
@@ -217,7 +215,6 @@ class Measure extends olInteractionInteraction {
     return this.drawInteraction_;
   }
 
-
   /**
    * Creates the draw interaction.
    *
@@ -231,12 +228,10 @@ class Measure extends olInteractionInteraction {
     return undefined;
   }
 
-
   /**
    * @inheritDoc
    */
   setMap(map) {
-
     olInteractionInteraction.prototype.setMap.call(this, map);
 
     this.vectorLayer_.setMap(map);
@@ -251,7 +246,6 @@ class Measure extends olInteractionInteraction {
     }
   }
 
-
   /**
    * Handle draw interaction `drawstart` event.
    * @param { import('ol/events/Event.js').default|import('ngeo/interaction/common.js').DrawEvent} evt Event.
@@ -260,7 +254,7 @@ class Measure extends olInteractionInteraction {
   onDrawStart_(evt) {
     // @ts-ignore: evt should be of type {import('ol/interaction/Draw.js').DrawEvent but he is private
     this.sketchFeature = evt.feature || evt.detail.feature;
-    /** @type {olSourceVector} */(this.vectorLayer_.getSource()).clear(true);
+    /** @type {olSourceVector} */ (this.vectorLayer_.getSource()).clear(true);
     this.createMeasureTooltip_();
 
     const geometry = this.sketchFeature.getGeometry();
@@ -279,7 +273,6 @@ class Measure extends olInteractionInteraction {
       this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
     });
   }
-
 
   /**
    * Handle draw interaction `drawend` event.
@@ -321,12 +314,11 @@ class Measure extends olInteractionInteraction {
       this.helpTooltipOverlay_ = new olOverlay({
         element: this.helpTooltipElement_,
         offset: [15, 0],
-        positioning: 'center-left'
+        positioning: 'center-left',
       });
       this.getMap().addOverlay(this.helpTooltipOverlay_);
     }
   }
-
 
   /**
    * Destroy the help tooltip
@@ -343,7 +335,6 @@ class Measure extends olInteractionInteraction {
     }
   }
 
-
   /**
    * Creates a new measure tooltip
    * @private
@@ -357,11 +348,10 @@ class Measure extends olInteractionInteraction {
       element: this.measureTooltipElement_,
       offset: [0, -15],
       positioning: 'bottom-center',
-      stopEvent: false
+      stopEvent: false,
     });
     this.getMap().addOverlay(this.measureTooltipOverlay_);
   }
-
 
   /**
    * Destroy the help tooltip
@@ -393,14 +383,13 @@ class Measure extends olInteractionInteraction {
         this.createHelpTooltip_();
       }
     } else {
-      /** @type {olSourceVector} */(this.vectorLayer_.getSource()).clear(true);
+      /** @type {olSourceVector} */ (this.vectorLayer_.getSource()).clear(true);
       this.getMap().removeOverlay(this.measureTooltipOverlay_);
       this.removeMeasureTooltip_();
       this.removeHelpTooltip_();
       this.unlistenerEvent_();
     }
   }
-
 
   /**
    * Function implemented in inherited classes to compute measurement, determine
@@ -410,7 +399,6 @@ class Measure extends olInteractionInteraction {
    *     to be called.
    */
   handleMeasure(callback) {}
-
 
   /**
    * Get a reference to the tooltip element.
@@ -434,7 +422,6 @@ class Measure extends olInteractionInteraction {
   }
 }
 
-
 /**
  * Calculate the area of the passed polygon and return a formatted string
  * of the area.
@@ -453,7 +440,6 @@ export function getFormattedArea(polygon, projection, precision, format) {
   return format(area, 'm²', 'square', precision);
 }
 
-
 /**
  * Calculate the area of the passed circle and return a formatted string of the area.
  * @param {!import("ol/geom/Circle.js").default} circle Circle
@@ -466,7 +452,6 @@ export function getFormattedCircleArea(circle, precision, format) {
   const area = Math.PI * Math.pow(circle.getRadius(), 2);
   return format(area, 'm²', 'square', precision);
 }
-
 
 /**
  * Calculate the length of the passed line string and return a formatted
@@ -489,7 +474,6 @@ export function getFormattedLength(lineString, projection, precision, format) {
   return format(length, 'm', 'unit', precision);
 }
 
-
 /**
  * Return a formatted string of the point.
  * @param {!import("ol/geom/Point.js").default} point Point.
@@ -503,7 +487,6 @@ export function getFormattedLength(lineString, projection, precision, format) {
 export function getFormattedPoint(point, decimals, format, opt_template) {
   return format(point.getCoordinates(), decimals, opt_template);
 }
-
 
 /**
  * Handle map browser event.

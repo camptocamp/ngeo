@@ -2,14 +2,11 @@ import angular from 'angular';
 import ngeoMiscFeatureHelper, {FeatureFormatType} from 'ngeo/misc/FeatureHelper.js';
 import {getUid as olUtilGetUid} from 'ol/util.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('ngeoExportfeatures', [
-  ngeoMiscFeatureHelper.name
-]);
+const module = angular.module('ngeoExportfeatures', [ngeoMiscFeatureHelper.name]);
 
 /**
  * Directive used to export vector features in different types of format.
@@ -40,14 +37,12 @@ function editingExportFeaturesComponent() {
     controller: 'ngeoExportfeaturesController as efCtrl',
     scope: true,
     bindToController: {
-      'features': '=ngeoExportfeaturesFeatures'
-    }
+      'features': '=ngeoExportfeaturesFeatures',
+    },
   };
 }
 
-
 module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
-
 
 /**
  * @param {JQuery} $element Element.
@@ -62,7 +57,6 @@ module.directive('ngeoExportfeatures', editingExportFeaturesComponent);
  * @ngname ngeoExportfeaturesController
  */
 function Controller($element, $injector, $scope, ngeoFeatureHelper) {
-
   /**
    * @type {import("ol/Collection.js").default.<import("ol/Feature.js").default>}
    * @private
@@ -114,7 +108,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
     $element.attr('id', id);
     const $menu = $('<ul />', {
       'class': 'dropdown-menu',
-      'aria-labelledby': id
+      'aria-labelledby': id,
     }).appendTo($element.parent()[0]);
 
     this.menu_ = $menu;
@@ -123,14 +117,11 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
     formats.forEach((format) => {
       $item = $('<li />')
         .appendTo($menu)
-        .append($('<a />', {
-          'href': '#',
-          'text': format
-        })
-          .on(
-            ['click', id].join('.'),
-            this.handleMenuItemClick_.bind(this, format)
-          )
+        .append(
+          $('<a />', {
+            'href': '#',
+            'text': format,
+          }).on(['click', id].join('.'), this.handleMenuItemClick_.bind(this, format))
         );
       this.items_.push($item);
     });
@@ -147,7 +138,6 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
-
 /**
  * Called when the element bound to this directive is clicked. Use the feature
  * helper to export the feature(s) depending on the format(s) available(s).
@@ -159,8 +149,7 @@ function Controller($element, $injector, $scope, ngeoFeatureHelper) {
  * that doesn't support the type of geometry.
  * @private
  */
-Controller.prototype.handleElementClick_ = function() {
-
+Controller.prototype.handleElementClick_ = function () {
   const features = this.features.getArray();
 
   if (this.formats_.length === 1) {
@@ -182,7 +171,6 @@ Controller.prototype.handleElementClick_ = function() {
   }
 };
 
-
 /**
  * Called when a menu item is clicked. Export the features to the selected
  * format.
@@ -190,19 +178,18 @@ Controller.prototype.handleElementClick_ = function() {
  * @param {JQueryEventObject} event Event.
  * @private
  */
-Controller.prototype.handleMenuItemClick_ = function(format, event) {
+Controller.prototype.handleMenuItemClick_ = function (format, event) {
   if (!$(event.target.parentElement).hasClass('disabled')) {
     const features = this.features.getArray();
     this.featureHelper_.export(features, format);
   }
 };
 
-
 /**
  * Cleanup event listeners and remove the menu from DOM, if any.
  * @private
  */
-Controller.prototype.handleDestroy_ = function() {
+Controller.prototype.handleDestroy_ = function () {
   const id = this.id_;
 
   this.element_.off(['click', id].join('.'));
@@ -217,8 +204,6 @@ Controller.prototype.handleDestroy_ = function() {
   }
 };
 
-
 module.controller('ngeoExportfeaturesController', Controller);
-
 
 export default module;

@@ -7,6 +7,4 @@ import ngeoGridComponent from 'ngeo/grid/component.js';
  *
  * @type {!angular.IModule}
  */
-export default angular.module('ngeoGridModule', [
-  ngeoGridComponent.name
-]);
+export default angular.module('ngeoGridModule', [ngeoGridComponent.name]);

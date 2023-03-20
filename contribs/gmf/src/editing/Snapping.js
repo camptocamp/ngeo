@@ -8,7 +8,6 @@ import olCollection from 'ol/Collection.js';
 import olFormatWFS from 'ol/format/WFS.js';
 import olInteractionSnap from 'ol/interaction/Snap.js';
 
-
 /**
  * The snapping service of GMF. Responsible of collecting the treeCtrls that
  * support snapping and store them here. As soon as a treeCtrl state becomes
@@ -36,9 +35,14 @@ import olInteractionSnap from 'ol/interaction/Snap.js';
  * @hidden
  */
 export function EditingSnappingService(
-  $http, $q, $rootScope, $injector, $timeout, gmfThemes, gmfTreeManager
+  $http,
+  $q,
+  $rootScope,
+  $injector,
+  $timeout,
+  gmfThemes,
+  gmfTreeManager
 ) {
-
   // === Injected services ===
 
   /**
@@ -83,7 +87,6 @@ export function EditingSnappingService(
    */
   this.gmfTreeManager_ = gmfTreeManager;
 
-
   // === Properties ===
 
   /**
@@ -126,10 +129,10 @@ export function EditingSnappingService(
    * @type {import('ol/source/Vector.js').default|undefined}
    * @private
    */
-  this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource') ?
-    this.injector_.get('ngeoSnappingSource') : undefined;
+  this.ngeoSnappingSource_ = this.injector_.has('ngeoSnappingSource')
+    ? this.injector_.get('ngeoSnappingSource')
+    : undefined;
 }
-
 
 class CustomSnap extends olInteractionSnap {
   constructor(options) {
@@ -143,7 +146,6 @@ class CustomSnap extends olInteractionSnap {
   }
 }
 
-
 /**
  * In order for a `ol.interaction.Snap` to work properly, it has to be added
  * to the map after any draw interactions or other kinds of interactions that
@@ -152,7 +154,7 @@ class CustomSnap extends olInteractionSnap {
  * This method can be called to make sure the Snap interactions are on top.
  *
  */
-EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function() {
+EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function () {
   const map = this.map_;
   console.assert(map);
 
@@ -167,13 +169,11 @@ EditingSnappingService.prototype.ensureSnapInteractionsOnTop = function() {
   }
 };
 
-
 /**
  * Bind the snapping service to a map
  * @param {?import("ol/Map.js").default} map Map
  */
-EditingSnappingService.prototype.setMap = function(map) {
-
+EditingSnappingService.prototype.setMap = function (map) {
   const keys = this.listenerKeys_;
 
   if (this.map_) {
@@ -186,20 +186,23 @@ EditingSnappingService.prototype.setMap = function(map) {
   this.map_ = map;
 
   if (map) {
-    this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(() => {
-      if (this.gmfTreeManager_.rootCtrl) {
-        return this.gmfTreeManager_.rootCtrl.children;
-      }
-    }, (value) => {
-      // Timeout required, because the collection event is fired before the
-      // leaf nodes are created and they are the ones we're looking for here.
-      this.timeout_(() => {
-        if (value) {
-          this.unregisterAllTreeCtrl_();
-          this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
+    this.treeCtrlsUnregister_ = this.rootScope_.$watchCollection(
+      () => {
+        if (this.gmfTreeManager_.rootCtrl) {
+          return this.gmfTreeManager_.rootCtrl.children;
         }
-      }, 0);
-    });
+      },
+      (value) => {
+        // Timeout required, because the collection event is fired before the
+        // leaf nodes are created and they are the ones we're looking for here.
+        this.timeout_(() => {
+          if (value) {
+            this.unregisterAllTreeCtrl_();
+            this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
+          }
+        }, 0);
+      }
+    );
 
     keys.push(
       olEvents.listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
@@ -208,19 +211,17 @@ EditingSnappingService.prototype.setMap = function(map) {
   }
 };
 
-
 /**
  * Called when the themes change. Get the OGC servers, then listen to the
  * tree manager Layertree controllers array changes.
  * @private
  */
-EditingSnappingService.prototype.handleThemesChange_ = function() {
+EditingSnappingService.prototype.handleThemesChange_ = function () {
   this.ogcServers_ = null;
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
   });
 };
-
 
 /**
  * Registers a newly added Layertree controller 'leaf'. If it's snappable,
@@ -231,8 +232,7 @@ EditingSnappingService.prototype.handleThemesChange_ = function() {
  *    register
  * @private
  */
-EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
-
+EditingSnappingService.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // Skip any Layertree controller that has a node that is not a leaf
   let node = /** @type {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
   const groupNode = /** @type import('gmf/themes.js').GmfGroup */ (node);
@@ -267,7 +267,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
         snappingConfig: snappingConfig,
         treeCtrl: treeCtrl,
         wfsConfig: wfsConfig,
-        stateWatcherUnregister: stateWatcherUnregister
+        stateWatcherUnregister: stateWatcherUnregister,
       };
 
       // This extra call is to initialize the treeCtrl with its current state
@@ -276,14 +276,13 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function(treeCtrl) {
   }
 };
 
-
 /**
  * Unregisters all removed layertree controllers 'leaf'. Remove the according
  * cache item and deactivate it as well. Unregister events.
  *
  * @private
  */
-EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
+EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function () {
   for (const uid in this.cache_) {
     const item = this.cache_[uid];
     if (item) {
@@ -294,7 +293,6 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
   }
 };
 
-
 /**
  * Get the OGC server.
  *
@@ -302,7 +300,7 @@ EditingSnappingService.prototype.unregisterAllTreeCtrl_ = function() {
  * @return {?import('gmf/themes.js').GmfOgcServer} The OGC server.
  * @private
  */
-EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
+EditingSnappingService.prototype.getOGCServer_ = function (treeCtrl) {
   const gmfLayer = /** @type {import('gmf/themes.js').GmfLayer} */ (treeCtrl.node);
   if (gmfLayer.type !== ThemeNodeType.WMS) {
     return null;
@@ -324,7 +322,6 @@ EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
   return this.ogcServers_[ogcServerName];
 };
 
-
 /**
  * Get the configuration required to do WFS requests (for snapping purpose)
  * from a Layertree controller that has a leaf node.
@@ -342,8 +339,7 @@ EditingSnappingService.prototype.getOGCServer_ = function(treeCtrl) {
  * @return {?WFSConfig} The configuration object.
  * @private
  */
-EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
-
+EditingSnappingService.prototype.getWFSConfig_ = function (treeCtrl) {
   // (1)
   if (this.ogcServers_ === null) {
     return null;
@@ -382,18 +378,16 @@ EditingSnappingService.prototype.getWFSConfig_ = function(treeCtrl) {
 
   return {
     featureTypes: featureTypes.join(','),
-    url: urlWfs
+    url: urlWfs,
   };
 };
-
 
 /**
  * @param {import("ngeo/layertree/Controller.js").LayertreeController} treeCtrl The layer tree controller
  * @param {string|undefined} newVal New state value
  * @private
  */
-EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function(treeCtrl, newVal) {
-
+EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function (treeCtrl, newVal) {
   const uid = olUtilGetUid(treeCtrl);
   const item = this.cache_[uid];
 
@@ -406,7 +400,6 @@ EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function(treeCtrl,
   }
 };
 
-
 /**
  * Activate a cache item by adding a Snap interaction to the map and launch
  * the initial request to get the features.
@@ -414,8 +407,7 @@ EditingSnappingService.prototype.handleTreeCtrlStateChange_ = function(treeCtrl,
  * @param {CacheItem} item Cache item.
  * @private
  */
-EditingSnappingService.prototype.activateItem_ = function(item) {
-
+EditingSnappingService.prototype.activateItem_ = function (item) {
   // No need to do anything if item is already active
   if (item.active) {
     return;
@@ -428,7 +420,7 @@ EditingSnappingService.prototype.activateItem_ = function(item) {
     edge: item.snappingConfig.edge,
     features: item.features,
     pixelTolerance: item.snappingConfig.tolerance,
-    vertex: item.snappingConfig.vertex
+    vertex: item.snappingConfig.vertex,
   });
 
   map.addInteraction(interaction);
@@ -440,7 +432,6 @@ EditingSnappingService.prototype.activateItem_ = function(item) {
   this.loadItemFeatures_(item);
 };
 
-
 /**
  * Deactivate a cache item by removing the snap interaction and clearing any
  * existing features.
@@ -448,8 +439,7 @@ EditingSnappingService.prototype.activateItem_ = function(item) {
  * @param {CacheItem} item Cache item.
  * @private
  */
-EditingSnappingService.prototype.deactivateItem_ = function(item) {
-
+EditingSnappingService.prototype.deactivateItem_ = function (item) {
   // No need to do anything if item is already inactive
   if (!item.active) {
     return;
@@ -474,11 +464,10 @@ EditingSnappingService.prototype.deactivateItem_ = function(item) {
   this.refreshSnappingSource_();
 };
 
-
 /**
  * @private
  */
-EditingSnappingService.prototype.loadAllItems_ = function() {
+EditingSnappingService.prototype.loadAllItems_ = function () {
   this.mapViewChangePromise_ = null;
   let item;
   for (const uid in this.cache_) {
@@ -489,14 +478,12 @@ EditingSnappingService.prototype.loadAllItems_ = function() {
   }
 };
 
-
 /**
  * Manually refresh all features
  */
-EditingSnappingService.prototype.refresh = function() {
+EditingSnappingService.prototype.refresh = function () {
   this.loadAllItems_();
 };
-
 
 /**
  * For a specific cache item, issue a new WFS GetFeatures request. The returned
@@ -506,8 +493,7 @@ EditingSnappingService.prototype.refresh = function() {
  * @param {CacheItem} item Cache item.
  * @private
  */
-EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
-
+EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
   // If a previous request is still running, cancel it.
   if (item.requestDeferred) {
     item.requestDeferred.resolve();
@@ -532,7 +518,7 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
     outputFormat: 'GML3',
     bbox: extent,
     geometryName: item.geometryName,
-    maxFeatures: item.maxFeatures
+    maxFeatures: item.maxFeatures,
   };
 
   const wfsFormat = new olFormatWFS();
@@ -543,34 +529,31 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
 
   item.requestDeferred = this.q_.defer();
 
-  this.http_.post(url, featureRequest, {timeout: item.requestDeferred.promise})
-    .then((response) => {
-      // (1) Unset requestDeferred
-      item.requestDeferred = null;
+  this.http_.post(url, featureRequest, {timeout: item.requestDeferred.promise}).then((response) => {
+    // (1) Unset requestDeferred
+    item.requestDeferred = null;
 
-      // (2) Clear any previous features in the item
-      item.features.clear();
+    // (2) Clear any previous features in the item
+    item.features.clear();
 
-      // (3) Read features from request response and add them to the item
-      const readFeatures = new olFormatWFS().readFeatures(response.data);
-      if (readFeatures) {
-        if (item.snappingConfig.invertXY) {
-          readFeatures.forEach(f => {
-            const geom = f.getGeometry();
-            if (geom) {
-              const coordinates = geom.getCoordinates();
-              this.switchXY_(coordinates);
-              f.getGeometry().setCoordinates(coordinates);
-            }
-          });
-        }
-        item.features.extend(readFeatures);
-        this.refreshSnappingSource_();
+    // (3) Read features from request response and add them to the item
+    const readFeatures = new olFormatWFS().readFeatures(response.data);
+    if (readFeatures) {
+      if (item.snappingConfig.invertXY) {
+        readFeatures.forEach((f) => {
+          const geom = f.getGeometry();
+          if (geom) {
+            const coordinates = geom.getCoordinates();
+            this.switchXY_(coordinates);
+            f.getGeometry().setCoordinates(coordinates);
+          }
+        });
       }
-    });
-
+      item.features.extend(readFeatures);
+      this.refreshSnappingSource_();
+    }
+  });
 };
-
 
 /**
  * Change the order of xy. This is to deal with the GML output format
@@ -581,9 +564,10 @@ EditingSnappingService.prototype.loadItemFeatures_ = function(item) {
  * @return coordinates OpenLayers coordinates
  * @private
  */
-EditingSnappingService.prototype.switchXY_ = function(coordinates) {
-  return Array.isArray(coordinates[0]) ? coordinates.forEach(this.switchXY_) :
-    [coordinates[0], coordinates[1]] = [coordinates[1], coordinates[0]];
+EditingSnappingService.prototype.switchXY_ = function (coordinates) {
+  return Array.isArray(coordinates[0])
+    ? coordinates.forEach(this.switchXY_)
+    : ([coordinates[0], coordinates[1]] = [coordinates[1], coordinates[0]]);
 };
 
 /**
@@ -591,20 +575,17 @@ EditingSnappingService.prototype.switchXY_ = function(coordinates) {
  * delay. Cancel any currently delayed call, if required.
  * @private
  */
-EditingSnappingService.prototype.handleMapMoveEnd_ = function() {
+EditingSnappingService.prototype.handleMapMoveEnd_ = function () {
   if (this.mapViewChangePromise_) {
     this.timeout_.cancel(this.mapViewChangePromise_);
   }
-  this.mapViewChangePromise_ = this.timeout_(
-    this.loadAllItems_.bind(this),
-    400
-  );
+  this.mapViewChangePromise_ = this.timeout_(this.loadAllItems_.bind(this), 400);
 };
 
 /**
  * @private
  */
-EditingSnappingService.prototype.refreshSnappingSource_ = function() {
+EditingSnappingService.prototype.refreshSnappingSource_ = function () {
   this.ngeoSnappingSource_.clear();
   for (const uid in this.cache_) {
     const item = this.cache_[uid];
@@ -617,7 +598,6 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function() {
 /**
  * @typedef {Object<number, CacheItem>} Cache
  */
-
 
 /**
  * @typedef {Object} CacheItem
@@ -635,13 +615,11 @@ EditingSnappingService.prototype.refreshSnappingSource_ = function() {
  * @property {WFSConfig} wfsConfig
  */
 
-
 /**
  * @typedef {Object} WFSConfig
  * @property {string} featureTypes
  * @property {string} url
  */
-
 
 /**
  * @type {!angular.IModule}
@@ -653,6 +631,5 @@ const module = angular.module('gmfSnapping', [
   ngeoLayertreeController.name,
 ]);
 module.service('gmfSnapping', EditingSnappingService);
-
 
 export default module;

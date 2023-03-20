@@ -5,14 +5,8 @@ import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent.js';
 import ngeoMiscTime from 'ngeo/misc/Time.js';
 import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC.js';
 
-
 /** @type {!angular.IModule} **/
-const module = angular.module('app', [
-  'gettext',
-  ngeoMiscDatepickerComponent.name,
-  ngeoMiscTime.name,
-]);
-
+const module = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscTime.name]);
 
 /**
  * @constructor
@@ -20,7 +14,6 @@ const module = angular.module('app', [
  * @ngInject
  */
 function MainController(ngeoTime) {
-
   /**
    * @type {import("ngeo/misc/Time.js").default}
    * @private
@@ -37,7 +30,7 @@ function MainController(ngeoTime) {
     maxDefValue: null,
     minDefValue: null,
     mode: TimePropertyModeEnum.RANGE,
-    interval: [0, 1, 0, 0]
+    interval: [0, 1, 0, 0],
   };
 
   /**
@@ -50,7 +43,7 @@ function MainController(ngeoTime) {
     maxDefValue: null,
     minDefValue: null,
     mode: TimePropertyModeEnum.VALUE,
-    interval: [0, 1, 0, 0]
+    interval: [0, 1, 0, 0],
   };
 
   /**
@@ -63,17 +56,15 @@ function MainController(ngeoTime) {
    */
   this.rangeValue;
 
-  this.onDateSelected = function(date) {
+  this.onDateSelected = function (date) {
     this.value = date;
   };
 
-  this.onDateRangeSelected = function(date) {
+  this.onDateRangeSelected = function (date) {
     this.rangeValue = date;
   };
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

@@ -29,8 +29,8 @@
   top: -10px;
   left: -10px;
   border: 2px solid #fff;
-  -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
-  box-shadow: rgba(0,0,0,0.3) 0 1px 3px 0;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px 0;
   z-index: 11;
 }
 .ngeo-colorpicker-palette td.ngeo-colorpicker-selected > div::after {
@@ -67,15 +67,15 @@ span.twitter-typeahead {
     width: auto;
   }
 }
-.gmf-search > .gmf-clear-button{
+.gmf-search > .gmf-clear-button {
   margin-left: -15px;
   padding: 3px 0 2px;
   position: relative;
 }
-.gmf-search > .gmf-clear-button:hover{
+.gmf-search > .gmf-clear-button:hover {
   cursor: pointer;
 }
-.gmf-search > .gmf-clear-button:after{
+.gmf-search > .gmf-clear-button:after {
   content: 'x';
 }
 /* CSS stolen from https://github.com/bassjobsen/typeahead.js-bootstrap-css/ */
@@ -102,8 +102,8 @@ span.twitter-typeahead .tt-menu {
   background-clip: padding-box;
 }
 span.twitter-typeahead .header {
- background-color: #CCDDEE;
- padding: 4px 0;
+  background-color: #ccddee;
+  padding: 4px 0;
 }
 span.twitter-typeahead .tt-suggestion {
   display: block;

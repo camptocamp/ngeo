@@ -37,12 +37,10 @@ describe('gmf.authentication.Service', () => {
     const spy = jasmine.createSpy();
     /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event;
-    olEvents.listenOnce(
-      gmfAuthentication, 'ready', (evt) => {
-        event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
-        spy();
-      }
-    );
+    olEvents.listenOnce(gmfAuthentication, 'ready', (evt) => {
+      event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
+      spy();
+    });
 
     $httpBackend.when('GET', isLoggedInUrl).respond({});
 
@@ -59,11 +57,10 @@ describe('gmf.authentication.Service', () => {
     const spy = jasmine.createSpy();
     /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */
     let event;
-    olEvents.listenOnce(
-      gmfAuthentication, 'login', (evt) => {
-        event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */(evt);
-        spy();
-      });
+    olEvents.listenOnce(gmfAuthentication, 'login', (evt) => {
+      event = /** @type {import('gmf/authentication/Service.js').AuthenticationEvent} */ (evt);
+      spy();
+    });
 
     $httpBackend.when('POST', loginUrl).respond({'username': 'user'});
 
@@ -78,8 +75,7 @@ describe('gmf.authentication.Service', () => {
 
   it('trys to login with wrong credentials', () => {
     const spy = jasmine.createSpy();
-    olEvents.listenOnce(
-      gmfAuthentication, 'login', spy);
+    olEvents.listenOnce(gmfAuthentication, 'login', spy);
 
     $httpBackend.when('POST', loginUrl).respond({});
 
@@ -91,8 +87,7 @@ describe('gmf.authentication.Service', () => {
 
   it('logs out', () => {
     const spy = jasmine.createSpy();
-    olEvents.listenOnce(
-      gmfAuthentication, 'logout', spy);
+    olEvents.listenOnce(gmfAuthentication, 'logout', spy);
 
     $httpBackend.when('GET', logoutUrl).respond('true');
 

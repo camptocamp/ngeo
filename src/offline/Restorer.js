@@ -1,9 +1,7 @@
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr.js';
 import angular from 'angular';
 
-
 class Restorer {
-
   /**
    * @ngInject
    * @param {import("ngeo/offline/Configuration.js").default}
@@ -30,8 +28,9 @@ class Restorer {
    * @return {Promise<import("ol/extent.js").Extent>} A promise to the extent of the restored area.
    */
   restore(map) {
-    return this.configuration_.getItem('offline_content').then(
-      offlineContent => this.doRestore(map, offlineContent));
+    return this.configuration_
+      .getItem('offline_content')
+      .then((offlineContent) => this.doRestore(map, offlineContent));
   }
 
   /**
@@ -56,11 +55,8 @@ class Restorer {
 }
 
 const name = 'ngeoOfflineRestorer';
-Restorer.module = angular.module(name, [
-  ngeoMapBackgroundLayerMgr.name
-]).service(name, Restorer);
+Restorer.module = angular.module(name, [ngeoMapBackgroundLayerMgr.name]).service(name, Restorer);
 
 const exports = Restorer;
-
 
 export default exports;

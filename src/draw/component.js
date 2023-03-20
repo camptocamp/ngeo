@@ -8,7 +8,6 @@ import ngeoMeasureArea from 'ngeo/measure/area.js';
 import ngeoMeasureAzimut from 'ngeo/measure/azimut.js';
 import ngeoMeasureLength from 'ngeo/measure/length.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -22,7 +21,6 @@ const module = angular.module('ngeoDrawfeature', [
   ngeoMeasureAzimut.name,
   ngeoMeasureLength.name,
 ]);
-
 
 /**
  * Directive used to draw vector features on a map.
@@ -105,12 +103,11 @@ function drawComponent() {
       'active': '=ngeoDrawfeatureActive',
       'features': '=?ngeoDrawfeatureFeatures',
       'map': '=ngeoDrawfeatureMap',
-      'showMeasure': '=?ngeoDrawfeatureShowmeasure'
-    }
+      'showMeasure': '=?ngeoDrawfeatureShowmeasure',
+    },
   };
 }
 
 module.directive('ngeoDrawfeature', drawComponent);
-
 
 export default module;

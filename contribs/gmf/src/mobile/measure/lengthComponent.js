@@ -3,17 +3,14 @@ import ngeoMiscFilters from 'ngeo/misc/filters.js';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile.js';
 import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
  */
-const module = angular.module('gmfMobileMeasureLength', [
-  ngeoMiscFilters.name,
-]);
+const module = angular.module('gmfMobileMeasureLength', [ngeoMiscFilters.name]);
 
-
-module.value('gmfMobileMeasureLengthTemplateUrl',
+module.value(
+  'gmfMobileMeasureLengthTemplateUrl',
   /**
    * @param {JQuery} element Element.
    * @param {angular.IAttributes} attrs Attributes.
@@ -21,15 +18,16 @@ module.value('gmfMobileMeasureLengthTemplateUrl',
    */
   (element, attrs) => {
     const templateUrl = attrs['gmfMobileMeasureLengthTemplateurl'];
-    return templateUrl !== undefined ? templateUrl :
-      'gmf/measure/lengthComponent';
-  });
+    return templateUrl !== undefined ? templateUrl : 'gmf/measure/lengthComponent';
+  }
+);
 
-module.run(/* @ngInject */ ($templateCache) => {
-  // @ts-ignore: webpack
-  $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
-});
-
+module.run(
+  /* @ngInject */ ($templateCache) => {
+    // @ts-ignore: webpack
+    $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
+  }
+);
 
 /**
  * Provide a directive to do a length measure on the mobile devices.
@@ -61,7 +59,7 @@ function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
       'active': '=gmfMobileMeasurelengthActive',
       'precision': '<?gmfMobileMeasurelengthPrecision',
       'map': '=gmfMobileMeasurelengthMap',
-      'sketchStyle': '=?gmfMobileMeasurelengthSketchstyle'
+      'sketchStyle': '=?gmfMobileMeasurelengthSketchstyle',
     },
     controller: 'GmfMobileMeasureLengthController as ctrl',
     bindToController: true,
@@ -74,13 +72,11 @@ function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
      */
     link: (scope, element, attrs, controller) => {
       controller.init();
-    }
+    },
   };
 }
 
-
 module.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
-
 
 /**
  * @private
@@ -107,9 +103,11 @@ class Controller extends MeasueMobileBaseController {
    */
   init() {
     this.measure = new ngeoInteractionMeasureLengthMobile(
-      this.filter('ngeoUnitPrefix'), this.gettextCatalog, {
+      this.filter('ngeoUnitPrefix'),
+      this.gettextCatalog,
+      {
         precision: this.precision,
-        sketchStyle: this.sketchStyle
+        sketchStyle: this.sketchStyle,
       }
     );
 
@@ -146,6 +144,5 @@ class Controller extends MeasueMobileBaseController {
 }
 
 module.controller('GmfMobileMeasureLengthController', Controller);
-
 
 export default module;

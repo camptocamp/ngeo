@@ -13,5 +13,5 @@ export default {
   /**
    * @type {string}
    */
-  OR: '||'
+  OR: '||',
 };

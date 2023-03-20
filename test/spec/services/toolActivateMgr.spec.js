@@ -95,5 +95,4 @@ describe('ngeo.misc.ToolActivateMgr', () => {
     $rootScope.$digest();
     expect(tool1.getActive()).toBe(true);
   });
-
 });

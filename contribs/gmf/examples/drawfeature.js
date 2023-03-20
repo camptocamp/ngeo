@@ -14,7 +14,6 @@ import olView from 'ol/View.js';
 import olLayerTile from 'ol/layer/Tile.js';
 import olSourceOSM from 'ol/source/OSM.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -28,15 +27,10 @@ const module = angular.module('gmfapp', [
   ngeoMiscToolActivateMgr.name,
 ]);
 
-
-module.value('ngeoExportFeatureFormats', [
-  FeatureFormatType.KML,
-  FeatureFormatType.GPX
-]);
+module.value('ngeoExportFeatureFormats', [FeatureFormatType.KML, FeatureFormatType.GPX]);
 
 module.constant('defaultTheme', 'Demo');
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @param {!angular.IScope} $scope Angular scope.
@@ -50,9 +44,7 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @constructor
  * @ngInject
  */
-function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
-  ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
-
+function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivateMgr, ngeoFeatureOverlayMgr) {
   /**
    * @type {!angular.IScope}
    * @private
@@ -61,7 +53,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
 
   const view = new olView({
     center: [0, 0],
-    zoom: 3
+    zoom: 3,
   });
 
   ngeoFeatureHelper.setProjection(view.getProjection());
@@ -75,10 +67,10 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
   this.map = new olMap({
     layers: [
       new olLayerTile({
-        source: new olSourceOSM()
-      })
+        source: new olSourceOSM(),
+      }),
     ],
-    view: view
+    view: view,
   });
 
   /**
@@ -86,20 +78,16 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
    */
   this.drawFeatureActive = true;
 
-  const drawFeatureToolActivate = new ngeoMiscToolActivate(
-    this, 'drawFeatureActive');
-  ngeoToolActivateMgr.registerTool(
-    'mapTools', drawFeatureToolActivate, true);
+  const drawFeatureToolActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
+  ngeoToolActivateMgr.registerTool('mapTools', drawFeatureToolActivate, true);
 
   /**
    * @type {boolean}
    */
   this.pointerMoveActive = false;
 
-  const pointerMoveToolActivate = new ngeoMiscToolActivate(
-    this, 'pointerMoveActive');
-  ngeoToolActivateMgr.registerTool(
-    'mapTools', pointerMoveToolActivate, false);
+  const pointerMoveToolActivate = new ngeoMiscToolActivate(this, 'pointerMoveActive');
+  ngeoToolActivateMgr.registerTool('mapTools', pointerMoveToolActivate, false);
 
   $scope.$watch(
     () => this.pointerMoveActive,
@@ -120,29 +108,24 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures,
   // initialize tooltips
   $('[data-toggle="tooltip"]').tooltip({
     container: 'body',
-    trigger: 'hover'
+    trigger: 'hover',
   });
 }
-
 
 /**
  * @param {import("ol/MapBrowserEvent.js").default} evt MapBrowser event
  * @private
  */
-MainController.prototype.handleMapPointerMove_ = function(evt) {
+MainController.prototype.handleMapPointerMove_ = function (evt) {
   const pixel = evt.pixel;
 
-  const feature = this.map.forEachFeatureAtPixel(pixel, feature => feature);
+  const feature = this.map.forEachFeatureAtPixel(pixel, (feature) => feature);
 
-  $('#pointermove-feature').html(
-    (feature) ? feature.get(ngeoFormatFeatureProperties.NAME) : 'None'
-  );
+  $('#pointermove-feature').html(feature ? feature.get(ngeoFormatFeatureProperties.NAME) : 'None');
 
   this.scope_.$apply();
 };
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

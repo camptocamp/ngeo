@@ -6,16 +6,11 @@ import gmfThemeModule from 'gmf/theme/module.js';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager.js';
 
 /** @type {!angular.IModule} **/
-const module = angular.module('gmfapp', [
-  'gettext',
-  gmfLayertreeTreeManager.name,
-  gmfThemeModule.name,
-]);
+const module = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
 
 module.value('gmfTreeUrl', appURL.GMF_THEMES);
 
 module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
-
 
 /**
  * @constructor
@@ -25,12 +20,11 @@ module.constant('angularLocaleScript', '../build/angular-locale_{{locale}}.js');
  * @ngInject
  */
 function MainController($http, gmfThemes, gmfThemeManager) {
-
   /**
    * @param {import('gmf/themes.js').GmfTheme} theme Theme.
    * @return {boolean} Theme is 'Enseignement'
    */
-  this.filter = function(theme) {
+  this.filter = function (theme) {
     return theme.name !== 'Enseignement';
   };
 
@@ -42,8 +36,6 @@ function MainController($http, gmfThemes, gmfThemeManager) {
   gmfThemes.loadThemes();
 }
 
-
 module.controller('MainController', MainController);
-
 
 export default module;

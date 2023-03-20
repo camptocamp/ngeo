@@ -114,7 +114,6 @@ export function encodeQueryString(queryData) {
   return queryItem.join('&');
 }
 
-
 /**
  * Delete condition passed to the modify interaction
  * @param {import("ol/MapBrowserEvent.js").default} event Browser event.

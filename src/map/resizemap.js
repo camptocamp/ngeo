@@ -1,7 +1,6 @@
 import angular from 'angular';
 import olMap from 'ol/Map.js';
 
-
 /**
  * @type {!angular.IModule}
  * @hidden
@@ -74,12 +73,10 @@ function mapResizeComponent($window) {
           animationDelayKey = $window.requestAnimationFrame(animationDelay);
         }
       });
-    }
+    },
   };
 }
 
-
 module.directive('ngeoResizemap', mapResizeComponent);
-
 
 export default module;

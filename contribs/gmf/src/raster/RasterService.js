@@ -13,7 +13,6 @@ import angular from 'angular';
  * @hidden
  */
 export function RasterService($http, gmfRasterUrl) {
-
   /**
    * @type {angular.IHttpService}
    * @private
@@ -27,43 +26,40 @@ export function RasterService($http, gmfRasterUrl) {
   this.url_ = gmfRasterUrl;
 }
 
-
 /**
  * @enum {string}
  * @hidden
  */
 const Param = {
   X: 'lon',
-  Y: 'lat'
+  Y: 'lat',
 };
-
 
 /**
  * @param {import("ol/coordinate.js").Coordinate} coordinate Coordinate.
  * @param {Object=} opt_params Optional parameters for the request.
  * @return {angular.IPromise} Promise.
  */
-RasterService.prototype.getRaster = function(coordinate, opt_params) {
-
+RasterService.prototype.getRaster = function (coordinate, opt_params) {
   const params = opt_params || {};
   params[Param.X] = coordinate[0];
   params[Param.Y] = coordinate[1];
 
-  return this.$http_.get(this.url_, {
-    params
-  }).then(this.handleGetRaster_.bind(this));
+  return this.$http_
+    .get(this.url_, {
+      params,
+    })
+    .then(this.handleGetRaster_.bind(this));
 };
-
 
 /**
  * @param {angular.IHttpResponse} resp Ajax response.
  * @return {Object.<string, number>} The response object.
  * @private
  */
-RasterService.prototype.handleGetRaster_ = function(resp) {
+RasterService.prototype.handleGetRaster_ = function (resp) {
   return resp.data;
 };
-
 
 /**
  * @type {!angular.IModule}
@@ -71,6 +67,5 @@ RasterService.prototype.handleGetRaster_ = function(resp) {
  */
 const module = angular.module('gmfRaster', []);
 module.service('gmfRaster', RasterService);
-
 
 export default module;

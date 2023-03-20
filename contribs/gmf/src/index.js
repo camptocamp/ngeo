@@ -18,7 +18,6 @@ export const EXTERNALLAYERGROUP_NAME = 'external';
  */
 export const COORDINATES_LAYER_NAME = 'gmfCoordinatesLayerName';
 
-
 /**
  * @enum {string}
  * @hidden
@@ -37,5 +36,5 @@ export const PermalinkParam = {
   TREE_GROUPS: 'tree_groups',
   WFS_LAYER: 'wfs_layer',
   WFS_NGROUPS: 'wfs_ngroups',
-  WFS_SHOW_FEATURES: 'wfs_showFeatures'
+  WFS_SHOW_FEATURES: 'wfs_showFeatures',
 };

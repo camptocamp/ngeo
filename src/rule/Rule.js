@@ -1,6 +1,5 @@
 import * as olEvents from 'ol/events.js';
 
-
 /**
  * @typedef {Object} RuleOptions
  * @property {boolean} [active=false] Whether the rule is active or not. Used by the `ngeo-rule` component.
@@ -17,7 +16,6 @@ import * as olEvents from 'ol/events.js';
  * @property {number} [upperBoundary] The upper boundary of the rule. The expression and boundaries are
  *    mutually exclusives.
  */
-
 
 /**
  * @typedef {Object} RuleBaseValue
@@ -42,7 +40,6 @@ import * as olEvents from 'ol/events.js';
  * @property {string} propertyName The property name of the rule value
  */
 
-
 /**
  * @enum {string}
  * @hidden
@@ -55,9 +52,8 @@ export const RuleOperatorType = {
   LESSER_THAN: '<',
   LESSER_THAN_OR_EQUAL_TO: '<=',
   LIKE: '~',
-  NOT_EQUAL_TO: '!='
+  NOT_EQUAL_TO: '!=',
 };
-
 
 /**
  * @enum {string}
@@ -66,9 +62,8 @@ export const RuleOperatorType = {
 export const RuleSpatialOperatorType = {
   CONTAINS: 'contains',
   INTERSECTS: 'intersects',
-  WITHIN: 'within'
+  WITHIN: 'within',
 };
-
 
 /**
  * @enum {string}
@@ -78,15 +73,13 @@ export const RuleTemporalOperatorType = {
   BEGINS: 'time_start',
   DURING: 'time_during',
   ENDS: 'time_end',
-  EQUALS: 'time_equal'
+  EQUALS: 'time_equal',
 };
-
 
 /**
  * @hidden
  */
 export default class Rule {
-
   /**
    * The abstract class for all filter rules.
    *
@@ -111,7 +104,6 @@ export default class Rule {
    * @param {!RuleOptions} options Options.
    */
   constructor(options) {
-
     // === DYNAMIC properties (i.e. that can change / be watched ===
 
     /**
@@ -154,7 +146,6 @@ export default class Rule {
      */
     this.upperBoundary = options.upperBoundary !== undefined ? options.upperBoundary : null;
 
-
     // === STATIC properties (i.e. that never change) ===
 
     /**
@@ -192,7 +183,6 @@ export default class Rule {
      */
     this.type_ = options.type;
 
-
     // === Other properties ===
 
     /**
@@ -200,7 +190,6 @@ export default class Rule {
      * @protected
      */
     this.listenerKeys = [];
-
   }
 
   /**
@@ -275,14 +264,13 @@ export default class Rule {
     const upperBoundary = this.upperBoundary;
 
     if (operator) {
-      if (operator === RuleOperatorType.BETWEEN ||
-          operator === RuleTemporalOperatorType.DURING) {
+      if (operator === RuleOperatorType.BETWEEN || operator === RuleTemporalOperatorType.DURING) {
         if (lowerBoundary !== null && upperBoundary !== null) {
           value = {
             operator,
             lowerBoundary,
             propertyName,
-            upperBoundary
+            upperBoundary,
           };
         }
       } else {
@@ -290,7 +278,7 @@ export default class Rule {
           value = {
             expression,
             operator,
-            propertyName
+            propertyName,
           };
         }
       }

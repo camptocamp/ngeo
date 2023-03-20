@@ -9,5 +9,5 @@ import ngeoGeolocationMobile from 'ngeo/geolocation/mobile.js';
  */
 export default angular.module('ngeoGeolocationExtraModule', [
   ngeoGeolocationDesktop.name,
-  ngeoGeolocationMobile.name
+  ngeoGeolocationMobile.name,
 ]);

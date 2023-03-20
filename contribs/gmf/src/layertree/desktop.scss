@@ -19,7 +19,6 @@ gmf-layertree {
 }
 
 .gmf-layertree-node {
-
   .gmf-layertree-right-buttons {
     display: none;
     cursor: pointer;
@@ -92,12 +91,12 @@ gmf-layertree {
     left: 0;
     top: 0;
     height: 100%;
-    width : $app-margin;
+    width: $app-margin;
     margin: 0.12rem 0 0;
   }
 
   .gmf-layertree-sortable-handle-icon {
-    color:#555;
+    color: #555;
     visibility: hidden;
     position: absolute;
     top: 50%;

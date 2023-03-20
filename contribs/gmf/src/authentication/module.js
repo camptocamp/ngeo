@@ -10,5 +10,5 @@ import gmfAuthenticationService from 'gmf/authentication/Service.js';
  */
 export default angular.module('gmfAuthenticationModule', [
   gmfAuthenticationComponent.name,
-  gmfAuthenticationService.name
+  gmfAuthenticationService.name,
 ]);

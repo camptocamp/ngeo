@@ -32,7 +32,6 @@ import olStyleStroke from 'ol/style/Stroke.js';
 import olStyleStyle from 'ol/style/Style.js';
 import {ThemeEventType} from 'gmf/theme/Manager.js';
 
-
 /**
  * A part of the application config.
  *
@@ -47,7 +46,6 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
  * @property {import("ol/Collection.js").default.<import('"ol/interaction/Interaction.js').default>|Array.<import('ol/interaction/Interaction.js').default>} [mapInteractions]
  * @property {number} [mapPixelRatio]
  */
-
 
 /**
  * Application abstract controller.
@@ -67,7 +65,6 @@ import {ThemeEventType} from 'gmf/theme/Manager.js';
  * @ngInject
  */
 export function AbstractAppController(config, map, $scope, $injector) {
-
   /**
    * Location service
    * @type {import("ngeo/statemanager/Location.js").StatemanagerLocation}
@@ -153,7 +150,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @private
    */
-  this.updateHasEditableLayers_ = function() {
+  this.updateHasEditableLayers_ = function () {
     this.gmfThemes_.hasEditableLayers().then((hasEditableLayers) => {
       this.hasEditableLayers = hasEditableLayers;
     });
@@ -182,17 +179,21 @@ export function AbstractAppController(config, map, $scope, $injector) {
     const gettextCatalog = $injector.get('gettextCatalog');
     this.loginInfoMessage = gettextCatalog.getString(
       'Some layers in this link are not accessible to unauthenticated users. ' +
-      'Please log in to see whole data.');
+        'Please log in to see whole data.'
+    );
     this.loginRedirectUrl = args.url;
     this.loginActive = true;
 
-    const unbind = $scope.$watch(() => this.loginActive, () => {
-      if (!this.loginActive) {
-        this.loginInfoMessage = null;
-        this.loginRedirectUrl = null;
-        unbind();
+    const unbind = $scope.$watch(
+      () => this.loginActive,
+      () => {
+        if (!this.loginActive) {
+          this.loginInfoMessage = null;
+          this.loginRedirectUrl = null;
+          unbind();
+        }
       }
-    });
+    );
   });
 
   /**
@@ -208,18 +209,18 @@ export function AbstractAppController(config, map, $scope, $injector) {
     const functionalities = this.gmfUser.functionalities;
 
     // Enable filter tool in toolbar
-    if (functionalities &&
+    if (
+      functionalities &&
       functionalities.filterable_layers &&
-      functionalities.filterable_layers.length > 0) {
+      functionalities.filterable_layers.length > 0
+    ) {
       this.filterSelectorEnabled = true;
     }
 
     // Open filter panel if 'open_panel' is set in functionalities and
     // has 'layer_filter' as first value
     this.gmfThemes_.getThemesObject().then((themes) => {
-      if (functionalities &&
-          functionalities.open_panel &&
-          functionalities.open_panel[0] === 'layer_filter') {
+      if (functionalities && functionalities.open_panel && functionalities.open_panel[0] === 'layer_filter') {
         this.filterSelectorActive = true;
       }
     });
@@ -246,14 +247,16 @@ export function AbstractAppController(config, map, $scope, $injector) {
   /**
    * @type {Array<import('gmf/search/component.js').SearchComponentDatasource>}
    */
-  this.searchDatasources = [{
-    datasetTitle: undefined,
-    labelKey: 'label',
-    groupValues: /** @type {Array.<string>} **/ ($injector.get('gmfSearchGroups')),
-    groupActions: /** @type {Array.<string>} **/ ($injector.get('gmfSearchActions')),
-    projection: `EPSG:${config.srid || 21781}`,
-    url: /** @type {string} **/ ($injector.get('fulltextsearchUrl'))
-  }];
+  this.searchDatasources = [
+    {
+      datasetTitle: undefined,
+      labelKey: 'label',
+      groupValues: /** @type {Array.<string>} **/ ($injector.get('gmfSearchGroups')),
+      groupActions: /** @type {Array.<string>} **/ ($injector.get('gmfSearchActions')),
+      projection: `EPSG:${config.srid || 21781}`,
+      url: /** @type {string} **/ ($injector.get('fulltextsearchUrl')),
+    },
+  ];
 
   /**
    * @type {!Object.<string, string>}
@@ -287,9 +290,12 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.backgroundLayerMgr_ = $injector.get('ngeoBackgroundLayerMgr');
 
   // watch any change on dimensions object to refresh the background layer
-  $scope.$watchCollection(() => this.dimensions, () => {
-    this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
-  });
+  $scope.$watchCollection(
+    () => this.dimensions,
+    () => {
+      this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
+    }
+  );
 
   this.backgroundLayerMgr_.on('change', () => {
     this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
@@ -317,9 +323,9 @@ export function AbstractAppController(config, map, $scope, $injector) {
     image: new olStyleCircle({
       fill: queryFill,
       radius: 5,
-      stroke: queryStroke
+      stroke: queryStroke,
     }),
-    stroke: queryStroke
+    stroke: queryStroke,
   });
 
   /**
@@ -362,15 +368,18 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.ngeoMapQuerent_ = $injector.get('ngeoMapQuerent');
 
   // Don't deactivate ngeoQuery on print activation
-  $scope.$watch(() => this.printPanelActive, (newVal) => {
-    // Clear queries if another panel is open but not if user go back to the
-    // map form the print.
-    if (!newVal && !this.queryActive) {
-      this.ngeoMapQuerent_.clear();
+  $scope.$watch(
+    () => this.printPanelActive,
+    (newVal) => {
+      // Clear queries if another panel is open but not if user go back to the
+      // map form the print.
+      if (!newVal && !this.queryActive) {
+        this.ngeoMapQuerent_.clear();
+      }
+      this.queryAutoClear = !newVal;
+      this.printActive = newVal;
     }
-    this.queryAutoClear = !newVal;
-    this.printActive = newVal;
-  });
+  );
 
   /**
    * The active state of the directive responsible of area measurements.
@@ -508,7 +517,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * background layer.
    * @private
    */
-  this.updateCurrentBackgroundLayer_ = function(skipPermalink) {
+  this.updateCurrentBackgroundLayer_ = function (skipPermalink) {
     this.gmfThemes_.getBgLayers().then((layers) => {
       let background;
       if (!skipPermalink) {
@@ -522,7 +531,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
           const defaultBasemapArray = functionalities.default_basemap;
           if (defaultBasemapArray.length > 0) {
             const defaultBasemapLabel = defaultBasemapArray[0];
-            background = olArray.find(layers, layer => layer.get('label') === defaultBasemapLabel);
+            background = olArray.find(layers, (layer) => layer.get('label') === defaultBasemapLabel);
           }
         }
       }
@@ -547,7 +556,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    */
   const openPopup_ = (title, opt_width, opt_height, opt_apply) => {
-
     this.displaywindowTitle = title;
     this.displaywindowOpen = true;
 
@@ -579,9 +587,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {number=} opt_height CSS height.
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    */
-  gmfx.openIframePopup = (
-    url, title, opt_width, opt_height, opt_apply
-  ) => {
+  gmfx.openIframePopup = (url, title, opt_width, opt_height, opt_apply) => {
     this.displaywindowUrl = url;
     openPopup_(title, opt_width, opt_height, opt_apply);
   };
@@ -629,7 +635,7 @@ export function AbstractAppController(config, map, $scope, $injector) {
    * @param {number=} opt_height CSS height in pixel.
    * @param {boolean=} opt_apply If true, trigger the Angular digest loop. Default to true.
    */
-  cgxp.tools.openInfoWindow = function(url, title, opt_width, opt_height, opt_apply) {
+  cgxp.tools.openInfoWindow = function (url, title, opt_width, opt_height, opt_apply) {
     gmfx.openIframePopup(url, title, opt_width, opt_height, opt_apply);
   };
 
@@ -669,7 +675,6 @@ export function AbstractAppController(config, map, $scope, $injector) {
   this.displaywindowWidth = '50vw';
 }
 
-
 /**
  * @param {Array<import("ol/layer/Base.js").default>} layers Layers list.
  * @param {Array<string>} labels default_basemap list.
@@ -679,16 +684,15 @@ export function AbstractAppController(config, map, $scope, $injector) {
  */
 function getLayerByLabels(layers, labels) {
   if (labels && labels.length > 0) {
-    return olArray.find(layers, layer => layer.get('label') === labels[0]);
+    return olArray.find(layers, (layer) => layer.get('label') === labels[0]);
   }
   return null;
 }
 
-
 /**
  * @param {string} lang Language code.
  */
-AbstractAppController.prototype.switchLanguage = function(lang) {
+AbstractAppController.prototype.switchLanguage = function (lang) {
   console.assert(lang in this.langUrls);
   this.gettextCatalog.setCurrentLanguage(lang);
   this.gettextCatalog.loadRemote(this.langUrls[lang]);
@@ -696,20 +700,22 @@ AbstractAppController.prototype.switchLanguage = function(lang) {
   this.lang = lang;
 };
 
-
 /**
  */
-AbstractAppController.prototype.initLanguage = function() {
-  this.$scope.$watch(() => this.lang, (newValue) => {
-    this.stateManager.updateState({
-      'lang': newValue
-    });
-  });
+AbstractAppController.prototype.initLanguage = function () {
+  this.$scope.$watch(
+    () => this.lang,
+    (newValue) => {
+      this.stateManager.updateState({
+        'lang': newValue,
+      });
+    }
+  );
 
-  const browserLanguage = /** @type {string|undefined} */
-      (this.getBrowserLanguage(Object.keys(this.langUrls)));
-  const urlLanguage = /** @type {string|undefined} */
-      (this.stateManager.getInitialValue('lang'));
+  const browserLanguage =
+    /** @type {string|undefined} */
+    (this.getBrowserLanguage(Object.keys(this.langUrls)));
+  const urlLanguage = /** @type {string|undefined} */ (this.stateManager.getInitialValue('lang'));
 
   if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
     this.switchLanguage(urlLanguage);
@@ -726,12 +732,11 @@ AbstractAppController.prototype.initLanguage = function() {
   }
 };
 
-
 /**
  * @param {import('gmf/themes.js').GmfTheme} theme Theme.
  * @private
  */
-AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
+AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
   this.gmfThemes_.getBgLayers().then((layers) => {
     let layer;
 
@@ -760,7 +765,6 @@ AbstractAppController.prototype.setDefaultBackground_ = function(theme) {
   });
 };
 
-
 /**
  * @protected
  * @return {HTMLSpanElement} Span element with font-awesome inside of it
@@ -773,7 +777,6 @@ export function getLocationIcon() {
   arrowWrapper.appendChild(arrow);
   return arrowWrapper;
 }
-
 
 /**
  * @type {!angular.IModule}
@@ -802,25 +805,22 @@ const module = angular.module('GmfAbstractAppControllerModule', [
   ngeoStatemanagerWfsPermalink.name,
 ]);
 
-
 module.controller('AbstractController', AbstractAppController);
 
+module.value('ngeoExportFeatureFormats', [FeatureFormatType.KML, FeatureFormatType.GPX]);
 
-module.value('ngeoExportFeatureFormats', [
-  FeatureFormatType.KML,
-  FeatureFormatType.GPX
-]);
-
-module.config(['tmhDynamicLocaleProvider', 'angularLocaleScript',
+module.config([
+  'tmhDynamicLocaleProvider',
+  'angularLocaleScript',
   /**
    * @param {angular.dynamicLocale.tmhDynamicLocaleProvider} tmhDynamicLocaleProvider
    *     angular-dynamic-locale provider.
    * @param {string} angularLocaleScript the script.
    */
-  function(tmhDynamicLocaleProvider, angularLocaleScript) {
+  function (tmhDynamicLocaleProvider, angularLocaleScript) {
     // configure the script URL
     tmhDynamicLocaleProvider.localeLocationPattern(angularLocaleScript);
-  }
+  },
 ]);
 
 bootstrap(module);

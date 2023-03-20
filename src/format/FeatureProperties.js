@@ -49,5 +49,5 @@ export default {
   /**
    * @type {string}
    */
-  STROKE: 'k'
+  STROKE: 'k',
 };
