@@ -7,3 +7,9 @@ repos:
     rev: 0.2.3
     hooks:
       - id: copyright
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.7.1
+    hooks:
+      - id: prettier
+        additional_dependencies:
+          - prettier@2.8.4
