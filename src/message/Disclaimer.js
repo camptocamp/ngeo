@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -92,16 +92,32 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     this.messages_ = {};
 
     /**
+     * Increments if the message is used or not.
      * @type {Object<string, number>}
      * @private
      */
     this.messagesConsumerCount_ = {};
 
     /**
+     * The messages UID currently active and visible.
      * @type {Object<string, boolean>}
      * @private
      */
     this.uids_ = {};
+
+    /**
+     * The messages activated once.
+     * @type{string}
+     * @private
+     */
+    this.validMessages_ = [];
+
+    /**
+     * The messages closed manually.
+     * @type{string}
+     * @private
+     */
+    this.closedMessages_ = [];
   }
 
   /**
@@ -139,11 +155,20 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     const type = message.type;
     console.assert(typeof type == 'string', 'Type should be set.');
 
-    // No need to do anything if message already displayed.
+    // No need to do anything if message already displayed
     const uid = this.getMessageUid_(message);
     if (this.uids_[uid]) {
       return;
     }
+
+    // If already closed previously.
+    if (this.isClosedMessage_(uid) && this.isValidMessage_(uid)) {
+      return;
+    }
+
+    // Set the message status as opened once
+    this.validMessages_ = this.validMessages_.filter((msg) => msg !== uid);
+    this.validMessages_.push(uid);
 
     this.uids_[uid] = true;
 
@@ -202,6 +227,9 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
       const msg = angular.element('<span />').html(message.msg);
       el.append(button).append(msg);
 
+      // Set the message status as manually closed
+      button.on('click', () => this.closedMessages_.push(uid));
+
       let container;
 
       if (message.target) {
@@ -241,6 +269,24 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   }
 
   /**
+   * @param {string} uid The disclaimer UID.
+   * @returns {boolean} True if the uid is present.
+   * @private
+   */
+  isClosedMessage_(uid) {
+    return this.closedMessages_.find((msg) => msg === uid);
+  }
+
+  /**
+   * @param {string} uid The disclaimer UID.
+   * @returns {boolean} True if the uid is present.
+   * @private
+   */
+  isValidMessage_(uid) {
+    return this.validMessages_.find((msg) => msg === uid);
+  }
+
+  /**
    * Close the message.
    *
    * @param {Message} message Message.
@@ -252,6 +298,11 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
 
     // (1) No need to do anything if message doesn't exist
     if (!this.uids_[uid]) {
+      // If the message has been closed previously
+      if (this.isClosedMessage_(uid) && this.isValidMessage_(uid)) {
+        this.closedMessages_ = this.closedMessages_.filter((msg) => msg !== uid);
+        this.validMessages_ = this.validMessages_.filter((msg) => msg !== uid);
+      }
       return;
     }
     delete this.uids_[uid];
