@@ -42,3 +42,12 @@ GeoMapFish-specific web services. The `gmf` contrib examples are also available
 ## Other docs related to ngeo:
 
 - [Transifex](https://www.transifex.com/camptocamp/ngeo/) – Translation platform.
+
+## Contributing
+
+Install the pre-commit hooks:
+
+```bash
+pip install pre-commit
+pre-commit install --allow-missing-config
+```
