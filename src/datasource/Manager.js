@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -637,7 +637,8 @@ export class DatasourceManager {
 
     // Dimensions
     const dimensions = this.dimensions_;
-    const dimensionsConfig = node.dimensions || firstLevelGroup === null ? {} : firstLevelGroup.dimensions;
+    const dimensionsConfig = node.dimensions || (firstLevelGroup === null ? {} : firstLevelGroup.dimensions);
+
     const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
     // Time values (lower or lower/upper)
