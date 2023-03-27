@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -329,7 +329,7 @@ export class DatasourceManager {
         // Create a DataSources for each theme
         for (const theme of themes) {
           for (const child of theme.children) {
-            this.createDataSource_(child, child, ogcServers);
+            this.createDataSource_(child, child, ogcServers, false);
           }
         }
       });
@@ -337,7 +337,7 @@ export class DatasourceManager {
       const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then((backgroundLayers) => {
         // Create a DataSource for each background layer
         for (const backgroundLayer of backgroundLayers) {
-          this.createDataSource_(null, backgroundLayer, ogcServers);
+          this.createDataSource_(null, backgroundLayer, ogcServers, true);
         }
       });
 
@@ -449,10 +449,11 @@ export class DatasourceManager {
    * @param {import('gmf/themes.js').GmfGroup|import('gmf/themes.js').GmfLayer} node The node, which
    *     may have children or not.
    * @param {import('gmf/themes.js').GmfOgcServers} ogcServers OGC servers.
+   * @param {boolean} isBackground Is background.
    * @private
    * @hidden
    */
-  createDataSource_(firstLevelGroup, node, ogcServers) {
+  createDataSource_(firstLevelGroup, node, ogcServers, isBackground = false) {
     const groupNode = /** @type {import('gmf/themes.js').GmfGroup} */ (node);
     const children = groupNode.children;
 
@@ -461,7 +462,7 @@ export class DatasourceManager {
     //     group node itself is **skipped**.
     if (children) {
       for (const child of children) {
-        this.createDataSource_(firstLevelGroup, child, ogcServers);
+        this.createDataSource_(firstLevelGroup, child, ogcServers, isBackground);
       }
       return;
     }
@@ -620,7 +621,8 @@ export class DatasourceManager {
 
     // (7) Dimensions
     const dimensions = this.dimensions_;
-    const dimensionsConfig = node.dimensions || firstLevelGroup === null ? {} : firstLevelGroup.dimensions;
+    const dimensionsConfig = isBackground ? node.dimensions : (node.dimensions || firstLevelGroup === null ? {} : firstLevelGroup.dimensions);
+
     const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
     // (8) Time values (lower or lower/upper)
