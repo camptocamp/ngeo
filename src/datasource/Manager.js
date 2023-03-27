@@ -637,7 +637,8 @@ export class DatasourceManager {
 
     // Dimensions
     const dimensions = this.dimensions_;
-    const dimensionsConfig = node.dimensions || firstLevelGroup === null ? {} : firstLevelGroup.dimensions;
+    const dimensionsConfig = node.dimensions || (firstLevelGroup === null ? {} : firstLevelGroup.dimensions);
+
     const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
     // Time values (lower or lower/upper)
