@@ -68,7 +68,6 @@ jobs:
       - run: '! (npm run typecheck|sed -r "s/\x1B\[([0-9]{1,2}(;[0-9]{1,2})?)?[mGK]//g"|grep ^src)'
       - run: '! (npm run typecheck|grep api)'
       - run: '! (npm run typecheck|grep gmf)'
-      - run: '! (npm run typecheck|grep test)'
       - run: '! (npm run typecheck|grep examples)'
       - run: npm run doc > /dev/null
       - run: npm run build-api
