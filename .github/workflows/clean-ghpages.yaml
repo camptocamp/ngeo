@@ -1,11 +1,10 @@
----
 name: Clean GitHub pages
 
 on: delete
 
 jobs:
   clean:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     name: Clean GitHub pages
     timeout-minutes: 5
 
