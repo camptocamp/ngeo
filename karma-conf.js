@@ -3,9 +3,8 @@ const commons = require('./buildtools/webpack.commons');
 
 const webpackConfig = webpackMerge(commons.config(), require('./buildtools/webpack.dev'));
 
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
-
     jasmin: {
       random: false,
     },
@@ -18,9 +17,7 @@ module.exports = function(config) {
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-    files: [
-      'test/spec/all.js',
-    ],
+    files: ['test/spec/all.js'],
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
@@ -33,7 +30,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters:['progress'],
+    reporters: ['progress'],
 
     // web server port
     port: 9876,
