@@ -103,7 +103,7 @@
     "fast-sass-loader": "1.5.0",
     "file-loader": "6.2.0",
     "file-saver": "2.0.5",
-    "floatthead": "2.2.4",
+    "floatthead": "2.2.5",
     "fs-extra": "9.1.0",
     "glob": "7.1.7",
     "html-webpack-plugin": "4.5.2",
