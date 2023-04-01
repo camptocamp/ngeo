@@ -4,5 +4,5 @@ htmlmin==0.1.12
 Mako==1.2.4
 requests==2.27.1
 polib==1.1.1
-urllib3==1.26.14
+urllib3==1.26.15
 certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
