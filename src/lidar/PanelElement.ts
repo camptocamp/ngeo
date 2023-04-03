@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -423,16 +423,12 @@ export default class GmfLidarPanel extends ToolPanelElement {
   csvExport(): void {
     if (this.line) {
       const points = this.profile.utils.getFlatPointsByDistance(this.profile.profilePoints) || [];
-      try {
-        const csvData = this.profile.utils.getCSVData(points);
-        const headerColumnNames = Object.keys(points[0]);
-        const headerColumns = headerColumnNames.map((columnName) => {
-          return {'name': columnName};
-        });
-        DownloadCsvService.startDownload(csvData, headerColumns, 'LIDAR_profile.csv');
-      } catch (error) {
-        window.alert(i18next.t('No graph to export in CSV!'));
-      }
+      const csvData = this.profile.utils.getCSVData(points);
+      const headerColumnNames = Object.keys(points[0]);
+      const headerColumns = headerColumnNames.map((columnName) => {
+        return {'name': columnName};
+      });
+      DownloadCsvService.startDownload(csvData, headerColumns, 'LIDAR_profile.csv');
     }
   }
 
