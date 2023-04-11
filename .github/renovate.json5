@@ -10,6 +10,11 @@
   lockFileMaintenance: {enabled: true, automerge: true, schedule: 'after 5pm on the first day of the month'},
   baseBranches: ['master', '2.7', '2.6', '2.4'],
   'pre-commit': {enabled: true},
+  osvVulnerabilityAlerts: true,
+  vulnerabilityAlerts: {
+    schedule: ['at any time'],
+    automerge: true,
+  },
   regexManagers: [
     {
       fileMatch: ['^.pre-commit-config.yaml$'],
