@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -162,6 +162,11 @@ export function DisclaimerController(
    * @type {?import('ol/layer/Group').default}
    */
   this.dataLayerGroup_ = null;
+
+  /**
+   * @type {angular.IScope | undefined}
+   */
+  this.rootscopeListener_ = null;
 }
 
 /**
@@ -232,13 +237,27 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
         this.closeAll_(layer);
       }
 
-      this.rootScope_.$on('ngeo-layertree-state', () => {
+      this.rootscopeListener_ = this.rootScope_.$on('ngeo-disclaimer-state', () => {
         if (layer.getVisible()) {
           this.update_(layer);
         } else {
           this.closeAll_(layer);
         }
       });
+
+      const listenerKey = listen(
+        layer,
+        'propertychange',
+        /** @type {import('ol/events').ListenerFunction} */
+        (event) => {
+          if (layer.getVisible()) {
+            this.update_(layer);
+          } else {
+            this.closeAll_(layer);
+          }
+        }
+      );
+      this.eventHelper_.addListenerKey(layerUid, listenerKey);
     } else {
       // Show disclaimer messages for this layer
       this.showAll_(layer);
@@ -308,6 +327,10 @@ DisclaimerController.prototype.closeAll_ = function (layer) {
     for (const key in disclaimers) {
       const uid = `${layerUid}-${key}`;
       this.closeDisclaimerMessage_(uid, disclaimers[key]);
+    }
+    // Unsubscribe rootscope listener
+    if (this.rootscopeListener_) {
+      this.rootscopeListener_();
     }
   }
 };

@@ -274,7 +274,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
    * @private
    */
   isClosedMessage_(uid) {
-    return this.closedMessages_.find((msg) => msg === uid);
+    return !!this.closedMessages_.find((msg) => msg === uid);
   }
 
   /**
@@ -283,7 +283,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
    * @private
    */
   isValidMessage_(uid) {
-    return this.validMessages_.find((msg) => msg === uid);
+    return !!this.validMessages_.find((msg) => msg === uid);
   }
 
   /**
