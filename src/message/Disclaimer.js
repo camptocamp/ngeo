@@ -50,10 +50,11 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
   /**
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
+   * @param {angular.IScope} $rootScope Angular rootScope.
    * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
    * @ngInject
    */
-  constructor($sce, gettextCatalog, ngeoCreatePopup) {
+  constructor($sce, gettextCatalog, $rootScope, ngeoCreatePopup) {
     super();
 
     /**
@@ -118,6 +119,11 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
      * @private
      */
     this.closedMessages_ = [];
+
+    // Reset visible disclaimers when layertree is emptied.
+    $rootScope.$on('ngeo-empty-layertree', () => {
+      this.uids_ = {};
+    });
   }
 
   /**

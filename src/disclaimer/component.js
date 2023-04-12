@@ -179,6 +179,12 @@ DisclaimerController.prototype.$onInit = function () {
 
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
+
+  this.rootScope_.$on('ngeo-empty-layertree', () => {
+    for (var layer of this.map.getAllLayers()) {
+      this.closeAll_(layer);
+    }
+  });
 };
 
 /**
