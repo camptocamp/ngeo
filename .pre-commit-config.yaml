@@ -33,7 +33,15 @@ repos:
     rev: v2.2.2
     hooks:
       - id: codespell
-        exclude: (^contribs/gmf/test/spec/data/themescapabilities\.js$|^contribs/gmf/test/spec/data/themes\.js$|^buildtools/asitvd.capabilities\.xml$|^examples/measure\.js$|^src/bootstrap-custom\.css\.map$)
+        exclude: |-
+          (?x)^(
+            contribs/gmf/test/spec/data/themescapabilities\.js
+            |contribs/gmf/test/spec/data/themes\.js
+            |buildtools/asitvd.capabilities\.xml
+            |examples/measure\.js
+            |src/bootstrap-custom\.css\.map
+            |buildtools/sgx\.capabilities\.xml
+          )$
         args:
           - --ignore-words=.github/spell-ignore-words.txt
   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -64,7 +72,13 @@ repos:
     rev: v0.1.5
     hooks:
       - id: ripsecrets
-        exclude: ^(private.key|contribs/gmf/apps/desktop_alt/index.html.ejs|examples/googlestreetview.html|examples/mapillarystreetview.js)$
+        exclude: |-
+          (?x)^(
+            private.key
+            |contribs/gmf/apps/desktop_alt/index.html.ejs
+            |examples/googlestreetview.html
+            |examples/mapillarystreetview.js
+          )$
   - repo: https://github.com/psf/black
     rev: 23.1.0
     hooks:
