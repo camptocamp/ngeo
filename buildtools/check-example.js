@@ -59,6 +59,7 @@ function fileMock(name, contentType) {
 
 const OSMImage = fileMock('osm.png', 'image/png');
 const ASITVDCapabilities = fileMock('asitvd.capabilities.xml', 'text/xml');
+const SgxCapabilities = fileMock('sgx.capabilities.xml', 'text/xml');
 let browser;
 
 process.on('unhandledRejection', async (error) => {
@@ -162,6 +163,16 @@ function loaded(page, browser) {
     }
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
+    } else if (
+      /^https:\/\/[0-9-]*\.geomapfish-demo\.[0-9a-z-.]*\.camptocamp\.com\/static-geomapfish\/[0-9a-f]*\/locales\/en.json/.test(
+        url
+      )
+    ) {
+      request.respond('{}');
+    } else if (url.startsWith('https://cdn-icons-png.flaticon.com/512/3428/3428903.png')) {
+      request.respond(OSMImage);
+    } else if (url == 'https://sgx.geodatenzentrum.de/wmts_basemapde/1.0.0/WMTSCapabilities.xml') {
+      request.respond(SgxCapabilities);
     } else if (
       parse(url).host == parse(page_url).host ||
       url.startsWith('http://localhost:') ||
