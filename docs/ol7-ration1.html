@@ -44,6 +44,7 @@
       var map = new ol.Map({
         target: 'map',
         layers: [
+          layer,
           new ol.layer.Image({
             source: new ol.source.ImageWMS({
               url: 'https://geomapfish-demo-2-7.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG',
@@ -54,7 +55,6 @@
               ratio: 1,
             }),
           }),
-          layer,
         ],
         view: new ol.View({
           center: [2535000, 1153000],
