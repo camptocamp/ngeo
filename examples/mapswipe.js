@@ -62,6 +62,11 @@ function MainController() {
       zoom: 15,
     }),
   });
+
+  this.gmfLayerBeingSwipe = {
+    layer: this.openSeaMapLayer,
+    swipeValue: 0.5,
+  };
 }
 
 myModule.controller('MainController', MainController);
