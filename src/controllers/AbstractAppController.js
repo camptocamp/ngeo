@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -48,7 +48,7 @@ import {ThemeEventType} from 'gmf/theme/Manager';
 import {getBrowserLanguage} from 'ngeo/utils';
 import * as Sentry from '@sentry/browser';
 import {Integrations} from '@sentry/tracing';
-import createProjection from 'ngeo/proj/utils';
+import createProjections from 'ngeo/proj/utils';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olControlScaleLine from 'ol/control/ScaleLine';
@@ -81,11 +81,8 @@ import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
  * @ngInject
  */
 export function AbstractAppController($scope, $injector, mobile) {
-  /** @type {import('gmf/options').gmfProjectionsOptions} */
-  const projections = $injector.get('gmfProjectionsOptions');
-  for (const code in projections) {
-    createProjection(code, projections[code].definition.join(' '), projections[code].extent);
-  }
+  createProjections($injector.get('gmfProjectionsOptions'));
+
   /** @type {import('gmf/options').gmfOptions} */
   this.options = $injector.get('gmfOptions');
 
