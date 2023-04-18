@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,7 +40,7 @@ import MousePosition from 'ol/control/MousePosition';
 import {createStringXY} from 'ol/coordinate';
 import ScaleLine from 'ol/control/ScaleLine';
 import OverviewMap from 'ol/control/OverviewMap';
-import createProjection from 'ngeo/proj/utils';
+import createProjections from 'ngeo/proj/utils';
 
 // @ts-ignore: there is no existing types for ol-layerswitcher
 import LayerSwitcher from 'ol-layerswitcher';
@@ -111,13 +111,7 @@ class Map {
     }
 
     Object.assign(constants, JSON.parse(request.responseText)['constants']);
-    for (const code in constants.projections) {
-      createProjection(
-        code,
-        constants.projections[code].definition.join(' '),
-        constants.projections[code].extent
-      );
-    }
+    createProjections(constants.projections);
 
     /** @type {import('ol/View').ViewOptions} */
     const viewOptions = {
