@@ -40,12 +40,13 @@ import Group from 'ol/layer/Group';
  * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
+ * @param {import('gmf/options').gmfWMSSourceOptions} gmfWMSSourceOptions the WMS source options.
  * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  * @hidden
  */
-export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfThemes) {
+export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfThemes, gmfWMSSourceOptions) {
   /**
    * @type {import('ngeo/map/LayerHelper').LayerHelper}
    */
@@ -55,6 +56,12 @@ export function SyncLayertreeMap($rootScope, ngeoLayerHelper, ngeoWMSTime, gmfTh
    * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
   this.ngeoWMSTime_ = ngeoWMSTime;
+
+  /**
+   * @type {import('gmf/options').gmfWMSSourceOptions}
+   * @private
+   */
+  this.gmfWMSSourceOptions_ = gmfWMSSourceOptions;
 
   /**
    * @type {?import('gmf/themes').GmfOgcServers}
@@ -277,7 +284,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
       timeParam,
       undefined, // WMS parameters
       ogcServer.credential ? 'use-credentials' : 'anonymous',
-      undefined // Source options
+      this.gmfWMSSourceOptions_
     );
 
     layer.set(DATASOURCE_ID, groupNode.id);
@@ -349,7 +356,8 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
       ogcServer.type,
       timeParam,
       opt_params, // WMS parameters
-      ogcServer.credential ? 'use-credentials' : 'anonymous'
+      ogcServer.credential ? 'use-credentials' : 'anonymous',
+      this.gmfWMSSourceOptions_
     );
   }
   // Update layer information and tree state.
