@@ -146,6 +146,7 @@ export default function (module) {
   module.constant('ngeoProfileOptions', {});
   module.constant('gmfProfileOptions', {});
   module.constant('gmfLayerTreeOptions', {});
+  module.constant('gmfWMSSourceOptions', {});
 
   module.constant('ngeoQueryOptions', {
     'limit': 20,
