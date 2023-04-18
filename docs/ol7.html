@@ -20,6 +20,7 @@
       ol.proj.proj4.register(proj4);
       const projection = new ol.proj.Projection({
         code: crs,
+        units: 'm',
         extent: [2420000, 1030000, 2900000, 1350000],
       });
 
