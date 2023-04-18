@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -193,7 +193,9 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups)
   //Remove existing submenu if opened at theme refresh
   this.parseTreeNodes(this.root);
 
+  this.rootScope_.$broadcast('ngeo-pre-empty-layertree');
   this.root.children.length = 0;
+  this.rootScope_.$broadcast('ngeo-post-empty-layertree');
   this.ngeoStateManager_.deleteParam(PermalinkParam.TREE_GROUPS);
   return this.addFirstLevelGroups(firstLevelGroups);
 };
