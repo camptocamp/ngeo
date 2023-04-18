@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -174,6 +174,12 @@ DisclaimerController.prototype.$onInit = function () {
 
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
+
+  this.rootScope_.$on('ngeo-pre-empty-layertree', () => {
+    for (const layer of this.map.getAllLayers()) {
+      this.closeAll_(layer);
+    }
+  });
 };
 
 /**
@@ -226,14 +232,14 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
   } else {
     if (this.options.layerVisibility || this.options.layerVisibility === undefined) {
       // Show disclaimer messages for this layer
-      if (layer.getVisible()) {
+      if (layer.getVisible() && this.map.getAllLayers().includes(layer)) {
         this.update_(layer);
       } else {
         this.closeAll_(layer);
       }
 
-      this.rootScope_.$on('ngeo-layertree-state', () => {
-        if (layer.getVisible()) {
+      this.rootScope_.$on('ngeo-disclaimer-state', () => {
+        if (layer.getVisible() && this.map.getAllLayers().includes(layer)) {
           this.update_(layer);
         } else {
           this.closeAll_(layer);
