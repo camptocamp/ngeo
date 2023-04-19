@@ -193,6 +193,7 @@ export class SwipeController {
       ctx.clip();
     } else {
       // ctx instanceof WebGLRenderingContext
+      ctx.clear(ctx.COLOR_BUFFER_BIT);
       ctx.enable(ctx.SCISSOR_TEST);
       ctx.scissor(0, 0, width, height);
     }
