@@ -164,7 +164,7 @@ function loaded(page, browser) {
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
     } else if (
-      /^https:\/\/[0-9-]*\.geomapfish-demo\.[0-9a-z-.]*\.camptocamp\.com\/static-geomapfish\/[0-9a-f]*\/locales\/en.json/.test(
+      /^https:\/\/[0-9-]*(-test)?\.geomapfish-demo\.[0-9a-z-.]*\.camptocamp\.com\/static-geomapfish\/[0-9a-f]*\/locales\/en.json/.test(
         url
       )
     ) {
