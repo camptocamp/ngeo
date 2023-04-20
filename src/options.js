@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2022 Camptocamp SA
+// Copyright (c) 2020-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -655,6 +655,13 @@ export function buildStyle(styleDescriptor) {
  * @typedef {Object} gmfVectorTilesOptions
  * @property {string} projection Projection of the tile grid.
  * @property {olTileGridOptions} tiles grid options.
+ */
+
+/**
+ * Configuration options for the WMS sources.
+ *
+ * @typedef {Object} gmfWMSSourceOptions
+ * @property {number} ratio Ratio. 1 means image requests are the size of the map viewport, 2 means twice the width and height of the map viewport, and so on. Must be 1 or higher (non integer value make the layers blurry).
  */
 
 /**
