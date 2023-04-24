@@ -908,4 +908,13 @@ export function buildStyle(styleDescriptor) {
  * @typedef {string} gmfCustomStylesheetUrl
  */
 
+/**
+ * @typedef {Object} gmfFitOptions
+ * @property {number[]} padding Padding (in pixels) to be cleared inside the view. Values in the array are top, right, bottom and left padding.
+ * @property {boolean} nearest If the view constrainResolution option is true, get the nearest extent instead of the closest that actually fits the view.
+ * @property {number} [minResolution] Minimum resolution that we zoom to.
+ * @property {number} [maxZoom] Maximum zoom level that we zoom to. If minResolution is given, this property is ignored.
+ * @property {number} [duration] The duration of the animation in milliseconds. By default, there is no animation to the target extent.
+ */
+
 export default null;

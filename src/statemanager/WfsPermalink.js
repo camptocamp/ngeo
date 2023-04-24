@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -110,6 +110,7 @@ import olFormatWFS from 'ol/format/WFS';
  * @param {QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {import('ngeo/options').ngeoWfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
+ * @param {import('ngeo/options').gmfFitOptions} gmfFitOptions The fit options.
  * @ngdoc service
  * @ngname ngeoWfsPermalink
  * @ngInject
@@ -118,7 +119,8 @@ export function WfsPermalinkService(
   $http,
   ngeoPermalinkOgcserverUrl,
   ngeoQueryResult,
-  ngeoWfsPermalinkOptions
+  ngeoWfsPermalinkOptions,
+  gmfFitOptions
 ) {
   const options = ngeoWfsPermalinkOptions;
 
@@ -131,6 +133,8 @@ export function WfsPermalinkService(
    * @type {number}
    */
   this.maxFeatures_ = options.maxFeatures !== undefined ? options.maxFeatures : 50;
+
+  this._gmfFitOptions = gmfFitOptions;
 
   /**
    * @type {Object<string, import('ngeo/options').WfsType>}
@@ -240,12 +244,19 @@ WfsPermalinkService.prototype.issueRequest_ = function (
     }
 
     // zoom to features
-    const size = map.getSize();
-    if (size !== undefined) {
-      const maxZoom = zoomLevel === undefined ? this.pointRecenterZoom_ : zoomLevel;
-      const padding = [10, 10, 10, 10];
-      map.getView().fit(this.getExtent_(features), {size, maxZoom, padding});
-    }
+    setTimeout(() => {
+      const size = map.getSize();
+      if (size !== undefined) {
+        const defaultMaxZoomLevel = zoomLevel === undefined ? this.pointRecenterZoom_ : zoomLevel;
+        const defaultPadding = [50, 50, 50, 50];
+        map
+          .getView()
+          .fit(
+            this.getExtent_(features),
+            Object.apply({size, maxZoom: defaultMaxZoomLevel, padding: defaultPadding}, this._gmfFitOptions)
+          );
+      }
+    });
 
     // then show if requested
     if (showFeatures) {

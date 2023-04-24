@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -34,7 +34,16 @@ describe('Permalink service', () => {
   let StateManagerService;
   let ngeoLocation;
 
-  beforeEach(
+  beforeEach(() => {
+    angular.mock.module(
+      'ngeo',
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        $provide.value('gmfFitOptions', {});
+      }
+    );
     angular.mock.inject((_ngeoStateManager_, _gmfPermalink_, _ngeoLocation_, _ngeoLayerHelper_) => {
       StateManagerService = _ngeoStateManager_;
       PermalinkService = _gmfPermalink_;
@@ -66,8 +75,8 @@ describe('Permalink service', () => {
 
       firstLevelGroup.getLayers().insertAt(0, secondLevelGroup);
       dataGroup.getLayers().insertAt(0, firstLevelGroup);
-    })
-  );
+    });
+  });
 
   describe('#getWfsPermalinkData_', () => {
     it('returns null if no query params', () => {
