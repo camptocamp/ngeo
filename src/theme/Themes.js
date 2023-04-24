@@ -46,6 +46,7 @@ export class ThemesService extends olEventsEventTarget {
    * @param {string} gmfTreeUrl The tree URL.
    * @param {string} gmfVectorTilesUrl The Vector Tiles URL.
    * @param {import('gmf/options').gmfVectorTilesOptions} gmfVectorTilesOptions the VectorTiles options.
+   * @param {import('gmf/options').gmfWMSSourceOptions} gmfWMSSourceOptions the WMS source options.
    * @ngInject
    */
   constructor(
@@ -57,7 +58,8 @@ export class ThemesService extends olEventsEventTarget {
     gmfThemesOptions,
     gmfTreeUrl,
     gmfVectorTilesUrl,
-    gmfVectorTilesOptions
+    gmfVectorTilesOptions,
+    gmfWMSSourceOptions
   ) {
     super();
 
@@ -99,6 +101,12 @@ export class ThemesService extends olEventsEventTarget {
      * @private
      */
     this.gmfVectorTilesOptions_ = gmfVectorTilesOptions;
+
+    /**
+     * @type {import('gmf/options').gmfWMSSourceOptions}
+     * @private
+     */
+    this.gmfWMSSourceOptions_ = gmfWMSSourceOptions;
 
     /**
      * @type {?import('ngeo/statemanager/Location').StatemanagerLocation}
@@ -307,7 +315,7 @@ export class ThemesService extends olEventsEventTarget {
         undefined, // time
         opt_params,
         server.credential ? 'use-credentials' : 'anonymous',
-        gmfLayerWMS.metadata.customOpenLayersOptions
+        Object.assign({}, this.gmfWMSSourceOptions_, gmfLayerWMS.metadata.customOpenLayersOptions)
       )
     );
   }

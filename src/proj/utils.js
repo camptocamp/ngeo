@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,20 +19,18 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {get as getProjection} from 'ol/proj';
+import {get as getProjection, add as addProjection} from 'ol/proj';
 import {register} from 'ol/proj/proj4';
 import proj4 from 'proj4';
 
-/**
- * @param {string} code
- * @param {string} def
- * @param {number[]} extent
- * @returns {import('ol/proj/Projection').default}
- */
-export default function create(code, def, extent) {
-  proj4.defs(code, def.trim());
+/** @type {import('gmf/options').gmfProjectionsOptions} */
+export default function createProjections(projections) {
+  for (const code in projections) {
+    proj4.defs(code, projections[code].definition.join(' ').trim());
+  }
   register(proj4);
-  const proj = getProjection(code);
-  proj.setExtent(extent);
-  return proj;
+  for (const code in projections) {
+    const proj = getProjection(code);
+    proj.setExtent(projections[code].extent);
+  }
 }
