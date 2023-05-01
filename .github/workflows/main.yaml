@@ -18,7 +18,7 @@ env:
 
 jobs:
   not-failed-backport:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     name: Test that's not a failed backport
     timeout-minutes: 5
     steps:
