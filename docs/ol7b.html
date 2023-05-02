@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js" crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.0/proj4.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css" />
+    <style>
+      #map {
+        width: 300px;
+        height: 301px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      const crs = 'EPSG:2056';
+      proj4.defs(
+        crs,
+        '+proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333' +
+          ' +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel ' +
+          '+towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs'
+      );
+      ol.proj.proj4.register(proj4);
+      const projection = new ol.proj.Projection({
+        code: crs,
+        units: 'm',
+        extent: [2420000, 1030000, 2900000, 1350000],
+      });
+
+      var map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://geomapfish-demo-2-7.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG',
+              params: {
+                'LAYERS': 'post_office',
+              },
+              // 1 or 2 ok, 1.5 is blurry
+              ratio: 2,
+            }),
+          }),
+        ],
+        view: new ol.View({
+          center: [2535000, 1153000],
+          zoom: 6,
+          constrainRotation: false,
+          extent: [2485071.54, 175346.36, 3171913, 1709347],
+          projection: projection,
+          resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
+        }),
+      });
+    </script>
+  </body>
+</html>
