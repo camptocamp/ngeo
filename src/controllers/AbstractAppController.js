@@ -63,6 +63,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import storeMap from 'gmfapi/store/map';
 import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
+import i18next from 'i18next';
 
 /**
  * Application abstract controller.
@@ -258,7 +259,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.loginInfoMessage = null;
 
   $scope.$on('authenticationrequired', (event, args) => {
-    this.loginInfoMessage = loginMessageRequired;
+    this.loginInfoMessage = i18next.t(loginMessageRequired);
     this.loginRedirectUrl = args.url;
     this.loginActive = true;
 
