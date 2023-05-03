@@ -51,6 +51,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
           defaultFeatureNS: 'http://mapserver.gis.umn.edu/mapserver',
           defaultFeaturePrefix: 'ms',
         });
+        $provide.value('gmfFitOptions', {});
       }
     );
 

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -35,6 +35,15 @@ describe('gmf.layertree.TreeManager', () => {
   let $timeout;
 
   beforeEach(() => {
+    angular.mock.module(
+      'ngeo',
+      /**
+       * @param {angular.IModule} $provide
+       */
+      ($provide) => {
+        $provide.value('gmfFitOptions', {});
+      }
+    );
     angular.mock.inject((_$timeout_, _$httpBackend_, _gmfTreeManager_, _gmfThemes_, _gmfTreeUrl_) => {
       $timeout = _$timeout_;
       gmfTreeManager = _gmfTreeManager_;
