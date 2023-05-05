@@ -189,7 +189,6 @@ export class AbstractDesktopController extends AbstractAPIController {
 
     user.getLoginMessage().subscribe({
       next: (message) => {
-        this.loginInfoMessage = message;
         if (message) {
           // Open the auth panel if a message is displayed
           panels.openToolPanel('auth');
