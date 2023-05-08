@@ -136,7 +136,6 @@ export class AbstractMobileController extends AbstractAppController {
 
     user.getLoginMessage().subscribe({
       next: (message) => {
-        this.loginInfoMessage = message;
         if (message) {
           // Open the right panel if a message is displayed
           this.rightNavVisible = true;

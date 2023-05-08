@@ -251,15 +251,7 @@ export function AbstractAppController($scope, $injector, mobile) {
    */
   this.loginRedirectUrl = null;
 
-  /**
-   * Information message for the login form.
-   *
-   * @type {?string}
-   */
-  this.loginInfoMessage = null;
-
   $scope.$on('authenticationrequired', (event, args) => {
-    this.loginInfoMessage = i18next.t(loginMessageRequired);
     this.loginRedirectUrl = args.url;
     this.loginActive = true;
 
@@ -267,7 +259,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       () => this.loginActive,
       () => {
         if (!this.loginActive) {
-          this.loginInfoMessage = null;
           this.loginRedirectUrl = null;
           unbind();
         }
