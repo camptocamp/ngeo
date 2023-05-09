@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -606,7 +606,14 @@ Controller.prototype.getLegendIconURL = function (treeCtrl) {
   //name to get the icon
   const layerName = gmfLayerWMS.layers.split(',')[0];
   const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
-  return this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, undefined, legendRule, 20, 20);
+  return this.layerHelper_.getWMSLegendURL(
+    gmfOgcServer.url,
+    layerName,
+    undefined,
+    legendRule,
+    this.options.layerIcon ? this.options.layerIcon.width : 20,
+    this.options.layerIcon ? this.options.layerIcon.height : 20
+  );
 };
 
 /**
