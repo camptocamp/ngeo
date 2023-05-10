@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2022 Camptocamp SA
+// Copyright (c) 2020-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -870,10 +870,17 @@ export function buildStyle(styleDescriptor) {
  */
 
 /**
+ * @typedef {Object} layerIcon
+ * @property {number} width The icon width.
+ * @property {number} height The icon height.
+ */
+
+/**
  * @typedef {Object} gmfLayerTreeOptions
  * @property {boolean} openlinksinnewwindow if true, open
  *    metadataURLs in a new window. Otherwise open them in a popup.
  * @property {boolean} isExpanded [Experimental] Whether all the layer group is expanded by default.
+ * @property {layerIcon} layerIcon The legend icon dimensions.
  */
 
 /**
