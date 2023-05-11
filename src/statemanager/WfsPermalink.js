@@ -249,12 +249,9 @@ WfsPermalinkService.prototype.issueRequest_ = function (
       if (size !== undefined) {
         const defaultMaxZoomLevel = zoomLevel === undefined ? this.pointRecenterZoom_ : zoomLevel;
         const defaultPadding = [50, 50, 50, 50];
-        map
-          .getView()
-          .fit(
-            this.getExtent_(features),
-            Object.apply({size, maxZoom: defaultMaxZoomLevel, padding: defaultPadding}, this._gmfFitOptions)
-          );
+        const fitOptions = {size, maxZoom: defaultMaxZoomLevel, padding: defaultPadding};
+        Object.apply(fitOptions, this._gmfFitOptions);
+        map.getView().fit(this.getExtent_(features), fitOptions);
       }
     });
 
