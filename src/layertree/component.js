@@ -606,7 +606,14 @@ Controller.prototype.getLegendIconURL = function (treeCtrl) {
   //name to get the icon
   const layerName = gmfLayerWMS.layers.split(',')[0];
   const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
-  return this.layerHelper_.getWMSLegendURL(gmfOgcServer.url, layerName, undefined, legendRule, 20, 20);
+  return this.layerHelper_.getWMSLegendURL(
+    gmfOgcServer.url,
+    layerName,
+    undefined,
+    legendRule,
+    this.options.layerIcon ? this.options.layerIcon.width : undefined,
+    this.options.layerIcon ? this.options.layerIcon.height : undefined
+  );
 };
 
 /**
