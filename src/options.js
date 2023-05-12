@@ -877,10 +877,17 @@ export function buildStyle(styleDescriptor) {
  */
 
 /**
+ * @typedef {Object} layerIcon
+ * @property {number} width The icon width.
+ * @property {number} height The icon height.
+ */
+
+/**
  * @typedef {Object} gmfLayerTreeOptions
  * @property {boolean} openlinksinnewwindow if true, open
  *    metadataURLs in a new window. Otherwise open them in a popup.
  * @property {boolean} isExpanded [Experimental] Whether all the layer group is expanded by default.
+ * @property {layerIcon} layerIcon The legend icon dimensions.
  */
 
 /**
