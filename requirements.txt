@@ -4,5 +4,5 @@ htmlmin==0.1.12
 Mako==1.2.4
 requests==2.31.0
 transifex-client==0.12.5  # rq.filter: <=0.12.5
-urllib3==1.26.14
+urllib3==1.26.16
 certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
