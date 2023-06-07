@@ -200,7 +200,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	touch $@
 
 .build/node_modules.copyright.timestamp: .build/node_modules.timestamp
-	npm install --no-save --omit=optional --no-package-lock ./buildtools/copyright
+	npm install --no-save --omit=optional --no-package-lock ./buildtools/copyright --legacy-peer-deps
 	touch $@
 
 .build/eslint.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml \
@@ -332,7 +332,7 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
-	npm install --omit=optional
+	npm install --omit=optional --legacy-peer-deps
 	# Installed from peer dependency from ol-layerswitcher and that breaks our types
 	rm -rf ./node_modules/@types/openlayers
 	mkdir -p $(dir $@)
