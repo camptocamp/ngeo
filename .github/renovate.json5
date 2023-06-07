@@ -1,5 +1,6 @@
 {
   extends: ['config:base'],
+  semanticCommits: 'disabled',
   timezone: 'Europe/Zurich',
   schedule: 'after 5pm on the first day of the month',
   labels: ['dependencies'],
