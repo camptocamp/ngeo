@@ -26,7 +26,7 @@ jobs:
         if: github.event.head_commit.message == '[skip ci] Add instructions to finish the backport.'
 
   main:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     name: Continuous integration
     timeout-minutes: 50
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
