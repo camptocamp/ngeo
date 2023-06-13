@@ -43,14 +43,14 @@ if [ "${GITHUB_REPOSITORY}" = "camptocamp/ngeo" ]; then
             echo "This is not a regular version"
         fi
         if [ "${PACKAGE_VERSION}" = "${GIT_TAG}" ]; then
-            $RUN npm publish --force --tag="version-${MAIN_BRANCH}" "${TAG}"
+            $RUN npm publish --tag="version-${MAIN_BRANCH}" "${TAG}"
         else
             echo "Skipping publication, the Git tag and package version differ"
         fi
     else
         if [ "${GITHUB_REF}" = "refs/heads/${MAIN_BRANCH}" ]; then
             echo "Publish daily version"
-            $RUN npm install --no-save fluid-publish
+            $RUN npm install --force --no-save fluid-publish
             if [ "${MAIN_BRANCH}" = "master" ]; then
                 $RUN node_modules/.bin/fluid-publish devTag="latest"
             else
