@@ -43,7 +43,7 @@ if [ "${GITHUB_REPOSITORY}" = "camptocamp/ngeo" ]; then
             echo "This is not a regular version"
         fi
         if [ "${PACKAGE_VERSION}" = "${GIT_TAG}" ]; then
-            $RUN npm publish --tag="version-${MAIN_BRANCH}" "${TAG}"
+            $RUN npm publish --force --tag="version-${MAIN_BRANCH}" "${TAG}"
         else
             echo "Skipping publication, the Git tag and package version differ"
         fi
