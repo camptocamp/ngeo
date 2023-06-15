@@ -5,7 +5,13 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.0/proj4.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.3.0/ol.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.4.1-dev.1685821513583/ol.css" />
+    <style>
+      #map {
+        width: 401px;
+        height: 400px;
+      }
+    </style>
   </head>
   <body>
     <div id="map"></div>
@@ -61,11 +67,23 @@
           center: [2535000, 1153000],
           zoom: 6,
           constrainRotation: false,
+          constrainResolution: true,
           extent: [2485071.54, 175346.36, 3171913, 1709347],
           projection: projection,
           resolutions: [250, 100, 50, 20, 10, 5, 2, 1, 0.5, 0.25, 0.1, 0.05],
         }),
       });
+      window.map = map;
+      const centerConstraint = map.getView().getConstraints().center;
+      map.getView().getConstraints().center = function (coord, resolution, size, q) {
+        console.error(arguments);
+        const coorectionx = (coord[0] / map.getView().getResolution() - size[0] / 2) % 1;
+        console.info(coorectionx);
+
+        const newCenter = centerConstraint(coord, resolution, size, q);
+        newCenter[0] -= coorectionx * map.getView().getResolution();
+        return newCenter;
+      };
     </script>
   </body>
 </html>
