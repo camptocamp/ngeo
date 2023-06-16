@@ -824,6 +824,10 @@ export type gmfOptions = {
   cssVars: {
     [x: string]: string;
   };
+  /**
+   * The map extent, used to fit the view pixel to the WMTS pixel.
+   */
+  wmtsTopLeft?: number[];
 };
 
 /**

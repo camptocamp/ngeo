@@ -100,17 +100,43 @@ export function AbstractAppController($scope, $injector, mobile) {
   const view = new olView(this.options.view);
   const constraints = view.getConstraints();
   const centerConstraint = constraints.center;
-  constraints.center = (coord, resolution, size) => {
-    const newCenter = centerConstraint(coord, resolution, size);
+  /**
+   * @param {number} number The number.
+   * @param {number} base The base.
+   * @returns {number} The modulo.
+   */
+  const fixedModulo = (number, base) => {
+    return number > 0 ? number % base : base + (number % base);
+  };
 
-    const correctionX = ((newCenter[0] / resolution - size[0] / 2 + 0.5) % 1) - 0.5;
-    const correctionY = ((newCenter[1] / resolution - size[1] / 2 + 0.5) % 1) - 0.5;
+  /**
+   * @param {import("./coordinate.js").Coordinate|undefined} center Center.
+   * @param {number|undefined} resolution Resolution.
+   * @param {import("./size.js").Size} size Viewport size; unused if `onlyCenter` was specified.
+   * @param {boolean} [isMoving] True if an interaction or animation is in progress.
+   * @param {Array<number>} [centerShift] Shift between map center and viewport center.
+   * @return {import("./coordinate.js").Coordinate|undefined} Center.
+   */
+  constraints.center = (coord, resolution, size, isMoving, centerShift) => {
+    const newCenter = centerConstraint(coord, resolution, size, isMoving, centerShift);
 
-    newCenter[0] -= correctionX * resolution;
-    newCenter[1] -= correctionY * resolution;
+    if (!isMoving) {
+      const wmtsTopLeft = this.options.wmtsTopLeft || [0, 0];
+      const correctionX =
+        fixedModulo((newCenter[0] - wmtsTopLeft[1]) / resolution - size[0] / 2 + 0.5, 1) - 0.5;
+      const correctionY =
+        fixedModulo((wmtsTopLeft[0] - newCenter[1]) / resolution - size[1] / 2 + 0.5, 1) - 0.5;
+
+      newCenter[0] -= correctionX * resolution;
+      newCenter[1] += correctionY * resolution;
+    }
 
     return newCenter;
   };
+
+  view.on('change:resolution', () => {
+    view.setCenter(view.getCenter());
+  });
 
   const map = new olMap(
     Object.assign(
