@@ -128,6 +128,20 @@ class Map {
      */
     this.view_ = new View(viewOptions);
 
+    const constraints = this.view_.getConstraints();
+    const centerConstraint = constraints.center;
+    constraints.center = (coord, resolution, size) => {
+      const newCenter = centerConstraint(coord, resolution, size);
+
+      const correctionX = ((newCenter[0] / resolution - size[0] / 2 + 0.5) % 1) - 0.5;
+      const correctionY = ((newCenter[1] / resolution - size[1] / 2 + 0.5) % 1) - 0.5;
+
+      newCenter[0] -= correctionX * resolution;
+      newCenter[1] -= correctionY * resolution;
+
+      return newCenter;
+    };
+
     if (options.center !== undefined) {
       this.view_.setCenter(options.center);
     } else if (constants.extent) {

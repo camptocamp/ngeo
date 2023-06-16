@@ -95,11 +95,27 @@ export function AbstractAppController($scope, $injector, mobile) {
   }
 
   const scaleline = document.getElementById('scaleline');
+
+  const view = new olView(this.options.view);
+  const constraints = view.getConstraints();
+  const centerConstraint = constraints.center;
+  constraints.center = (coord, resolution, size) => {
+    const newCenter = centerConstraint(coord, resolution, size);
+
+    const correctionX = ((newCenter[0] / resolution - size[0] / 2 + 0.5) % 1) - 0.5;
+    const correctionY = ((newCenter[1] / resolution - size[1] / 2 + 0.5) % 1) - 0.5;
+
+    newCenter[0] -= correctionX * resolution;
+    newCenter[1] -= correctionY * resolution;
+
+    return newCenter;
+  };
+
   const map = new olMap(
     Object.assign(
       {
         layers: [],
-        view: new olView(this.options.view),
+        view: view,
         controls: this.options.mapControls || [
           new olControlScaleLine({
             target: scaleline,
