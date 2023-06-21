@@ -977,13 +977,13 @@ PermalinkService.prototype.registerMap_ = function (map, oeFeature) {
   } else {
     const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(Permalink3dParam.ENABLED);
     if (!enabled3d) {
-      center = this.getMapCenter();
-      if (center) {
-        view.setCenter(center);
-      }
       zoom = this.getMapZoom();
       if (zoom !== undefined) {
         view.setZoom(zoom);
+      }
+      center = this.getMapCenter();
+      if (center) {
+        view.setCenter([...center]);
       }
     }
   }
