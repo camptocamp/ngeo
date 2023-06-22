@@ -133,10 +133,6 @@ export function AbstractAppController($scope, $injector, mobile) {
     return newCenter;
   };
 
-  view.on('change:resolution', () => {
-    view.setCenter(view.getCenter());
-  });
-
   const map = new olMap(
     Object.assign(
       {
