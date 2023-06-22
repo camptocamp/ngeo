@@ -170,6 +170,15 @@ export function AbstractAppController($scope, $injector, mobile) {
       this.options.map
     )
   );
+  // To fix the map position constraint, we need to set the center
+  let onMoveEnd = false;
+  map.on('moveend', () => {
+    if (!onMoveEnd) {
+      onMoveEnd = true;
+      view.setCenter(view.getCenter());
+      onMoveEnd = false;
+    }
+  });
 
   if (!mobile) {
     map.addInteraction(
