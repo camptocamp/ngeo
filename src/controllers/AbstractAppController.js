@@ -51,6 +51,7 @@ import {Integrations} from '@sentry/tracing';
 import createProjections from 'ngeo/proj/utils';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
+import ViewHint from 'ol/ViewHint.js';
 import olControlScaleLine from 'ol/control/ScaleLine';
 import olControlZoom from 'ol/control/Zoom';
 import olControlRotate from 'ol/control/Rotate';
@@ -98,6 +99,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   const scaleline = document.getElementById('scaleline');
 
   const view = new olView(this.options.view);
+
   const constraints = view.getConstraints();
   const centerConstraint = constraints.center;
   /**
@@ -120,6 +122,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   constraints.center = (coord, resolution, size, isMoving, centerShift) => {
     const newCenter = centerConstraint(coord, resolution, size, isMoving, centerShift);
 
+    // Constraint the center on the WMTS grid
     if (!isMoving) {
       const wmtsTopLeft = this.options.wmtsTopLeft || [0, 0];
       const correctionX =
@@ -132,6 +135,15 @@ export function AbstractAppController($scope, $injector, mobile) {
     }
 
     return newCenter;
+  };
+
+  // Fix the center on the WMTS grid on animation end
+  const originalViewSetHint = view.setHint;
+  view.setHint = (hint, value) => {
+    originalViewSetHint.call(view, hint, value);
+    if (hint === ViewHint.ANIMATING && value === -1) {
+      view.setCenter(view.getCenter());
+    }
   };
 
   const map = new olMap(
@@ -171,15 +183,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       this.options.map
     )
   );
-  // To fix the map position constraint, we need to set the center
-  let onMoveEnd = false;
-  map.on('moveend', () => {
-    if (!onMoveEnd) {
-      onMoveEnd = true;
-      view.setCenter(view.getCenter());
-      onMoveEnd = false;
-    }
-  });
 
   if (!mobile) {
     map.addInteraction(
