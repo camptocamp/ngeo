@@ -183,6 +183,22 @@ export function AbstractAppController($scope, $injector, mobile) {
     )
   );
 
+  /**
+   * Use the parseFloat function as in updateSize() to allow non integer number of pixel.
+   * https://github.com/openlayers/openlayers/blob/c8590eda8ec256e6055dbda6659b257e01317d6d/src/ol/Map.js#L1694-L1707
+   */
+  map.updateViewportSize_ = function () {
+    const view = this.getView();
+    if (view) {
+      let size = undefined;
+      const computedStyle = getComputedStyle(this.viewport_);
+      if (computedStyle.width && computedStyle.height) {
+        size = [Math.round(parseFloat(computedStyle.width)), Math.round(parseFloat(computedStyle.height))];
+      }
+      view.setViewportSize(size);
+    }
+  };
+
   if (!mobile) {
     map.addInteraction(
       new olInteractionDragPan({
