@@ -332,6 +332,13 @@ export function AbstractAppController($scope, $injector, mobile) {
     );
   });
 
+  this.hasPrivateLayers = false;
+  user.getLoginMessage().subscribe({
+    next: (loginMessage) => {
+      this.hasPrivateLayers = loginMessage == loginMessageRequired;
+    },
+  });
+
   /**
    * Update the page with the user settings.
    */
@@ -369,7 +376,7 @@ export function AbstractAppController($scope, $injector, mobile) {
 
     if (user.getState() !== UserState.READY) {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
-      this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true);
+      this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true, this.hasPrivateLayers);
     }
     this.setDefaultBackground_(null);
     this.updateHasEditableLayers_();
