@@ -9,7 +9,7 @@ on:
 jobs:
   all:
     name: Add message on pull requests with the related examples
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     timeout-minutes: 2
 
     steps:
