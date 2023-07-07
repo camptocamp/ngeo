@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -136,16 +136,24 @@ ThemeManagerService.prototype.isLoading = function () {
  * @param {?string} themeName wanted theme name.
  * @param {string} fallbackThemeName fallback theme name.
  * @param {boolean} [opt_silent] if true notifyCantAddGroups_ is not called.
+ * @param {boolean} [opt_hasPrivateLayers] if true the theme has private layers.
  * @export
  */
-ThemeManagerService.prototype.updateCurrentTheme = function (themeName, fallbackThemeName, opt_silent) {
+ThemeManagerService.prototype.updateCurrentTheme = function (
+  themeName,
+  fallbackThemeName,
+  opt_silent,
+  opt_hasPrivateLayers
+) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     if (!themeName && this.modeFlush) {
       // In flush mode load current theme private groups
       const fallbackTheme = findThemeByName(themes, fallbackThemeName);
       if (fallbackTheme) {
         this.gmfTreeManager_.setInitialFirstLevelGroups(fallbackTheme.children);
-        this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, opt_silent);
+        if (opt_hasPrivateLayers) {
+          this.gmfTreeManager_.addFirstLevelGroups(fallbackTheme.children, false, opt_silent);
+        }
       }
     }
     if (themeName) {
