@@ -219,7 +219,7 @@ jobs:
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
   gh-pages:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     name: Github Pages
     timeout-minutes: 10
     concurrency: gh-pages-push
