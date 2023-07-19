@@ -9,7 +9,7 @@
   prHourlyLimit: 0,
   prConcurrentLimit: 0,
   lockFileMaintenance: {enabled: true, automerge: true, schedule: 'after 5pm on the first day of the month'},
-  baseBranches: ['master', '2.7', '2.6'],
+  baseBranches: ['master', '2.7', '2.8'],
   'pre-commit': {enabled: true},
   regexManagers: [
     {
