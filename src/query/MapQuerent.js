@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -108,6 +108,12 @@ export class MapQuerent {
      * @type {number}
      * @private
      */
+    this.queryCountFirst_ = options.queryCountFirst !== undefined ? options.queryCountFirst : true;
+
+    /**
+     * @type {number}
+     * @private
+     */
     this.tolerance_;
 
     if (hasCoarsePointingDevice()) {
@@ -166,6 +172,7 @@ export class MapQuerent {
       limit: limit,
       tolerance: this.tolerance_,
       bboxAsGETParam: this.bboxAsGETParam_,
+      queryCountFirst: this.queryCountFirst_,
     });
     this.result_.pending = true;
     return this.ngeoQuerent_.issue(options).then(this.handleResult_.bind(this, action));
