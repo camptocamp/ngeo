@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2022 Camptocamp SA
+// Copyright (c) 2020-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -277,6 +277,7 @@ export type ngeoQueryOptions = {
   /**
    * For WFS sources, should the number of features first be
    * requested with `resultType=hits` before requesting the actual features in an seconds request?
+   * Should be used on window result but not on grid result.
    */
   queryCountFirst?: boolean;
   /**

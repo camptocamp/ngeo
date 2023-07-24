@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -91,6 +91,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS';
  *    coordinate to issue WFS requests.
  * @property {boolean} [bboxAsGETParam=false] Pass the queried bbox as a parameter of the GET query on WFS
  *    requests.
+ * @property {boolean} [queryCountFirst=true] Do a requested with `resultType=hits` before.
  */
 
 /**
@@ -770,65 +771,75 @@ export class Querent {
       //     If we do not need to count features first, then proceed with
       //     an normal WFS GetFeature request.
 
-      // (4.1) Count, if required
-      /** @type {angular.IPromise<number|void>} */
-      /** @type {import('ol/format/WFS').WriteGetFeatureOptions} */
-      const getCountOptions = Object.assign(
-        {
-          resultType: 'hits',
-        },
-        getFeatureCommonOptions
-      );
-      const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
-      const featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
+      options.queryCountFirst = false;
       const canceler = this.registerCanceler_();
       /** @type {angular.IPromise<QuerentResult>} */
       const countPromise = new Promise((resolve, reject) => {
-        this.http_
-          .post(url, featureCountRequest, {
-            params: params,
-            headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-            timeout: canceler.promise,
-          })
-          .then((response) => {
-            if (!dataSources[0].wfsFormat) {
-              throw new Error('Missing wfsFormat');
-            }
+        const doQuery = (response) => {
+          if (!dataSources[0].wfsFormat) {
+            throw new Error('Missing wfsFormat');
+          }
 
+          let numberOfFeatures = -1;
+          if (response !== undefined) {
             const metadata = dataSources[0].wfsFormat.readFeatureCollectionMetadata(response.data);
             if (!metadata) {
               throw new Error('Missing metadata');
             }
-            const numberOfFeatures = metadata.numberOfFeatures;
-            const getFeatureOptions = Object.assign(
-              {
+            numberOfFeatures = metadata.numberOfFeatures;
+          }
+          const getFeatureOptions = Object.assign(
+            {
+              maxFeatures,
+            },
+            getFeatureCommonOptions
+          );
+          const featureRequestXml = wfsFormat.writeGetFeature(getFeatureOptions);
+          const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
+          if (typeof url !== 'string') {
+            throw new Error('Wrong URL type');
+          }
+          this.http_
+            .post(url, featureRequest, {
+              params: params,
+              headers: {'Content-Type': 'text/xml; charset=UTF-8'},
+              timeout: canceler.promise,
+            })
+            .then((response) => {
+              const results = this.handleWFSQueryResult_(
+                dataSources,
                 maxFeatures,
-              },
-              getFeatureCommonOptions
-            );
-            const featureRequestXml = wfsFormat.writeGetFeature(getFeatureOptions);
-            const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
-            if (typeof url !== 'string') {
-              throw new Error('Wrong URL type');
-            }
-            const canceler = this.registerCanceler_();
-            this.http_
-              .post(url, featureRequest, {
-                params: params,
-                headers: {'Content-Type': 'text/xml; charset=UTF-8'},
-                timeout: canceler.promise,
-              })
-              .then((response) => {
-                const results = this.handleWFSQueryResult_(
-                  dataSources,
-                  maxFeatures,
-                  numberOfFeatures,
-                  true,
-                  response
-                );
-                resolve(results);
-              });
-          });
+                numberOfFeatures,
+                true,
+                response
+              );
+              resolve(results);
+            });
+        };
+        if (options.queryCountFirst) {
+          // (4.1) Count, if required
+          /** @type {angular.IPromise<number|void>} */
+          /** @type {import('ol/format/WFS').WriteGetFeatureOptions} */
+          const getCountOptions = Object.assign(
+            {
+              resultType: 'hits',
+            },
+            getFeatureCommonOptions
+          );
+          const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
+          const featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
+          this.http_
+            .post(url, featureCountRequest, {
+              params: params,
+              headers: {'Content-Type': 'text/xml; charset=UTF-8'},
+              timeout: canceler.promise,
+            })
+            .then((response) => {
+              doQuery(response);
+            });
+        } else {
+          doQuery();
+        }
       });
       promises.push(countPromise);
     }
