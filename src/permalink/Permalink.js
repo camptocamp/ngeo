@@ -554,7 +554,11 @@ export function PermalinkService(
           const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (ctrl.node);
           if (groupNode.children === undefined) {
             const param = `${ParamPrefix.TREE_ENABLE}${ctrl.node.name}`;
-            newState[param] = `${visible}`;
+            if ((groupNode.metadata.isChecked === true) !== visible) {
+              newState[param] = `${visible}`;
+            } else {
+              this.ngeoStateManager_.deleteParam(param);
+            }
           }
         }
       );
