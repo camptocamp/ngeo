@@ -277,6 +277,7 @@ export type ngeoQueryOptions = {
   /**
    * For WFS sources, should the number of features first be
    * requested with `resultType=hits` before requesting the actual features in an seconds request?
+   * Should be used on window result but not on grid result.
    */
   queryCountFirst?: boolean;
   /**
