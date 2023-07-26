@@ -1,8 +1,8 @@
-c2cciutils[checks]==1.4.7
-urllib3==1.26.14 # not directly required, pinned by Snyk to avoid a vulnerability
+c2cciutils[checks]==1.4.12
+urllib3==1.26.16 # not directly required, pinned by Snyk to avoid a vulnerability
 setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
 wheel==0.38.4
 certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
-pre-commit==3.0.2
+pre-commit==3.0.4
 cryptography>=39.0.1 # not directly required, pinned by Snyk to avoid a vulnerability
 requests>=2.31.0 # not directly required, pinned by Snyk to avoid a vulnerability
