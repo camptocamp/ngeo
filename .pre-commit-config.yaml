@@ -50,9 +50,15 @@ repos:
       - id: prettier
         additional_dependencies:
           - prettier@2.8.8 # npm
-          - prettier-plugin-sh@0.13.1 # npm
+          - prettier-plugin-sh@0.12.8 # npm
           - prettier-plugin-toml@0.4.0 # npm
           - '@prettier/plugin-xml@0.12.0' # npm
+        exclude: |-
+          (?x)(
+            \.npmignore
+            |\.gitignore
+            |\.prettierignore
+          )$
   - repo: https://github.com/shellcheck-py/shellcheck-py
     rev: v0.9.0.2
     hooks:
