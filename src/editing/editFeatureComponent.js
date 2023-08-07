@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -1282,7 +1282,13 @@ Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
   /** @type {import('ngeo/Menu').MenuActionOptions[]} */
   const actions = [];
   features.forEach((feature) => {
-    const label = feature.get('name') ? feature.get('name') : feature.getId();
+    let label = null;
+    const selectionName = this.editableTreeCtrl.node.metadata['editingSelectionAttribute'];
+    if (selectionName) {
+      label = feature.get(selectionName);
+    } else {
+      label = feature.get('name') ? feature.get('name') : feature.getId();
+    }
     /** @type {import('ngeo/Menu').MenuActionOptions} */
     const choice = {
       cls: '',
