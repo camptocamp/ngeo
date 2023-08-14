@@ -6,6 +6,7 @@ ci:
     - copyright
     - ripsecrets
 
+    - jsonschema-validator
 exclude: ^src/bootstrap-custom\.css\.map$
 
 repos:
@@ -128,3 +129,8 @@ repos:
     hooks:
       - id: copyright
       - id: workflows-require-timeout
+  - repo: https://github.com/sbrunner/jsonschema-validator
+    rev: 0.1.0
+    hooks:
+      - id: jsonschema-validator
+        files: ^ci/config\.yaml$
