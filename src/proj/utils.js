@@ -27,6 +27,13 @@ import proj4 from 'proj4';
 export default function createProjections(projections) {
   for (const code in projections) {
     proj4.defs(code, projections[code].definition.join(' ').trim());
+    const match = /^EPSG:(\d+)$/.exec(code);
+    if (match !== null) {
+      proj4.defs(
+        'http://www.opengis.net/gml/srs/epsg.xml#' + match[1], //NOSONAR
+        proj4.defs(code)
+      );
+    }
   }
   register(proj4);
   for (const code in projections) {
