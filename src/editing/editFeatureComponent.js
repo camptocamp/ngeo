@@ -1283,7 +1283,13 @@ Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
   /** @type {import('ngeo/Menu').MenuActionOptions[]} */
   const actions = [];
   features.forEach((feature) => {
-    const label = feature.get('name') ? feature.get('name') : feature.getId();
+    let label = null;
+    const selectionName = this.editableTreeCtrl.node.metadata['editingSelectionAttribute'];
+    if (selectionName) {
+      label = feature.get(selectionName);
+    } else {
+      label = feature.get('name') ? feature.get('name') : feature.getId();
+    }
     /** @type {import('ngeo/Menu').MenuActionOptions} */
     const choice = {
       cls: '',

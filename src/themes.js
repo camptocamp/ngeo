@@ -228,6 +228,8 @@
  * @property {string} [iconUrl] The URL of the icon to display in the layer tree. For every kind of layer.
  * @property {string} identifierAttributeField The field used in the 'display query window' as feature title.
  *      For WMS layers.
+ * @property {string} editingSelectionAttribute The field used in the selector tooltip to name the layer when multiple ones are selected on the map.
+ *      For WMS layers.
  * @property {boolean|undefined} [isChecked=false] Is the layer checked by default. For WMS and WMTS layers.
  * @property {boolean|undefined} [isExpanded=false] Whether the layer group is expanded by default. For
  *      layer groups (only).
