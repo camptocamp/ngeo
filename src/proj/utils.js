@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -31,6 +31,13 @@ import proj4 from 'proj4';
  */
 export default function create(code, def, extent) {
   proj4.defs(code, def.trim());
+  const match = /^EPSG:(\d+)$/.exec(code);
+  if (match !== null) {
+    proj4.defs(
+      'http://www.opengis.net/gml/srs/epsg.xml#' + match[1], //NOSONAR
+      proj4.defs(code)
+    );
+  }
   register(proj4);
   const proj = getProjection(code);
   proj.setExtent(extent);
