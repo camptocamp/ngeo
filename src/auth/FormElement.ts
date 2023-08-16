@@ -477,12 +477,16 @@ export default class GmfAuthForm extends GmfBaseElement {
     if (pwdVal === '') {
       errors.push(i18next.t('The password is required.'));
     }
+    let otpVal = '';
+    if (this.twoFactorAuth) {
+      otpVal = (form.otp as HTMLInputElement).value;
+    }
     if (errors.length) {
       this.isLoading = false;
       this.setError_(errors);
     } else {
       authenticationService
-        .login(loginVal, pwdVal)
+        .login(loginVal, pwdVal, otpVal)
         .then(() => {
           this.cleanForm_();
           this.resetError_();
