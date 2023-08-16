@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2022 Camptocamp SA
+// Copyright (c) 2021-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -479,12 +479,16 @@ export default class GmfAuthForm extends GmfBaseElement {
     if (pwdVal === '') {
       errors.push(i18next.t('The password is required.'));
     }
+    let otpVal = '';
+    if (this.twoFactorAuth) {
+      otpVal = (form.otp as HTMLInputElement).value;
+    }
     if (errors.length) {
       this.isLoading = false;
       this.setError_(errors);
     } else {
       authenticationService
-        .login(loginVal, pwdVal)
+        .login(loginVal, pwdVal, otpVal)
         .then(() => {
           this.cleanForm_();
           this.resetError_();
