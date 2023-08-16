@@ -264,7 +264,7 @@ class Map {
         const hasDescription = feature.get('description') !== undefined;
         return hasId && hasTitle && hasDescription;
       },
-      style: () => [],
+      style: null,
     });
     this.map_.addInteraction(this.selectInteraction_);
 
