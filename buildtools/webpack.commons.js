@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -151,7 +151,9 @@ module.exports = function (config) {
             {allowDeclareFields: true},
           ],
           [require.resolve('@babel/plugin-proposal-decorators'), {decoratorsBeforeExport: true}],
-          [require.resolve('@babel/plugin-proposal-class-properties')],
+          require.resolve('@babel/plugin-proposal-class-properties'),
+          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+          require.resolve('@babel/plugin-proposal-optional-chaining'),
         ],
       },
     },
@@ -171,7 +173,11 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        plugins: [require.resolve('babel-plugin-angularjs-annotate')],
+        plugins: [
+          require.resolve('babel-plugin-angularjs-annotate'),
+          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+          require.resolve('@babel/plugin-proposal-optional-chaining'),
+        ],
       },
     },
   };
@@ -194,6 +200,10 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
+        plugins: [
+          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+          require.resolve('@babel/plugin-proposal-optional-chaining'),
+        ],
       },
     },
   };
