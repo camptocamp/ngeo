@@ -150,7 +150,7 @@ function MainController($scope, ngeoFeatureHelper) {
 
   /** @type {Object<string, *>} */
   const rectProperties = {
-    geometry: olGeomPolygonFromExtent([-7874848, 6496535, -7730535, 6384020]),
+    geometry: olGeomPolygonFromExtent([-7874848, 6384020, -7730535, 6496535]),
   };
   rectProperties[ngeoFormatFeatureProperties.COLOR] = '#000000';
   rectProperties[ngeoFormatFeatureProperties.IS_RECTANGLE] = true;
