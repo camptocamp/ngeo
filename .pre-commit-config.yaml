@@ -113,17 +113,6 @@ repos:
       - id: pyupgrade
         args:
           - --py39-plus
-    # - repo: https://github.com/pre-commit/mirrors-eslint
-    #   rev: v8.31.0
-    #   hooks:
-    #     - id: eslint
-    #       additional_dependencies:
-    #         - '@typescript-eslint/eslint-plugin@5.48.0'
-    #         - '@typescript-eslint/parser@5.48.0'
-    #         - eslint@8.31.0
-    #         - eslint-plugin-jsdoc@39.6.4
-    #         - eslint-plugin-lit@1.7.2
-    #         - eslint-plugin-wc@1.4.0
   - repo: https://github.com/sbrunner/hooks
     rev: 0.5.0
     hooks:
