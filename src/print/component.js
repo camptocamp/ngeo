@@ -1187,7 +1187,9 @@ export class PrintController {
             return this.translate_(prop);
           });
         }
-        data.push(Object.keys(properties).map((key) => properties[key]));
+        data.push(
+          Object.keys(properties).map((key) => (properties[key] !== undefined ? properties[key] : ''))
+        );
       });
       if (columns.length) {
         const datasourceObj = {
