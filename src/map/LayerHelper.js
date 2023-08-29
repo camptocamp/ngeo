@@ -164,7 +164,7 @@ LayerHelper.prototype.createBasicWMSLayer = function (
   }
   if (opt_serverType) {
     params.SERVERTYPE = opt_serverType;
-    // OpenLayers expects 'qgis' insteads of 'qgisserver'
+    // OpenLayers expects 'qgis' instead of 'qgisserver'
     olServerType = opt_serverType.replace(ServerType.QGISSERVER, 'qgis');
   }
 

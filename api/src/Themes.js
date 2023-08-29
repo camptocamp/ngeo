@@ -242,13 +242,17 @@ export function getOverlayLayers(layerNames) {
  * @hidden
  */
 export function createWMSLayer(config, ogcServer) {
+  let serverType = ogcServer.type;
+  // OpenLayers expects 'qgis' instead of 'qgisserver'
+  serverType = serverType.replace('qgisserver', 'qgis');
+
   const layer = new ImageLayer({
     source: new ImageWMS({
       url: ogcServer.url,
       params: {
         'LAYERS': config.layers,
       },
-      serverType: ogcServer.type,
+      serverType: serverType,
     }),
     minResolution: config.minResolutionHint,
     maxResolution: config.maxResolutionHint,
