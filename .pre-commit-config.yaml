@@ -69,7 +69,7 @@ repos:
         additional_dependencies:
           - pyjson5==1.6.4 # pypi
   - repo: https://github.com/sirwart/ripsecrets
-    rev: v0.1.5
+    rev: v0.1.6
     hooks:
       - id: ripsecrets
         exclude: |-
