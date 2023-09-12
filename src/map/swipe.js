@@ -22,7 +22,6 @@
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events';
 import RenderEvent from 'ol/render/Event';
-import {getRenderPixel} from 'ol/render.js';
 
 import ResizeObserver from 'resize-observer-polyfill';
 import 'jquery-ui/ui/widgets/draggable';
@@ -193,7 +192,6 @@ export class SwipeController {
       ctx.clip();
     } else {
       // ctx instanceof WebGLRenderingContext
-      ctx.clear(ctx.COLOR_BUFFER_BIT);
       ctx.enable(ctx.SCISSOR_TEST);
       ctx.scissor(0, 0, width, height);
     }
