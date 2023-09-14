@@ -41,9 +41,13 @@ module.exports = {
           options: {
             babelrc: false,
             comments: false,
-            plugins: [
-              require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-              require.resolve('@babel/plugin-proposal-optional-chaining'),
+            presets: [
+              [
+                require.resolve('@babel/preset-env'),
+                {
+                  targets: require('./webpack.share').browsers,
+                },
+              ],
             ],
           },
         },
