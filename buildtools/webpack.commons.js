@@ -49,6 +49,15 @@ module.exports = function (config) {
     $: 'jquery',
   });
 
+  const babelPresetEnv = [
+    require.resolve('@babel/preset-env'),
+    {
+      targets: config.browsers || require('./webpack.share').browsers,
+      debug: true,
+      loose: true,
+    },
+  ];
+
   // Expose corejs-typeahead as window.Bloodhound
   const typeaheadRule = {
     test: require.resolve('corejs-typeahead'),
@@ -144,6 +153,7 @@ module.exports = function (config) {
         assumptions: {
           setPublicClassFields: true,
         },
+        presets: [babelPresetEnv],
         plugins: [
           [
             require.resolve('@babel/plugin-transform-typescript'),
@@ -151,9 +161,6 @@ module.exports = function (config) {
             {allowDeclareFields: true},
           ],
           [require.resolve('@babel/plugin-proposal-decorators'), {decoratorsBeforeExport: true}],
-          require.resolve('@babel/plugin-proposal-class-properties'),
-          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-          require.resolve('@babel/plugin-proposal-optional-chaining'),
         ],
       },
     },
@@ -173,11 +180,8 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        plugins: [
-          require.resolve('babel-plugin-angularjs-annotate'),
-          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-          require.resolve('@babel/plugin-proposal-optional-chaining'),
-        ],
+        presets: [babelPresetEnv],
+        plugins: [require.resolve('babel-plugin-angularjs-annotate')],
       },
     },
   };
@@ -200,10 +204,7 @@ module.exports = function (config) {
       options: {
         babelrc: false,
         comments: false,
-        plugins: [
-          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-          require.resolve('@babel/plugin-proposal-optional-chaining'),
-        ],
+        presets: [babelPresetEnv],
       },
     },
   };
