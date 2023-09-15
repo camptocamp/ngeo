@@ -10,6 +10,14 @@ jobs:
     concurrency: gh-pages-push
 
     steps:
+      - run: env
+      - name: GitHub event
+        run: echo ${GITHUB_EVENT} | python3 -m json.tool
+        env:
+          GITHUB_EVENT: ${{ toJson(github) }}
+      - name: GitHub event file
+        run: cat ${GITHUB_EVENT_PATH}
+
       - uses: actions/checkout@v3
         with:
           ref: gh-pages
