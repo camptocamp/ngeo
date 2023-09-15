@@ -34,10 +34,10 @@ jobs:
               repo: github.context.issue.repo,
               pull_number: github.context.issue.number,
               body: [
-                "Examples: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/examples/",
-                "Storybook: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/storybook/",
-                "API help: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/api/apihelp/apihelp.html",
-                "API documentation: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/apidoc/",
+                'Examples: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/examples/',
+                'Storybook: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/storybook/',
+                'API help: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/api/apihelp/apihelp.html',
+                'API documentation: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/apidoc/',
               ].join('\n'),
               event: 'COMMENT'
             });
