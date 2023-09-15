@@ -12,6 +12,14 @@ jobs:
     timeout-minutes: 2
 
     steps:
+      - run: env
+      - name: GitHub event
+        run: echo ${GITHUB_EVENT} | python3 -m json.tool
+        env:
+          GITHUB_EVENT: ${{ toJson(github) }}
+      - name: GitHub event file
+        run: cat ${GITHUB_EVENT_PATH}
+
       - id: branch
         run: echo "branch=${GITHUB_REF}" >> $GITHUB_OUTPUT
         if: env.HAS_SECRETS == 'HAS_SECRETS'
