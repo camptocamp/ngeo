@@ -110,7 +110,7 @@ function loaded(page, browser) {
                 process.exit(2);
               }
             );
-        }, 500);
+        }, 1000);
       } else {
         await browser.close();
       }
