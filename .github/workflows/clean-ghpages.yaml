@@ -1,6 +1,10 @@
 name: Clean GitHub pages
 
-on: delete
+on:
+  delete:
+  pull_request:
+    types:
+      - closed
 
 jobs:
   clean:
