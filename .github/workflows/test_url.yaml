@@ -20,13 +20,7 @@ jobs:
       - name: GitHub event file
         run: cat ${GITHUB_EVENT_PATH}
 
-      - id: branch
-        run: echo "branch=${GITHUB_REF}" >> $GITHUB_OUTPUT
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
-        env:
-          GITHUB_REF: ${{ github.head_ref || github.ref_name }}
-
-      - run: npm install --production @actions/github
+      - run: npm install @actions/github
       - run: |
           echo "
           const github = require('@actions/github');
@@ -40,10 +34,10 @@ jobs:
               repo: github.context.issue.repo,
               pull_number: github.context.issue.number,
               body: [
-                \`Examples: https://camptocamp.github.io/ngeo/${{ steps.branch.outputs.branch }}/examples/\`,
-                \`Storybook: https://camptocamp.github.io/ngeo/${{ steps.branch.outputs.branch }}/storybook/\`,
-                \`API help: https://camptocamp.github.io/ngeo/${{ steps.branch.outputs.branch }}/api/apihelp/apihelp.html\`,
-                \`API documentation: https://camptocamp.github.io/ngeo/${{ steps.branch.outputs.branch }}/apidoc/\`,
+                "Examples: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/examples/",
+                "Storybook: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/storybook/",
+                "API help: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/api/apihelp/apihelp.html",
+                "API documentation: https://camptocamp.github.io/ngeo/refs/pull/${{github.event.number}}/merge/apidoc/",
               ].join('\n'),
               event: 'COMMENT'
             });
@@ -77,6 +71,8 @@ jobs:
           run();
           " > pr-message.js
         if: github.actor == 'dependabot[bot]'
+
+      - run: cat pr-message.js
 
       - run: node pr-message.js
         env:
