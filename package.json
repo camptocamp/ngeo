@@ -71,7 +71,7 @@
     "@lit/reactive-element": "1.6.3",
     "@sentry/browser": "7.64.0",
     "@sentry/tracing": "7.64.0",
-    "@sentry/types": "7.64.0",
+    "@sentry/types": "7.66.0",
     "@storybook/preset-scss": "1.0.3",
     "@storybook/web-components": "6.5.16",
     "@trevoreyre/autocomplete-js": "2.4.1",
