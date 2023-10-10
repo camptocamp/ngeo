@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -149,11 +149,21 @@ describe('ngeo.layertree.component', () => {
 
   it('Get calculate state', () => {
     const treeNode0 = roottreeCtrl.children[0];
-    const treeLeaf01 = treeNode0.children[1];
-    treeLeaf01.state_ = 'on';
-    expect(roottreeCtrl.getCalculateState()).toBe('indeterminate');
+    const treeLeaf01 = treeNode0.children[0];
+    const treeLeaf02 = treeNode0.children[1];
+    expect(treeNode0.getState()).toBe('off');
+    expect(treeLeaf01.getState()).toBe('off');
+    expect(treeLeaf02.getState()).toBe('off');
+    expect(roottreeCtrl.getState()).toBe('off');
+    treeLeaf02.state_ = 'on';
     expect(treeNode0.getCalculateState()).toBe('indeterminate');
-    expect(treeLeaf01.getCalculateState()).toBe('on');
+    expect(roottreeCtrl.getCalculateState()).toBe('off');
+    treeNode0.refreshState();
+    expect(treeNode0.getState()).toBe('indeterminate');
+    expect(treeLeaf01.getState()).toBe('off');
+    expect(treeLeaf02.getState()).toBe('on');
+    expect(roottreeCtrl.getState()).toBe('indeterminate');
+    expect(roottreeCtrl.getCalculateState()).toBe('indeterminate');
   });
 
   it('Get first parent tree', () => {
