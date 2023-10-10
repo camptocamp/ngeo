@@ -204,7 +204,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 /**
  * Return the current state.
  *
- * @returns {string} 'on', 'off', 'indeterminate'.
+ * @returns {string} 'on', 'off', 'indeterminate', or '' if the children are not initialized.
  */
 LayertreeController.prototype.getState = function () {
   return this.state_;
@@ -302,7 +302,7 @@ LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcas
 /**
  * Return the current state, calculate on all its children recursively.
  *
- * @returns {string} 'on', 'off' or 'indeterminate'.
+ * @returns {string} 'on', 'off', 'indeterminate', or '' if the children are not initialized.
  */
 LayertreeController.prototype.getCalculateState = function () {
   const group = /** @type {import('gmf/themes').GmfGroup} */ (this.node);
@@ -314,7 +314,7 @@ LayertreeController.prototype.getCalculateState = function () {
   /** @type {string} */
   let previousChildState;
   this.children.some((child) => {
-    childState = child.getCalculateState();
+    childState = child.getState();
     if (previousChildState) {
       if (previousChildState !== childState) {
         childState = 'indeterminate';
