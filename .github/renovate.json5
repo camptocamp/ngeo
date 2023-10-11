@@ -13,30 +13,23 @@
   'pre-commit': {enabled: true},
   regexManagers: [
     {
-      fileMatch: ['^.pre-commit-config.yaml$'],
+      fileMatch: ['^\\.pre\\-commit\\-config\\.yaml$'],
       matchStrings: [" +- '?(?<depName>[^' @=]+)(@|==)(?<currentValue>[^' @=]+)'? # (?<datasource>.+)"],
     },
     {
-      fileMatch: ['^ci/applications-versions.yaml$'],
+      fileMatch: ['^ci/applications\\-versions\\.yaml$'],
       matchStrings: ['(?<depName>[^\\s]+): (?<currentValue>[^\\s]+) # (?<datasource>[^\\s]+)'],
     },
     {
-      fileMatch: ['^.github/workflows/main.yaml$'],
+      fileMatch: ['^.github/workflows/main\\.yaml$'],
       matchStrings: ["node-version: '(?<currentValue>[^\\s]+).x'"],
       depNameTemplate: 'node',
       datasourceTemplate: 'node',
     },
     {
-      'fileMatch': ['^ci/config\\\\.yaml$'],
+      'fileMatch': ['^ci/config\\.yaml$'],
       'matchStrings': [
-        '.*https://raw\\\\.githubusercontent\\\\.com/(?<depName>[^\\\\s]+)/(?<currentValue>[0-9\\\\.]+)/.*',
-      ],
-      'datasourceTemplate': 'github-tags',
-    },
-    {
-      'fileMatch': ['^ci/config\\\\.yaml$'],
-      'matchStrings': [
-        '.*https://raw\\\\.githubusercontent\\\\.com/(?<depName>[^\\\\s]+)/(?<currentValue>[0-9\\\\.]+)/.*',
+        '.*https://raw\\.githubusercontent\\.com/(?<depName>[^\\s]+)/(?<currentValue>[0-9\\.]+)/.*',
       ],
       'datasourceTemplate': 'github-tags',
     },
