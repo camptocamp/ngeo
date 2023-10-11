@@ -199,9 +199,7 @@ export default class GmfAuthForm extends GmfBaseElement {
         ? html`
             <div>
               <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
-                <div class="form-group">
-                  <slot name="gmf-auth-login"></slot>
-                </div>
+                <div class="form-group">test: <slot name="gmf-auth-login"></slot></div>
                 <div class="form-group">
                   <slot name="gmf-auth-password"></slot>
                 </div>
@@ -251,6 +249,7 @@ export default class GmfAuthForm extends GmfBaseElement {
         : ''}
       ${this.changingPassword
         ? html`
+            test
             <div>
               ${this.userMustChangeItsPassword
                 ? html` <div class="alert alert-warning">${i18next.t('You must change your password')}</div>`
