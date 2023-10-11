@@ -1,0 +1,29 @@
+# Run with
+# act -s GITHUB_TOKEN="$(gh auth token)"  --workflows=./ghw/
+
+name: Stale repo identifier
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '3 2 1 * *'
+
+jobs:
+  build:
+    name: Stale repo identifier
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run stale_repos tool
+        uses: docker://ghcr.io/github/stale_repos:v1
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ORGANIZATION: camptocamp
+          INACTIVE_DAYS: 365
+
+      - run: head stale_repos.md
+      - run: cat stale_repos.md
