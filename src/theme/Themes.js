@@ -256,7 +256,7 @@ export class ThemesService extends olEventsEventTarget {
         gmfLayerWMTS.url,
         gmfLayerWMTS.layer || '',
         gmfLayerWMTS.matrixSet,
-        gmfLayerWMTS.layer.dimensions,
+        gmfLayerWMTS.dimensions,
         gmfLayerWMTS.metadata.customOpenLayersOptions,
         minResolution,
         maxResolution,
