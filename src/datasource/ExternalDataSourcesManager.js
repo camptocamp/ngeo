@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -373,6 +373,9 @@ export class ExternalDatSourcesManager {
       let wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GML) ? WMSInfoFormat.GML : undefined;
       if (wmsInfoFormat === undefined) {
         wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GEOJSON) ? WMSInfoFormat.GEOJSON : undefined;
+      }
+      if (wmsInfoFormat === undefined) {
+        wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GEO_JSON) ? WMSInfoFormat.GEO_JSON : undefined;
       }
 
       // queryable

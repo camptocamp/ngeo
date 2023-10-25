@@ -79,6 +79,7 @@ export class DatasourceManager {
    * @param {angular.IQService} $q Angular q service
    * @param {angular.IScope} $rootScope Angular rootScope.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
+   * @param {angular.IInjectorService} $injector Main injector.
    * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
    * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager The gmf TreeManager
    *    service.
@@ -99,6 +100,7 @@ export class DatasourceManager {
     $q,
     $rootScope,
     $timeout,
+    $injector,
     gmfThemes,
     gmfTreeManager,
     ngeoBackgroundLayerMgr,
@@ -232,6 +234,13 @@ export class DatasourceManager {
      * @private
      */
     this.treeCtrlsUnregister_ = null;
+
+    /**
+     * @type {{import('gmf/options').gmfDatasourceOptions}
+     */
+    this.gmfDatasourceOptions = $injector.has('gmfDatasourceOptions')
+      ? $injector.get('gmfDatasourceOptions')
+      : {};
 
     // === Events ===
     listen(this.ngeoBackgroundLayerMgr_, 'change', this.handleNgeoBackgroundLayerChange_, this);
@@ -737,6 +746,9 @@ export class DatasourceManager {
     }
     if (wmtsUrl) {
       options.wmtsUrl = wmtsUrl;
+    }
+    if (ogcServerType === ServerType.ARCGIS && this.gmfDatasourceOptions.arcgisWMSInfoFormat) {
+      options.wmsInfoFormat = this.gmfDatasourceOptions.arcgisWMSInfoFormat;
     }
     // Create the data source and add it to the cache
     this.dataSourcesCache_[id] = new GmfDatasourceOGC(options);
