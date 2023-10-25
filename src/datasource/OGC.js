@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -89,6 +89,7 @@ export const WFSOutputFormat = {
  */
 export const WMSInfoFormat = {
   GEOJSON: 'application/geojson',
+  GEO_JSON: 'application/geo+json',
   GML: 'application/vnd.ogc.gml',
 };
 
@@ -587,7 +588,10 @@ export class GmfDatasourceOGC extends ngeoDatasourceDataSource {
         wmsFormat = new olFormatWMSGetFeatureInfo({
           layers: wmsLayerNames,
         });
-      } else if (this.wmsInfoFormat === WMSInfoFormat.GEOJSON) {
+      } else if (
+        this.wmsInfoFormat === WMSInfoFormat.GEOJSON ||
+        this.wmsInfoFormat === WMSInfoFormat.GEO_JSON
+      ) {
         wmsFormat = new ngeoFormatArcGISGeoJSON({
           layers: wmsLayerNames,
         });
