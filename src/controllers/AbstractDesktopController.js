@@ -179,7 +179,7 @@ export class AbstractDesktopController extends AbstractAPIController {
         this.googleStreetViewActive = panel === 'googlestreetview';
         this.mapillaryStreetViewActive = panel === 'mapillary';
 
-        $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular diggest
+        $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular digest
 
         if (panel === null || !panel.includes('auth')) {
           user.setLoginMessage('');
