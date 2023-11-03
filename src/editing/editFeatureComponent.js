@@ -142,7 +142,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
-  }
+  },
 );
 
 /**
@@ -244,7 +244,7 @@ export function Controller(
   ngeoFeatureHelper,
   ngeoLayerHelper,
   ngeoToolActivateMgr,
-  gmfEditFeatureOptions
+  gmfEditFeatureOptions,
 ) {
   // === Binding properties ===
 
@@ -669,7 +669,7 @@ Controller.prototype.$onInit = function () {
       if (newVal) {
         this.gmfSnapping_.ensureSnapInteractionsOnTop();
       }
-    }
+    },
   );
 
   this.scope_.$on('$destroy', this.handleDestroy_.bind(this));
@@ -706,7 +706,7 @@ Controller.prototype.$onInit = function () {
           this.state = state.DEACTIVATE_EXECUTE;
         }
       }
-    }
+    },
   );
 
   this.scope_.$watch(
@@ -716,7 +716,7 @@ Controller.prototype.$onInit = function () {
       if (oldValue && !newValue) {
         this.state = EditingState.IDLE;
       }
-    }
+    },
   );
 
   // (3) Get attributes
@@ -879,7 +879,7 @@ Controller.prototype.delete = function () {
         this.pending = false;
         this.serverErrorType = `error type : ${response.data.error_type}`;
         this.serverErrorMessage = `error message : ${response.data.message}`;
-      }
+      },
     );
   }
 };
@@ -1090,7 +1090,7 @@ Controller.prototype.handleMapSelectActiveChange_ = function (active) {
   if (active) {
     this.mapListenerKeys_.push(
       listen(this.map, 'click', this.handleMapClick_, this),
-      listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this)
+      listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this),
     );
   } else {
     this.mapListenerKeys_.forEach(unlistenByKey);
@@ -1141,7 +1141,7 @@ Controller.prototype.handleMapClick_ = function (evt) {
       {
         hitTolerance: 5,
         layerFilter: undefined,
-      }
+      },
     );
 
     if (feature) {
@@ -1210,7 +1210,7 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
       {
         hitTolerance: 7,
         layerFilter: undefined,
-      }
+      },
     );
 
     feature = feature ? feature : null;
@@ -1307,19 +1307,19 @@ Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
       this.menuMultiple_,
       'actionmouseenter',
       this.handleMultiMenuActionMouseEnter_.bind(this, features),
-      this
-    )
+      this,
+    ),
   );
   this.menuMultipleListenerKeys_.push(
     listen(
       this.menuMultiple_,
       'actionmouseout',
       this.handleMultiMenuActionMouseOut_.bind(this, features),
-      this
-    )
+      this,
+    ),
   );
   this.menuMultipleListenerKeys_.push(
-    listen(this.menuMultiple_, 'actionclick', this.handleMenuMultipleActionClick_.bind(this, features), this)
+    listen(this.menuMultiple_, 'actionclick', this.handleMenuMultipleActionClick_.bind(this, features), this),
   );
 
   this.map.addOverlay(this.menuMultiple_);
@@ -1385,7 +1385,7 @@ Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
     geom = newFeature.getGeometry();
     this.geomListenerKeys_.push(
       listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this),
-      listen(geom, 'change', this.handleFeatureGeometryChange_, this)
+      listen(geom, 'change', this.handleFeatureGeometryChange_, this),
     );
     this.registerInteractions_();
 

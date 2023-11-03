@@ -100,7 +100,7 @@ function MainController(ngeoToolActivateMgr) {
           color: '#ffcc33',
         }),
       }),
-    })
+    }),
   );
 
   // manage clicks on the map
@@ -121,7 +121,7 @@ function MainController(ngeoToolActivateMgr) {
           content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
         }
       }
-    )
+    ),
   );
 
   const mapClickTool = new ngeoMiscToolActivate(this, 'mapClickIsEnabled');
@@ -135,7 +135,7 @@ function MainController(ngeoToolActivateMgr) {
     /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'Point',
       features: features,
-    })
+    }),
   );
   this.drawPoint.setActive(false);
   interactionDecoration(this.drawPoint);
@@ -152,7 +152,7 @@ function MainController(ngeoToolActivateMgr) {
     /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'LineString',
       features: features,
-    })
+    }),
   );
   this.drawLine.setActive(false);
   interactionDecoration(this.drawLine);
@@ -169,7 +169,7 @@ function MainController(ngeoToolActivateMgr) {
     /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'Polygon',
       features: features,
-    })
+    }),
   );
   this.drawPolygon.setActive(false);
   interactionDecoration(this.drawPolygon);

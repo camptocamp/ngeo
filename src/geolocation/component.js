@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -176,7 +176,7 @@ Controller.prototype.$onInit = function () {
         ngeoMessageNotification.error(msg);
         this.$scope_.$emit(GeolocationEventType.ERROR, error);
       }
-    )
+    ),
   );
 
   /**
@@ -219,7 +219,7 @@ Controller.prototype.$onInit = function () {
       }
       this.accuracyFeature_.setGeometry(geometry);
       this.setPosition_();
-    }
+    },
   );
 
   listen(
@@ -228,7 +228,7 @@ Controller.prototype.$onInit = function () {
     /** @type {import('ol/events').ListenerFunction} */
     () => {
       this.setPosition_();
-    }
+    },
   );
 
   const view = this.map.getView();
@@ -243,7 +243,7 @@ Controller.prototype.$onInit = function () {
         if (newVal === false) {
           this.toggleTracking();
         }
-      }
+      },
     );
   }
 };
@@ -345,7 +345,7 @@ Controller.prototype.autoRotateListener = function () {
           currentAlpha = this.handleRotate_(event.alpha, currentAlpha);
         }
       },
-      true
+      true,
     );
   } else if (window.hasOwnProperty('ondeviceorientation')) {
     window.addEventListener(
@@ -364,7 +364,7 @@ Controller.prototype.autoRotateListener = function () {
           currentAlpha = this.handleRotate_(evt.alpha - 270, currentAlpha);
         }
       },
-      true
+      true,
     );
   } else {
     console.error('Orientation is not supported on this device');

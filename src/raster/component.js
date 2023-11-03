@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -43,7 +43,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -55,7 +55,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.gmfElevationwidgetTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'gmf/raster/widgetComponent';
-  }
+  },
 );
 
 /**
@@ -128,7 +128,7 @@ function rasterComponent() {
         () => ctrl.active,
         (active) => {
           ctrl.toggleActive_(active);
-        }
+        },
       );
 
       // Watch current layer.
@@ -137,7 +137,7 @@ function rasterComponent() {
         (layer) => {
           ctrl.layer = layer;
           ctrl.elevation = null;
-        }
+        },
       );
     },
   };
@@ -238,7 +238,7 @@ Controller.prototype.activate_ = function () {
 
   // Launch the raster service request when the user stops moving the mouse for less short delay.
   this.listenerKeys_.push(
-    listen(this.map, 'pointermove', this.ngeoDebounce_(this.afterPointerMove_.bind(this), 500, true))
+    listen(this.map, 'pointermove', this.ngeoDebounce_(this.afterPointerMove_.bind(this), 500, true)),
   );
 
   // Clear the elevation and set inViewport_ to false.

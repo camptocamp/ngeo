@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -84,7 +84,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
   layer,
   resolution,
   destinationPrintDpi,
-  goodnessOfFit
+  goodnessOfFit,
 ) {
   /**
    * @type {import('ol/source/Vector').default<import('ol/geom/Geometry').default>}
@@ -168,7 +168,7 @@ VectorEncoder.prototype.encodeVectorLayer = function (
         resolution,
         style,
         destinationPrintDpi,
-        goodnessOfFit
+        goodnessOfFit,
       );
       if (mapfishPrintStyles && mapfishPrintStyles.length > 0) {
         styleObject.symbolizers.push(...mapfishPrintStyles);
@@ -215,7 +215,7 @@ VectorEncoder.prototype.newFeatureFromStyle_ = function (style) {
       image: style.getImage(),
       stroke: style.getStroke(),
       text: style.getText(),
-    })
+    }),
   );
   return feature;
 };
@@ -233,7 +233,7 @@ VectorEncoder.prototype.encodeVectorStyle_ = function (
   resolution,
   style,
   destinationPrintDpi,
-  goodnessOfFit
+  goodnessOfFit,
 ) {
   if (!(geometryType in PRINT_STYLE_TYPES)) {
     // unsupported geometry type

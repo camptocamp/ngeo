@@ -59,7 +59,7 @@ export class ThemesService extends olEventsEventTarget {
     gmfTreeUrl,
     gmfVectorTilesUrl,
     gmfVectorTilesOptions,
-    gmfWMSSourceOptions
+    gmfWMSSourceOptions,
   ) {
     super();
 
@@ -260,7 +260,7 @@ export class ThemesService extends olEventsEventTarget {
         gmfLayerWMTS.metadata.customOpenLayersOptions,
         minResolution,
         maxResolution,
-        gmfLayerWMTS.metadata.opacity
+        gmfLayerWMTS.metadata.opacity,
       )
       .then(this.setLayerProperties_.bind(this, gmfLayerWMTS))
       .then(null, (response) => {
@@ -315,8 +315,8 @@ export class ThemesService extends olEventsEventTarget {
         undefined, // time
         opt_params,
         server.credential ? 'use-credentials' : 'anonymous',
-        Object.assign({}, this.gmfWMSSourceOptions_, gmfLayerWMS.metadata.customOpenLayersOptions)
-      )
+        Object.assign({}, this.gmfWMSSourceOptions_, gmfLayerWMS.metadata.customOpenLayersOptions),
+      ),
     );
   }
 
@@ -346,13 +346,13 @@ export class ThemesService extends olEventsEventTarget {
           tileGrid,
           minResolution,
           maxResolution,
-          gmfLayerVectorTiles.metadata.opacity
+          gmfLayerVectorTiles.metadata.opacity,
         );
         deferred.resolve(this.setLayerProperties_(gmfLayerVectorTiles, layer));
       },
       (response) => {
         deferred.reject(response);
-      }
+      },
     );
     return promise;
   }
@@ -367,7 +367,7 @@ export class ThemesService extends olEventsEventTarget {
     // The order of insertion in OL3 is the contrary of the theme
     const orderedChildren = item.children.map((x) => x).reverse();
     const promises = orderedChildren.map((item) =>
-      this.layerLayerCreationFn_(ogcServers, /** @type {import('gmf/themes').GmfLayer} */ (item))
+      this.layerLayerCreationFn_(ogcServers, /** @type {import('gmf/themes').GmfLayer} */ (item)),
     );
     return this.$q_.all(promises).then((layers) => {
       let collection;
@@ -404,7 +404,7 @@ export class ThemesService extends olEventsEventTarget {
       )
     );
     return /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ /** @type {*} */ this.$q_.all(
-      promises
+      promises,
     );
   }
 
@@ -436,7 +436,7 @@ export class ThemesService extends olEventsEventTarget {
        * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
        * @returns {?import('gmf/themes').GmfTheme} The theme object for themeName, or null if not found.
        */
-      (data) => findThemeByName(data.themes, themeName)
+      (data) => findThemeByName(data.themes, themeName),
     );
   }
 
@@ -451,7 +451,7 @@ export class ThemesService extends olEventsEventTarget {
        * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
        * @returns {import('gmf/themes').GmfTheme[]} The themes object.
        */
-      (data) => data.themes
+      (data) => data.themes,
     );
   }
 
@@ -471,7 +471,7 @@ export class ThemesService extends olEventsEventTarget {
        * @returns {(import('gmf/themes').GmfLayer | import('gmf/themes').GmfGroup)[]}
        *    The background layers object.
        */
-      (data) => data.background_layers
+      (data) => data.background_layers,
     );
   }
 
@@ -489,7 +489,7 @@ export class ThemesService extends olEventsEventTarget {
        * @param {import('gmf/themes').GmfThemesResponse} data The "themes" web service response.
        * @returns {import('gmf/themes').GmfOgcServers} The `ogcServers` object.
        */
-      (data) => data.ogcServers
+      (data) => data.ogcServers,
     );
   }
 
@@ -586,7 +586,7 @@ export class ThemesService extends olEventsEventTarget {
         },
         (response) => {
           this.deferred_.reject(response);
-        }
+        },
       );
   }
 }

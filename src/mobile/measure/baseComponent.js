@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -76,7 +76,7 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
         throw new Error('Missing measure');
       }
       this.measure.setActive(newVal);
-    }
+    },
   );
 
   /**
@@ -146,7 +146,7 @@ MeasueMobileBaseController.prototype.init = function () {
         this.scope.$apply();
       }
     },
-    this
+    this,
   );
 
   listen(
@@ -156,7 +156,7 @@ MeasueMobileBaseController.prototype.init = function () {
     (evt) => {
       this.drawing = drawInteraction.getDrawing();
     },
-    this
+    this,
   );
 
   listen(
@@ -166,7 +166,7 @@ MeasueMobileBaseController.prototype.init = function () {
     (evt) => {
       this.valid = drawInteraction.getValid();
     },
-    this
+    this,
   );
 
   this.map.addInteraction(this.measure);

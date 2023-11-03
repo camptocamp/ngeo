@@ -96,7 +96,7 @@ export default class extends olObservable {
     this.dispatchEvent(
       new ngeoCustomEvent('progress', {
         'progress': progress,
-      })
+      }),
     );
   }
 

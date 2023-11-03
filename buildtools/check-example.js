@@ -108,7 +108,7 @@ function loaded(page, browser) {
                 console.log(`Screenshot error: ${e}`);
                 await browser.close();
                 process.exit(2);
-              }
+              },
             );
         }, 1000);
       } else {
@@ -165,7 +165,7 @@ function loaded(page, browser) {
       request.respond(ASITVDCapabilities);
     } else if (
       /^https:\/\/[0-9-]*(-test)?\.geomapfish-demo\.[0-9a-z-.]*\.camptocamp\.com\/static-geomapfish\/[0-9a-f]*\/locales\/en.json/.test(
-        url
+        url,
       )
     ) {
       request.respond('{}');

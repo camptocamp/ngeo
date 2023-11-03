@@ -177,7 +177,7 @@ export class FeatureOverlayMgr {
    */
   styleFunction_(
     feature: OlFeature<OlGeomGeometry> | OlRenderFeature,
-    resolution: number
+    resolution: number,
   ): void | OlStyleStyle | OlStyleStyle[] {
     const featureUid = olUtilGetUid(feature).toString();
     console.assert(featureUid in this.featureUidToGroupIndex_);

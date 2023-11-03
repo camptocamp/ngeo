@@ -173,7 +173,7 @@ export function LayertreeController($scope, $rootScope, $attrs) {
        */
       (evt) => {
         this.rootScope_.$broadcast('ngeo-layertree-opacity', this);
-      }
+      },
     );
   }
 

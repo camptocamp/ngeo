@@ -170,7 +170,7 @@ export default class extends olInteractionTranslate {
       features.forEach((feature) => this.addFeature_(feature));
       keys.push(
         listen(features, 'add', this.handleFeaturesAdd_, this),
-        listen(features, 'remove', this.handleFeaturesRemove_, this)
+        listen(features, 'remove', this.handleFeaturesRemove_, this),
       );
     } else {
       if (map) {
@@ -225,7 +225,7 @@ export default class extends olInteractionTranslate {
       geometry,
       'change',
       this.handleGeometryChange_.bind(this, feature),
-      this
+      this,
     );
 
     const point = this.getGeometryCenterPoint_(geometry);

@@ -70,7 +70,7 @@ describe('Auth component', () => {
         () => {},
         (err) => {
           expect(err).to.equal('Login fail.');
-        }
+        },
       );
 
       await new Promise((resolve) => {

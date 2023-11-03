@@ -104,7 +104,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/objectediting', require('./component.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -117,7 +117,7 @@ myModule.value(
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfObjecteditingTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'gmf/objectediting';
-  }
+  },
 );
 
 /**
@@ -202,7 +202,7 @@ export function Controller(
   gmfTreeManager,
   ngeoFeatureHelper,
   ngeoLayerHelper,
-  ngeoToolActivateMgr
+  ngeoToolActivateMgr,
 ) {
   // == Scope properties ==
 
@@ -448,7 +448,7 @@ Controller.prototype.$onInit = function () {
       if (newVal != oldVal) {
         this.toggle_(newVal);
       }
-    }
+    },
   );
 
   this.scope_.$watchCollection(
@@ -469,7 +469,7 @@ Controller.prototype.$onInit = function () {
           this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
         }
       });
-    }
+    },
   );
 
   if (!this.feature) {
@@ -488,7 +488,7 @@ Controller.prototype.$onInit = function () {
           this.dirty = true;
         }
       }
-    }
+    },
   );
 
   const defaultColor = [39, 155, 145];
@@ -706,13 +706,13 @@ Controller.prototype.toggle_ = function (active) {
         this.feature,
         `change:${this.feature.getGeometryName()}`,
         this.handleFeatureGeometryChange_,
-        this
-      )
+        this,
+      ),
     );
     keys.push(listen(this.modify_, 'change:active', this.setFeatureStyle_, this));
     keys.push(listen(this.modify_, 'modifyend', this.handleModifyInteractionModifyEnd_, this));
     keys.push(
-      listen(window, 'beforeunload', /** @type {function(?): ?} */ (this.handleWindowBeforeUnload_), this)
+      listen(window, 'beforeunload', /** @type {function(?): ?} */ (this.handleWindowBeforeUnload_), this),
     );
     keys.push(listen(this.sketchFeatures, 'add', this.handleSketchFeaturesAdd_, this));
 

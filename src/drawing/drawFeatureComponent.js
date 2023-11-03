@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -74,7 +74,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
-  }
+  },
 );
 
 /**
@@ -133,7 +133,7 @@ export function Controller(
   gmfSnapping,
   ngeoFeatureHelper,
   ngeoFeatures,
-  ngeoToolActivateMgr
+  ngeoToolActivateMgr,
 ) {
   /**
    * @type {?import('ol/Map').default}
@@ -322,7 +322,7 @@ export function Controller(
       if (active) {
         this.selectedFeature = null;
       }
-    }
+    },
   );
 
   $scope.$watch(
@@ -348,7 +348,7 @@ export function Controller(
       } else {
         this.closeMenu_();
       }
-    }
+    },
   );
 
   $scope.$watch(() => this.mapSelectActive, this.handleMapSelectActiveChange_.bind(this));
@@ -404,7 +404,7 @@ Controller.prototype.$onInit = function () {
   }
 
   this.mainListenerKeys_.push(
-    listen(this.map.getInteractions(), 'add', this.handleMapInteractionsAdd_, this)
+    listen(this.map.getInteractions(), 'add', this.handleMapInteractionsAdd_, this),
   );
 };
 
@@ -634,7 +634,7 @@ Controller.prototype.handleMapClick_ = function (evt) {
       {
         hitTolerance: 5,
         layerFilter: undefined,
-      }
+      },
     );
 
     feature = feature ? feature : null;
@@ -696,7 +696,7 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
         {
           hitTolerance: 7,
           layerFilter: undefined,
-        }
+        },
       )
     );
 
@@ -752,7 +752,7 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
         this.menu_,
         'actionclick',
         this.handleMenuActionClick_.bind(this, vertexInfo),
-        this
+        this,
       );
       this.map.addOverlay(this.menu_);
 

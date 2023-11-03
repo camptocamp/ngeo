@@ -144,7 +144,7 @@ function MainController($scope) {
         this.profileLine = /** @type {?import('ol/geom/LineString').default} */ (e.feature.getGeometry());
         $scope.$digest();
       }
-    )
+    ),
   );
 }
 

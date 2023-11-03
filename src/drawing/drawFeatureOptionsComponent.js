@@ -51,9 +51,9 @@ myModule.run(
     $templateCache.put(
       'gmf/drawing/drawFeatureOptionsComponent',
       // @ts-ignore: webpack
-      require('./drawFeatureOptionsComponent.html')
+      require('./drawFeatureOptionsComponent.html'),
     );
-  }
+  },
 );
 
 /**
@@ -244,7 +244,7 @@ export class DrawFeatureOptionsController {
     this.listenerKeys_.push(
       olEventsListen(drawInteraction, 'drawstart', this.handleDrawInteractionDrawStart_, this),
       olEventsListen(this.map, 'singleclick', this.handleMapSingleClick_, this),
-      olEventsListen(this.map, 'dblclick', this.handleMapDoubleClick_, this)
+      olEventsListen(this.map, 'dblclick', this.handleMapDoubleClick_, this),
     );
 
     if (requiresHeight) {
@@ -262,7 +262,7 @@ export class DrawFeatureOptionsController {
           } else {
             this.resetSnapFeature_();
           }
-        }
+        },
       );
     } else {
       this.scope_.$watch(
@@ -279,7 +279,7 @@ export class DrawFeatureOptionsController {
           } else {
             this.resetSnapFeature_();
           }
-        }
+        },
       );
     }
   }

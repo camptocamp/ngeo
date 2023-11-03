@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -104,7 +104,7 @@ function searchComponent() {
           scope.$apply(() => {
             typeaheadListeners.cursorchange(event, suggestion, dataset);
           });
-        }
+        },
       );
 
       element.on(
@@ -118,7 +118,7 @@ function searchComponent() {
           scope.$apply(() => {
             typeaheadListeners.select(event, suggestion, dataset);
           });
-        }
+        },
       );
 
       element.on(
@@ -132,7 +132,7 @@ function searchComponent() {
           scope.$apply(() => {
             typeaheadListeners.autocomplete(event, suggestion, dataset);
           });
-        }
+        },
       );
 
       element.on(
@@ -147,7 +147,7 @@ function searchComponent() {
             const empty = element.data('tt-typeahead').menu._allDatasetsEmpty();
             typeaheadListeners.datasetsempty(event, query, empty);
           });
-        }
+        },
       );
 
       element.on(
@@ -160,7 +160,7 @@ function searchComponent() {
             const query = element.data('tt-typeahead').input.query;
             typeaheadListeners.change(event, query);
           });
-        }
+        },
       );
 
       //show spinning gif while waiting for the results

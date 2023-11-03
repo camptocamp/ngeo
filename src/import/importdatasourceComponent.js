@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -51,7 +51,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -63,7 +63,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.gmfImportdatasourceTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'gmf/import/importdatasourceComponent';
-  }
+  },
 );
 
 /**
@@ -113,7 +113,7 @@ export class Controller {
     gmfExternalDataSourcesManager,
     ngeoQuerent,
     gmfExternalOGCServers,
-    gettextCatalog
+    gettextCatalog,
   ) {
     // Binding properties
 
@@ -309,7 +309,7 @@ export class Controller {
                   return `<div>${item.name}</div>`;
                 },
               },
-            }
+            },
           )
           .on(
             'typeahead:select',
@@ -323,7 +323,7 @@ export class Controller {
                 this.scope_.$apply();
                 $connectBtn.focus();
               });
-            }
+            },
           );
       });
     }
@@ -353,7 +353,7 @@ export class Controller {
           this.isLoading = false;
           // Something went wrong...
           this.stopWorking_(true);
-        }
+        },
       );
     } else if (serviceType === Type.WMTS) {
       this.ngeoQuerent_.wmtsGetCapabilities(url).then(
@@ -367,7 +367,7 @@ export class Controller {
           this.isLoading = false;
           // Something went wrong...
           this.stopWorking_(true);
-        }
+        },
       );
     } else {
       // Could not determine the type of url

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -42,7 +42,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/grid', require('./component.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -54,7 +54,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.ngeoGridTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/grid';
-  }
+  },
 );
 
 /**

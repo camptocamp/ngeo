@@ -212,7 +212,7 @@ export default class extends olInteractionPointer {
         if (feature === node.feature) {
           nodesToRemove.push(node);
         }
-      }
+      },
     );
     for (let i = nodesToRemove.length - 1; i >= 0; --i) {
       rBush.remove(nodesToRemove[i]);
@@ -473,7 +473,7 @@ export default class extends olInteractionPointer {
     if (geometry instanceof Polygon) {
       this.writeCircleGeometry_(
         /** @type {olFeature<import('ol/geom/Geometry').default>} */ (this.dragSegments_[0][0].feature),
-        geometry
+        geometry,
       );
     }
 

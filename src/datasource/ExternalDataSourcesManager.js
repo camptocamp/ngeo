@@ -78,7 +78,7 @@ export class ExternalDatSourcesManager {
     gmfDatasourceFileGroup,
     ngeoDataSources,
     ngeoFile,
-    ngeoLayerHelper
+    ngeoLayerHelper,
   ) {
     // === Injected properties ===
 
@@ -425,7 +425,7 @@ export class ExternalDatSourcesManager {
           title: service.Title,
           url: getMapUrl,
         },
-        this.ngeoLayerHelper_
+        this.ngeoLayerHelper_,
       );
       this.addLayer_(wmsGroup.layer);
       this.addWMSGroup_(wmsGroup);
@@ -498,7 +498,7 @@ export class ExternalDatSourcesManager {
       // the OL layer object visible property
       unregister: this.rootScope_.$watch(
         () => dataSource.visible,
-        this.handleWMTSDataSourceVisibleChange_.bind(this, layerObj)
+        this.handleWMTSDataSourceVisibleChange_.bind(this, layerObj),
       ),
     };
   }
@@ -549,7 +549,7 @@ export class ExternalDatSourcesManager {
         if (opt_callback) {
           opt_callback(false);
         }
-      }
+      },
     );
   }
 

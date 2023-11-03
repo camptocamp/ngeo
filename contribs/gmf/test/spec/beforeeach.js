@@ -97,6 +97,6 @@ beforeEach(() => {
         wfsTypes: [],
       });
       $provide.value('gmfWMSSourceOptions', {});
-    }
+    },
   );
 });

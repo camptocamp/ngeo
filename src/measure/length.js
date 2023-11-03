@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -51,7 +51,7 @@ function measureLengthComponent(
   $filter,
   $injector,
   ngeoMeasurePrecision,
-  ngeoSnappingTolerance
+  ngeoSnappingTolerance,
 ) {
   return {
     restrict: 'A',
@@ -69,7 +69,7 @@ function measureLengthComponent(
 
       const helpMsg = gettextCatalog.getString('Click to start drawing line');
       const contMsg = gettextCatalog.getString(
-        'Click to continue drawing<br>' + 'Double-click or click last point to finish'
+        'Click to continue drawing<br>' + 'Double-click or click last point to finish',
       );
 
       /** @type {import('ngeo/interaction/Measure').MeasureOptions} */
@@ -86,7 +86,7 @@ function measureLengthComponent(
       const measureLength = new ngeoInteractionMeasureLength(
         $filter('ngeoUnitPrefix'),
         gettextCatalog,
-        options
+        options,
       );
 
       if (drawFeatureCtrl.uid) {
@@ -100,7 +100,7 @@ function measureLengthComponent(
         measureLength,
         'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.LINE_STRING),
-        drawFeatureCtrl
+        drawFeatureCtrl,
       );
       listen(measureLength, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     },

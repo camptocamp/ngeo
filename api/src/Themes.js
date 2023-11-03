@@ -69,7 +69,7 @@ export function getLocalePromise() {
       .then(
         (data) =>
           // Return the first property as data should looks like { 'fr': { ... } }
-          data[Object.keys(data)[0]]
+          data[Object.keys(data)[0]],
       );
   }
   return localePromise;
@@ -96,7 +96,7 @@ export function getBackgroundLayers() {
           createWMTSLayer(layerWMTS).then((layer) => {
             layer.set('config.name', layerWMTS.name);
             return layer;
-          })
+          }),
         );
       } else if (layerConfig.type === 'WMS') {
         const layerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (config));
@@ -105,7 +105,7 @@ export function getBackgroundLayers() {
           createWMSLayer(layerWMS, ogcServer).then((layer) => {
             layer.set('config.name', layerWMS.name);
             return layer;
-          })
+          }),
         );
       } else if (/** @type {import('gmf/themes').GmfGroup} */ (config).children) {
         // reverse children order
@@ -134,14 +134,14 @@ export function getBackgroundLayers() {
             });
             group.set('config.name', config.name);
             return group;
-          })
+          }),
         );
       }
     }
     return Promise.all(
       /** @type {Promise<TileLayer<import('ol/source/Tile').default>|ImageLayer<import('ol/source/Image').default>|GroupLayer>[]} */ (
         promises
-      )
+      ),
     );
   });
 }
@@ -282,7 +282,7 @@ export function createWMTSLayer(config) {
       console.log(
         `Missing options for WMTS layer '${config.layer}', ` +
           `with name '${config.name}', ` +
-          `from URL '${config.url}'.`
+          `from URL '${config.url}'.`,
       );
       return null;
     }

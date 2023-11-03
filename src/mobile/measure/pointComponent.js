@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -47,7 +47,7 @@ myModule.value(
   (element, attrs) => {
     const templateUrl = attrs.gmfMobileMeasurePointTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'gmf/measure/pointComponent';
-  }
+  },
 );
 
 myModule.run(
@@ -58,7 +58,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
-  }
+  },
 );
 
 /**
@@ -136,7 +136,7 @@ export function MobileMeasurePointController(
   $filter,
   gmfRaster,
   ngeoDebounce,
-  gmfMobileMeasurePointOptions
+  gmfMobileMeasurePointOptions,
 ) {
   /**
    * @type {import('gmf/options').gmfMobileMeasurePointOptions}
@@ -181,7 +181,7 @@ export function MobileMeasurePointController(
       }
       this.measure.setActive(newVal);
       this.handleMeasureActiveChange_();
-    }
+    },
   );
 
   /**
@@ -212,7 +212,7 @@ MobileMeasurePointController.prototype.init = function () {
     {
       decimals: this.options.decimals,
       sketchStyle: buildStyle(this.options.sketchStyle),
-    }
+    },
   );
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
@@ -265,7 +265,7 @@ MobileMeasurePointController.prototype.handleMeasureActiveChange_ = function () 
       view,
       'propertychange',
       this.ngeoDebounce_(this.getMeasure_.bind(this), 300, /* invokeApply */ true),
-      this
+      this,
     );
     this.getMeasure_();
   } else if (this.mapViewPropertyChangeEventKey_) {

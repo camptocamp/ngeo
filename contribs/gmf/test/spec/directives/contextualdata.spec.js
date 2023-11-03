@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -42,7 +42,7 @@ describe('gmf.contextualdata.component', () => {
 
       const element = angular.element(
         '<gmf-map gmf-map-map="map" gmf-contextualdata="" gmf-contextualdata-map="::map" ' +
-          'gmf-contextualdata-callback="callback"></gmf-map>'
+          'gmf-contextualdata-callback="callback"></gmf-map>',
       );
       element.css({
         position: 'absolute',
@@ -93,7 +93,7 @@ describe('gmf.contextualdata.component', () => {
       $httpBackend.whenGET('https://fake/gmf/raster?lat=2&lon=1').respond({
         'elevation': 1234,
       });
-    })
+    }),
   );
 
   afterEach(() => {

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -85,11 +85,11 @@ function buttonGroupComponent($parse) {
                * @param {function(angular.IScope): boolean} buttonModel
                * @returns {boolean}
                */
-              (buttonModel) => buttonModel(scope) === true
+              (buttonModel) => buttonModel(scope) === true,
             ),
           (newValue) => {
             setActive(scope, newValue);
-          }
+          },
         );
       }
     },

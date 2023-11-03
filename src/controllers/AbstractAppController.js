@@ -161,7 +161,7 @@ export function AbstractAppController($scope, $injector, mobile) {
               target: mobile ? undefined : 'ol-zoom-control',
               zoomInTipLabel: '',
               zoomOutTipLabel: '',
-            }
+            },
           ),
           new olControlRotate({
             label: getLocationIcon(),
@@ -176,11 +176,11 @@ export function AbstractAppController($scope, $injector, mobile) {
                 ? {}
                 : {
                     dragPan: false,
-                  })
+                  }),
           ),
       },
-      this.options.map
-    )
+      this.options.map,
+    ),
   );
 
   /**
@@ -203,7 +203,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     map.addInteraction(
       new olInteractionDragPan({
         condition: dragPanCondition,
-      })
+      }),
     );
   }
 
@@ -341,7 +341,7 @@ export function AbstractAppController($scope, $injector, mobile) {
           this.loginRedirectUrl = null;
           unbind();
         }
-      }
+      },
     );
   });
 
@@ -457,7 +457,7 @@ export function AbstractAppController($scope, $injector, mobile) {
     () => this.dimensions,
     () => {
       this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
-    }
+    },
   );
 
   this.backgroundLayerMgr_.on('change', () => {
@@ -744,7 +744,7 @@ AbstractAppController.prototype.initLanguage = function () {
       this.stateManager.updateState({
         'lang': newValue,
       });
-    }
+    },
   );
 
   const browserLanguage = getBrowserLanguage(Object.keys(this.langUrls));

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -70,7 +70,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
-  }
+  },
 );
 
 /**
@@ -285,7 +285,7 @@ Controller.prototype.$onInit = function () {
           this[this.toolActiveNames_[i]] = false;
         }
       }
-    }
+    },
   );
 };
 
@@ -313,7 +313,7 @@ Controller.prototype.registerTool_ = function (toolActiveName, process, opt_requ
   this.scope_.$watch(
     // @ts-ignore: Strange behivior...
     () => this[toolActiveName],
-    this.handleToolActiveChange_.bind(this, process, requiresLayer)
+    this.handleToolActiveChange_.bind(this, process, requiresLayer),
   );
 
   const group = `${NAMESPACE}-${olUtilGetUid(this)}`;

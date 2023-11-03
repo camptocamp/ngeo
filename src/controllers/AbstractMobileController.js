@@ -128,7 +128,7 @@ export class AbstractMobileController extends AbstractAppController {
         if (newVal !== null && this.navIsVisible()) {
           this.rightNavVisible = false;
         }
-      }
+      },
     );
 
     user.getLoginMessage().subscribe({

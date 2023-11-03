@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -26,7 +26,7 @@ describe('AbstractAppController', () => {
     expect(
       calculateCssVars({
         'brand-primary': '#9FB6CC',
-      })
+      }),
     ).toEqual({
       'brand-primary': '#9FB6CC',
       'input-border-focus': '#6d90b1',
@@ -43,7 +43,7 @@ describe('AbstractAppController', () => {
     expect(
       calculateCssVars({
         'brand-secondary': '#D3DBE3',
-      })
+      }),
     ).toEqual({
       'brand-secondary': '#D3DBE3',
       'brand-secondary-dark': '#a4b5c5',
@@ -54,7 +54,7 @@ describe('AbstractAppController', () => {
       calculateCssVars({
         'brand-secondary': '#D3DBE3',
         'brand-secondary-dark': 'red',
-      })
+      }),
     ).toEqual({
       'brand-secondary': '#D3DBE3',
       'brand-secondary-dark': 'red',

@@ -96,7 +96,7 @@ function MainController() {
   this.interaction = new ngeoInteractionModifyCircle(
     /** @type {import('ol/interaction/Modify').Options} */ ({
       features: this.features,
-    })
+    }),
   );
 
   const interaction = this.interaction;

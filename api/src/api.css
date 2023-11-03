@@ -85,12 +85,16 @@
 .ol-rotate {
   top: 0.5em;
   right: 0.5em;
-  transition: opacity 0.25s linear, visibility 0s linear;
+  transition:
+    opacity 0.25s linear,
+    visibility 0s linear;
 }
 .ol-rotate.ol-hidden {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.25s linear, visibility 0s linear 0.25s;
+  transition:
+    opacity 0.25s linear,
+    visibility 0s linear 0.25s;
 }
 .ol-zoom-extent {
   top: 4.643em;

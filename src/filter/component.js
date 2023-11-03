@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -58,7 +58,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/filter', require('./component.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -70,7 +70,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.ngeoFilterTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/filter';
-  }
+  },
 );
 
 /**
@@ -249,7 +249,7 @@ export class FilterController {
       () => this.datasource.filterRules,
       () => {
         this.filterIsApplied = this.hasARuleActive();
-      }
+      },
     );
 
     // (1) Separate the attributes in 2: geometry and the others.
@@ -456,7 +456,7 @@ export class FilterController {
     const uid = olUtilGetUid(rule);
     this.ruleUnlisteners_[uid] = this.scope_.$watch(
       () => rule.active,
-      this.handleRuleActiveChange_.bind(this)
+      this.handleRuleActiveChange_.bind(this),
     );
 
     if (rule instanceof ngeoRuleGeometry) {

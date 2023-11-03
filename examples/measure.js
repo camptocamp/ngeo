@@ -61,7 +61,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
-  }
+  },
 );
 
 /**
@@ -130,15 +130,15 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   const measureLengthContinueMsgs = {
     'en': $sce.trustAsHtml('Click to continue drawing<br>' + 'Double-click or click last point to finish.'),
     'fr': $sce.trustAsHtml(
-      'Cliquer pour continuer le dessin<br>' + 'Double-cliquer ou cliquer sur dernier point pour finir.'
+      'Cliquer pour continuer le dessin<br>' + 'Double-cliquer ou cliquer sur dernier point pour finir.',
     ),
   };
   const measureAreaContinueMsgs = {
     'en': $sce.trustAsHtml(
-      'Click to continue drawing<br>' + 'Double-click or click starting point to finish.'
+      'Click to continue drawing<br>' + 'Double-click or click starting point to finish.',
     ),
     'fr': $sce.trustAsHtml(
-      'Cliquer pour continuer le dessin<br>' + 'Double-cliquer ou cliquer sur point de départ pour finir.'
+      'Cliquer pour continuer le dessin<br>' + 'Double-cliquer ou cliquer sur point de départ pour finir.',
     ),
   };
   const measureAzimutContinueMsgs = {
@@ -150,13 +150,13 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   let measureStartMsg = angular.element('<span ng-bind-html="ctrl.measureStartMsg"></span>');
   measureStartMsg = $compile(measureStartMsg)($scope);
   let measureLengthContinueMsg = angular.element(
-    '<span ng-bind-html="ctrl.measureLengthContinueMsg"></span>'
+    '<span ng-bind-html="ctrl.measureLengthContinueMsg"></span>',
   );
   measureLengthContinueMsg = $compile(measureLengthContinueMsg)($scope);
   let measureAreaContinueMsg = angular.element('<span ng-bind-html="ctrl.measureAreaContinueMsg"></span>');
   measureAreaContinueMsg = $compile(measureAreaContinueMsg)($scope);
   let measureAzimutContinueMsg = angular.element(
-    '<span ng-bind-html="ctrl.measureAzimutContinueMsg"></span>'
+    '<span ng-bind-html="ctrl.measureAzimutContinueMsg"></span>',
   );
   measureAzimutContinueMsg = $compile(measureAzimutContinueMsg)($scope);
 
@@ -173,7 +173,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
       this.measureAreaContinueMsg = measureAreaContinueMsgs[newVal];
       // @ts-ignore
       this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
-    }
+    },
   );
 
   const style = new olStyleStyle({
@@ -247,7 +247,7 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
           el.innerHTML += '<br>Additional info';
         }
       }
-    )
+    ),
   );
 }
 
@@ -291,7 +291,7 @@ function MainController() {
     new olControlScaleLine({
       // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
       dpi: 96,
-    })
+    }),
   );
 }
 

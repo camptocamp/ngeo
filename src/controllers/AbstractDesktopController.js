@@ -207,7 +207,7 @@ export class AbstractDesktopController extends AbstractAPIController {
         }
         this.queryAutoClear = !newVal;
         this.printActive = newVal;
-      }
+      },
     );
 
     $scope.$watch(
@@ -221,7 +221,7 @@ export class AbstractDesktopController extends AbstractAPIController {
             this.$toolsPanel_.width(this.toolsPanelWidth);
           }
         }
-      }
+      },
     );
 
     /**
@@ -257,7 +257,7 @@ export class AbstractDesktopController extends AbstractAPIController {
 
         // Avoid error in config type checking with IE11
         sanitizeFn: $injector.get('$sanitize'),
-      })
+      }),
     );
 
     // deactivate tooltips on touch device
@@ -344,7 +344,7 @@ export class AbstractDesktopController extends AbstractAPIController {
             }
           });
         }
-      }
+      },
     );
 
     /**
@@ -423,12 +423,12 @@ export class AbstractDesktopController extends AbstractAPIController {
       .append(
         $('<span>', {
           'class': `fa fa-angle-double-left ${dataPanelCls}-collapse-btn`,
-        })
+        }),
       )
       .append(
         $('<span>', {
           'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`,
-        })
+        }),
       );
 
     $scope.$watch(
@@ -440,7 +440,7 @@ export class AbstractDesktopController extends AbstractAPIController {
           this.dataPanelWidth_ = this.checkPanelWidth_(this.dataPanelWidth_, this.$dataPanel_);
           this.setToolsPanelMaxResizableWidth_(this.dataPanelWidth_);
         }
-      }
+      },
     );
 
     // Make the tools panel (on the right) resizable.
@@ -488,7 +488,7 @@ export class AbstractDesktopController extends AbstractAPIController {
             this.setDataPanelMaxResizableWidth_(this.toolsPanelWidth);
           }
         }
-      }
+      },
     );
 
     // Make the tools panel (on the right) resizable and collapsible when the handle is clicked.
@@ -519,7 +519,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       .append(
         $('<span>', {
           'class': `fa fa-angle-double-right ${toolsPanelCls}-collapse-btn`,
-        })
+        }),
       );
 
     // Listen to window resize to set the max resizable width
@@ -547,7 +547,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     const maxWidth = this.findMaxWidth_(
       this.$toolsPanel_,
       this.dataPanelMinResizableWidth_,
-      opt_newToolsPanelWidth
+      opt_newToolsPanelWidth,
     );
     this.$dataPanel_.resizable('option', 'maxWidth', maxWidth);
     this.dataPanelWidth_ = this.checkPanelWidth_(this.dataPanelWidth_, this.$dataPanel_);
@@ -569,7 +569,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     const maxWidth = this.findMaxWidth_(
       this.$dataPanel_,
       this.toolsPanelMinResizableWidth_,
-      opt_newDataPanelWidth
+      opt_newDataPanelWidth,
     );
     this.$toolsPanel_.resizable('option', 'maxWidth', maxWidth);
     this.toolsPanelWidth = this.checkPanelWidth_(this.toolsPanelWidth, this.$toolsPanel_);

@@ -65,7 +65,7 @@ export function ThemeManagerService(
   gmfThemes,
   gmfTreeManagerModeFlush,
   gmfTreeManager,
-  ngeoStateManager
+  ngeoStateManager,
 ) {
   /**
    * @type {angular.IScope}
@@ -143,7 +143,7 @@ ThemeManagerService.prototype.updateCurrentTheme = function (
   themeName,
   fallbackThemeName,
   opt_silent,
-  opt_hasPrivateLayers
+  opt_hasPrivateLayers,
 ) {
   this.gmfThemes_.getThemesObject().then((themes) => {
     if (!themeName && this.modeFlush) {

@@ -79,7 +79,7 @@ function bootstrap(module) {
   const appName = appNameMeta ? appNameMeta.getAttribute('content') : `App${interface_}`;
   const search = document.location ? document.location.search || '' : '';
   const dynamicUrl = `${dynamicUrl_}?interface=${interface_}&query=${encodeURIComponent(
-    search
+    search,
   )}&path=${encodeURIComponent(document.location.pathname)}`;
   const request = $.ajax(dynamicUrl, {
     'dataType': 'json',
@@ -104,7 +104,7 @@ function bootstrap(module) {
         (Array.isArray(gmfCustomJavascriptUrl) ? gmfCustomJavascriptUrl : [gmfCustomJavascriptUrl]).forEach(
           (url) => {
             addScript(url);
-          }
+          },
         );
       }
       if ('gmfCustomStylesheetUrl' in dynamic.constants) {
@@ -112,7 +112,7 @@ function bootstrap(module) {
         (Array.isArray(gmfCustomStylesheetUrl) ? gmfCustomStylesheetUrl : [gmfCustomStylesheetUrl]).forEach(
           (url) => {
             addStylesheet(url);
-          }
+          },
         );
       }
 

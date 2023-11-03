@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -123,7 +123,7 @@ export default class {
     map_resolution: number,
     linestring: OlGeomLineString,
     dLeft: number,
-    dRight: number
+    dRight: number,
   ): ClippedLine {
     const clippedLine = new olGeomLineString([]);
     let mileage_start = 0;
@@ -234,7 +234,7 @@ export default class {
           rotation: lastSegementAngle,
           angle: (4 * Math.PI) / 3,
         }),
-      })
+      }),
     );
 
     return {
@@ -448,7 +448,7 @@ export default class {
     tolerance: number,
     sx: updateScaleFunction,
     sy: updateScaleFunction,
-    classification_colors: LidarprofileServerConfigClassifications
+    classification_colors: LidarprofileServerConfigClassifications,
   ): undefined | LidarPoint {
     const d = points;
     const tol = tolerance;
@@ -463,7 +463,7 @@ export default class {
         sy(d.altitude[i]) > ys - tol
       ) {
         const pDistance = Math.sqrt(
-          Math.pow(sx(d.distance[i]) - xs, 2) + Math.pow(sy(d.altitude[i]) - ys, 2)
+          Math.pow(sx(d.distance[i]) - xs, 2) + Math.pow(sy(d.altitude[i]) - ys, 2),
         );
         const cClassif = classification_colors[d.classification[i]];
         if (cClassif && cClassif.visible == 1) {

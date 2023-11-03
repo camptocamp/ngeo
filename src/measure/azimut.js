@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -51,7 +51,7 @@ function measureAzimutComponent(
   gettextCatalog,
   $filter,
   ngeoMeasurePrecision,
-  ngeoMeasureDecimals
+  ngeoMeasureDecimals,
 ) {
   return {
     restrict: 'A',
@@ -81,7 +81,7 @@ function measureAzimutComponent(
       const measureAzimut = new ngeoInteractionMeasureAzimut(
         $filter('ngeoUnitPrefix'),
         $filter('number'),
-        options
+        options,
       );
 
       if (drawFeatureCtrl.uid) {
@@ -109,17 +109,17 @@ function measureAzimutComponent(
           const circle = /** @type {import('ol/geom/Circle').default} */ (geometry.getGeometries()[1]);
           const polygon = fromCircle(
             circle,
-            Number.parseInt(attrs.$$element.attr('ngeo-measureazimut-nbpoints') || 64)
+            Number.parseInt(attrs.$$element.attr('ngeo-measureazimut-nbpoints') || 64),
           );
           myEvent.detail.feature = new olFeature(polygon);
           const azimut = getAzimut(
-            /** @type {import('ol/geom/LineString').default} */ (geometry.getGeometries()[0])
+            /** @type {import('ol/geom/LineString').default} */ (geometry.getGeometries()[0]),
           );
           myEvent.detail.feature.set('azimut', azimut);
 
           drawFeatureCtrl.handleDrawEnd(ngeoGeometryType.CIRCLE, event);
         },
-        drawFeatureCtrl
+        drawFeatureCtrl,
       );
 
       listen(measureAzimut, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);

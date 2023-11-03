@@ -18,7 +18,7 @@ module.exports = (env, args) => {
 
       // Remove the existing css rule
       mergedConfig.module.rules = mergedConfig.module.rules.filter(
-        (f) => f.test.toString() !== '/\\.css$/' && f.test.toString() !== '/\\.scss$/'
+        (f) => f.test.toString() !== '/\\.css$/' && f.test.toString() !== '/\\.scss$/',
       );
 
       // And add back the storybook one.

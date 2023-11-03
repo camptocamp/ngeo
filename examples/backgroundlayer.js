@@ -46,7 +46,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('partials/backgroundlayer', require('./partials/backgroundlayer.html'));
-  }
+  },
 );
 
 /**

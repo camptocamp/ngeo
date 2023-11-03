@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -46,7 +46,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
-  }
+  },
 );
 
 /**
@@ -289,7 +289,7 @@ Controller.prototype.getTimeValueList_ = function () {
     endDate.setFullYear(minDate.getFullYear() + maxNbValues * wmsTime.interval[0]);
     endDate.setMonth(
       minDate.getMonth() + maxNbValues * wmsTime.interval[1],
-      minDate.getDate() + maxNbValues * wmsTime.interval[2]
+      minDate.getDate() + maxNbValues * wmsTime.interval[2],
     );
     endDate.setSeconds(minDate.getSeconds() + maxNbValues * wmsTime.interval[3]);
 
@@ -302,7 +302,7 @@ Controller.prototype.getTimeValueList_ = function () {
         nextDate.setFullYear(minDate.getFullYear() + i * wmsTime.interval[0]);
         nextDate.setMonth(
           minDate.getMonth() + i * wmsTime.interval[1],
-          minDate.getDate() + i * wmsTime.interval[2]
+          minDate.getDate() + i * wmsTime.interval[2],
         );
         nextDate.setSeconds(minDate.getSeconds() + i * wmsTime.interval[3]);
         if (nextDate <= maxDate) {
@@ -370,7 +370,7 @@ Controller.prototype.getClosestValue_ = function (timestamp) {
       next.setFullYear(startDate.getFullYear() + i * this.time.interval[0]);
       next.setMonth(
         startDate.getMonth() + i * this.time.interval[1],
-        startDate.getDate() + i * this.time.interval[2]
+        startDate.getDate() + i * this.time.interval[2],
       );
       next.setSeconds(startDate.getSeconds() + i * this.time.interval[3]);
 

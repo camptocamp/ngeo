@@ -174,14 +174,14 @@ class Map {
       new ScaleLine({
         // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
         dpi: 96,
-      })
+      }),
     );
 
     if (options.showCoords) {
       this.map_.addControl(
         new MousePosition({
           coordinateFormat: createStringXY(0),
-        })
+        }),
       );
     }
     if (options.addMiniMap) {
@@ -203,7 +203,7 @@ class Map {
                   projection: this.view_.getProjection(),
                   resolutions,
                 }),
-              })
+              }),
             );
           }
         }
@@ -280,7 +280,7 @@ class Map {
             this.selectObject(selected.getId());
           }
         }
-      )
+      ),
     );
 
     this.map_.on(
@@ -313,7 +313,7 @@ class Map {
             }
           }
         }
-      )
+      ),
     );
 
     if (options.searchDiv) {
@@ -394,7 +394,7 @@ class Map {
       marker.setStyle(
         new Style({
           image,
-        })
+        }),
       );
     } else {
       marker.setStyle(createDefaultStyle);
@@ -476,7 +476,7 @@ class Map {
                    * @param {number} val
                    * @returns {number}
                    */
-                  (val) => val * Math.sign(val)
+                  (val) => val * Math.sign(val),
                 );
             }
             const image = new Icon({
@@ -488,7 +488,7 @@ class Map {
             marker.setStyle(
               new Style({
                 image,
-              })
+              }),
             );
             this.vectorSource_.addFeature(marker);
           }

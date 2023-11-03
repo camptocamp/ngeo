@@ -63,7 +63,9 @@ main {
     visibility: hidden;
     opacity: 0;
 
-    transition: opacity $duration, visibility $duration;
+    transition:
+      opacity $duration,
+      visibility $duration;
     backface-visibility: hidden;
 
     .gmf-mobile-nav-is-visible & {
@@ -86,7 +88,9 @@ main {
   visibility: hidden;
   opacity: 0;
 
-  transition: opacity $duration, visibility $duration;
+  transition:
+    opacity $duration,
+    visibility $duration;
   backface-visibility: hidden;
 
   @media (max-width: map-get($grid-breakpoints, 'sm')) {
@@ -169,7 +173,9 @@ nav.gmf-mobile-nav-right {
       width: $nav-width;
       left: $nav-width;
       transform: translateX(0);
-      transition: transform $duration, opacity $duration;
+      transition:
+        transform $duration,
+        opacity $duration;
       will-change: transform, opacity;
       opacity: 0;
       text-align: center;
@@ -243,7 +249,9 @@ nav.gmf-mobile-nav-right {
     height: calc(100% - #{$nav-bar-height});
     width: $nav-width;
     transform: translateX(100%);
-    transition: transform $duration, opacity $duration;
+    transition:
+      transform $duration,
+      opacity $duration;
     will-change: transform, opacity;
     opacity: 0;
     overflow-y: auto;

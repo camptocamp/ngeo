@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -83,11 +83,11 @@ if (Cypress.browser.isHeaded) {
         // Check button 'background' and 'themes'
         cy.get('.gmf-mobile-nav-active > :nth-child(1) > :nth-child(1) > .gmf-mobile-nav-button').should(
           'contain.html',
-          'Background'
+          'Background',
         );
         cy.get('.gmf-mobile-nav-active > :nth-child(1) > :nth-child(2) > .gmf-mobile-nav-button').should(
           'contain.html',
-          'Themes'
+          'Themes',
         );
 
         // Check the layertree content
@@ -95,7 +95,7 @@ if (Cypress.browser.isHeaded) {
 
         // Test the submenu
         cy.get(
-          '.gmf-mobile-nav-left > .gmf-mobile-nav-active > :nth-child(1) > :nth-child(1) > .gmf-mobile-nav-button'
+          '.gmf-mobile-nav-left > .gmf-mobile-nav-active > :nth-child(1) > :nth-child(1) > .gmf-mobile-nav-button',
         ).click();
         cy.get('.gmf-mobile-nav-left > header > .gmf-mobile-nav-go-back').click();
 
@@ -108,7 +108,7 @@ if (Cypress.browser.isHeaded) {
         cy.get('.gmf-mobile-nav-right-trigger').click();
         cy.get('.gmf-mobile-nav-right > header > .gmf-mobile-nav-header-title').should(
           'contain.html',
-          'Tools'
+          'Tools',
         );
 
         // Test the submenu
@@ -144,7 +144,7 @@ if (Cypress.browser.isHeaded) {
 
         // Open opacity setting of the 'Layers' group
         cy.get(
-          'div.gmf-layertree-node-596 > .gmf-layertree-right-buttons > .gmf-layertree-node-menu-btn > .fa'
+          'div.gmf-layertree-node-596 > .gmf-layertree-right-buttons > .gmf-layertree-node-menu-btn > .fa',
         ).click();
 
         // Set the opacity to 0.4 and check the value
@@ -179,11 +179,11 @@ if (Cypress.browser.isHeaded) {
         cy.get('.gmf-backgroundlayerselector').should('be.visible');
         cy.get('.gmf-backgroundlayerselector > :nth-child(1)').should(
           'have.class',
-          'gmf-backgroundlayerselector-active'
+          'gmf-backgroundlayerselector-active',
         );
         cy.get('.gmf-backgroundlayerselector > :nth-child(2)').should(
           'not.have.class',
-          'gmf-backgroundlayerselector-active'
+          'gmf-backgroundlayerselector-active',
         );
 
         // Close the panel
@@ -567,7 +567,7 @@ if (Cypress.browser.isHeaded) {
       beforeEach(() => {
         cy.loadPage(
           false,
-          'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632464&map_y=1185457'
+          'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632464&map_y=1185457',
         );
       });
 
@@ -864,7 +864,7 @@ if (Cypress.browser.isHeaded) {
       it('Query a layer and test the query window result layout', () => {
         cy.loadPage(
           false,
-          'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632270&map_y=1186700&theme=Demo&tree_groups=Filters&tree_group_layers_Filters=osm_open'
+          'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en&map_x=2632270&map_y=1186700&theme=Demo&tree_groups=Filters&tree_group_layers_Filters=osm_open',
         );
         cy.wait(350); // query not working without the wait
         cy.readWindowValue('map').then((map: olMap) => {
@@ -876,19 +876,19 @@ if (Cypress.browser.isHeaded) {
         cy.get('.collapse-button').should('have.class', 'collapse-button-down');
         cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
           'have.class',
-          'animation-container-detailed'
+          'animation-container-detailed',
         );
         cy.get('.collapse-button').click();
         cy.get('.collapse-button').should('have.class', 'collapse-button-up');
         cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
           'not.have.class',
-          'animation-container-detailed'
+          'animation-container-detailed',
         );
         cy.get('.collapse-button').click();
         cy.get('.collapse-button').should('have.class', 'collapse-button-down');
         cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should(
           'have.class',
-          'animation-container-detailed'
+          'animation-container-detailed',
         );
 
         // Test the previous/next result button
@@ -949,7 +949,7 @@ if (Cypress.browser.isHeaded) {
 
               cy.get('.ngeo-displaywindow > .windowcontainer').should('be.visible');
               cy.get(
-                '.ngeo-displaywindow > .windowcontainer > .animation-container > .slide-animation > .header > .title'
+                '.ngeo-displaywindow > .windowcontainer > .animation-container > .slide-animation > .header > .title',
               ).should('have.text', 'OSM');
 
               // Check that the popop window is inside the window dimensions

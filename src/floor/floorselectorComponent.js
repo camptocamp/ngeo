@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2022 Camptocamp SA
+// Copyright (c) 2019-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -35,7 +35,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/floor/floorselectorcomponent', require('./floorselectorcomponent.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -47,7 +47,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.gmfFloorselectorTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'gmf/floor/floorselectorcomponent';
-  }
+  },
 );
 
 /**
@@ -118,7 +118,7 @@ export class Controller {
       },
       () => {
         this.valueChanged_();
-      }
+      },
     );
 
     this.element[0].addEventListener('wheel', (event) => {
@@ -143,7 +143,7 @@ export class Controller {
        */
       (item) => {
         return item.value === value;
-      }
+      },
     );
     console.assert(this.currentIndex > -1);
 

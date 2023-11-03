@@ -92,7 +92,7 @@ describe('ngeo.print.Service', () => {
         map.addLayer(
           new olLayerImage({
             source,
-          })
+          }),
         );
       });
 
@@ -154,7 +154,7 @@ describe('ngeo.print.Service', () => {
                 'STYLES': '',
               },
             }),
-          })
+          }),
         );
       });
 
@@ -230,7 +230,7 @@ describe('ngeo.print.Service', () => {
                 '{TileMatrix}/{TileRow}/{TileCol}.jpeg',
               version: '1.1.0',
             }),
-          })
+          }),
         );
       });
 
@@ -431,7 +431,7 @@ describe('ngeo.print.Service', () => {
               features: [feature0, feature1, feature2, feature3],
             }),
             style: styleFunction,
-          })
+          }),
         );
       });
 
@@ -639,7 +639,7 @@ describe('ngeo.print.Service', () => {
         map.addLayer(
           new olLayerImage({
             source: source1,
-          })
+          }),
         );
 
         const source2 = new olSourceImageWMS({
@@ -653,7 +653,7 @@ describe('ngeo.print.Service', () => {
         map.addLayer(
           new olLayerImage({
             source: source2,
-          })
+          }),
         );
       });
 
@@ -830,7 +830,7 @@ describe('ngeo.print.Service', () => {
         };
 
         $httpBackend.when('GET', 'http://example.com/print/capabilities.json').respond(capabilities);
-      })
+      }),
     );
 
     beforeEach(() => {
@@ -856,7 +856,7 @@ describe('ngeo.print.Service', () => {
         print = ngeoCreatePrint('http://example.com/print');
         $httpBackend = _$httpBackend_;
         $httpBackend.when('DELETE', 'http://example.com/print/cancel/deadbeef').respond(200);
-      })
+      }),
     );
 
     afterEach(() => {

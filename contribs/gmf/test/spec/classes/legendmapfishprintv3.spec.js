@@ -68,7 +68,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
         ngeoLayerHelper,
         gmfExternalDataSourcesManager,
         legendOptions,
-        map
+        map,
       );
     });
   });
@@ -319,7 +319,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
         title: 'External layer legend 1',
         url: 'https://external.1.test.ch/?',
       },
-      ngeoLayerHelper
+      ngeoLayerHelper,
     );
     const wmsGroup2 = new ngeoDatasourceWMSGroup(
       {
@@ -329,7 +329,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
         title: 'External layer legend 2',
         url: 'https://external.2.test.ch/?',
       },
-      ngeoLayerHelper
+      ngeoLayerHelper,
     );
     gmfExternalDataSourcesManager.wmsGroupsCollection.push(wmsGroup1);
     gmfExternalDataSourcesManager.wmsGroupsCollection.push(wmsGroup2);

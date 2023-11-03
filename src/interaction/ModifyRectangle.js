@@ -333,7 +333,7 @@ class ModifyRectangle extends olInteractionPointer {
 
     const feature = /** @type {olFeature<import('ol/geom/Geometry').default>} */ (
       map.forEachFeatureAtPixel(evt.pixel, (feature) =>
-        feature.get('siblingX') && feature.get('siblingY') ? feature : undefined
+        feature.get('siblingX') && feature.get('siblingY') ? feature : undefined,
       )
     );
 

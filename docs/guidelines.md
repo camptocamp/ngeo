@@ -217,14 +217,14 @@ module.value(
   function ($element, $attrs) {
     const templateUrl = $attrs['ngeoNameComponentTemplateurl'];
     return templateUrl !== undefined ? templateUrl : 'ngeo/module/component';
-  }
+  },
 );
 
 module.run(
   /* @ngInject */ ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/module/component', require('./component.html'));
-  }
+  },
 );
 
 /**

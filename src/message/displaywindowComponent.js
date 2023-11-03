@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -41,7 +41,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -53,7 +53,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs['ngeoMessageDisplaywindowTemplateUrl'];
     return templateUrl !== undefined ? templateUrl : 'ngeo/message/displaywindowComponent';
-  }
+  },
 );
 
 /**
@@ -239,7 +239,7 @@ export class Controller {
 
     this.scope_.$watch(
       () => this.contentTemplate,
-      () => this.updateContentTemplate_()
+      () => this.updateContentTemplate_(),
     );
   }
 
@@ -253,7 +253,7 @@ export class Controller {
     const scope = this.contentScope || this.scope_;
     const compiled = this.compile_(this.contentTemplate)(scope);
     const displayWindow = this.element_.find(
-      '.ngeo-displaywindow .windowcontainer .animation-container .content-template-container'
+      '.ngeo-displaywindow .windowcontainer .animation-container .content-template-container',
     );
     displayWindow.empty();
     displayWindow.append(/** @type {?} */ (compiled));

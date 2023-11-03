@@ -176,7 +176,7 @@ export class AuthenticationService {
         (data: User) => this.handleLogin_(true, data),
         () => {
           throw new Error('Login fail.');
-        }
+        },
       );
   }
 
@@ -193,7 +193,7 @@ export class AuthenticationService {
     oldPwd: string,
     newPwd: string,
     confPwd: string,
-    otp: string = undefined
+    otp: string = undefined,
   ): Promise<void> {
     const url = `${this.baseUrl_}/${RouteSuffix.CHANGE_PASSWORD}`;
     const options: RequestInit = {
@@ -216,7 +216,7 @@ export class AuthenticationService {
         (data) => this.setUser_(data, UserState.LOGGED_IN),
         () => {
           throw new Error('Change password fail.');
-        }
+        },
       );
   }
 
@@ -247,7 +247,7 @@ export class AuthenticationService {
         (data) => this.handleLogin_(false, data),
         () => {
           throw new Error('Login fail.');
-        }
+        },
       );
   }
 
@@ -292,7 +292,7 @@ export class AuthenticationService {
     };
 
     return fetch(url, options).then((resp) =>
-      resp.json().then((data: AuthenticationDefaultResponse) => data)
+      resp.json().then((data: AuthenticationDefaultResponse) => data),
     );
   }
 

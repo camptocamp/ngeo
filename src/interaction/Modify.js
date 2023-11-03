@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -112,7 +112,7 @@ export default class extends olInteractionInteraction {
         pixelTolerance: options.pixelTolerance,
         style: options.style,
         wrapX: options.wrapX,
-      })
+      }),
     );
 
     /**
@@ -129,8 +129,8 @@ export default class extends olInteractionInteraction {
           style: options.style,
           wrapX: options.wrapX,
         },
-        options.nbPoints
-      )
+        options.nbPoints,
+      ),
     );
 
     /**
@@ -145,7 +145,7 @@ export default class extends olInteractionInteraction {
         pixelTolerance: options.pixelTolerance,
         style: options.style,
         wrapX: options.wrapX,
-      })
+      }),
     );
   }
 
@@ -212,7 +212,7 @@ export default class extends olInteractionInteraction {
       this.features_.forEach((feature) => this.addFeature_(feature));
       keys.push(
         listen(this.features_, 'add', this.handleFeaturesAdd_, this),
-        listen(this.features_, 'remove', this.handleFeaturesRemove_, this)
+        listen(this.features_, 'remove', this.handleFeaturesRemove_, this),
       );
     } else {
       keys.forEach(unlistenByKey);

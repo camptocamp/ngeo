@@ -72,7 +72,7 @@ function MainController() {
           color: '#ffcc33',
         }),
       }),
-    })
+    }),
   );
 
   /**
@@ -102,7 +102,7 @@ function MainController() {
     /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'Polygon',
       features: features,
-    })
+    }),
   );
 
   const drawPolygon = this.drawPolygon;
@@ -118,7 +118,7 @@ function MainController() {
     /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'Point',
       features: features,
-    })
+    }),
   );
 
   const drawPoint = this.drawPoint;
@@ -133,7 +133,7 @@ function MainController() {
     /** @type {import('ol/interaction/Draw').Options} */ ({
       type: 'LineString',
       features: features,
-    })
+    }),
   );
 
   const drawLine = this.drawLine;

@@ -298,7 +298,7 @@ export function PermalinkService(
   gmfLayerBeingSwipe,
   gmfPermalinkOptions,
   gmfDataSourcesManager,
-  ngeoWMSTime
+  ngeoWMSTime,
 ) {
   /**
    * @type {angular.IQService}
@@ -560,7 +560,7 @@ export function PermalinkService(
               this.ngeoStateManager_.deleteParam(param);
             }
           }
-        }
+        },
       );
     } else {
       /** @type {string[]} */
@@ -574,7 +574,7 @@ export function PermalinkService(
           if (groupNode.children === undefined && ctrl.getState() === 'on') {
             gmfLayerNames.push(ctrl.node.name);
           }
-        }
+        },
       );
       newState[`${ParamPrefix.TREE_GROUP_LAYERS}${firstParent.node.name}`] = gmfLayerNames.join(',');
     }
@@ -651,25 +651,25 @@ export function PermalinkService(
           this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
           'add',
           this.handleExternalDSGroupCollectionAdd_,
-          this
+          this,
         );
         listen(
           this.gmfExternalDataSourcesManager_.wmsGroupsCollection,
           'remove',
           this.handleExternalDSGroupCollectionRemove_,
-          this
+          this,
         );
         listen(
           this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
           'add',
           this.handleExternalDSGroupCollectionAdd_,
-          this
+          this,
         );
         listen(
           this.gmfExternalDataSourcesManager_.wmtsGroupsCollection,
           'remove',
           this.handleExternalDSGroupCollectionRemove_,
-          this
+          this,
         );
 
         // We also need to 'register' the existing groups as well, i.e. those
@@ -749,7 +749,7 @@ PermalinkService.prototype.getMapCenter = function () {
         center,
         targetProjection.getExtent(),
         targetProjection,
-        this.sourceProjections_
+        this.sourceProjections_,
       );
       if (reprojectedCenter) {
         return reprojectedCenter;
@@ -882,7 +882,7 @@ PermalinkService.prototype.getFeatures = function () {
   const f = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.FEATURES);
   if (f !== undefined && f !== '') {
     return /** @type {olFeature<import('ol/geom/Geometry').default>[]} */ this.featureHashFormat_.readFeatures(
-      f
+      f,
     );
   }
   return [];
@@ -911,7 +911,7 @@ PermalinkService.prototype.setDimensions = function (dimensions) {
         params[ParamPrefix.DIMENSIONS + key] = dimensions[key];
       }
       this.ngeoLocation_.updateParams(params);
-    }
+    },
   );
 };
 
@@ -1013,9 +1013,9 @@ PermalinkService.prototype.registerMap_ = function (map, oeFeature) {
         this.ngeoStateManager_.updateState(object);
       },
       300,
-      /* invokeApply */ true
+      /* invokeApply */ true,
     ),
-    this
+    this,
   );
 
   // (3) Add map crosshair, if set
@@ -1124,7 +1124,7 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function () {
         const object = {};
         object[PermalinkParam.BG_LAYER_OPACITY] = `${opacity * 100}`;
         this.ngeoStateManager_.updateState(object);
-      }
+      },
     );
   }
 };
@@ -1337,7 +1337,7 @@ PermalinkService.prototype.initLayers_ = function () {
           const opacity = this.ngeoStateManager_.getInitialNumberValue(
             parentGroupNode.mixed
               ? `${ParamPrefix.TREE_OPACITY}${treeCtrl.node.name}`
-              : `${ParamPrefix.TREE_GROUP_OPACITY}${treeCtrl.node.name}`
+              : `${ParamPrefix.TREE_GROUP_OPACITY}${treeCtrl.node.name}`,
           );
           if (treeCtrl.layer) {
             if (opacity !== undefined) {
@@ -1365,7 +1365,7 @@ PermalinkService.prototype.initLayers_ = function () {
           if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
             // Layer of a mixed group
             const enable = this.ngeoStateManager_.getInitialBooleanValue(
-              `${ParamPrefix.TREE_ENABLE}${treeCtrl.node.name}`
+              `${ParamPrefix.TREE_ENABLE}${treeCtrl.node.name}`,
             );
             if (enable !== undefined) {
               treeCtrl.setState(enable ? 'on' : 'off', false);
@@ -1373,7 +1373,7 @@ PermalinkService.prototype.initLayers_ = function () {
           } else if (!groupNode.mixed && treeCtrl.depth == 1) {
             // First level non mixed group
             const groupLayers = this.ngeoStateManager_.getInitialStringValue(
-              `${ParamPrefix.TREE_GROUP_LAYERS}${treeCtrl.node.name}`
+              `${ParamPrefix.TREE_GROUP_LAYERS}${treeCtrl.node.name}`,
             );
             if (groupLayers !== undefined) {
               const groupLayersArray = groupLayers == '' ? [] : groupLayers.split(',');
@@ -1460,7 +1460,7 @@ PermalinkService.prototype.addNgeoFeature_ = function (feature) {
   const uid = olUtilGetUid(feature);
   this.ngeoEventHelper_.addListenerKey(
     uid,
-    listen(feature, 'change', this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this)
+    listen(feature, 'change', this.ngeoDebounce_(this.handleNgeoFeaturesChange_, 250, true), this),
   );
 };
 
@@ -1601,7 +1601,7 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
   const promises = [];
 
   const layerNamesString = this.ngeoStateManager_.getInitialStringValue(
-    PermalinkParam.EXTERNAL_DATASOURCES_NAMES
+    PermalinkParam.EXTERNAL_DATASOURCES_NAMES,
   );
   const urlsString = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.EXTERNAL_DATASOURCES_URLS);
 
@@ -1643,7 +1643,7 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
               serviceType,
               url,
             });
-          }
+          },
         );
       } else if (serviceType === Type.WMTS) {
         ngeoQuerent.wmtsGetCapabilities(url).then(
@@ -1662,7 +1662,7 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
               serviceType,
               url,
             });
-          }
+          },
         );
       } else {
         // Wrong service type
@@ -1684,13 +1684,13 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
           for (const layerName of response.groupLayerNames) {
             const layerCap = ngeoQuerent.wmsFindLayerCapability(
               response.capabilities.Capability.Layer.Layer,
-              layerName
+              layerName,
             );
             if (layerCap) {
               gmfExtDSManager.createAndAddDataSourceFromWMSCapability(
                 layerCap,
                 response.capabilities,
-                response.url
+                response.url,
               );
             } else {
               // TODO - handle 'not found' layer in capabilities
@@ -1702,13 +1702,13 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
           for (const layerName of response.groupLayerNames) {
             const layerCap = ngeoQuerent.wmtsFindLayerCapability(
               response.capabilities.Contents.Layer,
-              layerName
+              layerName,
             );
             if (layerCap) {
               gmfExtDSManager.createAndAddDataSourceFromWMTSCapability(
                 layerCap,
                 response.capabilities,
-                response.url
+                response.url,
               );
             } else {
               // TODO - handle 'not found' layer in capabilities
@@ -1719,7 +1719,7 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
     },
     (rejections) => {
       // TODO - handle rejections
-    }
+    },
   );
 };
 
@@ -1743,7 +1743,7 @@ PermalinkService.prototype.handleExternalDSGroupCollectionAdd_ = function (evt) 
 PermalinkService.prototype.registerExternalDSGroup_ = function (group) {
   this.listenerKeys_.push(
     listen(group.dataSourcesCollection, 'add', this.setExternalDataSourcesState_, this),
-    listen(group.dataSourcesCollection, 'remove', this.setExternalDataSourcesState_, this)
+    listen(group.dataSourcesCollection, 'remove', this.setExternalDataSourcesState_, this),
   );
 };
 

@@ -93,7 +93,7 @@ myModule.value(
    * @param {angular.IAttributes} attrs Attributes.
    * @returns {string} Template URL.
    */
-  (element, attrs) => 'gmf/layertree'
+  (element, attrs) => 'gmf/layertree',
 );
 
 myModule.run(
@@ -104,7 +104,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/layertree', require('./component.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -124,7 +124,7 @@ myModule.value(
       `gmf-layertree-node-templateurl="${subTemplateUrl}">` +
       '</div>'
     );
-  }
+  },
 );
 
 /**
@@ -240,7 +240,7 @@ export function Controller(
   ngeoWMSTime,
   gmfThemes,
   $timeout,
-  gmfLayerTreeOptions
+  gmfLayerTreeOptions,
 ) {
   /**
    * @type {import('gmf/options').gmfLayerTreeOptions}
@@ -361,7 +361,7 @@ Controller.prototype.$onInit = function () {
       if (this.gmfLayerBeingSwipe.layer && !this.layers.includes(this.gmfLayerBeingSwipe.layer)) {
         this.gmfLayerBeingSwipe.layer = null;
       }
-    }
+    },
   );
 
   // watch any change on dimensions object to refresh the layers
@@ -378,7 +378,7 @@ Controller.prototype.$onInit = function () {
         }
         this.updateDimensions_(this.gmfTreeManager_.rootCtrl);
       }
-    }
+    },
   );
 };
 
@@ -394,7 +394,7 @@ Controller.prototype.updateDimensions_ = function (treeCtrl) {
       }
       this.updateLayerDimensions_(
         /** @type {olLayerLayer<import('ol/source/Source').default>} */ (layer),
-        /** @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} */ (ctrl.node)
+        /** @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} */ (ctrl.node),
       );
       return LayertreeVisitorDecision.DESCEND;
     }
@@ -612,7 +612,7 @@ Controller.prototype.getLegendIconURL = function (treeCtrl) {
     undefined,
     legendRule,
     this.options.layerIcon ? this.options.layerIcon.width : undefined,
-    this.options.layerIcon ? this.options.layerIcon.height : undefined
+    this.options.layerIcon ? this.options.layerIcon.height : undefined,
   );
 };
 

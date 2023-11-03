@@ -78,7 +78,7 @@ export default class GmfAuthForm extends GmfBaseElement {
         next: (message: string) => {
           this.loginInfoMessage = message;
         },
-      })
+      }),
     );
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
@@ -435,7 +435,7 @@ export default class GmfAuthForm extends GmfBaseElement {
             this.changePasswordReset();
             this.setError_(
               [i18next.t('Your password has successfully been changed.')],
-              MessageType.INFORMATION
+              MessageType.INFORMATION,
             );
           })
           .catch(() => {
@@ -582,7 +582,7 @@ export default class GmfAuthForm extends GmfBaseElement {
     const oldPwd = this.renderRoot.querySelector('input[name = "oldpassword"]') as HTMLInputElement;
     const newPwd = this.renderRoot.querySelector('input[name = "newpassword"]') as HTMLInputElement;
     const newPwdConf = this.renderRoot.querySelector(
-      'input[name = "newpasswordconfirm"]'
+      'input[name = "newpasswordconfirm"]',
     ) as HTMLInputElement;
     oldPwd.value = '';
     newPwd.value = '';

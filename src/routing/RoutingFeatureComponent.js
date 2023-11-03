@@ -53,7 +53,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -65,7 +65,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.ngeoRoutingFeatureTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/routing/routingfeature';
-  }
+  },
 );
 
 /**
@@ -244,7 +244,7 @@ export class Controller {
           this.vectorSource_.clear();
           this.snapFeature_(/** @type {olFeature<import('ol/geom/Point').default>} */ (feature));
         }
-      )
+      ),
     );
 
     this.scope_.$watch(
@@ -257,7 +257,7 @@ export class Controller {
           this.vectorSource_.clear();
           this.featureLabel = '';
         }
-      }
+      },
     );
   }
 
@@ -307,7 +307,7 @@ export class Controller {
           this.snapFeature_(/** @type {olFeature<import('ol/geom/Point').default>} */ (event.feature));
           this.modifyFeature_.setActive(true);
         }
-      )
+      ),
     );
 
     this.modifyFeature_.setActive(false);

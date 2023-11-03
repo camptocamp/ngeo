@@ -51,7 +51,7 @@ export const setupSyncLayertreeMap = () => {
     '<div gmf-layertree-node="tree"' +
       'gmf-layertree-node-map="map"' +
       'gmf-layertree-node-nodelayer="getLayer(treeCtrl)"' +
-      '</div>'
+      '</div>',
   );
 
   let $httpBackend_;
@@ -240,7 +240,7 @@ describe('gmf.layertree.SyncLayertreeMap', () => {
     gmfSyncLayertreeMap_.sync_(treeGroup);
     wmsParamLayers = treeGroup.layer.getSource().getParams().LAYERS;
     expect(wmsParamLayers).toEqual(
-      'firestations,sustenance,entertainment,osm_time,post_office,police,cinema'
+      'firestations,sustenance,entertainment,osm_time,post_office,police,cinema',
     );
   });
 

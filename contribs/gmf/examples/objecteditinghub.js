@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -149,7 +149,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
         this.getFeatures_(newVal).then(this.handleGetFeatures_.bind(this, newVal));
         this.getGeometryType_(newVal).then(this.handleGetGeometryType_.bind(this, newVal));
       }
-    }
+    },
   );
 
   /**
@@ -206,7 +206,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       for (i = 0, ii = groupNode.children.length; i < ii; i++) {
         if (groupNode.children[i].metadata.identifierAttributeField) {
           gmfLayerNodes.push(
-            /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (groupNode.children[i]))
+            /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (groupNode.children[i])),
           );
         }
       }
@@ -356,7 +356,7 @@ MainController.prototype.issueGetAttributesRequest_ = function (gmfLayerNode) {
         this.geomTypeCache_[gmfLayerNode.id] = geomAttr.geomType;
         this.getGeometryTypeDeferred_.resolve();
       }
-    }.bind(this, gmfLayerNode)
+    }.bind(this, gmfLayerNode),
   );
 };
 

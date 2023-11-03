@@ -220,8 +220,8 @@ export class QueryController {
             this.drawBoxInteraction_,
             'drawend',
             /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawBoxInteractionDrawEnd_),
-            this
-          )
+            this,
+          ),
         );
         break;
 
@@ -233,8 +233,8 @@ export class QueryController {
             this.drawPolygonInteraction_,
             'drawend',
             /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawPolygonInteractionDrawEnd_),
-            this
-          )
+            this,
+          ),
         );
         break;
 

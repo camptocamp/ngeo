@@ -151,7 +151,7 @@ LayerHelper.prototype.createBasicWMSLayer = function (
   opt_params,
   opt_crossOrigin,
   opt_customSourceOptions,
-  opt_customLayerOptions
+  opt_customLayerOptions,
 ) {
   /** @type {Object<string, string>} */
   const params = {
@@ -225,7 +225,7 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
     serverType,
     undefined,
     undefined,
-    opt_crossOrigin
+    opt_crossOrigin,
   );
 
   // (2) Manage visibility
@@ -280,7 +280,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
   opt_customOptions,
   opt_minResolution,
   opt_maxResolution,
-  opt_opacity
+  opt_opacity,
 ) {
   opt_maxResolution = this.fixResolution_(opt_maxResolution);
   const parser = new olFormatWMTSCapabilities();
@@ -305,7 +305,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
           matrixSet: opt_matrixSet,
           crossOrigin: 'anonymous',
           layer: layerName,
-        })
+        }),
       );
       const source = new olSourceWMTS(/** @type {import('ol/source/WMTS').Options} */ (options));
       if (opt_dimensions && !isEmpty(opt_dimensions)) {
@@ -342,7 +342,7 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
 LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   capabilities,
   layerCap,
-  opt_dimensions
+  opt_dimensions,
 ) {
   const options = optionsFromCapabilities(capabilities, {
     crossOrigin: 'anonymous',
@@ -388,7 +388,7 @@ LayerHelper.prototype.createBasicVectorTilesLayer = function (
   tileGrid,
   opt_minResolution,
   opt_maxResolution,
-  opt_opacity
+  opt_opacity,
 ) {
   opt_maxResolution = this.fixResolution_(opt_maxResolution);
   const format = new olFormatMVT();
@@ -582,7 +582,7 @@ LayerHelper.prototype.getWMSLegendURL = function (
   opt_dpi,
   opt_bbox,
   opt_srs,
-  opt_additionalQueryString
+  opt_additionalQueryString,
 ) {
   if (!url) {
     return undefined;

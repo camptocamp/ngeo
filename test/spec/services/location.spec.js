@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2021 Camptocamp SA
+// Copyright (c) 2014-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -38,7 +38,7 @@ describe('ngeo.statemanager.Location', () => {
        */
       ($provide) => {
         $provide.value('$window', win);
-      }
+      },
     );
     angular.mock.inject((_ngeoLocation_) => {
       ngeoLocation = _ngeoLocation_;
@@ -144,7 +144,7 @@ describe('ngeo.statemanager.Location', () => {
       expect(win.history.replaceState).toHaveBeenCalledWith(
         null,
         '',
-        'http://domain.com/some/path?some=param'
+        'http://domain.com/some/path?some=param',
       );
     });
   });

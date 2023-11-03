@@ -120,7 +120,7 @@ export function WfsPermalinkService(
   ngeoPermalinkOgcserverUrl,
   ngeoQueryResult,
   ngeoWfsPermalinkOptions,
-  gmfFitOptions
+  gmfFitOptions,
 ) {
   const options = ngeoWfsPermalinkOptions;
 
@@ -190,7 +190,7 @@ WfsPermalinkService.prototype.clear = function () {
 WfsPermalinkService.prototype.issue = function (queryData, map, zoomLevel = undefined) {
   console.assert(
     this.url_,
-    'url is not set. to use the wfs permalink service, ' + 'set the value `ngeoWfsPermalinkOptions`'
+    'url is not set. to use the wfs permalink service, ' + 'set the value `ngeoWfsPermalinkOptions`',
   );
   this.clearResult_();
 
@@ -220,7 +220,7 @@ WfsPermalinkService.prototype.issueRequest_ = function (
   filter,
   map,
   showFeatures,
-  zoomLevel = undefined
+  zoomLevel = undefined,
 ) {
   const wfsFormat = new olFormatWFS();
   const featureRequestXml = wfsFormat.writeGetFeature({
@@ -286,7 +286,7 @@ WfsPermalinkService.prototype.getExtent_ = function (features) {
         return extent;
       }
     },
-    createEmptyExtent()
+    createEmptyExtent(),
   );
 };
 

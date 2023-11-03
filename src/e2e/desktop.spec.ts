@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -268,7 +268,7 @@ if (Cypress.browser.isHeaded) {
       it('Query any layer', () => {
         cy.loadPage(
           false,
-          'https://localhost:3000/contribs/gmf/apps/desktop.html?lang=en&map_x=2632287&map_y=1186329&map_zoom=9'
+          'https://localhost:3000/contribs/gmf/apps/desktop.html?lang=en&map_x=2632287&map_y=1186329&map_zoom=9',
         );
 
         cy.wait(500); // query not working without the wait
@@ -327,7 +327,7 @@ if (Cypress.browser.isHeaded) {
       it('Result in a grid', () => {
         cy.loadPage(
           false,
-          'https://localhost:3000/contribs/gmf/apps/desktop_alt.html?lang=en&map_x=2632287&map_y=1186329&map_zoom=9'
+          'https://localhost:3000/contribs/gmf/apps/desktop_alt.html?lang=en&map_x=2632287&map_y=1186329&map_zoom=9',
         );
 
         cy.wait(500); // query not working without the wait
@@ -335,7 +335,7 @@ if (Cypress.browser.isHeaded) {
         // Close disclaimer
         cy.get('[ng-model="disclaimerVisibility"] .modal-header > .close').click();
         cy.get('[ng-model="disclaimerVisibility"] > .modal > .modal-dialog > .modal-content').should(
-          'not.be.visible'
+          'not.be.visible',
         );
 
         cy.readWindowValue('map').then((map: olMap) => {

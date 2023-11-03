@@ -21,7 +21,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-$gmf-input-range-track-box-shadow: 0.06rem 0.06rem 0.06rem rgba(0, 0, 0, 0), 0 0 0.06rem rgba(13, 13, 13, 0);
+$gmf-input-range-track-box-shadow:
+  0.06rem 0.06rem 0.06rem rgba(0, 0, 0, 0),
+  0 0 0.06rem rgba(13, 13, 13, 0);
 $gmf-input-range-track-height: 0.31rem;
 $gmf-input-range-track-border: 0.01rem solid rgba(1, 1, 1, 0.2);
 $gmf-input-range-track-border-radius: 0.06rem;
@@ -30,7 +32,8 @@ $gmf-input-range-thumb-width: 0.62rem;
 $gmf-input-range-thumb-border-radius: 0.31rem;
 $gmf-input-range-thumb-border: 0.06rem solid rgba(0, 0, 30, 0.2);
 $gmf-input-range-thumb-background: #ffffff;
-$gmf-input-range-thumb-box-shadow: 0.06rem 0.06rem 0.06rem rgba(0, 0, 49, 0.2),
+$gmf-input-range-thumb-box-shadow:
+  0.06rem 0.06rem 0.06rem rgba(0, 0, 49, 0.2),
   0 0 0.06rem rgba(0, 0, 75, 0.2);
 $gmf-input-range-cursor: pointer;
 

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -157,7 +157,7 @@ export function Controller($scope, $timeout) {
           this.interaction.setActive(false);
         }, 0);
       }
-    )
+    ),
   );
 
   // Line may be removed from an other component
@@ -168,7 +168,7 @@ export function Controller($scope, $timeout) {
       if (newLine === null) {
         this.clear_();
       }
-    }
+    },
   );
 
   $scope.$watch(
@@ -179,7 +179,7 @@ export function Controller($scope, $timeout) {
       }
       // Will activate the interaction automatically the first time
       this.interaction.setActive(this.active);
-    }
+    },
   );
 }
 
