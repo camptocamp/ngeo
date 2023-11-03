@@ -74,7 +74,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/search', require('./component.html'));
-  }
+  },
 );
 
 /**
@@ -189,7 +189,7 @@ export class SearchController {
     ngeoLocation,
     gmfSearchOptions,
     gmfSearchGroups,
-    fulltextsearchUrl
+    fulltextsearchUrl,
   ) {
     this.options = gmfSearchOptions;
     this.groups = gmfSearchGroups;
@@ -495,8 +495,8 @@ export class SearchController {
               typeaheadDatasetOptions: datasource.typeaheadDatasetOptions,
               url: datasource.url || this.fulltextsearchUrl,
             },
-            filter.filter
-          )
+            filter.filter,
+          ),
         );
       });
     }
@@ -594,7 +594,7 @@ export class SearchController {
           return (
             !properties.layer_name &&
             /** @type {import('gmf/options').SearchAction[]} */ (properties.actions).some(
-              (act) => act.action === action
+              (act) => act.action === action,
             )
           );
         } else {
@@ -650,7 +650,7 @@ export class SearchController {
       olProj.get(mapProjectionCode),
       olProj.get(config.projection),
       config.bloodhoundOptions,
-      remoteOptions
+      remoteOptions,
     );
     bloodhound.initialize();
     return bloodhound;
@@ -708,7 +708,7 @@ export class SearchController {
         coordinates,
         extent,
         viewProjection,
-        this.coordinatesProjectionsInstances_.map((proj) => proj.getCode())
+        this.coordinatesProjectionsInstances_.map((proj) => proj.getCode()),
       );
       if (position === null) {
         return;
@@ -736,7 +736,7 @@ export class SearchController {
       throw new Error('Missing feature');
     }
     const style = buildStyle(
-      this.options.styles[feature.get('layer_name')] || this.options.styles['default']
+      this.options.styles[feature.get('layer_name')] || this.options.styles['default'],
     );
     const trueStyle = /** @type {import('ol/style/Style').default} */ (style);
     if (this.color) {
@@ -851,7 +851,7 @@ export class SearchController {
           geometry: geom,
           'layer_name': COORDINATES_LAYER_NAME,
           name: 'SearchFeature',
-        })
+        }),
       );
       this.map.getView().setCenter(coordinateSuggestion.position);
       this.leaveSearch_();

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -139,7 +139,7 @@ export function FeatureHelper(
   ngeoMeasurePrecision,
   ngeoMeasureDecimals,
   ngeoMeasureSpherical,
-  ngeoPointfilter
+  ngeoPointfilter,
 ) {
   /**
    * @type {angular.IFilterService}
@@ -326,7 +326,7 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
           name: '',
           text: textLabelValue,
         }),
-      })
+      }),
     );
   }
   return styles;
@@ -412,7 +412,7 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
       }
       // On every segments.
       addArrowToSegment(start, end);
-    }
+    },
   );
 
   // Add an arrow on a specific segment.
@@ -465,7 +465,7 @@ FeatureHelper.prototype.getPointStyle_ = function (feature) {
           size: font_size,
           offsetY: -(size + (font_size / 2) * textLabelValues.length * point_to_px + 4),
         }),
-      })
+      }),
     );
   }
   return styles;
@@ -560,7 +560,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
             text: length,
             angle: (((azimut % 180) + 180) % 180) - 90,
           }),
-        })
+        }),
       );
 
       // Azimut style
@@ -575,7 +575,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
             offsetX: Math.cos(((azimut - 90) * Math.PI) / 180) * 20,
             offsetY: Math.sin(((azimut - 90) * Math.PI) / 180) * 20,
           }),
-        })
+        }),
       );
 
       //Label Style
@@ -589,7 +589,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
               offsetY: -8,
               exceedLength: true,
             }),
-          })
+          }),
         );
       }
     } else {
@@ -612,7 +612,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
               text: textLabelValue,
               exceedLength: true,
             }),
-          })
+          }),
         );
       }
     }
@@ -670,7 +670,7 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
           }),
         }),
         zIndex: Infinity,
-      })
+      }),
     );
   } else {
     if (type === 'LineString') {
@@ -680,7 +680,7 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
             color: white,
             width: width + 2,
           }),
-        })
+        }),
       );
       styles.push(
         new olStyleStyle({
@@ -688,7 +688,7 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
             color: blue,
             width: width,
           }),
-        })
+        }),
       );
     } else {
       styles.push(
@@ -700,7 +700,7 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
           fill: new olStyleFill({
             color: [255, 255, 255, 0.5],
           }),
-        })
+        }),
       );
     }
 
@@ -771,7 +771,7 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
           coordinates2[i],
           coordinate,
           minNumCoordinates,
-          buffer
+          buffer,
         );
         if (index !== -1) {
           info = [i, index];
@@ -789,7 +789,7 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
             coordinates2[j],
             coordinate,
             minNumCoordinates,
-            buffer
+            buffer,
           );
           if (index !== -1) {
             info = [i, j, index];
@@ -828,7 +828,7 @@ FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function (coordinates, c
     for (let i = 0; i < ii; i++) {
       const hits = olExtent.containsCoordinate(
         olExtent.buffer(olExtent.createOrUpdateFromCoordinate(coordinates[i]), buffer),
-        coordinate
+        coordinate,
       );
       if (hits) {
         index = i;
@@ -1396,7 +1396,7 @@ FeatureHelper.prototype.getMeasure = function (feature) {
         this.decimals_,
         this.precision_,
         this.unitPrefixFormat_,
-        this.numberFormat_
+        this.numberFormat_,
       );
     } else {
       measure = getFormattedArea(
@@ -1404,7 +1404,7 @@ FeatureHelper.prototype.getMeasure = function (feature) {
         this.projection_,
         this.precision_,
         this.unitPrefixFormat_,
-        this.spherical
+        this.spherical,
       );
     }
   } else if (geometry instanceof olGeomLineString) {
@@ -1413,7 +1413,7 @@ FeatureHelper.prototype.getMeasure = function (feature) {
       this.projection_,
       this.precision_,
       this.unitPrefixFormat_,
-      this.spherical
+      this.spherical,
     );
   } else if (geometry instanceof olGeomPoint) {
     if (this.pointFilterFn_ === null) {
@@ -1422,7 +1422,7 @@ FeatureHelper.prototype.getMeasure = function (feature) {
       const coordinates = geometry.getCoordinates();
       if (this.pointFilterArgs_.length > 1) {
         measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0], this.pointFilterArgs_[1]).join(
-          ', '
+          ', ',
         );
       } else {
         measure = this.pointFilterFn_(coordinates, this.pointFilterArgs_[0]).join(', ');
@@ -1538,7 +1538,7 @@ FeatureHelper.prototype.fitMapToFeature = function (feature, map, opt_duration) 
             center: mapCenter,
             duration: duration,
             zoom: featureZoom,
-          }
+          },
         );
       }
     }
@@ -1571,7 +1571,7 @@ FeatureHelper.prototype.fitMapToFeature = function (feature, map, opt_duration) 
         {
           center: featureCenter,
           duration: duration,
-        }
+        },
       );
     } else {
       // == Action: Fit ==

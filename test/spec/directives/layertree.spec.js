@@ -41,7 +41,7 @@ describe('ngeo.layertree.component', () => {
       '<div gmf-layertree-node="tree"' +
         'gmf-layertree-node-map="map"' +
         'gmf-layertree-node-nodelayer="getLayer(node)"' +
-        '</div>'
+        '</div>',
     );
 
     const tree = {

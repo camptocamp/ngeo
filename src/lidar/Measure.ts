@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -98,7 +98,7 @@ export default class {
     const svg = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg'),
     );
     svg.style('cursor', 'pointer');
     svg.on('click', (event) => this.measureHeight(event));
@@ -119,13 +119,13 @@ export default class {
     const svg = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg'),
     );
     const svgEl = svg.node();
     const canvas = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas'),
     );
     const canvasEl = canvas.node();
 
@@ -148,7 +148,7 @@ export default class {
       tolerance,
       this.manager_.plot.updateScaleX,
       this.manager_.plot.updateScaleY,
-      this.manager_.config.serverConfig.classification_colors
+      this.manager_.config.serverConfig.classification_colors,
     );
 
     if (!this.pStart_.set) {

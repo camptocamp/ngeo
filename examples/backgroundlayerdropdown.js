@@ -47,9 +47,9 @@ myModule.run(
     $templateCache.put(
       'partials/backgroundlayerdropdown',
       // @ts-ignore: webpack
-      require('./partials/backgroundlayerdropdown.html')
+      require('./partials/backgroundlayerdropdown.html'),
     );
-  }
+  },
 );
 
 /**

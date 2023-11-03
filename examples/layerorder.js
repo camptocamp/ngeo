@@ -130,7 +130,7 @@ function MainController($scope) {
     () => selectedLayers,
     () => {
       map.render();
-    }
+    },
   );
 
   /**

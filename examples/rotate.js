@@ -84,7 +84,7 @@ function MainController() {
   this.features.push(
     new olFeature({
       geometry: polygon,
-    })
+    }),
   );
 
   const vectorSource = new olSourceVector({
@@ -157,7 +157,7 @@ function MainController() {
       features: this.features,
       layers: [vectorLayer],
       style: style,
-    })
+    }),
   );
 
   const interaction = this.interaction;
@@ -175,7 +175,7 @@ function MainController() {
           this.interaction.setActive(true);
         }
       }
-    )
+    ),
   );
 }
 

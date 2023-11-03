@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -67,7 +67,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -79,7 +79,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.gmfFilterselectorTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'gmf/filters/filterselectorcomponent';
-  }
+  },
 );
 
 /**
@@ -131,7 +131,7 @@ export class FilterSelectorController {
     gmfDataSourceBeingFiltered,
     gmfDataSourcesHelper,
     gmfSavedFilters,
-    ngeoRuleHelper
+    ngeoRuleHelper,
   ) {
     // Binding properties
 
@@ -175,7 +175,7 @@ export class FilterSelectorController {
 
     $scope.$watch(
       () => this.gmfDataSourceBeingFiltered.dataSource,
-      this.handleSelectedDataSourceChange_.bind(this)
+      this.handleSelectedDataSourceChange_.bind(this),
     );
 
     /**
@@ -196,7 +196,7 @@ export class FilterSelectorController {
         if (this.gmfSavedFilters.currentDataSourceItems.length === 0 && this.saveFilterManageModalShown) {
           this.saveFilterManageModalShown = false;
         }
-      }
+      },
     );
 
     /**
@@ -217,7 +217,7 @@ export class FilterSelectorController {
           this.gmfUser_ = value;
           this.handleGmfUserFunctionalitiesChange_();
         },
-      })
+      }),
     );
 
     /**
@@ -298,7 +298,7 @@ export class FilterSelectorController {
       () => this.saveFilterSaveModalShown,
       () => {
         this.saveFilterName = '';
-      }
+      },
     );
 
     /**
@@ -318,7 +318,7 @@ export class FilterSelectorController {
 
     $scope.$watch(
       () => this.enableDataSourceRegistration_,
-      this.handleEnableDataSourceRegistrationChange_.bind(this)
+      this.handleEnableDataSourceRegistrationChange_.bind(this),
     );
 
     /**
@@ -383,7 +383,7 @@ export class FilterSelectorController {
       // Listen to data sources being added/removed
       keys.push(
         listen(this.gmfDataSources_, 'add', this.handleDataSourcesAdd_, this),
-        listen(this.gmfDataSources_, 'remove', this.handleDataSourcesRemove_, this)
+        listen(this.gmfDataSources_, 'remove', this.handleDataSourcesRemove_, this),
       );
 
       // Manage the data sources that are already in the collection
@@ -518,8 +518,8 @@ export class FilterSelectorController {
         msgs.push(
           gettext.getString(
             "The data source doesn't support WFS, which is required " +
-              'to fetch the attributes to build the filter rules.'
-          )
+              'to fetch the attributes to build the filter rules.',
+          ),
         );
       }
 
@@ -538,12 +538,12 @@ export class FilterSelectorController {
       if (notify && !filtrable) {
         const p1 = gettext.getString(
           `The following data source is marked as being filtrable,
-          but is missing some requirements: `
+          but is missing some requirements: `,
         );
         const p2 = `${dataSource.name} (${dataSource.id}).`;
         const p3 = gettext.getString(
           `Please, contact your administrator about this.
-          Here are the reasons: `
+          Here are the reasons: `,
         );
         msgs.unshift(`${p1} ${p2} ${p3}`);
         console.warn(msgs.join(' '));
@@ -657,7 +657,7 @@ export class FilterSelectorController {
 
     const msg = this.gettextCatalog_.getString(
       `A filter with the same name already exists.
-      Do you want to overwrite it?`
+      Do you want to overwrite it?`,
     );
     if (!alreadyExist || confirm(msg)) {
       // (1) Serialize the existing custom and directed rules

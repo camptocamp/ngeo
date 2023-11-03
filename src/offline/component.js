@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -44,7 +44,7 @@ myModule.value(
   (element, attrs) => {
     const templateUrl = attrs['ngeoOfflineTemplateurl'];
     return templateUrl !== undefined ? templateUrl : 'ngeo/offline/component.html';
-  }
+  },
 );
 
 myModule.run(
@@ -55,7 +55,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/offline/component.html', require('./component.html'));
-  }
+  },
 );
 
 /**
@@ -122,7 +122,7 @@ export const Controller = class {
     ngeoOfflineServiceManager,
     ngeoOfflineConfiguration,
     ngeoOfflineMode,
-    ngeoNetworkStatus
+    ngeoNetworkStatus,
   ) {
     /**
      * @type {angular.ITimeoutService}
@@ -320,7 +320,7 @@ export const Controller = class {
     this.offlineMode.registerComponent(this);
     this.ngeoOfflineConfiguration_.on(
       /** @type {import('ol/Observable').EventTypes} */ ('progress'),
-      /** @type {function(?): ?} */ (this.progressCallback_)
+      /** @type {function(?): ?} */ (this.progressCallback_),
     );
     this.maskMargin = this.maskMargin || 100;
     this.minZoom = this.minZoom || 10;
@@ -332,7 +332,7 @@ export const Controller = class {
   $onDestroy() {
     this.ngeoOfflineConfiguration_.un(
       /** @type {import('ol/Observable').EventTypes} */ ('progress'),
-      /** @type {function(?): ?} */ (this.progressCallback_)
+      /** @type {function(?): ?} */ (this.progressCallback_),
     );
   }
 

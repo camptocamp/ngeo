@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -89,7 +89,7 @@ export function EditingSnappingService(
   gmfThemes,
   gmfTreeManager,
   ngeoFeatures,
-  gmfSnappingOptions
+  gmfSnappingOptions,
 ) {
   // === Injected services ===
 
@@ -299,7 +299,7 @@ EditingSnappingService.prototype.setMap = function (map) {
             this.gmfTreeManager_.rootCtrl.traverseDepthFirst(this.registerTreeCtrl_.bind(this));
           }
         }, 0);
-      }
+      },
     );
 
     keys.push(
@@ -307,7 +307,7 @@ EditingSnappingService.prototype.setMap = function (map) {
       listen(this.gmfThemes_, 'change', this.handleThemesChange_, this),
       // (3) Listen when the map is moved to update the vector
       //     features of the WMS (WFS) layers
-      listen(map, 'moveend', this.handleMapMoveEnd_, this)
+      listen(map, 'moveend', this.handleMapMoveEnd_, this),
     );
 
     // (4) Listen when File data sources are added to the File Group
@@ -322,8 +322,8 @@ EditingSnappingService.prototype.setMap = function (map) {
           fileGroup.dataSourcesCollection,
           'remove',
           this.handleFileGroupDataSourcesCollectionRemove_,
-          this
-        )
+          this,
+        ),
       );
     }
 
@@ -372,7 +372,7 @@ EditingSnappingService.prototype.registerTreeCtrl_ = function (treeCtrl) {
 
       const stateWatcherUnregister = this.rootScope_.$watch(
         () => this.isSnappingActiveForTreeCtrl_(treeCtrl),
-        this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
+        this.handleTreeCtrlStateChange_.bind(this, treeCtrl),
       );
 
       const ogcServer = this.getOGCServer_(treeCtrl);
@@ -759,9 +759,12 @@ EditingSnappingService.prototype.handleFileGroupDataSourcesCollectionAdd_ = func
 
   // (2) Watch the visible property of the data source. When ON, the
   //     snap should be added. When OFF, it should be removed.
-  const visibleWatcherUnregister = this.rootScope_.$watch(() => {
-    return fileDataSource.visible;
-  }, this.handleFileDataSourceVisibleChange_.bind(this, fileDataSource));
+  const visibleWatcherUnregister = this.rootScope_.$watch(
+    () => {
+      return fileDataSource.visible;
+    },
+    this.handleFileDataSourceVisibleChange_.bind(this, fileDataSource),
+  );
 
   const uid = olUtilGetUid(fileDataSource);
 

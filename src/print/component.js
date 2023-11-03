@@ -82,7 +82,7 @@ myModule.value(
   (element, attrs) => {
     const templateUrl = attrs.gmfPrintTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'gmf/print';
-  }
+  },
 );
 
 myModule.run(
@@ -93,7 +93,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/print', require('./component.html'));
-  }
+  },
 );
 
 /**
@@ -247,7 +247,7 @@ export class PrintController {
     gmfThemes,
     gmfExternalDataSourcesManager,
     gmfPrintOptions,
-    cacheVersion
+    cacheVersion,
   ) {
     this.options = gmfPrintOptions;
 
@@ -533,7 +533,7 @@ export class PrintController {
       this.ngeoLayerHelper_,
       this.gmfExternalDataSourcesManager_,
       this.options.legend,
-      this.map
+      this.map,
     );
 
     listen(
@@ -545,7 +545,7 @@ export class PrintController {
         if (target instanceof olView) {
           this.updateRotation_(Math.round(toDegrees(target.getRotation())));
         }
-      }
+      },
     );
 
     // Clear the capabilities if the roles changes
@@ -554,7 +554,7 @@ export class PrintController {
       () => {
         this.gmfPrintState_.state = PrintStateEnum.CAPABILITIES_NOT_LOADED;
         this.capabilities_ = null;
-      }
+      },
     );
 
     // Store user email
@@ -562,14 +562,14 @@ export class PrintController {
       () => gmfAuthenticationService.getEmail(),
       (newValue) => {
         this.smtpEmail = newValue;
-      }
+      },
     );
 
     this.$scope_.$watch(
       () => this.active,
       (active) => {
         this.togglePrintPanel_(active);
-      }
+      },
     );
 
     // Print on event.
@@ -594,7 +594,7 @@ export class PrintController {
         this.gmfThemes_.getThemesObject().then((currentThemes) => {
           this.currentThemes_ = currentThemes;
         });
-      }
+      },
     );
 
     /**
@@ -675,7 +675,7 @@ export class PrintController {
             /** @type {import('ol/events').ListenerFunction} */
             () => {
               this.scaleManuallySelected_ = false;
-            }
+            },
           );
           this.map.render();
         },
@@ -683,7 +683,7 @@ export class PrintController {
           // Get capabilities - On error
           this.gmfPrintState_.state = PrintStateEnum.ERROR_ON_GETCAPABILITIES;
           this.capabilities_ = null;
-        }
+        },
       );
     } else {
       if (!this.map) {
@@ -1034,7 +1034,7 @@ export class PrintController {
         this.currentThemes_,
         scale,
         this.layoutInfo.dpi,
-        bbox
+        bbox,
       );
       if (legend !== null) {
         customAttributes.legend = legend;
@@ -1072,7 +1072,7 @@ export class PrintController {
               undefined,
               undefined,
               undefined,
-              {opacity: layer.get('opacity')}
+              {opacity: layer.get('opacity')},
             );
             layer.setZIndex(-200);
           } else {
@@ -1106,7 +1106,7 @@ export class PrintController {
       format,
       customAttributes,
       email,
-      this.options.goodnessOfFit
+      this.options.goodnessOfFit,
     );
 
     // Add feature overlay layer to print spec.
@@ -1122,7 +1122,7 @@ export class PrintController {
         spec,
         /** @type {angular.IRequestShortcutConfig} */ ({
           timeout: this.requestCanceler_.promise,
-        })
+        }),
       )
       .then(this.handleCreateReportSuccess_.bind(this), this.handleCreateReportError_.bind(this));
 
@@ -1188,7 +1188,7 @@ export class PrintController {
           });
         }
         data.push(
-          Object.keys(properties).map((key) => (properties[key] !== undefined ? properties[key] : ''))
+          Object.keys(properties).map((key) => (properties[key] !== undefined ? properties[key] : '')),
         );
       });
       if (columns.length) {
@@ -1221,7 +1221,7 @@ export class PrintController {
         mapSize,
         viewResolution,
         this.paperSize_,
-        scales.reverse()
+        scales.reverse(),
       );
       if (scale > 0) {
         return scale;
@@ -1289,7 +1289,7 @@ export class PrintController {
           this.getStatus_(ref);
         },
         1000,
-        false
+        false,
       );
     }
   }

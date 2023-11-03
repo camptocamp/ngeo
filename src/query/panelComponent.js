@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2021 Camptocamp SA
+// Copyright (c) 2019-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -38,9 +38,9 @@ myModule.run(
     $templateCache.put(
       'ngeo/src/query/panelComponent',
       // @ts-ignore: webpack
-      require('./panelComponent.html')
+      require('./panelComponent.html'),
     );
-  }
+  },
 );
 
 myModule.value(
@@ -52,7 +52,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.ngeoQueryPanelTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/src/query/panelComponent';
-  }
+  },
 );
 
 /**

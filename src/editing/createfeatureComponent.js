@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -114,7 +114,7 @@ export function Controller(
   $scope,
   $timeout,
   ngeoEventHelper,
-  ngeoSnappingTolerance
+  ngeoSnappingTolerance,
 ) {
   /**
    * @type {boolean}
@@ -192,7 +192,7 @@ export function Controller(
         throw new Error('Missing interaction');
       }
       this.interaction_.setActive(newVal);
-    }
+    },
   );
 }
 
@@ -215,7 +215,7 @@ Controller.prototype.$onInit = function () {
   ) {
     const helpMsg = gettextCatalog.getString('Click to start drawing length');
     const contMsg = gettextCatalog.getString(
-      'Click to continue drawing<br/>' + 'Double-click or click last point to finish'
+      'Click to continue drawing<br/>' + 'Double-click or click last point to finish',
     );
 
     /** @type {import('ngeo/interaction/Measure').MeasureOptions} */
@@ -233,7 +233,7 @@ Controller.prototype.$onInit = function () {
   } else if (this.geomType === ngeoGeometryType.POLYGON || this.geomType === ngeoGeometryType.MULTI_POLYGON) {
     const helpMsg = gettextCatalog.getString('Click to start drawing area');
     const contMsg = gettextCatalog.getString(
-      'Click to continue drawing<br/>' + 'Double-click or click starting point to finish'
+      'Click to continue drawing<br/>' + 'Double-click or click starting point to finish',
     );
 
     interaction = new ngeoInteractionMeasureArea(this.filter_('ngeoUnitPrefix'), gettextCatalog, {
@@ -262,8 +262,8 @@ Controller.prototype.$onInit = function () {
         interaction,
         'drawend',
         /** @type {import('ol/events').ListenerFunction } */ (this.handleDrawEnd_),
-        this
-      )
+        this,
+      ),
     );
   } else if (
     interaction instanceof ngeoInteractionMeasureLength ||
@@ -275,8 +275,8 @@ Controller.prototype.$onInit = function () {
         interaction,
         'measureend',
         /** @type {import('ol/events').ListenerFunction } */ (this.handleDrawEnd_),
-        this
-      )
+        this,
+      ),
     );
   }
 };

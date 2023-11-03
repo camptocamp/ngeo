@@ -106,7 +106,7 @@ export class DatasourceManager {
     ngeoLayerHelper,
     ngeoRuleHelper,
     ngeoWMSTime,
-    gmfWFSAliases
+    gmfWFSAliases,
   ) {
     // === Injected properties ===
 
@@ -274,7 +274,7 @@ export class DatasourceManager {
     this.dimensionsWatcherUnregister = this.rootScope_.$watch(
       () => this.dimensions_,
       this.handleDimensionsChange_.bind(this),
-      true
+      true,
     );
     this.handleDimensionsChange_();
   }
@@ -761,14 +761,17 @@ export class DatasourceManager {
 
     const stateWatcherUnregister = this.rootScope_.$watch(
       () => treeCtrl.getState(),
-      this.handleTreeCtrlStateChange_.bind(this, treeCtrl)
+      this.handleTreeCtrlStateChange_.bind(this, treeCtrl),
     );
 
-    const filterRulesWatcherUnregister = this.rootScope_.$watch(() => {
-      const hasFilters = dataSource.filterRules !== null;
-      const isVisible = dataSource.visible;
-      return hasFilters && isVisible;
-    }, this.handleDataSourceFilterRulesChange_.bind(this, dataSource));
+    const filterRulesWatcherUnregister = this.rootScope_.$watch(
+      () => {
+        const hasFilters = dataSource.filterRules !== null;
+        const isVisible = dataSource.visible;
+        return hasFilters && isVisible;
+      },
+      this.handleDataSourceFilterRulesChange_.bind(this, dataSource),
+    );
 
     // Watch for time values change to update the WMS layer
     let timeLowerValueWatcherUnregister;
@@ -777,13 +780,13 @@ export class DatasourceManager {
     if (dataSource.timeProperty && dataSource.ogcType === Type.WMS) {
       timeLowerValueWatcherUnregister = this.rootScope_.$watch(
         () => dataSource.timeLowerValue,
-        this.handleDataSourceTimeValueChange_.bind(this, dataSource)
+        this.handleDataSourceTimeValueChange_.bind(this, dataSource),
       );
 
       if (dataSource.timeProperty.mode === 'range') {
         timeUpperValueWatcherUnregister = this.rootScope_.$watch(
           () => dataSource.timeUpperValue,
-          this.handleDataSourceTimeValueChange_.bind(this, dataSource)
+          this.handleDataSourceTimeValueChange_.bind(this, dataSource),
         );
       }
 

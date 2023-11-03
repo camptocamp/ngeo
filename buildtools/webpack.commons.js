@@ -35,8 +35,8 @@ module.exports = function (config) {
       {
         manifest: path.resolve(__dirname, '../dist/vendor-manifest.json'),
       },
-      config.DllReferencePluginOptions || {}
-    )
+      config.DllReferencePluginOptions || {},
+    ),
   );
 
   const providePlugin = new webpack.ProvidePlugin({
@@ -255,8 +255,8 @@ module.exports = function (config) {
               // project and ngeo default apps other sass files
               '/apps/',
               '/controllers/',
-            ]
-          )
+            ],
+          ),
         );
         console.log();
         console.log('SCSS files order:');
@@ -281,14 +281,14 @@ module.exports = function (config) {
           console.log(file + ': ' + JSON.stringify(files[file]));
         }
       }),
-    })
+    }),
   );
 
   plugins.push(
     new webpack.IgnorePlugin({
       resourceRegExp: /^cross-fetch$/,
       contextRegExp: /i18next-http-backend\/esm$/,
-    })
+    }),
   );
 
   return {

@@ -110,7 +110,7 @@ function t(msg: string): string {
 
 export const loginMessageRequired = t(
   'Some layers in this link are not accessible to unauthenticated users. ' +
-    'Please log in to see whole data.'
+    'Please log in to see whole data.',
 );
 
 /**

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -96,7 +96,7 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
   this.typeaheadSourceDebounced = this.ngeoDebounce_(
     this.typeaheadSource_.bind(this),
     this.typeaheadDebounceDelay_,
-    true
+    true,
   );
 }
 

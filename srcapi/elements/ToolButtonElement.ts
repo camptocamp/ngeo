@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -81,8 +81,11 @@ export default class ToolButtonElement extends BaseElement {
         font-size: 0.8rem;
         line-height: 1.5;
         border-radius: 0;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-          border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        transition:
+          color 0.15s ease-in-out,
+          background-color 0.15s ease-in-out,
+          border-color 0.15s ease-in-out,
+          box-shadow 0.15s ease-in-out;
         background-color: var(--brand-primary);
         border-radius: 0;
         border: var(--border);
@@ -122,7 +125,7 @@ export default class ToolButtonElement extends BaseElement {
         next: (panel: string) => {
           this.active_ = panel && panel == this.panelName_;
         },
-      })
+      }),
     );
   }
 

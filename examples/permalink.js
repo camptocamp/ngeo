@@ -133,9 +133,9 @@ MapComponentController.prototype.$onInit = function () {
           this.ngeoLocation_.updateParams(params);
         },
         300,
-        /* invokeApply */ true
+        /* invokeApply */ true,
       )
-    )
+    ),
   );
 };
 
@@ -227,7 +227,7 @@ DrawComponentController.prototype.$onInit = function () {
         // @ts-ignore
         e.feature.set('id', ++this.featureSeq_);
       }
-    )
+    ),
   );
 
   // Deal with the encoding and decoding of features in the URL.
@@ -248,7 +248,7 @@ DrawComponentController.prototype.$onInit = function () {
               color: [255, 0, 0, 1],
               width: 2,
             }),
-          })
+          }),
         );
         const features = vectorSource.getFeatures();
         const encodedFeatures = fhFormat.writeFeatures(features);
@@ -260,7 +260,7 @@ DrawComponentController.prototype.$onInit = function () {
           console.error(`Unsupported type: ${typeof encodedFeatures}`);
         }
       }
-    )
+    ),
   );
 
   const encodedFeatures = this.ngeoLocation_.getParam('features');

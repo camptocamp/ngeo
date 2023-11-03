@@ -692,7 +692,7 @@ export class Querent {
             dataSources.length === 1 ||
               !(dataSource.timeRangeValue || (dataSource.filterRules && dataSource.filterRules.length)),
             `A data source having filterRules or timeRangeValue should issue
-            a single query, alone.`
+            a single query, alone.`,
           );
 
           filter = this.ngeoRuleHelper_.createFilter({
@@ -725,7 +725,7 @@ export class Querent {
             queryIconPosition = this.makeBboxWithQueryIconPosition_(
               dataSource.queryIconPosition,
               resolution,
-              coordinate
+              coordinate,
             );
             console.assert(queryIconPosition !== null, 'Bad queryIconPosition values');
             // Be sure it respects a minimal bbox.
@@ -792,7 +792,7 @@ export class Querent {
             {
               maxFeatures,
             },
-            getFeatureCommonOptions
+            getFeatureCommonOptions,
           );
           const featureRequestXml = wfsFormat.writeGetFeature(getFeatureOptions);
           const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
@@ -811,7 +811,7 @@ export class Querent {
                 maxFeatures,
                 numberOfFeatures,
                 true,
-                response
+                response,
               );
               resolve(results);
             });
@@ -824,7 +824,7 @@ export class Querent {
             {
               resultType: 'hits',
             },
-            getFeatureCommonOptions
+            getFeatureCommonOptions,
           );
           const featureCountXml = wfsFormat.writeGetFeature(getCountOptions);
           const featureCountRequest = xmlSerializer.serializeToString(featureCountXml);
@@ -968,7 +968,7 @@ export class Querent {
           console.assert(dataSources.length === 1);
           params.TIME = this.ngeoWMSTime_.formatWMSTimeParam(
             dataSource.timeProperty,
-            /** @type {import('ngeo/datasource/OGC').TimeRange} */ (dataSource.timeRangeValue)
+            /** @type {import('ngeo/datasource/OGC').TimeRange} */ (dataSource.timeRangeValue),
           );
         }
       }
@@ -1027,8 +1027,8 @@ export class Querent {
           })
           .then(
             /** @type {function(angular.IHttpResponse<Document|Element|string>|number): QuerentResult} */
-            (this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false))
-          )
+            (this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false)),
+          ),
       );
     }
 

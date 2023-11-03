@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2022 Camptocamp SA
+// Copyright (c) 2014-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,7 +40,7 @@ myModule.value(
   (element, attrs) => {
     const templateUrl = attrs['gmfLayertreeNodeTemplateurl'];
     return templateUrl !== undefined ? templateUrl : 'gmf/layertree/layertreeNode';
-  }
+  },
 );
 
 myModule.run(
@@ -51,7 +51,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/layertree/layertreeNode', require('./layertreeNode.html'));
-  }
+  },
 );
 
 /**

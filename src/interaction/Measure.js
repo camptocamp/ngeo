@@ -249,7 +249,7 @@ class Measure extends olInteractionInteraction {
       this.drawInteraction_,
       'drawstart',
       /** @type {import('ol/events').ListenerFunction} */ (this.onDrawStart_),
-      this
+      this,
     );
     listen(this.drawInteraction_, 'drawend', this.onDrawEnd_, this);
     listen(this, 'change:active', this.updateState_, this);
@@ -334,7 +334,7 @@ class Measure extends olInteractionInteraction {
             this.measureTooltipOverlayCoord_ = coord;
           }
         });
-      }
+      },
     );
 
     this.postcomposeEventKey_ = listen(
@@ -345,7 +345,7 @@ class Measure extends olInteractionInteraction {
         if (this.measureTooltipOverlay_ && this.measureTooltipOverlayCoord_) {
           this.measureTooltipOverlay_.setPosition(this.measureTooltipOverlayCoord_);
         }
-      }
+      },
     );
   }
 

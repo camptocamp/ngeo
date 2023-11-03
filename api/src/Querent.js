@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2021 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -103,7 +103,7 @@ export function getFeaturesFromIds(layer, ids) {
             features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
               wfsFormat.readFeatures(responseText)
             );
-          })
+          }),
         )
         .catch((response) => {
           console.error(`WFS GetFeature request failed, response: ${response}`);
@@ -161,7 +161,7 @@ export function getFeaturesFromCoordinates(layer, coordinate, resolution) {
             feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
               wfsFormat.readFeature(responseText)
             );
-          })
+          }),
         )
         .catch((response) => {
           console.error(`WFS GetFeature request failed, response: ${response}`);

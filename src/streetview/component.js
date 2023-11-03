@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -44,7 +44,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.ngeoStreetviewTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/streetview';
-  }
+  },
 );
 
 myModule.run(
@@ -55,7 +55,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/streetview', require('./component.html'));
-  }
+  },
 );
 
 /**
@@ -274,7 +274,7 @@ class StreetviewController {
         this.map,
         this.handlePanoramaPositionChange_,
         this.radius,
-        this.element_
+        this.element_,
       );
       this.addWatchers_();
     }
@@ -307,7 +307,7 @@ class StreetviewController {
           return;
         }
         this.streetViewService_.toggleShow(show);
-      }
+      },
     );
   }
 
@@ -331,13 +331,13 @@ class StreetviewController {
         this.map,
         this.handlePanoramaPositionChange_,
         accessToken,
-        bufferSize
+        bufferSize,
       );
       this.scope_.$watch(
         () => this.panelWidth,
         (newVal) => {
           mapillaryService.resize();
-        }
+        },
       );
       this.streetViewService_ = mapillaryService;
       this.addWatchers_();

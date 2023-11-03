@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -41,7 +41,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -53,7 +53,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.gmfPermalinkShareTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'gmf/permalink/shareComponent';
-  }
+  },
 );
 
 /**
@@ -197,7 +197,7 @@ export class ShareComponentController {
       (resp) => {
         this.shortLink = this.permalink_;
         this.errorOnGetShortUrl = true;
-      }
+      },
     );
   }
 
@@ -219,7 +219,7 @@ export class ShareComponentController {
         (resp) => {
           this.errorOnsend = true;
           this.isFinishedState = true;
-        }
+        },
       );
     }
   }

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -27,7 +27,7 @@ describe('ngeo.misc.filters', () => {
   beforeEach(
     angular.mock.inject((_$filter_) => {
       $filter = _$filter_;
-    })
+    }),
   );
 
   it('Ngeo Scalify', () => {
@@ -86,7 +86,7 @@ describe('ngeo.misc.filters', () => {
     const co = [7.1234, 46.9876];
     expect(ngeoDMSCoordinates(co)).toBe('7\u00b0 07\u2032 24\u2033 E 46\u00b0 59\u2032 15\u2033 N');
     expect(ngeoDMSCoordinates(co, 2, '[{y}; {x}]')).toBe(
-      '[46\u00b0 59\u2032 15.36\u2033 N; 7\u00b0 07\u2032 24.24\u2033 E]'
+      '[46\u00b0 59\u2032 15.36\u2033 N; 7\u00b0 07\u2032 24.24\u2033 E]',
     );
   });
 });

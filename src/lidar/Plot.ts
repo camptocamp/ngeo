@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -178,7 +178,7 @@ export default class {
     const canvas: any = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas'),
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
@@ -234,7 +234,7 @@ export default class {
     const canvas: any = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas'),
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
@@ -245,7 +245,7 @@ export default class {
 
     const margin = this.manager_.config.clientConfig.margin;
     const container: any = d3select(
-      document.querySelector('#lidar-footer').shadowRoot.querySelector('#gmf-lidarprofile-container')
+      document.querySelector('#lidar-footer').shadowRoot.querySelector('#gmf-lidarprofile-container'),
     );
     const containerEl = container.node();
     const containerWidth = containerEl.getBoundingClientRect().width;
@@ -319,7 +319,7 @@ export default class {
     const svg = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg'),
     );
 
     // @ts-ignore
@@ -368,7 +368,7 @@ export default class {
     const canvas: any = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas'),
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
@@ -408,7 +408,7 @@ export default class {
     const svg = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container svg.lidar-svg'),
     );
     const xAxis: any = d3axisBottom(this.scaleX);
     const yAxis: any = d3axisLeft(this.scaleY).tickSize(-this.width_);
@@ -422,7 +422,7 @@ export default class {
     const canvas: any = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas'),
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
@@ -473,7 +473,7 @@ export default class {
       tolerance,
       this.updateScaleX,
       this.updateScaleY,
-      classification_colors
+      classification_colors,
     );
 
     const source = this.manager_.lidarPointHighlight.getSource();
@@ -519,7 +519,7 @@ export default class {
               }),
               radius: 3,
             }),
-          })
+          }),
         );
       }
 
@@ -542,7 +542,7 @@ export default class {
   getInfoHTML(
     point: GmfLidarprofileUtilsLidarPoint,
     classification_color: GmfLidarprofileConfigLidarprofileServerConfigClassification,
-    distDecimal: number
+    distDecimal: number,
   ): string {
     const html = [];
     const distance = point.distance;
@@ -588,7 +588,7 @@ export default class {
     const canvas: any = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lidar-canvas'),
     );
     const canvasEl: HTMLCanvasElement = canvas.node();
     const ctx = canvasEl.getContext('2d');
@@ -608,7 +608,7 @@ export default class {
    */
   setClassActive(
     classification: GmfLidarprofileConfigLidarprofileServerConfigClassifications,
-    material: string
+    material: string,
   ): void {
     if (!this.manager_.config) {
       throw new Error('Missing manager.config');

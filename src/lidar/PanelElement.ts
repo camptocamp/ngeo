@@ -85,7 +85,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
             this.clearAll();
           }
         },
-      })
+      }),
     );
     this.subscriptions.push(
       map.getMap().subscribe({
@@ -95,7 +95,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
             this.profile.init(this.profileConfig_, this.map);
           }
         },
-      })
+      }),
     );
     this.subscriptions.push(
       panels.getActiveToolPanel().subscribe({
@@ -110,7 +110,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
             line.setLine(null);
           }
         },
-      })
+      }),
     );
   }
 
@@ -157,7 +157,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
             ? html`
                 <em class="text-muted small">
                   ${i18next.t(
-                    'Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the drawing.'
+                    'Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the drawing.',
                   )}
                 </em>
               `
@@ -212,7 +212,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
                 <p>${i18next.t('Material')}</p>
                 <select id="select-attributes" @change="${() => this.selectPointAttribute()}">
                   ${Object.entries(this.availablePointAttributes).map(
-                    ([key, value]) => html` <option value="${key}">${value.name}</option> `
+                    ([key, value]) => html` <option value="${key}">${value.name}</option> `,
                   )}
                 </select>
               </div>
@@ -230,7 +230,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
                     />
                     <label for="${value.name}">${value.name}</label>
                   </div>
-                `
+                `,
               )}
             `
           : html` <p>${i18next.t('Initializing, please wait...')}</p> `}
@@ -412,7 +412,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
     if (this.line) {
       this.profile.plot.setClassActive(
         this.profileConfig_.serverConfig.classification_colors,
-        this.profileConfig_.serverConfig.default_attribute
+        this.profileConfig_.serverConfig.default_attribute,
       );
     }
   }

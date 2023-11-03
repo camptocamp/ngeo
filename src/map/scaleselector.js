@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,7 +40,7 @@ myModule.value(
   (element, attrs) => {
     const templateUrl = attrs.ngeoScaleselectorTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/map/scaleselector';
-  }
+  },
 );
 
 myModule.run(
@@ -51,7 +51,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
-  }
+  },
 );
 
 /**
@@ -172,14 +172,14 @@ export class ScaleselectorController {
         const scale = this.scales[zoom];
         if (scale == undefined) {
           console.warn(
-            `Missing scale for zoom '${zoom}', set it to real calculated scale '${calculatedScale}'.`
+            `Missing scale for zoom '${zoom}', set it to real calculated scale '${calculatedScale}'.`,
           );
           this.scales[zoom] = calculatedScale;
         } else {
           if (Math.exp(Math.abs(Math.log(calculatedScale / scale))) > warningRatio) {
             console.warn(
               `Big difference between configured scale '${scale}' ` +
-                `for zoom '${zoom}' and real calculated scale '${calculatedScale}'.`
+                `for zoom '${zoom}' and real calculated scale '${calculatedScale}'.`,
             );
           }
         }

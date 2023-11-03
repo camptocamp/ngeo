@@ -412,7 +412,7 @@ export default class extends olInteractionInteraction {
       this.sketchFeature_ = null;
       this.sketchPoint_ = null;
       /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (this.overlay_.getSource()).clear(
-        true
+        true,
       );
     }
     this.sketchPoints_ = [];

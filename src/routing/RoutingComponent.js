@@ -63,7 +63,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/routing/routing', require('./routing.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -75,7 +75,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.ngeoRoutingTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/routing/routing';
-  }
+  },
 );
 
 /**
@@ -341,8 +341,8 @@ export class Controller {
           (step) =>
             new olFeature({
               geometry: format.readGeometry(step.geometry, formatConfig),
-            })
-        )
+            }),
+        ),
       );
       // flatten
       parsedRoutes = [].concat(...parsedRoutes_);

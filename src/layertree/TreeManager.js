@@ -73,7 +73,7 @@ export function LayertreeTreeManager(
   gettextCatalog,
   ngeoLayerHelper,
   gmfThemes,
-  ngeoStateManager
+  ngeoStateManager,
 ) {
   /**
    * @type {angular.IScope}
@@ -248,7 +248,7 @@ LayertreeTreeManager.prototype.addSecondLevelGroups = function (
   firstLevelGroups,
   groupName,
   opt_add,
-  opt_silent
+  opt_silent,
 ) {
   /** @type {import('gmf/themes').GmfGroup[]} */
   const groupNotAdded = [];
@@ -415,7 +415,7 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function (group) {
       this.root.children.forEach((group, old_index) => {
         if (this.initialLevelFirstGroups_ !== undefined) {
           const new_index = this.initialLevelFirstGroups_.findIndex(
-            (firstLevelGroup) => firstLevelGroup.id === group.id
+            (firstLevelGroup) => firstLevelGroup.id === group.id,
           );
           if (new_index !== -1 && new_index !== old_index) {
             this.reorderChild_(this.root.children, old_index, new_index);

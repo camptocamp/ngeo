@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -44,7 +44,7 @@ export function createGeoJSONBloodhound(
   opt_featureProjection,
   opt_dataProjection,
   opt_options,
-  opt_remoteOptions
+  opt_remoteOptions,
 ) {
   const geojsonFormat = new olFormatGeoJSON();
   /** @type {Bloodhound.BloodhoundOptions<GeoJSON.FeatureCollection|import('ol/Feature').FeatureLike[]>} */
@@ -93,7 +93,7 @@ export function createGeoJSONBloodhound(
         return [];
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-    }
+    },
   );
 
   const remoteOptions = /** @type {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} */ (
@@ -110,7 +110,7 @@ export function createGeoJSONBloodhound(
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
   return /** @type {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} */ new Bloodhound(
-    bloodhoundOptions
+    bloodhoundOptions,
   );
 }
 

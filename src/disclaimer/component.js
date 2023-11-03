@@ -87,7 +87,7 @@ export function DisclaimerController(
   ngeoDisclaimer,
   ngeoEventHelper,
   ngeoLayerHelper,
-  gmfDisclaimerOptions
+  gmfDisclaimerOptions,
 ) {
   /**
    * @type {import('gmf/options').gmfDisclaimerOptions}
@@ -222,7 +222,7 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
     this.eventHelper_.addListenerKey(layerUid, listen(layer.getLayers(), 'add', this.handleLayersAdd_, this));
     this.eventHelper_.addListenerKey(
       layerUid,
-      listen(layer.getLayers(), 'remove', this.handleLayersRemove_, this)
+      listen(layer.getLayers(), 'remove', this.handleLayersRemove_, this),
     );
 
     // (2) Register existing layers in the group

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -47,9 +47,9 @@ myModule.run(
     $templateCache.put(
       'gmf/import/wmsCapabilityLayertreeComponent',
       // @ts-ignore: webpack
-      require('./wmsCapabilityLayertreeComponent.html')
+      require('./wmsCapabilityLayertreeComponent.html'),
     );
-  }
+  },
 );
 
 myModule.value(
@@ -61,7 +61,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.gmfWmscapabilitylayertreenodeTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'gmf/import/wmsCapabilityLayertreeComponent';
-  }
+  },
 );
 
 /**
@@ -129,7 +129,7 @@ export class Controller {
     this.gmfExternalDataSourcesManager_.createAndAddDataSourceFromWMSCapability(
       layer,
       this.capabilities,
-      this.url
+      this.url,
     );
   }
 

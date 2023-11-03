@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -63,7 +63,7 @@ myModule.value(
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfDisplayquerygridTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'gmf/query/gridComponent';
-  }
+  },
 );
 
 myModule.run(
@@ -74,7 +74,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
-  }
+  },
 );
 
 /**
@@ -153,7 +153,7 @@ export function QueryGridController(
   ngeoQueryOptions,
   gmfCsvFilename,
   $element,
-  gmfDisplayQueryGridOptions
+  gmfDisplayQueryGridOptions,
 ) {
   /**
    * @type {import('gmf/options').gmfDisplayQueryGridOptions}
@@ -284,7 +284,7 @@ export function QueryGridController(
       if (newQueryResult !== oldQueryResult) {
         this.updateData_();
       }
-    }
+    },
   );
 
   /**
@@ -691,7 +691,7 @@ QueryGridController.prototype.getGridConfiguration_ = function (data) {
     columnDefs.push(
       /** @type {import('ngeo/download/Csv').GridColumnDef} */ ({
         name: column,
-      })
+      }),
     );
   });
 
@@ -758,7 +758,7 @@ QueryGridController.prototype.selectTab = function (gridSource) {
         if (Object.keys(newSelected) !== Object.keys(oldSelectedRows)) {
           this.onSelectionChanged_();
         }
-      }
+      },
     );
   }
   this.updateFeatures_(gridSource);

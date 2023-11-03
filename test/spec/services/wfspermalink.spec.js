@@ -44,7 +44,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       ($provide) => {
         $provide.value(
           'ngeoPermalinkOgcserverUrl',
-          'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy'
+          'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy',
         );
         $provide.value('ngeoWfsPermalinkOptions', {
           wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
@@ -52,7 +52,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
           defaultFeaturePrefix: 'ms',
         });
         $provide.value('gmfFitOptions', {});
-      }
+      },
     );
 
     angular.mock.inject((_ngeoWfsPermalink_, _ngeoQueryResult_) => {
@@ -160,9 +160,9 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       const expectedFilters = f.or(
         f.or(
           f.and(f.equalTo('osm_id', '12345'), f.or(f.equalTo('type', 'diesel'), f.equalTo('type', 'gas'))),
-          f.or(f.equalTo('payment', 'card'), f.equalTo('payment', 'cash'))
+          f.or(f.equalTo('payment', 'card'), f.equalTo('payment', 'cash')),
         ),
-        f.equalTo('open_7_24', '1')
+        f.equalTo('open_7_24', '1'),
       );
       expectFiltersToEqual(ngeoWfsPermalink.createFilters_(queryData['filterGroups']), expectedFilters);
     });

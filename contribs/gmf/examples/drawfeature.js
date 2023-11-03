@@ -116,7 +116,7 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
              */ (evt) => {
               this.handleMapPointerMove_(evt);
             }
-          )
+          ),
         );
       } else {
         this.map.un(
@@ -127,11 +127,11 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
              */ (evt) => {
               this.handleMapPointerMove_(evt);
             }
-          )
+          ),
         );
         $('#pointermove-feature').html('');
       }
-    }
+    },
   );
 
   // initialize tooltips

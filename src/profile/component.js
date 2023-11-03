@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -80,7 +80,7 @@ myModule.value(
   ($element, $attrs) => {
     const templateUrl = $attrs.gmfProfileTemplateurl;
     return templateUrl !== undefined ? templateUrl : 'gmf/profile';
-  }
+  },
 );
 
 myModule.run(
@@ -91,7 +91,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('gmf/profile', require('./component.html'));
-  }
+  },
 );
 
 /**
@@ -175,7 +175,7 @@ export function ProfileController(
   gettextCatalog,
   gmfProfileJsonUrl,
   gmfProfileOptions,
-  ngeoProfileOptions
+  ngeoProfileOptions,
 ) {
   this.options = gmfProfileOptions;
   this.ngeoOptions = ngeoProfileOptions;
@@ -325,7 +325,7 @@ export function ProfileController(
       if (oldValue !== newValue) {
         this.updateEventsListening_();
       }
-    }
+    },
   );
 
   // Watch the line to update the profileData (data for the chart).
@@ -335,7 +335,7 @@ export function ProfileController(
       if (oldLine !== newLine) {
         this.update_();
       }
-    }
+    },
   );
 
   this.updateEventsListening_();
@@ -427,7 +427,7 @@ ProfileController.prototype.updateEventsListening_ = function () {
           }
           this.$scope_.$apply();
         }
-      )
+      ),
     );
   } else {
     if (this.pointerMoveKey_) {

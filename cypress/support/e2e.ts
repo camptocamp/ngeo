@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -105,7 +105,7 @@ Cypress.Commands.add(
     opt_altKey = false,
     opt_ctrlKey = false,
     opt_shiftKey = false,
-    opt_pointerId = 0
+    opt_pointerId = 0,
   ) => {
     cy.log(`simulating ${type} at [${x}, ${y}]`);
 
@@ -129,7 +129,7 @@ Cypress.Commands.add(
 
     const simulatedEvent = new MapBrowserEvent(type, map, event);
     map.handleMapBrowserEvent(simulatedEvent);
-  }
+  },
 );
 
 Cypress.Commands.add(
@@ -143,7 +143,7 @@ Cypress.Commands.add(
       ctrlKey: opt_ctrlKey,
     });
     element.dispatchEvent(event);
-  }
+  },
 );
 
 Cypress.Commands.add(
@@ -157,7 +157,7 @@ Cypress.Commands.add(
     opt_altKey = false,
     opt_ctrlKey = false,
     opt_shiftKey = false,
-    opt_pointerId = 0
+    opt_pointerId = 0,
   ) => {
     cy.log(`simulating ${type} at coordinate [${map_x}, ${map_y}]`);
     const viewport = map.getViewport();
@@ -179,7 +179,7 @@ Cypress.Commands.add(
     } as unknown as UIEvent;
     const simulatedEvent = new MapBrowserEvent(type, map, event);
     map.handleMapBrowserEvent(simulatedEvent);
-  }
+  },
 );
 
 /**

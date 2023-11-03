@@ -164,7 +164,7 @@ export default class extends olInteractionPointer {
       this.features_.forEach((feature) => this.addFeature_(feature));
       this.listenerKeys_.push(
         listen(this.features_, 'add', this.handleFeatureAdd_, this),
-        listen(this.features_, 'remove', this.handleFeatureRemove_, this)
+        listen(this.features_, 'remove', this.handleFeatureRemove_, this),
       );
     } else {
       this.listenerKeys_.forEach(unlistenByKey);
@@ -191,7 +191,7 @@ export default class extends olInteractionPointer {
     const centerFeature = new olFeature(point);
     this.centerFeatures_[uid] = centerFeature;
     /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (this.overlay_.getSource()).addFeature(
-      centerFeature
+      centerFeature,
     );
   }
 

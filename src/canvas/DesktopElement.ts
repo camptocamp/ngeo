@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -276,7 +276,9 @@ export default class GmfDesktopCanvas extends BaseElement {
       #gmf-app-tools-content {
         min-width: var(--current-right-panel-width);
         padding: 0 0;
-        transition: margin-right 0.2s ease, width 0.001s ease;
+        transition:
+          margin-right 0.2s ease,
+          width 0.001s ease;
         height: 100%;
         flex-grow: 1;
         order: 1;
@@ -394,7 +396,7 @@ export default class GmfDesktopCanvas extends BaseElement {
             this.map_ = map;
           }
         },
-      })
+      }),
     );
     this.subscriptions.push(
       panels.getActiveToolPanel().subscribe({
@@ -411,7 +413,7 @@ export default class GmfDesktopCanvas extends BaseElement {
 
           this.toolPanel_ = panel;
         },
-      })
+      }),
     );
     this.subscriptions.push(
       panels.getActiveFooterPanel().subscribe({
@@ -431,7 +433,7 @@ export default class GmfDesktopCanvas extends BaseElement {
 
           this.footerPanel_ = panel;
         },
-      })
+      }),
     );
     this.resizeObserver_ = new ResizeObserver(() => {
       if (this.map_) {
@@ -485,7 +487,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       document.documentElement.style.setProperty(`--left-panel-width`, this.datapanelWidth_);
       document.documentElement.style.setProperty(
         `--current-left-panel-separator-width`,
-        'var(--panel-separator-width)'
+        'var(--panel-separator-width)',
       );
       document.documentElement.style.setProperty(`--current-left-panel-border-width`, 'var(--border)');
     } else {
@@ -514,7 +516,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       panelResizeEvent: PanelResize,
       separator: HTMLElement,
       leftElement: HTMLElement,
-      rightElement: HTMLElement
+      rightElement: HTMLElement,
     ) =>
     (event: MouseEvent): void => {
       panelResizeEvent = {
@@ -561,7 +563,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         // Take into account the minimum panel width
         deltaX = Math.min(
           Math.max(deltaX, this.minDatapanelWidth_ - panelResizeEvent.leftWidth),
-          panelResizeEvent.rightWidth
+          panelResizeEvent.rightWidth,
         );
         // Resize panels
         const newLeftWidth = `${panelResizeEvent.leftWidth + deltaX}px`;
@@ -583,7 +585,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         }
         deltaX = Math.max(
           -panelResizeEvent.leftWidth,
-          Math.min(deltaX, panelResizeEvent.rightWidth - minToolpanelWidth)
+          Math.min(deltaX, panelResizeEvent.rightWidth - minToolpanelWidth),
         );
         // Move panel separator
         panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;

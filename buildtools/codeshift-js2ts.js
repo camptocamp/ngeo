@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2022 Camptocamp SA
+// Copyright (c) 2021-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -94,7 +94,7 @@ function addTypes(j, root, path, original_path, comments) {
       j.identifier(original_path.value.expression.left.property.name),
       null,
       null,
-      false
+      false,
     );
     for (const comment of comments) {
       for (const type_ of comment.value.matchAll(find_type)) {
@@ -239,14 +239,14 @@ function addImport(j, root, path) {
         importedNames.push(importAs);
         const importStatement = j.importDeclaration(
           [j.importDefaultSpecifier(j.identifier(importAs))],
-          j.literal(importName)
+          j.literal(importName),
         );
         addStatements(j, root, importStatement);
       }
     } else {
       const importStatement = j.importDeclaration(
         [j.importSpecifier(j.identifier(import_[2]))],
-        j.literal(importName)
+        j.literal(importName),
       );
       importAs = rename(importName, import_[2]);
       if (!importedNames.includes(importAs)) {
@@ -1026,16 +1026,16 @@ export default function transformer(file, api) {
                   'npx -p typescript tsc /tmp/typedef.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/',
                   {
                     stdio: 'pipe',
-                  }
+                  },
                 );
 
                 result = `${result.substring(0, path.value.start)}${fs.readFileSync(
-                  '/tmp/typedef.d.ts'
+                  '/tmp/typedef.d.ts',
                 )}${result.substring(path.value.end)}`;
               } catch (e) {
                 console.error("To know what's wrong run:");
                 console.error(
-                  'npx -p typescript tsc /tmp/typedef.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/'
+                  'npx -p typescript tsc /tmp/typedef.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/',
                 );
                 throw e;
               }
@@ -1067,19 +1067,19 @@ export default function transformer(file, api) {
                   ? result.substring(comments[0].start, path.value.end)
                   : `${result.substring(comments[0].start, comments[0].end)}\nexport ${result.substring(
                       path.value.start,
-                      path.value.end
-                    )}`
+                      path.value.end,
+                    )}`,
               );
               console.log(
                 child_process
                   .execSync(
-                    'npx -p typescript tsc /tmp/enum.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/'
+                    'npx -p typescript tsc /tmp/enum.js --declaration --allowJs --emitDeclarationOnly --outDir /tmp/',
                   )
-                  .toString()
+                  .toString(),
               );
 
               result = `${result.substring(0, comments[0].start)}${fs.readFileSync(
-                '/tmp/enum.d.ts'
+                '/tmp/enum.d.ts',
               )}${result.substring(path.value.end)}`;
               finish = false;
             }

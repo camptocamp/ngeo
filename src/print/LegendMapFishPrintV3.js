@@ -349,7 +349,7 @@ export default class LegendMapFishPrintV3 {
         dpi,
         this.gmfLegendOptions_.useBbox ? bbox : undefined,
         this.map_.getView().getProjection().getCode(),
-        this.gmfLegendOptions_.params[serverType]
+        this.gmfLegendOptions_.params[serverType],
       );
       if (!url) {
         throw new Error('Missing url');

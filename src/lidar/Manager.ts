@@ -258,7 +258,7 @@ export class LidarprofileManager {
     clippedLine: OlCoordinateCoordinate[],
     distanceOffset: number,
     resetPlot: boolean,
-    minLOD: number
+    minLOD: number,
   ): void {
     if (!this.config) {
       throw new Error('Missing config');
@@ -325,7 +325,7 @@ export class LidarprofileManager {
           distanceOffset,
           lastLOD,
           profileWidth,
-          resetPlot
+          resetPlot,
         );
         i += this.config.serverConfig.initialLOD - 1;
       } else if (i < maxLODWith.maxLOD - 1) {
@@ -337,7 +337,7 @@ export class LidarprofileManager {
           distanceOffset,
           lastLOD,
           profileWidth,
-          false
+          false,
         );
       } else {
         lastLOD = true;
@@ -349,7 +349,7 @@ export class LidarprofileManager {
           distanceOffset,
           lastLOD,
           profileWidth,
-          false
+          false,
         );
       }
     }
@@ -376,7 +376,7 @@ export class LidarprofileManager {
     distanceOffset: number,
     lastLOD: boolean,
     width: number,
-    resetPlot: boolean
+    resetPlot: boolean,
   ): void {
     if (!this.config) {
       throw new Error('Missing config');
@@ -388,7 +388,7 @@ export class LidarprofileManager {
     const lodInfo = d3select(
       document
         .querySelector('#lidar-footer')
-        .shadowRoot.querySelector('#gmf-lidarprofile-container .lod-info')
+        .shadowRoot.querySelector('#gmf-lidarprofile-container .lod-info'),
     );
     if (this.config.serverConfig.debug) {
       let html = lodInfo.html();
@@ -444,7 +444,7 @@ export class LidarprofileManager {
     iter: number,
     distanceOffset: number,
     lastLOD: boolean,
-    resetPlot: boolean
+    resetPlot: boolean,
   ): void {
     if (!this.config) {
       throw new Error('Missing config');
@@ -589,7 +589,7 @@ export class LidarprofileManager {
     const errorOfflineTxt = i18next.t('It might be offline');
     const errorOutsideTxt = i18next.t('Or did you attempt to draw a profile outside data extent?');
     const errorNoPointError = i18next.t(
-      'Or did you attempt to draw such a small profile that no point was returned?'
+      'Or did you attempt to draw such a small profile that no point was returned?',
     );
     return `
       <div class="lidarprofile-error">
@@ -635,7 +635,7 @@ export class LidarprofileManager {
       map_resolution,
       this.line_,
       domainX[0],
-      domainX[1]
+      domainX[1],
     );
 
     const source: olSourceVector<OlGeomGeometry> = this.lidarBuffer.getSource();

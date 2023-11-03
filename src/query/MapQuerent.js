@@ -64,7 +64,7 @@ export class MapQuerent {
     ngeoFeatureHelper,
     ngeoQuerent,
     ngeoQueryResult,
-    ngeoQueryOptions
+    ngeoQueryOptions,
   ) {
     const options = ngeoQueryOptions;
 
@@ -160,7 +160,7 @@ export class MapQuerent {
     if (options.dataSources === undefined && options.queryableDataSources === undefined) {
       queryableDataSources = this.ngeoQuerent_.getQueryableDataSources(
         this.dataSources_.getArray(),
-        options.map
+        options.map,
       );
     }
 
@@ -281,7 +281,7 @@ export class MapQuerent {
             for (const newFeature of featuresByType) {
               const existingFeatureIndex = this.featureHelper_.findFeatureIndexByFid(
                 existingSource.features,
-                `${newFeature.getId()}`
+                `${newFeature.getId()}`,
               );
               if (existingFeatureIndex === -1) {
                 if (action === ngeoQueryAction.ADD) {
@@ -348,7 +348,7 @@ myModule.value(
     sources: [],
     total: 0,
     pending: false,
-  })
+  }),
 );
 
 export default myModule;

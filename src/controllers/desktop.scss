@@ -474,7 +474,9 @@ gmf-backgroundlayerselector {
     min-width: $right-panel-width;
     padding: 0 0;
     margin-right: -$right-panel-width;
-    transition: margin-right 0.2s ease, width 0.001s ease;
+    transition:
+      margin-right 0.2s ease,
+      width 0.001s ease;
     height: 100%;
     flex-grow: 1;
     order: 1;

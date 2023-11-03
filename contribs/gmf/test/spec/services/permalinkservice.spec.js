@@ -42,7 +42,7 @@ describe('Permalink service', () => {
        */
       ($provide) => {
         $provide.value('gmfFitOptions', {});
-      }
+      },
     );
     angular.mock.inject((_ngeoStateManager_, _gmfPermalink_, _ngeoLocation_, _ngeoLayerHelper_) => {
       StateManagerService = _ngeoStateManager_;
@@ -63,14 +63,14 @@ describe('Permalink service', () => {
         new olCollection([
           LayerHelper.createBasicWMSLayer('', 'l_g1_1'),
           LayerHelper.createBasicWMSLayer('', 'l_g1_2'),
-        ])
+        ]),
       );
 
       const secondLevelGroup = LayerHelper.createBasicGroup(
         new olCollection([
           LayerHelper.createBasicWMSLayer('', 'l_g2_1'),
           LayerHelper.createBasicWMSLayer('', 'l_g2_2'),
-        ])
+        ]),
       );
 
       firstLevelGroup.getLayers().insertAt(0, secondLevelGroup);

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2021 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -156,7 +156,7 @@ describe('ngeo.format.FeatureHash', () => {
         const feature = fhFormat.readFeature(
           "p(__~foo*foo'bar*bar~fillColor*%23ff0101'" +
             "strokeColor*%2301ff01'strokeWidth*3'" +
-            "fontSize*12px'fontColor*%230101ff)"
+            "fontSize*12px'fontColor*%230101ff)",
         );
         expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
@@ -193,7 +193,7 @@ describe('ngeo.format.FeatureHash', () => {
         const feature = fhFormat.readFeature(
           "p(__~foo*foo'bar*bar~fillColor*%23ff0101'" +
             "strokeColor*%2301ff01'strokeWidth*3'" +
-            'pointRadius*4)'
+            'pointRadius*4)',
         );
         expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
@@ -228,7 +228,7 @@ describe('ngeo.format.FeatureHash', () => {
     describe('feature decoding with style, without attributes', () => {
       it('correctly decodes a feature with style, without attributes', () => {
         const feature = fhFormat.readFeature(
-          "p(__~~fillColor*%23ff0101'" + "strokeColor*%2301ff01'strokeWidth*3'" + 'pointRadius*4)'
+          "p(__~~fillColor*%23ff0101'" + "strokeColor*%2301ff01'strokeWidth*3'" + 'pointRadius*4)',
         );
         expect(feature instanceof olFeature).toBeTruthy();
         const geometry = feature.getGeometry();
@@ -416,13 +416,13 @@ describe('ngeo.format.FeatureHash', () => {
                 width: 2,
               }),
             }),
-          })
+          }),
         );
         const result = fhFormat.writeFeature(feature);
         expect(result).toBe(
           "p(__~foo*foo'bar*bar~" +
             "pointRadius*3'fillColor*%23ff0101'" +
-            "strokeColor*%2301ff01'strokeWidth*2)"
+            "strokeColor*%2301ff01'strokeWidth*2)",
         );
       });
     });
@@ -444,7 +444,7 @@ describe('ngeo.format.FeatureHash', () => {
               width: 2,
               color: [255, 1, 1, 1],
             }),
-          })
+          }),
         );
         const result = fhFormat.writeFeature(feature);
         expect(result).toBe("l(..__~foo*foo'bar*bar~" + "strokeColor*%23ff0101'strokeWidth*2)");
@@ -488,13 +488,13 @@ describe('ngeo.format.FeatureHash', () => {
                 color: [1, 255, 1, 1],
               }),
             }),
-          })
+          }),
         );
         const result = fhFormat.writeFeature(feature);
         expect(result).toBe(
           "a(..DD.K'!F_..!-.~foo*foo'bar*bar~" +
             "fillColor*%23ff0101'strokeColor*%2301ff01'strokeWidth*2'" +
-            "fontSize*12px'fontColor*%2301ff01)"
+            "fontSize*12px'fontColor*%2301ff01)",
         );
       });
     });

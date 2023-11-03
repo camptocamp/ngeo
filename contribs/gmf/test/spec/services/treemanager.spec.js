@@ -42,7 +42,7 @@ describe('gmf.layertree.TreeManager', () => {
        */
       ($provide) => {
         $provide.value('gmfFitOptions', {});
-      }
+      },
     );
     angular.mock.inject((_$timeout_, _$httpBackend_, _gmfTreeManager_, _gmfThemes_, _gmfTreeUrl_) => {
       $timeout = _$timeout_;

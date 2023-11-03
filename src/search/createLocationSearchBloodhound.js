@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -186,7 +186,7 @@ export function createLocationSearchBloodhound(opt_options) {
         return [];
       },
       queryTokenizer: Bloodhound.tokenizers.whitespace,
-    }
+    },
   );
   const remoteOptions = Object.assign({}, options.remoteOptions || {});
 
@@ -200,7 +200,7 @@ export function createLocationSearchBloodhound(opt_options) {
   Object.assign(bloodhoundOptions.remote, remoteOptions);
 
   return /** @type {Bloodhound<olFeature<import('ol/geom/Geometry').default>[]>} */ new Bloodhound(
-    bloodhoundOptions
+    bloodhoundOptions,
   );
 }
 

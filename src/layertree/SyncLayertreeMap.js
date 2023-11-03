@@ -133,7 +133,7 @@ SyncLayertreeMap.prototype.sync_ = function (treeCtrl) {
         /** @type {import('ol/layer/Image').default<import('ol/source/Image').default>|import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} */ (
           treeCtrl.layer
         ),
-        treeCtrl
+        treeCtrl,
       );
       return LayertreeVisitorDecision.DESCEND;
     }
@@ -284,7 +284,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
       timeParam,
       undefined, // WMS parameters
       ogcServer.credential ? 'use-credentials' : 'anonymous',
-      this.gmfWMSSourceOptions_
+      this.gmfWMSSourceOptions_,
     );
 
     layer.set(DATASOURCE_ID, groupNode.id);
@@ -297,7 +297,7 @@ SyncLayertreeMap.prototype.createLayerFromGroup_ = function (treeCtrl, mixed) {
         ctrl.setState('on', false);
         this.updateLayerState_(
           /** @type {import('ol/layer/Image').default<import('ol/source/Image').default>} */ (layer),
-          ctrl
+          ctrl,
         );
         hasActiveChildren = true;
         return LayertreeVisitorDecision.DESCEND;
@@ -322,7 +322,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
   // Make layer.
   if (gmfLayer.type === 'WMTS') {
     layer = this.createWMTSLayer_(
-      /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer))
+      /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer)),
     );
   } else {
     if (!this.ogcServersObject_) {
@@ -357,7 +357,7 @@ SyncLayertreeMap.prototype.createLeafInAMixedGroup_ = function (treeCtrl, map) {
       timeParam,
       opt_params, // WMS parameters
       ogcServer.credential ? 'use-credentials' : 'anonymous',
-      this.gmfWMSSourceOptions_
+      this.gmfWMSSourceOptions_,
     );
   }
   // Update layer information and tree state.
@@ -434,7 +434,7 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {
       undefined,
       minResolution,
       maxResolution,
-      gmfLayerWMTS.metadata.opacity
+      gmfLayerWMTS.metadata.opacity,
     )
     .then((layer) => {
       this.layerHelper_.copyProperties(layer, newLayer, ['visible']);

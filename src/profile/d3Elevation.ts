@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2022 Camptocamp SA
+// Copyright (c) 2015-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -55,7 +55,7 @@ type scaleModifierFunction = {
     args1: ScaleLinear<number, number, never>,
     args2: ScaleLinear<number, number, never>,
     args3: number,
-    args4: number
+    args4: number,
   ): void;
 };
 
@@ -114,7 +114,7 @@ type scaleModifierFunction = {
  */
 function d3Elevation(
   options: ngeoOptionsNgeoProfileOptions,
-  functions: NgeoProfileElevationComponentProfileOptions<unknown>
+  functions: NgeoProfileElevationComponentProfileOptions<unknown>,
 ): unknown {
   /**
    * Whether the simplified profile should be shown.
@@ -435,7 +435,7 @@ function d3Elevation(
 
       if (!light) {
         xAxis.tickFormat(
-          (domainValue: NumberValue) => `${formatter.xtick((domainValue as number) / xFactor, xUnits)}`
+          (domainValue: NumberValue) => `${formatter.xtick((domainValue as number) / xFactor, xUnits)}`,
         );
 
         if (lightXAxis) {

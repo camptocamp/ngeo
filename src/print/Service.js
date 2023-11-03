@@ -155,7 +155,7 @@ PrintService.prototype.createSpec = function (
   format,
   customAttributes,
   email,
-  goodnessOfFit
+  goodnessOfFit,
 ) {
   const specMap = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintMap} */ ({
     dpi: dpi,
@@ -317,7 +317,7 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
        */
       (value, key) => {
         customParams[key] = value;
-      }
+      },
     );
   }
   for (const key in params) {
@@ -431,7 +431,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
         tileSize: olSize.toSize(tileGrid.getTileSize(i)),
         topLeftCorner: tileGrid.getOrigin(i),
         matrixSize: [tileRange.maxX - tileRange.minX, tileRange.maxY - tileRange.minY],
-      })
+      }),
     );
   }
 

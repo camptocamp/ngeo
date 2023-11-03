@@ -41,7 +41,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/src/map/swipe', require('./swipe.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -53,7 +53,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs.ngeoMapswipeTemplateUrl;
     return templateUrl !== undefined ? templateUrl : 'ngeo/src/map/swipe';
-  }
+  },
 );
 
 /**

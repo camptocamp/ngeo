@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2022 Camptocamp SA
+// Copyright (c) 2018-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -269,7 +269,7 @@ function fillDependency(
   assetName,
   assetUrl,
   queryString,
-  replacements
+  replacements,
 ) {
   return (resolve, reject) => {
     if (assetUrl.startsWith('~')) {
@@ -387,15 +387,15 @@ function manageContent(pluginOptions, usedContext, compilation, chunk, resolve, 
                   assetName,
                   assetUrl,
                   queryString,
-                  replacements
-                )
-              )
+                  replacements,
+                ),
+              ),
             );
           } else {
             promises.push(
               new Promise(
-                fillDependency(pluginOptions, usedContext, compilation, assetUrl, assetUrl, '', replacements)
-              )
+                fillDependency(pluginOptions, usedContext, compilation, assetUrl, assetUrl, '', replacements),
+              ),
             );
           }
         } catch (e) {
@@ -462,7 +462,7 @@ function processAsset(files) {
                 file: file,
                 content: entry.content,
               },
-              resolver(entry.ctx)
+              resolver(entry.ctx),
             );
             const merged2 = [];
             for (const content of merged) {
@@ -477,7 +477,7 @@ function processAsset(files) {
               },
               () => {
                 reject(`${position}, ${file}`);
-              }
+              },
             );
           } else {
             reject(`Missing entry for ${file}`);
@@ -540,7 +540,7 @@ class SassPlugin {
               manageContent(pluginOptions, usedContext, compilation, chunk, resolve, callback),
               (error) => {
                 callback(`SCSS dependencies error, ${error}`);
-              }
+              },
             );
           });
           await Promise.all([promise]);

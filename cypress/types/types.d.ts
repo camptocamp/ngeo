@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -45,7 +45,7 @@ declare namespace Cypress {
       opt_altKey?: boolean,
       opt_ctrlKey?: boolean,
       opt_shiftKey?: boolean,
-      opt_pointerId?: number
+      opt_pointerId?: number,
     ): Chainable<Subject>;
 
     /**
@@ -60,7 +60,7 @@ declare namespace Cypress {
       opt_altKey?: boolean,
       opt_ctrlKey?: boolean,
       opt_shiftKey?: boolean,
-      opt_pointerId?: number
+      opt_pointerId?: number,
     ): Chainable<Subject>;
 
     simulateDOMEvent(
@@ -68,7 +68,7 @@ declare namespace Cypress {
       type: string,
       x: number,
       y: number,
-      opt_ctrlKey?: boolean
+      opt_ctrlKey?: boolean,
     ): Chainable<Subject>;
   }
 }

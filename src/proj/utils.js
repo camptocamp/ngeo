@@ -31,7 +31,7 @@ export default function createProjections(projections) {
     if (match !== null) {
       proj4.defs(
         'http://www.opengis.net/gml/srs/epsg.xml#' + match[1], //NOSONAR
-        proj4.defs(code)
+        proj4.defs(code),
       );
     }
   }

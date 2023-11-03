@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2022 Camptocamp SA
+// Copyright (c) 2021-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -132,7 +132,7 @@ export default class MapillaryService extends StreetviewService {
     const coord_northing = coordinates[1];
     const bufferAreaInMeter = buffer(
       [coord_easting, coord_northing, coord_easting, coord_northing],
-      bufferSizeInMeters
+      bufferSizeInMeters,
     );
 
     // 4. Convert the buffer to WSG:84 (° units) and use it for the image request bbox
@@ -147,7 +147,7 @@ export default class MapillaryService extends StreetviewService {
       () => {
         // On error
         this.noDataAtLocation = true;
-      }
+      },
     );
   }
 
@@ -192,7 +192,7 @@ export default class MapillaryService extends StreetviewService {
       (error) => {
         console.error(error);
         return null;
-      }
+      },
     );
   }
 }

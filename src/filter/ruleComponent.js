@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2022 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -78,7 +78,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
-  }
+  },
 );
 
 myModule.value(
@@ -90,7 +90,7 @@ myModule.value(
   ($attrs) => {
     const templateUrl = $attrs['ngeoRuleTemplateUrl'];
     return templateUrl !== undefined ? templateUrl : 'ngeo/filter/rulecomponent';
-  }
+  },
 );
 
 /**
@@ -446,8 +446,8 @@ export class RuleController {
             if (typeof newVal == 'string') {
               this.timeValueMode.minDefValue = newVal || this.createDate_();
             }
-          }
-        )
+          },
+        ),
       );
       // Watch 'lowerBoundary'
       this.unlisteners_.push(
@@ -462,8 +462,8 @@ export class RuleController {
             if (typeof newVal == 'string') {
               this.timeRangeMode.minDefValue = newVal || this.createWeekAgoDate_();
             }
-          }
-        )
+          },
+        ),
       );
       // Watch 'upperBoundary'
       this.unlisteners_.push(
@@ -478,8 +478,8 @@ export class RuleController {
             if (typeof newVal == 'string') {
               this.timeRangeMode.maxDefValue = newVal || this.createDate_();
             }
-          }
-        )
+          },
+        ),
       );
     } else if (this.clone.type === ngeoFormatAttributeType.GEOMETRY) {
       // Watch 'operator' of clone. Make sure any existing geometry is
@@ -515,8 +515,8 @@ export class RuleController {
                 }
               }
             }
-          }
-        )
+          },
+        ),
       );
 
       // Watch 'literal' of clone. Set 'geomType' property accordingly.
@@ -537,8 +537,8 @@ export class RuleController {
             } else {
               this.geomType = null;
             }
-          }
-        )
+          },
+        ),
       );
 
       // Watch both 'literal', 'active' and the modify control to be all
@@ -568,8 +568,8 @@ export class RuleController {
             } else {
               this.selectedFeatures.clear();
             }
-          }
-        )
+          },
+        ),
       );
     }
   }
@@ -774,7 +774,7 @@ export class RuleController {
         listen(this.drawnFeatures, 'add', this.handleFeaturesAdd_, this),
         listen(mapDiv, 'contextmenu', this.handleMapContextMenu_, this),
         listen(this.translate_, 'translateend', this.handleTranslateEnd_, this),
-        listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this)
+        listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this),
       );
 
       this.featureOverlay.removeFeature(ruleFeature);

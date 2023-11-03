@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -126,7 +126,7 @@ export default class GoogleStreetviewService extends StreetviewService {
         },
         radius: this.radius_,
       },
-      this.handleStreetViewServiceGetPanorama_.bind(this)
+      this.handleStreetViewServiceGetPanorama_.bind(this),
     );
   }
 
@@ -142,7 +142,7 @@ export default class GoogleStreetviewService extends StreetviewService {
       this.panoramaListener_ = google.maps.event.addListener(
         this.panorama_,
         'position_changed',
-        this.positionChange_.bind(this)
+        this.positionChange_.bind(this),
       );
     } else if (this.panoramaListener_) {
       google.maps.event.removeListener(this.panoramaListener_);

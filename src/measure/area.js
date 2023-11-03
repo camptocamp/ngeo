@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -59,7 +59,7 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
 
       const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
       const contMsg = gettextCatalog.getString(
-        'Click to continue drawing<br>' + 'Double-click or click starting point to finish'
+        'Click to continue drawing<br>' + 'Double-click or click starting point to finish',
       );
 
       /** @type {import('ngeo/interaction/Measure').MeasureOptions} */
@@ -83,7 +83,7 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
         measureArea,
         'measureend',
         drawFeatureCtrl.handleDrawEnd.bind(drawFeatureCtrl, ngeoGeometryType.POLYGON),
-        drawFeatureCtrl
+        drawFeatureCtrl,
       );
       listen(measureArea, 'change:active', drawFeatureCtrl.handleActiveChange, drawFeatureCtrl);
     },

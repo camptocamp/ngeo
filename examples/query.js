@@ -65,7 +65,7 @@ myModule.run(
   ($templateCache) => {
     // @ts-ignore: webpack
     $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
-  }
+  },
 );
 
 myModule.value('ngeoQueryOptions', {
@@ -185,7 +185,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
           queryable: true,
         },
       ],
-    })
+    }),
   );
 
   ngeoDataSources.collection.push(
@@ -208,7 +208,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
           queryable: true,
         },
       ],
-    })
+    }),
   );
 
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');

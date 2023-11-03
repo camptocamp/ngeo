@@ -81,7 +81,7 @@ function MainController() {
     new olFeature({
       geometry: rectangle,
       'isRectangle': true,
-    })
+    }),
   );
 
   /** @type {import('ol/style/Style').StyleLike} */
@@ -158,7 +158,7 @@ function MainController() {
     /** @type {import('ol/interaction/Modify').Options} */ ({
       features: this.features,
       style: style,
-    })
+    }),
   );
 
   const interaction = this.interaction;
