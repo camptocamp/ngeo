@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2022 Camptocamp SA
+// Copyright (c) 2020-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -85,10 +85,10 @@ function processDrag_() {
 /**
  * This function handles the drop event
  * For a valid file, the file is added to the external source
- * For an invalid file an alert message is dsplayed
+ * For an invalid file an alert message is displayed
  * If an element with 'gmf-app-map-messages' (disclaimers) exists the message is added to it
  * otherwise it is placed directly on the element
- * the message desappears after a delay of 4 seconds
+ * the message disappear after a delay of 4 seconds
  *
  * @param {JQuery} element Element.
  * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.

@@ -540,7 +540,7 @@ export class Querent {
         });
       }
     });
-    // Re-set the value to the datasource.xxxFormat to be able to re-use
+    // Re-set the value to the datasource.xxxFormat to be able to reuse
     // it later (in another query);
     this.getSetOlFormatTypes_(dataSource, wfs, featureTypes);
     return features;
