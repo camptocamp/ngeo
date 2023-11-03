@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2021 Camptocamp SA
+// Copyright (c) 2016-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -100,7 +100,7 @@ Time.prototype.getOptions = function (time) {
 /**
  * Time.prototype.getUTCDate - Get UTC date from a local date object
  *
- * @param  {Date} localDate loacl date object in
+ * @param  {Date} localDate local date object in
  * @returns {Date} UTC date
  */
 Time.prototype.getUTCDate = function (localDate) {
