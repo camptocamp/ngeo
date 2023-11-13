@@ -908,4 +908,9 @@ export function buildStyle(styleDescriptor) {
  * @typedef {string} gmfCustomStylesheetUrl
  */
 
+/**
+ * @typedef {Object} gmfDatasourceOptions
+ * @property {string} arcgisWMSInfoFormat The WMS info format to be used with Arcgis OGC server.
+ */
+
 export default null;
