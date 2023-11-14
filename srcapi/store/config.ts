@@ -1386,6 +1386,12 @@ export type gmfCustomCSS = {
  */
 export type pytreeLidarprofileJsonUrl = string;
 
+export type gmfDatasourceOptions = {
+  /**
+   * The WMS info format to be used with Arcgis OGC server.
+   */
+  arcgisWMSInfoFormat: string;
+};
 /**
  * The full configuration
  */
@@ -1456,6 +1462,7 @@ export type Configuration = {
   gmfCustomCSS: gmfCustomCSS;
   gmfI18nextConfiguration: InitOptions;
   pytreeLidarprofileJsonUrl: pytreeLidarprofileJsonUrl;
+  gmfDatasourceOptions: gmfDatasourceOptions;
 };
 
 export type APIConfig = {

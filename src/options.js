@@ -924,4 +924,9 @@ export function buildStyle(styleDescriptor) {
  * @property {number} [duration] The duration of the animation in milliseconds. By default, there is no animation to the target extent.
  */
 
+/**
+ * @typedef {Object} gmfDatasourceOptions
+ * @property {string} arcgisWMSInfoFormat The WMS info format to be used with Arcgis OGC server.
+ */
+
 export default null;
