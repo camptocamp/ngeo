@@ -374,6 +374,9 @@ export class ExternalDatSourcesManager {
       if (wmsInfoFormat === undefined) {
         wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GEOJSON) ? WMSInfoFormat.GEOJSON : undefined;
       }
+      if (wmsInfoFormat === undefined) {
+        wmsInfoFormat = infoFormats.includes(WMSInfoFormat.GEO_JSON) ? WMSInfoFormat.GEO_JSON : undefined;
+      }
 
       // queryable
       const queryable = layer.queryable === true && wmsInfoFormat !== undefined;
