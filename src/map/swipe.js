@@ -193,10 +193,30 @@ export class SwipeController {
       ctx.clip();
     } else {
       // ctx instanceof WebGLRenderingContext
-      ctx.clear(ctx.COLOR_BUFFER_BIT);
+      this.fixWebGLContextScissorClear(ctx);
       ctx.enable(ctx.SCISSOR_TEST);
       ctx.scissor(0, 0, width, height);
     }
+  }
+
+  /**
+   * Will monkey-patch the context to make sure that clear() calls will not
+   * take into account any scissor test previously set.
+   * @param {WebGLRenderingContext} gl WebGL Context
+   * @private
+   */
+  fixWebGLContextScissorClear(gl) {
+    if (gl._scissorClearFixed) {
+      return;
+    }
+    const clearFn = gl.clear;
+    gl.clear = function (...args) {
+      const scissorEnabled = gl.getParameter(gl.SCISSOR_TEST);
+      scissorEnabled && gl.disable(gl.SCISSOR_TEST);
+      clearFn.apply(gl, args);
+      scissorEnabled && gl.enable(gl.SCISSOR_TEST);
+    };
+    gl._scissorClearFixed = true;
   }
 
   /**
