@@ -18,16 +18,17 @@ env:
 
 jobs:
   not-failed-backport:
-    runs-on: ubuntu-22.04
     name: Test that's not a failed backport
+    runs-on: ubuntu-22.04
     timeout-minutes: 5
+
     steps:
       - run: 'false'
         if: github.event.head_commit.message == '[skip ci] Add instructions to finish the backport.'
 
   main:
-    runs-on: ubuntu-22.04
     name: Continuous integration
+    runs-on: ubuntu-22.04
     timeout-minutes: 50
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
@@ -219,8 +220,8 @@ jobs:
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
   gh-pages:
-    runs-on: ubuntu-22.04
     name: Github Pages
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
     concurrency: gh-pages-push
     needs:
