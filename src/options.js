@@ -925,8 +925,14 @@ export function buildStyle(styleDescriptor) {
  */
 
 /**
+ * @typedef {Object} ogcServerDatasourceOptions
+ * @property {string} arcgisWMSInfoFormat The WMS info format to be used with Arcgis OGC server.
+ */
+
+/**
  * @typedef {Object} gmfDatasourceOptions
  * @property {string} arcgisWMSInfoFormat The WMS info format to be used with Arcgis OGC server.
+ * @property {Object<string, ogcServerDatasourceOptions>} ogcServersSpecific The OGC server specific options.
  */
 
 export default null;
