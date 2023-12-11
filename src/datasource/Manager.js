@@ -747,8 +747,17 @@ export class DatasourceManager {
     if (wmtsUrl) {
       options.wmtsUrl = wmtsUrl;
     }
-    if (ogcServerType === ServerType.ARCGIS && this.gmfDatasourceOptions.arcgisWMSInfoFormat) {
-      options.wmsInfoFormat = this.gmfDatasourceOptions.arcgisWMSInfoFormat;
+    if (ogcServerType === ServerType.ARCGIS) {
+      if (
+        this.gmfDatasourceOptions.ogcServersSpecific &&
+        this.gmfDatasourceOptions.ogcServersSpecific[this.ogcServerName] &&
+        this.gmfDatasourceOptions.ogcServersSpecific[this.ogcServerName].arcgisWMSInfoFormat
+      ) {
+        options.wmsInfoFormat =
+          this.gmfDatasourceOptions.ogcServersSpecific[this.ogcServerName].arcgisWMSInfoFormat;
+      } else if (this.gmfDatasourceOptions.arcgisWMSInfoFormat) {
+        options.wmsInfoFormat = this.gmfDatasourceOptions.arcgisWMSInfoFormat;
+      }
     }
     // Create the data source and add it to the cache
     this.dataSourcesCache_[id] = new GmfDatasourceOGC(options);
