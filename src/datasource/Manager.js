@@ -516,6 +516,8 @@ export class DatasourceManager {
     let timeProperty;
     /** @type {import('gmf/themes').GmfOgcServer} */
     let ogcServer;
+    /** @type {string} */
+    let ogcServerName;
 
     if (ogcType === ThemeNodeType.WMTS || ogcType === ThemeNodeType.VECTOR_TILES) {
       // Manage WMTS / Vector tiles
@@ -543,6 +545,7 @@ export class DatasourceManager {
 
       // OGC Server
       if (meta.ogcServer && ogcServers[meta.ogcServer]) {
+        ogcServerName = meta.ogcServer;
         ogcServer = ogcServers[meta.ogcServer];
       }
     }
@@ -612,7 +615,7 @@ export class DatasourceManager {
       });
 
       // OGC Server
-      const ogcServerName =
+      ogcServerName =
         !firstLevelGroup || firstLevelGroup.mixed ? gmfLayerWMS.ogcServer : firstLevelGroup.ogcServer;
       ogcServer = ogcServers[ogcServerName];
       ogcImageType = ogcServer.imageType;
@@ -750,11 +753,11 @@ export class DatasourceManager {
     if (ogcServerType === ServerType.ARCGIS) {
       if (
         this.gmfDatasourceOptions.ogcServersSpecific &&
-        this.gmfDatasourceOptions.ogcServersSpecific[this.ogcServerName] &&
-        this.gmfDatasourceOptions.ogcServersSpecific[this.ogcServerName].arcgisWMSInfoFormat
+        this.gmfDatasourceOptions.ogcServersSpecific[ogcServerName] &&
+        this.gmfDatasourceOptions.ogcServersSpecific[ogcServerName].arcgisWMSInfoFormat
       ) {
         options.wmsInfoFormat =
-          this.gmfDatasourceOptions.ogcServersSpecific[this.ogcServerName].arcgisWMSInfoFormat;
+          this.gmfDatasourceOptions.ogcServersSpecific[ogcServerName].arcgisWMSInfoFormat;
       } else if (this.gmfDatasourceOptions.arcgisWMSInfoFormat) {
         options.wmsInfoFormat = this.gmfDatasourceOptions.arcgisWMSInfoFormat;
       }
