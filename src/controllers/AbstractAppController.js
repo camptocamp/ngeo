@@ -323,9 +323,12 @@ export function AbstractAppController($scope, $injector, mobile) {
    */
   this.searchListeners = {
     select: function (event, feature, dataset) {
-      const params = feature.get('params') || {};
-      for (const key in params) {
-        this.dimensions[key] = params[key].toString();
+      // If its coordinates, no getter is present
+      if (typeof feature.get !== 'undefined') {
+        const params = feature.get('params') || {};
+        for (const key in params) {
+          this.dimensions[key] = params[key].toString();
+        }
       }
     }.bind(this),
   };
