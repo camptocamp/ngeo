@@ -17,6 +17,14 @@ repos:
     rev: v2.1.0
     hooks:
       - id: codespell
-        exclude: (^contribs/gmf/test/spec/data/themescapabilities\.js$|^contribs/gmf/test/spec/data/themes\.js$|^buildtools/asitvd.capabilities\.xml$|^examples/measure\.js$|^src/bootstrap-custom\.css\.map$)
+        exclude: |-
+          (?x)^(
+            contribs/gmf/test/spec/data/themescapabilities\.js
+            |contribs/gmf/test/spec/data/themes\.js
+            |buildtools/asitvd.capabilities\.xml
+            |examples/measure\.js
+            |src/bootstrap-custom\.css\.map
+            |\.github/workflows/pull-request-automation\.yaml
+          )$
         args:
           - --ignore-words=spell-ignore-words.txt
