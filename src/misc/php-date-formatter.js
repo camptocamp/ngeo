@@ -271,15 +271,15 @@ export default class DateFormatter {
           const vMeriIndex = vFormatParts.includes('a')
             ? vFormatParts.indexOf('a')
             : vFormatParts.includes('A')
-            ? vFormatParts.indexOf('A')
-            : -1;
+              ? vFormatParts.indexOf('A')
+              : -1;
           const mer = vDateParts[vMeriIndex];
           if (vMeriIndex !== -1) {
             const vMeriOffset = _compare(mer, vSettings.meridiem[0])
               ? 0
               : _compare(mer, vSettings.meridiem[1])
-              ? 12
-              : -1;
+                ? 12
+                : -1;
             if (iDatePart >= 1 && iDatePart <= 12 && vMeriOffset !== -1) {
               out.hour = iDatePart % 12 === 0 ? vMeriOffset : iDatePart + vMeriOffset;
             } else {

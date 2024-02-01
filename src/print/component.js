@@ -839,8 +839,8 @@ export class PrintController {
           defaultValue !== undefined && defaultValue !== ''
             ? `${defaultValue}`
             : name in (this.options.fieldValues || {})
-            ? `${this.options.fieldValues[name]}`
-            : '';
+              ? `${this.options.fieldValues[name]}`
+              : '';
 
         // Try to use existing form field type
         const rawType = `${attribute.type}`;
