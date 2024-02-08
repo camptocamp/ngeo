@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2023 Camptocamp SA
+// Copyright (c) 2016-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +22,7 @@
 import * as Sentry from '@sentry/browser';
 import * as $ from 'jquery';
 
-import user, {User, UserState} from 'gmfapi/store/user';
+import user, {User, UserState, loginMessageRequired} from 'gmfapi/store/user';
 import configuration, {
   Configuration,
   gmfAuthenticationNoReloadRole as gmfOptionsGmfAuthenticationNoReloadRole,
@@ -87,6 +87,8 @@ export class AuthenticationService {
   noReloadRole_: undefined | gmfOptionsGmfAuthenticationNoReloadRole;
 
   verifyConnection_: number;
+
+  originalUrl: string = window.location.href;
 
   constructor() {
     /**
@@ -228,7 +230,14 @@ export class AuthenticationService {
    */
   login(login: string, pwd: string, otp: string = undefined): Promise<void | User> {
     const url = `${this.baseUrl_}/${RouteSuffix.LOGIN}`;
-    const params = {'login': login, 'password': pwd};
+    const params = {
+      'login': login,
+      'password': pwd,
+      // The `originalUrl` is used to be able to get a link with the private layers (that will open the
+      // login panel, with the `loginMessageRequired` message).
+      came_from:
+        user.getLoginMessage().value == loginMessageRequired ? this.originalUrl : window.location.href,
+    };
     if (otp) {
       Object.assign(params, {'otp': otp});
     }
