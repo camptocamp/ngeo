@@ -235,7 +235,7 @@ export class AuthenticationService {
       'password': pwd,
       // The `originalUrl` is used to be able to get a link with the private layers (that will open the
       // login panel, with the `loginMessageRequired` message).
-      came_from:
+      referrer_to:
         user.getLoginMessage().value == loginMessageRequired ? this.originalUrl : window.location.href,
     };
     if (otp) {
