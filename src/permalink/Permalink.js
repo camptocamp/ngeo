@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2023 Camptocamp SA
+// Copyright (c) 2016-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -1276,6 +1276,18 @@ PermalinkService.prototype.initLayers_ = function () {
   this.gmfThemes_
     .getThemesObject()
     .then((themes) => {
+      /**
+       * @type {string[]}
+       */
+      const tree_enable_keys = this.ngeoLocation_.getParamKeys().filter((key) => {
+        if (key.startsWith(ParamPrefix.TREE_ENABLE)) {
+          if (this.ngeoLocation_.getParam(key) === 'true') {
+            return true;
+          }
+        }
+        return false;
+      });
+
       const themeName = this.defaultThemeName();
 
       if (this.gmfThemeManager_) {
@@ -1310,6 +1322,11 @@ PermalinkService.prototype.initLayers_ = function () {
       }
 
       this.$timeout_(() => {
+        /**
+         * @type {string[]}
+         */
+        const used_tree_enable = [];
+
         if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
           // we don't have any layertree
           if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
@@ -1364,9 +1381,9 @@ PermalinkService.prototype.initLayers_ = function () {
 
           if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
             // Layer of a mixed group
-            const enable = this.ngeoStateManager_.getInitialBooleanValue(
-              `${ParamPrefix.TREE_ENABLE}${treeCtrl.node.name}`,
-            );
+            const param = `${ParamPrefix.TREE_ENABLE}${treeCtrl.node.name}`;
+            used_tree_enable.push(param);
+            const enable = this.ngeoStateManager_.getInitialBooleanValue(param);
             if (enable !== undefined) {
               treeCtrl.setState(enable ? 'on' : 'off', false);
             }
@@ -1413,6 +1430,11 @@ PermalinkService.prototype.initLayers_ = function () {
           });
         });
 
+        for (const key of tree_enable_keys) {
+          if (!used_tree_enable.includes(key)) {
+            authenticationRequired = true;
+          }
+        }
         if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
           this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
           user.setLoginMessage(loginMessageRequired);
