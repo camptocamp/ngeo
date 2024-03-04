@@ -54,9 +54,10 @@
       groupName: 'all minor versions',
       automerge: true,
     },
+    /** Requires dashboard approval for major updates */
     {
       matchUpdateTypes: ['major'],
-      enabled: false,
+      dependencyDashboardApproval: true,
     },
     /** Accept only the patch on stabilization branches */
     {
