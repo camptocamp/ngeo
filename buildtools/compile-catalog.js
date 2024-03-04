@@ -2,7 +2,7 @@
 
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2023 Camptocamp SA
+// Copyright (c) 2016-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,7 +23,7 @@
 
 'use strict';
 const fs = require('fs');
-const options = require('commander');
+const {program} = require('commander');
 const Compiler = require('angular-gettext-tools').Compiler;
 
 /**
@@ -51,8 +51,8 @@ function main(inputs) {
 
 // If running this module directly then call the main function.
 if (require.main === module) {
-  options.parse(process.argv);
-  main(options.args);
+  program.parse(process.argv);
+  main(program.args);
 }
 
 module.exports = main;
