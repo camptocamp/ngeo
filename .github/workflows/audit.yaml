@@ -27,7 +27,7 @@ jobs:
           sudo apt update
           sudo apt install g++-10 libgbm1 graphicsmagick fonts-liberation2
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: ${{ matrix.branch }}
           token: ${{ secrets.GOPASS_CI_GITHUB_TOKEN }}
@@ -43,12 +43,12 @@ jobs:
 
       - name: Check .tool-versions file existence
         id: tool-versions
-        uses: andstor/file-existence-action@v2
+        uses: andstor/file-existence-action@v3
         with:
           files: .tool-versions
-      - uses: asdf-vm/actions/install@v1
+      - uses: asdf-vm/actions/install@v3
         if: steps.tool-versions.outputs.files_exists == 'true'
-      - uses: asdf-vm/actions/setup@v1
+      - uses: asdf-vm/actions/setup@v3
         if: steps.tool-versions.outputs.files_exists != 'true'
       - run: cat /tmp/python-build.*.log
         if: failure()
@@ -60,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GOPASS_CI_GITHUB_TOKEN }}
       - name: Check ci/dpkg-versions.yaml file existence
         id: dpkg-versions
-        uses: andstor/file-existence-action@v2
+        uses: andstor/file-existence-action@v3
         with:
           files: ci/dpkg-versions.yaml
       - name: Update dpkg packages versions

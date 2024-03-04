@@ -48,17 +48,17 @@ jobs:
         run: echo "sha=$(jq -r .pull_request.head.sha < ${GITHUB_EVENT_PATH})" >> $GITHUB_OUTPUT
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
         if: github.event_name != 'pull_request_target'
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           ref: ${{ steps.sha.outputs.sha }}
         if: github.event_name == 'pull_request_target'
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 18.x
 
@@ -74,7 +74,7 @@ jobs:
       - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
       - run: python3 -m pip install --user --requirement=ci/requirements.txt
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
@@ -125,28 +125,28 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
       - run: make check-examples
         if: github.event_name != 'pull_request_target'
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Examples
           path: examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: GMF Examples
           path: contribs/gmf/examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Apps
           path: contribs/gmf/apps
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Examples hosted
           path: .build/examples-hosted
@@ -165,7 +165,7 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run dist-spinner
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Npm logs
           path: /home/runner/.npm/_logs
@@ -213,7 +213,7 @@ jobs:
           cp -ar .build/storybook gh-pages/storybook
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: gh-pages
           path: gh-pages
@@ -232,7 +232,7 @@ jobs:
         run: echo ${GITHUB_EVENT} | python3 -m json.tool
         env:
           GITHUB_EVENT: ${{ toJson(github) }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: gh-pages
           fetch-depth: 0
@@ -244,7 +244,7 @@ jobs:
           GITHUB_REF: ${{ github.head_ref || github.ref_name }}
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: gh-pages
           path: ${{ steps.branch.outputs.branch }}
