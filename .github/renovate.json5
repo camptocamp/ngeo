@@ -76,10 +76,10 @@
       groupName: 'CI dependencies',
       automerge: true,
     },
-    /** Dependency Dashboard Approval for ol-cesium updates */
+    /** Disable ol-cesium updates */
     {
       matchPackageNames: ['ol-cesium'],
-      dependencyDashboardApproval: true,
+      enabled: false,
     },
   ],
 }
