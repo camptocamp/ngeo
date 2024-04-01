@@ -1,3 +1,3 @@
-c2cciutils[checks]==1.6.17
+c2cciutils[checks]==1.6.18
 wheel==0.42.0
 pre-commit==3.6.2
