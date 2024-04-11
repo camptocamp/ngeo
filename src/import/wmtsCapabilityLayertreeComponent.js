@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2023 Camptocamp SA
+// Copyright (c) 2017-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -127,7 +127,7 @@ export class Controller {
       throw new Error('Missing url');
     }
     const manager = this.gmfExternalDataSourcesManager_;
-    manager.createAndAddDataSourceFromWMTSCapability(layer, this.capabilities, this.url);
+    manager.createAndAddDataSourceFromWMTSCapability(layer, this.capabilities, this.url, 1);
   }
 
   /**
