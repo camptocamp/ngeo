@@ -1730,7 +1730,8 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
               gmfExtDSManager.createAndAddDataSourceFromWMTSCapability(
                 layerCap,
                 response.capabilities,
-                response.url
+                response.url,
+                this.ngeoStateManager_.getInitialNumberValue(`${ParamPrefix.TREE_OPACITY}${layerName}`)
               );
             } else {
               // TODO - handle 'not found' layer in capabilities
