@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -1704,7 +1704,8 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
               gmfExtDSManager.createAndAddDataSourceFromWMTSCapability(
                 layerCap,
                 response.capabilities,
-                response.url
+                response.url,
+                this.ngeoStateManager_.getInitialNumberValue(`${ParamPrefix.TREE_OPACITY}${layerName}`)
               );
             } else {
               // TODO - handle 'not found' layer in capabilities
