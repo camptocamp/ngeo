@@ -82,15 +82,15 @@ export type LidarprofilePoints = {
  * Profile point after measure or after parsing of the binary array returned by Pytree
  */
 export type LidarPoint = {
-  cx?: number;
-  cy?: number;
-  distance?: number;
-  altitude?: number;
-  color_packed?: number[];
-  coords?: number[];
-  intensity?: number;
-  classification?: number;
-  set?: boolean;
+  cx?: number | undefined;
+  cy?: number | undefined;
+  distance?: number | undefined;
+  altitude?: number | undefined;
+  color_packed?: number[] | undefined;
+  coords?: number[] | undefined;
+  intensity?: number | undefined;
+  classification?: number | undefined;
+  set?: boolean | undefined;
 };
 
 type ClippedLine = {
@@ -374,9 +374,12 @@ export default class {
         // @ts-ignore: unsupported by typescript
         const value = point[key]; // eslint-disable-line @typescript-eslint/no-unsafe-assignment
         if (key == 'altitude') {
-          row[key] = (value as LidarPoint['altitude']).toFixed(4);
-        } else if (key == 'color_packed' || key == 'coords') {
-          row[key] = (value as LidarPoint['color_packed'] | LidarPoint['coords']).join(' ');
+          const value = point?.altitude;
+          row[key] = value ? value.toFixed(4) : NaN;
+        } else if (key == 'color_packed') {
+          row[key] = (point.color_packed ?? []).join(' ');
+        } else if (key == 'coords') {
+          row[key] = (point.coords ?? []).join(' ');
         } else {
           row[key] = value; // eslint-disable-line @typescript-eslint/no-unsafe-assignment
         }
