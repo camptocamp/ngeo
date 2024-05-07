@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2023 Camptocamp SA
+// Copyright (c) 2016-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -586,10 +586,6 @@ Controller.prototype.undo = function () {
 
   this.geometryChanges_.pop();
   const clone = cloneGeometry(this.geometryChanges_[this.geometryChanges_.length - 1]);
-  if (!clone) {
-    throw new Error('Missing clone');
-  }
-
   this.feature.setGeometry(clone);
 
   this.skipGeometryChange_ = false;
