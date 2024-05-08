@@ -1731,7 +1731,6 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
                 layerCap,
                 response.capabilities,
                 response.url,
-                this.ngeoStateManager_.getInitialNumberValue(`${ParamPrefix.TREE_OPACITY}${layerName}`),
               );
             } else {
               // TODO - handle 'not found' layer in capabilities
