@@ -1358,7 +1358,9 @@ PermalinkService.prototype.initLayers_ = function () {
           );
           if (treeCtrl.layer) {
             if (opacity !== undefined) {
-              treeCtrl.layer.setOpacity(opacity);
+              this.$timeout_(() => {
+                treeCtrl.layer.setOpacity(opacity);
+              }, 100);
             }
             // === Set the gmfLayerBeingSwipe layer ===
             if (
@@ -1731,7 +1733,6 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
                 layerCap,
                 response.capabilities,
                 response.url,
-                this.ngeoStateManager_.getInitialNumberValue(`${ParamPrefix.TREE_OPACITY}${layerName}`),
               );
             } else {
               // TODO - handle 'not found' layer in capabilities
