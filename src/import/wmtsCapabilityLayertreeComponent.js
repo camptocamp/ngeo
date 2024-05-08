@@ -127,7 +127,7 @@ export class Controller {
       throw new Error('Missing url');
     }
     const manager = this.gmfExternalDataSourcesManager_;
-    manager.createAndAddDataSourceFromWMTSCapability(layer, this.capabilities, this.url, 1);
+    manager.createAndAddDataSourceFromWMTSCapability(layer, this.capabilities, this.url);
   }
 
   /**
