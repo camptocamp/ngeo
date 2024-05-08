@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2022 Camptocamp SA
+// Copyright (c) 2016-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -1337,7 +1337,9 @@ PermalinkService.prototype.initLayers_ = function () {
           );
           if (treeCtrl.layer) {
             if (opacity !== undefined) {
-              treeCtrl.layer.setOpacity(opacity);
+              this.$timeout_(() => {
+                treeCtrl.layer.setOpacity(opacity);
+              }, 100);
             }
             // === Set the gmfLayerBeingSwipe layer ===
             if (
