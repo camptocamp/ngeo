@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2023 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -441,7 +441,7 @@ export class ExternalDatSourcesManager {
    * @param {any} capabilities  WMTS Capabilities definition
    * @param {string} wmtsUrl The WMTS capabilities url
    */
-  createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl, opacity) {
+  createAndAddDataSourceFromWMTSCapability(layer, capabilities, wmtsUrl) {
     const id = getId(layer);
 
     // (1) No need to do anything if there's already a WMTS data source (and its
@@ -489,7 +489,6 @@ export class ExternalDatSourcesManager {
 
     // (4) Create and add the OL layer
     const layerObj = this.ngeoLayerHelper_.createWMTSLayerFromCapabilititesObj(capabilities, layer);
-    layerObj.setOpacity(opacity);
     this.addLayer_(layerObj);
 
     // (5) Add data source to ngeo collection
