@@ -586,10 +586,6 @@ Controller.prototype.undo = function () {
 
   this.geometryChanges_.pop();
   const clone = cloneGeometry(this.geometryChanges_[this.geometryChanges_.length - 1]);
-  if (!clone) {
-    throw new Error('Missing clone');
-  }
-
   this.feature.setGeometry(clone);
 
   this.skipGeometryChange_ = false;
