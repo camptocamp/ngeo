@@ -173,7 +173,7 @@
     "mapillary-js": "4.1.2",
     "moment": "2.30.1",
     "neat-csv": "5.2.0",
-    "node-sass": "7.0.3",
+    "node-sass": "9.0.0",
     "node-sass-importer": "2.0.2",
     "ol": "7.5.2",
     "ol-cesium": "2.14.0",
