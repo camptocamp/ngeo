@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://geoservices-int.camptocamp.com/github/schema.json
+
+pull-request-links:
+  content:
+    - requires:
+        - project
+        - issue
+      text: 'See JIRA issue: [{project}-{issue}](https://jira.camptocamp.com/browse/{project}-{issue}).'
+    - text: Examples
+      url: 'https://camptocamp.github.io/ngeo/refs/pull/{pull_request_number}/merge/examples/'
+    - text: Storybook
+      url: 'https://camptocamp.github.io/ngeo/refs/pull/{pull_request_number}/merge/storybook/'
+    - text: API help
+      url: 'https://camptocamp.github.io/ngeo/refs/pull/{pull_request_number}/merge/api/apihelp/apihelp.html'
+    - text: API documentation
+      url: 'https://camptocamp.github.io/ngeo/refs/pull/{pull_request_number}/merge/apidoc/'
