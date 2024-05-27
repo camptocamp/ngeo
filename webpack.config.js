@@ -30,6 +30,7 @@ module.exports = (env, args) => {
   let common_config = {};
   switch (process.env.TARGET) {
     case 'dist':
+    case 'lib':
       common_config.nodll = true;
       break;
   }
@@ -56,6 +57,10 @@ module.exports = (env, args) => {
       break;
     case 'gmf-apps':
       config = merge(config, require('./buildtools/webpack.gmfapps'));
+      break;
+    case 'lib':
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      config = merge(config, require('./buildtools/webpack.lib'));
       break;
     case 'dist':
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
