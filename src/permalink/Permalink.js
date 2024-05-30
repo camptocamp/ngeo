@@ -1337,9 +1337,7 @@ PermalinkService.prototype.initLayers_ = function () {
           );
           if (treeCtrl.layer) {
             if (opacity !== undefined) {
-              this.$timeout_(() => {
-                treeCtrl.layer.setOpacity(opacity);
-              }, 100);
+              treeCtrl.layer.setOpacity(opacity);
             }
             // === Set the gmfLayerBeingSwipe layer ===
             if (
