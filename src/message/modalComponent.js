@@ -62,7 +62,7 @@ const myModule = angular.module('ngeoModal', []);
  * @htmlAttribute {boolean} ngeo-modal-resizable Whether the modal can be
  *     resized or not. Defaults to `false`.
  * @htmlAttribute {boolean} ngeo-modal-closable Whether the modal can be
- *     closed by clicking outside it or by hiting the `escape` keyboard key. Defaults to `true`.
+ *     closed by clicking outside it or by hitting the `escape` keyboard key. Defaults to `true`.
  * @ngdoc component
  * @ngname ngeoModal
  * @type {angular.IComponentOptions}
