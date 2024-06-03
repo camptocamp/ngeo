@@ -437,7 +437,7 @@ SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {
       gmfLayerWMTS.metadata.opacity,
     )
     .then((layer) => {
-      this.layerHelper_.copyProperties(layer, newLayer, ['visible']);
+      this.layerHelper_.copyProperties(layer, newLayer, ['visible', 'opacity']);
     });
   return newLayer;
 };
