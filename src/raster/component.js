@@ -25,7 +25,7 @@ import gmfRasterRasterService from 'gmf/raster/RasterService';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
 
 import {listen, unlistenByKey} from 'ol/events';
-import MapBrowserEvent from 'ol/MapBrowserEvent';
+import widgetComponent from '!raw-loader!./widgetComponent.html'
 
 import 'bootstrap/js/src/dropdown';
 
@@ -41,8 +41,7 @@ myModule.run(
    * @param {angular.ITemplateCacheService} $templateCache
    */
   ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
+    $templateCache.put('gmf/raster/widgetComponent', widgetComponent);
   },
 );
 

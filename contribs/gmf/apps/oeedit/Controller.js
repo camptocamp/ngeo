@@ -39,6 +39,7 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import olCollection from 'ol/Collection';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceVector from 'ol/source/Vector';
+import defaultContextualData from '!raw-loader!./contextualdata.html'
 
 /**
  * @private
@@ -170,7 +171,7 @@ appModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
+    $templateCache.put('gmf/contextualdata', defaultContextualData);
   },
 );
 

@@ -26,6 +26,7 @@ import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent';
 import {ObjectEvent} from 'ol/Object';
 import './editing.css';
+import attributescomponent from '!raw-loader!./attributescomponent.html'
 
 /**
  * @type {angular.IModule}
@@ -43,7 +44,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
+    $templateCache.put('ngeo/editing/attributescomponent', attributescomponent);
   },
 );
 

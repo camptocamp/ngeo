@@ -23,6 +23,8 @@ import angular from 'angular';
 import {isPlatformModifierKeyOnly, isShiftKeyOnly} from 'ngeo/utils';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 import {getRowUid} from 'ngeo/grid/Config';
+import component from '!raw-loader!./component.html'
+
 
 import 'floatthead';
 import 'angular-float-thead';
@@ -41,7 +43,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/grid', require('./component.html'));
+    $templateCache.put('ngeo/grid', component);
   },
 );
 

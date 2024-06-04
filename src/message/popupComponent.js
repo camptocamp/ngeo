@@ -21,6 +21,7 @@
 
 import angular from 'angular';
 import 'angular-sanitize';
+import popupcomponent from '!raw-loader!./popupcomponent.html'
 
 /**
  * @type {angular.IModule}
@@ -48,7 +49,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
+    $templateCache.put('ngeo/message/popupcomponent', popupcomponent);
   },
 );
 

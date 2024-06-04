@@ -26,6 +26,8 @@ import {getRenderPixel} from 'ol/render.js';
 
 import ResizeObserver from 'resize-observer-polyfill';
 import 'jquery-ui/ui/widgets/draggable';
+import swipe from '!raw-loader!./swipe.html'
+
 
 /**
  * @type {angular.IModule}
@@ -40,7 +42,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/src/map/swipe', require('./swipe.html'));
+    $templateCache.put('ngeo/src/map/swipe', swipe);
   },
 );
 

@@ -24,6 +24,7 @@ import ngeoMiscFilters from 'ngeo/misc/filters';
 import olControlMousePosition from 'ol/control/MousePosition';
 
 import 'bootstrap/js/src/dropdown';
+import mousepositionComponent from '!raw-loader!./mousepositionComponent.html'
 
 /**
  * @type {angular.IModule}
@@ -38,7 +39,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
+    $templateCache.put('gmf/map/mousepositionComponent', mousepositionComponent);
   },
 );
 

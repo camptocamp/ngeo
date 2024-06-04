@@ -20,6 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import component from '!raw-loader!./component.html'
+
 
 /**
  * @type {angular.IModule}
@@ -34,7 +36,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/header/component', require('./component.html'));
+    $templateCache.put('gmf/header/component', component);
   },
 );
 

@@ -22,6 +22,7 @@
 import angular from 'angular';
 
 import ngeoQueryModeSelector from 'ngeo/query/ModeSelector';
+import panelComponent from '!raw-loader!./panelComponent.html'
 
 /**
  * @type {angular.IModule}
@@ -37,8 +38,7 @@ myModule.run(
   ($templateCache) => {
     $templateCache.put(
       'ngeo/src/query/panelComponent',
-      // @ts-ignore: webpack
-      require('./panelComponent.html'),
+      panelComponent,
     );
   },
 );

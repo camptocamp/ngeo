@@ -35,6 +35,7 @@ import olGeomPoint from 'ol/geom/Point';
 import olInteractionModify from 'ol/interaction/Modify';
 import olInteractionDraw from 'ol/interaction/Draw';
 import 'ngeo/sass/font.scss';
+import routingfeature from '!raw-loader!./routingfeature.html'
 
 /**
  * @type {angular.IModule}
@@ -52,7 +53,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
+    $templateCache.put('ngeo/routing/routingfeature', routingfeature);
   },
 );
 

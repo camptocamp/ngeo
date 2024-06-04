@@ -28,6 +28,7 @@ import olGeomPoint from 'ol/geom/Point';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import GoogleStreetviewService from './GoogleStreetviewService';
 import MapillaryService from './MapillaryService';
+import component from '!raw-loader!./component.html'
 
 /**
  * @type {angular.IModule}
@@ -54,7 +55,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/streetview', require('./component.html'));
+    $templateCache.put('ngeo/streetview', component);
   },
 );
 

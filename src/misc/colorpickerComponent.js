@@ -20,6 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import colorpickerComponent from '!raw-loader!./colorpickerComponent.html'
 
 /**
  * @type {angular.IModule}
@@ -47,7 +48,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
+    $templateCache.put('ngeo/misc/colorpickerComponent', colorpickerComponent);
   },
 );
 

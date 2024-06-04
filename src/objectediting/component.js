@@ -58,6 +58,8 @@ import olStyleFill from 'ol/style/Fill';
 import olStyleStroke from 'ol/style/Stroke';
 import olStyleStyle from 'ol/style/Style';
 import {CollectionEvent} from 'ol/Collection';
+import component from '!raw-loader!./component.html'
+
 
 // @ts-ignore: not supported import
 import {OL3Parser} from 'jsts/io';
@@ -103,7 +105,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/objectediting', require('./component.html'));
+    $templateCache.put('gmf/objectediting', component);
   },
 );
 

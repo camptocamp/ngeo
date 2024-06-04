@@ -45,6 +45,8 @@ import 'bootstrap/js/src/dropdown';
 
 import panels from 'gmfapi/store/panels';
 import user from 'gmfapi/store/user';
+import filterselectorcomponent from '!raw-loader!./filterselectorcomponent.html'
+
 
 /**
  * @type {angular.IModule}
@@ -66,7 +68,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
+    $templateCache.put('gmf/filters/filterselectorcomponent', filterselectorcomponent);
   },
 );
 

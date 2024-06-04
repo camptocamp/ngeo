@@ -36,6 +36,8 @@ import {buildStyle} from 'ngeo/options';
 
 import 'bootstrap/js/src/dropdown';
 import panels from 'gmfapi/store/panels';
+import component from '!raw-loader!./component.html'
+
 
 /**
  * @typedef {Object} ProfileElement
@@ -90,7 +92,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/profile', require('./component.html'));
+    $templateCache.put('gmf/profile', component);
   },
 );
 

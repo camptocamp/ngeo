@@ -48,6 +48,8 @@ import olStyleFill from 'ol/style/Fill';
 import {CollectionEvent} from 'ol/Collection';
 import Feature from 'ol/Feature';
 import 'ngeo/sass/font.scss';
+import rulecomponent from '!raw-loader!./rulecomponent.html'
+
 
 /**
  * @typedef {Object} MenuEventTarget
@@ -77,7 +79,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
+    $templateCache.put('ngeo/filter/rulecomponent', rulecomponent);
   },
 );
 

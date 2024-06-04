@@ -20,6 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import floorselectorcomponent from '!raw-loader!./floorselectorcomponent.html'
+
 
 /**
  * @type {!angular.IModule}
@@ -34,7 +36,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/floor/floorselectorcomponent', require('./floorselectorcomponent.html'));
+    $templateCache.put('gmf/floor/floorselectorcomponent', floorselectorcomponent);
   },
 );
 

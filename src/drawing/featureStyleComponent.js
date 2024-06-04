@@ -28,6 +28,8 @@ import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 
 import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper';
 
+import featureStyleComponent from '!raw-loader!./featureStyleComponent.html'
+
 /**
  * @type {angular.IModule}
  * @hidden
@@ -44,7 +46,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
+    $templateCache.put('gmf/drawing/featureStyleComponent', featureStyleComponent);
   },
 );
 

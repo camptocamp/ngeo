@@ -36,6 +36,7 @@ import {toLonLat} from 'ol/proj';
 import olFeature from 'ol/Feature';
 import olGeomLineString from 'ol/geom/LineString';
 import 'ngeo/sass/font.scss';
+import routing from '!raw-loader!./routing.html'
 
 /**
  * @typedef {Object} RoutingVia
@@ -62,7 +63,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/routing/routing', require('./routing.html'));
+    $templateCache.put('ngeo/routing/routing', routing);
   },
 );
 

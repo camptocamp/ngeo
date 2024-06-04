@@ -36,6 +36,8 @@ import OLSourceVector from 'ol/source/Vector';
 
 import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
 
+import drawFeatureOptionsComponent from '!raw-loader!./drawFeatureOptionsComponent.html'
+
 /**
  * @type {angular.IModule}
  * @hidden
@@ -50,8 +52,7 @@ myModule.run(
   ($templateCache) => {
     $templateCache.put(
       'gmf/drawing/drawFeatureOptionsComponent',
-      // @ts-ignore: webpack
-      require('./drawFeatureOptionsComponent.html'),
+      drawFeatureOptionsComponent,
     );
   },
 );

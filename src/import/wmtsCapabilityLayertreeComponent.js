@@ -26,6 +26,8 @@ import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalData
 import ngeoMessagePopup from 'ngeo/message/Popup';
 
 import {getUid as olUtilGetUid} from 'ol/util';
+import wmtsCapabilityLayertreeComponent from '!raw-loader!./wmtsCapabilityLayertreeComponent.html'
+
 
 /**
  * @type {angular.IModule}
@@ -44,8 +46,7 @@ myModule.run(
   ($templateCache) => {
     $templateCache.put(
       'ngeo/import/wmtsCapabilityLayertreeComponent',
-      // @ts-ignore: webpack
-      require('./wmtsCapabilityLayertreeComponent.html'),
+      wmtsCapabilityLayertreeComponent,
     );
   },
 );

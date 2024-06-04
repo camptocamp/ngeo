@@ -22,6 +22,7 @@
 import angular from 'angular';
 import ngeoSearchSearchDirective from 'ngeo/search/searchDirective';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService';
+import nominatiminput from '!raw-loader!./nominatiminput.html'
 
 /**
  * @type {angular.IModule}
@@ -39,7 +40,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
+    $templateCache.put('ngeo/routing/nominatiminput', nominatiminput);
   },
 );
 

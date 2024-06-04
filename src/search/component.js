@@ -40,6 +40,8 @@ import * as olProj from 'ol/proj';
 import {appendParams as olUriAppendParams} from 'ol/uri';
 import Geometry from 'ol/geom/Geometry';
 import {buildStyle} from 'ngeo/options';
+import component from '!raw-loader!./component.html'
+
 
 /**
  * @type {angular.IModule}
@@ -73,7 +75,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/search', require('./component.html'));
+    $templateCache.put('gmf/search', component);
   },
 );
 

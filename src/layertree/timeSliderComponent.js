@@ -27,6 +27,7 @@ import 'jquery-ui/ui/widgets/slider';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-ui-slider';
 import './timeslider.scss';
+import timesliderComponent from '!raw-loader!./timesliderComponent.html'
 
 /**
  * @type {angular.IModule}
@@ -45,7 +46,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
+    $templateCache.put('gmf/layertree/timesliderComponent', timesliderComponent);
   },
 );
 

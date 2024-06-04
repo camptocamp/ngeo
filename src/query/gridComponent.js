@@ -37,6 +37,8 @@ import {buildStyle} from 'ngeo/options';
 import panels from 'gmfapi/store/panels';
 
 import 'bootstrap/js/src/dropdown';
+import gridComponent from '!raw-loader!./gridComponent.html'
+
 
 /**
  * Configuration for a grid tab.
@@ -73,7 +75,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
+    $templateCache.put('gmf/query/gridComponent', gridComponent);
   },
 );
 

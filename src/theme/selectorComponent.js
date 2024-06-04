@@ -26,6 +26,8 @@ import gmfThemeThemes from 'gmf/theme/Themes';
 import {listen, unlistenByKey} from 'ol/events';
 
 import 'bootstrap/js/src/dropdown';
+import selectorComponent from '!raw-loader!./selectorComponent.html'
+
 
 /**
  * @type {angular.IModule}
@@ -40,7 +42,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
+    $templateCache.put('gmf/theme/selectorComponent', );
   },
 );
 

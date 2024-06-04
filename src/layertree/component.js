@@ -51,6 +51,8 @@ import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceWMTS from 'ol/source/WMTS';
 import LayerBase from 'ol/layer/Base';
 import {getUid} from 'ol/util';
+import component from '!raw-loader!./component.html'
+
 
 import 'bootstrap/js/src/collapse';
 
@@ -103,7 +105,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/layertree', require('./component.html'));
+    $templateCache.put('gmf/layertree', component);
   },
 );
 

@@ -24,6 +24,7 @@ import ngeoMiscFilters from 'ngeo/misc/filters';
 import ngeoInteractionMeasureLengthMobile from 'ngeo/interaction/MeasureLengthMobile';
 import {MeasueMobileBaseController} from 'gmf/mobile/measure/baseComponent';
 import {buildStyle} from 'ngeo/options';
+import baseComponent from '!raw-loader!./baseComponent.html'
 
 /**
  * @type {angular.IModule}
@@ -51,7 +52,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
+    $templateCache.put('gmf/measure/lengthComponent', baseComponent);
   },
 );
 

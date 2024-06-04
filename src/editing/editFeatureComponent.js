@@ -71,6 +71,8 @@ import {CollectionEvent} from 'ol/Collection';
 import VectorSource from 'ol/source/Vector';
 import olLayerVector from 'ol/layer/Vector';
 import {buildStyle} from 'ngeo/options';
+import editFeatureComponent from '!raw-loader!./editFeatureComponent.html'
+
 
 /**
  * The different possible values of the `state` inner property.
@@ -141,7 +143,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
+    $templateCache.put('gmf/editing/editFeatureComponent', editFeatureComponent);
   },
 );
 

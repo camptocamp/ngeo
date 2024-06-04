@@ -28,6 +28,8 @@ import ngeoMessagePopup from 'ngeo/message/Popup';
 import {getUid as olUtilGetUid} from 'ol/util';
 
 import 'bootstrap/js/src/collapse';
+import wmsCapabilityLayertreeComponent from '!raw-loader!./wmsCapabilityLayertreeComponent.html'
+
 
 /**
  * @type {angular.IModule}
@@ -46,8 +48,7 @@ myModule.run(
   ($templateCache) => {
     $templateCache.put(
       'gmf/import/wmsCapabilityLayertreeComponent',
-      // @ts-ignore: webpack
-      require('./wmsCapabilityLayertreeComponent.html'),
+      wmsCapabilityLayertreeComponent,
     );
   },
 );

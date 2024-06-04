@@ -31,6 +31,8 @@ import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapability
 
 import ngeoQueryQuerent from 'ngeo/query/Querent';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
+import importdatasourceComponent from '!raw-loader!./importdatasourceComponent.html'
+
 
 /**
  * @type {angular.IModule}
@@ -50,7 +52,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
+    $templateCache.put('gmf/import/importdatasourceComponent', importdatasourceComponent);
   },
 );
 

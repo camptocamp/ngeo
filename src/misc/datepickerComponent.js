@@ -31,6 +31,8 @@ import 'jquery-ui/ui/i18n/datepicker-en-GB';
 import 'jquery-ui/ui/i18n/datepicker-de';
 import 'jquery-ui/ui/i18n/datepicker-it';
 
+import datepickerComponent from '!raw-loader!./datepickerComponent.html'
+
 /**
  * @type {angular.IModule}
  * @hidden
@@ -57,7 +59,7 @@ myModule.run(
    */
   ($templateCache) => {
     // @ts-ignore: webpack
-    $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
+    $templateCache.put('ngeo/misc/datepickerComponent', datepickerComponent);
   },
 );
 
