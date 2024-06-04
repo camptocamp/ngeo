@@ -31,6 +31,17 @@ export {default as gmfPermalinkModule} from 'gmf/permalink/module';
 export {default as gmfRasterModule} from 'gmf/raster/module';
 export {default as gmfThemeModule} from 'gmf/theme/module';
 
+// Apps
+
+// FIXME: we should remove the scss imports from these controllers
+// We want to prebuild all JS symbols in one file and one CSS file per interface
+// This strategy assume we can have multi-entry
+export {default as AbstractDesktopController} from 'gmf/controllers/AbstractDesktopController';
+export {default as AbstractMobileController} from 'gmf/controllers/AbstractMobileController';
+export {default as AbstractAPIController} from 'gmf/controllers/AbstractAPIController';
+export {default as AbstractAppController} from 'gmf/controllers/AbstractAppController';
+
+
 export {default as DesktopController} from './apps/desktop/Controller.js';
 export {default as DesktopAltController} from './apps/desktop_alt/Controller.js';
 
@@ -39,3 +50,6 @@ export {default as MobileAltController} from './apps/mobile_alt/Controller.js';
 
 export {default as IframeApiController} from './apps/iframe_api/Controller.js';
 export {default as OeeditController} from './apps/oeedit/Controller.js';
+
+// Re-export angular so that the apps can use it
+export {default as angular} from 'angular';
