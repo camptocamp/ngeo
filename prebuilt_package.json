@@ -1,0 +1,20 @@
+{
+  "name": "gmfpb",
+  "version": "2.9.0",
+  "description": "Prebuilt gmf library",
+  "sideEffects": true,
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/camptocamp/ngeo.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/camptocamp/ngeo/issues"
+  },
+  "type": "commonjs",
+  "main": "./gmfprebuilt.js",
+  "peerDependencies": {
+    "ol": "^9.0.0",
+    "lit": "^2.8.0"
+  }
+}

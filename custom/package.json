@@ -1,0 +1,19 @@
+{
+  "name": "custom",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "lit": "^2.8.0",
+    "ol": "^9.2.4"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.0",
+    "vite": "^5.2.0"
+  }
+}
