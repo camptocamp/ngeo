@@ -18,16 +18,17 @@ env:
 
 jobs:
   not-failed-backport:
-    runs-on: ubuntu-22.04
     name: Test that's not a failed backport
+    runs-on: ubuntu-22.04
     timeout-minutes: 5
+
     steps:
       - run: 'false'
         if: github.event.head_commit.message == '[skip ci] Add instructions to finish the backport.'
 
   main:
-    runs-on: ubuntu-22.04
     name: Continuous integration
+    runs-on: ubuntu-22.04
     timeout-minutes: 50
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
@@ -79,7 +80,13 @@ jobs:
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
           restore-keys: "pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}\npre-commit-"
       - run: pre-commit run --all-files
-      - run: git diff
+      - run: git diff --exit-code --patch > /tmp/pre-commit.patch || true
+        if: failure()
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Apply pre-commit fix.patch
+          path: /tmp/pre-commit.patch
+          retention-days: 1
         if: failure()
       - name: Checks
         run: c2cciutils-checks
@@ -180,17 +187,17 @@ jobs:
 
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
-        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
         env:
           NODE_OPTIONS: --openssl-legacy-provider
+        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
       - name: Publish Storybook to Chromatic to run visual tests
         run:
           GITHUB_SHA=${GITHUB_SHA_} npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
           --branch-name=${GITHUB_HEAD_REF}
-        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
         env:
           NODE_OPTIONS: --openssl-legacy-provider
           GITHUB_SHA_: ${{ steps.sha.outputs.sha }}
+        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
 
       - name: Notify c2cgeoportal
         run: >
@@ -219,8 +226,8 @@ jobs:
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
   gh-pages:
-    runs-on: ubuntu-22.04
     name: Github Pages
+    runs-on: ubuntu-22.04
     timeout-minutes: 10
     concurrency: gh-pages-push
     needs:
@@ -239,9 +246,9 @@ jobs:
 
       - id: branch
         run: echo "branch=${GITHUB_REF}" >> $GITHUB_OUTPUT
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
         env:
           GITHUB_REF: ${{ github.head_ref || github.ref_name }}
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
 
       - uses: actions/download-artifact@v3
         with:
