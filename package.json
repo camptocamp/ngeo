@@ -150,7 +150,7 @@
     "i18next-browser-languagedetector": "7.2.1",
     "i18next-http-backend": "2.5.2",
     "i18next-parser": "7.9.0",
-    "jasmine-core": "4.6.1",
+    "jasmine-core": "5.1.2",
     "jquery": "3.7.1",
     "jquery-datetimepicker": "2.5.21",
     "jquery-mousewheel": "3.1.13",
