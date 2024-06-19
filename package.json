@@ -193,7 +193,7 @@
     "sass": "1.77.4",
     "sass-loader": "10.5.2",
     "simple-html-tokenizer": "0.5.11",
-    "sinon": "15.2.0",
+    "sinon": "18.0.0",
     "start-server-and-test": "1.15.4",
     "strip-bom": "5.0.0",
     "style-loader": "2.0.0",
