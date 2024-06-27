@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2023 Camptocamp SA
+// Copyright (c) 2018-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -59,20 +59,6 @@ function addStylesheet(stylesheetUrl) {
  * @param {angular.IModule} module The module
  */
 function bootstrap(module) {
-  // Hack to make the bootstrap type check working with polyfill.io
-  const oldObjectToString = Object.prototype.toString;
-  if (!oldObjectToString.toString().includes('[native code]')) {
-    Object.prototype.toString = function () {
-      if (this === null) {
-        return '[object Null]';
-      }
-      if (this === undefined) {
-        return '[object Undefined]';
-      }
-      return oldObjectToString.call(this);
-    };
-  }
-
   const interface_ = $('meta[name=interface]')[0].getAttribute('content');
   const dynamicUrl_ = $('meta[name=dynamicUrl]')[0].getAttribute('content');
   const appNameMeta = $('meta[name=appName]')[0];
