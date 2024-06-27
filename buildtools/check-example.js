@@ -227,7 +227,6 @@ function loaded(page, browser) {
     const url = request.url();
     if (
       !url.startsWith('https://www.camptocamp.com/') &&
-      !url.startsWith('https://cdn.polyfill.io/') &&
       !url.startsWith('https://maps.googleapis.com/')
     ) {
       console.log(`Request failed on: ${url}`);

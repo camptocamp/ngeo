@@ -28,20 +28,6 @@ import angular from 'angular';
  * @param {angular.IModule} module The module
  */
 function bootstrap(module) {
-  // Hack to make the bootstrap type check working with polyfill.io
-  const oldObjectToString = Object.prototype.toString;
-  if (!oldObjectToString.toString().includes('[native code]')) {
-    Object.prototype.toString = function () {
-      if (this === null) {
-        return '[object Null]';
-      }
-      if (this === undefined) {
-        return '[object Undefined]';
-      }
-      return oldObjectToString.call(this);
-    };
-  }
-
   const interface_ = $('meta[name=interface]')[0].getAttribute('content');
   const dynamicUrl_ = $('meta[name=dynamicUrl]')[0].getAttribute('content');
   const search = document.location ? document.location.search || '' : '';
