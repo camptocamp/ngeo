@@ -1,7 +1,5 @@
 checks:
-  required_workflows:
-    main.yaml: False
-    rebuild.yaml: False
+  required_workflows: False
   versions: False
   codespell:
     ignore_re:
