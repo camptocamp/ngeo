@@ -8,3 +8,4 @@ cryptography>=39.0.1 # not directly required, pinned by Snyk to avoid a vulnerab
 requests>=2.32.0 # not directly required, pinned by Snyk to avoid a vulnerability
 pygments>=2.15.0 # not directly required, pinned by Snyk to avoid a vulnerability
 idna>=3.7 # not directly required, pinned by Snyk to avoid a vulnerability
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
