@@ -26,7 +26,7 @@ import './vars.scss';
  *
  * @type {string}
  */
-const GMF_DEMO = 'https://geomapfish-demo-2-8.camptocamp.com/';
+const GMF_DEMO = 'https://geomapfish-demo-2-9.camptocamp.com/';
 
 /**
  * Base url for the GeoMapFish demo server.

@@ -35,12 +35,12 @@ export default {
           "\u00a9 Les contributeurs d\u2019<a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
         'ogcServer': 'Main PNG',
         'thumbnail':
-          'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
+          'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
         'wmsLayers': 'buildings_query',
       },
       'name': 'OSM map',
       'type': 'WMTS',
-      'url': 'https://geomapfish-demo-2-8.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml',
+      'url': 'https://geomapfish-demo-2-9.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml',
     },
     {
       'dimensions': {
@@ -53,7 +53,7 @@ export default {
       'matrixSet': '2056',
       'metadata': {
         'thumbnail':
-          'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
+          'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
       },
       'name': 'asitvd.fond_couleur',
       'type': 'WMTS',
@@ -70,7 +70,7 @@ export default {
       'matrixSet': '2056',
       'metadata': {
         'thumbnail':
-          'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
+          'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
       },
       'name': 'asitvd.fond_gris',
       'type': 'WMTS',
@@ -87,9 +87,9 @@ export default {
       'namespace': null,
       'type': 'arcgis',
       'url':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': true,
     },
     'ArcGIS VD noWFS 2': {
@@ -100,9 +100,9 @@ export default {
       'namespace': null,
       'type': 'arcgis',
       'url':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+noWFS+2&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+noWFS+2&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+noWFS+2&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=ArcGIS+VD+noWFS+2&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': false,
     },
     'Main Jpeg': {
@@ -4195,9 +4195,9 @@ export default {
       'namespace': 'http://mapserver.gis.umn.edu/mapserver',
       'type': 'mapserver',
       'url':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=Main+Jpeg&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+Jpeg&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=Main+Jpeg&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+Jpeg&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': true,
     },
     'Main PNG': {
@@ -6784,9 +6784,9 @@ export default {
       'namespace': 'http://mapserver.gis.umn.edu/mapserver',
       'type': 'mapserver',
       'url':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': true,
     },
     'Main no WFS': {
@@ -6797,9 +6797,9 @@ export default {
       'namespace': null,
       'type': 'mapserver',
       'url':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=Main+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=Main+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': false,
     },
     'QGIS server': {
@@ -7503,9 +7503,9 @@ export default {
       'namespace': 'http://www.qgis.org/gml',
       'type': 'qgisserver',
       'url':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': true,
     },
     'QGIS server no WFS': {
@@ -7516,9 +7516,9 @@ export default {
       'namespace': null,
       'type': 'qgisserver',
       'url':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-8.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server+no+WFS&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': false,
     },
     'WMS CH topo fr': {
@@ -7588,7 +7588,7 @@ export default {
                   '<a href="http://www.geo.admin.ch/">Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>',
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'opacity': 0.8,
                 'queryLayers': 'ch.astra.ausnahmetransportrouten',
               },
@@ -7718,7 +7718,7 @@ export default {
         'default_basemap': ['blank'],
       },
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
       'id': 29,
       'metadata': {},
       'name': 'Cadastre',
@@ -7819,7 +7819,7 @@ export default {
                     'identifierAttributeField': 'name',
                     'legend': true,
                     'legendImage':
-                      'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                      'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                     'timeAttribute': 'timestamp',
                   },
                   'minResolutionHint': 0.0,
@@ -7919,7 +7919,7 @@ export default {
                     'identifierAttributeField': 'name',
                     'legend': true,
                     'legendImage':
-                      'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                      'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                     'legendRule': 'Dans les temps',
                     'queryLayers': '5',
                     'timeAttribute': 'timestamp',
@@ -8251,7 +8251,7 @@ export default {
                     'identifierAttributeField': 'name',
                     'legend': true,
                     'legendImage':
-                      'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                      'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                     'legendRule': 'Dans les temps',
                     'queryLayers': '5',
                     'timeAttribute': 'timestamp',
@@ -8306,7 +8306,7 @@ export default {
                   '<a href="http://www.geo.admin.ch/">Donn\u00e9es publiques de l\'infrastructure f\u00e9d\u00e9rale de donn\u00e9es g\u00e9ographiques (IFDG)</a>',
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'opacity': 0.8,
                 'queryLayers': 'ch.astra.ausnahmetransportrouten',
               },
@@ -8387,7 +8387,7 @@ export default {
                     'isChecked': true,
                     'legend': true,
                     'legendImage':
-                      'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                      'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                     'queryIconPosition': ['5'],
                   },
                   'minResolutionHint': 0.0,
@@ -8420,7 +8420,7 @@ export default {
                 'isChecked': true,
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'legendRule': 'Poste de police',
               },
               'minResolutionHint': 0.0,
@@ -8470,7 +8470,7 @@ export default {
                 'identifierAttributeField': 'name',
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'legendRule': 'Dans les temps',
                 'queryLayers': '5',
                 'timeAttribute': 'timestamp',
@@ -8600,7 +8600,7 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'queryIconPosition': ['5'],
               },
               'minResolutionHint': 0.0,
@@ -8626,7 +8626,7 @@ export default {
                 'identifierAttributeField': 'display_name',
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'legendRule': 'Poste de police',
               },
               'minResolutionHint': 0.0,
@@ -8676,7 +8676,7 @@ export default {
                 'identifierAttributeField': 'name',
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'legendRule': 'Dans les temps',
                 'queryLayers': '5',
                 'timeAttribute': 'timestamp',
@@ -8898,7 +8898,7 @@ export default {
                 'identifierAttributeField': 'name',
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'legendRule': 'Dans les temps',
                 'queryLayers': '5',
                 'timeAttribute': 'timestamp',
@@ -9370,12 +9370,12 @@ export default {
                   "\u00a9 Les contributeurs d\u2019<a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
                 'ogcServer': 'Main PNG',
                 'thumbnail':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
                 'wmsLayers': 'buildings_query',
               },
               'name': 'OSM map',
               'type': 'WMTS',
-              'url': 'https://geomapfish-demo-2-8.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml',
+              'url': 'https://geomapfish-demo-2-9.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml',
             },
             {
               'childLayers': [
@@ -9592,7 +9592,7 @@ export default {
         'default_basemap': ['OSM map'],
       },
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/osm.png',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/osm.png',
       'id': 64,
       'metadata': {},
       'name': 'Demo',
@@ -10074,7 +10074,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/edit.png',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/edit.png',
       'id': 73,
       'metadata': {
         'disclaimer': 'Editing theme',
@@ -10122,7 +10122,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/administration.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/administration.jpeg',
       'id': 5,
       'metadata': {
         'timeAttribute': 'cvb',
@@ -10168,7 +10168,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/enseignement2.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/enseignement2.jpeg',
       'id': 92,
       'metadata': {},
       'name': 'Enseignement',
@@ -10240,7 +10240,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/enseignement.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/enseignement.jpeg',
       'id': 38,
       'metadata': {},
       'name': 'Enseignement 2',
@@ -10310,12 +10310,12 @@ export default {
                   "\u00a9 Les contributeurs d\u2019<a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
                 'ogcServer': 'Main PNG',
                 'thumbnail':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
                 'wmsLayers': 'buildings_query',
               },
               'name': 'OSM map',
               'type': 'WMTS',
-              'url': 'https://geomapfish-demo-2-8.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml',
+              'url': 'https://geomapfish-demo-2-9.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml',
             },
             {
               'childLayers': [
@@ -10427,7 +10427,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/filters.png',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/filters.png',
       'id': 176,
       'metadata': {},
       'name': 'Filters',
@@ -10474,7 +10474,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/gestion_eaux.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/gestion_eaux.jpeg',
       'id': 3,
       'metadata': {},
       'name': 'Gestion des eaux',
@@ -10776,7 +10776,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/edit.png',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/edit.png',
       'id': 168,
       'metadata': {},
       'name': 'ObjectEditing',
@@ -10848,7 +10848,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/patrimoine.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/patrimoine.jpeg',
       'id': 4,
       'metadata': {},
       'name': 'Patrimoine',
@@ -10919,7 +10919,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/paysage.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/paysage.jpeg',
       'id': 598,
       'metadata': {
         'disclaimer': 'This is a test disclaimer, to test metadata addition.',
@@ -10995,7 +10995,7 @@ export default {
         'location': ['"Lausanne": [535436, 155243, 539476, 150443]'],
       },
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/osm.png',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/osm.png',
       'id': 185,
       'metadata': {},
       'name': 'Testsearchtheme',
@@ -11091,7 +11091,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/transports.jpeg',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/transports.jpeg',
       'id': 37,
       'metadata': {},
       'name': 'Transport',
@@ -11138,7 +11138,7 @@ export default {
               'metadata': {
                 'legend': true,
                 'legendImage':
-                  'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                  'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
                 'legendRule': 'railways',
                 'snappingConfig': {},
               },
@@ -11807,7 +11807,7 @@ export default {
       ],
       'functionalities': {},
       'icon':
-        'https://geomapfish-demo-2-8.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/QGIS_logo_2017.png',
+        'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/QGIS_logo_2017.png',
       'id': 221,
       'metadata': {},
       'name': 'QGIS server',
