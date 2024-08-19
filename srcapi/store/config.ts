@@ -1471,6 +1471,7 @@ export type Configuration = {
   gmfI18nextConfiguration: InitOptions;
   pytreeLidarprofileJsonUrl: pytreeLidarprofileJsonUrl;
   gmfDatasourceOptions: gmfDatasourceOptions;
+  gmfOidcLoginUrl: string;
 };
 
 export type APIConfig = {
