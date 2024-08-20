@@ -58,7 +58,7 @@ describe('Auth component', () => {
   context('service', () => {
     beforeEach(() => {
       configuration.setConfig({
-        authenticationBaseUrl: 'https://geomapfish-demo-2-8.camptocamp.com/',
+        authenticationBaseUrl: 'https://geomapfish-demo-2-9.camptocamp.com/',
       } as Configuration);
     });
 
