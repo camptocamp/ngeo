@@ -175,7 +175,7 @@
     "neat-csv": "5.2.0",
     "node-sass": "9.0.0",
     "node-sass-importer": "2.0.2",
-    "ol": "7.5.2",
+    "ol": "10.1.0",
     "ol-cesium": "2.14.0",
     "ol-layerswitcher": "4.1.2",
     "ol-mapbox-style": "12.3.5",
