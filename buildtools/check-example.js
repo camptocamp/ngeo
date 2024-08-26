@@ -189,14 +189,18 @@ function loaded(page, browser) {
           request.headers().origin = 'http://localhost:3001';
         }
         console.log(`Request: ${url}`);
-        request.continue({
-          url,
-          headers: {
-            // Don't be intranet
-            'Forwarded': 'for=8.8.8.8;proto=https',
-            'Cache-Control': 'no-cache',
-          },
-        });
+        if (url.startsWith('http://localhost:') && url.endsWith('/favicon.ico')) {
+          request.respond(OSMImage);
+        } else {
+          request.continue({
+            url,
+            headers: {
+              // Don't be intranet
+              'Forwarded': 'for=8.8.8.8;proto=https',
+              'Cache-Control': 'no-cache',
+            },
+          });
+        }
       }
     } else if (
       url.includes('tile.openstreetmap.org') ||
