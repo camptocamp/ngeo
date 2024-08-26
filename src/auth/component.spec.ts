@@ -62,7 +62,6 @@ describe('Auth component', () => {
       } as Configuration);
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     it.skip('tries to login with wrong credentials', async () => {
       gmfAuthenticationService.load_();
       expect(user.getState()).to.equal(UserState.NOT_INITIALIZED);
@@ -81,7 +80,6 @@ describe('Auth component', () => {
       });
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     it.skip('logins successfully', async () => {
       gmfAuthenticationService.load_();
       expect(user.getState()).to.equal(UserState.READY);
@@ -95,7 +93,6 @@ describe('Auth component', () => {
       });
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     it.skip('logs out', async () => {
       expect(user.getState()).to.equal(UserState.LOGGED_IN);
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
