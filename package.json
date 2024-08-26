@@ -178,7 +178,7 @@
     "ol": "7.5.2",
     "ol-cesium": "2.14.0",
     "ol-layerswitcher": "4.1.2",
-    "ol-mapbox-style": "9.7.0",
+    "ol-mapbox-style": "12.3.5",
     "parse-absolute-css-unit": "1.0.2",
     "popper.js": "1.16.1",
     "proj4": "2.11.0",
