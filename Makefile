@@ -20,7 +20,7 @@ GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js') $(shell find contribs/gmf/apps/ -type f -name '*.ts')
-BUILD_JS_FILES = $(shell ls -1 *.js) $(shell ls -1 utils/*.js) $(shell find buildtools/ -type f -name '*.js') $(shell find .storybook/ -type f -name '*.js') $(shell find cypress/ -type f -name '*.js')
+BUILD_JS_FILES = $(shell ls -1 *.js) $(shell ls -1 utils/*.js) $(shell find buildtools/ -type f -name '*.js') $(shell find cypress/ -type f -name '*.js')
 GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html' -or -name '*.html.ejs')
 GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(NGEO_ALL_SRC_FILES)
 
