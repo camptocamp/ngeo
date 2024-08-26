@@ -74,7 +74,7 @@
     "@sentry/types": "7.118.0",
     "@storybook/preset-scss": "1.0.3",
     "@storybook/web-components": "6.5.16",
-    "@trevoreyre/autocomplete-js": "2.4.1",
+    "@trevoreyre/autocomplete-js": "3.0.2",
     "@types/angular": "1.8.9",
     "@types/angular-animate": "1.5.14",
     "@types/angular-dynamic-locale": "0.1.35",
