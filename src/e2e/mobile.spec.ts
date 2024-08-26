@@ -464,7 +464,7 @@ if (Cypress.browser.isHeaded) {
           cy.wrap(btn)
             .click({force: true})
             .then((btn) => {
-              expect(btn).to.not.be.visible;
+              expect(btn).to.not.be.visible; // eslint-disable-line @typescript-eslint/no-unused-expressions
 
               // Check the placeholder
               cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');

@@ -112,7 +112,7 @@ function bootstrap(module) {
       angular.bootstrap(document, [appName]);
     })
     .catch((error) => {
-      window.alert(`Failed to get the dynamic: ${error}`);
+      window.alert(`Failed to get the dynamic: ${error}`); // eslint-disable-line @typescript-eslint/no-base-to-string
     });
 }
 

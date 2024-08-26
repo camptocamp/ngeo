@@ -337,7 +337,7 @@ function d3Elevation(
           .attr('dy', '.75em')
           .attr('transform', 'rotate(-90)')
           .style('fill', 'grey')
-          .text(`${yAxisLabel} [m]`); // eslint-disable-line @typescript-eslint/restrict-template-expressions
+          .text(`${yAxisLabel} [m]`); // eslint-disable-line @typescript-eslint/restrict-template-expressions,@typescript-eslint/no-base-to-string
 
         gEnter
           .append('g')
@@ -447,7 +447,7 @@ function d3Elevation(
         g.select('.x.axis').transition().call(xAxis);
 
         g.select('.x.label')
-          .text(`${xAxisLabel} [${xUnits}]`) // eslint-disable-line @typescript-eslint/restrict-template-expressions
+          .text(`${xAxisLabel} [${xUnits}]`) // eslint-disable-line @typescript-eslint/restrict-template-expressions,@typescript-eslint/no-base-to-string
           .style('fill', 'grey')
           .style('shape-rendering', 'crispEdges');
 

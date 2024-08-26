@@ -502,7 +502,7 @@ export default class {
       source.clear();
       const lidarPointGeom = new olGeomPoint([p.coords[0], p.coords[1]]);
       const lidarPointFeature = new olFeature(lidarPointGeom);
-      if (typeof pointClassification.color !== undefined) {
+      if (pointClassification.color !== undefined) {
         lidarPointFeature.setStyle(
           new olStyleStyle({
             image: new olStyleCircle({

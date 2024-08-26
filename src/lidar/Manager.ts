@@ -421,7 +421,7 @@ export class LidarprofileManager {
         this.processBuffer_(data, iter, distanceOffset, lastLOD, resetPlot);
       })
       .catch((err: Error) => {
-        throw `Error on pytree query: ${err.message}`;
+        throw new Error(`Error on pytree query: ${err.message}`);
       });
   }
 
@@ -470,6 +470,7 @@ export class LidarprofileManager {
 
     try {
       JSON.parse(strHeaderLocal);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       if (!this.isPlotSetup_) {
         const canvas: any = d3select(lidarContainerElement.querySelector('.lidar-canvas'));

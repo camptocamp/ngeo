@@ -337,7 +337,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
         jqueryObj.alert('close');
       }
     } else {
-      console.log(`No disclaimer found for  '${message}'.`);
+      console.log(`No disclaimer found for '${message.msg}'.`);
     }
 
     // (3) Remove message from cache since it's closed now.

@@ -265,8 +265,8 @@ export class Querent {
    */
   wfsDescribeFeatureType(dataSource) {
     if (!dataSource.supportsAttributes) {
-      throw `The data source must support WFS, have a single OGCLayer that
-      is queryable in order to issue WFS DescribeFeatureType requests`;
+      throw new Error(`The data source must support WFS, have a single OGCLayer that
+      is queryable in order to issue WFS DescribeFeatureType requests`);
     }
     if (!dataSource.wfsUrl) {
       throw new Error('Missing WFS URL');
