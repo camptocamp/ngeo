@@ -199,7 +199,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	npm run build-gmf-apps
 	touch $@
 
-.build/eslint.timestamp: .eslintrc.yaml \
+.build/eslint.timestamp: eslint.config.mjs \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -208,16 +208,16 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .eslintrc.yaml, $^)
+	./node_modules/.bin/eslint $(filter-out eslint.config.mjs, $^)
 	touch $@
 
-.build/eslint-ts.timestamp: .eslintrc.yaml \
+.build/eslint-ts.timestamp: eslint.config.mjs \
 		$(TS_FILES)
-	./node_modules/.bin/eslint --max-warnings=0 $(filter-out .eslintrc.yaml .eslintrc-ts.yaml, $^)
+	./node_modules/.bin/eslint --max-warnings=0 $(filter-out eslint.config.mjs .eslintrc-ts.yaml, $^)
 	touch $@
 
 .PHONY: eslint-fix
-eslint-fix: .eslintrc.yaml \
+eslint-fix: eslint.config.mjs \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -225,7 +225,7 @@ eslint-fix: .eslintrc.yaml \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint --fix $(filter-out .eslintrc.yaml, $^)
+	./node_modules/.bin/eslint --fix $(filter-out eslint.config.mjs, $^)
 
 .build/examples-hosted/partials: examples/partials/
 	mkdir -p $(dir $@)
