@@ -41,6 +41,7 @@ module.exports = function (source) {
   let tokens = simpleHTMLTokenizer.tokenize(source);
 
   tokens = tokens.map((tag) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
     if (tag.type === 'StartTag' && tag.tagName === 'svg') {
       let width = undefined;
       let height = undefined;

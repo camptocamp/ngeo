@@ -257,7 +257,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
    * @param key The key string of the toggled classification.
    */
   toggleVisibility(classification: LidarprofileServerConfigClassification, key: string): void {
-    classification.visible === 0 ? (classification.visible = 1) : (classification.visible = 0);
+    classification.visible = classification.visible === 0 ? 1 : 0;
     this.setClassification(classification, parseInt(key));
   }
 

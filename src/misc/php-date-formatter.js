@@ -79,7 +79,7 @@ function _compare(str1, str2) {
  * @returns {string}
  */
 function _lpad(value, length, chr) {
-  const val = value.toString();
+  const val = value.toString(); // eslint-disable-line @typescript-eslint/no-base-to-string
   chr = chr || '0';
   return val.length < length ? _lpad(chr + val, length) : val;
 }

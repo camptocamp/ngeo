@@ -566,7 +566,7 @@ function visit(indent, node, call) {
   if (!done) {
     console.log('Unknown node type');
     console.log(node);
-    throw 'Unknown node type';
+    throw new Error('Unknown node type');
   }
 }
 
