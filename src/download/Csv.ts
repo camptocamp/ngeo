@@ -101,7 +101,6 @@ export class DownloadCsvService {
 
     const rowValues = values.map((value) => {
       if (value !== undefined && value !== null) {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         const strValue = `${value}`;
         // wrap each value into quotes and escape quotes with double quotes
         return `${this.quote_}${strValue.replace(matchAllQuotesRegex, doubleQuote)}${this.quote_}`;

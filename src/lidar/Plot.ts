@@ -245,9 +245,9 @@ export default class {
     const containerEl = container.node();
     const containerWidth = containerEl.getBoundingClientRect().width;
     const containerHeight = containerEl.getBoundingClientRect().height;
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
     this.width_ = containerWidth - (margin.left + margin.right);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
     this.height_ = containerHeight - (margin.top + margin.bottom);
 
     this.material = this.manager_.config.serverConfig.default_attribute;
@@ -322,7 +322,6 @@ export default class {
 
     svg.selectAll('*').remove();
 
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     svg.attr('width', this.width_ + margin.left).attr('height', this.height_ + margin.top + margin.bottom);
 
     svg.on('mousemove', (event: MouseEvent) => {
@@ -340,9 +339,8 @@ export default class {
     // @ts-ignore
     svg.append('g').attr('class', 'x axis').call(xAxis);
 
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
     svg.select('.y.axis').attr('transform', `translate(${margin.left}, ${margin.top})`);
-    // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
     svg.select('.x.axis').attr('transform', `translate(${margin.left}, ${this.height_ + margin.top})`);
 
     svg.select('.y.axis').selectAll('g.tick line').style('opacity', '0.5').style('stroke', '#b7cff7');
@@ -470,9 +468,8 @@ export default class {
 
     const source = this.manager_.lidarPointHighlight.getSource();
     if (p != undefined) {
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       cx = this.updateScaleX(p.distance) + margin.left;
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
       cy = this.updateScaleY(p.altitude) + margin.top;
 
       svg.selectAll('#highlightCircle').remove();
@@ -482,7 +479,7 @@ export default class {
         .attr('id', 'highlightCircle')
         .attr('cx', cx)
         .attr('cy', cy)
-        // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
         .attr('r', pointSize + 1)
         .style('fill', 'orange');
 
@@ -515,7 +512,7 @@ export default class {
         );
       }
 
-      source.addFeature(lidarPointFeature); // eslint-disable-line @typescript-eslint/no-unsafe-call
+      source.addFeature(lidarPointFeature);
     } else {
       source.clear();
       svg.select('#highlightCircle').remove();
@@ -544,22 +541,22 @@ export default class {
 
     if (distance !== undefined) {
       const distanceTxt = i18next.t('Distance: ');
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
       html.push(`${distanceTxt + this.formatDecimals(distance, distDecimal)}`);
     }
     if (altitude !== undefined) {
       const altitudeTxt = i18next.t('Altitude: ');
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
       html.push(`${altitudeTxt + this.formatDecimals(altitude, distDecimal)}`);
     }
     if (classification.length > 0) {
       const classificationTxt = i18next.t('Classification: ');
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
       html.push(`${classificationTxt + classification}`);
     }
     if (intensity !== undefined) {
       const intensityTxt = i18next.t('Intensity: ');
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+
       html.push(`${intensityTxt + this.formatDecimals(intensity, 0)}`);
     }
 

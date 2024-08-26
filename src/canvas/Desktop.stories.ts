@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import ToolButtonElement, {ToolButtonDefault} from 'gmfapi/elements/ToolButtonElement';
 import {css, html, TemplateResult} from 'lit';

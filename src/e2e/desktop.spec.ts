@@ -21,9 +21,6 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/unbound-method */
 
 import olMap from 'ol/Map';
 import path from 'path';
@@ -251,9 +248,9 @@ if (Cypress.browser.isHeaded) {
      */
     function validateCsv(csv: string, validationObject: any) {
       cy.wrap(csv)
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
         .then(stripBom) // Remove Byte order mark
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+
         .then(neatCSV) // Parse the CSV
         .then((list: any) => {
           expect(list, 'number of records').to.have.length(1);
