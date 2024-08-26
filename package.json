@@ -149,7 +149,7 @@
     "i18next": "22.5.1",
     "i18next-browser-languagedetector": "7.2.1",
     "i18next-http-backend": "2.5.2",
-    "i18next-parser": "7.9.0",
+    "i18next-parser": "9.0.2",
     "jasmine-core": "5.2.0",
     "jquery": "3.7.1",
     "jquery-datetimepicker": "2.5.21",
