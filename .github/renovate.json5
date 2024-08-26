@@ -70,6 +70,12 @@
       versioning: 'regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$',
       matchDepNames: ['shellcheck-py/shellcheck-py'],
     },
+    /** Group Webpack dependencies */
+    {
+      matchPackageNames: ['webpack', '/^webpack-.*/', '/.*-loader$/', 'copy-webpack-plugin'],
+      groupName: 'webpack',
+      automerge: true,
+    },
     /** Group and auto merge the CI dependencies */
     {
       matchFileNames: ['.github/**', '.pre-commit-config.yaml', 'ci/**'],
