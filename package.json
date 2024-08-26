@@ -181,7 +181,7 @@
     "parse-absolute-css-unit": "1.0.2",
     "@popperjs/core": "2.11.8",
     "proj4": "2.11.0",
-    "puppeteer": "20.9.0",
+    "puppeteer": "21.11.0",
     "qruri": "0.0.4",
     "raw-loader": "4.0.2",
     "react": "18.3.1",
