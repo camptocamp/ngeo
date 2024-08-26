@@ -20,7 +20,7 @@ GMF_EXAMPLES_JS_FILES := $(GMF_EXAMPLES_HTML_FILES:.html=.js)
 
 GMF_APPS += mobile desktop desktop_alt iframe_api mobile_alt oeedit
 GMF_APPS_JS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.js') $(shell find contribs/gmf/apps/ -type f -name '*.ts')
-BUILD_JS_FILES = $(shell ls -1 *.js) $(shell ls -1 utils/*.js) $(shell find buildtools/ -type f -name '*.js') $(shell find .storybook/ -type f -name '*.js') $(shell find cypress/ -type f -name '*.js')
+BUILD_JS_FILES = $(shell ls -1 *.js) $(shell ls -1 utils/*.js) $(shell find buildtools/ -type f -name '*.js') $(shell find cypress/ -type f -name '*.js')
 GMF_APPS_PARTIALS_FILES = $(shell find contribs/gmf/apps/ -type f -name '*.html' -or -name '*.html.ejs')
 GMF_APPS_ALL_FILES = $(shell find contribs/gmf/apps/ -type f) $(NGEO_ALL_SRC_FILES)
 
@@ -199,25 +199,30 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	npm run build-gmf-apps
 	touch $@
 
-.build/eslint.timestamp: .eslintrc.yaml \
+.build/eslint.timestamp: eslint.config.mjs .build/eslint.test.timestamp \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
-		$(NGEO_TEST_JS_FILES) \
 		$(NGEO_EXAMPLES_JS_FILES) \
-		$(GMF_TEST_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .eslintrc.yaml, $^)
+	./node_modules/.bin/eslint $(filter-out eslint.config.mjs .build/eslint.test.timestamp, $^)
 	touch $@
 
-.build/eslint-ts.timestamp: .eslintrc.yaml \
+
+.build/eslint.test.timestamp: test/eslint.config.mjs \
+		$(NGEO_TEST_JS_FILES) \
+		$(GMF_TEST_JS_FILES)
+	./node_modules/.bin/eslint --config=test/eslint.config.mjs $(filter-out test/eslint.config.mjs, $^)
+	touch $@
+
+.build/eslint-ts.timestamp: eslint.config.mjs \
 		$(TS_FILES)
-	./node_modules/.bin/eslint --max-warnings=0 $(filter-out .eslintrc.yaml .eslintrc-ts.yaml, $^)
+	./node_modules/.bin/eslint --max-warnings=0 $(filter-out eslint.config.mjs .eslintrc-ts.yaml, $^)
 	touch $@
 
 .PHONY: eslint-fix
-eslint-fix: .eslintrc.yaml \
+eslint-fix: eslint.config.mjs \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -225,7 +230,7 @@ eslint-fix: .eslintrc.yaml \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint --fix $(filter-out .eslintrc.yaml, $^)
+	./node_modules/.bin/eslint --fix $(filter-out eslint.config.mjs, $^)
 
 .build/examples-hosted/partials: examples/partials/
 	mkdir -p $(dir $@)

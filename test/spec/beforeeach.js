@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // @ts-nocheck
-/* eslint valid-jsdoc: 0 */
 import angular from 'angular';
 import ngeoMainmodule from 'ngeo/mainmodule';
 import i18next from 'i18next';
