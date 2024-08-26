@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022 Camptocamp SA
+// Copyright (c) 2022-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -39,14 +39,12 @@ import OlGeomLineString from 'ol/geom/LineString';
 export class LineModel {
   /**
    * The observable line's properties.
-   *
    * @private
    */
   line_: BehaviorSubject<OlGeomLineString> = new BehaviorSubject<OlGeomLineString>(null);
 
   /**
-   * Get the lines
-   *
+   * Get the lines.
    * @returns {BehaviorSubject<OlGeomLineString>} The existing line.
    */
   getLine(): BehaviorSubject<OlGeomLineString> {
@@ -55,7 +53,6 @@ export class LineModel {
 
   /**
    * Set the line.
-   *
    * @param line The line
    */
   setLine(line: OlGeomLineString): void {

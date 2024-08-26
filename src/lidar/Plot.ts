@@ -101,7 +101,6 @@ export default class {
   /**
    * Provides a service to create an SVG element with defined axis and a LIDAR
    * point drawing mechanism.
-   *
    * @param gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */
@@ -118,7 +117,6 @@ export default class {
 
     /**
      * d3.scaleLinear X scale.
-     *
      * @param x .
      * @returns x .
      */
@@ -131,14 +129,13 @@ export default class {
 
     /**
      * d3.scaleLinear Y scale.
-     *
      * @param y .
      * @returns y .
      */
     this.updateScaleY = (y) => y;
 
     /**
-     * The material used for the drawing process. Initialized in the setup
+     * The material used for the drawing process. Initialized in the setup.
      */
     this.material = null;
 
@@ -161,8 +158,7 @@ export default class {
   }
 
   /**
-   * Draw the points to the canvas element
-   *
+   * Draw the points to the canvas element.
    * @param points of the profile
    */
   drawPoints(points: GmfLidarprofileUtilsLidarprofilePoints): void {
@@ -219,8 +215,7 @@ export default class {
   }
 
   /**
-   * Setup the SVG components of the D3 chart
-   *
+   * Setup the SVG components of the D3 chart.
    * @param rangeX range of the x scale
    * @param rangeY range of the y scale
    */
@@ -354,8 +349,7 @@ export default class {
   }
 
   /**
-   * Update the plot data at the end of the zoom process
-   *
+   * Update the plot data at the end of the zoom process.
    * @param event Event .
    */
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -380,8 +374,7 @@ export default class {
   }
 
   /**
-   * Update the plot axis during the zoom process
-   *
+   * Update the plot axis during the zoom process.
    * @param event Event .
    */
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -438,8 +431,7 @@ export default class {
   }
 
   /**
-   * Update the OpenLayers overlay that displays point position and attributes values
-   *
+   * Update the OpenLayers overlay that displays point position and attributes values.
    * @param event Event .
    */
   pointHighlight(event: MouseEvent): void {
@@ -579,8 +571,7 @@ export default class {
   }
 
   /**
-   * Change the profile style according to the material color
-   *
+   * Change the profile style according to the material color.
    * @param material value as defined in Pytree attribute configuration
    */
   changeStyle(material: string): void {
@@ -600,8 +591,7 @@ export default class {
   }
 
   /**
-   * Show/Hide classes in the profile
-   *
+   * Show/Hide classes in the profile.
    * @param classification
    *   value as defined in the Pytree classification_colors configuration
    * @param material  value as defined in Pytree attribute configuration

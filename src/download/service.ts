@@ -24,7 +24,6 @@ import {saveAs} from 'file-saver';
 
 /**
  * A function to start a download for a file.
- *
  * @param {string} content The content of the file to download.
  * @param {string} fileName The name of the file to download.
  * @param {string | undefined} opt_fileType The type of the file to download.

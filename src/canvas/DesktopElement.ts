@@ -503,8 +503,7 @@ export default class GmfDesktopCanvas extends BaseElement {
 
   /**
    * Panel resizing:
-   * Store initial mouse position, listen to drag event and resize elements
-   *
+   * Store initial mouse position, listen to drag event and resize elements.
    * @param {PanelResize} panelResizeEvent Interface to store the details of the drag event
    * @param {HTMLElement} separator Element separating the elements to resize
    * @param {HTMLElement} leftElement Left element to resize
@@ -540,8 +539,7 @@ export default class GmfDesktopCanvas extends BaseElement {
 
   /**
    * Panel resizing:
-   * Compute drag offset, change element position or width accordingly
-   *
+   * Compute drag offset, change element position or width accordingly.
    * @param {PanelResize} panelResizeEvent Interface to store the details of the mouse down event
    * @returns {MouseEvent} The drag event
    */
@@ -598,7 +596,6 @@ export default class GmfDesktopCanvas extends BaseElement {
 
   /**
    * Resize the data (left) panel when dragging the separator
-   *
    * @param {MouseEvent} event The mouse down event
    * @param {ShadowRoot} desktopCanvas The desktop canvas
    * @returns {MouseEvent} The mouse down event
@@ -616,7 +613,6 @@ export default class GmfDesktopCanvas extends BaseElement {
 
   /**
    * Resize the tool (right) panel when dragging the separator
-   *
    * @param {MouseEvent} event The mouse down event
    * @param {ShadowRoot} desktopCanvas The desktop canvas
    * @returns {MouseEvent} The mouse down event
