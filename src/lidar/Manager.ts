@@ -47,6 +47,7 @@ import olStyleStyle from 'ol/style/Style';
 import {select as d3select} from 'd3';
 
 import OlMap from 'ol/Map';
+import OlFeature from 'ol/Feature';
 import OlOverlay from 'ol/Overlay';
 import OlLayerVector from 'ol/layer/Vector';
 import OlSourceVector from 'ol/source/Vector';
@@ -88,13 +89,13 @@ export class LidarprofileManager {
   /**
    * The hovered point geometry (point) in D3 profile highlighted on the 2D map.
    */
-  lidarPointHighlight: OlLayerVector<OlSourceVector<OlGeomGeometry>>;
+  lidarPointHighlight: OlLayerVector<OlSourceVector<OlFeature<OlGeomGeometry>>>;
 
   /**
    * The profile footpring represented as a LineString represented
    * with real mapunites stroke width.
    */
-  lidarBuffer: OlLayerVector<OlSourceVector<OlGeomGeometry>>;
+  lidarBuffer: OlLayerVector<OlSourceVector<OlFeature<OlGeomGeometry>>>;
 
   /**
    * The variable where all points of the profile are stored.
@@ -632,7 +633,7 @@ export class LidarprofileManager {
       domainX[1],
     );
 
-    const source: olSourceVector<OlGeomGeometry> = this.lidarBuffer.getSource();
+    const source: olSourceVector<OlFeature<OlGeomGeometry>> = this.lidarBuffer.getSource();
     source.clear();
     source.addFeature(clip.bufferGeom);
     this.lidarBuffer.setStyle(clip.bufferStyle);

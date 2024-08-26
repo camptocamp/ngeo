@@ -515,7 +515,7 @@ export default class {
         );
       }
 
-      source.addFeature(lidarPointFeature);
+      source.addFeature(lidarPointFeature); // eslint-disable-line @typescript-eslint/no-unsafe-call
     } else {
       source.clear();
       svg.select('#highlightCircle').remove();
