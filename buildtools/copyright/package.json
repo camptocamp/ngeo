@@ -1,6 +1,0 @@
-{
-  "name": "eslint-plugin-copyright",
-  "version": "1.0.0",
-  "description": "Check the copyright",
-  "main": "index.js"
-}
