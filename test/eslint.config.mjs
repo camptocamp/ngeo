@@ -8,9 +8,5 @@ export default [
                 sinon: true,
             },
         },
-
-        rules: {
-            'valid-jsdoc': 'off',
-        },
     },
 ];

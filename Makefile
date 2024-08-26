@@ -202,9 +202,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 .build/eslint.timestamp: eslint.config.mjs .build/eslint.test.timestamp \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
-		$(NGEO_TEST_JS_FILES) \
 		$(NGEO_EXAMPLES_JS_FILES) \
-		$(GMF_TEST_JS_FILES) \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
