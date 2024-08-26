@@ -6,6 +6,7 @@
   labels: ['dependencies'],
   separateMajorMinor: true,
   separateMinorPatch: true,
+  separateMultipleMajor: true,
   prHourlyLimit: 0,
   prConcurrentLimit: 0,
   lockFileMaintenance: {enabled: true, automerge: true, schedule: 'after 5pm on the first day of the month'},
