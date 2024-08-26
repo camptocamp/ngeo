@@ -199,7 +199,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	npm run build-gmf-apps
 	touch $@
 
-.build/eslint.timestamp: eslint.config.mjs \
+.build/eslint.timestamp: eslint.config.mjs .build/eslint.test.timestamp \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -208,7 +208,14 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out eslint.config.mjs, $^)
+	./node_modules/.bin/eslint $(filter-out eslint.config.mjs .build/eslint.test.timestamp, $^)
+	touch $@
+
+
+.build/eslint.test.timestamp: test/eslint.config.mjs \
+		$(NGEO_TEST_JS_FILES) \
+		$(GMF_TEST_JS_FILES)
+	./node_modules/.bin/eslint --config= test/eslint.config.mjs $(filter-out test/eslint.config.mjs, $^)
 	touch $@
 
 .build/eslint-ts.timestamp: eslint.config.mjs \
