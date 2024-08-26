@@ -215,7 +215,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 .build/eslint.test.timestamp: test/eslint.config.mjs \
 		$(NGEO_TEST_JS_FILES) \
 		$(GMF_TEST_JS_FILES)
-	./node_modules/.bin/eslint --config= test/eslint.config.mjs $(filter-out test/eslint.config.mjs, $^)
+	./node_modules/.bin/eslint --config=test/eslint.config.mjs $(filter-out test/eslint.config.mjs, $^)
 	touch $@
 
 .build/eslint-ts.timestamp: eslint.config.mjs \
