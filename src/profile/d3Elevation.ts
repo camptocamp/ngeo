@@ -22,7 +22,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable jsdoc/no-undefined-types */
 
 import d3, {
   area as d3area,
@@ -269,7 +268,7 @@ function d3Elevation(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const func = function (data: number[][], index: number, groups: d3.BaseType[] | ArrayLike<d3.BaseType>) {
       // @ts-ignore
-      const element: ContainerElement = this; // eslint-disable-line  @typescript-eslint/no-this-alias,  @typescript-eslint/no-explicit-any
+      const element: ContainerElement = this; // eslint-disable-line  @typescript-eslint/no-this-alias
       d3select(element).selectAll('svg').remove();
       if (data === undefined) {
         return;

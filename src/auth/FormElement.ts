@@ -618,9 +618,9 @@ export default class GmfAuthForm extends GmfBaseElement {
    */
   cleanForm_(): void {
     const form = this.renderRoot.querySelector('form') as HTMLFormElement;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
     const loginField = document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+
     const passwordField = document.body.querySelector('input[slot=gmf-auth-password]') as HTMLInputElement;
     form.reset();
     loginField.value = '';
