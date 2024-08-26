@@ -73,9 +73,17 @@
     },
     /** Group Webpack dependencies */
     {
-      matchPackageNames: ['webpack', '/^webpack-.*/', '/.*-loader$/', 'copy-webpack-plugin'],
+      matchPackageNames: [
+        'webpack',
+        '/^webpack-.*/',
+        '/.*-webpack-plugin/',
+        '/.*-webpack$/',
+        '/.*-loader$/',
+        'loader-utils',
+      ],
       groupName: 'webpack',
       automerge: true,
+      separateMultipleMajor: false,
     },
     /** Group and auto merge the CI dependencies */
     {
