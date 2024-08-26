@@ -165,7 +165,7 @@
     "karma-sourcemap-loader": "0.4.0",
     "karma-webpack": "4.0.2",
     "lit": "2.8.0",
-    "lit-element": "3.3.3",
+    "lit-element": "4.1.0",
     "lit-html": "2.8.0",
     "loader-utils": "2.0.4",
     "loc-i18next": "0.1.6",
