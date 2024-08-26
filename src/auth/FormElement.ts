@@ -373,7 +373,6 @@ export default class GmfAuthForm extends GmfBaseElement {
 
   /**
    * Calls the authentication service changePassword method.
-   *
    * @param evt the event
    */
   changePassword(evt: Event): void {
@@ -457,7 +456,6 @@ export default class GmfAuthForm extends GmfBaseElement {
 
   /**
    * Calls the authentication service login method.
-   *
    * @param evt Event from the form submit action.
    */
   login(evt: Event): void {
@@ -503,7 +501,6 @@ export default class GmfAuthForm extends GmfBaseElement {
 
   /**
    * Calls the authentication service logout method.
-   *
    * @param evt Event from the form submit action.
    */
   logout(evt: Event): void {
@@ -536,7 +533,6 @@ export default class GmfAuthForm extends GmfBaseElement {
 
   /**
    * Calls the authentication service resetPassword method.
-   *
    * @param evt Event from the form submit action.
    */
   resetPassword(evt: Event): void {
@@ -591,8 +587,7 @@ export default class GmfAuthForm extends GmfBaseElement {
   }
 
   /**
-   * Set an error notification
-   *
+   * Set an error notification.
    * @param errors List of errors
    * @param messageType Type of message
    */

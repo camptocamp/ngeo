@@ -81,23 +81,23 @@ export class LidarprofileManager {
   map_: undefined | OlMap;
 
   /**
-   * The hovered point attributes in D3 profile highlighted on the 2D map
+   * The hovered point attributes in D3 profile highlighted on the 2D map.
    */
   cartoHighlight: OlOverlay;
 
   /**
-   * The hovered point geometry (point) in D3 profile highlighted on the 2D map
+   * The hovered point geometry (point) in D3 profile highlighted on the 2D map.
    */
   lidarPointHighlight: OlLayerVector<OlSourceVector<OlGeomGeometry>>;
 
   /**
    * The profile footpring represented as a LineString represented
-   * with real mapunites stroke width
+   * with real mapunites stroke width.
    */
   lidarBuffer: OlLayerVector<OlSourceVector<OlGeomGeometry>>;
 
   /**
-   * The variable where all points of the profile are stored
+   * The variable where all points of the profile are stored.
    */
   profilePoints: GmfLidarprofileUtilsLidarprofilePoints;
 
@@ -118,7 +118,7 @@ export class LidarprofileManager {
   debouncer = debounce(() => this.updateData_(), 200);
   /**
    * Provides a service to manage a D3js component to be used to draw an lidar point cloud profile chart.
-   * Requires access to a Pytree webservice: https://github.com/sitn/pytree
+   * Requires access to a Pytree webservice: https://github.com/sitn/pytree.
    */
   constructor() {
     /**
@@ -138,7 +138,7 @@ export class LidarprofileManager {
     this.map_ = null;
 
     /**
-     * The hovered point attributes in D3 profile highlighted on the 2D map
+     * The hovered point attributes in D3 profile highlighted on the 2D map.
      */
     this.cartoHighlight = new olOverlay({
       offset: [0, -15],
@@ -146,7 +146,7 @@ export class LidarprofileManager {
     });
 
     /**
-     * The hovered point geometry (point) in D3 profile highlighted on the 2D map
+     * The hovered point geometry (point) in D3 profile highlighted on the 2D map.
      */
     this.lidarPointHighlight = new olLayerVector({
       className: 'canvas2d',
@@ -163,7 +163,7 @@ export class LidarprofileManager {
 
     /**
      * The profile footpring represented as a LineString represented
-     * with real mapunites stroke width
+     * with real mapunites stroke width.
      */
     this.lidarBuffer = new olLayerVector({
       className: 'canvas2d',
@@ -171,7 +171,7 @@ export class LidarprofileManager {
     });
 
     /**
-     * The variable where all points of the profile are stored
+     * The variable where all points of the profile are stored.
      */
     this.profilePoints = this.getEmptyProfilePoints_();
 
@@ -200,7 +200,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * Clears the profile footprint
+   * Clears the profile footprint.
    */
   clearBuffer(): void {
     if (this.lidarBuffer) {
@@ -211,8 +211,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * Set the line for the profile
-   *
+   * Set the line for the profile.
    * @param line that defines the profile
    */
   setLine(line: undefined | OlGeomLineString): void {
@@ -220,8 +219,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * Set the map used by the profile
-   *
+   * Set the map used by the profile.
    * @param map The map.
    */
   setMap(map: OlMap): void {
@@ -247,8 +245,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests
-   *
+   * Load profile data (lidar points) by successive Levels Of Details using asynchronous requests.
    * @param clippedLine an array of the clipped line coordinates
    * @param distanceOffset the left side of D3 profile domain at current zoom and pan configuration
    * @param resetPlot whether to reset D3 plot or not
@@ -356,8 +353,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * Request to Pytree service for a range of Level Of Detail (LOD)
-   *
+   * Request to Pytree service for a range of Level Of Detail (LOD).
    * @param minLOD minimum Level Of Detail of the request
    * @param maxLOD maximum Level Of Detail of the request
    * @param iter the iteration in profile requests cycle
@@ -430,8 +426,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * Process the binary array return by Pytree (cPotree)
-   *
+   * Process the binary array return by Pytree (cPotree).
    * @param profile binary array returned by cPotree executable called by Pytree
    * @param iter the iteration in profile requests cycle
    * @param distanceOffset the left side of D3 profile domain at current zoom and pan configuration
@@ -609,8 +604,7 @@ export class LidarprofileManager {
   }
 
   /**
-   * Callback method used by the debouncer to update the profile data
-   *
+   * Callback method used by the debouncer to update the profile data.
    * @private
    */
   updateData_(): void {

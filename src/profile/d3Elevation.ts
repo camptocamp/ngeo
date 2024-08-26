@@ -106,7 +106,6 @@ type scaleModifierFunction = {
  *             "x": 541620
  *         }, ...
  *     ]
- *
  * @param {ngeoOptionsNgeoProfileOptions} options Profile options.
  * @param {NgeoProfileElevationComponentProfileOptions<unknown>} functions Profile options.
  * @returns D3js component.
@@ -485,8 +484,7 @@ function d3Elevation(
       g.select('.overlay').on('mouseout', mouseout).on('mousemove', mousemove);
 
       /**
-       * Generate the highlight from the mouse position
-       *
+       * Generate the highlight from the mouse position.
        * @param event Event
        */
       function mousemove(event: Event): void {
@@ -518,7 +516,6 @@ function d3Elevation(
   /**
    * Highlight the given distance and corresponding elevation on chart.
    * Fire the hoverCallback callback with corresponding point.
-   *
    * @param {number} distance Distance.
    */
   profile.highlight = function (distance: number) {

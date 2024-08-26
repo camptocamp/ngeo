@@ -43,7 +43,7 @@ import {updateScaleFunction} from 'ngeo/lidar/Plot';
 import i18next from 'i18next';
 
 /**
- * The lidar point attribute list width default option
+ * The lidar point attribute list width default option.
  */
 type LidarPointAttributeList = {
   availableOptions?: LidarprofileServerConfigPointAttributes[];
@@ -52,7 +52,7 @@ type LidarPointAttributeList = {
 };
 
 /**
- * The object containing all points in profile
+ * The object containing all points in profile.
  */
 export type LidarprofileClientConfig = {
   autoWidth?: boolean;
@@ -67,7 +67,7 @@ export type LidarprofileClientConfig = {
 };
 
 /**
- * The object containing all points in profile
+ * The object containing all points in profile.
  */
 export type LidarprofilePoints = {
   distance?: number[];
@@ -79,7 +79,7 @@ export type LidarprofilePoints = {
 };
 
 /**
- * Profile point after measure or after parsing of the binary array returned by Pytree
+ * Profile point after measure or after parsing of the binary array returned by Pytree.
  */
 export type LidarPoint = {
   cx?: number | undefined;
@@ -108,8 +108,7 @@ type NiceLOD = {
 export default class {
   onload: () => void;
   /**
-   * Clip a linestring with start and end measure given by D3 Chart domain
-   *
+   * Clip a linestring with start and end measure given by D3 Chart domain.
    * @param config the LIDAR profile config
    *    instance
    * @param map_resolution the current resolution of the map
@@ -247,8 +246,7 @@ export default class {
 
   /**
    * Get a Level Of Details and with for a given chart span
-   * Configuration is set up in Pytree configuration
-   *
+   * Configuration is set up in Pytree configuration.
    * @param span domain extent
    * @param max_levels levels defined
    *    by a LIDAR server
@@ -272,7 +270,6 @@ export default class {
 
   /**
    * Create a image file by combining SVG and canvas elements and let the user downloads it.
-   *
    * @param profileClientConfig The profile client configuration.
    */
   downloadProfileAsImageFile(profileClientConfig: LidarprofileClientConfig): void {
@@ -340,7 +337,6 @@ export default class {
 
   /**
    * Transforms a lidarprofile into multiple single points sorted by distance.
-   *
    * @param profilePoints in the profile
    * @returns An array of LIDAR Points.
    */
@@ -363,7 +359,6 @@ export default class {
 
   /**
    * Get the data for a CSV export of the profile.
-   *
    * @param points A list of lidar profile point objects.
    * @returns Objects for a csv export (column: value).
    */
@@ -389,8 +384,7 @@ export default class {
   }
 
   /**
-   * Find the maximum value in am array of numbers
-   *
+   * Find the maximum value in am array of numbers.
    * @param array of number
    * @returns the maximum of input array
    */
@@ -399,8 +393,7 @@ export default class {
   }
 
   /**
-   * Find the minimum value in am array of numbers
-   *
+   * Find the minimum value in am array of numbers.
    * @param array of number
    * @returns the minimum of input array
    */
@@ -415,8 +408,7 @@ export default class {
   }
 
   /**
-   * Transform OpenLayers linestring into a cPotree compatible definition
-   *
+   * Transform OpenLayers linestring into a cPotree compatible definition.
    * @param line the profile 2D line
    * @returns linestring in a cPotree/pytree compatible string definition
    */
@@ -432,8 +424,7 @@ export default class {
   }
 
   /**
-   * Find the profile's closest point in profile data to the chart mouse position
-   *
+   * Find the profile's closest point in profile data to the chart mouse position.
    * @param points Object containing points properties as arrays
    * @param xs mouse x coordinate on canvas element
    * @param ys mouse y coordinate on canvas element

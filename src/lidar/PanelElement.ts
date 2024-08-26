@@ -253,7 +253,6 @@ export default class GmfLidarPanel extends ToolPanelElement {
 
   /**
    * Toggle visibility of the selected classification object.
-   *
    * @param classification The classification to change visibility.
    * @param key The key string of the toggled classification.
    */
@@ -263,7 +262,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   }
 
   /**
-   * Set visible the selected point attribute option
+   * Set visible the selected point attribute option.
    */
   selectPointAttribute(): void {
     const selectElement = this.renderRoot.querySelector('#select-attributes');
@@ -334,7 +333,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
     this.resetPlot();
   }
   /**
-   * Activate the measure tool
+   * Activate the measure tool.
    */
   setMeasureActive(): void {
     if (!this.profile.measure) {
@@ -345,7 +344,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   }
 
   /**
-   * Clear the current measure
+   * Clear the current measure.
    */
   clearMeasure(): void {
     if (!this.profile.measure) {
@@ -355,7 +354,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   }
 
   /**
-   * Reload and reset the plot for the current profile (reloads data)
+   * Reload and reset the plot for the current profile (reloads data).
    */
   resetPlot(): void {
     this.profile.clearBuffer();
@@ -366,7 +365,6 @@ export default class GmfLidarPanel extends ToolPanelElement {
 
   /**
    * Get all available point attributes.
-   *
    * @returns Available point attributes.
    */
   getAvailablePointAttributes(): LidarprofileServerConfigPointAttributes[] | undefined {
@@ -374,8 +372,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   }
 
   /**
-   * Set the selected point attribute
-   *
+   * Set the selected point attribute.
    * @param {LidarprofileServerConfigPointAttribute} selectedPointAttribute The new selected point attribute.
    */
   setSelectedPointAttribute(selectedPointAttribute: LidarprofileServerConfigPointAttribute): void {
@@ -384,8 +381,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   }
 
   /**
-   * Get the available classifications for this dataset
-   *
+   * Get the available classifications for this dataset.
    * @returns classification list
    */
   getClassification(): LidarprofileServerConfigClassifications {
@@ -396,8 +392,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
   }
 
   /**
-   * Sets the visible classification in the profile
-   *
+   * Sets the visible classification in the profile.
    * @param classification selected value.
    * @param key of the classification code.
    */

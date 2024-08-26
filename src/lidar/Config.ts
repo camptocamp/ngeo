@@ -213,8 +213,7 @@ export class LidarprofileConfigService {
   }
 
   /**
-   * Initialize the service variables from Pytree profile_config_gmf2 route
-   *
+   * Initialize the service variables from Pytree profile_config_gmf2 route.
    * @returns Promise<void | Response> The server configuration.
    */
   initProfileConfig(): Promise<void | Response> {

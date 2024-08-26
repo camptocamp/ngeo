@@ -36,7 +36,6 @@ import OlEventsEvent from 'ol/events/Event';
  *
  * Example of initialization:
  * const featureOverlay = new FeatureOverlay(manager, index);
- *
  * @param {NgeoMapFeatureOverlayMgrFeatureOverlayMgr} manager The feature overlay manager.
  * @param {number} index This feature overlay's index.
  */
@@ -55,7 +54,6 @@ export class FeatureOverlay {
 
   /**
    * Add a feature to the feature overlay.
-   *
    * @param {OlFeature<OlGeomGeometry>} feature The feature to add.
    */
   addFeature(feature: OlFeature<OlGeomGeometry>): void {
@@ -64,7 +62,6 @@ export class FeatureOverlay {
 
   /**
    * Remove a feature from the feature overlay.
-   *
    * @param {OlFeature<OlGeomGeometry>} feature The feature to remove.
    */
   removeFeature(feature: OlFeature<OlGeomGeometry>): void {
@@ -73,7 +70,6 @@ export class FeatureOverlay {
 
   /**
    * Check if featureOverlay has no features.
-   *
    * @returns {boolean} True if there is no features. False otherwise.
    */
   isEmpty(): boolean {
@@ -93,7 +89,6 @@ export class FeatureOverlay {
    * configure the feature overlay with a feature collection you will use the
    * collection to add and remove features instead of using the overlay's
    * `addFeature`, `removeFeature` and `clear` functions.
-   *
    * @param {OlCollection<OlFeature<OlGeomGeometry>>} features Feature collection.
    */
   setFeatures(features: OlCollection<OlFeature<OlGeomGeometry>>): void {
@@ -118,7 +113,6 @@ export class FeatureOverlay {
 
   /**
    * Set a style for the feature overlay.
-   *
    * @param {OlStyleStyle | OlStyleStyle[] | OlStyleStyleStyleFunction} style Style.
    */
   setStyle(style: OlStyleStyle | OlStyleStyle[] | OlStyleStyleStyleFunction): void {

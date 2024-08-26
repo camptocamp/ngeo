@@ -67,7 +67,6 @@ export class DownloadCsvService {
 
   /**
    * Generate a CSV.
-   *
    * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
    * @param {GridColumnDef[]} columnDefs Column definitions.
    * @returns {string} The CSV file as string.
@@ -116,7 +115,6 @@ export class DownloadCsvService {
 
   /**
    * Generate a CSV and start a download with the generated file.
-   *
    * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
    * @param {GridColumnDef[]} columnDefs Column definitions.
    * @param {string} fileName The CSV file name, without the extension.

@@ -55,14 +55,12 @@ export enum MessageType {
 
 /**
  * Abstract class for services that display messages.
- *
  * @class
  * @abstract
  */
 export default class {
   /**
    * Show the message.
-   *
    * @abstract
    * @param message Message.
    * @protected
@@ -73,7 +71,6 @@ export default class {
   /**
    * Show disclaimer message string or object or list of disclame message
    * strings or objects.
-   *
    * @param object A message or list of messages as text or configuration objects.
    */
   show(object: string | Message | (string | Message)[]): void {
@@ -83,7 +80,6 @@ export default class {
 
   /**
    * Display the given error message or list of error messages.
-   *
    * @param message Message or list of messages.
    */
   error(message: string | string[]): void {
@@ -92,7 +88,6 @@ export default class {
 
   /**
    * Display the given info message or list of info messages.
-   *
    * @param message Message or list of messages.
    */
   info(message: string | string[]): void {
@@ -101,7 +96,6 @@ export default class {
 
   /**
    * Display the given success message or list of success messages.
-   *
    * @param message Message or list of messages.
    */
   success(message: string | string[]): void {
@@ -110,7 +104,6 @@ export default class {
 
   /**
    * Display the given warning message or list of warning messages.
-   *
    * @param message Message or list of messages.
    */
   warn(message: string | string[]): void {
@@ -122,7 +115,6 @@ export default class {
    * message strings, message object or list message objects. The type can be
    * overridden here as well OR defined (if the message(s) is/are string(s),
    * defaults to 'information').
-   *
    * @param object
    *     A message or list of messages as text or configuration objects.
    * @param opt_type The type of message to override the messages with.

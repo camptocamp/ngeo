@@ -45,8 +45,7 @@ export default class {
   pEnd_: GmfLidarprofileUtilsLidarPoint;
 
   /**
-   * Measure tool for the d3 chart
-   *
+   * Measure tool for the d3 chart.
    * @param gmfLidarprofileManagerInstance
    *    gmf lidar profile manager instance
    */
@@ -68,7 +67,7 @@ export default class {
   }
 
   /**
-   * Clear the current measure
+   * Clear the current measure.
    */
   clearMeasure(): void {
     this.pStart_ = {};
@@ -92,7 +91,7 @@ export default class {
   }
 
   /**
-   * Activate the measure tool
+   * Activate the measure tool.
    */
   setMeasureActive(): void {
     const svg = d3select(
@@ -106,7 +105,6 @@ export default class {
 
   /**
    * Measure and display height after two click on the profile.
-   *
    * @param event Event .
    */
   measureHeight(event: MouseEvent): void {

@@ -36,7 +36,6 @@ let userTransformer = (user: User) => user;
 
 /**
  * Method defined in the aim to be overridden.
- *
  * @param fn The callback function to apply after login.
  */
 export function setOnSuccessfulLoginFunction(fn: typeof userTransformer): void {
@@ -66,14 +65,12 @@ export enum RouteSuffix {
 export class AuthenticationService {
   /**
    * The authentication url without trailing slash.
-   *
    * @private
    */
   baseUrl_: string;
 
   /**
    * The user.
-   *
    * @private
    */
   user_: User;
@@ -81,7 +78,6 @@ export class AuthenticationService {
   /**
    * Don't request a new user object from the back-end after
    * logging out if the logged-in user's role has this role.
-   *
    * @private
    */
   noReloadRole_: undefined | gmfOptionsGmfAuthenticationNoReloadRole;
@@ -93,7 +89,6 @@ export class AuthenticationService {
   constructor() {
     /**
      * The authentication url without trailing slash.
-     *
      * @private
      */
     this.baseUrl_ = null;
@@ -111,7 +106,6 @@ export class AuthenticationService {
     /**
      * Don't request a new user object from the back-end after
      * logging out if the logged-in user's role has this role.
-     *
      * @private
      */
     this.noReloadRole_ = null;
@@ -137,7 +131,6 @@ export class AuthenticationService {
 
   /**
    * Check whether the user is connected or not like on load.
-   *
    * @private
    */
   checkConnection_(): void {
@@ -165,7 +158,6 @@ export class AuthenticationService {
   /**
    * Load the authentication service, which sends an async request to
    * determine whether the user is currently connected or not.
-   *
    * @private
    */
   load_(): void {
@@ -262,7 +254,6 @@ export class AuthenticationService {
 
   /**
    * Check the user to have a user with all parameters in all cases.
-   *
    * @param data Ajax response.
    * @returns Response.
    */

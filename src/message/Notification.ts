@@ -26,7 +26,6 @@ import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
  * Default delay (in milliseconds) a message should be displayed.
- *
  * @private
  */
 const DEFAULT_DELAY = 7000;
@@ -40,7 +39,6 @@ type CacheItem = {
  * Provides methods to display any sort of messages, notifications, errors,
  * etc. Requires Bootstrap library (both CSS and JS) to display the alerts
  * properly.
- *
  * @abstract
  */
 export class MessageNotification extends ngeoMessageMessage {
@@ -82,7 +80,6 @@ export class MessageNotification extends ngeoMessageMessage {
   /**
    * Display the given message string or object or list of message strings or
    * objects.
-   *
    * @param object
    *     A message or list of messages as text or configuration objects.
    */
@@ -162,7 +159,6 @@ export class MessageNotification extends ngeoMessageMessage {
 
   /**
    * Clear a message using its cache item.
-   *
    * @param item Cache item.
    * @private
    */
