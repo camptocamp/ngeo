@@ -113,7 +113,7 @@ type scaleModifierFunction = {
  */
 function d3Elevation(
   options: ngeoOptionsNgeoProfileOptions,
-  functions: NgeoProfileElevationComponentProfileOptions<unknown>,
+  functions: NgeoProfileElevationComponentProfileOptions,
 ): unknown {
   /**
    * Whether the simplified profile should be shown.
