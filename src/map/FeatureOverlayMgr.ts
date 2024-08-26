@@ -66,9 +66,9 @@ export class FeatureOverlayMgr {
 
   groups_: MapFeatureOverlayGroup[];
 
-  source_: OlSourceVector<OlGeomGeometry>;
+  source_: OlSourceVector<OlFeature<OlGeomGeometry>>;
 
-  layer_: OlLayerVector<OlSourceVector<OlGeomGeometry>>;
+  layer_: OlLayerVector<OlSourceVector<OlFeature<OlGeomGeometry>>>;
 
   constructor() {
     this.featureUidToGroupIndex_ = {};
@@ -137,7 +137,7 @@ export class FeatureOverlayMgr {
   /**
    * @returns {olLayerVector<olSourceVector<OlGeomGeometry>>} The vector layer used internally.
    */
-  getLayer(): olLayerVector<olSourceVector<OlGeomGeometry>> {
+  getLayer(): olLayerVector<olSourceVector<OlFeature<OlGeomGeometry>>> {
     return this.layer_;
   }
 
