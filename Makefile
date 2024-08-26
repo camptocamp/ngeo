@@ -199,11 +199,7 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 	npm run build-gmf-apps
 	touch $@
 
-.build/node_modules.copyright.timestamp: .build/node_modules.timestamp
-	npm install --no-save --omit=optional --no-package-lock ./buildtools/copyright
-	touch $@
-
-.build/eslint.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml \
+.build/eslint.timestamp: .eslintrc.yaml \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -212,16 +208,16 @@ examples-hosted-apps: .build/gmf-apps.timestamp
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml, $^)
+	./node_modules/.bin/eslint $(filter-out .eslintrc.yaml, $^)
 	touch $@
 
-.build/eslint-ts.timestamp: .build/node_modules.copyright.timestamp .eslintrc.yaml \
+.build/eslint-ts.timestamp: .eslintrc.yaml \
 		$(TS_FILES)
-	./node_modules/.bin/eslint --max-warnings=0 $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml .eslintrc-ts.yaml, $^)
+	./node_modules/.bin/eslint --max-warnings=0 $(filter-out .eslintrc.yaml .eslintrc-ts.yaml, $^)
 	touch $@
 
 .PHONY: eslint-fix
-eslint-fix: .build/node_modules.copyright.timestamp .eslintrc.yaml \
+eslint-fix: .eslintrc.yaml \
 		$(API_JS_FILES) \
 		$(NGEO_JS_FILES) \
 		$(NGEO_TEST_JS_FILES) \
@@ -229,7 +225,7 @@ eslint-fix: .build/node_modules.copyright.timestamp .eslintrc.yaml \
 		$(GMF_EXAMPLES_JS_FILES) \
 		$(GMF_APPS_JS_FILES) \
 		$(BUILD_JS_FILES)
-	./node_modules/.bin/eslint --fix $(filter-out .build/node_modules.copyright.timestamp .eslintrc.yaml, $^)
+	./node_modules/.bin/eslint --fix $(filter-out .eslintrc.yaml, $^)
 
 .build/examples-hosted/partials: examples/partials/
 	mkdir -p $(dir $@)

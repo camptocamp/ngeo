@@ -7,7 +7,6 @@ extends:
   - plugin:lit/recommended
 
 plugins:
-  - copyright
   - '@typescript-eslint'
 
 parser: '@typescript-eslint/parser'
@@ -34,7 +33,6 @@ rules:
     - error
     - nofunc
   no-var: error
-  copyright/copyright: error
   jsdoc/require-param-type: off
   jsdoc/require-property-type: off
   jsdoc/require-returns-type: off
