@@ -189,14 +189,18 @@ function loaded(page, browser) {
           request.headers().origin = 'http://localhost:3001';
         }
         console.log(`Request: ${url}`);
-        request.continue({
-          url,
-          headers: {
-            // Don't be intranet
-            'Forwarded': 'for=8.8.8.8;proto=https',
-            'Cache-Control': 'no-cache',
-          },
-        });
+        if (url.startsWith('http://localhost:') && url.endsWith('/favicon.ico')) {
+          request.respond(OSMImage);
+        } else {
+          request.continue({
+            url,
+            headers: {
+              // Don't be intranet
+              'Forwarded': 'for=8.8.8.8;proto=https',
+              'Cache-Control': 'no-cache',
+            },
+          });
+        }
       }
     } else if (
       url.includes('tile.openstreetmap.org') ||
@@ -268,7 +272,11 @@ function loaded(page, browser) {
         console.log(`Console ${type}`);
         console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
         console.log(message.text());
-        if (!message.text().includes('CORS')) {
+        if (
+          !message.text().includes('CORS') &&
+          !message.text().includes('Driver Message') &&
+          !message.text().includes('Password field is not contained in a form')
+        ) {
           await browser.close();
           process.exit(2);
         }

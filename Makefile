@@ -291,6 +291,7 @@ contribs/dist: .build/build-dll.timestamp
 	python3 -m http.server 3001 &
 	touch $@
 
+# Add --generate as argument to buildtools/check-example to regenerate the reference images
 .build/%.check.timestamp: .build/examples-ngeo.timestamp \
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
@@ -309,6 +310,7 @@ contribs/dist: .build/build-dll.timestamp
 	! buildtools/check-example .build/examples-hosted/error.html.png examples/error-ref.png
 	touch $@
 
+# Add --generate as argument to buildtools/check-example to regenerate the reference images
 .build/contribs/gmf/%.check.timestamp: .build/examples-gmf.timestamp \
 		.build/node_modules.timestamp \
 		.build/httpserver.timestamp
@@ -318,6 +320,7 @@ contribs/dist: .build/build-dll.timestamp
 	buildtools/check-example .build/examples-hosted/contribs/gmf/$*.html.png contribs/gmf/examples/$*-ref.png
 	touch $@
 
+# Add --generate as argument to buildtools/check-example to regenerate the reference images
 .build/contribs/gmf/apps/%.check.timestamp: .build/gmf-apps.timestamp \
 		.build/httpserver.timestamp
 	mkdir -p $(dir $@)

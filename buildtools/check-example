@@ -21,6 +21,7 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import argparse
 import os
 import shutil
 import subprocess
@@ -42,8 +43,14 @@ def main():
     Optional mask image (name from Reference image): examples/simple-mask.png
     Generate diff image (name from Generated image): .build/examples-hosted/simple-diff.png
     """
-    current = sys.argv[1]
-    ref = sys.argv[2]
+    parser = argparse.ArgumentParser(description=main.__doc__)
+    parser.add_argument("--generate", action="store_true", help="Regenerate the ref image")
+    parser.add_argument("current", help="The current image")
+    parser.add_argument("ref", help="The reference image")
+    args = parser.parse_args()
+
+    current = args.current
+    ref = args.ref
     mask = ref.replace("-ref", "-mask")
     diff = current.replace(".html.png", "-diff.png")
     old_ref = ref
@@ -56,12 +63,10 @@ def main():
         subprocess.run(["gm", "composite", "-compose", "Multiply", old_current, mask, current], check=True)
         subprocess.run(["gm", "composite", "-compose", "Multiply", old_ref, mask, ref], check=True)
 
-    # Set to True to regenerate ref images
-    if False:
-        if "/error-" not in ref:
-            shutil.copyfile(current, old_ref)
-            shutil.copyfile(current, ref)
-            sys.exit(0)
+    if args.generate and "/error-" not in ref:
+        shutil.copyfile(current, old_ref)
+        shutil.copyfile(current, ref)
+        sys.exit(0)
     result = subprocess.run(
         [
             "gm",
