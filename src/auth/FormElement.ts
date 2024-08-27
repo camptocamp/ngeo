@@ -25,7 +25,7 @@ import GmfBaseElement from 'gmfapi/elements/BaseElement';
 import {Message, MessageType} from 'ngeo/message/Message';
 import ngeoMessageNotification from 'ngeo/message/Notification';
 import {unsafeSVG} from 'lit/directives/unsafe-svg';
-import loadingSvg from 'gmf/icons/spinner.svg';
+import loadingSvg from 'gmf/icons/spinner';
 import {gmfBackgroundlayerStatus} from 'ngeo/backgroundlayerselector/status';
 import user, {User, UserState} from 'gmfapi/store/user';
 // @ts-ignore
@@ -225,12 +225,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                 ${this.isLoading
                   ? html`
                       <div class="login-spinner">
-                        <i class="fa fa-spin"
-                          >${
-                            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                            unsafeSVG(loadingSvg)
-                          }</i
-                        >
+                        <i class="fa fa-spin">${unsafeSVG(loadingSvg)}</i>
                       </div>
                     `
                   : ''}
