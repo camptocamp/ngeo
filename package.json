@@ -117,6 +117,7 @@
     "babel-loader": "8.3.0",
     "babel-plugin-angularjs-annotate": "0.10.0",
     "bootstrap": "4.6.2",
+    "cheerio": "1.0.0-rc.12",
     "chokidar": "3.6.0",
     "chromatic": "11.7.1",
     "co": "4.6.0",
