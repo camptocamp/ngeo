@@ -20,24 +20,21 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
- * Webpack loader to be used after `svg-inline-loader`.
- *
  * It will:
  *  - Fill the `viewBox` if it's missing (to be able to change the `width` and the `height`).
  *  - Fill the `width` and `height` (required by OpenLayers).
  *  - Allows to change the `width` and `height` (with `width` or `height` arguments).
  *  - Remove the unneeded `x` and `y` property.
- *
- * See also the `svg` example.
  */
 
 const simpleHTMLTokenizer = require('simple-html-tokenizer');
 const querystring = require('querystring');
 const generate = require('./generate-xml-from-tokens.js');
 const parseUnit = require('parse-absolute-css-unit');
+const {program} = require('commander');
+const fs = require('fs');
 
-module.exports = function (source) {
-  this.cacheable(true);
+function process(source, resourceQuery) {
   let tokens = simpleHTMLTokenizer.tokenize(source);
 
   tokens = tokens.map((tag) => {
@@ -86,9 +83,7 @@ module.exports = function (source) {
         if (viewBox === undefined) {
           tag.attributes.push(['viewBox', `0 0 ${width} ${height}`, true]);
         }
-        const queryString = this.resourceQuery.startsWith('?')
-          ? this.resourceQuery.substring(1)
-          : this.resourceQuery;
+        const queryString = resourceQuery.startsWith('?') ? resourceQuery.substring(1) : resourceQuery;
         const query = querystring.decode(queryString);
         if (query.width !== undefined) {
           const parsed = query.width.match(/^([0-9]+)([a-z]*)$/);
@@ -108,4 +103,20 @@ module.exports = function (source) {
   });
 
   return generate(tokens);
-};
+}
+
+function main(args) {
+  const uri = args[0];
+  const resourceQuery = args[1];
+  const source = fs.readFileSync(uri, 'utf-8');
+  const result = process(source, resourceQuery);
+  fs.writeFileSync(uri, result, 'utf-8');
+}
+
+// If running this module directly then call the main function.
+if (require.main === module) {
+  program.parse(process.argv);
+  main(program.args);
+}
+
+module.exports = main;

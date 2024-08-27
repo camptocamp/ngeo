@@ -18,9 +18,7 @@
                    'gmf-mobile-nav-left-is-visible': mainCtrl.leftNavVisible,
                    'gmf-mobile-nav-right-is-visible': mainCtrl.rightNavVisible}">
     <div ng-show="mainCtrl.loading" class="loading-mask">
-      <i class="fa custom-spinner-loading fa-spin spinner-loading-mask">
-        <%=require('gmf/icons/spinner.svg?viewbox&height=1em')%>
-      </i>
+      <i class="fa custom-spinner-loading fa-spin spinner-loading-mask"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em"><circle cx="256" cy="48" r="48" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="109.17" cy="108.313" r="43" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="46.537" cy="257.328" r="38" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="108.028" cy="403.972" r="33" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="255.794" cy="463.935" r="28" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="402.894" cy="402.936" r="23" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="463.623" cy="256.106" r="18" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/></svg></i>
     </div>
     <main ng-class="{'gmf-search-is-active': mainCtrl.searchOverlayVisible}">
       <gmf-map
@@ -50,9 +48,7 @@
         gmf-mobile-measurepoint-map="::mainCtrl.map">
       </div>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-left-trigger"
-        ng-click="mainCtrl.toggleLeftNavVisibility()">
-        <%=require('gmf/icons/layers.svg')%>
-      </button>
+        ng-click="mainCtrl.toggleLeftNavVisibility()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><path d="M19.984 6.256 10 1.264.016 6.256 10 11.248zM10 2.921l6.67 3.335L10 9.591 3.33 6.256zM17.984 9l2 .999L10 14.992.016 10l2-1L10 12.992Zm0 3.743 2 1L10 18.736.016 13.744l2-1L10 16.736Z"/></svg></button>
       <gmf-search gmf-search-map="::mainCtrl.map"
         gmf-search-listeners="::mainCtrl.searchListeners">
       </gmf-search>

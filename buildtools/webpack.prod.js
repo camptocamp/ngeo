@@ -37,44 +37,15 @@ const resourcesRule = {
 
 const svgRule = {
   test: /\.svg$/,
-  oneOf: [
+  use: [
     {
-      resourceQuery: /url/,
-      use: [
-        {
-          loader: 'file-loader',
-          options: {
-            esModule: false,
-            name: '[name].[hash:6].[ext]',
-          },
-        },
-        'svgo-loader',
-      ],
+      loader: 'file-loader',
+      options: {
+        esModule: false,
+        name: '[name].[hash:6].[ext]',
+      },
     },
-    {
-      resourceQuery: /viewbox/,
-      use: [
-        {
-          loader: 'svg-inline-loader',
-          options: {
-            removeSVGTagAttrs: false,
-          },
-        },
-        './buildtools/svg-viewbox-loader',
-        'svgo-loader',
-      ],
-    },
-    {
-      use: [
-        {
-          loader: 'svg-inline-loader',
-          options: {
-            removeSVGTagAttrs: false,
-          },
-        },
-        'svgo-loader',
-      ],
-    },
+    'svgo-loader',
   ],
 };
 
