@@ -23,6 +23,7 @@ import angular from 'angular';
 import gmfPermalinkShareService, {URL_MAX_LEN, URL_PATH_MAX_LEN} from 'gmf/permalink/ShareService';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
 import {getUid as olUtilGetUid} from 'ol/util';
+import htmlTemplate from './shareComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -40,7 +41,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
+      $templateCache.put('gmf/permalink/shareComponent', htmlTemplate);
     },
   ],
 );

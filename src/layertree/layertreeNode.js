@@ -23,6 +23,7 @@ gmfLayertreeNodeComponent.$inject = ['gmfLayertreeNodeTemplateUrl'];
 import angular from 'angular';
 import ngeoLayertreeController, {LayertreeController} from 'ngeo/layertree/Controller';
 import 'bootstrap/js/src/collapse'; // needed to collapse a layertree
+import htmlTemplate from './layertreeNode.html';
 
 /**
  * @type {angular.IModule}
@@ -49,7 +50,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/layertree/layertreeNode', require('./layertreeNode.html'));
+      $templateCache.put('gmf/layertree/layertreeNode', htmlTemplate);
     },
   ],
 );

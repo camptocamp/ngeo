@@ -23,6 +23,7 @@ Controller.$inject = ['$element', '$scope', 'ngeoNominatimService'];
 import angular from 'angular';
 import ngeoSearchSearchDirective from 'ngeo/search/searchDirective';
 import ngeoRoutingNominatimService from 'ngeo/routing/NominatimService';
+import htmlTemplate from './nominatiminput.html';
 
 /**
  * @type {angular.IModule}
@@ -40,7 +41,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
+      $templateCache.put('ngeo/routing/nominatiminput', htmlTemplate);
     },
   ],
 );

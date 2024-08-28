@@ -25,6 +25,7 @@ import angular from 'angular';
 import ngeoMiscTime from 'ngeo/misc/Time';
 import 'angular-ui-date';
 import 'ngeo/sass/jquery-ui.scss';
+import htmlTemplate from './datepickerComponent.html';
 
 // FIXME: import the locales in the applications
 import 'jquery-ui/ui/i18n/datepicker-fr';
@@ -57,7 +58,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
+      $templateCache.put('ngeo/misc/datepickerComponent', htmlTemplate);
     },
   ],
 );

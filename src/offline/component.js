@@ -28,6 +28,7 @@ import Polygon from 'ol/geom/Polygon';
 import {DEVICE_PIXEL_RATIO} from 'ol/has';
 import angular from 'angular';
 import MaskLayer from './Mask';
+import htmlTemplate from './component.html';
 
 /**
  * @type {!angular.IModule}
@@ -53,7 +54,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/offline/component.html', require('./component.html'));
+      $templateCache.put('ngeo/offline/component.html', htmlTemplate);
     },
   ],
 );

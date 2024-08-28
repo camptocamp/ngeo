@@ -1,0 +1,169 @@
+// The MIT License (MIT)
+//
+// Copyright (c) 2024 Camptocamp SA
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+// the Software, and to permit persons to whom the Software is furnished to do so,
+// subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+// FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+// COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+// IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+// CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+export default `<div class="gmf-profile-container panel" ng-show="ctrl.active">
+  <div class="spinner-profile" ng-show="ctrl.isLoading">
+    <i class="fa fa-spin"
+      ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="3rem" height="3rem">
+        <circle
+          cx="256"
+          cy="48"
+          r="48"
+          style="
+            opacity: 1;
+            fill-opacity: 1;
+            stroke: #000;
+            stroke-width: 0;
+            stroke-miterlimit: 4;
+            stroke-dasharray: none;
+            stroke-opacity: 1;
+          "
+        />
+        <circle
+          cx="109.17"
+          cy="108.313"
+          r="43"
+          style="
+            opacity: 1;
+            fill-opacity: 1;
+            stroke: #000;
+            stroke-width: 0;
+            stroke-miterlimit: 4;
+            stroke-dasharray: none;
+            stroke-opacity: 1;
+          "
+        />
+        <circle
+          cx="46.537"
+          cy="257.328"
+          r="38"
+          style="
+            opacity: 1;
+            fill-opacity: 1;
+            stroke: #000;
+            stroke-width: 0;
+            stroke-miterlimit: 4;
+            stroke-dasharray: none;
+            stroke-opacity: 1;
+          "
+        />
+        <circle
+          cx="108.028"
+          cy="403.972"
+          r="33"
+          style="
+            opacity: 1;
+            fill-opacity: 1;
+            stroke: #000;
+            stroke-width: 0;
+            stroke-miterlimit: 4;
+            stroke-dasharray: none;
+            stroke-opacity: 1;
+          "
+        />
+        <circle
+          cx="255.794"
+          cy="463.935"
+          r="28"
+          style="
+            opacity: 1;
+            fill-opacity: 1;
+            stroke: #000;
+            stroke-width: 0;
+            stroke-miterlimit: 4;
+            stroke-dasharray: none;
+            stroke-opacity: 1;
+          "
+        />
+        <circle
+          cx="402.894"
+          cy="402.936"
+          r="23"
+          style="
+            opacity: 1;
+            fill-opacity: 1;
+            stroke: #000;
+            stroke-width: 0;
+            stroke-miterlimit: 4;
+            stroke-dasharray: none;
+            stroke-opacity: 1;
+          "
+        />
+        <circle
+          cx="463.623"
+          cy="256.106"
+          r="18"
+          style="
+            opacity: 1;
+            fill-opacity: 1;
+            stroke: #000;
+            stroke-width: 0;
+            stroke-miterlimit: 4;
+            stroke-dasharray: none;
+            stroke-opacity: 1;
+          "
+        /></svg
+    ></i>
+  </div>
+
+  <div
+    class="ngeo-profile"
+    ng-if="!ctrl.isErrored && !ctrl.isLoading"
+    ngeo-profile="ctrl.profileData"
+    ngeo-profile-highlight="ctrl.profileHighlight"
+    ngeo-profile-options="::ctrl.profileOptions"
+  ></div>
+
+  <ul class="gmf-profile-legend" ng-if="!ctrl.isErrored && !ctrl.isLoading">
+    <li ng-repeat="name in ::ctrl.getLayersNames()">
+      <i class="fa fa-minus" ng-style="ctrl.getStyle(name)"></i>
+      {{name | translate}}
+      <span ng-if="ctrl.currentPoint.elevations[name] != null">
+        {{ctrl.currentPoint.elevations[name]}}&nbsp;{{ctrl.currentPoint.yUnits}}
+      </span>
+    </li>
+  </ul>
+
+  <div class="gmf-profile-export btn-group dropup" ng-show="!ctrl.isErrored && !ctrl.isLoading">
+    <a
+      class="dropdown-toggle"
+      href=""
+      ng-show="ctrl.profileData.length !== 0"
+      data-toggle="dropdown"
+      aria-expanded="false"
+    >
+      {{'Export' | translate}}
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+      <li>
+        <a href="" ng-click="::ctrl.downloadCsv()">
+          <i class="fa fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a
+        >
+      </li>
+    </ul>
+  </div>
+
+  <div class="gmf-profile-error" ng-show="ctrl.isErrored">
+    <p>{{'The profile service does not respond, please try later.' | translate}}</p>
+  </div>
+  <div class="close" ng-click="ctrl.line = null">&times;</div>
+</div>`;

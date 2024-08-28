@@ -41,6 +41,7 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent';
 import {buildStyle} from 'ngeo/options';
 import 'bootstrap/js/src/dropdown';
 import panels from 'gmfapi/store/panels';
+import htmlTemplate from './component.html';
 
 /**
  * @typedef {Object} ProfileElement
@@ -94,7 +95,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/profile', require('./component.html'));
+      $templateCache.put('gmf/profile', htmlTemplate);
     },
   ],
 );

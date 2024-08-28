@@ -42,6 +42,7 @@ import 'angular-animate';
 import 'angular-touch';
 import 'bootstrap/js/src/collapse';
 import 'bootstrap/js/src/dropdown';
+import htmlTemplate from './windowComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -86,7 +87,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
+      $templateCache.put('gmf/query/windowComponent', htmlTemplate);
     },
   ],
 );

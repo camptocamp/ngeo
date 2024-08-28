@@ -34,6 +34,7 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import {listen, unlistenByKey} from 'ol/events';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import 'bootstrap/js/src/dropdown';
+import htmlTemplate from './widgetComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -48,7 +49,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
+      $templateCache.put('gmf/raster/widgetComponent', htmlTemplate);
     },
   ],
 );

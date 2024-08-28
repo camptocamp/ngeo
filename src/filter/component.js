@@ -30,7 +30,7 @@ import {getUid as olUtilGetUid} from 'ol/util';
 import {remove as removeFromArray} from 'ol/array';
 import 'ngeo/sass/font.scss';
 import panels from 'gmfapi/store/panels';
-
+import htmlTemplate from './component.html';
 /**
  * @typedef {Object} FilterCondition
  * @property {string} text
@@ -54,7 +54,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/filter', require('./component.html'));
+      $templateCache.put('ngeo/filter', htmlTemplate);
     },
   ],
 );

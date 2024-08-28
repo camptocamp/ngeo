@@ -36,6 +36,7 @@ import {interactionDecoration} from 'ngeo/misc/decorate';
 import {listen, unlistenByKey} from 'ol/events';
 import MobileDraw from 'ngeo/interaction/MobileDraw';
 import {buildStyle} from 'ngeo/options';
+import htmlTemplate from './pointComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -65,7 +66,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
+      $templateCache.put('gmf/measure/pointComponent', htmlTemplate);
     },
   ],
 );

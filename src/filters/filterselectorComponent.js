@@ -36,7 +36,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import 'bootstrap/js/src/dropdown';
 import panels from 'gmfapi/store/panels';
 import user from 'gmfapi/store/user';
-
+import htmlTemplate from './filterselectorcomponent.html';
 /**
  * @type {angular.IModule}
  * @hidden
@@ -57,7 +57,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/filters/filterselectorcomponent', require('./filterselectorcomponent.html'));
+      $templateCache.put('gmf/filters/filterselectorcomponent', htmlTemplate);
     },
   ],
 );

@@ -69,6 +69,7 @@ import {CollectionEvent} from 'ol/Collection';
 // @ts-ignore: not supported import
 import {OL3Parser} from 'jsts/io';
 import 'jsts/monkey';
+import htmlTemplate from './component.html';
 
 /**
  * @typedef {Object<string, import('ol/style/Style').default | import('ol/style/Style').default[]>} StylesObject
@@ -110,7 +111,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/objectediting', require('./component.html'));
+      $templateCache.put('gmf/objectediting', htmlTemplate);
     },
   ],
 );

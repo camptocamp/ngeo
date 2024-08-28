@@ -25,6 +25,7 @@ import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr';
 import {listen, unlistenByKey} from 'ol/events';
+import htmlTemplate from './component.html';
 
 /**
  * @type {angular.IModule}
@@ -54,7 +55,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
+      $templateCache.put('gmf/backgroundlayerselector', htmlTemplate);
     },
   ],
 );

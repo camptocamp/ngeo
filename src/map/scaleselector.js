@@ -23,6 +23,7 @@ import angular from 'angular';
 import olMap from 'ol/Map';
 import {listen, unlistenByKey} from 'ol/events';
 import 'bootstrap/js/src/dropdown';
+import htmlTemplate from './scaleselector.html';
 
 /**
  * @type {angular.IModule}
@@ -49,7 +50,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
+      $templateCache.put('ngeo/map/scaleselector', htmlTemplate);
     },
   ],
 );

@@ -25,6 +25,7 @@ import 'jquery-ui/ui/widgets/resizable';
 import 'jquery-ui/ui/widgets/draggable';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-sanitize';
+import htmlTemplate from './displaywindowComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -39,7 +40,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/message/displaywindowComponent', require('./displaywindowComponent.html'));
+      $templateCache.put('ngeo/message/displaywindowComponent', htmlTemplate);
     },
   ],
 );

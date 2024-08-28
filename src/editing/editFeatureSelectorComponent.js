@@ -24,7 +24,7 @@ import angular from 'angular';
 import gmfEditingEditFeatureComponent, {EditingState} from 'gmf/editing/editFeatureComponent';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfThemeThemes from 'gmf/theme/Themes';
-
+import htmlTemplate from './editFeatureSelectorComponent.html';
 /**
  * @type {angular.IModule}
  * @hidden
@@ -44,7 +44,7 @@ myModule.run(
       $templateCache.put(
         'gmf/editing/editFeatureSelectorComponent',
         // @ts-ignore: webpack
-        require('./editFeatureSelectorComponent.html'),
+        htmlTemplate,
       );
     },
   ],

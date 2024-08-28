@@ -26,6 +26,7 @@ import angular from 'angular';
 import * as olEasing from 'ol/easing';
 import {toRadians} from 'ol/math';
 import olcsCore from 'olcs/core';
+import htmlTemplate from './controls3d.html';
 
 /**
  * @type {angular.IModule}
@@ -276,7 +277,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
+      $templateCache.put('ngeo/olsc/controls3d', htmlTemplate);
     },
   ],
 );
