@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 class Mode {
   /**
    * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
@@ -99,12 +98,11 @@ class Mode {
     return this.ngeoOfflineConfiguration_.hasOfflineData();
   }
 }
-
+Mode.$inject = ['ngeoOfflineConfiguration'];
 /**
  * @type {!angular.IModule}
  */
 const myModule = angular.module('ngeoOfflineMode', []);
 myModule.service('ngeoOfflineMode', Mode);
 Mode.module = myModule;
-
 export default Mode;

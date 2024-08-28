@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', '$element', 'gettextCatalog', 'ngeoGeolocationOptions'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -78,7 +79,6 @@ function geolocationComponent() {
     bindToController: true,
   };
 }
-
 myModule.directive('ngeoGeolocation', geolocationComponent);
 
 /**
@@ -94,7 +94,6 @@ myModule.directive('ngeoGeolocation', geolocationComponent);
  */
 export function Controller($scope, $element, gettextCatalog, ngeoGeolocationOptions) {
   this.options = ngeoGeolocationOptions;
-
   $element.on('click', this.toggleTracking.bind(this));
 
   /**
@@ -137,11 +136,10 @@ Controller.prototype.$onInit = function () {
    */
   this.geolocation_ = new olGeolocation({
     projection: this.map.getView().getProjection(),
-    trackingOptions: /** @type {PositionOptions} */ ({
+    trackingOptions: /** @type {PositionOptions} */ {
       enableHighAccuracy: true,
-    }),
+    },
   });
-
   if (this.options.autoRotate) {
     this.autoRotateListener();
   }
@@ -152,45 +150,46 @@ Controller.prototype.$onInit = function () {
   // handle geolocation error.
   this.geolocation_.on(
     'error',
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {GeolocationPositionError} error
-       */
-      (error) => {
-        this.untrack_();
-        let msg;
-        switch (error.code) {
-          case 1:
-            msg = gettextCatalog.getString('User denied the request for Geolocation.');
-            break;
-          case 2:
-            msg = gettextCatalog.getString('Location information is unavailable.');
-            break;
-          case 3:
-            msg = gettextCatalog.getString('The request to get user location timed out.');
-            break;
-          default:
-            msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
-            break;
-        }
-        ngeoMessageNotification.error(msg);
-        this.$scope_.$emit(GeolocationEventType.ERROR, error);
+    /** @type {function(?): ?} */
+    /**
+     * @param {GeolocationPositionError} error
+     */
+    (error) => {
+      this.untrack_();
+      let msg;
+      switch (error.code) {
+        case 1:
+          msg = gettextCatalog.getString('User denied the request for Geolocation.');
+          break;
+        case 2:
+          msg = gettextCatalog.getString('Location information is unavailable.');
+          break;
+        case 3:
+          msg = gettextCatalog.getString('The request to get user location timed out.');
+          break;
+        default:
+          msg = gettextCatalog.getString('Geolocation: An unknown error occurred.');
+          break;
       }
-    ),
+      ngeoMessageNotification.error(msg);
+      this.$scope_.$emit(GeolocationEventType.ERROR, error);
+    },
   );
 
   /**
    * @type {olFeature<import('ol/geom/Geometry').default>}
    */
-  this.positionFeature_ = new olFeature({name: 'GeolocationPositionFeature'});
-
+  this.positionFeature_ = new olFeature({
+    name: 'GeolocationPositionFeature',
+  });
   this.positionFeature_.setStyle(buildStyle(this.options.positionFeatureStyle));
 
   /**
    * @type {olFeature<import('ol/geom/Geometry').default>}
    */
-  this.accuracyFeature_ = new olFeature({name: 'GeolocationAccuracyFeature'});
-
+  this.accuracyFeature_ = new olFeature({
+    name: 'GeolocationAccuracyFeature',
+  });
   this.accuracyFeature_.setStyle(buildStyle(this.options.accuracyFeatureStyle));
 
   /**
@@ -207,7 +206,6 @@ Controller.prototype.$onInit = function () {
    * @type {boolean}
    */
   this.viewChangedByMe_ = false;
-
   listen(
     this.geolocation_,
     'change:accuracyGeometry',
@@ -221,7 +219,6 @@ Controller.prototype.$onInit = function () {
       this.setPosition_();
     },
   );
-
   listen(
     this.geolocation_,
     'change:position',
@@ -230,12 +227,9 @@ Controller.prototype.$onInit = function () {
       this.setPosition_();
     },
   );
-
   const view = this.map.getView();
-
   listen(view, 'change:center', this.handleViewChange_, this);
   listen(view, 'change:resolution', this.handleViewChange_, this);
-
   if (this.options.atLoadingTime && this.loading !== undefined) {
     this.$scope_.$watch(
       () => this.loading,
@@ -280,21 +274,18 @@ Controller.prototype.toggleTracking = function () {
     this.track_();
   }
 };
-
 Controller.prototype.track_ = function () {
   this.featureOverlay_.addFeature(this.positionFeature_);
   this.featureOverlay_.addFeature(this.accuracyFeature_);
   this.follow_ = true;
   this.geolocation_.setTracking(true);
 };
-
 Controller.prototype.untrack_ = function () {
   this.featureOverlay_.clear();
   this.follow_ = false;
   this.geolocation_.setTracking(false);
   ngeoMessageNotification.clear();
 };
-
 Controller.prototype.setPosition_ = function () {
   const view = this.map.getView();
   const position = this.geolocation_.getPosition();
@@ -302,10 +293,8 @@ Controller.prototype.setPosition_ = function () {
     throw new Error('Missing position');
   }
   const point = new olGeomPoint(position);
-
   this.positionFeature_.setGeometry(point);
   const accuracy = this.accuracyFeature_.getGeometry();
-
   if (this.follow_) {
     this.viewChangedByMe_ = true;
     if (this.options.zoom || this.options.zoom === 0) {
@@ -316,7 +305,9 @@ Controller.prototype.setPosition_ = function () {
       if (size === undefined) {
         throw new Error('Missing size');
       }
-      view.fit(accuracy, {size});
+      view.fit(accuracy, {
+        size,
+      });
     }
     this.viewChangedByMe_ = false;
   }
@@ -390,7 +381,5 @@ Controller.prototype.handleRotate_ = function (eventAlpha, currentAlpha) {
   }
   return currentAlpha;
 };
-
 myModule.controller('ngeoGeolocationController', Controller);
-
 export default myModule;

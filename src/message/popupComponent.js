@@ -1,3 +1,4 @@
+messagePopopComponent.$inject = ['ngeoPopupTemplateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -27,7 +28,6 @@ import 'angular-sanitize';
  * @hidden
  */
 const myModule = angular.module('ngeoPopup', ['ngSanitize']);
-
 myModule.value(
   'ngeoPopupTemplateUrl',
   /**
@@ -40,16 +40,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'ngeo/message/popupcomponent';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/message/popupcomponent', require('./popupcomponent.html'));
+    },
+  ],
 );
 
 /**
@@ -104,7 +106,5 @@ function messagePopopComponent(ngeoPopupTemplateUrl) {
     },
   };
 }
-
 myModule.directive('ngeoPopup', messagePopopComponent);
-
 export default myModule;

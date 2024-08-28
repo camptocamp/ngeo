@@ -72,12 +72,11 @@ export class EditingEnumerateAttributeService {
     return this.promises_[promiseId];
   }
 }
-
+EditingEnumerateAttributeService.$inject = ['$http', 'gmfLayersUrl'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfEnumerateAttribute', []);
 myModule.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);
-
 export default myModule;

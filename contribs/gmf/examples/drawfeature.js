@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope', 'ngeoFeatureHelper', 'ngeoFeatures', 'ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -24,7 +25,6 @@ import './drawfeature.css';
 import 'bootstrap/js/src/tooltip';
 import gmfMapComponent from 'gmf/map/component';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import gmfDrawingModule from 'gmf/drawing/module';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoMapModule from 'ngeo/map/module';
@@ -45,7 +45,8 @@ const myModule = angular.module('gmfapp', [
   'gettext',
   gmfDrawingModule.name,
   gmfMapComponent.name,
-  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeoMapModule.name,
+  // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
 ]);
@@ -65,14 +66,11 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
    * @type {angular.IScope}
    */
   this.scope_ = $scope;
-
   const view = new olView({
     center: [0, 0],
     zoom: 3,
   });
-
   ngeoFeatureHelper.setProjection(view.getProjection());
-
   const featureOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   featureOverlay.setFeatures(ngeoFeatures);
 
@@ -92,7 +90,6 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
    * @type {boolean}
    */
   this.drawFeatureActive = true;
-
   const drawFeatureToolActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawFeatureToolActivate, true);
 
@@ -100,34 +97,30 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
    * @type {boolean}
    */
   this.pointerMoveActive = false;
-
   const pointerMoveToolActivate = new ngeoMiscToolActivate(this, 'pointerMoveActive');
   ngeoToolActivateMgr.registerTool('mapTools', pointerMoveToolActivate, false);
-
   $scope.$watch(
     () => this.pointerMoveActive,
     (newVal) => {
       if (newVal) {
         this.map.on(
-          /** @type {import('ol/Observable').EventTypes} */ ('pointermove'),
-          /** @type {function(?): ?} */ (
-            /**
-             * @param {import('ol/MapBrowserEvent').default<unknown>} evt
-             */ (evt) => {
-              this.handleMapPointerMove_(evt);
-            }
-          ),
+          /** @type {import('ol/Observable').EventTypes} */ 'pointermove',
+          /** @type {function(?): ?} */
+          /**
+           * @param {import('ol/MapBrowserEvent').default<unknown>} evt
+           */ (evt) => {
+            this.handleMapPointerMove_(evt);
+          },
         );
       } else {
         this.map.un(
-          /** @type {import('ol/Observable').EventTypes} */ ('pointermove'),
-          /** @type {function(?): ?} */ (
-            /**
-             * @param {import('ol/MapBrowserEvent').default<unknown>} evt
-             */ (evt) => {
-              this.handleMapPointerMove_(evt);
-            }
-          ),
+          /** @type {import('ol/Observable').EventTypes} */ 'pointermove',
+          /** @type {function(?): ?} */
+          /**
+           * @param {import('ol/MapBrowserEvent').default<unknown>} evt
+           */ (evt) => {
+            this.handleMapPointerMove_(evt);
+          },
         );
         $('#pointermove-feature').html('');
       }
@@ -146,15 +139,10 @@ function MainController($scope, ngeoFeatureHelper, ngeoFeatures, ngeoToolActivat
  */
 MainController.prototype.handleMapPointerMove_ = function (evt) {
   const pixel = evt.pixel;
-
   const feature = this.map.forEachFeatureAtPixel(pixel, (feature) => feature);
-
   $('#pointermove-feature').html(feature ? feature.get(ngeoFormatFeatureProperties.NAME) : 'None');
-
   this.scope_.$apply();
 };
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

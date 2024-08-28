@@ -187,7 +187,6 @@ export class ExternalDatSourcesManager {
      * @private
      */
     this.wmtsCache_ = {};
-
     listen(this.dataSources_, 'remove', this.handleDataSourcesRemove_, this);
   }
 
@@ -350,13 +349,10 @@ export class ExternalDatSourcesManager {
   createAndAddDataSourceFromWMSCapability(layer, capabilities, url) {
     const id = getId(layer);
     const service = capabilities.Service;
-
     const req = capabilities.Capability.Request;
     const dcpType = req.GetMap.DCPType.find((type) => type.hasOwnProperty('HTTP'));
     const getMapUrl = dcpType !== undefined ? dcpType.HTTP.Get.OnlineResource : url;
-
     const originalUrl = url || getMapUrl;
-
     let dataSource;
 
     // (1) Get data source from cache if it exists, otherwise create it
@@ -401,9 +397,11 @@ export class ExternalDatSourcesManager {
       if (wmsInfoFormat) {
         options.wmsInfoFormat = wmsInfoFormat;
       }
-
-      const legend = {'title': layer.Title, 'url': originalUrl, 'name': layer.Name};
-
+      const legend = {
+        'title': layer.Title,
+        'url': originalUrl,
+        'name': layer.Name,
+      };
       dataSource = new gmfExternalDatasourceOGC(options, legend);
 
       // Keep a reference to the external data source in the cache
@@ -565,7 +563,6 @@ export class ExternalDatSourcesManager {
    */
   getFileDataSource_(file) {
     const defer = this.q_.defer();
-
     if (this.files_[file.name]) {
       defer.resolve(this.files_[file.name]);
     } else {
@@ -579,20 +576,17 @@ export class ExternalDatSourcesManager {
         const readOptions = {
           featureProjection: this.map_.getView().getProjection(),
         };
-
         if (ngeoFile.isKml(content)) {
-          features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-            new olFormatKML().readFeatures(content, readOptions)
-          );
+          features =
+            /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+            new olFormatKML().readFeatures(content, readOptions);
         } else if (ngeoFile.isGpx(content)) {
-          features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-            new olFormatGPX().readFeatures(content, readOptions)
-          );
+          features =
+            /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+            new olFormatGPX().readFeatures(content, readOptions);
         }
-
         if (features) {
           const id = getId(file);
-
           const dataSource = new ngeoDatasourceFile({
             features: new olCollection(features),
             id: id,
@@ -603,14 +597,12 @@ export class ExternalDatSourcesManager {
           // Keep a reference if both caches
           this.files_[file.name] = dataSource;
           this.extDataSources_[id] = dataSource;
-
           defer.resolve(dataSource);
         } else {
           defer.reject();
         }
       });
     }
-
     return defer.promise;
   }
 
@@ -677,7 +669,6 @@ export class ExternalDatSourcesManager {
       if (!dataSource.wmsUrl) {
         throw new Error('Missing dataSource.wmsUrl');
       }
-
       const wmsGroup = this.getWMSGroup(dataSource.wmsUrl);
       if (wmsGroup && wmsGroup.dataSources.includes(dataSource)) {
         // Remove from group
@@ -696,7 +687,6 @@ export class ExternalDatSourcesManager {
       if (!dataSource.wmtsUrl) {
         throw new Error('Missing dataSource.wmsUrl');
       }
-
       const wmtsGroup = this.getWMTSGroup(dataSource.wmtsUrl);
       if (wmtsGroup && wmtsGroup.dataSources.includes(dataSource)) {
         // Remove from group
@@ -745,7 +735,16 @@ export class ExternalDatSourcesManager {
     }
   }
 }
-
+ExternalDatSourcesManager.$inject = [
+  'gettextCatalog',
+  '$injector',
+  '$q',
+  '$rootScope',
+  'gmfDatasourceFileGroup',
+  'ngeoDataSources',
+  'ngeoFile',
+  'ngeoLayerHelper',
+];
 /**
  * Get the data source id from a WMS or WMTS Capability Layer object, or
  * from a File object.
@@ -775,5 +774,4 @@ const myModule = angular.module('gmfExternalDataSourcesManager', [
   ngeoDatasourceDataSources.name,
 ]);
 myModule.service('gmfExternalDataSourcesManager', ExternalDatSourcesManager);
-
 export default myModule;

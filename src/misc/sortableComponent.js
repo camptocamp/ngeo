@@ -1,3 +1,4 @@
+sortableComponent.$inject = ['$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -90,17 +91,14 @@ function sortableComponent($timeout) {
     link: (scope, element, attrs) => {
       const sortable = scope.$eval(attrs.ngeoSortable) || [];
       console.assert(Array.isArray(sortable));
-
       scope.$watchCollection(
         () => sortable,
         () => {
           sortable.length && $timeout(resetUpDragDrop, 0);
         },
       );
-
       const optionsObject = scope.$eval(attrs.ngeoSortableOptions);
       const options = getOptions(optionsObject);
-
       const callbackFn = scope.$eval(attrs.ngeoSortableCallback);
       const callbackCtx = scope.$eval(attrs.ngeoSortableCallbackCtx);
 
@@ -115,7 +113,6 @@ function sortableComponent($timeout) {
         for (let i = 0; i < children.length; ++i) {
           angular.element(children[i]).data('idx', i);
         }
-
         const sortableElement = $(element);
 
         // the element is already sortable; reset it.
@@ -143,7 +140,6 @@ function sortableComponent($timeout) {
           sortableOptions.placeholder = options.placeholderClassName;
           sortableOptions.forcePlaceholderSize = true;
         }
-
         sortableElement.sortable(sortableOptions);
 
         // This event is triggered when the user stopped sorting and
@@ -176,19 +172,19 @@ function sortableComponent($timeout) {
         let ret;
         const defaultHandleClassName = 'ngeo-sortable-handle';
         if (options === undefined) {
-          ret = {'handleClassName': defaultHandleClassName};
+          ret = {
+            'handleClassName': defaultHandleClassName,
+          };
         } else {
           if (options.handleClassName === undefined) {
             options.handleClassName = defaultHandleClassName;
           }
-          ret = /** @type {miscSortableOptions} */ (options);
+          ret = /** @type {miscSortableOptions} */ options;
         }
         return ret;
       }
     },
   };
 }
-
 myModule.directive('ngeoSortable', sortableComponent);
-
 export default myModule;

@@ -1,3 +1,11 @@
+QueryWindowController.$inject = [
+  '$element',
+  '$scope',
+  'ngeoQueryResult',
+  'ngeoMapQuerent',
+  'gmfCsvFilename',
+  'gmfDisplayQueryWindowOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -23,15 +31,11 @@ import angular from 'angular';
 import downloadCsvService from 'ngeo/download/Csv';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import ngeoMiscFeatureHelper, {getFilteredFeatureValues} from 'ngeo/misc/FeatureHelper';
-
 import ngeoMiscSwipe from 'ngeo/misc/swipe';
-
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
-
 import olCollection from 'ol/Collection';
 import {isEmpty} from 'ol/obj';
 import {buildStyle} from 'ngeo/options';
-
 import 'jquery-ui/ui/widgets/resizable';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-animate';
@@ -50,7 +54,6 @@ const myModule = angular.module('gmfQueryWindowComponent', [
   'ngAnimate',
   'ngTouch',
 ]);
-
 myModule.config([
   '$animateProvider',
   /**
@@ -63,7 +66,6 @@ myModule.config([
     $animateProvider.classNameFilter(/gmf-animatable/);
   },
 ]);
-
 myModule.value(
   'gmfDisplayquerywindowTemplateUrl',
   /**
@@ -76,16 +78,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/query/windowComponent';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/query/windowComponent', require('./windowComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -98,6 +102,7 @@ myModule.run(
  * @private
  * @hidden
  */
+gmfDisplayquerywindowTemplateUrl.$inject = ['$element', '$attrs', 'gmfDisplayquerywindowTemplateUrl'];
 function gmfDisplayquerywindowTemplateUrl($element, $attrs, gmfDisplayquerywindowTemplateUrl) {
   return gmfDisplayquerywindowTemplateUrl($element, $attrs);
 }
@@ -130,7 +135,6 @@ const queryWindowComponent = {
   },
   templateUrl: gmfDisplayquerywindowTemplateUrl,
 };
-
 myModule.component('gmfDisplayquerywindow', queryWindowComponent);
 
 /**
@@ -257,7 +261,6 @@ export function QueryWindowController(
    * @type {boolean}
    */
   this.isLoading = false;
-
   $scope.$watchCollection(
     () => ngeoQueryResult,
     (newQueryResult, oldQueryResult) => {
@@ -281,15 +284,12 @@ QueryWindowController.prototype.$onInit = function () {
     this.collapsed = this.options.collapsed;
   }
   this.draggableContainment = this.draggableContainment || 'document';
-
   const featuresOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
   featuresOverlay.setStyle(buildStyle(this.options.featuresStyle));
-
   const highlightFeaturesOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   highlightFeaturesOverlay.setStyle(buildStyle(this.options.selectedFeatureStyle));
-
   const windowContainer = this.element_.find('.gmf-displayquerywindow .windowcontainer');
   if (this.desktop) {
     windowContainer.draggable({
@@ -313,7 +313,6 @@ QueryWindowController.prototype.show = function () {
   this.clear();
   this.updateFeatures_();
 };
-
 QueryWindowController.prototype.updateFeatures_ = function () {
   this.setCurrentResult_(0, false);
   if (this.source !== null) {
@@ -585,11 +584,12 @@ QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   // From Set (distinct values) to array.
   /** @type {import('ngeo/download/Csv').GridColumnDef[]} */
   const columnDefs = [];
-  distinctKeys.forEach((key) => columnDefs.push({name: key}));
-
+  distinctKeys.forEach((key) =>
+    columnDefs.push({
+      name: key,
+    }),
+  );
   return columnDefs;
 };
-
 myModule.controller('GmfDisplayquerywindowController', QueryWindowController);
-
 export default myModule;

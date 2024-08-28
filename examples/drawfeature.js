@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope', 'ngeoFeatures', 'ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import './drawfeature.css';
 import angular from 'angular';
 import ngeoDrawModule from 'ngeo/draw/module';
-
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
@@ -56,7 +56,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
    * @type {angular.IScope}
    */
   this.scope_ = $scope;
-
   const vector = new olLayerVector({
     source: new olSourceVector({
       wrapX: false,
@@ -84,7 +83,6 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
    * @type {boolean}
    */
   this.drawActive = false;
-
   const drawToolActivate = new ngeoMiscToolActivate(this, 'drawActive');
   ngeoToolActivateMgr.registerTool('mapTools', drawToolActivate, false);
 
@@ -92,12 +90,9 @@ function MainController($scope, ngeoFeatures, ngeoToolActivateMgr) {
    * @type {boolean}
    */
   this.dummyActive = true;
-
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

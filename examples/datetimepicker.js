@@ -46,7 +46,5 @@ function MainController() {
    */
   this.datetime = '2018-01-01 12:00:00';
 }
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

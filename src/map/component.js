@@ -1,3 +1,4 @@
+Controller.$inject = ['gmfPermalink', 'gmfSnapping', '$injector', '$element'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -52,7 +53,6 @@ function gmfMapComponent() {
     bindToController: true,
   };
 }
-
 myModule.directive('gmfMap', gmfMapComponent);
 
 /**
@@ -107,7 +107,5 @@ Controller.prototype.$onInit = function () {
   // Needed cypress e2e tests
   window['overlayMgr'] = ngeoMapFeatureOverlayMgr;
 };
-
 myModule.controller('GmfMapController', Controller);
-
 export default myModule;

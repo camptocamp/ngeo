@@ -1,3 +1,4 @@
+FileService.$inject = ['$q', '$http', 'gettext'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2017-2024 Camptocamp SA
@@ -153,7 +154,5 @@ export function FileService($q, $http, gettext) {
  * @hidden
  */
 const myModule = angular.module('ngeoFile', []);
-
 myModule.service('ngeoFile', FileService);
-
 export default myModule;

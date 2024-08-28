@@ -29,7 +29,6 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('ngeoScaleselector', []);
-
 myModule.value(
   'ngeoScaleselectorTemplateUrl',
   /**
@@ -42,16 +41,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'ngeo/map/scaleselector';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/map/scaleselector', require('./scaleselector.html'));
+    },
+  ],
 );
 
 /**
@@ -106,7 +107,8 @@ const mapScaleselectorComponent = function (ngeoScaleselectorTemplateUrl) {
     templateUrl: ngeoScaleselectorTemplateUrl,
   };
 };
-
+mapScaleselectorComponent.$inject = ['ngeoScaleselectorTemplateUrl'];
+mapScaleselectorComponent.$inject = ['ngeoScaleselectorTemplateUrl'];
 myModule.directive('ngeoScaleselector', mapScaleselectorComponent);
 
 /**
@@ -126,14 +128,13 @@ export class ScaleselectorController {
      * @type {number[]}
      */
     this.scales = ngeoScaleSelectorOptions.values;
-
     const mapExpr = $attrs.ngeoScaleselectorMap;
 
     /**
      * @type {import('ol/Map').default}
      * @private
      */
-    this.map_ = /** @type {import('ol/Map').default} */ ($scope.$eval(mapExpr));
+    this.map_ = /** @type {import('ol/Map').default} */ $scope.$eval(mapExpr);
     console.assert(this.map_ instanceof olMap);
 
     /**
@@ -157,14 +158,12 @@ export class ScaleselectorController {
      * @type {number|undefined}
      */
     this.currentScale = undefined;
-
     const view = this.map_.getView();
 
     // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
     const dpi = 96;
     const inchesPerMeter = 39.37;
     const warningRatio = 1.5;
-
     if (this.scales) {
       for (let zoom = view.getMinZoom(); zoom <= view.getMaxZoom(); zoom++) {
         const calculatedScale = Math.round(view.getResolutionForZoom(zoom) * inchesPerMeter * dpi);
@@ -190,14 +189,11 @@ export class ScaleselectorController {
         this.scales[zoom] = Math.round(view.getResolutionForZoom(zoom) * inchesPerMeter * dpi);
       }
     }
-
     const currentZoom = this.map_.getView().getZoom();
     if (currentZoom !== undefined) {
       this.currentScale = this.getScale(currentZoom);
     }
-
     listen(this.map_, 'change:view', this.handleViewChange_, this);
-
     this.registerResolutionChangeListener_();
 
     // @ts-ignore: scope ...
@@ -287,7 +283,6 @@ export class ScaleselectorController {
     this.resolutionChangeKey_ = listen(view, 'change:resolution', this.handleResolutionChange_, this);
   }
 }
-
+ScaleselectorController.$inject = ['$scope', '$attrs', 'ngeoScaleSelectorOptions'];
 myModule.controller('NgeoScaleselectorController', ScaleselectorController);
-
 export default myModule;

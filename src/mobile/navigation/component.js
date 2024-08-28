@@ -100,7 +100,6 @@ function mobileNavigationComponent() {
     },
   };
 }
-
 myModule.directive('gmfMobileNav', mobileNavigationComponent);
 
 /**
@@ -146,7 +145,6 @@ export function Controller() {
    */
   this.back = this.back_.bind(this);
 }
-
 myModule.controller('gmfMobileNavController', Controller);
 
 /**
@@ -191,7 +189,6 @@ Controller.prototype.init = function (element) {
 
     // update the navigation header
     this.updateNavigationHeader_(slideIn, false);
-
     this.active_ = slideIn;
   };
   element.find('[data-toggle=slide-in]').on({
@@ -246,7 +243,6 @@ Controller.prototype.updateNavigationHeader_ = function (active, back) {
     nav.css('display', 'none');
     nav.offset();
     nav.css('display', '');
-
     window.setTimeout(() => {
       // fix: calling `position()` makes sure that the animation
       // is always run
@@ -281,7 +277,6 @@ Controller.prototype.back_ = function () {
 
   // update the navigation header
   this.updateNavigationHeader_(slideBack, true);
-
   this.active_ = slideBack;
 };
 
@@ -340,7 +335,6 @@ function mobileNavigationBackComponent() {
     },
   };
 }
-
 myModule.directive('gmfMobileNavBack', mobileNavigationBackComponent);
 
 /**
@@ -383,7 +377,5 @@ function mobileNavigationBackOnClickComponent() {
     },
   };
 }
-
 myModule.directive('gmfMobileNavBackOnClick', mobileNavigationBackOnClickComponent);
-
 export default myModule;

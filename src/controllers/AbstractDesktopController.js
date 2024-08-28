@@ -49,11 +49,9 @@ import olStyleFill from 'ol/style/Fill';
 import olStyleStroke from 'ol/style/Stroke';
 import olStyleStyle from 'ol/style/Style';
 import olStyleText from 'ol/style/Text';
-
 import 'gmfapi/index';
 import panels from 'gmfapi/store/panels';
 import user from 'gmfapi/store/user';
-
 import 'gmf/controllers/vars_desktop.scss';
 import 'gmf/controllers/desktop.scss';
 
@@ -166,9 +164,7 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {boolean}
      */
     this.routingPanelActive = false;
-
     const $timeout = $injector.get('$timeout');
-
     panels.getActiveToolPanel().subscribe({
       next: (panel) => {
         this.printPanelActive = panel === 'print';
@@ -178,7 +174,6 @@ export class AbstractDesktopController extends AbstractAPIController {
         this.editFeatureActivate = panel === 'edit';
         this.googleStreetViewActive = panel === 'googlestreetview';
         this.mapillaryStreetViewActive = panel === 'mapillary';
-
         $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular digest
 
         if (panel === null || !panel.includes('auth')) {
@@ -186,7 +181,6 @@ export class AbstractDesktopController extends AbstractAPIController {
         }
       },
     });
-
     user.getLoginMessage().subscribe({
       next: (message) => {
         if (message) {
@@ -209,7 +203,6 @@ export class AbstractDesktopController extends AbstractAPIController {
         this.printActive = newVal;
       },
     );
-
     $scope.$watch(
       () => this.googleStreetViewActive || this.mapillaryStreetViewActive,
       (newVal) => {
@@ -229,10 +222,15 @@ export class AbstractDesktopController extends AbstractAPIController {
      */
     this.streetViewStyle = new olStyleStyle({
       text: new olStyleText({
-        fill: new olStyleFill({color: '#279B61'}),
+        fill: new olStyleFill({
+          color: '#279B61',
+        }),
         font: '900 30px "Font Awesome 5 Free"',
         offsetY: -15,
-        stroke: new olStyleStroke({color: '#ffffff', width: 3}),
+        stroke: new olStyleStroke({
+          color: '#ffffff',
+          width: 3,
+        }),
         text: '\uf041',
       }),
     });
@@ -241,23 +239,20 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {boolean}
      */
     this.importDataSourceActive = false;
-
     const body = $('body');
-
     if ($injector.has('gmfQueryGrid')) {
       this.queryGrid = $injector.get('gmfQueryGrid');
     }
 
     // initialize tooltips
     body.tooltip(
-      /** @type {Bootstrap.TooltipOption} */ ({
+      /** @type {Bootstrap.TooltipOption} */ {
         container: 'body',
         trigger: 'hover',
         selector: '[data-toggle="tooltip"]',
-
         // Avoid error in config type checking with IE11
         sanitizeFn: $injector.get('$sanitize'),
-      }),
+      },
     );
 
     // deactivate tooltips on touch device
@@ -265,7 +260,6 @@ export class AbstractDesktopController extends AbstractAPIController {
       body.tooltip('dispose');
       body.off('touchstart.detectTouch');
     });
-
     const ngeoFeatureHelper = $injector.get('ngeoFeatureHelper');
 
     /**
@@ -300,28 +294,20 @@ export class AbstractDesktopController extends AbstractAPIController {
      * @type {import('gmf/datasource/LayerBeingSwipe').LayerBeingSwipe}
      */
     this.gmfLayerBeingSwipe = $injector.get('gmfLayerBeingSwipe');
-
     const editFeatureActivate = new ngeoMiscToolActivate(this, 'editFeatureActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', editFeatureActivate, false);
-
     const googleStreetViewActivate = new ngeoMiscToolActivate(this, 'googleStreetViewActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', googleStreetViewActivate, false);
-
     const mapillaryStreetViewActivate = new ngeoMiscToolActivate(this, 'mapillaryStreetViewActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', mapillaryStreetViewActivate, false);
-
     const contextdataActivate = new ngeoMiscToolActivate(this, 'contextdataActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', contextdataActivate, false);
-
     const drawFeatureActivate = new ngeoMiscToolActivate(this, 'drawFeatureActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', drawFeatureActivate, false);
-
     const drawProfilePanelActivate = new ngeoMiscToolActivate(this, 'drawProfilePanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', drawProfilePanelActivate, false);
-
     const printPanelActivate = new ngeoMiscToolActivate(this, 'printPanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', printPanelActivate, false);
-
     const routingPanelActive = new ngeoMiscToolActivate(this, 'routingPanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', routingPanelActive, false);
 
@@ -430,7 +416,6 @@ export class AbstractDesktopController extends AbstractAPIController {
           'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`,
         }),
       );
-
     $scope.$watch(
       () => this.dataPanelActive,
       (newVal) => {
@@ -469,7 +454,6 @@ export class AbstractDesktopController extends AbstractAPIController {
     const showRightPanelResize = (active) => {
       this.$toolsPanel_.resizable(active ? 'enable' : 'disable');
     };
-
     $scope.$watch(
       () => this.toolsActive,
       (newVal) => {
@@ -620,6 +604,7 @@ export class AbstractDesktopController extends AbstractAPIController {
     return maxWidth;
   }
 }
+AbstractDesktopController.$inject = ['$scope', '$injector'];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -642,9 +627,6 @@ const myModule = angular.module('GmfAbstractDesktopControllerModule', [
   ngeoMapswipeModule.name,
   ngeoQueryPanelComponent.name,
 ]);
-
 myModule.controller('AbstractDesktopController', AbstractDesktopController);
-
 myModule.value('ngeoSnappingSource', new olSourceVector());
-
 export default myModule;

@@ -28,7 +28,6 @@
 
 import './sass/vars_oeedit.scss';
 import './sass/oeedit.scss';
-
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,
@@ -64,12 +63,9 @@ class Controller extends AbstractDesktopController {
      * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
-
     ngeoToolActivateMgr.unregisterGroup('mapTools');
-
     const oeEditToolActivate = new ngeoMiscToolActivate(this, 'oeEditActive');
     ngeoToolActivateMgr.registerTool('mapTools', oeEditToolActivate, true);
-
     const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
     ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate, false);
 
@@ -114,7 +110,6 @@ class Controller extends AbstractDesktopController {
      * @type {import('gmf/theme/Themes').ThemesService} gmfObjectEditingManager The gmf theme service
      */
     const gmfThemes = $injector.get('gmfThemes');
-
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {
         // Add layer vector after
@@ -143,7 +138,6 @@ class Controller extends AbstractDesktopController {
      * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
      */
     this.oeFeature = null;
-
     gmfObjectEditingManager.getFeature().then((feature) => {
       this.oeFeature = feature;
       if (feature) {
@@ -152,7 +146,7 @@ class Controller extends AbstractDesktopController {
     });
   }
 }
-
+Controller.$inject = ['$scope', '$injector', '$timeout'];
 /**
  * @hidden
  */
@@ -161,26 +155,25 @@ const appModule = angular.module('Appoeedit', [
   gmfControllersAbstractDesktopController.name,
   gmfObjecteditingModule.name,
 ]);
-
 appModule.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 appModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/contextualdata', require('./contextualdata.html'));
+    },
+  ],
 );
-
 appModule.value(
   'gmfPermalinkOptions',
-  /** @type {import('gmf/options').gmfPermalinkOptions} */ ({
+  /** @type {import('gmf/options').gmfPermalinkOptions} */ {
     pointRecenterZoom: 10,
-  }),
+  },
 );
-
 appModule.controller('OEEditController', Controller);
-
 export default appModule;

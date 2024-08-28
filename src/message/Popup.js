@@ -1,3 +1,4 @@
+Factory.$inject = ['$compile', '$rootScope', '$sce', '$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -232,27 +233,21 @@ MessagePopup.prototype.open = function (options) {
   } else {
     console.assert(false, 'ngeo.message.Popup options requirest "url" or "content".');
   }
-
   if (options.autoDestroy !== undefined) {
     this.setAutoDestroy(options.autoDestroy);
   }
-
   if (options.cls !== undefined) {
     this.addClass(options.cls);
   }
-
   if (options.height !== undefined) {
     this.setHeight(options.height);
   }
-
   if (options.title !== undefined) {
     this.setTitle(options.title);
   }
-
   if (options.width !== undefined) {
     this.setWidth(options.width);
   }
-
   this.setOpen(true);
 };
 
@@ -282,5 +277,4 @@ export function Factory($compile, $rootScope, $sce, $timeout) {
  */
 const myModule = angular.module('ngeoCreatePopup', [ngeoMessagePopupComponent.name]);
 myModule.factory('ngeoCreatePopup', Factory);
-
 export default myModule;

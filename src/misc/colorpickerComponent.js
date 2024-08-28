@@ -1,3 +1,4 @@
+colorPickerComponent.$inject = ['ngeoColorpickerTemplateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -26,7 +27,6 @@ import angular from 'angular';
  * @hidden
  */
 const myModule = angular.module('ngeoColorpicker', []);
-
 myModule.value(
   'ngeoColorpickerTemplateUrl',
   /**
@@ -39,16 +39,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'ngeo/misc/colorpickerComponent';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -80,7 +82,6 @@ function colorPickerComponent(ngeoColorpickerTemplateUrl) {
     templateUrl: ngeoColorpickerTemplateUrl,
   };
 }
-
 myModule.directive('ngeoColorpicker', colorPickerComponent);
 
 /**
@@ -153,7 +154,5 @@ export function Controller() {
 Controller.prototype.setColor = function (color) {
   this.color = color;
 };
-
 myModule.controller('NgeoColorpickerController', Controller);
-
 export default myModule;

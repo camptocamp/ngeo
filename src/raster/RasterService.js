@@ -1,3 +1,4 @@
+RasterService.$inject = ['$http', 'gmfRasterUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -61,11 +62,14 @@ const Param = {
  * @returns {angular.IPromise<Object<string, number>>} Promise.
  */
 RasterService.prototype.getRaster = function (coordinate, opt_params) {
-  const params = opt_params || /** @type {Object<string, string|number>} */ ({});
+  const params = opt_params || /** @type {Object<string, string|number>} */ {};
   params[Param.X] = coordinate[0];
   params[Param.Y] = coordinate[1];
-
-  return this.$http_.get(this.url_, {params}).then((resp) => resp.data);
+  return this.$http_
+    .get(this.url_, {
+      params,
+    })
+    .then((resp) => resp.data);
 };
 
 /**
@@ -83,5 +87,4 @@ RasterService.prototype.handleGetRaster_ = function (resp) {
  */
 const myModule = angular.module('gmfRaster', []);
 myModule.service('gmfRaster', RasterService);
-
 export default myModule;

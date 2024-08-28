@@ -1,3 +1,5 @@
+PrintService.$inject = ['url', '$http', 'gettextCatalog', 'ngeoLayerHelper'];
+createPrintServiceFactory.$inject = ['$http', 'gettextCatalog', 'ngeoLayerHelper'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -126,7 +128,7 @@ export function PrintService(url, $http, gettextCatalog, ngeoLayerHelper) {
  */
 PrintService.prototype.cancel = function (ref, opt_httpConfig) {
   const httpConfig =
-    opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.IRequestShortcutConfig} */ ({});
+    opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.IRequestShortcutConfig} */ {};
   const url = `${this.url_}/cancel/${ref}`;
   // "delete" is a reserved word, so use ['delete']
   return this.$http_['delete'](url, httpConfig);
@@ -157,15 +159,13 @@ PrintService.prototype.createSpec = function (
   email,
   goodnessOfFit,
 ) {
-  const specMap = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintMap} */ ({
+  const specMap = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintMap} */ {
     dpi: dpi,
     rotation: rotation,
-  });
-
+  };
   if (goodnessOfFit) {
     this.goodnessOfFit_ = goodnessOfFit;
   }
-
   this.encodeMap_(map, scale, specMap, dpi);
 
   /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintAttributes} */
@@ -173,7 +173,6 @@ PrintService.prototype.createSpec = function (
     map: specMap,
   };
   Object.assign(attributes, customAttributes);
-
   const lang = this.gettextCatalog_.getCurrentLanguage();
 
   /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSpec} */
@@ -183,11 +182,11 @@ PrintService.prototype.createSpec = function (
     lang,
     layout,
   };
-
   if (email) {
-    spec.smtp = {to: email};
+    spec.smtp = {
+      to: email,
+    };
   }
-
   return spec;
 };
 
@@ -202,7 +201,6 @@ PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPri
   const viewCenter = view.getCenter();
   const viewProjection = view.getProjection();
   const viewResolution = view.getResolution();
-
   if (!viewCenter) {
     throw new Error('Missing viewCenter');
   }
@@ -212,13 +210,11 @@ PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPri
   if (!viewResolution) {
     throw new Error('Missing viewResolution');
   }
-
   object.center = viewCenter;
   object.projection = viewProjection.getCode();
   object.scale = scale;
   object.useNearestScale = false;
   object.layers = [];
-
   const mapLayerGroup = map.getLayerGroup();
   if (!mapLayerGroup) {
     throw new Error('Missing mapLayerGroup');
@@ -229,7 +225,6 @@ PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPri
   // Sort the layer by ZIndex
   stableSort(layers, (layer_a, layer_b) => (layer_a.getZIndex() || 0) - (layer_b.getZIndex() || 0));
   layers = layers.slice().reverse();
-
   layers.forEach((layer) => {
     if (layer.getVisible()) {
       this.encodeLayer(object.layers, layer, viewResolution, destinationPrintDpi);
@@ -289,7 +284,6 @@ PrintService.prototype.encodeImageWmsLayer_ = function (arr, layer) {
   if (!(source instanceof olSourceImageWMS)) {
     throw new Error('source not instance of olSourceImageWMS');
   }
-
   const url = source.getUrl();
   if (url !== undefined) {
     this.encodeWmsLayer_(arr, layer, url, source.getParams());
@@ -308,7 +302,9 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
   }
   const url_url = new URL(url);
   /** @type {Object<string, string>} */
-  const customParams = {'TRANSPARENT': 'true'};
+  const customParams = {
+    'TRANSPARENT': 'true',
+  };
   if (url_url.searchParams) {
     url_url.searchParams.forEach(
       /**
@@ -332,7 +328,6 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
   delete customParams.SERVERTYPE;
   delete customParams.VERSION;
   delete customParams.STYLES;
-
   let serverType = undefined;
   if (params.SERVERTYPE !== 'arcgis') {
     serverType = params.SERVERTYPE;
@@ -404,7 +399,6 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
   if (!(source instanceof olSourceWMTS)) {
     throw new Error('source not instance of olSourceWMTS');
   }
-
   const projection = source.getProjection();
   if (!projection) {
     throw new Error('Missing projection');
@@ -421,24 +415,21 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
 
   /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsMatrix[]} */
   const matrices = [];
-
   for (let i = 0, ii = matrixIds.length; i < ii; ++i) {
     const tileRange = tileGrid.getFullTileRange(i);
     matrices.push(
-      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsMatrix} */ ({
+      /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsMatrix} */ {
         identifier: matrixIds[i],
         scaleDenominator: (tileGrid.getResolution(i) * metersPerUnit) / 0.28e-3,
         tileSize: olSize.toSize(tileGrid.getTileSize(i)),
         topLeftCorner: tileGrid.getOrigin(i),
         matrixSize: [tileRange.maxX - tileRange.minX, tileRange.maxY - tileRange.minY],
-      }),
+      },
     );
   }
-
   const dimensions = source.getDimensions();
   const dimensionKeys = Object.keys(dimensions);
-
-  const object = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsLayer} */ ({
+  const object = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintWmtsLayer} */ {
     baseURL: this.getWmtsUrl_(source),
     dimensions: dimensionKeys,
     dimensionParams: dimensions,
@@ -451,8 +442,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
     style: source.getStyle(),
     type: 'WMTS',
     version: source.getVersion(),
-  });
-
+  };
   arr.push(object);
 };
 
@@ -468,7 +458,6 @@ PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
   if (!(source instanceof olSourceTileWMS)) {
     throw new Error('source not instance of olSourceTileWMS');
   }
-
   const urls = source.getUrls();
   if (!urls) {
     throw new Error('Missing urls');
@@ -513,11 +502,11 @@ PrintService.prototype.getOpacityOrInherited_ = function (layer) {
 PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
   const format = printSpec.format || 'pdf';
   const url = `${this.url_}/report.${format}`;
-  const httpConfig = /** @type {angular.IRequestShortcutConfig} */ ({
+  const httpConfig = /** @type {angular.IRequestShortcutConfig} */ {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
     },
-  });
+  };
   Object.assign(httpConfig, opt_httpConfig !== undefined ? opt_httpConfig : {});
   return this.$http_.post(url, printSpec, httpConfig);
 };
@@ -531,7 +520,7 @@ PrintService.prototype.createReport = function (printSpec, opt_httpConfig) {
  */
 PrintService.prototype.getStatus = function (ref, opt_httpConfig) {
   const httpConfig =
-    opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.IRequestShortcutConfig} */ ({});
+    opt_httpConfig !== undefined ? opt_httpConfig : /** @type {angular.IRequestShortcutConfig} */ {};
   const url = `${this.url_}/status/${ref}.json`;
   return this.$http_.get(url, httpConfig);
 };
@@ -556,9 +545,9 @@ PrintService.prototype.getCapabilities = function (opt_httpConfig) {
   const httpConfig =
     opt_httpConfig !== undefined
       ? opt_httpConfig
-      : /** @type {angular.IRequestShortcutConfig} */ ({
+      : /** @type {angular.IRequestShortcutConfig} */ {
           withCredentials: true,
-        });
+        };
   const url = `${this.url_}/capabilities.json`;
   return this.$http_.get(url, httpConfig);
 };
@@ -592,5 +581,4 @@ export function createPrintServiceFactory($http, gettextCatalog, ngeoLayerHelper
 const myModule = angular.module('ngeoPrint', [ngeoMapLayerHelper.name]);
 myModule.service('ngeoPrintService', PrintService);
 myModule.factory('ngeoCreatePrint', createPrintServiceFactory);
-
 export default myModule;

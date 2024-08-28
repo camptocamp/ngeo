@@ -25,12 +25,9 @@ import gmfDatasourceWFSAliases from 'gmf/datasource/WFSAliases';
 import gmfLayertreeSyncLayertreeMap, {getLayer} from 'gmf/layertree/SyncLayertreeMap';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfThemeThemes, {ThemeNodeType} from 'gmf/theme/Themes';
-
 import {ServerType, WFSOutputFormat, Type} from 'ngeo/datasource/OGC';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
-
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
-
 import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
@@ -277,9 +274,7 @@ export class DatasourceManager {
     if (this.dimensionsWatcherUnregister) {
       this.dimensionsWatcherUnregister();
     }
-
     this.dimensions_ = dimensions;
-
     this.dimensionsWatcherUnregister = this.rootScope_.$watch(
       () => this.dimensions_,
       this.handleDimensionsChange_.bind(this),
@@ -304,7 +299,6 @@ export class DatasourceManager {
      * @type {string[]}
      */
     const layerIds = [];
-
     const dataSources = this.dataSources_.getArray();
     for (const dataSource of dataSources) {
       if (dataSource instanceof GmfDatasourceOGC && dataSource.dimensionsFiltersConfig) {
@@ -323,7 +317,6 @@ export class DatasourceManager {
         }
       }
     }
-
     layers.forEach(this.updateLayerFilter_.bind(this));
   }
 
@@ -352,7 +345,6 @@ export class DatasourceManager {
           }
         }
       });
-
       const promiseBgLayers = this.gmfThemes_.getBackgroundLayersObject().then((backgroundLayers) => {
         // Create a DataSource for each background layer
         for (const backgroundLayer of backgroundLayers) {
@@ -403,10 +395,10 @@ export class DatasourceManager {
        * @param {import('ngeo/layertree/Controller').LayertreeController} treeCtrl
        */
       const visitor = (treeCtrl) => {
-        const node = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayer} */ (
-          treeCtrl.node
-        );
-        const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
+        const node =
+          /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayer} */
+          treeCtrl.node;
+        const groupNode = /** @type {import('gmf/themes').GmfGroup} */ node;
         const children = groupNode.children;
         if (!children) {
           newTreeCtrls.push(treeCtrl);
@@ -475,7 +467,7 @@ export class DatasourceManager {
    * @hidden
    */
   createDataSource_(firstLevelGroup, node, ogcServers) {
-    const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
+    const groupNode = /** @type {import('gmf/themes').GmfGroup} */ node;
     const children = groupNode.children;
 
     // Group node (node that has children). Loop in the children
@@ -489,7 +481,7 @@ export class DatasourceManager {
     }
 
     // From there on, the node is a layer node.
-    const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (node);
+    const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ node;
 
     // Skip layer node if a data source with the same id exists
     const id = Number(olUtilGetUid(gmfLayer));
@@ -518,7 +510,6 @@ export class DatasourceManager {
     let ogcServer;
     /** @type {string} */
     let ogcServerName;
-
     if (ogcType === ThemeNodeType.WMTS || ogcType === ThemeNodeType.VECTOR_TILES) {
       // Manage WMTS / Vector tiles
       maxResolution = meta.maxQueryResolution !== undefined ? meta.maxQueryResolution : meta.maxResolution;
@@ -549,10 +540,9 @@ export class DatasourceManager {
         ogcServer = ogcServers[meta.ogcServer];
       }
     }
-
     if (ogcType === ThemeNodeType.WMTS) {
       // Manage WMTS
-      const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
+      const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ /** @type {any} */ gmfLayer;
 
       // Common options for WMTS
       wmtsLayer = gmfLayerWMTS.layer;
@@ -562,7 +552,7 @@ export class DatasourceManager {
       ogcImageType = gmfLayerWMTS.imageType;
     } else if (ogcType === ThemeNodeType.WMS) {
       // Manage WMS
-      const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
+      const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ gmfLayer;
 
       // Common options for WMS
       maxResolution = gmfLayerWMS.maxResolutionHint;
@@ -588,7 +578,6 @@ export class DatasourceManager {
       // filtrable.
 
       const queryLayers = meta.queryLayers ? meta.queryLayers.split(',') : null;
-
       wmsLayers = gmfLayerWMS.layers.split(',').map((childLayer) => {
         /** @type {import('ngeo/datasource/OGC').WMSLayer} */
         const item = {
@@ -634,7 +623,6 @@ export class DatasourceManager {
     const wmsIsSingleTile = ogcServer ? ogcServer.isSingleTile : undefined;
     const wfsUrl = ogcServer && ogcServer.wfsSupport ? ogcServer.urlWfs : undefined;
     const wmsUrl = ogcServer ? ogcServer.url : undefined;
-
     let wfsOutputFormat = WFSOutputFormat.GML3;
     // qgis server only supports GML2 output
     if (ogcServerType === ServerType.QGISSERVER) {
@@ -650,13 +638,11 @@ export class DatasourceManager {
     // Dimensions
     const dimensions = this.dimensions_;
     const dimensionsConfig = node.dimensions || (firstLevelGroup === null ? {} : firstLevelGroup.dimensions);
-
     const dimensionsFiltersConfig = gmfLayer.dimensionsFilters;
 
     // Time values (lower or lower/upper)
     let timeLowerValue;
     let timeUpperValue;
-
     if (timeProperty) {
       const timeValues = this.ngeoWMSTime_.getOptions(timeProperty).values;
       if (Array.isArray(timeValues)) {
@@ -782,12 +768,10 @@ export class DatasourceManager {
       throw new Error('Missing dataSource');
     }
     treeCtrl.setDataSource(dataSource);
-
     const stateWatcherUnregister = this.rootScope_.$watch(
       () => treeCtrl.getState(),
       this.handleTreeCtrlStateChange_.bind(this, treeCtrl),
     );
-
     const filterRulesWatcherUnregister = this.rootScope_.$watch(
       () => {
         const hasFilters = dataSource.filterRules !== null;
@@ -806,17 +790,14 @@ export class DatasourceManager {
         () => dataSource.timeLowerValue,
         this.handleDataSourceTimeValueChange_.bind(this, dataSource),
       );
-
       if (dataSource.timeProperty.mode === 'range') {
         timeUpperValueWatcherUnregister = this.rootScope_.$watch(
           () => dataSource.timeUpperValue,
           this.handleDataSourceTimeValueChange_.bind(this, dataSource),
         );
       }
-
       wmsLayer = getLayer(treeCtrl);
     }
-
     this.treeCtrlCache_[id] = {
       filterRulesWatcherUnregister,
       stateWatcherUnregister,
@@ -825,9 +806,7 @@ export class DatasourceManager {
       treeCtrl,
       wmsLayer,
     };
-
     this.dataSources_.push(dataSource);
-
     this.gmfWFSAliases_.describe(dataSource);
   }
 
@@ -958,20 +937,17 @@ export class DatasourceManager {
     if (!(source instanceof olSourceImageWMS || source instanceof olSourceTileWMS)) {
       return;
     }
-
     const params = source.getParams();
     const layersParam = params.LAYERS;
     const layersList = layersParam.split(',');
     if (!layersList.length) {
       throw new Error('Missing layersList');
     }
-
     const filterParam = 'FILTER';
     const filterParamValues = [];
     let hasFilter = false;
     for (const wmsLayerName of layersList) {
       let filterParamValue = '()';
-
       const dataSources = this.dataSources_.getArray();
       for (const dataSource of dataSources) {
         const dsLayer = this.getDataSourceLayer_(dataSource);
@@ -981,9 +957,9 @@ export class DatasourceManager {
         if (!(dataSource instanceof GmfDatasourceOGC)) {
           throw new Error('Wrong dataSource type');
         }
-        const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (
-          /** @type {any} */ (dataSource.gmfLayer)
-        );
+        const gmfLayerWMS =
+          /** @type {import('gmf/themes').GmfLayerWMS} */
+          /** @type {any} */ dataSource.gmfLayer;
         if (
           olUtilGetUid(dsLayer) == olUtilGetUid(layer) &&
           layer.get('querySourceIds').includes(String(dataSource.id)) &&
@@ -996,7 +972,6 @@ export class DatasourceManager {
           }
           const treeCtrl = item.treeCtrl;
           const projCode = treeCtrl.map.getView().getProjection().getCode();
-
           if (!(dataSource instanceof GmfDatasourceOGC)) {
             throw new Error('Wrong datasource');
           }
@@ -1013,10 +988,8 @@ export class DatasourceManager {
           }
         }
       }
-
       filterParamValues.push(filterParamValue);
     }
-
     source.updateParams({
       [filterParam]: hasFilter ? filterParamValues.join('') : null,
     });
@@ -1041,7 +1014,6 @@ export class DatasourceManager {
     if (dataSource.filtrable !== true || dataSource.ogcType !== Type.WMS) {
       return;
     }
-
     const layer = this.getDataSourceLayer_(dataSource);
     if (layer === undefined) {
       return;
@@ -1068,7 +1040,6 @@ export class DatasourceManager {
     }
     const wmsLayer = item.wmsLayer;
     const wmsSource = wmsLayer.getSource();
-
     const timeProperty = dataSource.timeProperty;
     let timeParam;
     const range = dataSource.timeRangeValue;
@@ -1104,7 +1075,7 @@ export class DatasourceManager {
    * @hidden
    */
   handleNgeoBackgroundLayerChange_(evt) {
-    const event = /** @type {import('ngeo/map/BackgroundLayerMgr').BackgroundEvent} */ (evt);
+    const event = /** @type {import('ngeo/map/BackgroundLayerMgr').BackgroundEvent} */ evt;
     const previousBackgroundLayer = event.detail.previous;
     const currentBackgroundLayer = event.detail.current;
     const cache = this.dataSourcesCache_;
@@ -1138,7 +1109,20 @@ export class DatasourceManager {
     }
   }
 }
-
+DatasourceManager.$inject = [
+  '$q',
+  '$rootScope',
+  '$timeout',
+  '$injector',
+  'gmfThemes',
+  'gmfTreeManager',
+  'ngeoBackgroundLayerMgr',
+  'ngeoDataSources',
+  'ngeoLayerHelper',
+  'ngeoRuleHelper',
+  'ngeoWMSTime',
+  'gmfWFSAliases',
+];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -1155,5 +1139,4 @@ const myModule = angular.module('gmfDataSourcesManager', [
   ngeoMiscWMSTime.name,
 ]);
 myModule.service('gmfDataSourcesManager', DatasourceManager);
-
 export default myModule;

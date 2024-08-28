@@ -22,13 +22,9 @@
 /* global Bloodhound */
 
 import angular from 'angular';
-
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
-
 import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent';
-
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent';
-
 import ngeoQueryQuerent from 'ngeo/query/Querent';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
 
@@ -42,18 +38,19 @@ const myModule = angular.module('gmfImportdatasource', [
   gmfImportWmtsCapabilityLayertreeComponent.name,
   ngeoQueryQuerent.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/import/importdatasourceComponent', require('./importdatasourceComponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfImportdatasourceTemplateUrl',
   /**
@@ -74,6 +71,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfImportdatasourceTemplateUrl.$inject = ['$attrs', 'gmfImportdatasourceTemplateUrl'];
 function gmfImportdatasourceTemplateUrl($attrs, gmfImportdatasourceTemplateUrl) {
   return gmfImportdatasourceTemplateUrl($attrs);
 }
@@ -199,7 +197,6 @@ export class Controller {
      * @type {string[]}
      */
     this.modes = [Mode.LOCAL, Mode.ONLINE];
-
     gettextCatalog.getString('Local');
     gettextCatalog.getString('Online');
 
@@ -212,9 +209,7 @@ export class Controller {
      * @type {import('ngeo/misc/filters').unitPrefix}
      * @private
      */
-    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters').unitPrefix} */ (
-      $filter('ngeoUnitPrefix')
-    );
+    this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters').unitPrefix} */ $filter('ngeoUnitPrefix');
 
     /**
      * Current WMS Capabilities that were connected.
@@ -243,7 +238,6 @@ export class Controller {
 
     /** @type {import('gmf/options').gmfExternalOGCServers} */
     const servers = gmfExternalOGCServers;
-
     if (servers) {
       this.serversEngine_ = new Bloodhound({
         datumTokenizer: (datum) => {
@@ -256,16 +250,14 @@ export class Controller {
 
     // Register input[type=file] onchange event, use HTML5 File api
     this.fileInput_.on('change', () => {
-      const fileInput = /** @type {HTMLInputElement} */ (this.fileInput_[0]);
+      const fileInput = /** @type {HTMLInputElement} */ this.fileInput_[0];
       const files = fileInput.files;
       this.file = files && files[0] ? files[0] : null;
-
       if (this.file) {
         this.hasError = false;
         // update the label
         $(fileInput).next('.custom-file-label').html(this.fileNameAndSize);
       }
-
       this.scope_.$apply();
     });
   }
@@ -275,7 +267,6 @@ export class Controller {
    */
   $onInit() {
     this.gmfExternalDataSourcesManager_.map = this.map;
-
     if (this.serversEngine_) {
       /**
        * @param {string} query Query string.
@@ -338,7 +329,6 @@ export class Controller {
     }
     const url = this.url;
     const serviceType = guessServiceTypeByUrl(url);
-
     this.isLoading = true;
     this.startWorking_();
     if (serviceType === Type.WMS) {
@@ -401,13 +391,11 @@ export class Controller {
       return '';
     }
     let nameAndSize = '';
-
     const file = this.file;
     if (file !== undefined) {
       const fileSize = this.unitPrefixFormat_(file.size, 'o');
       nameAndSize = `${file.name}, ${fileSize}`;
     }
-
     return nameAndSize;
   }
 
@@ -441,7 +429,6 @@ export class Controller {
     layer._visible = visible;
     layer._searchMatch = null;
     layer._expanded = false;
-
     if (!this.searchText) {
       layer._visible = true;
     } else {
@@ -507,7 +494,16 @@ export class Controller {
     }
   }
 }
-
+Controller.$inject = [
+  '$element',
+  '$filter',
+  '$scope',
+  '$timeout',
+  'gmfExternalDataSourcesManager',
+  'ngeoQuerent',
+  'gmfExternalOGCServers',
+  'gettextCatalog',
+];
 myModule.component('gmfImportdatasource', {
   bindings: {
     'map': '<',
@@ -515,5 +511,4 @@ myModule.component('gmfImportdatasource', {
   controller: Controller,
   templateUrl: gmfImportdatasourceTemplateUrl,
 });
-
 export default myModule;

@@ -22,7 +22,6 @@
 import angular from 'angular';
 import './elevation.css';
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfRasterModule from 'gmf/raster/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoMapModule from 'ngeo/map/module';
@@ -65,12 +64,9 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('gmfElevationOptions', {
   layers: ['aster', 'srtm'],
 });
 options(myModule);
-
 export default myModule;

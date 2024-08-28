@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import 'bootstrap/js/src/alert';
-
 import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup';
 import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message_OLD'; // TODO: Use new ts file when convert done
 import 'ngeo/sass/font.scss';
@@ -73,7 +72,6 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
      * @type {import('ngeo/message/Popup').PopupFactory}
      */
     this.createPopup_ = ngeoCreatePopup;
-
     const container = angular.element('<div class="ngeo-disclaimer"></div>');
     angular.element(document.body).append(container);
 
@@ -169,9 +167,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     // Set the message status as opened once
     this.validMessages_ = this.validMessages_.filter((msg) => msg !== uid);
     this.validMessages_.push(uid);
-
     this.uids_[uid] = true;
-
     if (message.popup === true) {
       // display the message in a popup, i.e. using the ngeo create popup
       const popup = this.createPopup_();
@@ -188,7 +184,6 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
           this.closeMessage_(message);
         }
       });
-
       this.messages_[uid] = popup;
     } else {
       // get an already displayed compatible message.
@@ -217,27 +212,21 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
         default:
           break;
       }
-
       const el = angular.element(`<div role="alert" class="${classNames.join(' ')}"></div>`);
       const button = angular.element(
-        `<button type="button" class="close" data-dismiss="alert" aria-label="${gettextCatalog.getString(
-          'Close',
-        )}"><span aria-hidden="true" class="fa fa-times"></span></button>`,
+        `<button type="button" class="close" data-dismiss="alert" aria-label="${gettextCatalog.getString('Close')}"><span aria-hidden="true" class="fa fa-times"></span></button>`,
       );
       const msg = angular.element('<span />').html(message.msg);
       el.append(button).append(msg);
 
       // Set the message status as manually closed
       button.on('click', () => this.closedMessages_.push(uid));
-
       let container;
-
       if (message.target) {
         container = angular.element(message.target);
       } else {
         container = this.container_;
       }
-
       container.append(el);
       el.addClass('show');
 
@@ -316,7 +305,6 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
       // the message is still used
       return;
     }
-
     const obj = this.messages_[compatibleMessageUid];
 
     // (2) Close message (popup or alert)
@@ -332,7 +320,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     } else if (obj) {
       // (2.2) Check if the message hasn't been closed using the UI, i.e. by
       //       clicking the close button. If not, then close it.
-      const jqueryObj = /** @type {JQuery} */ (obj);
+      const jqueryObj = /** @type {JQuery} */ obj;
       if (jqueryObj.hasClass('show')) {
         jqueryObj.alert('close');
       }
@@ -345,13 +333,11 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
     delete this.messagesConsumerCount_[compatibleMessageUid];
   }
 }
-
+MessageDisclaimerService.$inject = ['$sce', 'gettextCatalog', 'ngeoCreatePopup'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('ngeoDisclaimer', [ngeoMessagePopup.name]);
-
 myModule.service('ngeoDisclaimer', MessageDisclaimerService);
-
 export default myModule;

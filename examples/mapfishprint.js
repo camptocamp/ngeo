@@ -1,3 +1,4 @@
+MainController.$inject = ['$timeout', 'ngeoCreatePrint', 'ngeoPrintUtils'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import angular from 'angular';
 import {MAPSERVER_PROXY, PRINT_PROXY} from './url';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
-
 import ngeoPrintService from 'ngeo/print/Service';
 import ngeoPrintUtils from 'ngeo/print/Utils';
 import MaskLayer from 'ngeo/print/Mask';
@@ -137,9 +137,7 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
    * @type {import('ngeo/print/Utils').PrintUtils}
    */
   this.printUtils_ = ngeoPrintUtils;
-
   this.maskLayer_ = new MaskLayer();
-
   this.maskLayer_.getSize = () => PRINT_PAPER_SIZE_;
   this.maskLayer_.getScale = (frameState) => {
     const mapSize = frameState.size;
@@ -158,7 +156,6 @@ function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {
  */
 MainController.prototype.print = function () {
   const map = this.map;
-
   const mapSize = map.getSize();
   const viewResolution = map.getView().getResolution();
 
@@ -167,21 +164,17 @@ MainController.prototype.print = function () {
     mapSize !== undefined && viewResolution !== undefined
       ? this.printUtils_.getOptimalScale(mapSize, viewResolution, PRINT_PAPER_SIZE_, PRINT_SCALES_)
       : PRINT_SCALES_[0];
-
   const rotation = map.getView().getRotation();
   const dpi = PRINT_DPI_;
   const format = PRINT_FORMAT_;
   const layout = PRINT_LAYOUT_;
-
   this.printState = 'Printing...';
-
   const spec = this.print_.createSpec(map, scale, rotation, dpi, layout, format, {
     'datasource': [],
     'debug': 0,
     'comments': 'My comments',
     'title': 'My print',
   });
-
   this.print_
     .createReport(spec)
     .then(this.handleCreateReportSuccess_.bind(this), this.handleCreateReportError_.bind(this));
@@ -243,10 +236,7 @@ MainController.prototype.handleGetStatusSuccess_ = function (ref, resp) {
 MainController.prototype.handleGetStatusError_ = function (resp) {
   this.printState = 'Print error';
 };
-
 appmodule.controller('MainController', MainController);
-
 appmodule.constant('ngeoTilesPreloadingLimit', 0);
 options(appmodule);
-
 export default module;

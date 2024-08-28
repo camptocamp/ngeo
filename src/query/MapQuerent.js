@@ -115,7 +115,6 @@ export class MapQuerent {
      * @private
      */
     this.tolerance_;
-
     if (hasCoarsePointingDevice()) {
       this.tolerance_ = options.toleranceTouch !== undefined ? options.toleranceTouch : 10;
     } else {
@@ -188,7 +187,6 @@ export class MapQuerent {
     if (this.cleared_) {
       return;
     }
-
     this.result_.total = 0;
     for (const source of this.result_.sources) {
       if (!keep) {
@@ -226,7 +224,6 @@ export class MapQuerent {
       }
       let label = dataSource.name;
       console.assert(dataSource);
-
       const querentResultItem = response[id];
       const features = querentResultItem.features;
       const limit = querentResultItem.limit;
@@ -260,12 +257,10 @@ export class MapQuerent {
         }
         typeSeparatedFeatures[type].push(feature);
       });
-
       for (const type in typeSeparatedFeatures) {
         label = type ? type : label;
         const featuresByType = typeSeparatedFeatures[type];
         let shouldPush = false;
-
         if (action === ngeoQueryAction.REPLACE) {
           shouldPush = true;
         } else {
@@ -276,7 +271,6 @@ export class MapQuerent {
               break;
             }
           }
-
           if (existingSource) {
             for (const newFeature of featuresByType) {
               const existingFeatureIndex = this.featureHelper_.findFeatureIndexByFid(
@@ -301,7 +295,6 @@ export class MapQuerent {
             }
           }
         }
-
         if (shouldPush) {
           this.result_.sources.push({
             features: featuresByType,
@@ -325,7 +318,14 @@ export class MapQuerent {
     this.cleared_ = false;
   }
 }
-
+MapQuerent.$inject = [
+  'ngeoDataSources',
+  'gmfDataSourcesHelper',
+  'ngeoFeatureHelper',
+  'ngeoQuerent',
+  'ngeoQueryResult',
+  'ngeoQueryOptions',
+];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -344,11 +344,10 @@ myModule.service('ngeoMapQuerent', MapQuerent);
  */
 myModule.value(
   'ngeoQueryResult',
-  /** @type {QueryResult} */ ({
+  /** @type {QueryResult} */ {
     sources: [],
     total: 0,
     pending: false,
-  }),
+  },
 );
-
 export default myModule;

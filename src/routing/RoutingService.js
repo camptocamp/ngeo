@@ -1,3 +1,4 @@
+RoutingService.$inject = ['$http', 'ngeoRoutingOptions'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -132,12 +133,10 @@ RoutingService.prototype.getRoute = function (coordinates, config) {
   if (config.instance) {
     url += `${config.instance}/`;
   }
-
   url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
 
   // [ [a,b] , [c,d] ] -> 'a,b;c,d'
   const coordinateString = coordinates.map((c) => c.join(',')).join(';');
-
   url += coordinateString;
 
   // look for route service options
@@ -150,7 +149,6 @@ RoutingService.prototype.getRoute = function (coordinates, config) {
     }
     url += options.join('&');
   }
-
   return this.$http_.get(url);
 };
 
@@ -182,7 +180,6 @@ RoutingService.prototype.getNearest = function (coordinate, config) {
   if (config.instance) {
     url += `${config.instance}/`;
   }
-
   url += `${config.service}/${this.protocolVersion_}/${config.profile}/`;
 
   // [a,b] -> 'a,b'
@@ -198,7 +195,6 @@ RoutingService.prototype.getNearest = function (coordinate, config) {
     }
     url += options.join('&');
   }
-
   return this.$http_.get(url);
 };
 
@@ -207,7 +203,5 @@ RoutingService.prototype.getNearest = function (coordinate, config) {
  * @hidden
  */
 const myModule = angular.module('ngeoRoutingService', []);
-
 myModule.service('ngeoRoutingService', RoutingService);
-
 export default myModule;

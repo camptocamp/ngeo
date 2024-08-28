@@ -21,7 +21,6 @@
 import {StreetviewService} from './Service';
 import 'mapillary-js/dist/mapillary.css';
 import {buffer} from 'ol/extent';
-
 const MLY_METADATA_ENDPOINT = 'https://graph.mapillary.com';
 
 /**
@@ -73,10 +72,8 @@ export default class MapillaryService extends StreetviewService {
      */
     this.mapillaryElement = document.getElementById('mly');
     this.mapillaryElement.hidden = true;
-
     import(/* webpackChunkName: "mapillary" */ 'mapillary-js/src/Mapillary').then((Mapillary) => {
       this.Mapillary = Mapillary;
-
       this.mly = new Mapillary.Viewer({
         accessToken: this.accessToken_,
         container: 'mly',
@@ -196,3 +193,12 @@ export default class MapillaryService extends StreetviewService {
     );
   }
 }
+MapillaryService.$inject = [
+  '$scope',
+  '$timeout',
+  '$http',
+  'map',
+  'handlePanoramaPositionChange',
+  'accessToken',
+  'bufferSize',
+];

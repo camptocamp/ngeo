@@ -1,3 +1,4 @@
+FulltextSearchService.$inject = ['$http', 'fulltextsearchUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2017-2024 Camptocamp SA
@@ -42,13 +43,11 @@ export function FulltextSearchService($http, fulltextsearchUrl) {
    * @type {string}
    */
   this.url_ = fulltextsearchUrl;
-
   const url = this.url_.split('?');
   /**
    * @type {string}
    */
   this.baseUrl_ = url[0];
-
   const queryString = url.length == 2 ? `?${url[1]}` : '';
   /**
    * @type {Object<string, string>}
@@ -65,11 +64,8 @@ export function FulltextSearchService($http, fulltextsearchUrl) {
  */
 FulltextSearchService.prototype.search = function (query, params) {
   const queryParams = Object.assign({}, this.defaultParams_, params);
-
   queryParams['query'] = query;
-
   const url = `${this.baseUrl_}?${encodeQueryString(queryParams)}`;
-
   return new Promise((resolve, reject) => {
     this.$http_
       .get(url)
@@ -84,5 +80,4 @@ FulltextSearchService.prototype.search = function (query, params) {
  */
 const myModule = angular.module('gmfSearchFulltextSearch', []);
 myModule.service('gmfSearchFulltextSearch', FulltextSearchService);
-
 export default myModule;

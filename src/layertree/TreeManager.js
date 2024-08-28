@@ -1,3 +1,12 @@
+LayertreeTreeManager.$inject = [
+  '$rootScope',
+  '$timeout',
+  '$injector',
+  'gettextCatalog',
+  'ngeoLayerHelper',
+  'gmfThemes',
+  'ngeoStateManager',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -112,9 +121,9 @@ export function LayertreeTreeManager(
    * @type {import('gmf/themes').GmfRootNode}
    * @public
    */
-  this.root = /** @type {import('gmf/themes').GmfRootNode} */ ({
+  this.root = /** @type {import('gmf/themes').GmfRootNode} */ {
     children: [],
-  });
+  };
 
   /**
    * The controller of the (unique) root layer tree.
@@ -160,7 +169,6 @@ export function LayertreeTreeManager(
    * @type {?import('gmf/themes').GmfOgcServers}
    */
   this.ogcServers_ = null;
-
   listen(this.gmfThemes_, 'change', this.handleThemesChange_, this);
 }
 
@@ -173,7 +181,6 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     this.ogcServers_ = ogcServers;
   });
-
   if (this.rootCtrl && this.rootCtrl.children) {
     this.gmfThemes_.getThemesObject().then((themes) => {
       this.refreshFirstLevelGroups_(themes);
@@ -192,7 +199,6 @@ LayertreeTreeManager.prototype.handleThemesChange_ = function () {
 LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups) {
   //Remove existing submenu if opened at theme refresh
   this.parseTreeNodes(this.root);
-
   this.rootScope_.$broadcast('ngeo-pre-empty-layertree');
   this.root.children.length = 0;
   this.rootScope_.$broadcast('ngeo-post-empty-layertree');
@@ -214,7 +220,6 @@ LayertreeTreeManager.prototype.setFirstLevelGroups = function (firstLevelGroups)
 LayertreeTreeManager.prototype.addFirstLevelGroups = function (firstLevelGroups, opt_add, opt_silent) {
   /** @type {import('gmf/themes').GmfGroup[]} */
   const groupNotAdded = [];
-
   firstLevelGroups
     .slice()
     .reverse()
@@ -226,7 +231,6 @@ LayertreeTreeManager.prototype.addFirstLevelGroups = function (firstLevelGroups,
   if (groupNotAdded.length > 0 && !opt_silent) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
-
   return groupNotAdded.length === 0;
 };
 
@@ -252,7 +256,6 @@ LayertreeTreeManager.prototype.addSecondLevelGroups = function (
 ) {
   /** @type {import('gmf/themes').GmfGroup[]} */
   const groupNotAdded = [];
-
   firstLevelGroups
     .slice()
     .reverse()
@@ -260,7 +263,6 @@ LayertreeTreeManager.prototype.addSecondLevelGroups = function (
       if (!this.addFirstLevelGroup_(group)) {
         groupNotAdded.push(group);
       }
-
       group.children.forEach((child) => {
         // Find if the tree child is the one we searched
         let enabled = child.name === groupName;
@@ -268,7 +270,6 @@ LayertreeTreeManager.prototype.addSecondLevelGroups = function (
         // Set the tree child accordingly
         this.setSearchedChild(child, enabled);
       });
-
       setTimeout(() => {
         // Update the permalink
         const treeCtrl = this.getTreeCtrlByNodeId(group.id);
@@ -278,7 +279,6 @@ LayertreeTreeManager.prototype.addSecondLevelGroups = function (
   if (groupNotAdded.length > 0 && !opt_silent) {
     this.notifyCantAddGroups_(groupNotAdded);
   }
-
   return groupNotAdded.length === 0;
 };
 
@@ -310,7 +310,7 @@ LayertreeTreeManager.prototype.setInitialFirstLevelGroups = function (firstGroup
  * @param {import('gmf/themes').GmfGroup | import('gmf/themes').GmfLayer | import('gmf/themes').GmfRootNode} node Layer tree node to remove.
  */
 LayertreeTreeManager.prototype.parseTreeNodes = function (node) {
-  const group = /** @type {import('gmf/themes').GmfGroup} */ (node);
+  const group = /** @type {import('gmf/themes').GmfGroup} */ node;
   if (group.children) {
     /**
      * @param {unknown} child
@@ -356,9 +356,9 @@ LayertreeTreeManager.prototype.updateTreeGroupsState_ = function (groups, remove
   treeGroupsParam[PermalinkParam.TREE_GROUPS] = groups.map((node) => node.name).join(',');
   this.ngeoStateManager_.updateState(treeGroupsParam);
   if (this.$injector_.has('gmfPermalink')) {
-    /** @type {import('gmf/permalink/Permalink').PermalinkService} */ (
-      this.$injector_.get('gmfPermalink')
-    ).cleanParams(removedGroups);
+    /** @type {import('gmf/permalink/Permalink').PermalinkService} */ this.$injector_
+      .get('gmfPermalink')
+      .cleanParams(removedGroups);
   }
 };
 
@@ -433,7 +433,6 @@ LayertreeTreeManager.prototype.addFirstLevelGroup_ = function (group) {
     this.groupsToAddInThisDigestLoop_.length = 0;
     this.promiseForGroupsToAddInThisDigestLoop_ = null;
   });
-
   return true;
 };
 
@@ -562,12 +561,12 @@ LayertreeTreeManager.prototype.cloneGroupNode_ = function (group, names) {
  *     should have their checkbox checked)
  */
 LayertreeTreeManager.prototype.toggleNodeCheck_ = function (node, names) {
-  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
+  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ node;
   if (!groupNode.children) {
     return;
   }
   groupNode.children.forEach((childNode) => {
-    const childGroupNode = /** @type {import('gmf/themes').GmfGroup} */ (childNode);
+    const childGroupNode = /** @type {import('gmf/themes').GmfGroup} */ childNode;
     if (childGroupNode.children) {
       this.toggleNodeCheck_(childGroupNode, names);
     } else if (childNode.metadata) {
@@ -633,9 +632,9 @@ LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
   if (!this.ogcServers_) {
     throw new Error('Missing ogcServers');
   }
-  const gmfParentGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
+  const gmfParentGroup = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.parent.node;
   if (gmfParentGroup.mixed) {
-    const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (treeCtrl.node));
+    const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ treeCtrl.node;
     if (!gmfLayerWMS.ogcServer) {
       throw new Error('Missing gmfLayerWMS.ogcServer');
     }
@@ -645,7 +644,7 @@ LayertreeTreeManager.prototype.getOgcServer = function (treeCtrl) {
     while (!firstLevelGroupCtrl.parent.isRoot) {
       firstLevelGroupCtrl = firstLevelGroupCtrl.parent;
     }
-    const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (firstLevelGroupCtrl.node);
+    const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ firstLevelGroupCtrl.node;
     if (!gmfGroup.ogcServer) {
       throw new Error('Missing gmfGroup.ogcServer');
     }
@@ -722,7 +721,6 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl
   treeCtrl.children.map((child) => {
     children[child.node.name] = this.getFirstLevelGroupFullState_(child);
   });
-
   let isChecked, isExpanded, isLegendExpanded;
   if (treeCtrl.children.length > 0) {
     const nodeElement = $(`#gmf-layertree-layer-group-${treeCtrl.uid}`);
@@ -745,7 +743,6 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl
       isLegendExpanded = legendElement.hasClass('show');
     }
   }
-
   return {
     children,
     isChecked,
@@ -764,7 +761,6 @@ LayertreeTreeManager.prototype.setFirstLevelGroupFullState_ = function (treeCtrl
   if (fullState === undefined) {
     return;
   }
-
   if (treeCtrl.children.length > 0) {
     const nodeElement = $(`#gmf-layertree-layer-group-${treeCtrl.uid}`);
     // Set isExpanded only in groups.
@@ -806,5 +802,4 @@ const myModule = angular.module('gmfTreeManager', [
   ngeoStatemanagerService.name,
 ]);
 myModule.service('gmfTreeManager', LayertreeTreeManager);
-
 export default myModule;

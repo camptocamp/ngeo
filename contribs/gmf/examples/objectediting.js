@@ -1,3 +1,4 @@
+MainController.$inject = ['gmfObjectEditingManager', 'gmfThemes', 'gmfTreeManager', 'ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,13 +23,9 @@
 import angular from 'angular';
 import './objectediting.css';
 import gmfLayertreeComponent from 'gmf/layertree/component';
-
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfObjecteditingComponent from 'gmf/objectediting/component';
-
 import gmfObjecteditingManager from 'gmf/objectediting/Manager';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
@@ -77,9 +74,7 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
    * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = gmfTreeManager;
-
   gmfThemes.loadThemes();
-
   const projection = olProj.get(EPSG2056);
   projection.setExtent([485869.5728, 76443.1884, 837076.5648, 299941.7864]);
 
@@ -128,7 +123,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
       zoom: 2,
     }),
   });
-
   gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       // Add layer vector after
@@ -151,7 +145,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
    * @type {boolean}
    */
   this.objectEditingActive = true;
-
   const objectEditingToolActivate = new ngeoMiscToolActivate(this, 'objectEditingActive');
   ngeoToolActivateMgr.registerTool('mapTools', objectEditingToolActivate, true);
 
@@ -159,7 +152,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
    * @type {boolean}
    */
   this.dummyActive = false;
-
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, false);
 
@@ -167,7 +159,6 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
    * @type {?import('ol/Feature').default<import('ol/geom/Geometry').default>}
    */
   this.objectEditingFeature = null;
-
   gmfObjectEditingManager.getFeature().then((feature) => {
     this.objectEditingFeature = feature;
     if (feature) {
@@ -175,10 +166,7 @@ function MainController(gmfObjectEditingManager, gmfThemes, gmfTreeManager, ngeo
     }
   });
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('defaultTheme', 'ObjectEditing');
 options(myModule);
-
 export default myModule;

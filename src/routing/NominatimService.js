@@ -1,3 +1,4 @@
+NominatimService.$inject = ['$http', 'ngeoDebounce', 'ngeoNominatimUrl', 'ngeoNominatimSearchDefaultParams'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -110,13 +111,11 @@ export function NominatimService($http, ngeoDebounce, ngeoNominatimUrl, ngeoNomi
  */
 NominatimService.prototype.search = function (query, params) {
   let url = `${this.nominatimUrl_}search?q=${query}`;
-
   params = params || {};
   params = Object.assign({}, this.searchDefaultParams_, params);
 
   // require JSON response
   params.format = 'json';
-
   if (params) {
     url += '&';
     const options = [];
@@ -125,7 +124,6 @@ NominatimService.prototype.search = function (query, params) {
     }
     url += options.join('&');
   }
-
   return this.$http_.get(url);
 };
 
@@ -139,7 +137,6 @@ NominatimService.prototype.search = function (query, params) {
  */
 NominatimService.prototype.reverse = function (coordinate, params) {
   let url = `${this.nominatimUrl_}reverse`;
-
   params = Object.assign({}, params);
 
   // coordinate
@@ -148,7 +145,6 @@ NominatimService.prototype.reverse = function (coordinate, params) {
 
   // require JSON response
   params.format = 'json';
-
   if (params) {
     url += '?';
     const options = [];
@@ -157,7 +153,6 @@ NominatimService.prototype.reverse = function (coordinate, params) {
     }
     url += options.join('&');
   }
-
   return this.$http_.get(url);
 };
 
@@ -200,7 +195,6 @@ NominatimService.prototype.typeaheadSource_ = function (query, syncResults, asyn
       syncResults([]);
     }
   };
-
   this.search(query, {}).then(onSuccess_, onError_);
 };
 
@@ -209,7 +203,5 @@ NominatimService.prototype.typeaheadSource_ = function (query, syncResults, asyn
  * @hidden
  */
 const myModule = angular.module('ngeoNominatimService', [ngeoMiscDebounce.name]);
-
 myModule.service('ngeoNominatimService', NominatimService);
-
 export default myModule;

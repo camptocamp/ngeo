@@ -1,3 +1,4 @@
+configFunction_.$inject = ['$httpProvider'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -21,7 +22,6 @@
 
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import angular from 'angular';
-
 const Service = class {
   /**
    * This service watches the status of network connection.
@@ -92,10 +92,8 @@ const Service = class {
      * @type {angular.IPromise<void>|undefined}
      */
     this.promise_;
-
     this.initialize_();
   }
-
   initialize_() {
     this.offline_ = !this.$window_.navigator.onLine;
 
@@ -183,9 +181,7 @@ const Service = class {
     return !!this.offline_;
   }
 };
-
 const name = 'ngeoNetworkStatus';
-
 Service.module = angular.module(name, [ngeoMiscDebounce.name]);
 Service.module.service(name, Service);
 
@@ -214,6 +210,8 @@ const httpInterceptor = function ($q, ngeoDebounce, ngeoNetworkStatus) {
     },
   };
 };
+httpInterceptor.$inject = ['$q', 'ngeoDebounce', 'ngeoNetworkStatus'];
+httpInterceptor.$inject = ['$q', 'ngeoDebounce', 'ngeoNetworkStatus'];
 Service.module.factory('httpInterceptor', httpInterceptor);
 
 /**
@@ -225,7 +223,5 @@ function configFunction_($httpProvider) {
   $httpProvider.interceptors.push('httpInterceptor');
 }
 Service.module.config(configFunction_);
-
 const exports = Service;
-
 export default exports;

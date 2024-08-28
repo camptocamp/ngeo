@@ -1,3 +1,4 @@
+MainController.$inject = ['gmfTreeManager', 'gmfThemes', 'gmfThemeManager', 'ngeoLocation'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,14 +23,10 @@
 import angular from 'angular';
 import './layertreeadd.css';
 import gmfDisclaimerModule from 'gmf/disclaimer/module';
-
 import gmfLayertreeComponent from 'gmf/layertree/component';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfThemeThemes from 'gmf/theme/Themes';
-
 import gmfThemeManager from 'gmf/theme/Manager';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoStatemanagerLocation from 'ngeo/statemanager/Location';
@@ -162,7 +159,6 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
     }
     return this.gmfTreeManager.root.children;
   };
-
   gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
@@ -177,10 +173,10 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
         });
       });
       flatNodes.forEach((node) => {
-        const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
+        const groupNode = /** @type {import('gmf/themes').GmfGroup} */ node;
         // Get an array of all layers
         if (groupNode.children === undefined) {
-          this.layers.push(/** @type {import('gmf/themes').GmfLayer} */ (node));
+          this.layers.push(/** @type {import('gmf/themes').GmfLayer} */ node);
         }
       });
     }
@@ -196,7 +192,7 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
    */
   this.getDistinctFlatNodes_ = function (node, nodes) {
     let i;
-    const children = /** @type {import('gmf/themes').GmfGroup} */ (node).children;
+    const children = /** @type {import('gmf/themes').GmfGroup} */ node.children;
     if (children !== undefined) {
       for (i = 0; i < children.length; i++) {
         this.getDistinctFlatNodes_(children[i], nodes);
@@ -214,8 +210,6 @@ function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation
     }
   };
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

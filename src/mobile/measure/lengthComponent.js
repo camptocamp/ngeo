@@ -1,3 +1,4 @@
+mobileMeasureLenthComponent.$inject = ['gmfMobileMeasureLengthTemplateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -30,7 +31,6 @@ import {buildStyle} from 'ngeo/options';
  * @hidden
  */
 const myModule = angular.module('gmfMobileMeasureLength', [ngeoMiscFilters.name]);
-
 myModule.value(
   'gmfMobileMeasureLengthTemplateUrl',
   /**
@@ -43,16 +43,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/measure/lengthComponent';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/measure/lengthComponent', require('./baseComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -99,7 +101,6 @@ function mobileMeasureLenthComponent(gmfMobileMeasureLengthTemplateUrl) {
     },
   };
 }
-
 myModule.directive('gmfMobileMeasurelength', mobileMeasureLenthComponent);
 
 /**
@@ -138,7 +139,6 @@ export class Controller extends MeasueMobileBaseController {
         sketchStyle: buildStyle(this.options.sketchStyle),
       },
     );
-
     super.init();
   }
 
@@ -179,7 +179,6 @@ export class Controller extends MeasueMobileBaseController {
     this.active = false;
   }
 }
-
+Controller.$inject = ['$scope', '$filter', 'gettextCatalog', 'gmfMobileMeasureLengthOptions'];
 myModule.controller('GmfMobileMeasureLengthController', Controller);
-
 export default myModule;

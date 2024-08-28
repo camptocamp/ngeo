@@ -1,3 +1,13 @@
+Controller.$inject = [
+  'gettextCatalog',
+  '$compile',
+  '$filter',
+  '$injector',
+  '$scope',
+  '$timeout',
+  'ngeoEventHelper',
+  'ngeoSnappingTolerance',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -88,7 +98,6 @@ function editingCreateFeatureComponent() {
     },
   };
 }
-
 myModule.directive('ngeoCreatefeature', editingCreateFeatureComponent);
 
 /**
@@ -228,32 +237,27 @@ Controller.prototype.$onInit = function () {
     if (this.injector_.has('ngeoSnappingSource')) {
       options.source = this.injector_.get('ngeoSnappingSource');
     }
-
     interaction = new ngeoInteractionMeasureLength(this.filter_('ngeoUnitPrefix'), gettextCatalog, options);
   } else if (this.geomType === ngeoGeometryType.POLYGON || this.geomType === ngeoGeometryType.MULTI_POLYGON) {
     const helpMsg = gettextCatalog.getString('Click to start drawing area');
     const contMsg = gettextCatalog.getString(
       'Click to continue drawing<br/>' + 'Double-click or click starting point to finish',
     );
-
     interaction = new ngeoInteractionMeasureArea(this.filter_('ngeoUnitPrefix'), gettextCatalog, {
       style: new olStyleStyle(),
       startMsg: this.compile_(`<div translate>${helpMsg}</div>`)(this.scope_)[0],
       continueMsg: this.compile_(`<div translate>${contMsg}</div>`)(this.scope_)[0],
     });
   }
-
   if (!interaction) {
     throw new Error('Missing interaction');
   }
   if (!this.map) {
     throw new Error('Missing map');
   }
-
   interaction.setActive(this.active);
   this.interaction_ = interaction;
   this.map.addInteraction(interaction);
-
   const uid = olUtilGetUid(this);
   if (interaction instanceof olInteractionDraw) {
     this.ngeoEventHelper_.addListenerKey(
@@ -261,7 +265,7 @@ Controller.prototype.$onInit = function () {
       listen(
         interaction,
         'drawend',
-        /** @type {import('ol/events').ListenerFunction } */ (this.handleDrawEnd_),
+        /** @type {import('ol/events').ListenerFunction } */ this.handleDrawEnd_,
         this,
       ),
     );
@@ -274,7 +278,7 @@ Controller.prototype.$onInit = function () {
       listen(
         interaction,
         'measureend',
-        /** @type {import('ol/events').ListenerFunction } */ (this.handleDrawEnd_),
+        /** @type {import('ol/events').ListenerFunction } */ this.handleDrawEnd_,
         this,
       ),
     );
@@ -329,6 +333,5 @@ Controller.prototype.$onDestroy = function () {
     this.map.removeInteraction(this.interaction_);
   }, 0);
 };
-
 myModule.controller('ngeoCreatefeatureController', Controller);
 export default myModule;

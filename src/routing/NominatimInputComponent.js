@@ -1,3 +1,4 @@
+Controller.$inject = ['$element', '$scope', 'ngeoNominatimService'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -31,18 +32,19 @@ const myModule = angular.module('ngeoRoutingNominatimInputComponent', [
   ngeoSearchSearchDirective.name,
   ngeoRoutingNominatimService.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/routing/nominatiminput', require('./nominatiminput.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoRoutingNominatimInputComponentTemplateUrl',
   /**
@@ -64,6 +66,10 @@ myModule.value(
  * @private
  * @hidden
  */
+ngeoRoutingNominatimInputComponentTemplateUrl.$inject = [
+  '$attrs',
+  'ngeoRoutingNominatimInputComponentTemplateUrl',
+];
 function ngeoRoutingNominatimInputComponentTemplateUrl(
   $attrs,
   ngeoRoutingNominatimInputComponentTemplateUrl,
@@ -111,7 +117,7 @@ export function Controller($element, $scope, ngeoNominatimService) {
   /**
    * @type {Twitter.Typeahead.Options}
    */
-  this.options = /** @type {Twitter.Typeahead.Options} */ ({});
+  this.options = /** @type {Twitter.Typeahead.Options} */ {};
 
   /**
    * @type {Twitter.Typeahead.Dataset<import('./NominatimService').NominatimSearchResult>[]}
@@ -182,7 +188,5 @@ const routingNominatimInputComponent = {
   },
   templateUrl: ngeoRoutingNominatimInputComponentTemplateUrl,
 };
-
 myModule.component('ngeoNominatimInput', routingNominatimInputComponent);
-
 export default myModule;

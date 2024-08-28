@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', '$timeout', 'gmfThemes', 'gmfTreeManager'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,9 +21,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import gmfEditingEditFeatureComponent, {EditingState} from 'gmf/editing/editFeatureComponent';
-
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfThemeThemes from 'gmf/theme/Themes';
 
@@ -35,19 +34,21 @@ const myModule = angular.module('GmfEditingFeatureSelectorComponent', [
   gmfLayertreeTreeManager.name,
   gmfThemeThemes.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    $templateCache.put(
-      'gmf/editing/editFeatureSelectorComponent',
-      // @ts-ignore: webpack
-      require('./editFeatureSelectorComponent.html'),
-    );
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      $templateCache.put(
+        'gmf/editing/editFeatureSelectorComponent',
+        // @ts-ignore: webpack
+        require('./editFeatureSelectorComponent.html'),
+      );
+    },
+  ],
 );
 
 /**
@@ -89,7 +90,6 @@ function editingEditFeatureComponent() {
     templateUrl: 'gmf/editing/editFeatureSelectorComponent',
   };
 }
-
 myModule.directive('gmfEditfeatureselector', editingEditFeatureComponent);
 
 /**
@@ -111,7 +111,6 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * @type {boolean}
    */
   this.active = this.active === true;
-
   $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   /**
@@ -156,11 +155,10 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
     this.$timeout_(() => {
       if (value) {
         const editables = this.editableTreeCtrls;
-
         editables.length = 0;
         if (this.gmfTreeManager_.rootCtrl) {
           this.gmfTreeManager_.rootCtrl.traverseDepthFirst((treeCtrl) => {
-            const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
+            const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ treeCtrl.node;
             if (gmfLayer.editable) {
               editables.push(treeCtrl);
             }
@@ -203,7 +201,6 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * @type {?import('ngeo/layertree/Controller').LayertreeController}
    */
   this.selectedEditableTreeCtrl = null;
-
   $scope.$watch(
     () => this.selectedEditableTreeCtrl,
     (newValue, oldValue) => {
@@ -222,7 +219,6 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
    * @type {string}
    */
   this.state = EditingState.IDLE;
-
   $scope.$watch(
     () => this.state,
     (newValue, oldValue) => {
@@ -234,7 +230,6 @@ export function Controller($scope, $timeout, gmfThemes, gmfTreeManager) {
       }
     },
   );
-
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
@@ -270,11 +265,8 @@ Controller.prototype.handleActiveChange_ = function (active) {
     }
   }
 };
-
 Controller.prototype.handleDestroy_ = function () {
   this.treeCtrlsWatcherUnregister_();
 };
-
 myModule.controller('GmfEditfeatureselectorController', Controller);
-
 export default myModule;

@@ -1,3 +1,4 @@
+Controller.$inject = ['$element', '$injector', '$scope', 'ngeoFeatureHelper'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -62,7 +63,6 @@ function editingExportFeaturesComponent() {
     },
   };
 }
-
 myModule.directive('ngeoExportfeatures', editingExportFeaturesComponent);
 
 /**
@@ -86,7 +86,6 @@ export function Controller($element, $injector, $scope, ngeoFeatureHelper) {
    * @type {JQuery}
    */
   this.element_ = $element;
-
   const uid = olUtilGetUid(this);
   const id = ['ngeo-exportfeature', uid].join('-');
 
@@ -125,9 +124,7 @@ export function Controller($element, $injector, $scope, ngeoFeatureHelper) {
       'class': 'dropdown-menu',
       'aria-labelledby': id,
     }).appendTo($element.parent()[0]);
-
     this.menu_ = $menu;
-
     formats.forEach((format) => {
       const item = $('<a />', {
         'href': '#',
@@ -144,9 +141,7 @@ export function Controller($element, $injector, $scope, ngeoFeatureHelper) {
    * @type {string[]}
    */
   this.formats_ = formats;
-
   $element.on(['click', id].join('.'), this.handleElementClick_.bind(this));
-
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
@@ -164,9 +159,7 @@ Controller.prototype.handleElementClick_ = function () {
   if (!this.features) {
     throw new Error('Missing features');
   }
-
   const features = this.features.getArray();
-
   if (this.formats_.length === 1) {
     this.featureHelper_.export(features, this.formats_[0]);
   } else if (features.length === 1) {
@@ -215,9 +208,7 @@ Controller.prototype.handleMenuItemClick_ = function (format, event) {
  */
 Controller.prototype.handleDestroy_ = function () {
   const id = this.id_;
-
   this.element_.off(['click', id].join('.'));
-
   if (this.menu_) {
     this.menu_.remove();
     this.items_.forEach(($item) => {
@@ -227,7 +218,5 @@ Controller.prototype.handleDestroy_ = function () {
     this.menu_ = null;
   }
 };
-
 myModule.controller('ngeoExportfeaturesController', Controller);
-
 export default myModule;

@@ -27,11 +27,8 @@ import gmfSearchFulltextSearch from 'gmf/search/FulltextSearch';
 import gmfThemeThemes, {findThemeByName} from 'gmf/theme/Themes';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection';
-
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
-
 import ngeoMessagePopoverComponent from 'ngeo/message/popoverComponent';
-
 import olFeature from 'ol/Feature';
 import {asArray as asColorArray} from 'ol/color';
 import olGeomPoint from 'ol/geom/Point';
@@ -65,16 +62,18 @@ function gmfSearchTemplateUrl_(element, attrs) {
   const templateUrl = attrs.gmfSearchTemplateurl;
   return templateUrl !== undefined ? templateUrl : 'gmf/search';
 }
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/search', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/search', require('./component.html'));
+    },
+  ],
 );
 
 /**
@@ -86,6 +85,7 @@ myModule.run(
  * @private
  * @hidden
  */
+gmfSearchTemplateUrl.$inject = ['$element', '$attrs', 'gmfSearchTemplateUrl'];
 function gmfSearchTemplateUrl($element, $attrs, gmfSearchTemplateUrl) {
   return gmfSearchTemplateUrl($element, $attrs);
 }
@@ -140,7 +140,6 @@ const searchComponent = {
   controller: 'gmfSearchController',
   templateUrl: gmfSearchTemplateUrl,
 };
-
 myModule.value('gmfSearchTemplateUrl', gmfSearchTemplateUrl_);
 
 // Register the controller in the module
@@ -298,9 +297,9 @@ export class SearchController {
     /**
      * @type {Twitter.Typeahead.Options}
      */
-    this.typeaheadOptions = /** @type {Twitter.Typeahead.Options} */ ({
+    this.typeaheadOptions = /** @type {Twitter.Typeahead.Options} */ {
       highlight: true,
-    });
+    };
 
     /**
      * @type {(Twitter.Typeahead.Dataset<olFeature<import('ol/geom/Geometry').default>>|Twitter.Typeahead.Dataset<CoordinateSuggestion>)[]}
@@ -341,18 +340,14 @@ export class SearchController {
      * @type {string}
      */
     this.optionsName = null;
-
     if (!this.clearButton) {
       // Empty the search field on focus and blur.
       this.element_.find('input').on('focus blur', () => {
         this.clear();
       });
     }
-
     this.featureOverlay_.setStyle(this.getSearchStyle_.bind(this));
-
     this.scope_.$watch(() => this.color, this.setStyleColor.bind(this));
-
     if (this.ngeoLocation_) {
       const searchQuery = this.ngeoLocation_.getParam('search');
       if (searchQuery) {
@@ -386,7 +381,6 @@ export class SearchController {
     this.options = this.injector_.get(config);
     this.placeholder = this.options.placeholder || 'Search…';
     gettextCatalog.getString('Search…');
-
     this.coordinatesProjectionsInstances_ =
       this.options.coordinatesProjections === undefined
         ? [this.map.getView().getProjection()]
@@ -396,16 +390,13 @@ export class SearchController {
     if (this.typeaheadOptions) {
       Object.assign(this.options, this.typeaheadOptions);
     }
-
     this.initDatasets_();
-
     this.listeners = this.mergeListeners_(this.additionalListeners, {
       select: this.select_.bind(this),
       change: this.handleChange_.bind(this),
       close: this.close_.bind(this),
       datasetsempty: this.datasetsempty_.bind(this),
     });
-
     if (this.onInitCallback) {
       this.onInitCallback();
     }
@@ -462,7 +453,6 @@ export class SearchController {
       const groupActions = datasource.groupActions || [];
       /** @type {{title: string, filter: function(import("geojson").Feature): boolean}[]} */
       const filters = [];
-
       if (groupValues.length === 0) {
         filters.push({
           'title': '',
@@ -476,14 +466,12 @@ export class SearchController {
           });
         });
       }
-
       groupActions.forEach((action) => {
         filters.push({
           'title': gettextCatalog.getString(action.title),
           'filter': this.filterAction_(action.action),
         });
       });
-
       filters.forEach((filter) => {
         this.datasets.push(
           this.createDataset_(
@@ -517,7 +505,6 @@ export class SearchController {
          */
         suggestion: (suggestion) => {
           const coordinates = suggestion.label;
-
           let html = `<p class="gmf-search-label">${coordinates}</p>`;
           html = `<div class="gmf-search-datum">${html}</div>`;
           return html;
@@ -558,11 +545,8 @@ export class SearchController {
           const scope = componentScope.$new(true);
           // @ts-ignore: scope ...
           scope.feature = suggestion;
-
           let html = `<p class="gmf-search-label" translate>${suggestion.get(config.labelKey)}</p>`;
-          html += `<p class="gmf-search-group" translate>${
-            suggestion.get('layer_name') || config.datasetTitle
-          }</p>`;
+          html += `<p class="gmf-search-group" translate>${suggestion.get('layer_name') || config.datasetTitle}</p>`;
           html = `<div class="gmf-search-datum">${html}</div>`;
           return compile(html)(scope).html();
         },
@@ -593,7 +577,7 @@ export class SearchController {
           // add it to the corresponding group
           return (
             !properties.layer_name &&
-            /** @type {import('gmf/options').SearchAction[]} */ (properties.actions).some(
+            /** @type {import('gmf/options').SearchAction[]} */ properties.actions.some(
               (act) => act.action === action,
             )
           );
@@ -662,7 +646,7 @@ export class SearchController {
    */
   getBloodhoudRemoteOptions_() {
     const gettextCatalog = this.gettextCatalog_;
-    return /** @type {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} */ ({
+    return /** @type {Bloodhound.RemoteOptions<GeoJSON.FeatureCollection>} */ {
       rateLimitWait: this.options.delay == undefined ? 50 : this.options.delay,
       prepare: (query, settings) => {
         const url = settings.url;
@@ -679,7 +663,7 @@ export class SearchController {
         });
         return settings;
       },
-    });
+    };
   }
 
   /**
@@ -738,28 +722,26 @@ export class SearchController {
     const style = buildStyle(
       this.options.styles[feature.get('layer_name')] || this.options.styles['default'],
     );
-    const trueStyle = /** @type {import('ol/style/Style').default} */ (style);
+    const trueStyle = /** @type {import('ol/style/Style').default} */ style;
     if (this.color) {
       const color = asColorArray(this.color);
-
       const strokeStyle = trueStyle.getStroke();
-      const prevStrokeColor = /** @type {number[]} */ (strokeStyle.getColor());
+      const prevStrokeColor = /** @type {number[]} */ strokeStyle.getColor();
       const strokeColor = color.slice();
       strokeColor[3] = prevStrokeColor[3];
       if (strokeStyle) {
         strokeStyle.setColor(strokeColor);
       }
       const fillStyle = trueStyle.getFill();
-      const prevFillColor = /** @type {number[]} */ (fillStyle.getColor());
+      const prevFillColor = /** @type {number[]} */ fillStyle.getColor();
       const fillColor = color.slice();
       fillColor[3] = prevFillColor[3];
       if (fillStyle) {
         fillStyle.setColor(fillColor);
       }
-
       let imageStyle = trueStyle.getImage();
       if (imageStyle) {
-        const circleStyle = /** @type {import('ol/style/Circle').default} */ (imageStyle);
+        const circleStyle = /** @type {import('ol/style/Circle').default} */ imageStyle;
         const imageStrokeStyle = circleStyle.getStroke();
         if (imageStrokeStyle) {
           imageStrokeStyle.setColor(strokeColor);
@@ -842,9 +824,8 @@ export class SearchController {
     }
     // @ts-ignore: extra parameter
     if (suggestion.tt_source === 'coordinates') {
-      const coordinateSuggestion = /** @type {CoordinateSuggestion} */ (suggestion);
+      const coordinateSuggestion = /** @type {CoordinateSuggestion} */ suggestion;
       const geom = new olGeomPoint(coordinateSuggestion.position);
-
       this.featureOverlay_.clear();
       this.featureOverlay_.addFeature(
         new olFeature({
@@ -891,9 +872,9 @@ export class SearchController {
         } else if (actionName == 'add_group') {
           this.gmfTreeManager_.addGroupByName(actionData, true);
         } else if (actionName == 'add_layer') {
-          const groupActions = /** @type {import('gmf/options').SearchAction[]} */ (
-            this.options.datasources[0].groupActions
-          );
+          const groupActions =
+            /** @type {import('gmf/options').SearchAction[]} */
+            this.options.datasources[0].groupActions;
           let datasourcesActionsHaveAddLayer;
           groupActions.forEach((groupAction) => {
             if (groupAction.action === 'add_layer') {
@@ -912,7 +893,6 @@ export class SearchController {
         }
       }
     }
-
     const size = this.map.getSize();
     if (featureGeometry instanceof Geometry && size) {
       const view = this.map.getView();
@@ -966,7 +946,6 @@ export class SearchController {
       this.featureOverlay_.clear();
       this.displayColorPicker = false;
     }
-
     const menu = this.element_.find('.twitter-typeahead .tt-menu');
     const message = menu.children('.gmf-search-no-results');
     if (message.length == 0) {
@@ -997,33 +976,37 @@ export class SearchController {
       // can't be lower than one
       resultIndex = 1;
     }
-    this.fullTextSearch_.search(query, {limit: `${resultIndex}`}).then((data) => {
-      if (!this.map) {
-        throw new Error('Missing map');
-      }
-      if (data && data.features[resultIndex - 1]) {
-        const format = new olFormatGeoJSON();
-        const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
-          format.readFeature(data.features[resultIndex - 1])
-        );
-        feature.set('name', 'SearchFeature');
-        this.featureOverlay_.addFeature(feature);
-        /**
-         * @type {import('ol/View').FitOptions}
-         */
-        const fitOptions = {};
-        if (opt_zoom !== undefined) {
-          fitOptions.maxZoom = opt_zoom;
-          fitOptions.size = this.map.getSize() || null;
+    this.fullTextSearch_
+      .search(query, {
+        limit: `${resultIndex}`,
+      })
+      .then((data) => {
+        if (!this.map) {
+          throw new Error('Missing map');
         }
-        const geometry = feature.getGeometry();
-        if (!geometry) {
-          throw new Error('Missing geometry');
+        if (data && data.features[resultIndex - 1]) {
+          const format = new olFormatGeoJSON();
+          const feature =
+            /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */
+            format.readFeature(data.features[resultIndex - 1]);
+          feature.set('name', 'SearchFeature');
+          this.featureOverlay_.addFeature(feature);
+          /**
+           * @type {import('ol/View').FitOptions}
+           */
+          const fitOptions = {};
+          if (opt_zoom !== undefined) {
+            fitOptions.maxZoom = opt_zoom;
+            fitOptions.size = this.map.getSize() || null;
+          }
+          const geometry = feature.getGeometry();
+          if (!geometry) {
+            throw new Error('Missing geometry');
+          }
+          this.map.getView().fit(geometry.getExtent(), fitOptions);
+          this.inputValue = /** @type {string} */ feature.get('label');
         }
-        this.map.getView().fit(geometry.getExtent(), fitOptions);
-        this.inputValue = /** @type {string} */ (feature.get('label'));
-      }
-    });
+      });
   }
 
   /**
@@ -1041,8 +1024,23 @@ export class SearchController {
     this.datasetsempty_(event, query, false);
   }
 }
-
+SearchController.$inject = [
+  '$element',
+  '$scope',
+  '$compile',
+  '$timeout',
+  '$injector',
+  'gettextCatalog',
+  'ngeoAutoProjection',
+  'ngeoSearchCreateGeoJSONBloodhound',
+  'gmfThemes',
+  'gmfTreeManager',
+  'gmfSearchFulltextSearch',
+  'ngeoLocation',
+  'gmfSearchOptions',
+  'gmfSearchGroups',
+  'fulltextsearchUrl',
+];
 // Register the controller in the module
 myModule.controller('gmfSearchController', SearchController);
-
 export default myModule;

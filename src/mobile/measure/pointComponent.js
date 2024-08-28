@@ -1,3 +1,12 @@
+MobileMeasurePointController.$inject = [
+  'gettextCatalog',
+  '$scope',
+  '$filter',
+  'gmfRaster',
+  'ngeoDebounce',
+  'gmfMobileMeasurePointOptions',
+];
+mobileMeasurePointComponent.$inject = ['gmfMobileMeasurePointTemplateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -36,7 +45,6 @@ const myModule = angular.module('gmfMobileMeasurePoint', [
   gmfRasterRasterService.name,
   ngeoMiscDebounce.name,
 ]);
-
 myModule.value(
   'gmfMobileMeasurePointTemplateUrl',
   /**
@@ -49,16 +57,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/measure/pointComponent';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/measure/pointComponent', require('./pointComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -114,7 +124,6 @@ function mobileMeasurePointComponent(gmfMobileMeasurePointTemplateUrl) {
     },
   };
 }
-
 myModule.directive('gmfMobileMeasurepoint', mobileMeasurePointComponent);
 
 /**
@@ -172,7 +181,6 @@ export function MobileMeasurePointController(
    * @type {boolean}
    */
   this.active = false;
-
   $scope.$watch(
     () => this.active,
     (newVal) => {
@@ -207,7 +215,7 @@ export function MobileMeasurePointController(
  */
 MobileMeasurePointController.prototype.init = function () {
   this.measure = new ngeoInteractionMeasurePointMobile(
-    /** @type {import('ngeo/misc/filters').numberCoordinates} */ (this.$filter_('ngeoNumberCoordinates')),
+    /** @type {import('ngeo/misc/filters').numberCoordinates} */ this.$filter_('ngeoNumberCoordinates'),
     this.options.format,
     {
       decimals: this.options.decimals,
@@ -222,7 +230,6 @@ MobileMeasurePointController.prototype.init = function () {
   }
   this.drawInteraction = drawInteraction;
   interactionDecoration(this.drawInteraction);
-
   if (!this.map) {
     throw new Error('Missing map');
   }
@@ -302,7 +309,6 @@ MobileMeasurePointController.prototype.getMeasure_ = function () {
     const ctn = document.createElement('div');
     const className = 'gmf-mobile-measure-point';
     ctn.className = className;
-
     for (const config of this.options.rasterLayers) {
       const key = config.name;
       if (key in object) {
@@ -317,7 +323,6 @@ MobileMeasurePointController.prototype.getMeasure_ = function () {
         ctn.appendChild(childEl);
       }
     }
-
     const previousCtn = el.getElementsByClassName(className);
     if (previousCtn[0]) {
       previousCtn[0].remove();
@@ -325,7 +330,5 @@ MobileMeasurePointController.prototype.getMeasure_ = function () {
     el.appendChild(ctn);
   });
 };
-
 myModule.controller('GmfMobileMeasurePointController', MobileMeasurePointController);
-
 export default myModule;

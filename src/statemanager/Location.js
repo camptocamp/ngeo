@@ -1,3 +1,4 @@
+LocationFactory.$inject = ['$rootScope', '$window'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -109,33 +110,26 @@ StatemanagerLocation.prototype.getPath = function () {
  */
 StatemanagerLocation.prototype.getUriString = function () {
   const out = [];
-
   if (this.schema_) {
     out.push(this.schema_, ':');
   }
-
   if (this.domain_ || this.schema_ === 'file') {
     out.push('//');
-
     out.push(this.domain_);
-
     if (this.port_ !== undefined) {
       out.push(':', String(this.port_));
     }
   }
-
   if (this.path_) {
     if (this.domain_ && !this.path_.startsWith('/')) {
       out.push('/');
     }
     out.push(this.path_);
   }
-
   const encodedQueryData = encodeQueryString(this.queryData_);
   if (encodedQueryData.length > 0) {
     out.push('?', encodedQueryData);
   }
-
   const encodedFragment = encodeQueryString(this.fragment_);
   if (encodedFragment.length > 0) {
     out.push('#', encodedFragment);
@@ -363,7 +357,6 @@ StatemanagerLocation.prototype.setPath = function (path) {
 export function LocationFactory($rootScope, $window) {
   const history = $window.history;
   const service = new StatemanagerLocation($window.location, $window.history);
-
   let lastUri = service.getUriString();
   $rootScope.$watch(() => {
     const newUri = service.getUriString();
@@ -377,7 +370,6 @@ export function LocationFactory($rootScope, $window) {
       });
     }
   });
-
   return service;
 }
 
@@ -388,5 +380,4 @@ export function LocationFactory($rootScope, $window) {
  */
 const myModule = angular.module('ngeoLocation', []);
 myModule.factory('ngeoLocation', LocationFactory);
-
 export default myModule;

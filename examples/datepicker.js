@@ -1,3 +1,4 @@
+MainController.$inject = ['ngeoTime'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import './datepicker.css';
 import angular from 'angular';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
-
 import ngeoMiscTime from 'ngeo/misc/Time';
 import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 
@@ -86,7 +86,5 @@ function MainController(ngeoTime) {
     this.rangeValue = date;
   };
 }
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

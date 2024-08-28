@@ -1,3 +1,4 @@
+EditingEditFeature.$inject = ['$http', 'gmfLayersUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -71,14 +72,10 @@ EditingEditFeature.prototype.getFeaturesInExtent = function (layerIds, extent) {
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, {
     'bbox': extent.join(','),
   });
-  return this.http_
-    .get(url)
-    .then(
-      (response) =>
-        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-          new olFormatGeoJSON().readFeatures(response.data)
-        ),
-    );
+  return this.http_.get(url).then((response) =>
+    /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+    new olFormatGeoJSON().readFeatures(response.data),
+  );
 };
 
 /**
@@ -98,24 +95,16 @@ EditingEditFeature.prototype.getFeaturesWithComparisonFilters = function (layerI
   const properties = [];
   /** @type {Object<string, string>} */
   const params = {};
-
   for (const filter of filters) {
     params[`${filter.property}__${filter.operator}`] = filter.value;
     properties.push(filter.property);
   }
-
   params.queryable = properties.join(',');
-
   const url = olUriAppendParams(`${this.baseUrl_}/${layerIds.join(',')}`, params);
-
-  return this.http_
-    .get(url)
-    .then(
-      (response) =>
-        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-          new olFormatGeoJSON().readFeatures(response.data)
-        ),
-    );
+  return this.http_.get(url).then((response) =>
+    /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+    new olFormatGeoJSON().readFeatures(response.data),
+  );
 };
 
 /**
@@ -127,7 +116,9 @@ EditingEditFeature.prototype.insertFeatures = function (layerId, features) {
   const url = `${this.baseUrl_}/${layerId}`;
   const geoJSON = new olFormatGeoJSON().writeFeatures(features);
   return this.http_.post(url, geoJSON, {
-    headers: {'Content-Type': 'application/geo+json'},
+    headers: {
+      'Content-Type': 'application/geo+json',
+    },
     withCredentials: true,
   });
 };
@@ -141,7 +132,9 @@ EditingEditFeature.prototype.updateFeature = function (layerId, feature) {
   const url = `${this.baseUrl_}/${layerId.toString()}/${feature.getId()}`;
   const geoJSON = new olFormatGeoJSON().writeFeature(feature);
   return this.http_.put(url, geoJSON, {
-    headers: {'Content-Type': 'application/geo+json'},
+    headers: {
+      'Content-Type': 'application/geo+json',
+    },
     withCredentials: true,
   });
 };
@@ -164,5 +157,4 @@ EditingEditFeature.prototype.deleteFeature = function (layerId, feature) {
  */
 const myModule = angular.module('gmfEditFeature', []);
 myModule.service('gmfEditFeature', EditingEditFeature);
-
 export default myModule;

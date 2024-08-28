@@ -1,3 +1,4 @@
+MeasuretoolsController.$inject = ['$scope', '$compile', '$sce', '$filter', 'gettextCatalog'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -22,14 +23,11 @@
 import './measure.css';
 import angular from 'angular';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';
-
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut';
 import ngeoInteractionMeasureLength from 'ngeo/interaction/MeasureLength';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
-
 import {interactionDecoration} from 'ngeo/misc/decorate';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 import olMap from 'ol/Map';
@@ -52,16 +50,18 @@ const myModule = angular.module('app', [
   ngeoMiscFilters.name,
   'ngSanitize',
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('partials/measuretools', require('./partials/measuretools.html'));
+    },
+  ],
 );
 
 /**
@@ -79,7 +79,6 @@ const measuretoolsComponent = {
   controller: 'AppMeasuretoolsController',
   templateUrl: 'partials/measuretools',
 };
-
 myModule.component('appMeasuretools', measuretoolsComponent);
 
 /**
@@ -175,7 +174,6 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
       this.measureAzimutContinueMsg = measureAzimutContinueMsgs[newVal];
     },
   );
-
   const style = new olStyleStyle({
     fill: new olStyleFill({
       color: 'rgba(255, 255, 255, 0.2)',
@@ -204,7 +202,6 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
     startMsg: measureStartMsg[0],
     continueMsg: measureLengthContinueMsg[0],
   });
-
   this.measureLength.setActive(false);
   interactionDecoration(this.measureLength);
 
@@ -216,7 +213,6 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
     startMsg: measureStartMsg[0],
     continueMsg: measureAreaContinueMsg[0],
   });
-
   this.measureArea.setActive(false);
   interactionDecoration(this.measureArea);
 
@@ -228,7 +224,6 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
     startMsg: measureStartMsg[0],
     continueMsg: measureAzimutContinueMsg[0],
   });
-
   this.measureAzimut.setActive(false);
   interactionDecoration(this.measureAzimut);
 
@@ -236,23 +231,20 @@ function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog)
   // tooltip. This can be useful to display the elevation offset from the
   // 2 points of an azimut measurement.
   this.measureAzimut.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('measureend'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('ol/MapBrowserEvent').default<unknown>} evt
-       */ (evt) => {
-        const target = evt.target;
-        if (target instanceof Measure) {
-          const el = target.getTooltipElement();
-          el.innerHTML += '<br>Additional info';
-        }
+    /** @type {import('ol/Observable').EventTypes} */ 'measureend',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('ol/MapBrowserEvent').default<unknown>} evt
+     */ (evt) => {
+      const target = evt.target;
+      if (target instanceof Measure) {
+        const el = target.getTooltipElement();
+        el.innerHTML += '<br>Additional info';
       }
-    ),
+    },
   );
 }
-
 myModule.controller('AppMeasuretoolsController', MeasuretoolsController);
-
 MeasuretoolsController.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
@@ -286,7 +278,6 @@ function MainController() {
       zoom: 15,
     }),
   });
-
   this.map.addControl(
     new olControlScaleLine({
       // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
@@ -294,8 +285,6 @@ function MainController() {
     }),
   );
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

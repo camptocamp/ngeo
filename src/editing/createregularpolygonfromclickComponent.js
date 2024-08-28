@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -88,7 +89,6 @@ function editingCreateRegularPolygonFromClickComponent() {
     },
   };
 }
-
 myModule.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPolygonFromClickComponent);
 
 /**
@@ -106,7 +106,6 @@ export function Controller($scope) {
    * @type {boolean}
    */
   this.active = false;
-
   $scope.$watch(
     () => this.active,
     (newVal) => {
@@ -153,7 +152,6 @@ export function Controller($scope) {
    * @type {?import('ol/events').EventsKey}
    */
   this.interactionListenerKey_ = null;
-
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
@@ -173,14 +171,12 @@ Controller.prototype.$onInit = function () {
   }
   this.interaction_ = new ngeoInteractionDrawRegularPolygonFromClick(options);
   this.interaction_.setActive(this.active);
-
   this.interactionListenerKey_ = listen(
     this.interaction_,
     'drawend',
-    /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawEnd_),
+    /** @type {import('ol/events').ListenerFunction} */ this.handleDrawEnd_,
     this,
   );
-
   this.map.addInteraction(this.interaction_);
 };
 
@@ -215,7 +211,5 @@ Controller.prototype.handleDestroy_ = function () {
   this.interaction_.setActive(false);
   this.map.removeInteraction(this.interaction_);
 };
-
 myModule.controller('ngeoCreateregularpolygonfromclickController', Controller);
-
 export default myModule;

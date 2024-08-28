@@ -34,7 +34,6 @@ import MapillaryService from './MapillaryService';
  * @hidden
  */
 const myModule = angular.module('ngeoStreetview', []);
-
 myModule.value(
   'ngeoStreetviewTemplateUrl',
   /**
@@ -46,16 +45,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'ngeo/streetview';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/streetview', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/streetview', require('./component.html'));
+    },
+  ],
 );
 
 /**
@@ -66,6 +67,7 @@ myModule.run(
  * @private
  * @hidden
  */
+ngeoStreetviewTemplateUrl.$inject = ['$attrs', 'ngeoStreetviewTemplateUrl'];
 function ngeoStreetviewTemplateUrl($attrs, ngeoStreetviewTemplateUrl) {
   return ngeoStreetviewTemplateUrl($attrs);
 }
@@ -123,7 +125,6 @@ class StreetviewController {
      * @type {boolean}
      */
     this.active = false;
-
     $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
     /**
@@ -208,7 +209,6 @@ class StreetviewController {
      * @private
      */
     this.point_ = new olGeomPoint([0, 0]);
-
     this.feature_.setGeometry(this.point_);
 
     /**
@@ -237,7 +237,7 @@ class StreetviewController {
     this.handlePanoramaPositionChange_ = (newCoordinates) => {
       this.panoramaPositionChanging_ = true;
       this.map.getView().setCenter(newCoordinates);
-      const point = /** @type  {import('ol/geom/Point').default} */ (this.feature_.getGeometry());
+      const point = /** @type  {import('ol/geom/Point').default} */ this.feature_.getGeometry();
       point.setCoordinates(newCoordinates);
       this.location = newCoordinates;
       this.scope_.$apply();
@@ -263,9 +263,7 @@ class StreetviewController {
      * @type {import('ngeo/options').ngeoStreetviewOptions}
      */
     this.options = this.injector_.has(config) ? this.injector_.get(config) : null;
-
     this.viewer = this.options.viewer || 'mapillary';
-
     if (this.viewer === 'mapillary') {
       this.initMapillary_();
     } else {
@@ -279,7 +277,6 @@ class StreetviewController {
       this.addWatchers_();
     }
   }
-
   addWatchers_() {
     // === Watchers ===
 
@@ -354,9 +351,7 @@ class StreetviewController {
     if (!this.map) {
       throw new Error('Missing map');
     }
-
     const keys = this.listenerKeys_;
-
     if (active) {
       keys.push(listen(this.map, 'click', this.handleMapClick_, this));
     } else {
@@ -421,7 +416,6 @@ class StreetviewController {
     if (ready === oldReady) {
       return;
     }
-
     if (ready) {
       this.featureOverlay_.addFeature(this.feature_);
       setTimeout(() => {
@@ -432,7 +426,7 @@ class StreetviewController {
     }
   }
 }
-
+StreetviewController.$inject = ['$element', '$scope', '$http', '$injector', '$timeout'];
 myModule.component('ngeoStreetview', {
   bindings: {
     'active': '<',
@@ -445,5 +439,4 @@ myModule.component('ngeoStreetview', {
   controller: StreetviewController,
   templateUrl: ngeoStreetviewTemplateUrl,
 });
-
 export default myModule;

@@ -70,16 +70,26 @@ function MainController() {
       'timestamp': '2010-11-17T22:56:26Z',
     },
   ];
-
-  const columnDefs = [{name: 'name'}, {name: 'display_name'}, {name: 'timestamp'}, {name: 'type'}];
+  const columnDefs = [
+    {
+      name: 'name',
+    },
+    {
+      name: 'display_name',
+    },
+    {
+      name: 'timestamp',
+    },
+    {
+      name: 'type',
+    },
+  ];
 
   /**
    * @type {import('ngeo/grid/Config').default}
    */
   this.gridConfig = new ngeoGridConfig(data, columnDefs);
 }
-
 myModule.controller('MainController', MainController);
 myModule.constant('ngeoStringToHtmlReplacements', []);
-
 export default myModule;

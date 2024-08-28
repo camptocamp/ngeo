@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', '$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -71,7 +72,6 @@ function profileDrawLineComponent() {
     },
   };
 }
-
 myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
 
 /**
@@ -119,7 +119,6 @@ export function Controller($scope, $timeout) {
    */
   const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(this.features_);
-
   const style = new olStyleStyle({
     stroke: new olStyleStroke({
       color: '#ffcc33',
@@ -135,29 +134,27 @@ export function Controller($scope, $timeout) {
     type: 'LineString',
     features: this.features_,
   });
-
   interactionDecoration(this.interaction);
 
   // Clear the line as soon as a new drawing is started.
-  this.interaction.on(/** @type {import('ol/Observable').EventTypes} */ ('drawstart'), (event) => {
+  this.interaction.on(/** @type {import('ol/Observable').EventTypes} */ 'drawstart', (event) => {
     this.features_.clear();
   });
 
   // Update the profile with the new geometry.
   this.interaction.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('drawend'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('lib/ol.interaction.Draw').DrawEvent} event
-       */
-      (event) => {
-        this.line = /** @type {import('ol/geom/LineString').default} */ (event.feature.getGeometry());
-        // using timeout to prevent double click to zoom the map
-        $timeout(() => {
-          this.interaction.setActive(false);
-        }, 0);
-      }
-    ),
+    /** @type {import('ol/Observable').EventTypes} */ 'drawend',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('lib/ol.interaction.Draw').DrawEvent} event
+     */
+    (event) => {
+      this.line = /** @type {import('ol/geom/LineString').default} */ event.feature.getGeometry();
+      // using timeout to prevent double click to zoom the map
+      $timeout(() => {
+        this.interaction.setActive(false);
+      }, 0);
+    },
   );
 
   // Line may be removed from an other component
@@ -170,7 +167,6 @@ export function Controller($scope, $timeout) {
       }
     },
   );
-
   $scope.$watch(
     () => this.active,
     (newValue) => {
@@ -205,7 +201,5 @@ Controller.prototype.clear_ = function () {
   this.features_.clear();
   this.line = null;
 };
-
 myModule.controller('GmfDrawprofilelineController', Controller);
-
 export default myModule;

@@ -64,12 +64,11 @@ export class DatasourceWFSAlias {
     }
   }
 }
-
+DatasourceWFSAlias.$inject = ['gmfDataSourcesHelper'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfDatasourceWFSAliases', [gmfDatasourceHelper.name]);
 myModule.service('gmfWFSAliases', DatasourceWFSAlias);
-
 export default myModule;

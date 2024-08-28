@@ -1,3 +1,4 @@
+PopoverController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -57,12 +58,10 @@ function messagePopoverComponent() {
       if (!ngeoPopoverCtrl) {
         throw new Error('Missing ngeoPopoverCtrl');
       }
-
       ngeoPopoverCtrl.anchorElm.on('inserted.bs.popover', () => {
         ngeoPopoverCtrl.bodyElm.show();
         ngeoPopoverCtrl.shown = true;
       });
-
       ngeoPopoverCtrl.anchorElm.popover({
         container: 'body',
         html: true,
@@ -70,13 +69,11 @@ function messagePopoverComponent() {
         boundary: 'viewport',
         placement: attrs['ngeoPopoverPlacement'] || 'right',
       });
-
       if (attrs['ngeoPopoverDismiss']) {
         $(attrs['ngeoPopoverDismiss']).on('scroll', () => {
           ngeoPopoverCtrl.dismissPopover();
         });
       }
-
       scope.$on('$destroy', () => {
         ngeoPopoverCtrl.anchorElm.popover('dispose');
         ngeoPopoverCtrl.anchorElm.unbind('inserted.bs.popover');
@@ -172,9 +169,7 @@ export function PopoverController($scope) {
       this.dismissPopover();
     }
   };
-
   document.body.addEventListener('click', clickHandler);
-
   $scope.$on('$destroy', () => {
     document.body.removeEventListener('click', clickHandler);
   });
@@ -190,10 +185,8 @@ PopoverController.prototype.dismissPopover = function () {
   this.shown = false;
   this.anchorElm.popover('hide');
 };
-
 myModule.controller('NgeoPopoverController', PopoverController);
 myModule.directive('ngeoPopover', messagePopoverComponent);
 myModule.directive('ngeoPopoverAnchor', messagePopoverAnchorComponent);
 myModule.directive('ngeoPopoverContent', messagePopoverContentComponent);
-
 export default myModule;

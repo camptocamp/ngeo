@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', 'gmfThemeManager', 'gmfThemes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -24,7 +25,6 @@ import {gmfBackgroundlayerStatus} from 'gmf/backgroundlayerselector/status';
 import gmfThemeManager from 'gmf/theme/Manager';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import {listen, unlistenByKey} from 'ol/events';
-
 import 'bootstrap/js/src/dropdown';
 
 /**
@@ -32,18 +32,19 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfThemeSelectorComponent', [gmfThemeManager.name, gmfThemeThemes.name]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/theme/selectorComponent', require('./selectorComponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfThemeSelectorTemplateUrl',
   /**
@@ -64,6 +65,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfThemeSelectorTemplateUrl.$inject = ['$attrs', 'gmfThemeSelectorTemplateUrl'];
 function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
   return gmfThemeSelectorTemplateUrl($attrs);
 }
@@ -112,7 +114,6 @@ const themeSelectorComponent = {
   controller: 'gmfThemeselectorController',
   templateUrl: gmfThemeSelectorTemplateUrl,
 };
-
 myModule.component('gmfThemeselector', themeSelectorComponent);
 
 /**
@@ -150,9 +151,7 @@ export function Controller($scope, gmfThemeManager, gmfThemes) {
    * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
-
   this.listenerKeys_.push(listen(this.gmfThemes_, 'change', this.setThemes_, this));
-
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
@@ -177,12 +176,9 @@ Controller.prototype.setTheme = function (theme, opt_silent) {
     this.gmfThemeManager.addTheme(theme, opt_silent);
   }
 };
-
 Controller.prototype.handleDestroy_ = function () {
   this.listenerKeys_.forEach(unlistenByKey);
   this.listenerKeys_.length = 0;
 };
-
 myModule.controller('gmfThemeselectorController', Controller);
-
 export default myModule;

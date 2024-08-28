@@ -1,3 +1,4 @@
+MainController.$inject = ['$http', '$timeout', '$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,9 +22,7 @@
 
 import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute';
-
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
-
 import olFeature from 'ol/Feature';
 import ngeoMapModule from 'ngeo/map/module';
 
@@ -60,7 +59,6 @@ function MainController($http, $timeout, $scope) {
     'name': 'A feature',
     'kind': 'house',
   });
-
   $http.get('data/xsdattributes.xml').then(this.handleXSDAttributeGet_.bind(this));
 
   //
@@ -70,7 +68,6 @@ function MainController($http, $timeout, $scope) {
    * @type {string}
    */
   this.log = '';
-
   $scope.$watch(
     () => this.feature.get('name'),
     (newValue, oldValue) => {
@@ -79,7 +76,6 @@ function MainController($http, $timeout, $scope) {
       }
     },
   );
-
   $scope.$watch(
     () => this.feature.get('kind'),
     (newValue, oldValue) => {
@@ -115,7 +111,5 @@ MainController.prototype.updateName = function () {
 MainController.prototype.appendLog = function (newMessage) {
   this.log = `${newMessage}\n${this.log}`;
 };
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

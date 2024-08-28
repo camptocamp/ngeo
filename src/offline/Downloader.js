@@ -37,7 +37,6 @@ function magnitude2(a, b) {
   }
   return magnitudeSquared;
 }
-
 const Downloader = class {
   /**
    * @ngInject
@@ -57,7 +56,6 @@ const Downloader = class {
      */
     this.tileDownloader_ = null;
   }
-
   cancel() {
     if (this.tileDownloader_) {
       this.tileDownloader_.cancel();
@@ -69,9 +67,8 @@ const Downloader = class {
    * @param {import('./index').OfflineTile[]} queue Queue of tiles to download.
    */
   queueLayerTiles_(layerMetadata, queue) {
-    const source = /** @type {olSourceTileWMS|olSourceWMTS} */ (layerMetadata.source);
+    const source = /** @type {olSourceTileWMS|olSourceWMTS} */ layerMetadata.source;
     const {map, extentByZoom} = layerMetadata;
-
     if (!source) {
       return;
     }
@@ -79,7 +76,6 @@ const Downloader = class {
     const projection = map.getView().getProjection();
     const tileGrid = source.getTileGrid();
     const tileUrlFunction = source.getTileUrlFunction();
-
     console.assert(extentByZoom);
     for (const extentZoom of extentByZoom) {
       const z = extentZoom.zoom;
@@ -113,16 +109,18 @@ const Downloader = class {
         }
         const url = tileUrlFunction(coord, DEVICE_PIXEL_RATIO, projection);
         console.assert(url);
-
         if (url) {
           /**
            * @type {import('./index').OfflineTile}
            */
-          const tile = {coord, url, response: null};
+          const tile = {
+            coord,
+            url,
+            response: null,
+          };
           queueByZ.push(tile);
         }
       });
-
       const centerTileCoord = [z, (minX + maxX) / 2, (minY + maxY) / 2];
       queueByZ.sort((a, b) => magnitude2(a.coord, centerTileCoord) - magnitude2(b.coord, centerTileCoord));
       queue.push(...queueByZ);
@@ -167,7 +165,6 @@ const Downloader = class {
         layerSerialization: layerItem.layerSerialization,
         key: this.configuration_.getLayerKey(layerItem),
       });
-
       layerItem.extentByZoom.forEach((obj) => {
         const zoom = obj.zoom;
         if (!zooms.includes(zoom)) {
@@ -185,21 +182,16 @@ const Downloader = class {
       zooms: zooms.sort((a, b) => (a < b ? -1 : 1)),
     };
     const setOfflineContentPromise = this.configuration_.setItem('offline_content', persistentObject);
-
     const maxDownloads = this.configuration_.getMaxNumberOfParallelDownloads();
     this.tileDownloader_ = new TilesDownloader(queue, this.configuration_, maxDownloads);
     const tileDownloadPromise = this.tileDownloader_.download();
-
     const allPromise = Promise.all([setOfflineContentPromise, tileDownloadPromise]);
     const setHasOfflineData = () => this.configuration_.setHasOfflineData(true);
     allPromise.then(setHasOfflineData, setHasOfflineData);
     return allPromise;
   }
 };
-
 const name = 'offlineDownloader';
 Downloader.module = angular.module(name, []).service(name, Downloader);
-
 const exports = Downloader;
-
 export default exports;

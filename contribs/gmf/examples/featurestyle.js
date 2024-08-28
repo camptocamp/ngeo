@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope', 'ngeoFeatureHelper'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,9 +23,7 @@
 import angular from 'angular';
 import './featurestyle.css';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
 import ngeoMapModule from 'ngeo/map/module';
@@ -169,12 +168,10 @@ function MainController($scope, ngeoFeatureHelper) {
   circleProperties[ngeoFormatFeatureProperties.OPACITY] = '0.5';
   circleProperties[ngeoFormatFeatureProperties.STROKE] = '2';
   features.push(new olFeature(circleProperties));
-
   const view = new olView({
     center: [-8174482, 6288627],
     zoom: 6,
   });
-
   ngeoFeatureHelper.setProjection(view.getProjection());
 
   // set style
@@ -216,14 +213,12 @@ function MainController($scope, ngeoFeatureHelper) {
  */
 MainController.prototype.handleMapSingleClick_ = function (evt) {
   const pixel = evt.pixel;
-
-  const feature = /** @type {olFeature<import('ol/geom/Geometry').default>} */ (
-    this.map.forEachFeatureAtPixel(pixel, (feature) => feature)
-  );
+  const feature =
+    /** @type {olFeature<import('ol/geom/Geometry').default>} */
+    this.map.forEachFeatureAtPixel(pixel, (feature) => feature);
   if (this.selectedFeature) {
     this.featureHelper_.setStyle(this.selectedFeature);
   }
-
   if (feature) {
     if (this.selectedFeature !== feature) {
       this.selectedFeature = feature;
@@ -232,11 +227,8 @@ MainController.prototype.handleMapSingleClick_ = function (evt) {
   } else {
     this.selectedFeature = null;
   }
-
   this.scope_.$apply();
 };
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

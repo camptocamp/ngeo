@@ -32,21 +32,22 @@ const myModule = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
   ngeoDatasourceDataSources.name,
   ngeoMapLayerHelper.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    $templateCache.put(
-      'gmf/layertree/datasourceGroupTreeComponent',
-      // @ts-ignore: webpack
-      require('./datasourceGroupTreeComponent.html'),
-    );
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      $templateCache.put(
+        'gmf/layertree/datasourceGroupTreeComponent',
+        // @ts-ignore: webpack
+        require('./datasourceGroupTreeComponent.html'),
+      );
+    },
+  ],
 );
-
 myModule.value(
   'gmfLayertreeDatasourceGroupTreeTemplateUrl',
   /**
@@ -68,6 +69,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfLayertreeDatasourceGroupTreeTemplateUrl.$inject = ['$attrs', 'gmfLayertreeDatasourceGroupTreeTemplateUrl'];
 function gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs, gmfLayertreeDatasourceGroupTreeTemplateUrl) {
   return gmfLayertreeDatasourceGroupTreeTemplateUrl($attrs);
 }
@@ -211,7 +213,7 @@ export class Controller {
     }
   }
 }
-
+Controller.$inject = ['$scope', 'ngeoDataSources', 'ngeoLayerHelper'];
 myModule.component('gmfDatasourcegrouptree', {
   bindings: {
     'group': '<',
@@ -220,5 +222,4 @@ myModule.component('gmfDatasourcegrouptree', {
   controller: Controller,
   templateUrl: gmfLayertreeDatasourceGroupTreeTemplateUrl,
 });
-
 export default myModule;

@@ -1,3 +1,4 @@
+ngeoOlcsControls3dTemplateUrlInjectable.$inject = ['$attrs', 'ngeoOlcsControls3dTemplateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2017-2024 Camptocamp SA
@@ -46,7 +47,7 @@ function shouldUpdate(older, newer) {
 /**
  * @hidden
  */
-export const Controller = class {
+export const Controller = class _ngInjectAnonymousClass {
   /**
    * @ngInject
    * @param {JQuery} $element The element
@@ -123,7 +124,6 @@ export const Controller = class {
      */
     this.olcsService_ = ngeoOlcsService;
   }
-
   updateWidget_() {
     if (!this.ol3dm) {
       throw new Error('Missing ol3dm');
@@ -145,7 +145,6 @@ export const Controller = class {
       this.rotateElement_(this.rotation3dEl_, newRotation);
       this.previousRotation_ = newRotation;
     }
-
     const newViewMatrix = this.ol3dm.getCesiumViewMatrix();
     if (!Cesium.Matrix4.equalsEpsilon(this.previousViewMatrix_, newViewMatrix, 1e-5)) {
       const newTilt = this.ol3dm.getTiltOnGlobe(); // this is expensive!!
@@ -167,16 +166,13 @@ export const Controller = class {
         }
       }
     }
-
     this.animationFrameRequestId_ = requestAnimationFrame(() => this.updateWidget_());
   }
-
   $onDestroy() {
     if (this.animationFrameRequestId_) {
       cancelAnimationFrame(this.animationFrameRequestId_);
     }
   }
-
   $onInit() {
     if (this.minTilt === undefined) {
       this.minTilt = 0;
@@ -258,7 +254,7 @@ export const Controller = class {
     });
   }
 };
-
+_ngInjectAnonymousClass.$inject = ['$element', 'ngeoOlcsService'];
 /**
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {string} ngeoOlcsControls3dTemplateUrl Template function.
@@ -274,16 +270,18 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
   const templateUrl = $attrs['ngeoOlcsControls3dTemplateUrl'];
   return templateUrl ? templateUrl : 'ngeo/olsc/controls3d';
 }
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/olsc/controls3d', require('./controls3d.html'));
+    },
+  ],
 );
 
 /**
@@ -314,9 +312,6 @@ const olscControls3dComponent = {
   controller: Controller,
   templateUrl: ngeoOlcsControls3dTemplateUrlInjectable,
 };
-
 myModule.component('ngeoOlcsControls3d', olscControls3dComponent);
-
 myModule.value('ngeoOlcsControls3dTemplateUrl', '');
-
 export default myModule;

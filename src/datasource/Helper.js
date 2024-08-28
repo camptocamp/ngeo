@@ -120,7 +120,6 @@ export class DatasourceHelper {
    */
   getDataSourceAttributes(dataSource) {
     const getDataSourceAttributesDefer = this.q_.defer();
-
     if (dataSource.attributes) {
       getDataSourceAttributesDefer.resolve(dataSource.attributes);
     } else {
@@ -142,7 +141,7 @@ export class DatasourceHelper {
           // was returned.  Just to be sure, let's do a bunch of assertions.
           const ogcLayerName = dataSource.getWFSLayerNames()[0];
           console.assert(typeof ogcLayerName == 'string', 'The data source should have only one ogcLayer.');
-          const featureType = /** @type {Object<string, *>} */ (/** @type {unknown} */ (featureType_));
+          const featureType = /** @type {Object<string, *>} */ /** @type {unknown} */ featureType_;
           for (const element of featureType.element) {
             if (element.name === ogcLayerName) {
               for (const type of featureType.complexType) {
@@ -152,7 +151,6 @@ export class DatasourceHelper {
 
                   // Set the attributes in the data source
                   dataSource.setAttributes(attributes);
-
                   getDataSourceAttributesDefer.resolve(attributes);
                   break;
                 }
@@ -162,7 +160,6 @@ export class DatasourceHelper {
         });
       }
     }
-
     return getDataSourceAttributesDefer.promise;
   }
 
@@ -230,14 +227,12 @@ export class DatasourceHelper {
    */
   createDataSourceAttributesFromOGCAttributes_(dataSource) {
     let attributes = null;
-
     const formatWFSAttribute = new ngeoFormatWFSAttribute();
     const ogcAttributes = dataSource.ogcAttributesWFS;
     if (ogcAttributes) {
       attributes = [];
       for (const name in ogcAttributes) {
         const ogcAttribute = ogcAttributes[name];
-
         const alias = ogcAttribute.alias;
         const required = ogcAttribute.minOccurs != '0';
         const type = ogcAttribute.type;
@@ -257,11 +252,9 @@ export class DatasourceHelper {
         if (!ngeoAttributeSetGeometryType(attribute, `gml:${type}`)) {
           formatWFSAttribute.setAttributeType(attribute, type.toLowerCase());
         }
-
         attributes.push(attribute);
       }
     }
-
     return attributes;
   }
 
@@ -305,11 +298,10 @@ export class DatasourceHelper {
         prepareFiltrableDataSourceDefer.resolve(dataSource);
       }
     });
-
     return prepareFiltrableDataSourceDefer.promise;
   }
 }
-
+DatasourceHelper.$inject = ['$q', 'ngeoDataSources', 'ngeoQuerent', 'gmfEnumerateAttribute'];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -320,5 +312,4 @@ const myModule = angular.module('gmfDataSourcesHelper', [
   gmfEditingEnumerateAttribute.name,
 ]);
 myModule.service('gmfDataSourcesHelper', DatasourceHelper);
-
 export default myModule;

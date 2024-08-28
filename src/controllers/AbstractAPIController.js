@@ -41,7 +41,7 @@ export class AbstractAPIController extends AbstractAppController {
     super($scope, $injector, false);
   }
 }
-
+AbstractAPIController.$inject = ['$scope', '$injector'];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -50,7 +50,5 @@ const myModule = angular.module('GmfAbstractAPIControllerModule', [
   gmfControllersAbstractAppController.name,
   ngeoMapResizemap.name,
 ]);
-
 myModule.controller('AbstractAPIController', AbstractAPIController);
-
 export default myModule;

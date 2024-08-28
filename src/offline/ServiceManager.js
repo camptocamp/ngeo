@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 class ServiceManager {
   /**
    * @param {angular.auto.IInjectorService} $injector Main injector.
@@ -94,7 +93,6 @@ class ServiceManager {
   setRestoreService(restoreLikeService) {
     this.restoreService_ = this.getOfflineService_(restoreLikeService, 'restore');
   }
-
   cancel() {
     if (!this.saveService_) {
       console.warn('You must register a saveService first');
@@ -131,8 +129,7 @@ class ServiceManager {
     return this.restoreService_.restore(map);
   }
 }
-
+ServiceManager.$inject = ['$injector'];
 ServiceManager.module = angular.module('ngeoOfflineServiceManager', []);
 ServiceManager.module.service('ngeoOfflineServiceManager', ServiceManager);
-
 export default ServiceManager;

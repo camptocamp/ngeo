@@ -1,3 +1,4 @@
+ObjectEditingQuery.$inject = ['$http', '$q', 'gmfThemes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -85,12 +86,10 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
             queryableLayersInfo.push(allQueryableLayersInfo[i]);
           }
         }
-
         this.getQueryableLayerNodesDefered_.resolve(queryableLayersInfo);
       });
     });
   }
-
   return this.getQueryableLayerNodesDefered_.promise;
 };
 
@@ -108,7 +107,6 @@ ObjectEditingQuery.prototype.getQueryableLayersInfo = function () {
  */
 function getQueryableLayersInfoFromThemes(themes, ogcServers) {
   const queryableLayersInfo = [];
-
   for (let i = 0, ii = themes.length; i < ii; i++) {
     const theme = themes[i];
     for (let j = 0, jj = theme.children.length; j < jj; j++) {
@@ -122,10 +120,8 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
       /** @type {import('gmf/themes').GmfLayer[]} */
       const nodes = [];
       getFlatNodes(group, nodes);
-
       for (let k = 0, kk = nodes.length; k < kk; k++) {
-        const nodeWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (nodes[k]));
-
+        const nodeWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ nodes[k];
         if (nodeWMS.childLayers && nodeWMS.childLayers[0] && nodeWMS.childLayers[0].queryable) {
           queryableLayersInfo.push({
             layerNode: nodeWMS,
@@ -135,7 +131,6 @@ function getQueryableLayersInfoFromThemes(themes, ogcServers) {
       }
     }
   }
-
   return queryableLayersInfo;
 }
 
@@ -162,30 +157,26 @@ ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, m
   if (resolution === undefined) {
     throw new Error('Missing resolution');
   }
-
   const format = new olFormatWMSGetFeatureInfo({
     layers: layersParam,
   });
-
   const wmsSource = new olSourceImageWMS({
     url: ogcServer.url,
     params: {
       layers: layersParam,
     },
   });
-
-  const url = /** @type {string} */ (
+  const url =
+    /** @type {string} */
     wmsSource.getFeatureInfoUrl(coordinate, resolution, projCode, {
       'INFO_FORMAT': infoFormat,
       'FEATURE_COUNT': 1,
       'QUERY_LAYERS': layersParam,
-    })
-  );
-
+    });
   return this.http_.get(url).then((response) => {
-    const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-      format.readFeatures(response.data)
-    );
+    const features =
+      /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+      format.readFeatures(response.data);
     return features && features[0] ? features[0] : null;
   });
 };
@@ -196,5 +187,4 @@ ObjectEditingQuery.prototype.getFeatureInfo = function (layerInfo, coordinate, m
  */
 const myModule = angular.module('gmfObjectEditingQuery', [gmfThemeThemes.name]);
 myModule.service('gmfObjectEditingQuery', ObjectEditingQuery);
-
 export default myModule;

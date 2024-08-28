@@ -1,3 +1,5 @@
+MainController.$inject = ['gmfThemes', 'gmfDataSourcesManager', 'gmfThemeManager', 'defaultTheme'];
+QueryresultController.$inject = ['ngeoQueryResult'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -23,15 +25,10 @@ import angular from 'angular';
 import './displayquerygrid.css';
 import './gmf-hidden.inc.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
-
 import gmfLayertreeComponent from 'gmf/layertree/component';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import gmfQueryGridComponent from 'gmf/query/gridComponent';
-
 import gmfThemeManager from 'gmf/theme/Manager';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoGridModule from 'ngeo/grid/module';
@@ -58,7 +55,8 @@ const myModule = angular.module('gmfapp', [
   gmfThemeManager.name,
   gmfThemeThemes.name,
   ngeoGridModule.name,
-  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeoMapModule.name,
+  // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscBtnComponent.name,
   ngeoQueryComponent.name,
 ]);
@@ -75,7 +73,6 @@ const queryresultComponent = {
   // @ts-ignore: webpack
   template: require('./partials/queryresult.html'),
 };
-
 myModule.component('gmfappQueryresult', queryresultComponent);
 
 /**
@@ -91,7 +88,6 @@ function QueryresultController(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 }
-
 myModule.controller('gmfappQueryresultController', QueryresultController);
 
 /**
@@ -148,7 +144,6 @@ function MainController(gmfThemes, gmfDataSourcesManager, gmfThemeManager, defau
    * @type {import('gmf/themes').GmfTheme} The selected theme.
    */
   this.selectedTheme = null;
-
   this.updateTheme = function () {
     gmfThemeManager.addTheme(this.selectedTheme);
   };
@@ -157,7 +152,6 @@ function MainController(gmfThemes, gmfDataSourcesManager, gmfThemeManager, defau
    * @type {boolean}
    */
   this.queryGridActive = true;
-
   gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
@@ -171,23 +165,29 @@ function MainController(gmfThemes, gmfDataSourcesManager, gmfThemeManager, defau
       });
     }
   });
-
   ngeoMapFeatureOverlayMgr.init(this.map);
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('gmfDisplayQueryGridOptions', {
   featuresStyle: {
-    fill: {color: [255, 170, 0, 0.6]},
-    circle: {
-      fill: {color: [255, 170, 0, 0.6]},
-      radius: 5,
-      stroke: {color: [255, 170, 0, 1], width: 2},
+    fill: {
+      color: [255, 170, 0, 0.6],
     },
-    stroke: {color: [255, 170, 0, 1], width: 2},
+    circle: {
+      fill: {
+        color: [255, 170, 0, 0.6],
+      },
+      radius: 5,
+      stroke: {
+        color: [255, 170, 0, 1],
+        width: 2,
+      },
+    },
+    stroke: {
+      color: [255, 170, 0, 1],
+      width: 2,
+    },
   },
 });
 options(myModule);
-
 export default myModule;

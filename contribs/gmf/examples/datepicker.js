@@ -1,3 +1,4 @@
+MainController.$inject = ['ngeoWMSTime'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import angular from 'angular';
 import './datepicker.css';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
-
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 import options from './options';
@@ -64,11 +64,11 @@ function MainController(ngeoWMSTime) {
    * @type {import('ngeo/datasource/OGC').TimeProperty}
    */
   this.wmsTimeValueMode = {
-    widget: /** @type {TimePropertyWidgetEnum} */ ('datepicker'),
+    widget: /** @type {TimePropertyWidgetEnum} */ 'datepicker',
     maxValue: '2015-12-31T00:00:00Z',
     minValue: '2014-01-01T00:00:00Z',
-    resolution: /** @type {TimePropertyResolutionEnum}*/ ('month'),
-    mode: /** @type {TimePropertyModeEnum} */ ('value'),
+    resolution: /** @type {TimePropertyResolutionEnum}*/ 'month',
+    mode: /** @type {TimePropertyModeEnum} */ 'value',
     interval: [0, 1, 0, 0],
   };
 
@@ -98,8 +98,6 @@ function MainController(ngeoWMSTime) {
     this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

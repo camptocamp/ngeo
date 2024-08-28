@@ -1,3 +1,4 @@
+factory.$inject = ['$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -86,7 +87,5 @@ function factory($timeout) {
     return deb(func, wait, invokeApply, $timeout);
   };
 }
-
 myModule.factory('ngeoDebounce', factory);
-
 export default myModule;

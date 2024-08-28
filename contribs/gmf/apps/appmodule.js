@@ -34,7 +34,6 @@ import AngularServices from 'ngeo/services';
  * @hidden
  */
 const appModule = angular.module('app', []);
-
 appModule.config([
   '$compileProvider',
   /**
@@ -51,9 +50,11 @@ appModule.config([
 /**
  * @ngInject
  */
-appModule.run(($injector) => {
-  //AngularServices.auth = $injector.get('gmfAuthenticationService');
-  //AngularServices.notification = $injector.get('ngeoNotification');
-});
-
+appModule.run([
+  '$injector',
+  ($injector) => {
+    //AngularServices.auth = $injector.get('gmfAuthenticationService');
+    //AngularServices.notification = $injector.get('ngeoNotification');
+  },
+]);
 export default appModule;

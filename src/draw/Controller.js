@@ -20,9 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import ngeoDrawFeatures from 'ngeo/draw/features';
-
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoGeometryType from 'ngeo/GeometryType';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
@@ -188,15 +186,10 @@ export class DrawController {
     const event = evt.detail ? evt.detail : evt;
     const sketch = event.feature;
     console.assert(sketch);
-
     const azimut = sketch.get('azimut');
-
     const features = this.features || this.ngeoFeatures_;
-
     const feature = new olFeature(sketch.getGeometry());
-
     const prop = ngeoFormatFeatureProperties;
-
     switch (type) {
       case ngeoGeometryType.CIRCLE:
         feature.set(prop.IS_CIRCLE, true);
@@ -229,7 +222,6 @@ export class DrawController {
      */
     const color = type !== ngeoGeometryType.TEXT ? '#DB4436' : '#000000';
     feature.set(prop.COLOR, color);
-
     feature.set(prop.ANGLE, 0);
     feature.set(prop.OPACITY, 0.2);
     feature.set(prop.SHOW_MEASURE, this.showMeasure ? true : false);
@@ -244,7 +236,7 @@ export class DrawController {
     features.push(feature);
   }
 }
-
+DrawController.$inject = ['$scope', 'gettextCatalog', 'ngeoFeatureHelper', 'ngeoFeatures'];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -255,5 +247,4 @@ const myModule = angular.module('ngeoDrawfeatureController', [
   ngeoMiscFeatureHelper.name,
 ]);
 myModule.controller('ngeoDrawfeatureController', DrawController);
-
 export default myModule;

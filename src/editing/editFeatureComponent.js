@@ -1,3 +1,18 @@
+Controller.$inject = [
+  '$element',
+  '$q',
+  '$scope',
+  '$timeout',
+  'gettextCatalog',
+  'gmfEditFeature',
+  'gmfSnapping',
+  'gmfXSDAttributes',
+  'ngeoEventHelper',
+  'ngeoFeatureHelper',
+  'ngeoLayerHelper',
+  'ngeoToolActivateMgr',
+  'gmfEditFeatureOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,19 +36,14 @@
 
 import angular from 'angular';
 import gmfEditingEditFeature from 'gmf/editing/EditFeature';
-
 import gmfEditingSnapping from 'gmf/editing/Snapping';
-
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 import {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap';
 import DateFormatter from 'ngeo/misc/php-date-formatter';
 import 'jquery-datetimepicker/jquery.datetimepicker';
 import 'jquery-datetimepicker/jquery.datetimepicker.css';
-
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
-
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
-
 import {deleteCondition} from 'ngeo/utils';
 import {getGeometryAttribute} from 'ngeo/format/XSDAttribute';
 import ngeoGeometryType from 'ngeo/GeometryType';
@@ -42,18 +52,13 @@ import ngeoInteractionTranslate from 'ngeo/interaction/Translate';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMenu from 'ngeo/Menu';
 import ngeoMenuMulti from 'gmf/menu/MenuMultiFeature';
-
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
-
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
-
 import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
-
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
-
 import {getUid as olUtilGetUid} from 'ol/util';
 import olCollection from 'ol/Collection';
 import {listen, unlistenByKey} from 'ol/events';
@@ -133,16 +138,18 @@ const myModule = angular.module('GmfEditingFeatureComponent', [
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/editing/editFeatureComponent', require('./editFeatureComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -206,7 +213,6 @@ function editingEditFeatureComponent() {
     templateUrl: 'gmf/editing/editFeatureComponent',
   };
 }
-
 myModule.directive('gmfEditfeature', editingEditFeatureComponent);
 
 /**
@@ -415,7 +421,6 @@ export function Controller(
    * @type {?olFeature<import('ol/geom/Geometry').default>}
    */
   this.feature = null;
-
   this.scope_.$watch(() => this.feature, this.handleFeatureChange_.bind(this));
 
   /**
@@ -586,7 +591,6 @@ Controller.prototype.$onInit = function () {
   });
   this.highlightVectorLayer_.setMap(this.map);
   this.hightlightedFeatures_ = this.highlightVectorLayer_.getSource().getFeaturesCollection();
-
   const lang = this.gettextCatalog_.getCurrentLanguage();
 
   // @ts-ignore: $.datetimepicker is available, as it is imported
@@ -599,7 +603,7 @@ Controller.prototype.$onInit = function () {
   if (!this.editableTreeCtrl) {
     throw new Error('Missing editableTreeCtrl');
   }
-  this.editableNode_ = /** @type {import('gmf/themes').GmfLayer} */ (this.editableTreeCtrl.node);
+  this.editableNode_ = /** @type {import('gmf/themes').GmfLayer} */ this.editableTreeCtrl.node;
   if (!this.vectorLayer) {
     throw new Error('Missing vectorLayer');
   }
@@ -623,7 +627,6 @@ Controller.prototype.$onInit = function () {
     style: this.ngeoFeatureHelper_.getVertexStyle(false),
   });
   this.interactions_.push(this.modify_);
-
   this.rotate_ = new ngeoInteractionRotate({
     features: this.features,
     style: new olStyleStyle({
@@ -637,7 +640,6 @@ Controller.prototype.$onInit = function () {
     }),
   });
   this.interactions_.push(this.rotate_);
-
   this.translate_ = new ngeoInteractionTranslate({
     features: this.features,
     style: new olStyleStyle({
@@ -651,9 +653,7 @@ Controller.prototype.$onInit = function () {
     }),
   });
   this.interactions_.push(this.translate_);
-
   this.initializeInteractions_();
-
   this.modifyToolActivate = new ngeoMiscToolActivate(this.modify_, 'active');
   this.rotateToolActivate = new ngeoMiscToolActivate(this.rotate_, 'active');
   this.translateToolActivate = new ngeoMiscToolActivate(this.translate_, 'active');
@@ -671,14 +671,10 @@ Controller.prototype.$onInit = function () {
       }
     },
   );
-
   this.scope_.$on('$destroy', this.handleDestroy_.bind(this));
-
   const uid = olUtilGetUid(this);
   this.ngeoEventHelper_.addListenerKey(uid, listen(this.features, 'add', this.handleFeatureAdd_, this));
-
   this.scope_.$watch(() => this.mapSelectActive, this.handleMapSelectActiveChange_.bind(this));
-
   this.scope_.$watch(
     () => this.state,
     (newValue, oldValue) => {
@@ -708,7 +704,6 @@ Controller.prototype.$onInit = function () {
       }
     },
   );
-
   this.scope_.$watch(
     () => this.unsavedModificationsModalShown,
     (newValue, oldValue) => {
@@ -739,11 +734,9 @@ Controller.prototype.save = function () {
   if (!this.editableNode_) {
     throw new Error('Missing editableNode');
   }
-
   const feature = this.feature.clone();
   feature.setId(this.feature.getId());
   const id = this.featureId;
-
   this.pending = true;
 
   // Correct datetime on save
@@ -765,7 +758,6 @@ Controller.prototype.save = function () {
       feature.set(attribute.name, dateFormatter.formatDate(formattedValue, jsonFormat));
     }
   });
-
   const promise = id
     ? this.gmfEditFeature_.updateFeature(this.editableNode_.id, feature)
     : this.gmfEditFeature_.insertFeatures(this.editableNode_.id, [feature]);
@@ -833,7 +825,6 @@ Controller.prototype.checkForModifications_ = function (scopeApply) {
   } else {
     this.confirmDeferred_.resolve();
   }
-
   return this.confirmDeferred_.promise;
 };
 
@@ -1019,12 +1010,10 @@ Controller.prototype.toggle_ = function (active) {
   if (!this.editableTreeCtrl) {
     throw new Error('Missing editableTreeCtrl');
   }
-
   const keys = this.listenerKeys_;
   const createUid = ['create-', olUtilGetUid(this)].join('-');
   const otherUid = ['other-', olUtilGetUid(this)].join('-');
   const toolMgr = this.ngeoToolActivateMgr_;
-
   if (active) {
     if (!this.translate_) {
       throw new Error('Missing translate');
@@ -1040,10 +1029,8 @@ Controller.prototype.toggle_ = function (active) {
     keys.push(listen(this.menuVertex_, 'actionclick', this.handleMenuVertexActionClick_, this));
     keys.push(listen(this.translate_, 'translateend', this.handleTranslateEnd_, this));
     keys.push(listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this));
-
     toolMgr.registerTool(createUid, this.createToolActivate, false);
     toolMgr.registerTool(createUid, this.mapSelectToolActivate, true);
-
     toolMgr.registerTool(otherUid, this.createToolActivate, false);
     toolMgr.registerTool(otherUid, this.modifyToolActivate, true);
     toolMgr.registerTool(otherUid, this.translateToolActivate, false);
@@ -1054,19 +1041,15 @@ Controller.prototype.toggle_ = function (active) {
 
     keys.forEach(unlistenByKey);
     keys.length = 0;
-
     toolMgr.unregisterTool(createUid, this.createToolActivate);
     toolMgr.unregisterTool(createUid, this.mapSelectToolActivate);
-
     toolMgr.unregisterTool(otherUid, this.createToolActivate);
     toolMgr.unregisterTool(otherUid, this.modifyToolActivate);
     toolMgr.unregisterTool(otherUid, this.translateToolActivate);
     toolMgr.unregisterTool(otherUid, this.rotateToolActivate);
-
     this.createActive = false;
     this.cancel();
   }
-
   this.modify_.setActive(active);
   this.mapSelectActive = active;
   this.editableTreeCtrl.properties.editing = active;
@@ -1081,12 +1064,10 @@ Controller.prototype.handleMapSelectActiveChange_ = function (active) {
   if (!this.map) {
     throw new Error('Missing map');
   }
-
   const mapDiv = this.map.getViewport();
   if (!mapDiv) {
     throw new Error('Missing mapDiv');
   }
-
   if (active) {
     this.mapListenerKeys_.push(
       listen(this.map, 'click', this.handleMapClick_, this),
@@ -1143,7 +1124,6 @@ Controller.prototype.handleMapClick_ = function (evt) {
         layerFilter: undefined,
       },
     );
-
     if (feature) {
       return;
     }
@@ -1157,7 +1137,6 @@ Controller.prototype.handleMapClick_ = function (evt) {
       if (!this.editableNode_) {
         throw new Error('Missing editableNode');
       }
-
       const map = this.map;
       const view = map.getView();
       const resolution = view.getResolution();
@@ -1191,7 +1170,6 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
     }
     const pixel = this.map.getEventPixel(evt);
     const coordinate = this.map.getCoordinateFromPixel(pixel);
-
     let feature = this.map.forEachFeatureAtPixel(
       pixel,
       (feature) => {
@@ -1212,9 +1190,7 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
         layerFilter: undefined,
       },
     );
-
     feature = feature ? feature : null;
-
     this.menu_.close();
     this.menuVertex_.close();
     this.vertexInfo_ = null;
@@ -1240,7 +1216,6 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
           this.menu_.open(coordinate);
         }
       }
-
       evt.preventDefault();
       evt.stopPropagation();
     }
@@ -1261,12 +1236,10 @@ Controller.prototype.setFeature_ = function (feature) {
  */
 Controller.prototype.handleGetFeatures_ = function (coordinate, features) {
   this.pending = false;
-
   this.timeout_(() => {
     if (!this.features) {
       throw new Error('Missing features');
     }
-
     if (features.length === 1) {
       this.setFeature_(features[0]);
     } else if (features.length > 1) {
@@ -1298,7 +1271,6 @@ Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
     };
     actions.push(choice);
   });
-
   this.menuMultiple_ = new ngeoMenuMulti({
     actions,
   });
@@ -1321,7 +1293,6 @@ Controller.prototype.openFeatureMenu_ = function (coordinate, features) {
   this.menuMultipleListenerKeys_.push(
     listen(this.menuMultiple_, 'actionclick', this.handleMenuMultipleActionClick_.bind(this, features), this),
   );
-
   this.map.addOverlay(this.menuMultiple_);
   if (features[0].getGeometry().getType() === 'MultiPoint') {
     const resolution = this.map.getView().getResolution();
@@ -1379,7 +1350,6 @@ Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
     this.geomListenerKeys_.forEach(unlistenByKey);
     this.unregisterInteractions_();
   }
-
   if (newFeature) {
     this.featureId = newFeature.getId();
     geom = newFeature.getGeometry();
@@ -1388,7 +1358,6 @@ Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
       listen(geom, 'change', this.handleFeatureGeometryChange_, this),
     );
     this.registerInteractions_();
-
     this.gmfSnapping_.ensureSnapInteractionsOnTop();
 
     // The `ui-date` triggers an unwanted change, i.e. it converts the text
@@ -1405,11 +1374,9 @@ Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
     this.featureId = undefined;
   }
 };
-
 Controller.prototype.handleFeaturePropertyChange_ = function () {
   this.dirty = true;
 };
-
 Controller.prototype.handleFeatureGeometryChange_ = function () {
   this.dirty = true;
   this.scope_.$apply();
@@ -1419,8 +1386,7 @@ Controller.prototype.handleFeatureGeometryChange_ = function () {
  * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMenuActionClick_ = function (evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
-
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ evt.detail.action;
   switch (action) {
     case 'move':
       if (!this.translate_) {
@@ -1445,8 +1411,7 @@ Controller.prototype.handleMenuActionClick_ = function (evt) {
  * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMenuVertexActionClick_ = function (evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
-
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ evt.detail.action;
   switch (action) {
     case 'delete':
       if (!this.feature) {
@@ -1486,7 +1451,6 @@ Controller.prototype.handleRotateEnd_ = function (evt) {
   this.rotate_.setActive(false);
   this.scope_.$apply();
 };
-
 Controller.prototype.handleDestroy_ = function () {
   if (!this.features) {
     throw new Error('Missing features');
@@ -1509,7 +1473,7 @@ Controller.prototype.handleDestroy_ = function () {
  * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ evt.detail.action;
   const feature = Object.values(features).filter((feature) => feature.getId() === action);
   this.setFeature_(feature[0]);
   this.hightlightedFeatures_.clear();
@@ -1522,7 +1486,7 @@ Controller.prototype.handleMenuMultipleActionClick_ = function (features, evt) {
  * @param {Event|import('ol/events/Event').default} evt Event.
  */
 Controller.prototype.handleMultiMenuActionMouseEnter_ = function (features, evt) {
-  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ (evt).detail.action;
+  const action = /** @type {import('ngeo/filter/ruleComponent').MenuEvent} */ evt.detail.action;
   const feature = Object.values(features).filter((feature) => feature.getId() === action);
   this.hightlightedFeatures_.push(feature[0]);
 };
@@ -1533,7 +1497,5 @@ Controller.prototype.handleMultiMenuActionMouseEnter_ = function (features, evt)
 Controller.prototype.handleMultiMenuActionMouseOut_ = function () {
   this.hightlightedFeatures_.clear();
 };
-
 myModule.controller('GmfEditfeatureController', Controller);
-
 export default myModule;

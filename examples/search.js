@@ -1,3 +1,4 @@
+SearchController.$inject = ['$element', '$rootScope', '$compile', 'ngeoSearchCreateGeoJSONBloodhound'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import angular from 'angular';
 import {SEARCH} from './url';
 import './search.css';
-
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import {proj as EPSG2056} from 'ngeo/proj/EPSG_2056';
@@ -53,7 +53,6 @@ const searchComponent = {
     'ngeo-search-datasets="$ctrl.datasets" ' +
     'ngeo-search-listeners="$ctrl.listeners">',
 };
-
 myModule.component('appSearch', searchComponent);
 
 /**
@@ -87,11 +86,11 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
   /**
    * @type {Twitter.Typeahead.Options}
    */
-  this.options = /** @type {Twitter.Typeahead.Options} */ ({
+  this.options = /** @type {Twitter.Typeahead.Options} */ {
     highlight: true,
     hint: undefined,
     minLength: undefined,
-  });
+  };
 
   /**
    * @type {Twitter.Typeahead.Dataset<import('ol/Feature').default<import('ol/geom/Geometry').default>>[]}
@@ -100,17 +99,17 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
     {
       source: bloodhoundEngine.ttAdapter(),
       display: (suggestion) => {
-        const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
-          suggestion
-        );
+        const feature =
+          /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */
+          suggestion;
         return feature.get('label');
       },
       templates: {
         header: () => '<div class="ngeo-header">Addresses</div>',
         suggestion: (suggestion) => {
-          const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
-            suggestion
-          );
+          const feature =
+            /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */
+            suggestion;
 
           // A scope for the ng-click on the suggestion's « i » button.
           const scope = $rootScope.$new(true);
@@ -121,7 +120,6 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
             window.alert(feature.get('label'));
             event.stopPropagation();
           };
-
           const html = `<p>${feature.get('label')}<button ng-click="click($event)">i</button></p>`;
           return $compile(html)(scope).html();
         },
@@ -137,9 +135,9 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
-        suggestion
-      );
+      const feature =
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */
+        suggestion;
       const featureGeometry = feature.getGeometry();
       if (!(featureGeometry instanceof SimpleGeometry)) {
         throw new Error('Missing Wrong geometry type');
@@ -200,7 +198,6 @@ SearchController.prototype.createAndInitBloodhound_ = function (ngeoSearchCreate
   bloodhound.initialize();
   return bloodhound;
 };
-
 myModule.controller('AppSearchController', SearchController);
 
 /**
@@ -223,8 +220,6 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

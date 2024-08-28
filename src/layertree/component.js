@@ -1,3 +1,18 @@
+Controller.$inject = [
+  '$element',
+  '$scope',
+  'ngeoLayerHelper',
+  'gmfLayerBeingSwipe',
+  'gmfDataSourceBeingFiltered',
+  'gmfExternalDataSourcesManager',
+  'gmfPermalink',
+  'gmfTreeManager',
+  'gmfSyncLayertreeMap',
+  'ngeoWMSTime',
+  'gmfThemes',
+  '$timeout',
+  'gmfLayerTreeOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -25,9 +40,7 @@ import gmfDatasourceDataSourceBeingFiltered from 'gmf/datasource/DataSourceBeing
 import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
-
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent';
-
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfThemeThemes, {
@@ -37,7 +50,6 @@ import gmfThemeThemes, {
 } from 'gmf/theme/Themes';
 import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import {ServerType} from 'ngeo/datasource/OGC';
-
 import gmfLayertreeNode from 'gmf/layertree/layertreeNode';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
@@ -51,7 +63,6 @@ import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceWMTS from 'ol/source/WMTS';
 import LayerBase from 'ol/layer/Base';
 import {getUid} from 'ol/util';
-
 import 'bootstrap/js/src/collapse';
 
 /**
@@ -95,18 +106,19 @@ myModule.value(
    */
   (element, attrs) => 'gmf/layertree',
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/layertree', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/layertree', require('./component.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfLayertreeTemplate',
   /**
@@ -136,6 +148,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfLayertreeTemplate.$inject = ['$element', '$attrs', 'gmfLayertreeTemplate'];
 function gmfLayertreeTemplate($element, $attrs, gmfLayertreeTemplate) {
   return gmfLayertreeTemplate($element, $attrs);
 }
@@ -199,7 +212,6 @@ const layertreeComponent = {
   },
   template: gmfLayertreeTemplate,
 };
-
 myModule.component('gmfLayertree', layertreeComponent);
 
 /**
@@ -291,7 +303,6 @@ export function Controller(
    * @type {import('gmf/layertree/TreeManager').LayertreeTreeManager}
    */
   this.gmfTreeManager_ = gmfTreeManager;
-
   const root = gmfTreeManager.root;
   if (!root) {
     throw new Error('Missing root');
@@ -348,7 +359,6 @@ export function Controller(
  */
 Controller.prototype.$onInit = function () {
   this.dataLayerGroup_ = this.layerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
-
   ngeoMiscSyncArrays(this.dataLayerGroup_.getLayers().getArray(), this.layers, true, this.scope_, () => true);
 
   // watch any change on layers array to refresh the map
@@ -393,8 +403,8 @@ Controller.prototype.updateDimensions_ = function (treeCtrl) {
         throw new Error('Wrong feature type');
       }
       this.updateLayerDimensions_(
-        /** @type {olLayerLayer<import('ol/source/Source').default>} */ (layer),
-        /** @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} */ (ctrl.node),
+        /** @type {olLayerLayer<import('ol/source/Source').default>} */ layer,
+        /** @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} */ ctrl.node,
       );
       return LayertreeVisitorDecision.DESCEND;
     }
@@ -427,7 +437,7 @@ Controller.prototype.updateLayerDimensions_ = function (layer, node) {
         source.updateParams(dimensions);
       } else {
         // the source is not ready yet
-        layer.once(/** @type {import('ol/Observable').EventTypes} */ ('change:source'), () => {
+        layer.once(/** @type {import('ol/Observable').EventTypes} */ 'change:source', () => {
           if (!(layer instanceof olLayerLayer)) {
             throw new Error('Wrong feature type');
           }
@@ -461,14 +471,11 @@ Controller.prototype.getLayer = function (treeCtrl) {
       this.gmfTreeManager_.root.children.length - this.gmfTreeManager_.numberOfGroupsToAddInThisDigestLoop ||
       0;
   }
-
   const layer = this.gmfSyncLayertreeMap_.createLayer(treeCtrl, this.map, this.dataLayerGroup_, opt_position);
-
   if (layer instanceof olLayerLayer) {
-    const node = /** @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} */ (treeCtrl.node);
+    const node = /** @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer} */ treeCtrl.node;
     this.updateLayerDimensions_(layer, node);
   }
-
   return layer;
 };
 
@@ -556,7 +563,7 @@ Controller.prototype.updateWMSTimeLayerState = function (layertreeCtrl, time) {
   if (!time) {
     return;
   }
-  const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ (layertreeCtrl.getDataSource());
+  const dataSource = /** @type {?import("ngeo/datasource/OGC").default} */ layertreeCtrl.getDataSource();
   if (dataSource) {
     if (!(dataSource instanceof gmfDatasourceOGC)) {
       throw new Error('Wrong dataSource type');
@@ -579,25 +586,19 @@ Controller.prototype.updateWMSTimeLayerState = function (layertreeCtrl, time) {
  */
 Controller.prototype.getLegendIconURL = function (treeCtrl) {
   const iconUrl = treeCtrl.node.metadata.iconUrl;
-
   if (iconUrl !== undefined) {
     return iconUrl;
   }
-
-  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.node;
   if (gmfGroup.children !== undefined) {
     return undefined;
   }
-
-  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ treeCtrl.node;
   if (gmfLayer.type !== 'WMS') {
     return undefined;
   }
-
-  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
-
+  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ gmfLayer;
   const legendRule = gmfLayerWMS.metadata.legendRule;
-
   if (legendRule === undefined) {
     return undefined;
   }
@@ -627,17 +628,15 @@ Controller.prototype.getLegendIconURL = function (treeCtrl) {
 Controller.prototype.getLegendsObject = function (treeCtrl) {
   /** @type {Object<string, string>} */
   const legendsObject = {};
-  if (/** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node).children !== undefined) {
+  if (/** @type {import('gmf/themes').GmfGroup} */ treeCtrl.node.children !== undefined) {
     return null;
   }
-
-  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
+  const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ treeCtrl.node;
   const gmfLayerDefaultName = gmfLayer.name;
   if (gmfLayer.metadata.legendImage) {
     legendsObject[gmfLayerDefaultName] = gmfLayer.metadata.legendImage;
     return legendsObject;
   }
-
   const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS') {
     if (!(layer instanceof olLayerTile)) {
@@ -649,7 +648,7 @@ Controller.prototype.getLegendsObject = function (treeCtrl) {
     }
     return wmtsLegendURL ? legendsObject : null;
   } else {
-    const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
+    const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ gmfLayer;
     const layersNames = gmfLayerWMS.layers;
     const gmfOgcServer = this.gmfTreeManager_.getOgcServer(treeCtrl);
     const scale = this.getScale_();
@@ -717,7 +716,7 @@ Controller.prototype.isSnappingActivated = function (treeCtrl) {
     return treeCtrl.properties.snapping;
   }
   // Default to node.metadata.activated
-  const node = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
+  const node = /** @type {import('gmf/themes').GmfLayer} */ treeCtrl.node;
   const config = getSnappingConfig(node);
   return config !== null && config.activated;
 };
@@ -758,7 +757,7 @@ Controller.prototype.afterReorder = function () {
   if (!this.gmfTreeManager_.rootCtrl) {
     throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
-  const gmfRootGroup = /** @type {import('gmf/themes').GmfGroup} */ (this.gmfTreeManager_.rootCtrl.node);
+  const gmfRootGroup = /** @type {import('gmf/themes').GmfGroup} */ this.gmfTreeManager_.rootCtrl.node;
   const groupNodes = gmfRootGroup.children;
   const currentTreeCtrls = this.gmfTreeManager_.rootCtrl.children;
   /** @type {import('ngeo/layertree/Controller').LayertreeController[]} */
@@ -816,7 +815,6 @@ Controller.prototype.removeNode = function (node) {
   this.gmfTreeManager_.parseTreeNodes(node);
   this.gmfTreeManager_.removeGroup(node);
 };
-
 Controller.prototype.removeAllNodes = function () {
   this.gmfTreeManager_.parseTreeNodes(this.root);
   this.gmfTreeManager_.removeAll();
@@ -863,7 +861,7 @@ Controller.prototype.getResolutionStyle = function (gmfLayer) {
  *    from the current node.
  */
 Controller.prototype.zoomToResolution = function (treeCtrl) {
-  const gmfLayer = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (treeCtrl.node));
+  const gmfLayer = /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ treeCtrl.node;
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {
@@ -977,7 +975,7 @@ Controller.prototype.supportsCustomization = function (treeCtrl) {
  *     legend being shown.
  */
 Controller.prototype.supportsLegend = function (treeCtrl) {
-  const node = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+  const node = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.node;
   return !!node.metadata && !!node.metadata.legend && !!this.getLegendsObject(treeCtrl);
 };
 
@@ -987,9 +985,9 @@ Controller.prototype.supportsLegend = function (treeCtrl) {
  *     layer opacity being changed or not.
  */
 Controller.prototype.supportsOpacityChange = function (treeCtrl) {
-  const node = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+  const node = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.node;
   const parentNode = treeCtrl.parent
-    ? /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node)
+    ? /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.parent.node
     : undefined;
   return (
     !!treeCtrl.layer &&
@@ -1003,7 +1001,7 @@ Controller.prototype.supportsOpacityChange = function (treeCtrl) {
  * @returns {boolean} Whether the layer tree controller has a filtrable datasource or not.
  */
 Controller.prototype.isFiltrable = function (treeCtrl) {
-  const datasource = /** @type {import('ngeo/datasource/OGC').OGC} */ (treeCtrl.getDataSource());
+  const datasource = /** @type {import('ngeo/datasource/OGC').OGC} */ treeCtrl.getDataSource();
   return datasource ? datasource.filtrable : false;
 };
 
@@ -1013,9 +1011,9 @@ Controller.prototype.isFiltrable = function (treeCtrl) {
  *     opacity change or is filtrable. Or null if there is any parent with layer functions.
  */
 Controller.prototype.getFirstParentWithLayerFunctions = function (treeCtrl) {
-  const parentTreeCtrl = /** @type {import('ngeo/layertree/Controller').LayertreeController} */ (
-    treeCtrl.parent
-  );
+  const parentTreeCtrl =
+    /** @type {import('ngeo/layertree/Controller').LayertreeController} */
+    treeCtrl.parent;
   if (!parentTreeCtrl) {
     return null;
   }
@@ -1024,7 +1022,5 @@ Controller.prototype.getFirstParentWithLayerFunctions = function (treeCtrl) {
   }
   return this.getFirstParentWithLayerFunctions(parentTreeCtrl);
 };
-
 myModule.controller('GmfLayertreeController', Controller);
-
 export default myModule;

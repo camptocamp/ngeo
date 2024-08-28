@@ -1,3 +1,5 @@
+MainController.$inject = ['gmfThemes', 'gmfDataSourcesManager', 'gmfThemeManager', 'defaultTheme'];
+QueryresultController.$inject = ['ngeoQueryResult'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -23,15 +25,10 @@ import angular from 'angular';
 import './displayquerywindow.css';
 import './gmf-hidden.inc.css';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
-
 import gmfLayertreeComponent from 'gmf/layertree/component';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
-
 import gmfThemeManager from 'gmf/theme/Manager';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
@@ -56,7 +53,8 @@ const myModule = angular.module('gmfapp', [
   gmfQueryWindowComponent.name,
   gmfThemeManager.name,
   gmfThemeThemes.name,
-  ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
+  ngeoMapModule.name,
+  // for ngeo.map.FeatureOverlay, perhaps remove me
   ngeoMiscBtnComponent.name,
   ngeoQueryComponent.name,
 ]);
@@ -73,7 +71,6 @@ const queryresultComponent = {
   // @ts-ignore: webpack
   template: require('./partials/queryresult.html'),
 };
-
 myModule.component('appQueryresult', queryresultComponent);
 
 /**
@@ -89,7 +86,6 @@ function QueryresultController(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 }
-
 myModule.controller('AppQueryresultController', QueryresultController);
 
 /**
@@ -146,11 +142,9 @@ function MainController(gmfThemes, gmfDataSourcesManager, gmfThemeManager, defau
    * @type {import('gmf/themes').GmfTheme} The selected theme.
    */
   this.selectedTheme = null;
-
   this.updateTheme = function () {
     gmfThemeManager.addTheme(this.selectedTheme);
   };
-
   gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
@@ -164,23 +158,29 @@ function MainController(gmfThemes, gmfDataSourcesManager, gmfThemeManager, defau
       });
     }
   });
-
   ngeoMapFeatureOverlayMgr.init(this.map);
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('gmfDisplayQueryWindowOptions', {
   featuresStyle: {
-    fill: {color: [255, 170, 0, 0.6]},
-    stroke: {color: [255, 170, 0, 1], width: 2},
+    fill: {
+      color: [255, 170, 0, 0.6],
+    },
+    stroke: {
+      color: [255, 170, 0, 1],
+      width: 2,
+    },
     circle: {
       radius: 5,
-      fill: {color: [255, 170, 0, 0.6]},
-      stroke: {color: [255, 170, 0, 1], width: 2},
+      fill: {
+        color: [255, 170, 0, 0.6],
+      },
+      stroke: {
+        color: [255, 170, 0, 1],
+        width: 2,
+      },
     },
   },
 });
 options(myModule);
-
 export default myModule;

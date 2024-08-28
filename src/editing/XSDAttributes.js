@@ -1,3 +1,4 @@
+EditingXSDAttributeService.$inject = ['$http', 'gmfLayersUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -67,5 +68,4 @@ EditingXSDAttributeService.prototype.getAttributes = function (id) {
  */
 const myModule = angular.module('gmfXSDAttributes', []);
 myModule.service('gmfXSDAttributes', EditingXSDAttributeService);
-
 export default myModule;

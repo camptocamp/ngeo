@@ -23,7 +23,6 @@ import './mouseposition.css';
 import angular from 'angular';
 import gmfMapModule from 'gmf/map/module';
 import gmfMapComponent from 'gmf/map/component';
-
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import EPSG21781 from 'ngeo/proj/EPSG_21781';
 import olMap from 'ol/Map';
@@ -58,9 +57,7 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('gmfMousePositionOptions', {
   projections: [
     {
@@ -81,5 +78,4 @@ myModule.constant('gmfMousePositionOptions', {
   ],
 });
 options(myModule);
-
 export default myModule;

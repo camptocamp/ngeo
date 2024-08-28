@@ -35,7 +35,5 @@ function MainController() {
    */
   this.modalShown = false;
 }
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

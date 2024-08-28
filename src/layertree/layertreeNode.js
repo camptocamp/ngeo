@@ -1,3 +1,4 @@
+gmfLayertreeNodeComponent.$inject = ['gmfLayertreeNodeTemplateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -21,7 +22,6 @@
 
 import angular from 'angular';
 import ngeoLayertreeController, {LayertreeController} from 'ngeo/layertree/Controller';
-
 import 'bootstrap/js/src/collapse'; // needed to collapse a layertree
 
 /**
@@ -29,7 +29,6 @@ import 'bootstrap/js/src/collapse'; // needed to collapse a layertree
  * @hidden
  */
 const myModule = angular.module('gmfLayertreeNode', [ngeoLayertreeController.name]);
-
 myModule.value(
   'gmfLayertreeNodeTemplateUrl',
   /**
@@ -42,16 +41,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/layertree/layertreeNode';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/layertree/layertreeNode', require('./layertreeNode.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/layertree/layertreeNode', require('./layertreeNode.html'));
+    },
+  ],
 );
 
 /**
@@ -150,7 +151,5 @@ function gmfLayertreeNodeComponent(gmfLayertreeNodeTemplateUrl) {
     controller: LayertreeController,
   };
 }
-
 myModule.directive('gmfLayertreeNode', gmfLayertreeNodeComponent);
-
 export default myModule;

@@ -36,7 +36,6 @@ import ngeoRuleSelect from 'ngeo/rule/Select';
 import ngeoRuleText from 'ngeo/rule/Text';
 import {writeFilter} from 'ol/format/WFS';
 import * as olFormatFilter from 'ol/format/filter';
-
 import moment from 'moment';
 
 /**
@@ -221,7 +220,6 @@ export class RuleHelper {
         }
         break;
     }
-
     return rule;
   }
 
@@ -260,15 +258,15 @@ export class RuleHelper {
       case ngeoFormatAttributeType.SELECT:
         // Compatibility with filters saved before version 2.6
         if (options.expression) {
-          const expression = /** @type {string} */ (options.expression);
+          const expression = /** @type {string} */ options.expression;
           options.literal = expression.split(',');
         }
-        const selectOptions = /** @type {import('ngeo/rule/Select').SelectOptions} */ (options);
+        const selectOptions = /** @type {import('ngeo/rule/Select').SelectOptions} */ options;
         console.assert(selectOptions.choices);
         rule = new ngeoRuleSelect(selectOptions);
         break;
       default:
-        rule = new ngeoRuleText(/** @type {import('ngeo/rule/Text').TextOptions} */ (options));
+        rule = new ngeoRuleText(/** @type {import('ngeo/rule/Text').TextOptions} */ options);
         break;
     }
     return rule;
@@ -304,7 +302,6 @@ export class RuleHelper {
     if (rule.upperBoundary !== null) {
       options.upperBoundary = rule.upperBoundary;
     }
-
     let clone;
     if (rule instanceof ngeoRuleDate) {
       clone = new ngeoRuleDate(options);
@@ -312,16 +309,15 @@ export class RuleHelper {
       clone = new ngeoRuleGeometry(options);
       clone.feature.setProperties(this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature));
     } else if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select').SelectOptions} */ (options);
+      const opt = /** @type {import('ngeo/rule/Select').SelectOptions} */ options;
       opt.choices = rule.choices.slice(0);
       clone = new ngeoRuleSelect(opt);
     } else if (rule instanceof ngeoRuleText) {
-      const opt = /** @type {import('ngeo/rule/Text').TextOptions} */ (options);
+      const opt = /** @type {import('ngeo/rule/Text').TextOptions} */ options;
       clone = new ngeoRuleText(opt);
     } else {
       clone = new ngeoRuleRule(options);
     }
-
     return clone;
   }
 
@@ -338,19 +334,15 @@ export class RuleHelper {
     if (destRule.literal !== sourceRule.literal) {
       destRule.literal = sourceRule.literal;
     }
-
     if (destRule.lowerBoundary !== sourceRule.lowerBoundary) {
       destRule.lowerBoundary = sourceRule.lowerBoundary;
     }
-
     if (destRule.operator !== sourceRule.operator) {
       destRule.operator = sourceRule.operator;
     }
-
     if (destRule.upperBoundary !== sourceRule.upperBoundary) {
       destRule.upperBoundary = sourceRule.upperBoundary;
     }
-
     if (sourceRule instanceof ngeoRuleGeometry && destRule instanceof ngeoRuleGeometry) {
       this.ngeoFeatureHelper_.clearNonSpatialProperties(destRule.feature);
       destRule.feature.setProperties(this.ngeoFeatureHelper_.getNonSpatialProperties(sourceRule.feature));
@@ -381,27 +373,21 @@ export class RuleHelper {
       propertyName: rule.propertyName,
       type: rule.type,
     };
-
     if (rule.literal !== null) {
       obj.literal = rule.literal;
     }
-
     if (rule.lowerBoundary !== null) {
       obj.lowerBoundary = rule.lowerBoundary;
     }
-
     if (rule.operator !== null) {
       obj.operator = rule.operator;
     }
-
     if (rule.operators !== null) {
       obj.operators = rule.operators.slice(0);
     }
-
     if (rule.upperBoundary !== null) {
       obj.upperBoundary = rule.upperBoundary;
     }
-
     if (rule instanceof ngeoRuleGeometry) {
       /**
        * @type {import('ngeo/rule/Geometry').GeometryOptions}
@@ -409,12 +395,10 @@ export class RuleHelper {
       const opt = obj;
       opt.featureProperties = this.ngeoFeatureHelper_.getNonSpatialProperties(rule.feature);
     }
-
     if (rule instanceof ngeoRuleSelect) {
-      const opt = /** @type {import('ngeo/rule/Select').SelectOptions} */ (obj);
+      const opt = /** @type {import('ngeo/rule/Select').SelectOptions} */ obj;
       opt.choices = rule.choices;
     }
-
     return obj;
   }
 
@@ -428,13 +412,11 @@ export class RuleHelper {
   createFilter(options) {
     const dataSource = options.dataSource;
     let mainFilter = null;
-
     if (options.filter) {
       mainFilter = options.filter;
     } else {
       const rules = options.filterRules || dataSource.filterRules;
       const conditions = [];
-
       if (rules && rules.length) {
         for (const rule of rules) {
           const filter = this.createFilterFromRule_(rule, dataSource, options.srsName);
@@ -443,7 +425,6 @@ export class RuleHelper {
           }
         }
       }
-
       const condition = dataSource.filterCondition;
       if (conditions.length === 1) {
         mainFilter = conditions[0];
@@ -458,17 +439,14 @@ export class RuleHelper {
         mainFilter = olFormatFilter.not(mainFilter);
       }
     }
-
     if (options.incTime) {
       const timeFilter = this.createTimeFilterFromDataSource_(dataSource);
       mainFilter = this.joinFilters(mainFilter, timeFilter);
     }
-
     if (options.incDimensions) {
       const dimensionsFilter = this.createDimensionsFilterFromDataSource_(dataSource);
       mainFilter = this.joinFilters(mainFilter, dimensionsFilter);
     }
-
     return mainFilter;
   }
 
@@ -525,35 +503,28 @@ export class RuleHelper {
    */
   createFilterFromRule_(rule, dataSource, opt_srsName) {
     let filter = null;
-
     const value = rule.value;
     if (!value) {
       return null;
     }
-
-    const literal = /** @type {import('ngeo/rule/Rule').RuleOptions} */ (value).literal;
-    const lowerBoundary = /** @type {import('ngeo/rule/Rule').RuleOptions} */ (value).lowerBoundary;
+    const literal = /** @type {import('ngeo/rule/Rule').RuleOptions} */ value.literal;
+    const lowerBoundary = /** @type {import('ngeo/rule/Rule').RuleOptions} */ value.lowerBoundary;
     const operator = value.operator;
     const propertyName = value.propertyName;
-    const upperBoundary = /** @type {import('ngeo/rule/Rule').RuleOptions} */ (value).upperBoundary;
-
+    const upperBoundary = /** @type {import('ngeo/rule/Rule').RuleOptions} */ value.upperBoundary;
     const rot = RuleOperatorType;
     const rsot = RuleSpatialOperatorType;
     const rtot = RuleTemporalOperatorType;
-
     const spatialTypes = [rsot.CONTAINS, rsot.INTERSECTS, rsot.WITHIN];
-
     const numericTypes = [
       rot.GREATER_THAN,
       rot.GREATER_THAN_OR_EQUAL_TO,
       rot.LESSER_THAN,
       rot.LESSER_THAN_OR_EQUAL_TO,
     ];
-
     if (rule instanceof ngeoRuleDate) {
       let beginValue;
       let endValue;
-
       if (operator === rtot.DURING) {
         beginValue = moment(lowerBoundary).format('YYYY-MM-DD');
         endValue = moment(upperBoundary).format('YYYY-MM-DD');
@@ -622,7 +593,7 @@ export class RuleHelper {
     } else if (operator === rot.BETWEEN) {
       filter = olFormatFilter.between(propertyName, lowerBoundary, upperBoundary);
     } else if (operator === rot.EQUAL_TO) {
-      filter = olFormatFilter.equalTo(propertyName, /** @type {?number|string} */ (literal));
+      filter = olFormatFilter.equalTo(propertyName, /** @type {?number|string} */ literal);
     } else if (operator === rot.LIKE) {
       const stringLiteral = String(literal).replace(/!/g, '!!').replace(/\./g, '!.').replace(/\*/g, '!*');
       filter = olFormatFilter.like(
@@ -634,9 +605,8 @@ export class RuleHelper {
         false /* matchCase */,
       );
     } else if (operator === rot.NOT_EQUAL_TO) {
-      filter = olFormatFilter.notEqualTo(propertyName, /** @type {?number|string} */ (literal));
+      filter = olFormatFilter.notEqualTo(propertyName, /** @type {?number|string} */ literal);
     }
-
     return filter;
   }
 
@@ -652,7 +622,6 @@ export class RuleHelper {
   createDimensionsFilterFromDataSource_(dataSource) {
     const config = dataSource.dimensionsFiltersConfig || {};
     const dimensions = dataSource.dimensions;
-
     const conditions = [];
     for (const key in config) {
       let value = config[key].value;
@@ -688,14 +657,12 @@ export class RuleHelper {
     const range = dataSource.timeRangeValue;
     const timeProperty = dataSource.timeProperty;
     const name = dataSource.timeAttributeName;
-
     if (range && timeProperty && name) {
       if (range.end !== undefined) {
         // Case 1: the range has both 'start' and 'end' values.  Use them to
         //         create a During filter.
 
         const values = this.ngeoWMSTime_.formatWMSTimeParam(timeProperty, range).split('/');
-
         filter = olFormatFilter.during(name, values[0], values[1]);
       } else {
         // Case 2: we only have a 'start' value. We need to calculate the 'end'
@@ -704,7 +671,6 @@ export class RuleHelper {
         const resolution = timeProperty.resolution || 'seconds';
         const value = this.ngeoWMSTime_.formatWMSTimeParam(timeProperty, range);
         let momentEnd;
-
         switch (resolution) {
           case 'year':
             momentEnd = moment(value).add(1, 'years').subtract(1, 'seconds');
@@ -720,7 +686,6 @@ export class RuleHelper {
           // This would require a TContains filter, which neither OpenLayers
           // and MapServer support. Skip...
         }
-
         if (momentEnd) {
           const startValue = moment(value).utc().format('YYYY-MM-DD HH:mm:ss');
           const endValue = momentEnd.utc().format('YYYY-MM-DD HH:mm:ss');
@@ -728,16 +693,14 @@ export class RuleHelper {
         }
       }
     }
-
     return filter;
   }
 }
-
+RuleHelper.$inject = ['gettextCatalog', 'ngeoFeatureHelper', 'ngeoWMSTime'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('ngeoRuleHelper', [ngeoMiscFeatureHelper.name, ngeoMiscWMSTime.name]);
 myModule.service('ngeoRuleHelper', RuleHelper);
-
 export default myModule;

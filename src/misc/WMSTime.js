@@ -81,7 +81,6 @@ export class WMSTime extends Time {
       dayResolution = gettextCatalog.getString('M/d/yyyy');
       secondResolution = gettextCatalog.getString('M/d/yyyy HH:MM:ss');
     }
-
     switch (resolution) {
       case 'year':
         return this.$filter_('date')(date, yearResolution, utc);
@@ -114,23 +113,17 @@ export class WMSTime extends Time {
     console.assert(wmsTimeProperty.resolution !== undefined);
     if (wmsTimeProperty.mode === 'range') {
       console.assert(times.end !== undefined);
-      return `${this.formatTimeValue(
-        times.start,
-        wmsTimeProperty.resolution,
-        true,
-        opt_toUTC,
-      )}/${this.formatTimeValue(times.end, wmsTimeProperty.resolution, true, opt_toUTC)}`;
+      return `${this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC)}/${this.formatTimeValue(times.end, wmsTimeProperty.resolution, true, opt_toUTC)}`;
     } else {
       return this.formatTimeValue(times.start, wmsTimeProperty.resolution, true, opt_toUTC);
     }
   }
 }
-
+WMSTime.$inject = ['$filter', 'gettextCatalog'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('ngeoWMSTime', [ngeoMiscTime.name]);
 myModule.service('ngeoWMSTime', WMSTime);
-
 export default myModule;

@@ -20,18 +20,15 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
 import ngeoQueryMode from 'ngeo/query/Mode';
 import ngeoQueryModeSelector from 'ngeo/query/ModeSelector';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
-
 import {listen as olEventsListen} from 'ol/events';
 import {always as olEventsConditionAlways} from 'ol/events/condition';
 import olInteractionDraw, {createBox as olInteractionDrawCreateBox} from 'ol/interaction/Draw';
 import olLayerVector from 'ol/layer/Vector';
 import olSourceVector from 'ol/source/Vector';
-
 import ImageLayer from 'ol/layer/Image';
 import TileLayer from 'ol/layer/Tile';
 
@@ -159,7 +156,6 @@ export class QueryController {
     // === Event listeners that uses angular $scope
 
     $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
-
     $scope.$watch(() => {
       let value = null;
       if (this.active) {
@@ -211,7 +207,6 @@ export class QueryController {
           this.listenerKeys_.push(olEventsListen(this.map, 'pointermove', this.handleMapPointerMove_, this));
         }
         break;
-
       case ngeoQueryMode.DRAW_BOX:
         this.map.addLayer(this.vectorLayer_);
         this.map.addInteraction(this.drawBoxInteraction_);
@@ -219,12 +214,11 @@ export class QueryController {
           olEventsListen(
             this.drawBoxInteraction_,
             'drawend',
-            /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawBoxInteractionDrawEnd_),
+            /** @type {import('ol/events').ListenerFunction} */ this.handleDrawBoxInteractionDrawEnd_,
             this,
           ),
         );
         break;
-
       case ngeoQueryMode.DRAW_POLYGON:
         this.map.addLayer(this.vectorLayer_);
         this.map.addInteraction(this.drawPolygonInteraction_);
@@ -232,16 +226,14 @@ export class QueryController {
           olEventsListen(
             this.drawPolygonInteraction_,
             'drawend',
-            /** @type {import('ol/events').ListenerFunction} */ (this.handleDrawPolygonInteractionDrawEnd_),
+            /** @type {import('ol/events').ListenerFunction} */ this.handleDrawPolygonInteractionDrawEnd_,
             this,
           ),
         );
         break;
-
       default:
         break;
     }
-
     this.mode_ = mode;
   }
 
@@ -267,25 +259,20 @@ export class QueryController {
           this.map.getTargetElement().style.cursor = '';
         }
         break;
-
       case ngeoQueryMode.DRAW_BOX:
         this.vectorSource_.clear();
         this.map.removeLayer(this.vectorLayer_);
         this.map.removeInteraction(this.drawBoxInteraction_);
         break;
-
       case ngeoQueryMode.DRAW_POLYGON:
         this.vectorSource_.clear();
         this.map.removeLayer(this.vectorLayer_);
         this.map.removeInteraction(this.drawPolygonInteraction_);
         break;
-
       default:
         break;
     }
-
     ngeoEventsUnlistenByKeys(this.listenerKeys_);
-
     this.mode_ = null;
   }
 
@@ -326,14 +313,11 @@ export class QueryController {
    */
   handleDrawBoxInteractionDrawEnd_(evt) {
     const feature = evt.feature;
-
     const action = this.ngeoQueryModeSelector_.action;
     const extent = feature.getGeometry().getExtent();
     const limit = this.getLimitOption_();
     const map = this.map;
-
     this.ngeoQueryModeSelector_.pending = true;
-
     this.ngeoMapQuerent_
       .issue({
         action,
@@ -358,14 +342,11 @@ export class QueryController {
    */
   handleDrawPolygonInteractionDrawEnd_(evt) {
     const feature = evt.feature;
-
     const action = this.ngeoQueryModeSelector_.action;
     const geometry = feature.getGeometry();
     const limit = this.getLimitOption_();
     const map = this.map;
-
     this.ngeoQueryModeSelector_.pending = true;
-
     this.ngeoMapQuerent_
       .issue({
         action,
@@ -394,13 +375,10 @@ export class QueryController {
       // not a MapBrowserEvent
       return;
     }
-
     const action = this.ngeoQueryModeSelector_.action;
     const coordinate = evt.coordinate;
     const map = this.map;
-
     this.ngeoQueryModeSelector_.pending = true;
-
     this.ngeoMapQuerent_
       .issue({
         action,
@@ -428,7 +406,6 @@ export class QueryController {
       // not a MapBrowserEvent
       return false;
     }
-
     let hit = false;
     this.map.getAllLayers().forEach((layer) => {
       if (layer.get('visible') && !!layer.get('querySourceIds'))
@@ -441,7 +418,7 @@ export class QueryController {
     this.map.getTargetElement().style.cursor = hit ? 'pointer' : '';
   }
 }
-
+QueryController.$inject = ['ngeoMapQuerent', 'ngeoQueryModeSelector', '$scope', 'ngeoQueryOptions'];
 myModule.component('ngeoQuery', {
   bindings: {
     'active': '=',
@@ -450,5 +427,4 @@ myModule.component('ngeoQuery', {
   },
   controller: QueryController,
 });
-
 export default myModule;

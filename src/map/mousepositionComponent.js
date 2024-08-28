@@ -1,3 +1,4 @@
+Controller.$inject = ['$element', '$filter', '$scope', 'gettextCatalog', 'gmfMousePositionOptions'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 import olControlMousePosition from 'ol/control/MousePosition';
-
 import 'bootstrap/js/src/dropdown';
 
 /**
@@ -30,18 +30,19 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfMapMouseposition', [ngeoMiscFilters.name]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/map/mousepositionComponent', require('./mousepositionComponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfMapMousepositionTemplateUrl',
   /**
@@ -62,6 +63,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfMapMousepositionTemplateUrl.$inject = ['$attrs', 'gmfMapMousepositionTemplateUrl'];
 function gmfMapMousepositionTemplateUrl($attrs, gmfMapMousepositionTemplateUrl) {
   return gmfMapMousepositionTemplateUrl($attrs);
 }
@@ -87,7 +89,6 @@ const mapMousepositionComponent = {
   },
   templateUrl: gmfMapMousepositionTemplateUrl,
 };
-
 myModule.component('gmfMouseposition', mapMousepositionComponent);
 
 /**
@@ -195,7 +196,6 @@ Controller.prototype.initOlControl_ = function () {
     args.unshift(coordinates);
     return filter.apply(this, args);
   };
-
   const gettextCatalog = this.gettextCatalog_;
   this.control_ = new olControlMousePosition({
     className: 'gmf-mouseposition-control',
@@ -203,9 +203,7 @@ Controller.prototype.initOlControl_ = function () {
     target: this.$element_.find('.gmf-mouseposition-control-target').get(0),
     placeholder: gettextCatalog.getString('Coordinates'),
   });
-
   this.setProjection(this.projections[0]);
-
   this.map.addControl(this.control_);
 };
 
@@ -219,7 +217,5 @@ Controller.prototype.setProjection = function (projection) {
   this.control_.setProjection(projection.code);
   this.projection = projection;
 };
-
 myModule.controller('gmfMousepositionController', Controller);
-
 export default myModule;

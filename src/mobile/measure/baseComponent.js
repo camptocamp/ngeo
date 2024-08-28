@@ -1,3 +1,4 @@
+MeasueMobileBaseController.$inject = ['$scope', '$filter', 'gettextCatalog'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -68,7 +69,6 @@ export function MeasueMobileBaseController($scope, $filter, gettextCatalog) {
    * @type {boolean}
    */
   this.active = false;
-
   this.scope.$watch(
     () => this.active,
     (newVal) => {
@@ -115,23 +115,19 @@ MeasueMobileBaseController.prototype.init = function () {
   if (!this.measure) {
     throw new Error('Missing measure');
   }
-
   this.measure.setActive(this.active);
   interactionDecoration(this.measure);
-
   const drawInteraction = this.measure.getDrawInteraction();
   if (!(drawInteraction instanceof MobileDraw)) {
     throw new Error('Wrong drawInteraction');
   }
   this.drawInteraction = drawInteraction;
   interactionDecoration(drawInteraction);
-
   Object.defineProperty(this, 'hasPoints', {
     get() {
       return this.drawInteraction.getFeature() !== null;
     },
   });
-
   listen(
     drawInteraction,
     'change:dirty',
@@ -148,7 +144,6 @@ MeasueMobileBaseController.prototype.init = function () {
     },
     this,
   );
-
   listen(
     drawInteraction,
     'change:drawing',
@@ -158,7 +153,6 @@ MeasueMobileBaseController.prototype.init = function () {
     },
     this,
   );
-
   listen(
     drawInteraction,
     'change:valid',
@@ -168,10 +162,7 @@ MeasueMobileBaseController.prototype.init = function () {
     },
     this,
   );
-
   this.map.addInteraction(this.measure);
 };
-
 myModule.controller('gmfMeasueMobileBaseController', MeasueMobileBaseController);
-
 export default myModule;

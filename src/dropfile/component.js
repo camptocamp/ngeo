@@ -54,12 +54,12 @@ const fileDrop = function (gmfExternalDataSourcesManager, gettextCatalog) {
       element.bind('dragover', processDrag_);
       element.bind('dragenter', processDrag_);
       element.bind('dragleave', processDrag_);
-
       element.bind('drop', processDrop_.bind(this, element, gmfExternalDataSourcesManager, gettextCatalog));
     },
   };
 };
-
+fileDrop.$inject = ['gmfExternalDataSourcesManager', 'gettextCatalog'];
+fileDrop.$inject = ['gmfExternalDataSourcesManager', 'gettextCatalog'];
 /**
  * Function to display and hide the 'drop-zone' element, which covers the element
  */
@@ -70,7 +70,6 @@ function processDrag_() {
   }
   if (event.type === 'dragenter' || event.type === 'dragleave') {
     const dropZone = document.getElementById('drop-zone');
-
     if (event.type === 'dragenter') {
       dropZone.classList.remove('drop-zone-off');
       dropZone.classList.add('drop-zone');
@@ -112,7 +111,6 @@ function processDrop_(element, gmfExternalDataSourcesManager, gettextCatalog, ev
     if (!success) {
       const div = document.createElement('DIV');
       div.id = 'file-alert';
-
       const alertElements = document.getElementsByClassName('gmf-app-map-messages');
       if (alertElements && alertElements.length > 0) {
         div.classList.add('gmf-file-alert-contained');
@@ -128,7 +126,6 @@ function processDrop_(element, gmfExternalDataSourcesManager, gettextCatalog, ev
         target: document.querySelector('#file-alert'),
         delay: delay,
       });
-
       setTimeout(function () {
         const el = document.getElementById('file-alert');
         el.remove();
@@ -142,7 +139,5 @@ function processDrop_(element, gmfExternalDataSourcesManager, gettextCatalog, ev
  * @hidden
  */
 const myModule = angular.module('gmfFileDropZone', [gmfExternalDataSourcesManager.name]);
-
 myModule.directive('gmfFileDropZone', fileDrop);
-
 export default myModule;

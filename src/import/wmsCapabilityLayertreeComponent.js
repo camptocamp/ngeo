@@ -20,13 +20,9 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
-
 import ngeoMessagePopup from 'ngeo/message/Popup';
-
 import {getUid as olUtilGetUid} from 'ol/util';
-
 import 'bootstrap/js/src/collapse';
 
 /**
@@ -37,21 +33,22 @@ const myModule = angular.module('gmfWmscapabilitylayertreenode', [
   gmfDatasourceExternalDataSourcesManager.name,
   ngeoMessagePopup.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    $templateCache.put(
-      'gmf/import/wmsCapabilityLayertreeComponent',
-      // @ts-ignore: webpack
-      require('./wmsCapabilityLayertreeComponent.html'),
-    );
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      $templateCache.put(
+        'gmf/import/wmsCapabilityLayertreeComponent',
+        // @ts-ignore: webpack
+        require('./wmsCapabilityLayertreeComponent.html'),
+      );
+    },
+  ],
 );
-
 myModule.value(
   'gmfWmscapabilitylayertreenodeTemplateUrl',
   /**
@@ -73,6 +70,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfWmscapabilitylayertreenodeTemplateUrl.$inject = ['$attrs', 'gmfWmscapabilitylayertreenodeTemplateUrl'];
 function gmfWmscapabilitylayertreenodeTemplateUrl($attrs, gmfWmscapabilitylayertreenodeTemplateUrl) {
   return gmfWmscapabilitylayertreenodeTemplateUrl($attrs);
 }
@@ -141,7 +139,7 @@ export class Controller {
     return olUtilGetUid(layer);
   }
 }
-
+Controller.$inject = ['gmfExternalDataSourcesManager'];
 myModule.component('gmfWmscapabilitylayertreenode', {
   bindings: {
     'capabilities': '<',
@@ -151,5 +149,4 @@ myModule.component('gmfWmscapabilitylayertreenode', {
   controller: Controller,
   templateUrl: gmfWmscapabilitylayertreenodeTemplateUrl,
 });
-
 export default myModule;

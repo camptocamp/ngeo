@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -22,11 +23,8 @@
 import angular from 'angular';
 import './profile.css';
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import gmfProfileModule from 'gmf/profile/module';
 import ngeoMapModule from 'ngeo/map/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
@@ -79,7 +77,6 @@ function MainController($scope) {
       zoom: 3,
     }),
   });
-
   const lineStyle = new olStyleStyle({
     stroke: new olStyleStroke({
       color: '#ffcc33',
@@ -91,7 +88,6 @@ function MainController($scope) {
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/LineString').default>>}
    */
   const features = new olCollection();
-
   const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(lineStyle);
@@ -108,7 +104,6 @@ function MainController($scope) {
     type: 'LineString',
     features: features,
   });
-
   this.drawLine.setActive(false);
   this.map.addInteraction(this.drawLine);
 
@@ -123,33 +118,27 @@ function MainController($scope) {
       this.drawLine.setActive(true);
     }
   };
-
   this.clear_ = function () {
     features.clear(); // For the draw overlay.
     this.profileLine = null; // To reset the profile.
   };
-
-  this.drawLine.on(/** @type {import('ol/Observable').EventTypes} */ ('drawstart'), () => {
+  this.drawLine.on(/** @type {import('ol/Observable').EventTypes} */ 'drawstart', () => {
     this.clear_();
   });
-
   this.drawLine.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('drawend'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('lib/ol.interaction.Draw').DrawEvent} e
-       */
-      (e) => {
-        // Update the profile with the new geometry
-        this.profileLine = /** @type {?import('ol/geom/LineString').default} */ (e.feature.getGeometry());
-        $scope.$digest();
-      }
-    ),
+    /** @type {import('ol/Observable').EventTypes} */ 'drawend',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('lib/ol.interaction.Draw').DrawEvent} e
+     */
+    (e) => {
+      // Update the profile with the new geometry
+      this.profileLine = /** @type {?import('ol/geom/LineString').default} */ e.feature.getGeometry();
+      $scope.$digest();
+    },
   );
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('ngeoProfileOptions', {
   styleDefs: 'svg {background-color: #D3E5D7};',
   linesConfiguration: {
@@ -162,5 +151,4 @@ myModule.constant('ngeoProfileOptions', {
   },
 });
 options(myModule);
-
 export default myModule;

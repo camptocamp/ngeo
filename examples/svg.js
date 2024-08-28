@@ -22,7 +22,6 @@
 import angular from 'angular';
 import './svg.css';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
-
 import Map from 'ol/Map';
 import View from 'ol/View';
 import LayerVector from 'ol/layer/Vector';
@@ -31,7 +30,6 @@ import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
-
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 
@@ -59,7 +57,6 @@ function MainController() {
     }),
   ]);
   source.addFeature(feature1);
-
   const feature2 = new Feature({
     geometry: new Point([2600000, 1200000]),
   });
@@ -74,7 +71,6 @@ function MainController() {
     }),
   ]);
   source.addFeature(feature2);
-
   const feature3 = new Feature({
     geometry: new Point([2601000, 1200000]),
   });
@@ -89,7 +85,6 @@ function MainController() {
     }),
   ]);
   source.addFeature(feature3);
-
   this.map = new Map({
     layers: [
       new LayerVector({
@@ -104,8 +99,6 @@ function MainController() {
     }),
   });
 }
-
 appmodule.controller('MainController', MainController);
 options(appmodule);
-
 export default appmodule;

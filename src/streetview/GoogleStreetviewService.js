@@ -100,14 +100,12 @@ export default class GoogleStreetviewService extends StreetviewService {
       throw new Error('Missing data.location.latLng');
     }
     const panorama = this.panorama_;
-
     if (status === google.maps.StreetViewStatus.OK) {
       this.noDataAtLocation = false;
       panorama.setPosition(data.location.latLng);
     } else {
       this.noDataAtLocation = true;
     }
-
     this.scope_.$apply();
   }
 
@@ -137,7 +135,6 @@ export default class GoogleStreetviewService extends StreetviewService {
    */
   toggleShow(show) {
     this.panorama_.setVisible(show);
-
     if (show) {
       this.panoramaListener_ = google.maps.event.addListener(
         this.panorama_,
@@ -150,3 +147,4 @@ export default class GoogleStreetviewService extends StreetviewService {
     }
   }
 }
+GoogleStreetviewService.$inject = ['$scope', 'map', 'handlePanoramaPositionChange', 'radius', '$element'];

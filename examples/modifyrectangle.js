@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import ngeoInteractionModifyRectangle from 'ngeo/interaction/ModifyRectangle';
-
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
@@ -60,9 +59,7 @@ function MainController() {
       zoom: 4,
     }),
   });
-
   const map = this.map;
-
   const rectangle = new olGeomPolygon([
     [
       [-9e6, 4e6],
@@ -76,7 +73,6 @@ function MainController() {
    * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.features = new olCollection();
-
   this.features.push(
     new olFeature({
       geometry: rectangle,
@@ -107,7 +103,6 @@ function MainController() {
         }),
       }),
     ];
-
     styles.Point = [
       new olStyleStyle({
         image: new olStyleCircle({
@@ -124,7 +119,6 @@ function MainController() {
       }),
     ];
     styles.GeometryCollection = styles.Polygon.concat(styles.Point);
-
     return (
       /**
        * @param {olFeature<import('ol/geom/Geometry').default>|import('ol/render/Feature').default} feature
@@ -139,7 +133,6 @@ function MainController() {
       }
     );
   })();
-
   const vectorSource = new olSourceVector({
     features: this.features,
   });
@@ -155,18 +148,15 @@ function MainController() {
    * @type {import('ngeo/interaction/ModifyRectangle').default}
    */
   this.interaction = new ngeoInteractionModifyRectangle(
-    /** @type {import('ol/interaction/Modify').Options} */ ({
+    /** @type {import('ol/interaction/Modify').Options} */ {
       features: this.features,
       style: style,
-    }),
+    },
   );
-
   const interaction = this.interaction;
   map.addInteraction(interaction);
   interaction.setActive(true);
 }
-
 appmodule.controller('MainController', MainController);
 options(appmodule);
-
 export default module;

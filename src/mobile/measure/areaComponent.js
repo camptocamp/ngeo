@@ -1,3 +1,4 @@
+mobileMeasureAreaComponent.$inject = ['gmfMobileMeasureAreaTemplateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -30,7 +31,6 @@ import {buildStyle} from 'ngeo/options';
  * @hidden
  */
 const myModule = angular.module('gmfMobileMeasureArea', [ngeoMiscFilters.name]);
-
 myModule.value(
   'gmfMobileMeasureAreaTemplateUrl',
   /**
@@ -43,16 +43,18 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/measure/areaComponent';
   },
 );
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/measure/areaComponent', require('./baseComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/measure/areaComponent', require('./baseComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -99,7 +101,6 @@ function mobileMeasureAreaComponent(gmfMobileMeasureAreaTemplateUrl) {
     },
   };
 }
-
 myModule.directive('gmfMobileMeasurearea', mobileMeasureAreaComponent);
 
 /**
@@ -134,7 +135,6 @@ export class Controller extends MeasueMobileBaseController {
       precision: this.options.precision || 2,
       sketchStyle: buildStyle(this.options.sketchStyle),
     });
-
     super.init();
   }
 
@@ -175,7 +175,6 @@ export class Controller extends MeasueMobileBaseController {
     this.active = false;
   }
 }
-
+Controller.$inject = ['$scope', '$filter', 'gettextCatalog', 'gmfMobileMeasureAreaOptions'];
 myModule.controller('GmfMobileMeasureAreaController', Controller);
-
 export default myModule;

@@ -44,18 +44,19 @@ const myModule = angular.module('ngeoRoutingFeatureComponent', [
   ngeoRoutingNominatimService.name,
   ngeoRoutingNominatimInputComponent.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/routing/routingfeature', require('./routingfeature.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoRoutingFeatureTemplateUrl',
   /**
@@ -76,6 +77,7 @@ myModule.value(
  * @private
  * @hidden
  */
+ngeoRoutingFeatureTemplateUrl.$inject = ['$attrs', 'ngeoRoutingFeatureTemplateUrl'];
 function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
   return ngeoRoutingFeatureTemplateUrl($attrs);
 }
@@ -222,7 +224,6 @@ export class Controller {
      */
     this.errorMessage = '';
   }
-
   $onInit() {
     if (!this.map) {
       return;
@@ -232,21 +233,18 @@ export class Controller {
     // setup modify interaction
     this.modifyFeature_.setActive(true);
     this.map.addInteraction(this.modifyFeature_);
-
     this.modifyFeature_.on(
-      /** @type {import('ol/Observable').EventTypes} */ ('modifyend'),
-      /** @type {function(?): ?} */ (
-        /**
-         * @param {import('ol/interaction/Modify').ModifyEvent} event
-         */
-        (event) => {
-          const feature = event.features.getArray()[0];
-          this.vectorSource_.clear();
-          this.snapFeature_(/** @type {olFeature<import('ol/geom/Point').default>} */ (feature));
-        }
-      ),
+      /** @type {import('ol/Observable').EventTypes} */ 'modifyend',
+      /** @type {function(?): ?} */
+      /**
+       * @param {import('ol/interaction/Modify').ModifyEvent} event
+       */
+      (event) => {
+        const feature = event.features.getArray()[0];
+        this.vectorSource_.clear();
+        this.snapFeature_(/** @type {olFeature<import('ol/geom/Point').default>} */ feature);
+      },
     );
-
     this.scope_.$watch(
       () => this.feature,
       (newVal, oldVal) => {
@@ -282,34 +280,29 @@ export class Controller {
     if (this.draw_) {
       this.map.removeInteraction(this.draw_);
     }
-
     this.draw_ = new olInteractionDraw({
       features: this.vectorFeatures_,
       type: 'Point',
     });
-
-    this.draw_.on(/** @type {import('ol/Observable').EventTypes} */ ('drawstart'), () => {
+    this.draw_.on(/** @type {import('ol/Observable').EventTypes} */ 'drawstart', () => {
       if (this.feature) {
         this.vectorSource_.removeFeature(this.feature);
       }
     });
-
     this.draw_.on(
-      /** @type {import('ol/Observable').EventTypes} */ ('drawend'),
-      /** @type {function(?): ?} */ (
-        /**
-         * @param {import('lib/ol.interaction.Draw').DrawEvent} event
-         */
-        (event) => {
-          if (this.draw_ && this.map) {
-            this.map.removeInteraction(this.draw_);
-          }
-          this.snapFeature_(/** @type {olFeature<import('ol/geom/Point').default>} */ (event.feature));
-          this.modifyFeature_.setActive(true);
+      /** @type {import('ol/Observable').EventTypes} */ 'drawend',
+      /** @type {function(?): ?} */
+      /**
+       * @param {import('lib/ol.interaction.Draw').DrawEvent} event
+       */
+      (event) => {
+        if (this.draw_ && this.map) {
+          this.map.removeInteraction(this.draw_);
         }
-      ),
+        this.snapFeature_(/** @type {olFeature<import('ol/geom/Point').default>} */ event.feature);
+        this.modifyFeature_.setActive(true);
+      },
     );
-
     this.modifyFeature_.setActive(false);
     this.map.addInteraction(this.draw_);
   }
@@ -327,20 +320,19 @@ export class Controller {
     if (label === '') {
       label = transformedCoordinate.join('/');
     }
-    this.feature = /** @type {?olFeature<import('ol/geom/Geometry').default>} */ (
+    this.feature =
+      /** @type {?olFeature<import('ol/geom/Geometry').default>} */
       new olFeature({
         geometry: new olGeomPoint(transformedCoordinate),
         name: label,
-      })
-    );
+      });
   }
-
   onFeatureChange_() {
     if (!this.feature) {
       return;
     }
     // Update label
-    this.featureLabel = /** @type {string} */ (this.feature.get('name') || '');
+    this.featureLabel = /** @type {string} */ this.feature.get('name') || '';
 
     // Update vector source
     this.vectorSource_.clear();
@@ -364,9 +356,9 @@ export class Controller {
     const coordinate = selected.coordinate.map(parseFloat);
     const label = selected.label;
     this.setFeature_(coordinate, label);
-    const newCoordinates = /** @type {import('ol/geom/Point').default} */ (
-      this.feature.getGeometry()
-    ).getCoordinates();
+    const newCoordinates = /** @type {import('ol/geom/Point').default} */ this.feature
+      .getGeometry()
+      .getCoordinates();
     this.map.getView().setCenter(newCoordinates);
   }
 
@@ -403,7 +395,6 @@ export class Controller {
       this.errorMessage = 'Error: nominatim server not responding.';
       console.log(resp);
     };
-
     this.$q_.when(this.ngeoNominatimService_.reverse(coord, config)).then(onSuccess, onError);
   }
 
@@ -424,7 +415,7 @@ export class Controller {
     return olProj.toLonLat(coords, projection);
   }
 }
-
+Controller.$inject = ['$scope', '$timeout', '$q', 'ngeoNominatimService'];
 /**
  * Provides a text input and draw interaction to allow a user to create and modify a ol.Feature
  * (point geometry).
@@ -465,7 +456,5 @@ const routingFeatureComponent = {
   },
   templateUrl: ngeoRoutingFeatureTemplateUrl,
 };
-
 myModule.component('ngeoRoutingFeature', routingFeatureComponent);
-
 export default myModule;

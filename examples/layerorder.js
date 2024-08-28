@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -23,9 +24,7 @@ import './layerorder.css';
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-
 import ngeoMiscSortableComponent from 'ngeo/misc/sortableComponent';
-
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
@@ -51,7 +50,6 @@ function MainController($scope) {
     }),
   });
   asitvd.set('name', 'asitvd');
-
   const boundaries = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
@@ -63,7 +61,6 @@ function MainController($scope) {
     }),
   });
   boundaries.set('name', 'Boundaries');
-
   const waterBodies = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
@@ -75,7 +72,6 @@ function MainController($scope) {
     }),
   });
   waterBodies.set('name', 'Water bodies');
-
   const cities = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
@@ -100,9 +96,7 @@ function MainController($scope) {
       zoom: 9,
     }),
   });
-
   const map = this.map;
-
   this.roads_ = new olLayerImage({
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
@@ -120,9 +114,7 @@ function MainController($scope) {
    * @constant
    */
   this.selectedLayers = [];
-
   const selectedLayers = this.selectedLayers;
-
   ngeoMiscSyncArrays(map.getLayers().getArray(), selectedLayers, true, $scope, layerFilter);
 
   // watch any change on layers array to refresh the map
@@ -163,8 +155,6 @@ MainController.prototype.toggleRoadsLayer = function (val) {
     }
   }
 };
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

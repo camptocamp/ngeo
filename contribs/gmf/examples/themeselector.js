@@ -1,3 +1,4 @@
+MainController.$inject = ['$http', 'gmfThemes', 'gmfThemeManager'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import angular from 'angular';
 import './themeselector.css';
 import gmfThemeModule from 'gmf/theme/module';
-
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import options from './options';
 
@@ -49,11 +49,8 @@ function MainController($http, gmfThemes, gmfThemeManager) {
    * @type {import('gmf/theme/Manager').ThemeManagerService}
    */
   this.manager = gmfThemeManager;
-
   gmfThemes.loadThemes();
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

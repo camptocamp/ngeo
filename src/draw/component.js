@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import ngeoDrawController from 'ngeo/draw/Controller';
 import ngeoDrawPoint from 'ngeo/draw/point';
 import ngeoDrawRectangle from 'ngeo/draw/rectangle';
@@ -133,7 +132,5 @@ function drawComponent() {
     },
   };
 }
-
 myModule.directive('ngeoDrawfeature', drawComponent);
-
 export default myModule;

@@ -23,7 +23,6 @@ import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events';
 import RenderEvent from 'ol/render/Event';
 import {getRenderPixel} from 'ol/render.js';
-
 import ResizeObserver from 'resize-observer-polyfill';
 import 'jquery-ui/ui/widgets/draggable';
 
@@ -32,18 +31,19 @@ import 'jquery-ui/ui/widgets/draggable';
  * @hidden
  */
 const myModule = angular.module('ngeoMapswipe', []);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/src/map/swipe', require('./swipe.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/src/map/swipe', require('./swipe.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoMapswipeTemplateUrl',
   /**
@@ -64,6 +64,7 @@ myModule.value(
  * @private
  * @hidden
  */
+ngeoMapswipeTemplateUrl.$inject = ['$attrs', 'ngeoMapswipeTemplateUrl'];
 function ngeoMapswipeTemplateUrl($attrs, ngeoMapswipeTemplateUrl) {
   return ngeoMapswipeTemplateUrl($attrs);
 }
@@ -127,13 +128,11 @@ export class SwipeController {
    */
   $onInit() {
     const view = this.map.getView();
-
     this.swipeValue = this.swipeValue !== undefined ? this.swipeValue : 0.5;
     this.listenerKeys_.push(listen(this.layer, 'prerender', this.handleLayerPrerender_, this));
     this.listenerKeys_.push(listen(this.layer, 'postrender', this.handleLayerPostrender_, this));
     this.listenerKeys_.push(listen(this.layer, 'change:visible', this.handleLayerVisibleChange_, this));
     this.listenerKeys_.push(listen(view, 'change:rotation', this.handleViewRotationChange_, this));
-
     const halfDraggableWidth = this.draggableElement_.width() / 2;
 
     // When beginning to swipe a layer, reset the view rotation
@@ -141,16 +140,13 @@ export class SwipeController {
     if (rotation) {
       view.setRotation(0);
     }
-
     this.draggableElement_.draggable({
       axis: 'x',
       containment: 'parent',
       drag: () => {
         const parentWidth = this.draggableElement_.parent().width();
         const position = this.draggableElement_.position().left + halfDraggableWidth;
-
         this.swipeValue = position / parentWidth;
-
         this.map.render();
       },
     });
@@ -183,7 +179,6 @@ export class SwipeController {
     if (!ctx) {
       return;
     }
-
     const width = ctx.canvas.width * this.swipeValue;
     const height = ctx.canvas.height;
     if (ctx instanceof CanvasRenderingContext2D) {
@@ -259,7 +254,6 @@ export class SwipeController {
       this.deactivate();
     }
   }
-
   $onDestroy() {
     this.listenerKeys_.forEach(unlistenByKey);
     this.listenerKeys_.length = 0;
@@ -267,7 +261,7 @@ export class SwipeController {
     this.resizeObserver_.disconnect();
   }
 }
-
+SwipeController.$inject = ['$scope', '$element'];
 myModule.component('ngeoMapswipe', {
   controller: SwipeController,
   bindings: {
@@ -277,5 +271,4 @@ myModule.component('ngeoMapswipe', {
   },
   templateUrl: ngeoMapswipeTemplateUrl,
 });
-
 export default myModule;

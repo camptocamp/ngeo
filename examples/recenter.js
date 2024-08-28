@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import olMap from 'ol/Map';
-
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
@@ -51,8 +50,6 @@ function MainController() {
     }),
   });
 }
-
 appmodule.controller('MainController', MainController);
 options(appmodule);
-
 export default module;

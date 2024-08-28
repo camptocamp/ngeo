@@ -162,8 +162,8 @@ export class ThemesService extends olEventsEventTarget {
     if (this.bgLayerPromise_) {
       return this.bgLayerPromise_;
     }
-
-    this.bgLayerPromise_ = /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ (
+    this.bgLayerPromise_ =
+      /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */
       this.promise_.then(this.bgLayerPromiseSuccessFn_.bind(this)).then((values) => {
         /** @type {import('ol/layer/Base').default[]} */
         const layers = [];
@@ -181,9 +181,7 @@ export class ThemesService extends olEventsEventTarget {
           }
         });
         return layers;
-      })
-    );
-
+      });
     return this.bgLayerPromise_;
   }
 
@@ -193,7 +191,7 @@ export class ThemesService extends olEventsEventTarget {
    */
   getLayerGroupIds_(item, array) {
     array.push(olUtilGetUid(item));
-    const groupItem = /** @type {import('gmf/themes').GmfGroup} */ (item);
+    const groupItem = /** @type {import('gmf/themes').GmfGroup} */ item;
     const children = groupItem.children || [];
     children.forEach((child) => {
       this.getLayerGroupIds_(child, array);
@@ -225,17 +223,17 @@ export class ThemesService extends olEventsEventTarget {
    */
   layerLayerCreationFn_(ogcServers, gmfLayer) {
     if (gmfLayer.type === 'WMTS') {
-      const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ (/** @type {any} */ (gmfLayer));
+      const gmfLayerWMTS = /** @type {import('gmf/themes').GmfLayerWMTS} */ /** @type {any} */ gmfLayer;
       return this.layerLayerWMTSCreationFn_(gmfLayerWMTS);
     }
     if (gmfLayer.type === 'WMS') {
-      const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (gmfLayer));
+      const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ gmfLayer;
       return this.layerLayerWMSCreationFn_(ogcServers, gmfLayerWMS);
     }
     if (gmfLayer.type === 'VectorTiles') {
-      const gmfLayerVectorTiles = /** @type {import('gmf/themes').GmfLayerVectorTiles} */ (
-        /** @type {any} */ (gmfLayer)
-      );
+      const gmfLayerVectorTiles =
+        /** @type {import('gmf/themes').GmfLayerVectorTiles} */
+        /** @type {any} */ gmfLayer;
       return this.layerLayerVectorTilesCreationFn_(gmfLayerVectorTiles);
     }
     throw new Error(`Unsupported type: ${gmfLayer.type}`);
@@ -296,7 +294,9 @@ export class ThemesService extends olEventsEventTarget {
 
     // Manage WMS styles
     /** @type {Object<string, string>} */
-    const opt_params = {STYLES: gmfLayerWMS.style};
+    const opt_params = {
+      STYLES: gmfLayerWMS.style,
+    };
     if (gmfLayerWMS.dimensions) {
       for (const [key, value] of Object.entries(gmfLayerWMS.dimensions)) {
         if (value !== null) {
@@ -304,7 +304,6 @@ export class ThemesService extends olEventsEventTarget {
         }
       }
     }
-
     return this.setLayerProperties_(
       gmfLayerWMS,
       this.layerHelper_.createBasicWMSLayer(
@@ -312,7 +311,8 @@ export class ThemesService extends olEventsEventTarget {
         gmfLayerWMS.layers || '',
         server.imageType,
         server.type,
-        undefined, // time
+        undefined,
+        // time
         opt_params,
         server.credential ? 'use-credentials' : 'anonymous',
         Object.assign({}, this.gmfWMSSourceOptions_, gmfLayerWMS.metadata.customOpenLayersOptions),
@@ -367,7 +367,7 @@ export class ThemesService extends olEventsEventTarget {
     // The order of insertion in OL3 is the contrary of the theme
     const orderedChildren = item.children.map((x) => x).reverse();
     const promises = orderedChildren.map((item) =>
-      this.layerLayerCreationFn_(ogcServers, /** @type {import('gmf/themes').GmfLayer} */ (item)),
+      this.layerLayerCreationFn_(ogcServers, /** @type {import('gmf/themes').GmfLayer} */ item),
     );
     return this.$q_.all(promises).then((layers) => {
       let collection;
@@ -387,22 +387,21 @@ export class ThemesService extends olEventsEventTarget {
    * @returns {angular.IPromise<import('ol/layer/Base').default[]>} Promise.
    */
   bgLayerPromiseSuccessFn_(data) {
-    const promises = /** @type {angular.IPromise<unknown>} */ (
-      /** @type {*} */ (
-        data.background_layers.map((item) => {
-          const itemLayer = /** @type {import('gmf/themes').GmfLayer} */ (item);
-          const itemGroup = /** @type {import('gmf/themes').GmfGroup} */ (item);
-          if (['WMS', 'WMTS', 'VectorTiles'].includes(itemLayer.type)) {
-            return this.layerLayerCreationFn_(data.ogcServers, itemLayer);
-          } else if (itemGroup.children) {
-            // group of layers
-            return this.layerGroupCreationFn_(data.ogcServers, itemGroup);
-          } else {
-            return undefined;
-          }
-        })
-      )
-    );
+    const promises =
+      /** @type {angular.IPromise<unknown>} */
+      /** @type {*} */
+      data.background_layers.map((item) => {
+        const itemLayer = /** @type {import('gmf/themes').GmfLayer} */ item;
+        const itemGroup = /** @type {import('gmf/themes').GmfGroup} */ item;
+        if (['WMS', 'WMTS', 'VectorTiles'].includes(itemLayer.type)) {
+          return this.layerLayerCreationFn_(data.ogcServers, itemLayer);
+        } else if (itemGroup.children) {
+          // group of layers
+          return this.layerGroupCreationFn_(data.ogcServers, itemGroup);
+        } else {
+          return undefined;
+        }
+      });
     return /** @type {angular.IPromise<import('ol/layer/Base').default[]>} */ /** @type {*} */ this.$q_.all(
       promises,
     );
@@ -420,7 +419,9 @@ export class ThemesService extends olEventsEventTarget {
       source: new VectorSource(),
     });
     layer.set('label', 'blank');
-    layer.set('metadata', {thumbnail: ''});
+    layer.set('metadata', {
+      thumbnail: '',
+    });
     return layer;
   }
 
@@ -523,12 +524,11 @@ export class ThemesService extends olEventsEventTarget {
    * @returns {boolean} Editable layers?
    */
   hasNodeEditableLayers_(node) {
-    const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (node);
-    const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ (node);
+    const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ node;
+    const gmfLayer = /** @type {import('gmf/themes').GmfLayer} */ node;
     if (gmfLayer.editable) {
       return true;
     }
-
     let hasEditableLayers = false;
     const children = gmfGroup.children;
     if (children && children.length) {
@@ -545,7 +545,6 @@ export class ThemesService extends olEventsEventTarget {
     if (!this.treeUrl_) {
       throw new Error('gmfTreeUrl should be defined.');
     }
-
     if (this.loaded) {
       // reload the themes
       this.deferred_ = this.$q_.defer();
@@ -553,7 +552,6 @@ export class ThemesService extends olEventsEventTarget {
       this.bgLayerPromise_ = null;
       this.loaded = false;
     }
-
     this.$http_
       .get(this.treeUrl_, {
         params:
@@ -579,7 +577,6 @@ export class ThemesService extends olEventsEventTarget {
           Object.values(response.data.ogcServers).forEach((server) => {
             server.geometryName = server.geometryName || 'geometry';
           });
-
           this.deferred_.resolve(response.data);
           this.dispatchEvent('change');
           this.loaded = true;
@@ -590,7 +587,18 @@ export class ThemesService extends olEventsEventTarget {
       );
   }
 }
-
+ThemesService.$inject = [
+  '$http',
+  '$injector',
+  '$q',
+  'ngeoLayerHelper',
+  'gettextCatalog',
+  'gmfThemesOptions',
+  'gmfTreeUrl',
+  'gmfVectorTilesUrl',
+  'gmfVectorTilesOptions',
+  'gmfWMSSourceOptions',
+];
 /**
  * @param {import('gmf/themes').GmfTheme[]} themes Array of "theme" objects.
  * @param {string} name The layer name.
@@ -672,10 +680,10 @@ export function findThemeByName(themes, themeName) {
  * @hidden
  */
 function getFlatInternalNodes(node, nodes) {
-  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ (node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfGroup} */ node;
   const children = gmfGroup.children;
   if (children !== undefined) {
-    nodes.push(/** @type {import('gmf/themes').GmfGroup} */ (node));
+    nodes.push(/** @type {import('gmf/themes').GmfGroup} */ node);
     for (const child of children) {
       getFlatInternalNodes(child, nodes);
     }
@@ -690,14 +698,14 @@ function getFlatInternalNodes(node, nodes) {
  * @hidden
  */
 export function getFlatNodes(node, nodes) {
-  const gmfGroup = /** @type {import('gmf/themes').GmfTheme|import('gmf/themes').GmfGroup} */ (node);
+  const gmfGroup = /** @type {import('gmf/themes').GmfTheme|import('gmf/themes').GmfGroup} */ node;
   const children = gmfGroup.children;
   if (children !== undefined) {
     for (const child of children) {
       getFlatNodes(child, nodes);
     }
   } else {
-    nodes.push(/** @type {import('gmf/themes').GmfLayer} */ (node));
+    nodes.push(/** @type {import('gmf/themes').GmfLayer} */ node);
   }
 }
 
@@ -728,7 +736,7 @@ export function getSnappingConfig(node) {
  */
 export function getNodeMaxResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
-  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ gmfLayer;
   let maxResolution = gmfLayerWMS.maxResolutionHint;
   if (maxResolution === undefined && metadata !== undefined) {
     maxResolution = metadata.maxResolution;
@@ -746,7 +754,7 @@ export function getNodeMaxResolution(gmfLayer) {
  */
 export function getNodeMinResolution(gmfLayer) {
   const metadata = gmfLayer.metadata;
-  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ (gmfLayer);
+  const gmfLayerWMS = /** @type {import('gmf/themes').GmfLayerWMS} */ gmfLayer;
   let minResolution = gmfLayerWMS.minResolutionHint;
   if (minResolution === undefined && metadata !== undefined) {
     minResolution = metadata.minResolution;
@@ -771,7 +779,5 @@ export const ThemeNodeType = {
  * @hidden
  */
 const myModule = angular.module('gmfThemes', [ngeoMapLayerHelper.name]);
-
 myModule.service('gmfThemes', ThemesService);
-
 export default myModule;

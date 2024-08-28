@@ -22,7 +22,6 @@
 import angular from 'angular';
 import './share.css';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
-
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 import options from './options';
 
@@ -55,8 +54,6 @@ function MainController() {
    */
   this.modalShareShown = false;
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

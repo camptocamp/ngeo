@@ -26,18 +26,19 @@ import angular from 'angular';
  * @hidden
  */
 const myModule = angular.module('gmfHeader', []);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/header/component', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/header/component', require('./component.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfHeaderTemplateUrl',
   /**
@@ -61,6 +62,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfHeaderTemplateUrl.$inject = ['$element', '$attrs', 'gmfHeaderTemplateUrl'];
 function gmfHeaderTemplateUrl($element, $attrs, gmfHeaderTemplateUrl) {
   return gmfHeaderTemplateUrl($element, $attrs);
 }
@@ -76,7 +78,5 @@ function gmfHeaderTemplateUrl($element, $attrs, gmfHeaderTemplateUrl) {
 const headerComponent = {
   templateUrl: gmfHeaderTemplateUrl,
 };
-
 myModule.component('gmfHeader', headerComponent);
-
 export default myModule;

@@ -63,7 +63,6 @@ Time.prototype.getTime = function (date, defaultValue = null) {
 Time.prototype.getOptions = function (time) {
   const minDate = this.createDate(time.minValue);
   const maxDate = this.createDate(time.maxValue);
-
   const minDefaultDate = this.createDate(time.minDefValue, minDate);
   const maxDefaultDate = this.createDate(time.maxDefValue, maxDate);
   if (!minDefaultDate) {
@@ -72,10 +71,8 @@ Time.prototype.getOptions = function (time) {
   if (!maxDefaultDate) {
     throw new Error('Missing maxDefaultDate');
   }
-
   const minTime = this.getTime(minDate);
   const maxTime = this.getTime(maxDate);
-
   const minDefaultTime = this.getTime(minDefaultDate);
   const maxDefaultTime = this.getTime(maxDefaultDate);
   if (!minDefaultTime) {
@@ -89,7 +86,6 @@ Time.prototype.getOptions = function (time) {
     }
     defaultValues = [minDefaultTime, maxDefaultTime];
   }
-
   return {
     minDate: minTime,
     maxDate: maxTime,
@@ -113,5 +109,4 @@ Time.prototype.getUTCDate = function (localDate) {
  */
 const myModule = angular.module('ngeoTime', []);
 myModule.service('ngeoTime', Time);
-
 export default myModule;

@@ -23,7 +23,6 @@ import './permalink.css';
 import angular from 'angular';
 import gmfMapModule from 'gmf/map/module';
 import gmfMapComponent from 'gmf/map/component';
-
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -59,8 +58,6 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

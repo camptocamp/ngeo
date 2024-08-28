@@ -1,3 +1,5 @@
+MainController.$inject = ['$scope'];
+BackgroundlayerController.$inject = ['$http', 'ngeoBackgroundLayerMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -23,7 +25,6 @@ import './backgroundlayer.css';
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
 import {MAPSERVER_PROXY} from './url';
-
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -37,16 +38,18 @@ import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', gmfMapComponent.name]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('partials/backgroundlayer', require('./partials/backgroundlayer.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('partials/backgroundlayer', require('./partials/backgroundlayer.html'));
+    },
+  ],
 );
 
 /**
@@ -69,7 +72,6 @@ const backgroundlayerComponent = {
   templateUrl: 'partials/backgroundlayer',
   controller: 'AppBackgroundlayerController',
 };
-
 myModule.component('appBackgroundlayer', backgroundlayerComponent);
 
 /**
@@ -94,7 +96,6 @@ function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
    * @type {import('gmf/themes').GmfLayer}
    */
   this.bgLayer = null;
-
   $http.get('data/backgroundlayers.json').then((resp) => {
     this.bgLayers = resp.data;
     if (!this.bgLayers) {
@@ -136,13 +137,13 @@ BackgroundlayerController.prototype.getLayer_ = function (layerName) {
     layer.set('label', 'blank');
     return layer;
   }
-
   const source = new ngeoSourceAsitVD({
     layer: layerName,
   });
-  return new olLayerTile({source});
+  return new olLayerTile({
+    source,
+  });
 };
-
 myModule.controller('AppBackgroundlayerController', BackgroundlayerController);
 
 /**
@@ -162,10 +163,11 @@ function MainController($scope) {
       zoom: 3,
     }),
   });
-
   const source = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
-    params: {'LAYERS': 'default'},
+    params: {
+      'LAYERS': 'default',
+    },
     serverType: 'mapserver',
   });
   /**
@@ -176,12 +178,9 @@ function MainController($scope) {
   const overlay = new olLayerImage({
     source,
   });
-
   this.map.addLayer(overlay);
 }
-
 myModule.controller('MainController', MainController);
 myModule.constant('ngeoTilesPreloadingLimit', 0);
 options(myModule);
-
 export default myModule;

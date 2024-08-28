@@ -1,3 +1,4 @@
+LayertreeController.$inject = ['$scope', '$rootScope', '$attrs'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -45,7 +46,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    * @type {boolean}
    */
   this.isRoot = isRoot;
-
   const nodeExpr = $attrs.gmfLayertreeNode;
 
   /**
@@ -62,7 +62,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    * @type {string}
    */
   this.state_ = 'off';
-
   let node;
   if (isRoot) {
     $scope.$watch(nodeExpr, (newVal, oldVal) => {
@@ -75,7 +74,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    * @type {import('gmf/themes').GmfGroup|import('gmf/themes').GmfLayer}
    */
   this.node = node;
-
   const mapExpr = $attrs.gmfLayertreeNodeMap;
   /**
    * @type {import('ol/Map').default}
@@ -93,11 +91,9 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    * @type {import('ngeo/layertree/Controller').LayertreeController[]}
    */
   this.children = [];
-
   if (this.parent) {
     this.parent.children.push(this);
   }
-
   $scope.$on('$destroy', () => {
     if (this.parent) {
       const index = this.parent.children.indexOf(this);
@@ -128,7 +124,6 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    * @type {import('ol/Map').default}
    */
   this.map = map;
-
   let nodelayerExpr = $attrs.gmfLayertreeNodeNodelayer;
   if (nodelayerExpr === undefined) {
     const nodelayerexprExpr = $attrs.gmfLayertreeNodeNodelayerexpr;
@@ -149,7 +144,10 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    */
   this.layer = null;
   if (!isRoot) {
-    const layer = $scope.$eval(nodelayerExpr, {'treeCtrl': this}) || null;
+    const layer =
+      $scope.$eval(nodelayerExpr, {
+        'treeCtrl': this,
+      }) || null;
     if (layer) {
       console.assert(layer instanceof olLayerLayer || layer instanceof olLayerGroup);
       this.layer = layer;
@@ -160,11 +158,9 @@ export function LayertreeController($scope, $rootScope, $attrs) {
    * @type {?import('ngeo/datasource/DataSource').default}
    */
   this.dataSource_ = null;
-
   if (this.layer) {
     layerLoading(this.layer, $scope);
     layerDecoration(this.layer);
-
     listen(
       this.layer,
       'change:opacity',
@@ -176,13 +172,11 @@ export function LayertreeController($scope, $rootScope, $attrs) {
       },
     );
   }
-
   let listenersExpr = $attrs.gmfLayertreeNodeListeners;
   if (listenersExpr === undefined) {
     const listenersexprExpr = $attrs.gmfLayertreeNodeListenersexpr;
     listenersExpr = $scope.$eval(listenersexprExpr);
   }
-
   if (listenersExpr !== undefined) {
     console.assert(typeof listenersExpr == 'string');
   }
@@ -194,7 +188,10 @@ export function LayertreeController($scope, $rootScope, $attrs) {
 
   // Eval function to bind functions to this tree's events.
   if (listenersExpr) {
-    $scope.$eval(listenersExpr, {'treeScope': $scope, 'treeCtrl': this});
+    $scope.$eval(listenersExpr, {
+      'treeScope': $scope,
+      'treeCtrl': this,
+    });
   }
 
   // @ts-ignore: scope ...
@@ -227,9 +224,7 @@ LayertreeController.prototype.setState = function (state, opt_broadcast) {
   if (this.parent) {
     this.parent.refreshState(this, opt_broadcast);
   }
-
   const firstParents = this.isRoot ? this.children : [getFirstParentTree(this)];
-
   if (opt_broadcast === undefined || opt_broadcast) {
     firstParents.forEach((firstParent) => {
       this.rootScope_.$broadcast('ngeo-layertree-state', this, firstParent);
@@ -244,7 +239,6 @@ LayertreeController.prototype.setState = function (state, opt_broadcast) {
 LayertreeController.prototype.setStateInternal_ = function (state) {
   // Set the state
   this.state_ = state === 'on' ? 'on' : 'off';
-
   if (this.state_ === 'on' && this.node.metadata && this.node.metadata.exclusiveGroup) {
     let firstChild;
     for (const child of this.children) {
@@ -273,7 +267,7 @@ LayertreeController.prototype.setStateInternal_ = function (state) {
  * @public
  */
 LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcast) {
-  const group = /** @type {import('gmf/themes').GmfGroup} */ (this.node);
+  const group = /** @type {import('gmf/themes').GmfGroup} */ this.node;
   if (
     group.children &&
     opt_onChild &&
@@ -288,7 +282,6 @@ LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcas
       }
     });
   }
-
   const newState = this.getCalculateState();
   if (this.state_ === newState) {
     return;
@@ -305,7 +298,7 @@ LayertreeController.prototype.refreshState = function (opt_onChild, opt_broadcas
  * @returns {string} 'on', 'off', 'indeterminate', or '' if the children are not initialized.
  */
 LayertreeController.prototype.getCalculateState = function () {
-  const group = /** @type {import('gmf/themes').GmfGroup} */ (this.node);
+  const group = /** @type {import('gmf/themes').GmfGroup} */ this.node;
   if (group.children === undefined) {
     return this.state_;
   }
@@ -403,12 +396,13 @@ export const LayertreeVisitorDecision = {
 LayertreeController.prototype.traverseDepthFirst = function (visitor) {
   // First visit the current controller
   const decision = visitor(this) || LayertreeVisitorDecision.DESCEND;
-
   switch (decision) {
     case LayertreeVisitorDecision.STOP:
-      return true; // stop traversing
+      return true;
+    // stop traversing
     case LayertreeVisitorDecision.SKIP:
-      return false; // continue traversing but skip current branch
+      return false;
+    // continue traversing but skip current branch
     case LayertreeVisitorDecision.DESCEND:
       for (const child of this.children) {
         const stop = child.traverseDepthFirst(visitor);
@@ -416,7 +410,8 @@ LayertreeController.prototype.traverseDepthFirst = function (visitor) {
           return true; // stop traversing
         }
       }
-      return false; // continue traversing
+      return false;
+    // continue traversing
     default:
       throw new Error('Unhandled case');
   }
@@ -428,5 +423,4 @@ LayertreeController.prototype.traverseDepthFirst = function (visitor) {
  */
 const myModule = angular.module('ngeoLayertreeController', []);
 myModule.controller('ngeoLayertreeController', LayertreeController);
-
 export default myModule;

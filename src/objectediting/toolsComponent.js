@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', 'ngeoToolActivateMgr', 'gmfObjectEditingToolsOptions'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,17 +21,11 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import gmfObjecteditingGetWMSFeatureComponent from 'gmf/objectediting/getWMSFeatureComponent';
-
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
-
 import ngeoEditingCreateregularpolygonfromclickComponent from 'ngeo/editing/createregularpolygonfromclickComponent';
-
 import ngeoGeometryType from 'ngeo/GeometryType';
-
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
-
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import {getUid as olUtilGetUid} from 'ol/util';
@@ -61,16 +56,18 @@ const myModule = angular.module('gmfObjecteditingToolsComponent', [
   ngeoMiscBtnComponent.name,
   ngeoMiscToolActivateMgr.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -134,7 +131,6 @@ function objectEditingToolsComponent() {
     templateUrl: 'gmf/objectediting/toolsComponent',
   };
 }
-
 myModule.directive('gmfObjecteditingtools', objectEditingToolsComponent);
 
 /**
@@ -235,14 +231,12 @@ export function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOpt
    * @type {boolean}
    */
   this.drawActive = false;
-
   this.registerTool_('drawActive', ObjecteditingProcessType.ADD);
 
   /**
    * @type {boolean}
    */
   this.eraseActive = false;
-
   this.registerTool_('eraseActive', ObjecteditingProcessType.DELETE);
 
   /**
@@ -262,11 +256,9 @@ export function Controller($scope, ngeoToolActivateMgr, gmfObjectEditingToolsOpt
    */
   this.triangleRadius =
     oeToolsOptions.regularPolygonRadius !== undefined ? oeToolsOptions.regularPolygonRadius : 100;
-
   this.registerTool_('drawTriangleActive', ObjecteditingProcessType.ADD);
   this.registerTool_('copyFromActive', ObjecteditingProcessType.ADD, true);
   this.registerTool_('deleteFromActive', ObjecteditingProcessType.DELETE, true);
-
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
@@ -309,17 +301,14 @@ Controller.prototype.$onInit = function () {
  */
 Controller.prototype.registerTool_ = function (toolActiveName, process, opt_requiresLayer) {
   const requiresLayer = opt_requiresLayer === true;
-
   this.scope_.$watch(
     // @ts-ignore: Strange behivior...
     () => this[toolActiveName],
     this.handleToolActiveChange_.bind(this, process, requiresLayer),
   );
-
   const group = `${NAMESPACE}-${olUtilGetUid(this)}`;
   const toolActivate = new ngeoMiscToolActivate(this, toolActiveName);
   this.ngeoToolActivateMgr_.registerTool(group, toolActivate, false);
-
   this.toolActiveNames_.push(toolActiveName);
 };
 
@@ -349,9 +338,6 @@ Controller.prototype.handleToolActiveChange_ = function (process, requiresLayer,
   }
   this.active = active;
 };
-
 Controller.prototype.handleDestroy_ = function () {};
-
 myModule.controller('GmfObjecteditingtoolsController', Controller);
-
 export default myModule;

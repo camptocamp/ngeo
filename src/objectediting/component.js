@@ -1,3 +1,14 @@
+Controller.$inject = [
+  '$scope',
+  '$timeout',
+  'gettextCatalog',
+  'gmfEditFeature',
+  'gmfObjectEditingQuery',
+  'gmfTreeManager',
+  'ngeoFeatureHelper',
+  'ngeoLayerHelper',
+  'ngeoToolActivateMgr',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -27,16 +38,12 @@ import gmfLayertreeSyncLayertreeMap, {
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import {isEmpty, toXY} from 'gmf/objectediting/geom';
 import gmfObjecteditingQuery from 'gmf/objectediting/Query';
-
 import gmfObjecteditingToolsComponent, {ObjecteditingProcessType} from 'gmf/objectediting/toolsComponent';
-
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
-
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
-
 import {toMulti, deleteCondition} from 'ngeo/utils';
 import {getUid as olUtilGetUid} from 'ol/util';
 import olCollection from 'ol/Collection';
@@ -95,18 +102,19 @@ const myModule = angular.module('gmfObjectEditingComponent', [
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
 ]);
-
 myModule.run(
   /**
    * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/objectediting', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/objectediting', require('./component.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfObjecteditingTemplateUrl',
   /**
@@ -129,6 +137,7 @@ myModule.value(
  * @private
  * @hidden
  */
+gmfObjecteditingTemplateUrl.$inject = ['$element', '$attrs', 'gmfObjecteditingTemplateUrl'];
 function gmfObjecteditingTemplateUrl($element, $attrs, gmfObjecteditingTemplateUrl) {
   return gmfObjecteditingTemplateUrl($element, $attrs);
 }
@@ -171,7 +180,6 @@ const objecteditingComponent = {
   },
   templateUrl: gmfObjecteditingTemplateUrl,
 };
-
 myModule.component('gmfObjectediting', objecteditingComponent);
 
 /**
@@ -441,7 +449,6 @@ export function Controller(
  */
 Controller.prototype.$onInit = function () {
   this.gmfObjectEditingQuery_.getQueryableLayersInfo().then(this.handleGetQueryableLayersInfo_.bind(this));
-
   this.scope_.$watch(
     () => this.active,
     (newVal, oldVal) => {
@@ -450,7 +457,6 @@ Controller.prototype.$onInit = function () {
       }
     },
   );
-
   this.scope_.$watchCollection(
     () => {
       if (this.gmfTreeManager_.rootCtrl) {
@@ -471,13 +477,11 @@ Controller.prototype.$onInit = function () {
       });
     },
   );
-
   if (!this.feature) {
     throw new Error('Missing feature');
   }
   const geometry = this.feature.getGeometry();
   this.state_ = geometry ? ObjecteditingState.UPDATE : ObjecteditingState.INSERT;
-
   this.scope_.$watchCollection(
     () => this.geometryChanges_,
     (newVal, oldVal) => {
@@ -490,25 +494,20 @@ Controller.prototype.$onInit = function () {
       }
     },
   );
-
   const defaultColor = [39, 155, 145];
   const dirtyColor = [153, 51, 51];
   this.initializeStyles_(this.defaultStyles_, defaultColor);
   this.initializeStyles_(this.defaultStylesWoVertice_, defaultColor, false);
   this.initializeStyles_(this.dirtyStyles_, dirtyColor);
   this.initializeStyles_(this.dirtyStylesWoVertice_, dirtyColor, false);
-
   this.scope_.$watch(() => this.dirty, this.setFeatureStyle_.bind(this));
-
   this.features_.push(this.feature);
-
   this.featureHasGeom = !isEmpty(geometry);
 
   // Toggle on
   this.initializeInteractions_();
   this.toggle_(true);
   this.resetGeometryChanges_();
-
   this.scope_.$on('$destroy', this.handleDestroy_.bind(this));
 };
 
@@ -530,7 +529,6 @@ Controller.prototype.delete = function () {
     if (!this.feature) {
       throw new Error('Missing feature');
     }
-
     this.gmfEditFeature_
       .deleteFeature(this.layerNodeId, this.feature)
       .then(this.handleDeleteFeature_.bind(this));
@@ -547,7 +545,6 @@ Controller.prototype.save = function () {
   if (!this.layerNodeId) {
     throw new Error('Missing layerNodeId');
   }
-
   this.pending = true;
 
   // The geometry of the feature may contain Z in its coordinates, which
@@ -562,7 +559,6 @@ Controller.prototype.save = function () {
   if (geometry) {
     toXY(geometry);
   }
-
   if (this.state_ === ObjecteditingState.INSERT) {
     this.gmfEditFeature_.insertFeatures(this.layerNodeId, [feature]).then(this.handleEditFeature_.bind(this));
   } else if (this.state_ === ObjecteditingState.UPDATE) {
@@ -577,17 +573,13 @@ Controller.prototype.undo = function () {
   if (!this.feature) {
     throw new Error('Missing feature');
   }
-
   if (this.geometryChanges_.length <= 1) {
     return;
   }
-
   this.skipGeometryChange_ = true;
-
   this.geometryChanges_.pop();
   const clone = cloneGeometry(this.geometryChanges_[this.geometryChanges_.length - 1]);
   this.feature.setGeometry(clone);
-
   this.skipGeometryChange_ = false;
 };
 
@@ -691,11 +683,9 @@ Controller.prototype.toggle_ = function (active) {
   if (!this.sketchFeatures) {
     throw new Error('Missing sketchFeatures');
   }
-
   const keys = this.listenerKeys_;
   const uid = `${NAMESPACE}-${olUtilGetUid(this)}`;
   const toolMgr = this.ngeoToolActivateMgr_;
-
   if (active) {
     keys.push(
       listen(
@@ -708,24 +698,19 @@ Controller.prototype.toggle_ = function (active) {
     keys.push(listen(this.modify_, 'change:active', this.setFeatureStyle_, this));
     keys.push(listen(this.modify_, 'modifyend', this.handleModifyInteractionModifyEnd_, this));
     keys.push(
-      listen(window, 'beforeunload', /** @type {function(?): ?} */ (this.handleWindowBeforeUnload_), this),
+      listen(window, 'beforeunload', /** @type {function(?): ?} */ this.handleWindowBeforeUnload_, this),
     );
     keys.push(listen(this.sketchFeatures, 'add', this.handleSketchFeaturesAdd_, this));
-
     toolMgr.registerTool(uid, this.modifyToolActivate_, true);
     toolMgr.registerTool(uid, this.toolsToolActivate_, false);
-
     this.registerInteractions_();
   } else {
     this.unregisterInteractions_();
-
     keys.forEach(unlistenByKey);
     keys.length = 0;
-
     toolMgr.unregisterTool(uid, this.modifyToolActivate_);
     toolMgr.unregisterTool(uid, this.toolsToolActivate_);
   }
-
   this.toolsActive = active;
   this.modify_.setActive(active);
 };
@@ -742,7 +727,6 @@ Controller.prototype.undoAllChanges_ = function () {
     throw new Error('Missing clone');
   }
   this.feature.setGeometry(clone);
-
   this.resetGeometryChanges_();
   this.dirty = false;
   this.setFeatureStyle_();
@@ -784,7 +768,6 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function (evt) {
   if (!geometry) {
     throw new Error('Missing geometry');
   }
-
   if (geometry.getType() === 'MultiPolygon') {
     const jstsGeom = this.jstsOL3Parser_.read(geometry);
     const jstsBuffered = jstsGeom.buffer(0, undefined, undefined);
@@ -793,7 +776,6 @@ Controller.prototype.handleModifyInteractionModifyEnd_ = function (evt) {
     this.feature.setGeometry(geometry.clone());
     this.skipGeometryChange_ = false;
   }
-
   const clone = cloneGeometry(geometry);
   if (!clone) {
     throw new Error('Missing clone geometry');
@@ -811,23 +793,22 @@ Controller.prototype.initializeStyles_ = function (styles, color, opt_incVertice
   const incVertice = opt_incVertice !== false;
   const rgbaColor = color.slice();
   rgbaColor.push(0.3);
-
   const image = new olStyleCircle({
     radius: 8,
     stroke: new olStyleStroke({
       color: color,
       width: 1,
     }),
-    fill: new olStyleFill({color: rgbaColor}),
+    fill: new olStyleFill({
+      color: rgbaColor,
+    }),
   });
-
   styles.Point = new olStyleStyle({
     image,
   });
   styles.MultiPoint = new olStyleStyle({
     image,
   });
-
   styles.LineString = [
     new olStyleStyle({
       stroke: new olStyleStroke({
@@ -850,7 +831,6 @@ Controller.prototype.initializeStyles_ = function (styles, color, opt_incVertice
   if (incVertice) {
     styles.MultiLineString.push(this.ngeoFeatureHelper_.getVertexStyle(true));
   }
-
   styles.Polygon = [
     new olStyleStyle({
       stroke: new olStyleStroke({
@@ -926,12 +906,11 @@ Controller.prototype.setFeatureStyle_ = function () {
  */
 Controller.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // Skip any Layertree controller that has a node that is not a leaf
-  const nodeGroup = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+  const nodeGroup = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.node;
   if (nodeGroup.children && nodeGroup.children.length) {
     return;
   }
-
-  const nodeLayer = /** @type {import('gmf/themes').GmfLayer} */ (treeCtrl.node);
+  const nodeLayer = /** @type {import('gmf/themes').GmfLayer} */ treeCtrl.node;
   // Set editable WMS layer for refresh purpose
   if (nodeLayer.id === this.layerNodeId) {
     const layer = syncLayertreeMapGetLayer(treeCtrl);
@@ -995,14 +974,11 @@ Controller.prototype.handleSketchFeaturesAdd_ = function (evt) {
     }
     const sketchFeature = evt.element;
     const sketchGeom = sketchFeature.getGeometry();
-
     const geom = this.feature.getGeometry();
-
     if (geom) {
       const jstsGeom = this.jstsOL3Parser_.read(geom);
       const jstsSketchGeom = this.jstsOL3Parser_.read(sketchGeom);
       let jstsProcessedGeom;
-
       if (this.process === ObjecteditingProcessType.ADD) {
         jstsProcessedGeom = jstsGeom.union(jstsSketchGeom);
       } else {
@@ -1010,7 +986,6 @@ Controller.prototype.handleSketchFeaturesAdd_ = function (evt) {
           jstsProcessedGeom = jstsGeom.difference(jstsSketchGeom);
         }
       }
-
       if (jstsProcessedGeom) {
         const processedGeom = this.jstsOL3Parser_.write(jstsProcessedGeom);
         const multiGeom = toMulti(processedGeom);
@@ -1019,7 +994,6 @@ Controller.prototype.handleSketchFeaturesAdd_ = function (evt) {
     } else if (this.process === ObjecteditingProcessType.ADD) {
       this.feature.setGeometry(toMulti(sketchGeom.clone()));
     }
-
     this.sketchFeatures.clear();
   }
 };
@@ -1041,11 +1015,9 @@ Controller.prototype.handleFeatureGeometryChange_ = function () {
   this.timeout_(() => {
     this.featureHasGeom = !isEmpty(geom);
   });
-
   if (this.skipGeometryChange_) {
     return;
   }
-
   if (geom) {
     // Use a timeout here, because there can be a scope digest already in
     // progress. For example, with tools that requires the user to draw
@@ -1069,7 +1041,6 @@ Controller.prototype.handleGetQueryableLayersInfo_ = function (layersInfo) {
     this.selectedQueryableLayerInfo = this.queryableLayersInfo[0];
   }
 };
-
 Controller.prototype.handleDestroy_ = function () {
   this.features_.clear();
   this.toggle_(false);
@@ -1096,7 +1067,5 @@ function cloneGeometry(geometry) {
   }
   return clone;
 }
-
 myModule.controller('GmfObjecteditingController', Controller);
-
 export default myModule;

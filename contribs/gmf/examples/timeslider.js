@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope', 'ngeoWMSTime'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import './timeslider.css';
 import angular from 'angular';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
-
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 import options from './options';
@@ -98,8 +98,6 @@ function MainController($scope, ngeoWMSTime) {
     $scope.$digest();
   };
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

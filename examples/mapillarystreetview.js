@@ -1,3 +1,4 @@
+MainController.$inject = ['ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2021-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import './mapillarystreetview.css';
 import angular from 'angular';
 import olMap from 'ol/Map';
-
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
@@ -57,10 +57,15 @@ function MainController(ngeoToolActivateMgr) {
    */
   this.style = new olStyleStyle({
     text: new olStyleText({
-      fill: new olStyleFill({color: '#279B61'}),
+      fill: new olStyleFill({
+        color: '#279B61',
+      }),
       font: '900 30px "Font Awesome 5 Free"',
       offsetY: -15,
-      stroke: new olStyleStroke({color: '#ffffff', width: 3}),
+      stroke: new olStyleStroke({
+        color: '#ffffff',
+        width: 3,
+      }),
       text: '\uf041', //map-marker
     }),
   });
@@ -79,14 +84,12 @@ function MainController(ngeoToolActivateMgr) {
       zoom: 17,
     }),
   });
-
   ngeoMapFeatureOverlayMgr.init(this.map);
 
   /**
    * @type {boolean}
    */
   this.streetViewActive = true;
-
   const streetViewToolActivate = new ngeoMiscToolActivate(this, 'streetViewActive');
   ngeoToolActivateMgr.registerTool('mapTools', streetViewToolActivate, true);
 
@@ -94,18 +97,14 @@ function MainController(ngeoToolActivateMgr) {
    * @type {boolean}
    */
   this.dummyActive = false;
-
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, false);
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('ngeoStreetviewOptions', {
   viewer: 'mapillary',
   key: 'd1dNaFk4aDVoVVlZd0dEZG95Wm84QTpkYmRkOGQyMWRkMThiM2E2',
   bufferSize: 10, // value in pixels
 });
 options(myModule);
-
 export default myModule;

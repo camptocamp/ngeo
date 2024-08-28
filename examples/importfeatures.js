@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -22,9 +23,7 @@
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-
 import ngeoMiscFilereaderComponent from 'ngeo/misc/filereaderComponent';
-
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import * as olExtent from 'ol/extent';
@@ -80,7 +79,6 @@ function MainController($scope) {
    * @type {string}
    */
   this.fileContent = '';
-
   $scope.$watch(() => this.fileContent, this.importKml_.bind(this));
 }
 
@@ -90,21 +88,21 @@ function MainController($scope) {
 MainController.prototype.importKml_ = function (kml) {
   const map = this.map;
   const vectorSource = this.vectorSource_;
-  const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
+  const features =
+    /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
     this.kmlFormat_.readFeatures(kml, {
       featureProjection: 'EPSG:3857',
-    })
-  );
+    });
   vectorSource.clear(true);
   vectorSource.addFeatures(features);
   const extent = vectorSource.getExtent();
   const mapSize = map.getSize();
   if (mapSize && !olExtent.isEmpty(extent)) {
-    map.getView().fit(extent, {size: mapSize});
+    map.getView().fit(extent, {
+      size: mapSize,
+    });
   }
 };
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

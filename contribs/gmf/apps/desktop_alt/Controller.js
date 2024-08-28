@@ -28,7 +28,6 @@
 
 import './sass/desktop_alt.scss';
 import './sass/vars_desktop_alt.scss';
-
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,
@@ -53,7 +52,6 @@ class Controller extends AbstractDesktopController {
    */
   constructor($scope, $injector) {
     super($scope, $injector);
-
     if (this.dimensions.FLOOR == undefined) {
       this.dimensions.FLOOR = '*';
     }
@@ -62,16 +60,12 @@ class Controller extends AbstractDesktopController {
      * @type {boolean}
      */
     this.drawLidarprofilePanelActive = false;
-
     const drawLidarprofilePanelActive = new ngeoMiscToolActivate(this, 'drawLidarprofilePanelActive');
     this.ngeoToolActivateMgr.registerTool('mapTools', drawLidarprofilePanelActive, false);
-
     const $timeout = $injector.get('$timeout');
-
     panels.getActiveToolPanel().subscribe({
       next: (panel) => {
         this.drawLidarprofilePanelActive = panel === 'lidar';
-
         $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular digest
       },
     });
@@ -82,7 +76,7 @@ class Controller extends AbstractDesktopController {
    */
   onKeydown(event) {}
 }
-
+Controller.$inject = ['$scope', '$injector'];
 /**
  * @hidden
  */
@@ -95,7 +89,5 @@ const appModule = angular.module('Appdesktop_alt', [
   ngeoStreetviewModule.name,
   ngeoStatemanagerWfsPermalink.name,
 ]);
-
 appModule.controller('AlternativeDesktopController', Controller);
-
 export default appModule;
