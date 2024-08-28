@@ -29,7 +29,6 @@ import {encodeQueryString, decodeQueryString} from 'ngeo/utils';
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} fulltextsearchUrl The service URL.
  * @class
- * @ngInject
  * @ngname gmfFulltextSearch
  * @hidden
  */

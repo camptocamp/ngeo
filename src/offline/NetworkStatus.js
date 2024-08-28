@@ -37,7 +37,6 @@ const Service = class {
    *
    * During offline mode we test every 2 sec if we are back online.
    *
-   * @ngInject
    * @param {!jQuery} $document Angular document service.
    * @param {angular.IWindowService} $window Angular window service.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
@@ -186,7 +185,6 @@ Service.module = angular.module(name, [ngeoMiscDebounce.name]);
 Service.module.service(name, Service);
 
 /**
- * @ngInject
  * @param {angular.IQService} $q The Angular $q service.
  * @param {import('ngeo/misc/debounce').miscDebounce<function()>} ngeoDebounce ngeo debounce service.
  * @param {Service} ngeoNetworkStatus ngeo network status service.
@@ -215,7 +213,6 @@ httpInterceptor.$inject = ['$q', 'ngeoDebounce', 'ngeoNetworkStatus'];
 Service.module.factory('httpInterceptor', httpInterceptor);
 
 /**
- * @ngInject
  * @private
  * @param {angular.IHttpProvider} $httpProvider .
  */

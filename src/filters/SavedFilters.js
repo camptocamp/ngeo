@@ -40,7 +40,6 @@ export class SavedFilter {
    * Otherwise, they are kept in this service for the duration of the visit.
    *
    * @param {angular.IScope} $rootScope Angular rootScope.
-   * @ngInject
    * @ngdoc service
    * @ngname gmfSavedFilters
    */

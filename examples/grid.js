@@ -29,7 +29,6 @@ const myModule = angular.module('app', ['gettext', ngeoGridModule.name]);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   const data = [

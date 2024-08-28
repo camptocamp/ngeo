@@ -48,7 +48,6 @@ const myModule = angular.module('ngeoFilter', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -75,7 +74,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoFilterTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -110,7 +108,6 @@ export class FilterController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController
    */

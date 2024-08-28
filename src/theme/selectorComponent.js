@@ -34,7 +34,6 @@ import 'bootstrap/js/src/dropdown';
 const myModule = angular.module('gmfThemeSelectorComponent', [gmfThemeManager.name, gmfThemeThemes.name]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -61,7 +60,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfThemeSelectorTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -122,7 +120,6 @@ myModule.component('gmfThemeselector', themeSelectorComponent);
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfThemeselectorController
  */

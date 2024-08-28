@@ -45,7 +45,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -73,7 +72,6 @@ myModule.run(
  * @param {string|function(JQuery=, angular.IAttributes=):string} gmfMobileMeasureLengthTemplateUrl
  *     Template URL for the directive.
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfMobileMeasureLength
  */
@@ -112,7 +110,6 @@ export class Controller extends MeasueMobileBaseController {
    * @param {angular.IFilterService} $filter Angular filter
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
    * @param {import('gmf/options').gmfMobileMeasureLengthOptions} gmfMobileMeasureLengthOptions The options.
-   * @ngInject
    */
   constructor($scope, $filter, gettextCatalog, gmfMobileMeasureLengthOptions) {
     super($scope, $filter, gettextCatalog);

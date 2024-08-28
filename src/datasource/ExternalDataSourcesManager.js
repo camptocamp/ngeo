@@ -66,7 +66,6 @@ export class ExternalDatSourcesManager {
    * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
    * @param {import('ngeo/misc/File').FileService} ngeoFile Ngeo file.
    * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo layer helper service.
-   * @ngInject
    * @ngdoc service
    * @ngname gmfExternalDataSourcesManager
    */

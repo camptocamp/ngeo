@@ -41,7 +41,6 @@ myModule.component('appColorpicker', colorpickerComponent);
 
 /**
  * @class
- * @ngInject
  */
 function ColorPickerController() {
   /**
@@ -60,7 +59,6 @@ myModule.controller('AppColorpickerController', ColorPickerController);
 /**
  * @class
  * @param {angular.IScope} $scope Controller scope.
- * @ngInject
  */
 function MainController($scope) {
   /**

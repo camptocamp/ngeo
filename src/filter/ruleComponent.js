@@ -67,7 +67,6 @@ const myModule = angular.module('ngeoRule', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -94,7 +93,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -116,7 +114,6 @@ export class RuleController {
    * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
-   * @ngInject
    * @ngdoc controller
    * @ngname NgeoRuleController
    */

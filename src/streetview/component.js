@@ -47,7 +47,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -63,7 +62,6 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoStreetviewTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -104,7 +102,6 @@ class StreetviewController {
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.ITimeoutService} $timeout
    *    FeatureOverlay manager.
-   * @ngInject
    * @ngdoc controller
    * @ngname NgeoStreetviewController
    */

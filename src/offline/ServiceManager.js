@@ -24,7 +24,6 @@ class ServiceManager {
   /**
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @struct
-   * @ngInject
    * @ngdoc service
    * @ngname ngeoOfflineServiceManager
    */

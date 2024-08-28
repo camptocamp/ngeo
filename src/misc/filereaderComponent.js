@@ -46,7 +46,6 @@ const myModule = angular.module('ngeoFilereader', []);
  * @htmlAttribute {boolean} [ngeo]-filereader-supported Whether the FileReader API is supported.
  * @param {angular.IWindowService} $window The Angular $window service.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoFilereader
  * @private

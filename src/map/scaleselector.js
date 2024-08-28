@@ -43,7 +43,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -95,7 +94,6 @@ myModule.run(
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoScaleselectorTemplateUrl Template URL
  *    for the directive.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoScaleselector
  */
@@ -119,7 +117,6 @@ export class ScaleselectorController {
    * @param {angular.IScope} $scope Directive scope.
    * @param {angular.IAttributes} $attrs Attributes.
    * @param {import('ngeo/options').ngeoScaleSelectorOptions} ngeoScaleSelectorOptions The options.
-   * @ngInject
    */
   constructor($scope, $attrs, ngeoScaleSelectorOptions) {
     /**

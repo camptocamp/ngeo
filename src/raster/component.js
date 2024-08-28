@@ -42,7 +42,6 @@ import 'bootstrap/js/src/dropdown';
 const myModule = angular.module('gmfRasterComponent', [gmfRasterRasterService.name, ngeoMiscDebounce.name]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -70,7 +69,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -162,7 +160,6 @@ myModule.directive('gmfElevation', rasterComponent);
  * @param {import('gmf/options').gmfElevationOptions} gmfElevationOptions The options
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
  */
@@ -368,7 +365,6 @@ myModule.component('gmfElevationwidget', rasterWidgetComponent);
 /**
  * @class
  * @hidden
- * @nginject
  * @ngdoc controller
  * @param {import('gmf/options').gmfElevationOptions} gmfElevationOptions The options.
  */

@@ -115,7 +115,6 @@ const myModule = angular.module('ngeoDrawfeature', [
  *      property. Used to find those draw interactions later on from the
  *      map, using the property set.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawfeature
  */

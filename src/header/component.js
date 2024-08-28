@@ -28,7 +28,6 @@ import angular from 'angular';
 const myModule = angular.module('gmfHeader', []);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -58,7 +57,6 @@ myModule.value(
  * @param {function(JQuery, angular.IAttributes): string} gmfHeaderTemplateUrl
  *    Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */

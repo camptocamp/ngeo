@@ -35,7 +35,6 @@ import 'ngeo/sass/font.scss';
 const myModule = angular.module('ngeoGrid', [ngeoMiscFilters.name, 'floatThead']);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -62,7 +61,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoGridTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -101,7 +99,6 @@ myModule.component('ngeoGrid', gridComponent);
  * @class
  * @private
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoGridController
  */

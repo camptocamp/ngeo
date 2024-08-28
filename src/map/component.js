@@ -40,7 +40,6 @@ const myModule = angular.module('gmfMapComponent', [gmfPermalinkModule.name, gmf
  *
  * @htmlAttribute {import('ol/Map').default} gmf-map-map The map.
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfMap
  */
@@ -62,7 +61,6 @@ myModule.directive('gmfMap', gmfMapComponent);
  * @param {JQuery} $element
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController
  */

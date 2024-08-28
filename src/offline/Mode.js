@@ -24,7 +24,6 @@ class Mode {
   /**
    * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    * ngeo offline configuration service.
-   * @ngInject
    * @ngdoc service
    * @ngname ngeoOfflineState
    */

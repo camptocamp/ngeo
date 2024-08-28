@@ -83,7 +83,6 @@ const myModule = angular.module('gmfDisclaimer', [
  * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import('gmf/options').gmfDisclaimerOptions} gmfDisclaimerOptions The options.
- * @ngInject
  * @class
  * @ngdoc controller
  * @ngname GmfDisclaimerController

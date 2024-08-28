@@ -80,7 +80,6 @@ const PRINT_PAPER_SIZE_ = [555, 675];
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('ngeo/print/Service').CreatePrint} ngeoCreatePrint The ngeo Create Print function.
  * @param {import('ngeo/print/Utils').PrintUtils} ngeoPrintUtils The ngeo PrintUtils service.
- * @ngInject
  * @hidden
  */
 function MainController($timeout, ngeoCreatePrint, ngeoPrintUtils) {

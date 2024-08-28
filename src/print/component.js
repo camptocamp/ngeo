@@ -83,7 +83,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -136,7 +135,6 @@ myModule.value('gmfPrintState', {
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -221,7 +219,6 @@ export class PrintController {
    * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
    * @param {import('gmf/options').gmfPrintOptions} gmfPrintOptions The options.
    * @param {string} cacheVersion The cache version
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfPrintController
    */

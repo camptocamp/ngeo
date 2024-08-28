@@ -104,7 +104,6 @@ const myModule = angular.module('ngeoProfile', [ngeoMiscDebounce.name]);
  *    ngeo Debounce factory.
  * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile
  */

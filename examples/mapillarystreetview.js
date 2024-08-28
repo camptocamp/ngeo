@@ -49,7 +49,6 @@ const myModule = angular.module('app', [
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr
  *    Ngeo ToolActivate manager service.
  * @class
- * @ngInject
  */
 function MainController(ngeoToolActivateMgr) {
   /**

@@ -43,7 +43,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -139,7 +138,6 @@ myModule.run(
  * @param {string|function(JQuery=, angular.IAttributes=): string} gmfLayertreeNodeTemplateUrl
  *     Template URL for the directive.
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfLayertreeNode
  */

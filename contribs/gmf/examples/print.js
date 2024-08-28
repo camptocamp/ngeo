@@ -52,7 +52,6 @@ const myModule = angular.module('gmfapp', [
 /**
  * @class
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
- * @ngInject
  */
 function MainController(gmfThemes) {
   gmfThemes.loadThemes();

@@ -89,7 +89,6 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
 export class MapBackgroundLayerManager extends olObservable {
   /**
    * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Themes service.
-   * @ngInject
    */
   constructor(ngeoLayerHelper) {
     super();

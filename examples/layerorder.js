@@ -41,7 +41,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMis
 /**
  * @param {angular.IScope} $scope Scope.
  * @class
- * @ngInject
  */
 function MainController($scope) {
   const asitvd = new olLayerTile({

@@ -39,7 +39,6 @@ const myModule = angular.module('gmfLayertreeTimeSliderComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -68,7 +67,6 @@ myModule.run(
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfTimeSlider
  */
@@ -146,7 +144,6 @@ myModule.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */

@@ -47,7 +47,6 @@ class Controller extends AbstractDesktopController {
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @ngInject
    */
   constructor($scope, $injector, $timeout) {
     super($scope, $injector);
@@ -158,7 +157,6 @@ const appModule = angular.module('Appoeedit', [
 appModule.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 appModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [

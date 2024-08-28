@@ -32,7 +32,6 @@ import 'bootstrap/js/src/dropdown';
 const myModule = angular.module('gmfMapMouseposition', [ngeoMiscFilters.name]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -59,7 +58,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfMapMousepositionTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -99,7 +97,6 @@ myModule.component('gmfMouseposition', mapMousepositionComponent);
  * @param {import('gmf/options').gmfMousePositionOptions} gmfMousePositionOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfMousepositionController
  */

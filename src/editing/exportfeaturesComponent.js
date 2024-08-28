@@ -50,7 +50,6 @@ const myModule = angular.module('ngeoExportfeatures', [ngeoMiscFeatureHelper.nam
  * @htmlAttribute {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
  *    ngeo-exportfeatures-features The features to export
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoExportfeatures
  */
@@ -72,7 +71,6 @@ myModule.directive('ngeoExportfeatures', editingExportFeaturesComponent);
  * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Ngeo feature helper service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoExportfeaturesController
  */

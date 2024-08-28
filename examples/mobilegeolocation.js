@@ -37,7 +37,6 @@ const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, gmfMap
 /**
  * @param {angular.IScope} $scope Scope.
  * @class
- * @ngInject
  */
 function MainController($scope) {
   /**

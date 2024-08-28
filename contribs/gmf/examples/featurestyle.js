@@ -59,7 +59,6 @@ const myModule = angular.module('gmfapp', [
  * @class
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
- * @ngInject
  */
 function MainController($scope, ngeoFeatureHelper) {
   /**

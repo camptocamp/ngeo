@@ -53,7 +53,6 @@ myModule.component('appMap', mapComponent);
  *
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @class
- * @ngInject
  * @private
  * @hidden
  */

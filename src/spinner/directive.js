@@ -22,7 +22,6 @@
 import angular from 'angular';
 
 /**
- * @ngInject
  * @param {angular.IHttpService} $http Angular HTTP service.
  * @returns {angular.IDirective} The Directive Definition Object.
  * @ngdoc directive

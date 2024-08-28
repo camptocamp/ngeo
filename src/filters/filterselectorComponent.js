@@ -51,7 +51,6 @@ const myModule = angular.module('gmfFilterselector', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -78,7 +77,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfFilterselectorTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -113,7 +111,6 @@ export class FilterSelectorController {
    *     sources helper service.
    * @param {import('gmf/filters/SavedFilters').SavedFilter} gmfSavedFilters Gmf saved filters service.
    * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */

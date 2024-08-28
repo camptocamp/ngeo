@@ -27,7 +27,6 @@ import angular from 'angular';
  * @param {angular.IQService} $q .
  * @param {angular.IHttpService} $http .
  * @param {angular.gettext.gettextFunction} gettext .
- * @ngInject
  * @hidden
  */
 export function FileService($q, $http, gettext) {

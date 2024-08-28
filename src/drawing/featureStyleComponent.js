@@ -37,7 +37,6 @@ const myModule = angular.module('gmfDrawingFeatureStyle', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -60,7 +59,6 @@ myModule.run(
  *
  * @htmlAttribute {import('ol/Feature').default<import('ol/geom/Geometry').default>} gmf-featurestyle-feature The feature.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfFeaturestyle
  */
@@ -81,7 +79,6 @@ myModule.directive('gmfFeaturestyle', drawingDrawFeatureComponent);
  * @param {import('ngeo/misc/FeatureHelper').FeatureHelper} ngeoFeatureHelper Gmf feature helper service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfFeaturestyleController
  */

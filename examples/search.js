@@ -62,7 +62,6 @@ myModule.component('appSearch', searchComponent);
  * @param {angular.ICompileService} $compile Angular compile service.
  * @param {Function} ngeoSearchCreateGeoJSONBloodhound
  *    The ngeo create GeoJSON Bloodhound service.
- * @ngInject
  */
 function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSONBloodhound) {
   /**
@@ -202,7 +201,6 @@ myModule.controller('AppSearchController', SearchController);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

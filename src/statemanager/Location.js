@@ -351,7 +351,6 @@ StatemanagerLocation.prototype.setPath = function (path) {
  * @param {angular.IScope} $rootScope The root scope.
  * @param {angular.IWindowService} $window Angular window service.
  * @returns {StatemanagerLocation} The ngeo location service.
- * @ngInject
  * @hidden
  */
 export function LocationFactory($rootScope, $window) {

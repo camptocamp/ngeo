@@ -76,7 +76,6 @@ export function debounce(func, wait, invokeApply, $timeout) {
  * @template {function(?): void} Targs
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @returns {import('ngeo/misc/debounce').miscDebounce<T>} The debounce function.
- * @ngInject
  * @private
  * @hidden
  */

@@ -55,7 +55,6 @@ const myModule = angular.module('gmfapp', [
 /**
  * @param {import('gmf/permalink/Permalink').PermalinkService} gmfPermalink The gmf permalink service.
  * @class
- * @ngInject
  */
 function MainController(gmfPermalink) {
   const center = gmfPermalink.getMapCenter() || [537635, 152640];

@@ -28,7 +28,6 @@ const myModule = angular.module('app', ['gettext', ngeoMiscDatetimepickerCompone
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

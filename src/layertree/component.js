@@ -108,7 +108,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -144,7 +143,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfLayertreeTemplate Template function.
  * @returns {string} Template.
- * @ngInject
  * @private
  * @hidden
  */
@@ -235,7 +233,6 @@ myModule.component('gmfLayertree', layertreeComponent);
  * @param {import('gmf/options').gmfLayerTreeOptions} gmfLayerTreeOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfLayertreeController
  */

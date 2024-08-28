@@ -43,7 +43,6 @@ export class QueryModeSelector {
    * pressed.
    *
    * @param {angular.IScope} $rootScope The root scope.
-   * @ngInject
    */
   constructor($rootScope) {
     // Constants

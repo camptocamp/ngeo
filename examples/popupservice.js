@@ -31,7 +31,6 @@ const myModule = angular.module('app', ['gettext', ngeoMessagePopup.name]);
 /**
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
- * @ngInject
  * @class
  */
 function MainController($sce, ngeoCreatePopup) {

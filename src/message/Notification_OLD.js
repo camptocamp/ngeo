@@ -48,7 +48,6 @@ export class MessageNotification extends ngeoMessageMessage {
    * properly.
    *
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @ngInject
    */
   constructor($timeout) {
     super();

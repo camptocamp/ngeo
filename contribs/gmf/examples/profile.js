@@ -53,7 +53,6 @@ const myModule = angular.module('gmfapp', [
 /**
  * @param {angular.IScope} $scope Angular scope.
  * @class
- * @ngInject
  */
 function MainController($scope) {
   /**

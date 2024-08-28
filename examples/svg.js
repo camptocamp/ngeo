@@ -38,7 +38,6 @@ const appmodule = angular.module('app', ['gettext', gmfMapComponent.name]);
 
 /**
  * @class
- * @ngInject
  * @hidden
  */
 function MainController() {

@@ -34,7 +34,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMap
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   const openStreetMapLayer = new olLayerTile({

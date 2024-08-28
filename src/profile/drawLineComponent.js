@@ -79,7 +79,6 @@ myModule.directive('gmfDrawprofileline', profileDrawLineComponent);
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfDrawprofilelineController
  */

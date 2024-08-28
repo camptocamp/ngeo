@@ -35,7 +35,6 @@ export default class MapillaryService extends StreetviewService {
    * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void} handlePanoramaPositionChange Position change handler.
    * @param {string} accessToken The key to access the mapillary api.
    * @param {number} bufferSize The size to add to the bbox buffer.
-   * @ngInject
    */
   constructor($scope, $timeout, $http, map, handlePanoramaPositionChange, accessToken, bufferSize) {
     super($scope, map, handlePanoramaPositionChange);

@@ -35,7 +35,6 @@ const myModule = angular.module('gmfWmscapabilitylayertreenode', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -66,7 +65,6 @@ myModule.value(
  * @param {function(angular.IAttributes): string} gmfWmscapabilitylayertreenodeTemplateUrl Template
  *    function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -82,7 +80,6 @@ export class Controller {
   /**
    * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager
    *     GMF service responsible of managing external data sources.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfWmscapabilitylayertreenodeController
    */

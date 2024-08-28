@@ -33,7 +33,6 @@ const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoEditi
  * @param {angular.IHttpService} $http Angular http service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {angular.IScope} $scope Scope.
- * @ngInject
  * @class
  */
 function MainController($http, $timeout, $scope) {

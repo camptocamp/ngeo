@@ -64,7 +64,6 @@ const GeolocationEventType = {
  * @htmlAttribute {import('ol/Map').default} ngeo-geolocation-map The map.
  * @htmlAttribute {GeolocationDirectiveOptions} ngeo-geolocation-options The options.
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoGeolocation
  */
@@ -88,7 +87,6 @@ myModule.directive('ngeoGeolocation', geolocationComponent);
  * @param {JQuery} $element Element.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import('ngeo/options').ngeoGeolocationOptions} ngeoGeolocationOptions The options.
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoGeolocationController
  */

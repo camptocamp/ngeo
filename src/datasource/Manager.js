@@ -89,7 +89,6 @@ export class DatasourceManager {
    * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
    * @param {import('gmf/datasource/WFSAliases').DatasourceWFSAlias} gmfWFSAliases Gmf WFS aliases
    *    service.
-   * @ngInject
    * @ngdoc service
    * @ngname gmfDataSourcesManager
    */

@@ -48,7 +48,6 @@ const myModule = angular.module('gmfapp', [
  * @param {import('gmf/editing/XSDAttributes').EditingXSDAttributeService} gmfXSDAttributes
  *    The gmf XSDAttributes service.
  * @class
- * @ngInject
  */
 function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   /**

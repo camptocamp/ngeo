@@ -35,7 +35,6 @@ export class DatasourceWFSAlias {
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
-   * @ngInject
    */
   constructor(gmfDataSourcesHelper) {
     // === Injected properties ===

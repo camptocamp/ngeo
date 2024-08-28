@@ -38,7 +38,6 @@ const myModule = angular.module('ngeoAttributes', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -65,7 +64,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -111,7 +109,6 @@ myModule.component('ngeoAttributes', editingAttributeComponent);
  * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo event helper service
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoAttributesController
  */

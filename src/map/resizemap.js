@@ -46,7 +46,6 @@ const myModule = angular.module('ngeoResizemap', []);
  *
  * @param {angular.IWindowService} $window Angular window service.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoResizemap
  */

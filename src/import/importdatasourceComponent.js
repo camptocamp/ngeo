@@ -40,7 +40,6 @@ const myModule = angular.module('gmfImportdatasource', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -67,7 +66,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfImportdatasourceTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -99,7 +97,6 @@ export class Controller {
    * @param {import('ngeo/query/Querent').Querent} ngeoQuerent Ngeo querent service.
    * @param {import('gmf/options').gmfExternalOGCServers} gmfExternalOGCServers The options.
    * @param {angular.gettext.gettextCatalog} gettextCatalog The gettextCatalog service.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfImportdatasourceController
    */

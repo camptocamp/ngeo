@@ -29,7 +29,6 @@ import ngeoMessageNotification from 'ngeo/message/Notification';
 const myModule = angular.module('app', ['gettext']);
 
 /**
- * @ngInject
  * @class
  */
 function MainController() {

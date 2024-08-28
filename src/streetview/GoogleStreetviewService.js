@@ -32,7 +32,6 @@ export default class GoogleStreetviewService extends StreetviewService {
    * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void}handlePanoramaPositionChange Position change handler
    * @param {number} radius The radius
    * @param {JQuery} $element Element
-   * @ngInject
    */
   constructor($scope, map, handlePanoramaPositionChange, radius, $element) {
     super($scope, map, handlePanoramaPositionChange);

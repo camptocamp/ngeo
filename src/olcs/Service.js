@@ -31,7 +31,6 @@ import {toDegrees} from 'ol/math';
  */
 export const OlcsService = class _ngInjectAnonymousClass {
   /**
-   * @ngInject
    * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo debounce
    *    service.
    * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location

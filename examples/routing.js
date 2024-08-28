@@ -42,7 +42,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoRou
  * The application's main directive.
  *
  * @class
- * @ngInject
  */
 function MainController() {
   /**

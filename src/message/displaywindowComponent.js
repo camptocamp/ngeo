@@ -33,7 +33,6 @@ import 'angular-sanitize';
 const myModule = angular.module('ngeoMessageDisplaywindowComponent', ['ngSanitize']);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -60,7 +59,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoMessageDisplaywindowTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -78,7 +76,6 @@ export class Controller {
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.IScope} $scope Scope.
    * @param {angular.ICompileService} $compile The compile provider.
-   * @ngInject
    * @ngdoc controller
    * @ngname ngeoDisplaywindowComponentController
    */

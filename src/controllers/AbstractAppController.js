@@ -78,7 +78,6 @@ import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
  * @param {boolean} [mobile] Is mobile.
  * @class
  * @ngdoc controller
- * @ngInject
  */
 export function AbstractAppController($scope, $injector, mobile) {
   createProjections($injector.get('gmfProjectionsOptions'));

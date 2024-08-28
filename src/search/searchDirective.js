@@ -50,7 +50,6 @@ import angular from 'angular';
  * @htmlAttribute {Twitter.Typeahead.Dataset[]} ngeo-search-datasets The sources datasets.
  * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @template T
  */
 function searchComponent() {

@@ -68,7 +68,6 @@ class MainController {
    * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager gmf Tree Manager
    *    service.
    * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
-   * @ngInject
    */
   constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager, ngeoDataSources) {
     /**

@@ -56,7 +56,6 @@ const myModule = angular.module('ngeoRoutingComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -83,7 +82,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRoutingTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -108,7 +106,6 @@ export class Controller {
    * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce
    *    service.
    * @param {import('ngeo/options').ngeoRoutingOptions} ngeoRoutingOptions The options.
-   * @ngInject
    */
   constructor($scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce, ngeoRoutingOptions) {
     /**

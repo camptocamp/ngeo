@@ -48,7 +48,6 @@ appModule.config([
 ]);
 
 /**
- * @ngInject
  */
 appModule.run([
   '$injector',

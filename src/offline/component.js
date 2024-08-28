@@ -47,7 +47,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -64,7 +63,6 @@ myModule.run(
  * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!function(!JQuery, !angular.IAttributes): string} ngeoOfflineTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  */
 ngeoOfflineTemplateUrl.$inject = ['$element', '$attrs', 'ngeoOfflineTemplateUrl'];
 function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
@@ -113,7 +111,6 @@ export const Controller = class _ngInjectAnonymousClass {
    * ngeo offline configuration service.
    * @param {import('ngeo/offline/Mode').default} ngeoOfflineMode Offline mode manager.
    * @param {import('ngeo/offline/NetworkStatus').default} ngeoNetworkStatus ngeo network status service.
-   * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */

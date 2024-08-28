@@ -37,7 +37,6 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

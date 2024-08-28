@@ -35,7 +35,6 @@ import ngeoMessageNotification from 'ngeo/message/Notification';
  * On drop the file is added to the external datasources if it is valid
  * Otherwise an alert message is shown
  *
- * @ngInject
  * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @returns {angular.IDirective} The Directive Definition Object.

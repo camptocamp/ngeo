@@ -57,7 +57,6 @@ const appModule = angular.module('Appdesktop', [appBase.name, gmfControllersAbst
 appModule.value('gmfContextualdatacontentTemplateUrl', 'gmf/contextualdata');
 appModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [

@@ -38,7 +38,6 @@ const myModule = angular.module('gmfapp', [
  * @class
  * @param {angular.IScope} $scope Angular scope.
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
- * @ngInject
  */
 function MainController($scope, ngeoWMSTime) {
   /**

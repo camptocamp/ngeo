@@ -52,7 +52,6 @@ const myModule = angular.module('app', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -88,7 +87,6 @@ myModule.component('appMeasuretools', measuretoolsComponent);
  * @param {angular.IFilterService} $filter Angular filter service.
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @class
- * @ngInject
  */
 function MeasuretoolsController($scope, $compile, $sce, $filter, gettextCatalog) {
   /**
@@ -256,7 +254,6 @@ MeasuretoolsController.prototype.$onInit = function () {
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

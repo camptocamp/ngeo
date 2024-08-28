@@ -43,7 +43,6 @@ import localforage from 'localforage/src/localforage';
  */
 export default class _ngInjectAnonymousClass extends olObservable {
   /**
-   * @ngInject
    * @param {!angular.IScope} $rootScope The rootScope provider.
    * @param {!import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr
    *    Background layer manager.

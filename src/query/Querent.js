@@ -117,7 +117,6 @@ export class Querent {
    * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoQuerent
-   * @ngInject
    */
   constructor($http, $q, ngeoRuleHelper, ngeoWMSTime) {
     // === Injected properties ===

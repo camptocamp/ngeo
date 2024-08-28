@@ -41,7 +41,6 @@ import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
 const myModule = angular.module('GmfDrawFeatureOptionsComponent', []);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -62,7 +61,6 @@ myModule.run(
 export class DrawFeatureOptionsController {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfDrawFeatureOptionsController
    */

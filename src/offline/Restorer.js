@@ -23,7 +23,6 @@ import ngeoMapBackgroundLayerMgr from 'ngeo/map/BackgroundLayerMgr';
 import angular from 'angular';
 class Restorer {
   /**
-   * @ngInject
    * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    *    A service for customizing offline behavior.
    * @param {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr

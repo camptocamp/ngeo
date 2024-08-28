@@ -60,7 +60,6 @@ export const ObjecteditingParam = {
  * @param {import('gmf/editing/EditFeature').EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
  * @class
- * @ngInject
  * @hidden
  */
 export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {

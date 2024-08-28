@@ -58,7 +58,6 @@ const myModule = angular.module('gmfObjecteditingToolsComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -108,7 +107,6 @@ myModule.run(
  * @htmlAttribute {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} gmf-objectediting-sketchfeatures
  *     Collection of temporary features being drawn by the tools.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditingtools
  */
@@ -146,7 +144,6 @@ const NAMESPACE = 'oet';
  * @param {import('gmf/options').gmfObjectEditingToolsOptions} gmfObjectEditingToolsOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingtoolsController
  */

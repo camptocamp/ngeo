@@ -42,7 +42,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMis
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

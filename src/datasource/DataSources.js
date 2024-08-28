@@ -42,7 +42,6 @@ export class DataSource {
    *
    * @ngdoc service
    * @ngname ngeoDataSources
-   * @ngInject
    */
   constructor() {
     /**

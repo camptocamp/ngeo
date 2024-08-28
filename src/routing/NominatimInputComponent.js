@@ -34,7 +34,6 @@ const myModule = angular.module('ngeoRoutingNominatimInputComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -62,7 +61,6 @@ myModule.value(
  * @param {function(angular.IAttributes): string} ngeoRoutingNominatimInputComponentTemplateUrl
  *    Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -84,7 +82,6 @@ function ngeoRoutingNominatimInputComponentTemplateUrl(
  *    Nominatim
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname NgeoNominatimInputController
  */

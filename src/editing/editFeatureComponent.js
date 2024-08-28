@@ -140,7 +140,6 @@ const myModule = angular.module('GmfEditingFeatureComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -233,7 +232,6 @@ myModule.directive('gmfEditfeature', editingEditFeatureComponent);
  * @param {import('gmf/options').gmfEditFeatureOptions} gmfEditFeatureOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfEditfeatureController
  */

@@ -31,7 +31,6 @@ import angular from 'angular';
  * @param {import('ngeo/options').ngeoRoutingOptions} ngeoRoutingOptions The options.
  * @class
  * @ngdoc service
- * @ngInject
  * @ngname ngeoRoutingService
  * @hidden
  */

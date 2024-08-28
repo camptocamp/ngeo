@@ -25,7 +25,6 @@ import angular from 'angular';
  * ngeo - Time service
  *
  * @class
- * @ngInject
  * @ngdoc service
  * @ngname ngeoTime
  * @hidden

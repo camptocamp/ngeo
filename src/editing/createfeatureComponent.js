@@ -111,7 +111,6 @@ myModule.directive('ngeoCreatefeature', editingCreateFeatureComponent);
  * @param {import('ngeo/options').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreatefeatureController
  */

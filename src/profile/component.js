@@ -88,7 +88,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -105,7 +104,6 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -169,7 +167,6 @@ myModule.component('gmfProfile', profileComponent);
  * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfProfileController
  */

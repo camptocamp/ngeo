@@ -49,7 +49,6 @@ function shouldUpdate(older, newer) {
  */
 export const Controller = class _ngInjectAnonymousClass {
   /**
-   * @ngInject
    * @param {JQuery} $element The element
    * @param {import('ngeo/olcs/Service').OlcsService} ngeoOlcsService The ol-cesium service.
    */
@@ -259,7 +258,6 @@ _ngInjectAnonymousClass.$inject = ['$element', 'ngeoOlcsService'];
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {string} ngeoOlcsControls3dTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -272,7 +270,6 @@ function ngeoOlcsControls3dTemplateUrlInjectable($attrs, ngeoOlcsControls3dTempl
 }
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [

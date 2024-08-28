@@ -47,7 +47,6 @@ export class ThemesService extends olEventsEventTarget {
    * @param {string} gmfVectorTilesUrl The Vector Tiles URL.
    * @param {import('gmf/options').gmfVectorTilesOptions} gmfVectorTilesOptions the VectorTiles options.
    * @param {import('gmf/options').gmfWMSSourceOptions} gmfWMSSourceOptions the WMS source options.
-   * @ngInject
    */
   constructor(
     $http,

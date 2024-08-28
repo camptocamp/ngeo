@@ -45,7 +45,6 @@ const myModule = angular.module('ngeoPopover', []);
  *    </div>
  *
  * @ngdoc directive
- * @ngInject
  * @ngname ngeoPopover
  * @returns {angular.IDirective} The Directive Definition Object.
  */
@@ -85,7 +84,6 @@ function messagePopoverComponent() {
 
 /**
  * @ngdoc directive
- * @ngInject
  * @ngname ngeoPopoverAnchor
  * @returns {angular.IDirective} The Directive Definition Object
  */
@@ -104,7 +102,6 @@ function messagePopoverAnchorComponent() {
 
 /**
  * @ngdoc directive
- * @ngInject
  * @ngname ngeoPopoverContent
  * @returns {angular.IDirective} The Directive Definition Object
  */
@@ -126,7 +123,6 @@ function messagePopoverContentComponent() {
  * The controller for the 'popover' directive.
  *
  * @class
- * @ngInject
  * @ngdoc controller
  * @ngname NgeoPopoverController
  * @param {angular.IScope} $scope Scope.

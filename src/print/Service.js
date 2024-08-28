@@ -557,7 +557,6 @@ PrintService.prototype.getCapabilities = function (opt_httpConfig) {
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
  * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @returns {CreatePrint} The function to create a print service.
- * @ngInject
  * @ngdoc service
  * @ngname ngeoCreatePrint
  * @hidden

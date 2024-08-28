@@ -70,7 +70,6 @@ const myModule = angular.module('GmfDrawFeatureComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -96,7 +95,6 @@ myModule.run(
  *     active or not.
  * @htmlAttribute {import('ol/Map').default} gmf-drawfeature-map The map.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfDrawfeature
  */
@@ -126,7 +124,6 @@ myModule.directive('gmfDrawfeature', drawinfDrawFeatureComponent);
  *    manager service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfDrawfeatureController
  */

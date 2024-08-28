@@ -30,7 +30,6 @@ import angular from 'angular';
  * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfRasterUrl URL to a the c2cgeoportal raster service.
- * @ngInject
  * @ngdoc service
  * @ngname gmfRaster
  * @hidden

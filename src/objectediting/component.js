@@ -104,7 +104,6 @@ const myModule = angular.module('gmfObjectEditingComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -133,7 +132,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfObjecteditingTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -197,7 +195,6 @@ myModule.component('gmfObjectediting', objecteditingComponent);
  *    manager service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditingController
  */

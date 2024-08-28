@@ -33,7 +33,6 @@ const myModule = angular.module('ngeoDrawrectangle', []);
 
 /**
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawrectangle
  */

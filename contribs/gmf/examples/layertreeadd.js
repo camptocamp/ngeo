@@ -60,7 +60,6 @@ const myModule = angular.module('gmfapp', [
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
  * @param {import('gmf/theme/Manager').ThemeManagerService} gmfThemeManager gmf Tree Manager service.
  * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
- * @ngInject
  */
 function MainController(gmfTreeManager, gmfThemes, gmfThemeManager, ngeoLocation) {
   gmfThemes.loadThemes();

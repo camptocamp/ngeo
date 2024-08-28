@@ -48,7 +48,6 @@ import ngeoMiscDebounce from 'ngeo/misc/debounce';
  * @param {import('ngeo/options').ngeoNominatimSearchDefaultParams} ngeoNominatimSearchDefaultParams The search parameters
  * @class
  * @ngdoc service
- * @ngInject
  * @ngname ngeoNominatimService
  * @see https://wiki.openstreetmap.org/wiki/Nominatim
  * @hidden

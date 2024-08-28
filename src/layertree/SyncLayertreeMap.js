@@ -48,7 +48,6 @@ import Group from 'ol/layer/Group';
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
  * @param {import('gmf/options').gmfWMSSourceOptions} gmfWMSSourceOptions the WMS source options.
- * @ngInject
  * @ngdoc service
  * @ngname gmfSyncLayertreeMap
  * @hidden

@@ -40,7 +40,6 @@ import options from './options';
 const myModule = angular.module('app', ['gettext', gmfMapComponent.name]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -77,7 +76,6 @@ myModule.component('appBackgroundlayer', backgroundlayerComponent);
  * @param {angular.IHttpService} $http Angular http service.
  * @param {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr
  *    Background layer manager.
- * @ngInject
  */
 function BackgroundlayerController($http, ngeoBackgroundLayerMgr) {
   $http.get('data/backgroundlayers.json').then((resp) => {
@@ -136,7 +134,6 @@ myModule.controller('AppBackgroundlayerController', BackgroundlayerController);
 /**
  * @class
  * @param {angular.IScope} $scope Controller scope.
- * @ngInject
  */
 function MainController($scope) {
   /**

@@ -65,7 +65,6 @@ export class AbstractDesktopController extends AbstractAPIController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @ngInject
    */
   constructor($scope, $injector) {
     super($scope, $injector);

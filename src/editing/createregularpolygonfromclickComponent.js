@@ -95,7 +95,6 @@ myModule.directive('ngeoCreateregularpolygonfromclick', editingCreateRegularPoly
  * @param {angular.IScope} $scope Scope.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoCreateregularpolygonfromclickController
  */

@@ -51,7 +51,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -71,7 +70,6 @@ myModule.run(
  *    Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDatePicker
  */
@@ -142,7 +140,6 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */

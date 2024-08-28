@@ -31,7 +31,6 @@ export class EditingEnumerateAttributeService {
    *
    * @param {angular.IHttpService} $http Angular $http service.
    * @param {string} gmfLayersUrl URL to the GeoMapFish layers service.
-   * @ngInject
    * @ngdoc service
    * @ngname gmfEnumerateAttribute
    */

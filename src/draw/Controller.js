@@ -39,7 +39,6 @@ export class DrawController {
    *    service.
    * @param {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>} ngeoFeatures Collection of
    *    features.
-   * @ngInject
    */
   constructor($scope, gettextCatalog, ngeoFeatureHelper, ngeoFeatures) {
     /**

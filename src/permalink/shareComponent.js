@@ -34,7 +34,6 @@ const myModule = angular.module('gmfPermalinkShareComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -61,7 +60,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfPermalinkShareTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -98,7 +96,6 @@ export class ShareComponentController {
    * @param {angular.IAttributes} $attrs Attributes.
    * @param {import('gmf/options').gmfShareOptions} gmfShareOptions The options.
    * @class
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfShareController
    */

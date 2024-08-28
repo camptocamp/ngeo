@@ -39,7 +39,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMis
 /**
  * @class
  * @param {angular.IScope} $scope Scope.
- * @ngInject
  */
 function MainController($scope) {
   /**

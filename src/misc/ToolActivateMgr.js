@@ -56,7 +56,6 @@ import angular from 'angular';
  * @class
  * @ngdoc service
  * @ngname ngeoToolActivateMgr
- * @ngInject
  * @hidden
  */
 export function ToolActivateMgr($rootScope) {

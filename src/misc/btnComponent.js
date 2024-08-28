@@ -58,7 +58,6 @@ const myModule = angular.module('ngeoBtnComponent', []);
  * Tells whether at least one button of the group is active.
  * @param {angular.IParseService} $parse Angular parse service.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtnGroup
  */
@@ -105,7 +104,6 @@ myModule.directive('ngeoBtnGroup', buttonGroupComponent);
 export class BtnGroupController {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @ngInject
    * @hidden
    */
   constructor($scope) {
@@ -159,7 +157,6 @@ myModule.controller('ngeoBtnGroupController', BtnGroupController);
  * @htmlAttribute {*} ng-model Any property on the scope. Ideally a boolean.
  * @param {angular.IParseService} $parse Angular parse service.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtn
  */

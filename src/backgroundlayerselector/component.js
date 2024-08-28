@@ -48,7 +48,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -66,7 +65,6 @@ myModule.run(
  * @param {function(JQuery, angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl
  *    Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -121,7 +119,6 @@ myModule.component('gmfBackgroundlayerselector', backgroundlayerselectorComponen
  *    Background layer manager.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @param {import('gmf/options').gmfBackgroundLayerSelectorOptions} gmfBackgroundLayerSelectorOptions The options
- * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */

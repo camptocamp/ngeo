@@ -80,7 +80,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -98,7 +97,6 @@ myModule.run(
  * @param {function(JQuery, angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template
  *    function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -146,7 +144,6 @@ myModule.component('gmfDisplayquerywindow', queryWindowComponent);
  * @param {import('gmf/options').gmfDisplayQueryWindowOptions} gmfDisplayQueryWindowOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfDisplayquerywindowController
  */

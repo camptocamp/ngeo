@@ -76,7 +76,6 @@ const myModule = angular.module('ngeoSortable', []);
  *     the call of the callback function.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoSortable
  */

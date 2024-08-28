@@ -33,7 +33,6 @@ export class WMSTime extends Time {
   /**
    * @param {angular.IFilterService} $filter angular filter service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog service.
-   * @ngInject
    */
   constructor($filter, gettextCatalog) {
     super();

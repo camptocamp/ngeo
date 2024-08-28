@@ -79,7 +79,6 @@ export class RuleHelper {
    * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wms time service.
    * @ngdoc service
    * @ngname ngeoRuleHelper
-   * @ngInject
    */
   constructor(gettextCatalog, ngeoFeatureHelper, ngeoWMSTime) {
     /**

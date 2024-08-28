@@ -41,7 +41,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -66,7 +65,6 @@ myModule.run(
  * @param {string|function(JQuery=, angular.IAttributes=): string} ngeoColorpickerTemplateUrl
  *     Template URL for the directive.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoColorpicker
  */
@@ -128,7 +126,6 @@ const DEFAULT_COLORS = [
 /**
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname NgeoScaleselectorController
  */

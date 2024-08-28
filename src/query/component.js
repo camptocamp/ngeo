@@ -49,7 +49,6 @@ export class QueryController {
    *    The ngeo query modeSelector service.
    * @param {angular.IScope} $scope Scope.
    * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
-   * @ngInject
    * @ngdoc controller
    * @ngname NgeoQueryController
    */

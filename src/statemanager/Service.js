@@ -32,7 +32,6 @@ export class StatemanagerService {
   /**
    * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
    * @param {import('ngeo/options').ngeoUsedKeyRegexp} ngeoUsedKeyRegexp regexp used to identify the used keys.
-   * @ngInject
    */
   constructor(ngeoLocation, ngeoUsedKeyRegexp) {
     /**

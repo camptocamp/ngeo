@@ -48,7 +48,6 @@ myModule.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.h
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

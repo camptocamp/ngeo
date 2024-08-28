@@ -80,7 +80,6 @@ myModule.component('gmfappQueryresult', queryresultComponent);
  *
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult Query service.
  * @class
- * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
   /**
@@ -97,7 +96,6 @@ myModule.controller('gmfappQueryresultController', QueryresultController);
  *     data sources manager service.
  * @param {import('gmf/theme/Manager').ThemeManagerService} gmfThemeManager gmf Theme Manager service.
  * @param {string} defaultTheme The default theme.
- * @ngInject
  */
 function MainController(gmfThemes, gmfDataSourcesManager, gmfThemeManager, defaultTheme) {
   gmfThemes.loadThemes();

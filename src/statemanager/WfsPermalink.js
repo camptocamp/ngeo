@@ -120,7 +120,6 @@ import olFormatWFS from 'ol/format/WFS';
  * @param {import('ngeo/options').gmfFitOptions} gmfFitOptions The fit options.
  * @ngdoc service
  * @ngname ngeoWfsPermalink
- * @ngInject
  */
 export function WfsPermalinkService(
   $http,

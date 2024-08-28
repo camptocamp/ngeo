@@ -45,7 +45,6 @@ const myModule = angular.module('ngeoControl', []);
  *
  * @htmlAttribute {import('ol/Map').default} ngeo-control-map The map.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoControl
  */

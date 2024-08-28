@@ -288,7 +288,6 @@ const ParamPrefix = {
  * @param {import('gmf/datasource/Manager').DatasourceManager} gmfDataSourcesManager The gmf datasourcemanager
  *    service.
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime The ngeo  wmstime service
- * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */

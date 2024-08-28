@@ -86,7 +86,6 @@ export class CustomSnap extends olInteractionSnap {
  * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} ngeoFeatures Collection
  *    of features.
  * @param {import('gmf/options.js').gmfSnappingOptions} gmfSnappingOptions The options.
- * @ngInject
  * @ngdoc service
  * @ngname gmfSnapping
  */

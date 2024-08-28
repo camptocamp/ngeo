@@ -103,7 +103,6 @@ const myModule = angular.module('ngeoAngularFilters', []);
  * @param {angular.IFilterService} $filter Angular filter
  * @returns {function(number): string} A function to format number into a 'scale'
  *     string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoScalify
  */
@@ -142,7 +141,6 @@ myModule.filter('ngeoScalify', ScalifyFilter);
  *
  * @param {angular.ILocaleService} $locale Angular locale
  * @returns {formatNumber} Function used to format number into a string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumber
  */
@@ -218,7 +216,6 @@ myModule.filter('ngeoNumber', NumberFilter);
  *
  * @param {angular.IFilterService} $filter Angular filter
  * @returns {unitPrefix} Function used to format number into a string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoUnitPrefix
  */
@@ -285,7 +282,6 @@ myModule.filter('ngeoUnitPrefix', UnitPrefixFilter);
  *
  * @param {angular.IFilterService} $filter Angular filter
  * @returns {numberCoordinates} A function to format numbers into coordinates string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
  */
@@ -327,7 +323,6 @@ myModule.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
  * @returns {dmsCoordinates} A function to format numbers into a DMS coordinates string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
  */
@@ -378,7 +373,6 @@ myModule.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
  * If you use it, you don't require the "ngSanitize".
  *
  * @returns {function(?):string} The filter function.
- * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
  * @ngname ngeoTrustHtml
@@ -406,7 +400,6 @@ myModule.filter('ngeoTrustHtml', trustHtmlFilter);
  * If you use it, you don't require the "ngSanitize".
  *
  * @returns {function(?):string} The filter function.
- * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {import('ngeo/options').ngeoStringToHtmlReplacements} ngeoStringToHtmlReplacements
@@ -450,7 +443,6 @@ myModule.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
  *
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @returns {duration} Function used to format a time duration in seconds into a string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoDuration
  */

@@ -28,7 +28,6 @@ import angular from 'angular';
 const myModule = angular.module('gmfFloorSelector', []);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -55,7 +54,6 @@ myModule.value(
  * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!function(!angular.IAttributes): string} gmfFloorselectorTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -72,7 +70,6 @@ export class Controller {
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
    * @param {import('gmf/options').gmfFloors} gmfFloors Floor dimension values and labels.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */

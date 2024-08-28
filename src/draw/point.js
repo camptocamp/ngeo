@@ -32,7 +32,6 @@ const myModule = angular.module('ngeoDrawpoint', []);
 
 /**
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */

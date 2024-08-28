@@ -78,7 +78,6 @@ const CLASS_NAMES = {
  * When an element slides in the directive changes the text in the header.
  *
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  */
 function mobileNavigationComponent() {
   return {
@@ -105,7 +104,6 @@ myModule.directive('gmfMobileNav', mobileNavigationComponent);
 /**
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfMobileNavController
  */
@@ -310,7 +308,6 @@ Controller.prototype.backIfActive = function (element) {
  * active, the navigation will go back to the last slide.
  *
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  */
 function mobileNavigationBackComponent() {
   return {
@@ -354,7 +351,6 @@ myModule.directive('gmfMobileNavBack', mobileNavigationBackComponent);
  *      </gmf-themeselector>
  *
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  */
 function mobileNavigationBackOnClickComponent() {
   return {

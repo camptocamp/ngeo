@@ -29,7 +29,6 @@ const myModule = angular.module('app', [ngeoMessageDisplaywindowComponent.name])
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @ngInject
  * @class
  */
 function MainController($scope) {

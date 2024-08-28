@@ -34,7 +34,6 @@ const myModule = angular.module('gmfLayertreeDatasourceGroupTreeComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -65,7 +64,6 @@ myModule.value(
  * @param {function(angular.IAttributes): string} gmfLayertreeDatasourceGroupTreeTemplateUrl
  *    Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -82,7 +80,6 @@ export class Controller {
    * @param {angular.IScope} $scope Angular scope.
    * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
    * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo data sources service.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfDatasourcegrouptreeController
    */

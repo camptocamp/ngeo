@@ -56,7 +56,6 @@ const myModule = angular.module('app', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -86,7 +85,6 @@ myModule.component('appQueryresult', queryresultComponent);
 /**
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult The ngeo query service.
  * @class
- * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
   /**
@@ -102,7 +100,6 @@ myModule.controller('AppQueryresultController', QueryresultController);
  *     manager.
  * @param {import('ngeo/query/ModeSelector').QueryModeSelector} ngeoQueryModeSelector The ngeo QueryModeSelector service
  * @class
- * @ngInject
  */
 function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelector) {
   /**

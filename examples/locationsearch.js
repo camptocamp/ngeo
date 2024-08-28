@@ -54,7 +54,6 @@ appmodule.component('appLocationSearch', locationSearchComponent);
  * @class
  * @param {import('ngeo/search/createLocationSearchBloodhound').createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *    Bloodhound service.
- * @ngInject
  */
 function SearchController(ngeoCreateLocationSearchBloodhound) {
   /**
@@ -152,7 +151,6 @@ appmodule.controller('AppSearchController', SearchController);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

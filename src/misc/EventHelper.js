@@ -28,7 +28,6 @@ import {unlistenByKey} from 'ol/events';
  * @class
  * @ngdoc service
  * @ngname ngeoEventHelper
- * @ngInject
  * @hidden
  */
 export function EventHelper() {

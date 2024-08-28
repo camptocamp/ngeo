@@ -32,7 +32,6 @@ const myModule = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.n
 /**
  * @class
  * @param {import('ngeo/misc/Time').default} ngeoTime time service.
- * @ngInject
  */
 function MainController(ngeoTime) {
   /**

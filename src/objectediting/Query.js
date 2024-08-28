@@ -36,7 +36,6 @@ import olSourceImageWMS from 'ol/source/ImageWMS';
  * @param {angular.IQService} $q Angular $q service.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
  * @class
- * @ngInject
  * @hidden
  */
 export function ObjectEditingQuery($http, $q, gmfThemes) {

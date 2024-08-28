@@ -34,7 +34,6 @@ const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.na
  * @param {angular.IHttpService} $http Angular's $http service.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @param {import('gmf/theme/Manager').ThemeManagerService} gmfThemeManager gmf Tree Manager service.
- * @ngInject
  */
 function MainController($http, gmfThemes, gmfThemeManager) {
   /**

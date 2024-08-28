@@ -45,7 +45,6 @@ export class DatasourceHelper {
    * @ngname ngeoDataSourcesHelper
    * @param {import('gmf/editing/EnumerateAttribute').EditingEnumerateAttributeService} gmfEnumerateAttribute
    *    The Gmf enumerate attribute service.
-   * @ngInject
    */
   constructor($q, ngeoDataSources, ngeoQuerent, gmfEnumerateAttribute) {
     // === Injected properties ===

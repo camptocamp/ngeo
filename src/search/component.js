@@ -64,7 +64,6 @@ function gmfSearchTemplateUrl_(element, attrs) {
 }
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -81,7 +80,6 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfSearchTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -169,7 +167,6 @@ export class SearchController {
    * @param {import('gmf/options').gmfSearchOptions} gmfSearchOptions The options.
    * @param {import('gmf/options').gmfSearchGroups} gmfSearchGroups The groups.
    * @param {string} fulltextsearchUrl The service URL.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfSearchController
    */

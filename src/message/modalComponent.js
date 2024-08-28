@@ -93,7 +93,6 @@ myModule.component('ngeoModal', messageModalComponent);
  */
 export class Controller {
   /**
-   * @ngInject
    * @param {angular.IScope} $scope Scope.
    * @param {JQuery} $element Element.
    */

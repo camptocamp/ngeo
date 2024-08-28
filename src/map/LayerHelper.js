@@ -49,7 +49,6 @@ import {ServerType} from 'ngeo/datasource/OGC';
  * @class
  * @ngdoc service
  * @ngname ngeoLayerHelper
- * @ngInject
  * @hidden
  */
 export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {

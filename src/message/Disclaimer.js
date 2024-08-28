@@ -50,7 +50,6 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
    * @param {angular.ISCEService} $sce Angular sce service.
    * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext service.
    * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
-   * @ngInject
    */
   constructor($sce, gettextCatalog, ngeoCreatePopup) {
     super();

@@ -114,7 +114,6 @@ myModule.directive('gmfContextualdata', contextualDataComponent);
  * @class
  * @hidden
  * @ngdoc controller
- * @ngInject
  */
 export function ContextualdataController(
   $compile,
@@ -381,7 +380,6 @@ myModule.controller('GmfContextualdataController', ContextualdataController);
  *
  * @param {string} gmfContextualdatacontentTemplateUrl URL to template.
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfContextualdatacontent
  */

@@ -49,7 +49,6 @@ const myModule = angular.module('ngeoMeasureazimut', [ngeoDrawController.name, n
  * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
  * @param {import('ngeo/options').ngeoMeasureDecimals} ngeoMeasureDecimals The decimals.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */

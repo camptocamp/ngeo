@@ -36,7 +36,6 @@ const myModule = angular.module('app', ['gettext', ngeoScaleSelector.name, gmfMa
 /**
  * @class
  * @param {angular.IScope} $scope Controller scope.
- * @ngInject
  */
 function MainController($scope) {
   /**

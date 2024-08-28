@@ -27,7 +27,6 @@ const myModule = angular.module('app', ['gettext', ngeoMessageModalComponent.nam
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

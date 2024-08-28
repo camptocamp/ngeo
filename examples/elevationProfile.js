@@ -70,7 +70,6 @@ const typedFunctionsFactory = function (key, opt_childKey) {
  * @class
  * @param {angular.IHttpService} $http The $http angular service.
  * @param {angular.IScope} $scope The $scope angular service.
- * @ngInject
  */
 function MainController($http, $scope) {
   /**

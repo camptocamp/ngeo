@@ -56,7 +56,6 @@ export class MapQuerent {
    * @param {import('ngeo/options').ngeoQueryOptions} ngeoQueryOptions The options.
    * @ngdoc service
    * @ngname ngeoQuerent
-   * @ngInject
    */
   constructor(
     ngeoDataSources,

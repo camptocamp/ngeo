@@ -39,7 +39,6 @@ function magnitude2(a, b) {
 }
 const Downloader = class {
   /**
-   * @ngInject
    * @param {import('ngeo/offline/Configuration').default} ngeoOfflineConfiguration
    * A service for customizing offline behavior.
    */

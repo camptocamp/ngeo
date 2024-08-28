@@ -70,7 +70,6 @@ myModule.component('appMap', mapComponent);
  * @param {import('ngeo/misc/debounce').miscDebounce<function(import('ol/events/Event').default): void>} ngeoDebounce
  *    ngeo Debounce factory.
  * @class
- * @ngInject
  */
 function MapComponentController(ngeoLocation, ngeoDebounce) {
   /**
@@ -155,7 +154,6 @@ myModule.component('appDraw', drawComponent);
  * @param {angular.IScope} $scope Scope.
  * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
  * @class
- * @ngInject
  */
 function DrawComponentController($scope, ngeoLocation) {
   /**

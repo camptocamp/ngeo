@@ -136,7 +136,6 @@ export const ArrowPositions = {
  * @param {import('ngeo/options').ngeoPointfilter} ngeoPointfilter the point filter.
  * @ngdoc service
  * @ngname ngeoFeatureHelper
- * @ngInject
  * @hidden
  */
 export function FeatureHelper(

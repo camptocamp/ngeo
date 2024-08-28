@@ -46,7 +46,6 @@ const appmodule = angular.module('app', ['ngeo']);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**

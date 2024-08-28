@@ -46,7 +46,6 @@ const myModule = angular.module('ngeoRoutingFeatureComponent', [
 ]);
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -73,7 +72,6 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRoutingFeatureTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
@@ -90,7 +88,6 @@ function ngeoRoutingFeatureTemplateUrl($attrs, ngeoRoutingFeatureTemplateUrl) {
  *    Nominatim
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname NgeoRoutingFeatureController
  */

@@ -46,7 +46,6 @@ import angular from 'angular';
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfShortenerCreateUrl URL for the shortener API
  * @class
- * @ngInject
  * @ngname gmfShareService
  * @hidden
  */

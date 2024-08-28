@@ -70,7 +70,6 @@ import {listen} from 'ol/events';
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes gmf Themes service.
  * @param {import('ngeo/statemanager/Service').StatemanagerService} ngeoStateManager The ngeo
  *    statemanager service.
- * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
  * @hidden

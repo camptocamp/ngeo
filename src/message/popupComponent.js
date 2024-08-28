@@ -42,7 +42,6 @@ myModule.value(
 );
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
   [
@@ -71,7 +70,6 @@ myModule.run(
  *
  * @param {string} ngeoPopupTemplateUrl URL to popup template.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoPopup
  */
