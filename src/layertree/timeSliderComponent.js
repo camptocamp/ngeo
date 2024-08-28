@@ -1,3 +1,4 @@
+Controller.$inject = ['ngeoWMSTime', 'ngeoDebounce'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
-
 import 'jquery-ui/ui/widgets/slider';
 import 'ngeo/sass/jquery-ui.scss';
 import 'angular-ui-slider';
@@ -37,16 +37,17 @@ const myModule = angular.module('gmfLayertreeTimeSliderComponent', [
   ngeoMiscDebounce.name,
   'ui.slider',
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/layertree/timesliderComponent', require('./timesliderComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -66,7 +67,6 @@ myModule.run(
  * @htmlAttribute {function()} gmf-time-slider-on-date-selected Expression evaluated after
  * date(s) changed
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfTimeSlider
  */
@@ -86,7 +86,6 @@ function layertreeTimeSliderComponent() {
           throw new Error('Missing ctrl');
         }
         ctrl.init();
-
         ctrl.sliderOptions.stop = onSliderReleased_;
         ctrl.sliderOptions.slide = ctrl.ngeoDebounce_(onSliderReleased_, 300, true);
 
@@ -136,7 +135,6 @@ function layertreeTimeSliderComponent() {
     },
   };
 }
-
 myModule.directive('gmfTimeSlider', layertreeTimeSliderComponent);
 
 /**
@@ -146,7 +144,6 @@ myModule.directive('gmfTimeSlider', layertreeTimeSliderComponent);
  * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce factory.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfTimeSliderController
  */
@@ -255,7 +252,9 @@ Controller.prototype.init = function () {
     max: this.maxValue,
   };
   // Call the callback with the current slider time.
-  this.onDateSelected({time: currentTime});
+  this.onDateSelected({
+    time: currentTime,
+  });
 };
 
 /**
@@ -273,7 +272,6 @@ Controller.prototype.getTimeValueList_ = function () {
   let timeValueList = [];
   const minDate = new Date(this.minValue);
   const maxDate = new Date(this.maxValue);
-
   if (wmsTime.values) {
     timeValueList = [];
     wmsTime.values.forEach((date) => {
@@ -292,7 +290,6 @@ Controller.prototype.getTimeValueList_ = function () {
       minDate.getDate() + maxNbValues * wmsTime.interval[2],
     );
     endDate.setSeconds(minDate.getSeconds() + maxNbValues * wmsTime.interval[3]);
-
     if (endDate > maxDate) {
       // Transform interval to a list of values when the number
       // of values is below a threshold (maxNbValues)
@@ -330,17 +327,14 @@ Controller.prototype.getClosestValue_ = function (timestamp) {
   if (timestamp <= this.minValue) {
     return this.minValue;
   }
-
   if (timestamp >= this.maxValue) {
     return this.maxValue;
   }
-
   if (this.timeValueList) {
     // Time stops are defined as a list of values
     let index;
     let leftIndex = 0;
     let rightIndex = this.timeValueList.length - 1;
-
     while (rightIndex - leftIndex > 1) {
       index = Math.floor((leftIndex + rightIndex) / 2);
       if (this.timeValueList[index] >= timestamp) {
@@ -349,10 +343,8 @@ Controller.prototype.getClosestValue_ = function (timestamp) {
         leftIndex = index;
       }
     }
-
     const leftDistance = Math.abs(this.timeValueList[leftIndex] - timestamp);
     const rightDistance = Math.abs(this.timeValueList[rightIndex] - timestamp);
-
     return this.timeValueList[leftDistance < rightDistance ? leftIndex : rightIndex];
   } else {
     // Time stops are defined by a start date plus an interval
@@ -361,7 +353,6 @@ Controller.prototype.getClosestValue_ = function (timestamp) {
     let bestDate = new Date(this.minValue);
     const maxDate = new Date(this.maxValue);
     let bestDistance = Math.abs(targetDate.getTime() - bestDate.getTime());
-
     for (let i = 1; ; i++) {
       // The start date should always be used as a reference
       // because adding a month twice could differ from adding
@@ -373,11 +364,9 @@ Controller.prototype.getClosestValue_ = function (timestamp) {
         startDate.getDate() + i * this.time.interval[2],
       );
       next.setSeconds(startDate.getSeconds() + i * this.time.interval[3]);
-
       if (next > maxDate) {
         break;
       }
-
       const distance = Math.abs(targetDate.getTime() - next.getTime());
       if (distance <= bestDistance) {
         bestDate = next;
@@ -386,7 +375,6 @@ Controller.prototype.getClosestValue_ = function (timestamp) {
         break;
       }
     }
-
     return bestDate.getTime();
   }
 };
@@ -403,7 +391,5 @@ Controller.prototype.getLocalizedDate = function (time) {
   }
   return this.ngeoWMSTime_.formatTimeValue(time, this.time.resolution);
 };
-
 myModule.controller('gmfTimeSliderController', Controller);
-
 export default myModule;

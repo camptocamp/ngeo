@@ -1,3 +1,4 @@
+MainController.$inject = ['gmfThemes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,9 +23,7 @@
 import angular from 'angular';
 import './backgroundlayerselector.css';
 import gmfBackgroundlayerselectorModule from 'gmf/backgroundlayerselector/module';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfThemeThemes from 'gmf/theme/Themes';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
@@ -47,7 +46,6 @@ const myModule = angular.module('gmfapp', [
 /**
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @class
- * @ngInject
  */
 function MainController(gmfThemes) {
   gmfThemes.loadThemes();
@@ -65,8 +63,6 @@ function MainController(gmfThemes) {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

@@ -34,7 +34,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMap
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   const openStreetMapLayer = new olLayerTile({
@@ -62,14 +61,11 @@ function MainController() {
       zoom: 15,
     }),
   });
-
   this.gmfLayerBeingSwipe = {
     layer: this.openSeaMapLayer,
     swipeValue: 0.5,
   };
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

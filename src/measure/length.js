@@ -1,3 +1,11 @@
+measureLengthComponent.$inject = [
+  '$compile',
+  'gettextCatalog',
+  '$filter',
+  '$injector',
+  'ngeoMeasurePrecision',
+  'ngeoSnappingTolerance',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -41,7 +49,6 @@ const myModule = angular.module('ngeoMeasurelength', [ngeoDrawController.name, n
  * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
  * @param {import('ngeo/options').ngeoSnappingTolerance} ngeoSnappingTolerance The tolerance.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
@@ -66,7 +73,6 @@ function measureLengthComponent(
       if (!drawFeatureCtrl) {
         throw new Error('Missing drawFeatureCtrl');
       }
-
       const helpMsg = gettextCatalog.getString('Click to start drawing line');
       const contMsg = gettextCatalog.getString(
         'Click to continue drawing<br>' + 'Double-click or click last point to finish',
@@ -88,14 +94,11 @@ function measureLengthComponent(
         gettextCatalog,
         options,
       );
-
       if (drawFeatureCtrl.uid) {
         measureLength.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-length`);
       }
-
       drawFeatureCtrl.registerInteraction(measureLength);
       drawFeatureCtrl.measureLength = measureLength;
-
       listen(
         measureLength,
         'measureend',
@@ -106,7 +109,5 @@ function measureLengthComponent(
     },
   };
 }
-
 myModule.directive('ngeoMeasurelength', measureLengthComponent);
-
 export default myModule;

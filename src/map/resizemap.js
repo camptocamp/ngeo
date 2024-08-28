@@ -1,3 +1,4 @@
+mapResizeComponent.$inject = ['$window'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -45,13 +46,11 @@ const myModule = angular.module('ngeoResizemap', []);
  *
  * @param {angular.IWindowService} $window Angular window service.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoResizemap
  */
 function mapResizeComponent($window) {
   const /** @type {number} */ duration = 1000;
-
   return {
     restrict: 'A',
     /**
@@ -64,7 +63,6 @@ function mapResizeComponent($window) {
       const prop = attrs[attr];
       const map = scope.$eval(prop);
       console.assert(map instanceof olMap);
-
       const stateExpr = attrs.ngeoResizemapState;
       console.assert(stateExpr !== undefined);
 
@@ -72,11 +70,9 @@ function mapResizeComponent($window) {
       let start;
       /** @type {number} */
       let animationDelayKey;
-
       const animationDelay = () => {
         map.updateSize();
         map.renderSync();
-
         if (Date.now() - start < duration) {
           animationDelayKey = $window.requestAnimationFrame(animationDelay);
         }
@@ -88,7 +84,6 @@ function mapResizeComponent($window) {
         map.updateSize();
         map.renderSync();
       });
-
       scope.$watch(stateExpr, (newVal, oldVal) => {
         if (newVal != oldVal) {
           start = Date.now();
@@ -99,7 +94,5 @@ function mapResizeComponent($window) {
     },
   };
 }
-
 myModule.directive('ngeoResizemap', mapResizeComponent);
-
 export default myModule;

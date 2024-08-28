@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import olMap from 'ol/Map';
-
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
@@ -33,7 +32,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name]);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -51,8 +49,6 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

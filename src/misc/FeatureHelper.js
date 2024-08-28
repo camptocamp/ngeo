@@ -1,3 +1,10 @@
+FeatureHelper.$inject = [
+  '$filter',
+  'ngeoMeasurePrecision',
+  'ngeoMeasureDecimals',
+  'ngeoMeasureSpherical',
+  'ngeoPointfilter',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,9 +28,7 @@
 
 import angular from 'angular';
 import ngeoMiscFilters from 'ngeo/misc/filters';
-
 import gmfDownloadService from 'ngeo/download/service';
-
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoGeometryType from 'ngeo/GeometryType';
 import {getFormattedLength, getFormattedArea, getFormattedPoint} from 'ngeo/interaction/Measure';
@@ -131,7 +136,6 @@ export const ArrowPositions = {
  * @param {import('ngeo/options').ngeoPointfilter} ngeoPointfilter the point filter.
  * @ngdoc service
  * @ngname ngeoFeatureHelper
- * @ngInject
  * @hidden
  */
 export function FeatureHelper(
@@ -164,19 +168,19 @@ export function FeatureHelper(
   /**
    * @type {import('ngeo/misc/filters').formatNumber}
    */
-  this.numberFormat_ = /** @type {import('ngeo/misc/filters').formatNumber} */ ($filter('number'));
+  this.numberFormat_ = /** @type {import('ngeo/misc/filters').formatNumber} */ $filter('number');
 
   /**
    * @type {import('ngeo/misc/filters').unitPrefix}
    */
-  this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters').unitPrefix} */ ($filter('ngeoUnitPrefix'));
+  this.unitPrefixFormat_ = /** @type {import('ngeo/misc/filters').unitPrefix} */ $filter('ngeoUnitPrefix');
 
   /**
    * @type {import('ngeo/misc/filters').numberCoordinates}
    */
-  this.ngeoNumberCoordinates_ = /** @type {import('ngeo/misc/filters').numberCoordinates} */ (
-    $filter('ngeoNumberCoordinates')
-  );
+  this.ngeoNumberCoordinates_ =
+    /** @type {import('ngeo/misc/filters').numberCoordinates} */
+    $filter('ngeoNumberCoordinates');
 
   /**
    * Filter function to display point coordinates or null to don't use any filter.
@@ -191,7 +195,6 @@ export function FeatureHelper(
    * @type {*[]}
    */
   this.pointFilterArgs_ = [];
-
   if (ngeoPointfilter) {
     const filterElements = ngeoPointfilter.split(':');
     const filterName = filterElements.shift();
@@ -247,10 +250,9 @@ FeatureHelper.prototype.setStyle = function (feature, opt_select) {
 FeatureHelper.prototype.getStyle = function (feature) {
   const type = this.getType(feature);
   let style;
-
   switch (type) {
     case ngeoGeometryType.LINE_STRING:
-      style = this.getLineStringStyle_(/** @type {olFeature<olGeomLineString>} */ (feature));
+      style = this.getLineStringStyle_(/** @type {olFeature<olGeomLineString>} */ feature);
       break;
     case ngeoGeometryType.POINT:
       style = this.getPointStyle_(feature);
@@ -266,7 +268,6 @@ FeatureHelper.prototype.getStyle = function (feature) {
     default:
       break;
   }
-
   if (!style) {
     throw new Error('Missing style');
   }
@@ -278,7 +279,6 @@ FeatureHelper.prototype.getStyle = function (feature) {
   } else {
     styles = [style];
   }
-
   return styles;
 };
 
@@ -293,7 +293,6 @@ FeatureHelper.prototype.getLineStringStyle_ = function (feature) {
   const color = this.getRGBAColorProperty(feature);
   const arrowDirection = this.getArrowDirectionProperty(feature);
   const arrowPosition = this.getArrowPositionProperty(feature);
-
   const styles = [
     new olStyleStyle({
       stroke: new olStyleStroke({
@@ -372,7 +371,8 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
             width: 1,
             color: color,
           }),
-          text: '\uf054', // Arrow symbol (chevron-right).
+          text: '\uf054',
+          // Arrow symbol (chevron-right).
           rotateWithView: true,
           rotation: invert ? Math.PI - rotation : -rotation,
         }),
@@ -419,7 +419,6 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
   if (firstOrLastSegment) {
     addArrowToSegment(firstOrLastSegment[0], firstOrLastSegment[1]);
   }
-
   return arrowStyles;
 };
 
@@ -521,9 +520,7 @@ FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
   // fill color with opacity
   const fillColor = color.slice();
   fillColor[3] = opacity;
-
   const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
-
   const styles = [
     new olStyleStyle({
       fill: new olStyleFill({
@@ -543,7 +540,6 @@ FeatureHelper.prototype.getPolygonStyle_ = function (feature) {
       // Radius style:
       const line = this.getRadiusLine(feature, azimut);
       const length = getFormattedLength(line, this.projection_, this.precision_, this.unitPrefixFormat_);
-
       styles.push(
         new olStyleStyle({
           geometry: line,
@@ -649,13 +645,11 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
   const blue = [0, 153, 255, 1];
   const width = 3;
   const styles = [];
-
   const geom = feature.getGeometry();
   if (!geom) {
     throw new Error('Missing geom');
   }
   const type = geom.getType();
-
   if (type === 'Point') {
     styles.push(
       new olStyleStyle({
@@ -707,7 +701,6 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
     // (2) Anything else than 'Point' requires the vertex style as well
     styles.push(this.getVertexStyle(true));
   }
-
   return styles;
 };
 
@@ -734,14 +727,12 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
  */
 FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinate, resolution) {
   let info = null;
-
   if (this.supportsVertexRemoval_(feature)) {
     const buffer = resolution * VertexStyleRegularShapeRadius;
     let coordinates = null;
     let coordinates2 = null;
     let coordinates3 = null;
     let minNumCoordinates = -1;
-
     const geometry = feature.getGeometry();
     if (geometry instanceof olGeomLineString) {
       coordinates = geometry.getCoordinates();
@@ -756,7 +747,6 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
       coordinates3 = geometry.getCoordinates();
       minNumCoordinates = 4;
     }
-
     if (coordinates) {
       // Array of ol.Coordinate - 1 index
       const index = this.getCoordinateIndexThatHitsAt_(coordinates, coordinate, minNumCoordinates, buffer);
@@ -802,7 +792,6 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
       }
     }
   }
-
   return info;
 };
 
@@ -823,7 +812,6 @@ FeatureHelper.prototype.getVertexInfoAtCoordinate = function (feature, coordinat
 FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function (coordinates, coordinate, min, buffer) {
   let index = -1;
   const ii = coordinates.length;
-
   if (ii > min) {
     for (let i = 0; i < ii; i++) {
       const hits = olExtent.containsCoordinate(
@@ -836,7 +824,6 @@ FeatureHelper.prototype.getCoordinateIndexThatHitsAt_ = function (coordinates, c
       }
     }
   }
-
   return index;
 };
 
@@ -868,7 +855,6 @@ FeatureHelper.prototype.getVertexStyle = function (opt_incGeomFunc) {
       }),
     }),
   };
-
   if (incGeomFunc) {
     options.geometry = function (feature) {
       const geom = feature.getGeometry();
@@ -878,7 +864,6 @@ FeatureHelper.prototype.getVertexStyle = function (opt_incGeomFunc) {
       if (geom.getType() == 'Point') {
         return;
       }
-
       let innerMultiCoordinates;
       /** @type {number[][][]} */
       let multiCoordinates = [];
@@ -893,7 +878,6 @@ FeatureHelper.prototype.getVertexStyle = function (opt_incGeomFunc) {
       } else if (geom instanceof olGeomMultiPolygon) {
         innerMultiCoordinates = geom.getCoordinates();
       }
-
       if (innerMultiCoordinates) {
         for (let i = 0, ii = innerMultiCoordinates.length; i < ii; i++) {
           multiCoordinates = multiCoordinates.concat(innerMultiCoordinates[i]);
@@ -902,7 +886,6 @@ FeatureHelper.prototype.getVertexStyle = function (opt_incGeomFunc) {
       for (let i = 0, ii = multiCoordinates.length; i < ii; i++) {
         coordinates = coordinates.concat(multiCoordinates[i]);
       }
-
       if (coordinates.length) {
         return new olGeomMultiPoint(coordinates);
       } else {
@@ -910,7 +893,6 @@ FeatureHelper.prototype.getVertexStyle = function (opt_incGeomFunc) {
       }
     };
   }
-
   return new olStyleStyle(options);
 };
 
@@ -923,12 +905,10 @@ FeatureHelper.prototype.getVertexStyle = function (opt_incGeomFunc) {
  */
 FeatureHelper.prototype.removeVertex = function (feature, vertexInfo) {
   let deleted = false;
-
   const geometry = feature.getGeometry();
   if (!(geometry instanceof olGeomSimpleGeometry)) {
     throw new Error('Wrong geometry type');
   }
-
   if (geometry instanceof olGeomLineString) {
     // LineString
     const coordinates = geometry.getCoordinates();
@@ -937,7 +917,6 @@ FeatureHelper.prototype.removeVertex = function (feature, vertexInfo) {
       coordinates.splice(index, 1);
       deleted = true;
     }
-
     if (deleted) {
       geometry.setCoordinates(coordinates);
     }
@@ -956,7 +935,6 @@ FeatureHelper.prototype.removeVertex = function (feature, vertexInfo) {
         component.push(component[0]);
       }
     }
-
     if (deleted) {
       geometry.setCoordinates(coordinates);
     }
@@ -970,7 +948,6 @@ FeatureHelper.prototype.removeVertex = function (feature, vertexInfo) {
       component.splice(indexTwo, 1);
       deleted = true;
     }
-
     if (deleted) {
       geometry.setCoordinates(coordinates);
     }
@@ -990,7 +967,6 @@ FeatureHelper.prototype.removeVertex = function (feature, vertexInfo) {
         component.push(component[0]);
       }
     }
-
     if (deleted) {
       geometry.setCoordinates(coordinates);
     }
@@ -1037,7 +1013,6 @@ FeatureHelper.prototype.getHaloStyle_ = function (feature) {
   const type = this.getType(feature);
   let style;
   const haloSize = 3;
-
   switch (type) {
     case ngeoGeometryType.POINT:
       const size = this.getSizeProperty(feature);
@@ -1078,7 +1053,6 @@ FeatureHelper.prototype.getHaloStyle_ = function (feature) {
     default:
       break;
   }
-
   if (!style) {
     throw new Error('Missing style');
   }
@@ -1118,7 +1092,7 @@ export function getFilteredFeatureValues(feature) {
  * @returns {number} Angle.
  */
 FeatureHelper.prototype.getAngleProperty = function (feature) {
-  const angle = +(/** @type {string} */ (feature.get(ngeoFormatFeatureProperties.ANGLE)));
+  const angle = +(/** @type {string} */ feature.get(ngeoFormatFeatureProperties.ANGLE));
   console.assert(typeof angle == 'number');
   return angle;
 };
@@ -1272,7 +1246,7 @@ FeatureHelper.prototype.exportGPX = function (features) {
   const mimeType = 'application/gpx+xml';
   const fileName = 'export.gpx';
   // Typecast due OL issue ...
-  this.export_(features, /** @type {import('ol/format/Feature').default} */ (format), fileName, mimeType);
+  this.export_(features, /** @type {import('ol/format/Feature').default} */ format, fileName, mimeType);
 };
 
 /**
@@ -1286,7 +1260,7 @@ FeatureHelper.prototype.exportKML = function (features) {
   const mimeType = 'application/vnd.google-earth.kml+xml';
   const fileName = 'export.kml';
   // Typecast due OL issue ...
-  this.export_(features, /** @type {import('ol/format/Feature').default} */ (format), fileName, mimeType);
+  this.export_(features, /** @type {import('ol/format/Feature').default} */ format, fileName, mimeType);
 };
 
 /**
@@ -1312,14 +1286,12 @@ FeatureHelper.prototype.export_ = function (features, format, fileName, opt_mime
     this.setStyle(clone, false);
     clones.push(clone);
   });
-
   const writeOptions = this.projection_
     ? {
         dataProjection: 'EPSG:4326',
         featureProjection: this.projection_,
       }
     : {};
-
   const data = format.writeFeatures(clones, writeOptions);
   if (typeof data == 'string') {
     gmfDownloadService(data, fileName, `${mimeType};charset=utf-8`);
@@ -1343,22 +1315,19 @@ FeatureHelper.prototype.createTextStyle_ = function (options) {
     text_options.rotation = rotation;
     delete options.angle;
   }
-
   text_options.overflow = true;
-
   text_options.font = ['normal', `${options.size || 10}pt`, 'Arial'].join(' ');
-
   if (options.color) {
-    text_options.fill = new olStyleFill({color: options.color || [0, 0, 0, 1]});
+    text_options.fill = new olStyleFill({
+      color: options.color || [0, 0, 0, 1],
+    });
     delete options.color;
   }
-
   text_options.stroke = new olStyleStroke({
     color: [255, 255, 255, 1],
     width: options.width || 3,
   });
   delete options.width;
-
   return new olStyleText(text_options);
 };
 
@@ -1374,14 +1343,11 @@ FeatureHelper.prototype.getMeasure = function (feature) {
   if (!this.projection_) {
     throw new Error('Missing projection');
   }
-
   const geometry = feature.getGeometry();
   if (!geometry) {
     throw new Error('Missing geometry');
   }
-
   let measure = '';
-
   if (geometry instanceof olGeomPolygon) {
     if (this.getType(feature) === ngeoGeometryType.CIRCLE) {
       const azimut = this.optNumber(feature, ngeoFormatFeatureProperties.AZIMUT);
@@ -1389,7 +1355,6 @@ FeatureHelper.prototype.getMeasure = function (feature) {
         throw new Error('Missing azimut');
       }
       const line = this.getRadiusLine(feature, azimut);
-
       measure = getFormattedAzimutRadius(
         line,
         this.projection_,
@@ -1429,7 +1394,6 @@ FeatureHelper.prototype.getMeasure = function (feature) {
       }
     }
   }
-
   return measure;
 };
 
@@ -1443,9 +1407,7 @@ FeatureHelper.prototype.getMeasure = function (feature) {
 FeatureHelper.prototype.getType = function (feature) {
   const geometry = feature.getGeometry();
   console.assert(geometry, 'Geometry should be thruthy');
-
   let type;
-
   if (geometry instanceof olGeomPoint) {
     if (feature.get(ngeoFormatFeatureProperties.IS_TEXT)) {
       type = ngeoGeometryType.TEXT;
@@ -1469,7 +1431,6 @@ FeatureHelper.prototype.getType = function (feature) {
   } else if (geometry instanceof olGeomMultiLineString) {
     type = ngeoGeometryType.MULTI_LINE_STRING;
   }
-
   if (!type) {
     throw new Error('Missing type');
   }
@@ -1504,16 +1465,12 @@ FeatureHelper.prototype.fitMapToFeature = function (feature, map, opt_duration) 
   if (!geometry) {
     throw new Error('Missing geometry');
   }
-
   const geomIsVisible = geometry.intersectsExtent(viewExtent);
-
   const mapCenter = view.getCenter();
   if (!Array.isArray(mapCenter)) {
     throw new Error('Missing mapCenter');
   }
-
   const featureExtent = geometry.getExtent();
-
   if (geomIsVisible) {
     if (!(geometry instanceof olGeomPoint)) {
       // == Action: Zoom out ==
@@ -1548,7 +1505,6 @@ FeatureHelper.prototype.fitMapToFeature = function (feature, map, opt_duration) 
     const viewExtentHeight = olExtent.getHeight(viewExtent);
     const viewExtentWidth = olExtent.getWidth(viewExtent);
     const geomFitsInExtent = viewExtentHeight >= featureExtentHeight && viewExtentWidth >= featureExtentWidth;
-
     if (geomFitsInExtent) {
       // == Action: Pan ==
       // if geometry is not visible but fits in current map extent
@@ -1562,7 +1518,6 @@ FeatureHelper.prototype.fitMapToFeature = function (feature, map, opt_duration) 
       } else {
         featureCenter = olExtent.getCenter(geometry.getExtent());
       }
-
       view.animate(
         {
           center: mapCenter,
@@ -1600,9 +1555,7 @@ FeatureHelper.prototype.getRadiusLine = function (feature, azimut) {
   // Determine the radius for the circle
   const extent = geometry.getExtent();
   const radius = (extent[3] - extent[1]) / 2;
-
   const center = olExtent.getCenter(geometry.getExtent());
-
   const x = Math.cos(((azimut - 90) * Math.PI) / 180) * radius;
   const y = -Math.sin(((azimut - 90) * Math.PI) / 180) * radius;
   const endPoint = [x + center[0], y + center[1]];
@@ -1665,5 +1618,4 @@ FeatureHelper.prototype.findFeatureIndexByFid = function (features, fid) {
  */
 const myModule = angular.module('ngeoFeatureHelper', [ngeoMiscFilters.name]);
 myModule.service('ngeoFeatureHelper', FeatureHelper);
-
 export default myModule;

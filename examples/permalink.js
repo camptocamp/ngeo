@@ -1,3 +1,5 @@
+DrawComponentController.$inject = ['$scope', 'ngeoLocation'];
+MapComponentController.$inject = ['ngeoLocation', 'ngeoDebounce'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -61,7 +63,6 @@ const mapComponent = {
   },
   template: '<gmf-map gmf-map-map=ctrl.map></gmf-map>',
 };
-
 myModule.component('appMap', mapComponent);
 
 /**
@@ -69,7 +70,6 @@ myModule.component('appMap', mapComponent);
  * @param {import('ngeo/misc/debounce').miscDebounce<function(import('ol/events/Event').default): void>} ngeoDebounce
  *    ngeo Debounce factory.
  * @class
- * @ngInject
  */
 function MapComponentController(ngeoLocation, ngeoDebounce) {
   /**
@@ -87,54 +87,46 @@ function MapComponentController(ngeoLocation, ngeoDebounce) {
    */
   this.ngeoDebounce_ = ngeoDebounce;
 }
-
 myModule.controller('AppMapController', MapComponentController);
-
 MapComponentController.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
   const view = this.map.getView();
-
   const zoom_ = this.ngeoLocation_.getParam('z');
   const zoom = zoom_ !== undefined ? +zoom_ : 4;
-
   const x = this.ngeoLocation_.getParam('x');
   const y = this.ngeoLocation_.getParam('y');
   const center = x !== undefined && y !== undefined ? [+x, +y] : [0, 0];
-
   view.setCenter(center);
   view.setZoom(zoom);
-
   this.ngeoLocation_.updateParams({
     'z': `${zoom}`,
     'x': `${Math.round(center[0])}`,
     'y': `${Math.round(center[1])}`,
   });
-
   view.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('propertychange'),
-    /** @type {function(?): ?} */ (
-      this.ngeoDebounce_(
-        /**
-         * @param {import('ol/events/Event').default} e Object event.
-         */
-        // @ts-ignore
-        (e) => {
-          const center = view.getCenter();
-          if (!center) {
-            throw new Error('Missing center');
-          }
-          const params = {
-            'z': `${view.getZoom()}`,
-            'x': `${Math.round(center[0])}`,
-            'y': `${Math.round(center[1])}`,
-          };
-          this.ngeoLocation_.updateParams(params);
-        },
-        300,
-        /* invokeApply */ true,
-      )
+    /** @type {import('ol/Observable').EventTypes} */ 'propertychange',
+    /** @type {function(?): ?} */
+    this.ngeoDebounce_(
+      /**
+       * @param {import('ol/events/Event').default} e Object event.
+       */
+      // @ts-ignore
+      (e) => {
+        const center = view.getCenter();
+        if (!center) {
+          throw new Error('Missing center');
+        }
+        const params = {
+          'z': `${view.getZoom()}`,
+          'x': `${Math.round(center[0])}`,
+          'y': `${Math.round(center[1])}`,
+        };
+        this.ngeoLocation_.updateParams(params);
+      },
+      300,
+      /* invokeApply */ true,
     ),
   );
 };
@@ -156,14 +148,12 @@ const drawComponent = {
     '</label><br>' +
     '<button ng-click="ctrl.clearLayer()">Clear layer</button>',
 };
-
 myModule.component('appDraw', drawComponent);
 
 /**
  * @param {angular.IScope} $scope Scope.
  * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
  * @class
- * @ngInject
  */
 function DrawComponentController($scope, ngeoLocation) {
   /**
@@ -196,7 +186,6 @@ function DrawComponentController($scope, ngeoLocation) {
    */
   this.interaction = null;
 }
-
 DrawComponentController.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
@@ -208,66 +197,61 @@ DrawComponentController.prototype.$onInit = function () {
    * @type {olSourceVector<import('ol/geom/Geometry').default>}
    */
   const vectorSource = this.layer.getSource();
-
   this.interaction = new olInteractionDraw({
     type: 'LineString',
     source: vectorSource,
   });
-
   this.interaction.setActive(false);
   this.map.addInteraction(this.interaction);
   interactionDecoration(this.interaction);
-
   this.interaction.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('drawend'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('ol/MapBrowserEvent').default<unknown>} e
-       */ (e) => {
-        // @ts-ignore
-        e.feature.set('id', ++this.featureSeq_);
-      }
-    ),
+    /** @type {import('ol/Observable').EventTypes} */ 'drawend',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('ol/MapBrowserEvent').default<unknown>} e
+     */ (e) => {
+      // @ts-ignore
+      e.feature.set('id', ++this.featureSeq_);
+    },
   );
 
   // Deal with the encoding and decoding of features in the URL.
 
   const fhFormat = new ngeoFormatFeatureHash();
-
   vectorSource.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('addfeature'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('ol/MapBrowserEvent').default<unknown>} e
-       */ (e) => {
-        // @ts-ignore
-        const feature = e.feature;
-        feature.setStyle(
-          new olStyleStyle({
-            stroke: new olStyleStroke({
-              color: [255, 0, 0, 1],
-              width: 2,
-            }),
+    /** @type {import('ol/Observable').EventTypes} */ 'addfeature',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('ol/MapBrowserEvent').default<unknown>} e
+     */ (e) => {
+      // @ts-ignore
+      const feature = e.feature;
+      feature.setStyle(
+        new olStyleStyle({
+          stroke: new olStyleStroke({
+            color: [255, 0, 0, 1],
+            width: 2,
           }),
-        );
-        const features = vectorSource.getFeatures();
-        const encodedFeatures = fhFormat.writeFeatures(features);
-        if (typeof encodedFeatures == 'string') {
-          this.scope_.$applyAsync(() => {
-            this.ngeoLocation_.updateParams({'features': encodedFeatures});
+        }),
+      );
+      const features = vectorSource.getFeatures();
+      const encodedFeatures = fhFormat.writeFeatures(features);
+      if (typeof encodedFeatures == 'string') {
+        this.scope_.$applyAsync(() => {
+          this.ngeoLocation_.updateParams({
+            'features': encodedFeatures,
           });
-        } else {
-          console.error(`Unsupported type: ${typeof encodedFeatures}`);
-        }
+        });
+      } else {
+        console.error(`Unsupported type: ${typeof encodedFeatures}`);
       }
-    ),
+    },
   );
-
   const encodedFeatures = this.ngeoLocation_.getParam('features');
   if (encodedFeatures !== undefined) {
-    const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-      fhFormat.readFeatures(encodedFeatures)
-    );
+    const features =
+      /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+      fhFormat.readFeatures(encodedFeatures);
     this.featureSeq_ = features.length;
     vectorSource.addFeatures(features);
   }
@@ -288,7 +272,6 @@ DrawComponentController.prototype.clearLayer = function () {
   this.featureSeq_ = 0;
   this.ngeoLocation_.deleteParam('features');
 };
-
 myModule.controller('AppDrawController', DrawComponentController);
 
 /**
@@ -305,7 +288,6 @@ function MainController() {
       }),
     ],
   });
-
   const vectorSource = new olSourceVector();
 
   /**
@@ -319,8 +301,6 @@ function MainController() {
   // makes the vector layer "unmanaged", meaning that it is always on top.
   this.vectorLayer.setMap(this.map);
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

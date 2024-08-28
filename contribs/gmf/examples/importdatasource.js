@@ -24,19 +24,14 @@ import angular from 'angular';
 import './importdatasource.css';
 import 'bootstrap/js/src/tooltip';
 import gmfDatasourceManager from 'gmf/datasource/Manager';
-
 import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceComponent';
 import gmfLayertreeComponent from 'gmf/layertree/component';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
-
 import ngeoQueryComponent from 'ngeo/query/component';
 import ngeoMapModule from 'ngeo/map/module';
-
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -73,7 +68,6 @@ class MainController {
    * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager gmf Tree Manager
    *    service.
    * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.
-   * @ngInject
    */
   constructor($scope, gmfDataSourcesManager, gmfThemes, gmfTreeManager, ngeoDataSources) {
     /**
@@ -81,7 +75,6 @@ class MainController {
      * @private
      */
     this.scope_ = $scope;
-
     gmfThemes.loadThemes();
 
     /**
@@ -108,7 +101,6 @@ class MainController {
 
     // Init the datasources with our map.
     gmfDataSourcesManager.setDatasourceMap(this.map);
-
     gmfThemes.getThemesObject().then((themes) => {
       if (themes) {
         // Set 'Filters' theme, i.e. the one with id 175
@@ -133,10 +125,14 @@ class MainController {
     });
   }
 }
-
+MainController.$inject = [
+  '$scope',
+  'gmfDataSourcesManager',
+  'gmfThemes',
+  'gmfTreeManager',
+  'ngeoDataSources',
+];
 myModule.controller('MainController', MainController);
-
 myModule.constant('defaultTheme', 'Filters');
 options(myModule);
-
 export default myModule;

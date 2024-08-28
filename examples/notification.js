@@ -23,14 +23,12 @@ import './notification.css';
 import 'bootstrap/js/src/tooltip';
 import angular from 'angular';
 import {MessageType} from 'ngeo/message/Message';
-
 import ngeoMessageNotification from 'ngeo/message/Notification';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext']);
 
 /**
- * @ngInject
  * @class
  */
 function MainController() {
@@ -70,23 +68,18 @@ MainController.prototype.notifyMulti = function () {
     },
   ]);
 };
-
 MainController.prototype.success = function (msg) {
   ngeoMessageNotification.success(msg);
 };
-
 MainController.prototype.warn = function (msg) {
   ngeoMessageNotification.warn(msg);
 };
-
 MainController.prototype.info = function (msg) {
   ngeoMessageNotification.info(msg);
 };
-
 MainController.prototype.error = function (msg) {
   ngeoMessageNotification.error(msg);
 };
-
 MainController.prototype.clear = function () {
   ngeoMessageNotification.clear();
 };
@@ -113,7 +106,5 @@ MainController.prototype.notifyQuick = function () {
     type: MessageType.SUCCESS,
   });
 };
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

@@ -1,3 +1,4 @@
+Controller.$inject = ['gmfPermalink', 'gmfSnapping', '$injector', '$element'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -39,7 +40,6 @@ const myModule = angular.module('gmfMapComponent', [gmfPermalinkModule.name, gmf
  *
  * @htmlAttribute {import('ol/Map').default} gmf-map-map The map.
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfMap
  */
@@ -52,7 +52,6 @@ function gmfMapComponent() {
     bindToController: true,
   };
 }
-
 myModule.directive('gmfMap', gmfMapComponent);
 
 /**
@@ -62,7 +61,6 @@ myModule.directive('gmfMap', gmfMapComponent);
  * @param {JQuery} $element
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfMapController
  */
@@ -107,7 +105,5 @@ Controller.prototype.$onInit = function () {
   // Needed cypress e2e tests
   window['overlayMgr'] = ngeoMapFeatureOverlayMgr;
 };
-
 myModule.controller('GmfMapController', Controller);
-
 export default myModule;

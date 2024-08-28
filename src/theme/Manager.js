@@ -1,3 +1,10 @@
+ThemeManagerService.$inject = [
+  '$rootScope',
+  'gmfThemes',
+  'gmfTreeManagerModeFlush',
+  'gmfTreeManager',
+  'ngeoStateManager',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -55,7 +62,6 @@ export const ThemeEventType = {
  * @param {import('gmf/layertree/TreeManager').LayertreeTreeManager} gmfTreeManager the tree manager.
  * @param {import('ngeo/statemanager/Service').StatemanagerService} ngeoStateManager The ngeo statemanager
  *    service.
- * @ngInject
  * @ngdoc service
  * @ngname gmfTreeManager
  * @hidden
@@ -194,7 +200,5 @@ const myModule = angular.module('gmfThemeManager', [
   gmfThemeThemes.name,
   ngeoStatemanagerService.name,
 ]);
-
 myModule.service('gmfThemeManager', ThemeManagerService);
-
 export default myModule;

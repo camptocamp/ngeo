@@ -1,3 +1,5 @@
+buttonComponent.$inject = ['$parse'];
+buttonGroupComponent.$inject = ['$parse'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -56,7 +58,6 @@ const myModule = angular.module('ngeoBtnComponent', []);
  * Tells whether at least one button of the group is active.
  * @param {angular.IParseService} $parse Angular parse service.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtnGroup
  */
@@ -75,7 +76,6 @@ function buttonGroupComponent($parse) {
         throw new Error('Missing controller');
       }
       const setActive = $parse(attrs.ngeoBtnGroupActive).assign;
-
       if (setActive) {
         scope.$watch(
           // return true if at least one button is active otherwise false
@@ -95,7 +95,6 @@ function buttonGroupComponent($parse) {
     },
   };
 }
-
 myModule.directive('ngeoBtnGroup', buttonGroupComponent);
 
 /**
@@ -105,7 +104,6 @@ myModule.directive('ngeoBtnGroup', buttonGroupComponent);
 export class BtnGroupController {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @ngInject
    * @hidden
    */
   constructor($scope) {
@@ -142,7 +140,7 @@ export class BtnGroupController {
     return this.buttons_.length - 1;
   }
 }
-
+BtnGroupController.$inject = ['$scope'];
 myModule.controller('ngeoBtnGroupController', BtnGroupController);
 
 /**
@@ -159,7 +157,6 @@ myModule.controller('ngeoBtnGroupController', BtnGroupController);
  * @htmlAttribute {*} ng-model Any property on the scope. Ideally a boolean.
  * @param {angular.IParseService} $parse Angular parse service.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoBtn
  */
@@ -180,7 +177,6 @@ function buttonComponent($parse) {
       const buttonsCtrl = ctrls[0];
       const ngModelCtrl = ctrls[1];
       let indexInGroup = -1;
-
       const ngModelGet = $parse(attrs.ngModel);
       const ngModelSet = ngModelGet.assign;
 
@@ -210,7 +206,5 @@ function buttonComponent($parse) {
     },
   };
 }
-
 myModule.directive('ngeoBtn', buttonComponent);
-
 export default myModule;

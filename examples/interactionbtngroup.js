@@ -23,10 +23,8 @@ import './interactionbtngroup.css';
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import {interactionDecoration} from 'ngeo/misc/decorate';
 import olCollection from 'ol/Collection';
 import olMap from 'ol/Map';
@@ -44,7 +42,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMis
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -54,7 +51,6 @@ function MainController() {
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   const features = new olCollection();
-
   const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(
@@ -89,7 +85,6 @@ function MainController() {
       zoom: 4,
     }),
   });
-
   const map = this.map;
 
   // initialize the feature overlay manager with the map
@@ -99,14 +94,12 @@ function MainController() {
    * @type {import('ol/interaction/Draw').default}
    */
   this.drawPolygon = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ {
       type: 'Polygon',
       features: features,
-    }),
+    },
   );
-
   const drawPolygon = this.drawPolygon;
-
   drawPolygon.setActive(false);
   interactionDecoration(drawPolygon);
   map.addInteraction(drawPolygon);
@@ -115,12 +108,11 @@ function MainController() {
    * @type {import('ol/interaction/Draw').default}
    */
   this.drawPoint = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ {
       type: 'Point',
       features: features,
-    }),
+    },
   );
-
   const drawPoint = this.drawPoint;
   drawPoint.setActive(false);
   interactionDecoration(drawPoint);
@@ -130,19 +122,16 @@ function MainController() {
    * @type {import('ol/interaction/Draw').default}
    */
   this.drawLine = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ {
       type: 'LineString',
       features: features,
-    }),
+    },
   );
-
   const drawLine = this.drawLine;
   drawLine.setActive(false);
   interactionDecoration(drawLine);
   map.addInteraction(drawLine);
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

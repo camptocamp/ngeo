@@ -1,3 +1,4 @@
+ToolActivateMgr.$inject = ['$rootScope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -55,7 +56,6 @@ import angular from 'angular';
  * @class
  * @ngdoc service
  * @ngname ngeoToolActivateMgr
- * @ngInject
  * @hidden
  */
 export function ToolActivateMgr($rootScope) {
@@ -84,7 +84,6 @@ ToolActivateMgr.prototype.registerTool = function (groupName, tool, opt_defaultA
   if (!this.groups_[groupName]) {
     this.groups_[groupName] = [];
   }
-
   const unlisten = this.scope_.$watch(tool.getActive, (newVal, oldVal) => {
     if (newVal === oldVal) {
       return;
@@ -95,7 +94,6 @@ ToolActivateMgr.prototype.registerTool = function (groupName, tool, opt_defaultA
       this.activateDefault_(groupName);
     }
   });
-
   this.groups_[groupName].push({
     tool: tool,
     defaultTool: opt_defaultActivate || false,
@@ -179,15 +177,12 @@ ToolActivateMgr.prototype.activateDefault_ = function (groupName) {
   const entries = this.groups_[groupName];
   let defaultTool = null;
   let hasActiveTool = false;
-
   for (const entry of entries) {
     hasActiveTool = hasActiveTool || entry.tool.getActive();
-
     if (entry.defaultTool) {
       defaultTool = entry.tool;
     }
   }
-
   if (!hasActiveTool && defaultTool !== null) {
     defaultTool.setActive(true);
   }
@@ -199,5 +194,4 @@ ToolActivateMgr.prototype.activateDefault_ = function (groupName) {
  */
 const myModule = angular.module('ngeoToolActivateMgr', []);
 myModule.service('ngeoToolActivateMgr', ToolActivateMgr);
-
 export default myModule;

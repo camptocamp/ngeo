@@ -1,3 +1,5 @@
+MainController.$inject = ['ngeoDataSources', 'ngeoToolActivateMgr', 'ngeoQueryModeSelector'];
+QueryresultController.$inject = ['ngeoQueryResult'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -24,20 +26,16 @@ import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url';
 import './base.css';
 import './query.css';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
-
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
-
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import ngeoQueryComponent from 'ngeo/query/component';
 import ngeoQueryPanelComponent from 'ngeo/query/panelComponent';
 import ngeoQueryModule from 'ngeo/query/module';
-
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerImage from 'ol/layer/Image';
@@ -56,18 +54,18 @@ const myModule = angular.module('app', [
   ngeoQueryPanelComponent.name,
   ngeoQueryModule.name,
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('partials/queryresult', require('./partials/queryresult.html'));
+    },
+  ],
 );
-
 myModule.value('ngeoQueryOptions', {
   'cursorHover': true,
   'limit': 20,
@@ -82,13 +80,11 @@ const queryresultComponent = {
   controller: 'AppQueryresultController',
   templateUrl: 'partials/queryresult',
 };
-
 myModule.component('appQueryresult', queryresultComponent);
 
 /**
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult The ngeo query service.
  * @class
- * @ngInject
  */
 function QueryresultController(ngeoQueryResult) {
   /**
@@ -96,7 +92,6 @@ function QueryresultController(ngeoQueryResult) {
    */
   this.result = ngeoQueryResult;
 }
-
 myModule.controller('AppQueryresultController', QueryresultController);
 
 /**
@@ -105,7 +100,6 @@ myModule.controller('AppQueryresultController', QueryresultController);
  *     manager.
  * @param {import('ngeo/query/ModeSelector').QueryModeSelector} ngeoQueryModeSelector The ngeo QueryModeSelector service
  * @class
- * @ngInject
  */
 function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelector) {
   /**
@@ -127,18 +121,20 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
    * @type {import('ngeo/query/ModeSelector').QueryModeSelector}
    */
   this.ngeoQueryModeSelector = ngeoQueryModeSelector;
-
   const source1 = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
-    params: {'LAYERS': 'bus_stop'},
+    params: {
+      'LAYERS': 'bus_stop',
+    },
   });
   const busStopLayer = new olLayerImage({
     source: source1,
   });
-
   const source2 = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
-    params: {'LAYERS': 'information'},
+    params: {
+      'LAYERS': 'information',
+    },
   });
   const informationLayer = new olLayerImage({
     source: source2,
@@ -162,9 +158,7 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
       zoom: 4,
     }),
   });
-
   ngeoDataSources.map = this.map;
-
   ngeoDataSources.collection.push(
     new gmfDatasourceOGC({
       id: 1,
@@ -187,7 +181,6 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
       ],
     }),
   );
-
   ngeoDataSources.collection.push(
     new gmfDatasourceOGC({
       id: 2,
@@ -210,10 +203,8 @@ function MainController(ngeoDataSources, ngeoToolActivateMgr, ngeoQueryModeSelec
       ],
     }),
   );
-
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool('mapTools', queryToolActivate);
-
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 }
@@ -229,12 +220,10 @@ MainController.prototype.getSetQueryActive = function (val) {
     return this.queryActive;
   }
 };
-
 myModule.controller('MainController', MainController);
 myModule.constant('ngeoMeasurePrecision', 0);
 myModule.constant('ngeoMeasureDecimals', 0);
 myModule.constant('ngeoMeasureSpherical', false);
 myModule.constant('ngeoPointfilter', null);
 options(myModule);
-
 export default myModule;

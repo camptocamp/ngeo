@@ -1,3 +1,4 @@
+SearchController.$inject = ['ngeoCreateLocationSearchBloodhound'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,7 +22,6 @@
 
 import './locationsearch.css';
 import angular from 'angular';
-
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import ngeoSearchModule from 'ngeo/search/module';
@@ -48,21 +48,18 @@ const locationSearchComponent = {
     'ngeo-search-datasets="$ctrl.datasets" ' +
     'ngeo-search-listeners="$ctrl.listeners">',
 };
-
 appmodule.component('appLocationSearch', locationSearchComponent);
 
 /**
  * @class
  * @param {import('ngeo/search/createLocationSearchBloodhound').createLocationSearchBloodhoundFunction} ngeoCreateLocationSearchBloodhound
  *    Bloodhound service.
- * @ngInject
  */
 function SearchController(ngeoCreateLocationSearchBloodhound) {
   /**
    * @type {?import('ol/Map').default}
    */
   this.map = null;
-
   const limit = 10;
   /** @type {Bloodhound<import('ol/Feature').default<import('ol/geom/Geometry').default>[]>} */
   const bloodhoundEngine = this.createAndInitBloodhound_(ngeoCreateLocationSearchBloodhound, limit);
@@ -70,11 +67,11 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
   /**
    * @type {Twitter.Typeahead.Options}
    */
-  this.options = /** @type {Twitter.Typeahead.Options} */ ({
+  this.options = /** @type {Twitter.Typeahead.Options} */ {
     highlight: true,
     hint: undefined,
     minLength: undefined,
-  });
+  };
 
   /**
    * @type {Twitter.Typeahead.Dataset<import('ol/Feature').default<import('ol/geom/Geometry').default>>[]}
@@ -105,9 +102,9 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
       if (!this.map) {
         throw new Error('Missing map');
       }
-      const feature = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */ (
-        suggestion
-      );
+      const feature =
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>} */
+        suggestion;
       /**
        * @type {import('ol/extent').Extent}
        */
@@ -117,7 +114,10 @@ function SearchController(ngeoCreateLocationSearchBloodhound) {
         throw new Error('issing size');
       }
       const maxZoom = 16;
-      this.map.getView().fit(bbox, {size, maxZoom});
+      this.map.getView().fit(bbox, {
+        size,
+        maxZoom,
+      });
     },
   };
 }
@@ -147,12 +147,10 @@ SearchController.prototype.createAndInitBloodhound_ = function (ngeoCreateLocati
   bloodhound.initialize();
   return bloodhound;
 };
-
 appmodule.controller('AppSearchController', SearchController);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -170,8 +168,6 @@ function MainController() {
     }),
   });
 }
-
 appmodule.controller('MainController', MainController);
 options(appmodule);
-
 export default module;

@@ -32,18 +32,18 @@ const myModule = angular.module('gmfPermalinkShareComponent', [
   gmfPermalinkShareService.name,
   ngeoStatemanagerLocation.name,
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/permalink/shareComponent', require('./shareComponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfPermalinkShareTemplateUrl',
   /**
@@ -60,10 +60,10 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfPermalinkShareTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfPermalinkShareTemplateUrl.$inject = ['$attrs', 'gmfPermalinkShareTemplateUrl'];
 function gmfPermalinkShareTemplateUrl($attrs, gmfPermalinkShareTemplateUrl) {
   return gmfPermalinkShareTemplateUrl($attrs);
 }
@@ -96,7 +96,6 @@ export class ShareComponentController {
    * @param {angular.IAttributes} $attrs Attributes.
    * @param {import('gmf/options').gmfShareOptions} gmfShareOptions The options.
    * @class
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfShareController
    */
@@ -152,7 +151,6 @@ export class ShareComponentController {
      * @private
      */
     this.permalink_ = this.ngeoLocation_.getUriString();
-
     const path = ngeoLocation.getPath();
     if (!path) {
       throw new Error('Missing path');
@@ -181,7 +179,6 @@ export class ShareComponentController {
      * @type {boolean}
      */
     this.errorOnGetShortUrl = false;
-
     this.getShortUrl();
   }
 
@@ -191,7 +188,7 @@ export class ShareComponentController {
   getShortUrl() {
     this.$q_.when(this.gmfShareService_.getShortUrl(this.permalink_)).then(
       (resp) => {
-        this.shortLink = /** @type {angular.IHttpResponse<{short_url: string}>} */ (resp).data.short_url;
+        this.shortLink = /** @type {angular.IHttpResponse<{short_url: string}>} */ resp.data.short_url;
         this.errorOnGetShortUrl = false;
       },
       (resp) => {
@@ -224,7 +221,13 @@ export class ShareComponentController {
     }
   }
 }
-
+ShareComponentController.$inject = [
+  '$scope',
+  'ngeoLocation',
+  'gmfShareService',
+  '$q',
+  '$attrs',
+  'gmfShareOptions',
+];
 myModule.controller('GmfShareController', ShareComponentController);
-
 export default myModule;

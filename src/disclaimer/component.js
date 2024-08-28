@@ -1,3 +1,14 @@
+DisclaimerController.$inject = [
+  '$element',
+  '$sce',
+  '$timeout',
+  '$rootScope',
+  'gettextCatalog',
+  'ngeoDisclaimer',
+  'ngeoEventHelper',
+  'ngeoLayerHelper',
+  'gmfDisclaimerOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -30,7 +41,6 @@ import {MessageType} from 'ngeo/message/Message';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
 import {CollectionEvent} from 'ol/Collection';
-
 import 'angular-sanitize';
 
 /**
@@ -73,7 +83,6 @@ const myModule = angular.module('gmfDisclaimer', [
  * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo Event Helper.
  * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Ngeo Layer Helper.
  * @param {import('gmf/options').gmfDisclaimerOptions} gmfDisclaimerOptions The options.
- * @ngInject
  * @class
  * @ngdoc controller
  * @ngname GmfDisclaimerController
@@ -171,10 +180,8 @@ DisclaimerController.prototype.$onInit = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
-
   this.dataLayerGroup_ = this.ngeoLayerHelper_.getGroupFromMap(this.map, DATALAYERGROUP_NAME);
   this.registerLayer_(this.dataLayerGroup_);
-
   this.rootScope_.$on('ngeo-pre-empty-layertree', () => {
     for (const layer of this.map.getAllLayers()) {
       this.closeAll_(layer);
@@ -206,7 +213,6 @@ DisclaimerController.prototype.handleLayersRemove_ = function (evt) {
     if (!(layer instanceof olLayerBase)) {
       throw new Error('Wrong layer type');
     }
-
     this.unregisterLayer_(layer);
   }
 };
@@ -216,7 +222,6 @@ DisclaimerController.prototype.handleLayersRemove_ = function (evt) {
  */
 DisclaimerController.prototype.registerLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
-
   if (layer instanceof olLayerGroup) {
     // (1) Listen to added/removed layers to this group
     this.eventHelper_.addListenerKey(layerUid, listen(layer.getLayers(), 'add', this.handleLayersAdd_, this));
@@ -237,7 +242,6 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
       } else {
         this.closeAll_(layer);
       }
-
       this.rootScope_.$on('ngeo-disclaimer-state', () => {
         if (layer.getVisible() && this.map.getAllLayers().includes(layer)) {
           this.update_(layer);
@@ -257,7 +261,6 @@ DisclaimerController.prototype.registerLayer_ = function (layer) {
  */
 DisclaimerController.prototype.unregisterLayer_ = function (layer) {
   const layerUid = olUtilGetUid(layer);
-
   if (layer instanceof olLayerGroup) {
     // (1) Clear event listeners
     this.eventHelper_.clearListenerKey(layerUid);
@@ -269,7 +272,6 @@ DisclaimerController.prototype.unregisterLayer_ = function (layer) {
     this.closeAll_(layer);
   }
 };
-
 DisclaimerController.prototype.$onDestroy = function () {
   if (!this.dataLayerGroup_) {
     throw new Error('Missing dataLayerGroup');
@@ -346,9 +348,9 @@ DisclaimerController.prototype.update_ = function (layer) {
     console.assert(Object.keys(disclaimers).length === 1);
     this.showAll_(layer);
   } else {
-    const layerWMS = /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */ (
-      layer
-    );
+    const layerWMS =
+      /** @type {import('ol/layer/Layer').default<import('ol/source/ImageWMS').default>} */
+      layer;
     const sourceWMS = layerWMS.getSource();
     if (sourceWMS.getParams) {
       const layers = sourceWMS.getParams()['LAYERS'];
@@ -441,7 +443,5 @@ const disclaimerComponent = {
     'msg': '=?gmfDisclaimerExternalMsg',
   },
 };
-
 myModule.component('gmfDisclaimer', disclaimerComponent);
-
 export default myModule;

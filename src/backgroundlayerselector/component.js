@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', 'ngeoBackgroundLayerMgr', 'gmfThemes', 'gmfBackgroundLayerSelectorOptions'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -33,7 +34,6 @@ const myModule = angular.module('gmfBackgroundlayerselector', [
   gmfThemeThemes.name,
   ngeoMapBackgroundLayerMgr.name,
 ]);
-
 myModule.value(
   'gmfBackgroundlayerselectorTemplateUrl',
   /**
@@ -46,16 +46,17 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/backgroundlayerselector';
   },
 );
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/backgroundlayerselector', require('./component.html'));
+    },
+  ],
 );
 
 /**
@@ -64,10 +65,14 @@ myModule.run(
  * @param {function(JQuery, angular.IAttributes): string} gmfBackgroundlayerselectorTemplateUrl
  *    Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfBackgroundlayerselectorTemplateUrl.$inject = [
+  '$element',
+  '$attrs',
+  'gmfBackgroundlayerselectorTemplateUrl',
+];
 function gmfBackgroundlayerselectorTemplateUrl($element, $attrs, gmfBackgroundlayerselectorTemplateUrl) {
   return gmfBackgroundlayerselectorTemplateUrl($element, $attrs);
 }
@@ -104,7 +109,6 @@ const backgroundlayerselectorComponent = {
   },
   templateUrl: gmfBackgroundlayerselectorTemplateUrl,
 };
-
 myModule.component('gmfBackgroundlayerselector', backgroundlayerselectorComponent);
 
 /**
@@ -115,7 +119,6 @@ myModule.component('gmfBackgroundlayerselector', backgroundlayerselectorComponen
  *    Background layer manager.
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @param {import('gmf/options').gmfBackgroundLayerSelectorOptions} gmfBackgroundLayerSelectorOptions The options
- * @ngInject
  * @ngdoc controller
  * @ngname GmfBackgroundlayerselectorController
  */
@@ -161,14 +164,12 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
    * @type {import('ol/events').EventsKey[]}
    */
   this.listenerKeys_ = [];
-
   this.listenerKeys_.push(listen(gmfThemes, 'change', this.handleThemesChange_, this));
 
   /**
    * @type {import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager}
    */
   this.backgroundLayerMgr_ = ngeoBackgroundLayerMgr;
-
   this.listenerKeys_.push(
     listen(
       this.backgroundLayerMgr_,
@@ -177,11 +178,10 @@ export function Controller($scope, ngeoBackgroundLayerMgr, gmfThemes, gmfBackgro
       (event) => {
         this.bgLayer =
           /** @type {import('ngeo/map/BackgroundLayerMgr').BackgroundEvent} */
-          (event).detail.current;
+          event.detail.current;
       },
     ),
   );
-
   $scope.$on('$destroy', this.handleDestroy_.bind(this));
 }
 
@@ -198,7 +198,6 @@ Controller.prototype.$onInit = function () {
 Controller.prototype.handleThemesChange_ = function () {
   this.gmfThemes_.getBgLayers().then((layers) => {
     this.bgLayers = layers;
-
     if (this.options.opacityLayer !== undefined) {
       const opacityLayer = layers.find((layer) => layer.get('label') === this.options.opacityLayer);
       if (opacityLayer !== undefined) {
@@ -266,12 +265,9 @@ Controller.prototype.setOpacityBgLayer = function (layer) {
   }
   this.backgroundLayerMgr_.setOpacityBgLayer(this.map, layer);
 };
-
 Controller.prototype.handleDestroy_ = function () {
   this.listenerKeys_.forEach(unlistenByKey);
   this.listenerKeys_.length = 0;
 };
-
 myModule.controller('GmfBackgroundlayerselectorController', Controller);
-
 export default myModule;

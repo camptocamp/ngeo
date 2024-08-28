@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -36,12 +37,10 @@ const colorpickerComponent = {
   template: '<div ngeo-colorpicker="$ctrl.colors" ngeo-colorpicker-color="mainCtrl.color"></div>',
   controller: 'AppColorpickerController',
 };
-
 myModule.component('appColorpicker', colorpickerComponent);
 
 /**
  * @class
- * @ngInject
  */
 function ColorPickerController() {
   /**
@@ -55,13 +54,11 @@ function ColorPickerController() {
     ['#ffffff', '#f7f7f7', '#c3c3c3', '#000000'],
   ];
 }
-
 myModule.controller('AppColorpickerController', ColorPickerController);
 
 /**
  * @class
  * @param {angular.IScope} $scope Controller scope.
- * @ngInject
  */
 function MainController($scope) {
   /**
@@ -71,7 +68,5 @@ function MainController($scope) {
    */
   this.color = 'red';
 }
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

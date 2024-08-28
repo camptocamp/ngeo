@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import {listen as olEventsListen} from 'ol/events';
 import OLFeature from 'ol/Feature';
 import OLGeomCircle from 'ol/geom/Circle';
@@ -33,7 +32,6 @@ import OLInteractionPointer from 'ol/interaction/Pointer';
 import OLInteractionSnap from 'ol/interaction/Snap';
 import OLMapBrowserEvent from 'ol/MapBrowserEvent';
 import OLSourceVector from 'ol/source/Vector';
-
 import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
 
 /**
@@ -41,19 +39,20 @@ import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
  * @hidden
  */
 const myModule = angular.module('GmfDrawFeatureOptionsComponent', []);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    $templateCache.put(
-      'gmf/drawing/drawFeatureOptionsComponent',
-      // @ts-ignore: webpack
-      require('./drawFeatureOptionsComponent.html'),
-    );
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      $templateCache.put(
+        'gmf/drawing/drawFeatureOptionsComponent',
+        // @ts-ignore: webpack
+        require('./drawFeatureOptionsComponent.html'),
+      );
+    },
+  ],
 );
 
 /**
@@ -62,7 +61,6 @@ myModule.run(
 export class DrawFeatureOptionsController {
   /**
    * @param {angular.IScope} $scope Scope.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfDrawFeatureOptionsController
    */
@@ -232,21 +230,17 @@ export class DrawFeatureOptionsController {
       drawInteraction = this.drawRectangle;
       requiresHeight = true;
     }
-
     if (drawInteraction instanceof OLInteractionDraw) {
-      this.drawInteraction_ = /** @type {OLInteractionDraw} */ (drawInteraction);
+      this.drawInteraction_ = /** @type {OLInteractionDraw} */ drawInteraction;
     } else {
       throw new Error('No draw interaction given to DrawFeatureOptions component');
     }
-
     this.map.addInteraction(this.snapInteraction_);
-
     this.listenerKeys_.push(
       olEventsListen(drawInteraction, 'drawstart', this.handleDrawInteractionDrawStart_, this),
       olEventsListen(this.map, 'singleclick', this.handleMapSingleClick_, this),
       olEventsListen(this.map, 'dblclick', this.handleMapDoubleClick_, this),
     );
-
     if (requiresHeight) {
       this.scope_.$watch(
         () => {
@@ -291,9 +285,7 @@ export class DrawFeatureOptionsController {
     if (!this.drawInteraction_) {
       return;
     }
-
     ngeoEventsUnlistenByKeys(this.listenerKeys_);
-
     this.map.removeInteraction(this.snapInteraction_);
     this.snapSource_.clear();
   }
@@ -310,9 +302,7 @@ export class DrawFeatureOptionsController {
     // evt.detail.feature - ngeo.interaction.DrawAzimut
     // @ts-ignore: webpack
     const feature = evt.feature || evt.detail.feature;
-
     this.feature_ = feature;
-
     const geometry = feature.getGeometry();
     this.listenerKeys_.push(olEventsListen(geometry, 'change', this.handleFeatureGeometryChange_, this));
   }
@@ -324,7 +314,6 @@ export class DrawFeatureOptionsController {
    */
   handleFeatureGeometryChange_() {
     let adjust = false;
-
     if (this.measureLength) {
       // Length, i.e. LineString
       const lineStringGeometry = this.feature_.getGeometry();
@@ -382,9 +371,7 @@ export class DrawFeatureOptionsController {
     const lengthMeters = lengthUnits === 'm' ? length : length * 1000;
     const heightMeters =
       opt_height && opt_heightUnits ? (opt_heightUnits === 'm' ? opt_height : opt_height * 1000) : null;
-
     let snapGeometry;
-
     if (this.measureLength) {
       // Length, i.e. LineString
       const lineStringGeometry = this.feature_.getGeometry();
@@ -430,7 +417,6 @@ export class DrawFeatureOptionsController {
         ]);
       }
     }
-
     if (snapGeometry) {
       this.snapFeature_.setGeometry(snapGeometry);
     }
@@ -456,7 +442,6 @@ export class DrawFeatureOptionsController {
         this.shouldStopDrawing_ = true;
       }
     }
-
     return OLInteractionPointer.prototype.handleEvent.call(this.snapInteraction_, evt);
   }
 
@@ -471,7 +456,6 @@ export class DrawFeatureOptionsController {
     if (!(evt instanceof OLMapBrowserEvent)) {
       return;
     }
-
     this.shouldStopDrawing_ = false;
   }
 
@@ -493,14 +477,13 @@ export class DrawFeatureOptionsController {
     if (!(evt instanceof OLMapBrowserEvent)) {
       return;
     }
-
     if (this.shouldStopDrawing_) {
       this.drawInteraction_.removeLastPoint();
       this.drawInteraction_.finishDrawing();
     }
   }
 }
-
+DrawFeatureOptionsController.$inject = ['$scope'];
 myModule.component('gmfDrawfeatureoptions', {
   bindings: {
     'map': '<',
@@ -513,5 +496,4 @@ myModule.component('gmfDrawfeatureoptions', {
   controller: DrawFeatureOptionsController,
   templateUrl: 'gmf/drawing/drawFeatureOptionsComponent',
 });
-
 export default myModule;

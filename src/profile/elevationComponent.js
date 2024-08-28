@@ -1,3 +1,4 @@
+profileElevationComponent.$inject = ['ngeoDebounce', 'ngeoProfileOptions'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -23,7 +24,6 @@ import angular from 'angular';
 import {listen} from 'ol/events';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import ngeoProfileD3Elevation from 'ngeo/profile/d3Elevation';
-
 import {select as d3select} from 'd3';
 
 /**
@@ -104,7 +104,6 @@ const myModule = angular.module('ngeoProfile', [ngeoMiscDebounce.name]);
  *    ngeo Debounce factory.
  * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoProfile
  */
@@ -119,7 +118,6 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
     link: (scope, element, attrs) => {
       const optionsAttr = attrs.ngeoProfileOptions;
       console.assert(optionsAttr !== undefined);
-
       const selection = d3select(element[0]);
 
       /** @type {*} */
@@ -127,7 +125,6 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
       scope.$watchCollection(optionsAttr, (newVal) => {
         /** @type {ProfileOptions<unknown>} */
         const options = Object.assign({}, newVal);
-
         if (options !== undefined) {
           // proxy the hoverCallback and outCallbackin order to be able to
           // call $applyAsync
@@ -145,7 +142,6 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
               scope.$applyAsync();
             };
           }
-
           if (options.outCallback !== undefined) {
             const origOutCallback = options.outCallback;
             options.outCallback = function () {
@@ -153,7 +149,6 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
               scope.$applyAsync();
             };
           }
-
           profile = ngeoProfileD3Elevation(ngeoProfileOptions, options);
           refreshData();
         }
@@ -172,7 +167,6 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
         poiData = newVal;
         refreshData();
       });
-
       scope.$watch(attrs.ngeoProfileHighlight, (newVal, oldVal) => {
         if (newVal === undefined) {
           return;
@@ -183,7 +177,6 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
           profile.clearHighlight();
         }
       });
-
       listen(window, 'resize', ngeoDebounce(refreshData, 50, true));
 
       /**
@@ -200,7 +193,5 @@ function profileElevationComponent(ngeoDebounce, ngeoProfileOptions) {
     },
   };
 }
-
 myModule.directive('ngeoProfile', profileElevationComponent);
-
 export default myModule;

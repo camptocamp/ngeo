@@ -50,7 +50,6 @@ import angular from 'angular';
  * @htmlAttribute {Twitter.Typeahead.Dataset[]} ngeo-search-datasets The sources datasets.
  * @htmlAttribute {SearchDirectiveListeners} ngeo-search-listeners The listeners.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @template T
  */
 function searchComponent() {
@@ -65,13 +64,10 @@ function searchComponent() {
       const typeaheadOptionsExpr = attrs.ngeoSearch;
       /** @type {Twitter.Typeahead.Options} */
       const typeaheadOptions = scope.$eval(typeaheadOptionsExpr);
-
       const typeaheadDatasetsExpr = attrs.ngeoSearchDatasets;
       /** @type {Twitter.Typeahead.Dataset<T>[]} */
       const typeaheadDatasets = scope.$eval(typeaheadDatasetsExpr);
-
       element.typeahead(typeaheadOptions, typeaheadDatasets);
-
       const typeaheadListenersExpr = attrs.ngeoSearchListeners;
       /** @type {SearchDirectiveListeners<T>} */
       const typeaheadListeners_ = scope.$eval(typeaheadListenersExpr);
@@ -80,19 +76,16 @@ function searchComponent() {
        * @type {SearchDirectiveListeners<T>}
        */
       const typeaheadListeners = adaptListeners_(typeaheadListeners_);
-
       element.on('typeahead:open', () => {
         scope.$apply(() => {
           typeaheadListeners.open();
         });
       });
-
       element.on('typeahead:close', () => {
         scope.$apply(() => {
           typeaheadListeners.close();
         });
       });
-
       element.on(
         'typeahead:cursorchange',
         /**
@@ -106,7 +99,6 @@ function searchComponent() {
           });
         },
       );
-
       element.on(
         'typeahead:select',
         /**
@@ -120,7 +112,6 @@ function searchComponent() {
           });
         },
       );
-
       element.on(
         'typeahead:autocomplete',
         /**
@@ -134,7 +125,6 @@ function searchComponent() {
           });
         },
       );
-
       element.on(
         'typeahead:asyncreceive',
         /**
@@ -149,7 +139,6 @@ function searchComponent() {
           });
         },
       );
-
       element.on(
         'typeahead:change',
         /**
@@ -226,5 +215,4 @@ const myModule = angular.module('ngeoSearchDirective', []);
 
 // Register the directive in the module
 myModule.directive('ngeoSearch', searchComponent);
-
 export default myModule;

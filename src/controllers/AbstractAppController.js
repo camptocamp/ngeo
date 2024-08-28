@@ -1,3 +1,4 @@
+AbstractAppController.$inject = ['$scope', '$injector', 'mobile'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -58,10 +59,8 @@ import olControlRotate from 'ol/control/Rotate';
 import {defaults as interactionsDefaults} from 'ol/interaction';
 import olInteractionDragPan from 'ol/interaction/DragPan';
 import {noModifierKeys} from 'ol/events/condition';
-
 import gmfAuthenticationService from 'ngeo/auth/service';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import storeMap from 'gmfapi/store/map';
 import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
 
@@ -79,14 +78,12 @@ import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
  * @param {boolean} [mobile] Is mobile.
  * @class
  * @ngdoc controller
- * @ngInject
  */
 export function AbstractAppController($scope, $injector, mobile) {
   createProjections($injector.get('gmfProjectionsOptions'));
 
   /** @type {import('gmf/options').gmfOptions} */
   this.options = $injector.get('gmfOptions');
-
   if (this.options.cssVars) {
     const cssVars = calculateCssVars(this.options.cssVars);
     const style = document.documentElement.style;
@@ -94,11 +91,8 @@ export function AbstractAppController($scope, $injector, mobile) {
       style.setProperty(`--${cssVar}`, cssVars[cssVar]);
     }
   }
-
   const scaleline = document.getElementById('scaleline');
-
   const view = new olView(this.options.view);
-
   const constraints = view.getConstraints();
   const centerConstraint = constraints.center;
   /**
@@ -128,11 +122,9 @@ export function AbstractAppController($scope, $injector, mobile) {
         fixedModulo((newCenter[0] - wmtsTopLeft[1]) / resolution - size[0] / 2 + 0.5, 1) - 0.5;
       const correctionY =
         fixedModulo((wmtsTopLeft[0] - newCenter[1]) / resolution - size[1] / 2 + 0.5, 1) - 0.5;
-
       newCenter[0] -= correctionX * resolution;
       newCenter[1] += correctionY * resolution;
     }
-
     return newCenter;
   };
 
@@ -144,7 +136,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       view.setCenter(view.getCenter());
     }
   };
-
   const map = new olMap(
     Object.assign(
       {
@@ -198,7 +189,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       view.setViewportSize(size);
     }
   };
-
   if (!mobile) {
     map.addInteraction(
       new olInteractionDragPan({
@@ -206,7 +196,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       }),
     );
   }
-
   storeMap.setMap(map);
 
   // Needed cypress e2e tests
@@ -332,11 +321,9 @@ export function AbstractAppController($scope, $injector, mobile) {
       }
     }.bind(this),
   };
-
   $scope.$on('authenticationrequired', (event, args) => {
     this.loginRedirectUrl = args.url;
     this.loginActive = true;
-
     const unbind = $scope.$watch(
       () => this.loginActive,
       () => {
@@ -347,7 +334,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       },
     );
   });
-
   this.hasPrivateLayers = false;
   user.getLoginMessage().subscribe({
     next: (loginMessage) => {
@@ -364,7 +350,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       return;
     }
     const roleId = gmfAuthenticationService.getRolesIds().join(',');
-
     const functionalities = this.gmfUser.functionalities;
 
     // Enable filter tool in toolbar
@@ -389,7 +374,6 @@ export function AbstractAppController($scope, $injector, mobile) {
 
     // Reload themes and background layer when login status changes.
     this.gmfThemes.loadThemes(roleId);
-
     if (user.getState() !== UserState.READY) {
       const themeName = this.permalink_.defaultThemeNameFromFunctionalities();
       this.gmfThemeManager.updateCurrentTheme(themeName, previousThemeName, true, this.hasPrivateLayers);
@@ -439,7 +423,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   gmfDataSourcesManager.setDatasourceMap(this.map);
   // Give the dimensions to the gmfDataSourcesManager
   gmfDataSourcesManager.setDimensions(this.dimensions);
-
   if ($injector.has('gmfDefaultDimensions')) {
     // Set defaults
     const defaultDimensions = $injector.get('gmfDefaultDimensions');
@@ -462,7 +445,6 @@ export function AbstractAppController($scope, $injector, mobile) {
       this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
     },
   );
-
   this.backgroundLayerMgr_.on('change', () => {
     this.backgroundLayerMgr_.updateDimensions(this.map, this.dimensions);
   });
@@ -524,7 +506,6 @@ export function AbstractAppController($scope, $injector, mobile) {
    * @type {angular.gettext.gettextCatalog}
    */
   this.gettextCatalog = $injector.get('gettextCatalog');
-
   this.initLanguage();
 
   /**
@@ -546,10 +527,8 @@ export function AbstractAppController($scope, $injector, mobile) {
    * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
    */
   const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
-
   const queryToolActivate = new ngeoMiscToolActivate(this, 'queryActive');
   ngeoToolActivateMgr.registerTool(this.mapToolsGroup, queryToolActivate, true);
-
   $scope.$root.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
     this.gmfThemes.getThemeObject(name).then((theme) => {
       this.setDefaultBackground_(theme);
@@ -565,7 +544,6 @@ export function AbstractAppController($scope, $injector, mobile) {
   const openPopup_ = (title, opt_width, opt_height, opt_apply) => {
     this.displaywindowTitle = title;
     this.displaywindowOpen = true;
-
     if (opt_width) {
       this.displaywindowWidth = `${opt_width}px`;
     }
@@ -627,7 +605,6 @@ export function AbstractAppController($scope, $injector, mobile) {
    * @type {number|undefined}
    */
   this.resizeTransition;
-
   const cgxp = window.cgxp || {};
   // @ts-ignore: We do want to define a new property on `window`.
   window.cgxp = cgxp;
@@ -680,7 +657,6 @@ export function AbstractAppController($scope, $injector, mobile) {
    * @type {?string}
    */
   this.displaywindowWidth = '50vw';
-
   if ($injector.has('sentryOptions')) {
     const options = $injector.get('sentryOptions');
     if (options.dsn) {
@@ -749,10 +725,8 @@ AbstractAppController.prototype.initLanguage = function () {
       });
     },
   );
-
   const browserLanguage = getBrowserLanguage(Object.keys(this.langUrls));
-  const urlLanguage = /** @type {string|undefined} */ (this.stateManager.getInitialStringValue('lang'));
-
+  const urlLanguage = /** @type {string|undefined} */ this.stateManager.getInitialStringValue('lang');
   if (urlLanguage !== undefined && urlLanguage in this.langUrls) {
     this.switchLanguage(urlLanguage);
     return;
@@ -779,22 +753,18 @@ AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
     if (!gmfBackgroundlayerStatus.touchedByUser) {
       layer = this.permalink_.getBackgroundLayer(layers);
     }
-
     if (!layer && this.gmfUser.functionalities) {
       // get the background from the user settings
       layer = getLayerByLabels(layers, this.gmfUser.functionalities.default_basemap);
     }
-
     if (!layer && theme) {
       // get the background from the theme
       layer = getLayerByLabels(layers, theme.functionalities.default_basemap);
     }
-
     if (!layer) {
       // fallback to the layers list, use the second one because the first is the blank layer.
       layer = layers[layers.length > 1 ? 1 : 0];
     }
-
     if (!layer) {
       throw new Error('Missing layer');
     }
@@ -857,11 +827,8 @@ const myModule = angular.module('GmfAbstractAppControllerModule', [
   ngeoGeolocation.name,
   gmfMapComponent.name,
 ]);
-
 myModule.controller('AbstractController', AbstractAppController);
-
 myModule.value('ngeoExportFeatureFormats', [FeatureFormatType.KML, FeatureFormatType.GPX]);
-
 myModule.config([
   'tmhDynamicLocaleProvider',
   'angularLocaleScript',
@@ -875,7 +842,5 @@ myModule.config([
     tmhDynamicLocaleProvider.localeLocationPattern(angularLocaleScript);
   },
 ]);
-
 bootstrap(myModule);
-
 export default myModule;

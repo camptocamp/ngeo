@@ -1,3 +1,4 @@
+PermalinkShareService.$inject = ['$http', 'gmfShortenerCreateUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -45,7 +46,6 @@ import angular from 'angular';
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfShortenerCreateUrl URL for the shortener API
  * @class
- * @ngInject
  * @ngname gmfShareService
  * @hidden
  */
@@ -70,10 +70,9 @@ export function PermalinkShareService($http, gmfShortenerCreateUrl) {
  *    shortened or the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.getShortUrl = function (url) {
-  const params = /** @type {ShortenerAPIRequestParams} */ ({
+  const params = /** @type {ShortenerAPIRequestParams} */ {
     url,
-  });
-
+  };
   if (!this.gmfShortenerCreateUrl_) {
     return {
       data: {
@@ -82,7 +81,6 @@ PermalinkShareService.prototype.getShortUrl = function (url) {
       status: 200,
     };
   }
-
   return this.postShortUrl_(params);
 };
 
@@ -96,15 +94,13 @@ PermalinkShareService.prototype.getShortUrl = function (url) {
  * @returns {angular.IHttpPromise<void>} the promise attached to the shortener API request
  */
 PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_message) {
-  const params = /** @type {ShortenerAPIRequestParams} */ ({
+  const params = /** @type {ShortenerAPIRequestParams} */ {
     url: shortUrl,
     email: email,
-  });
-
+  };
   if (opt_message) {
     params.message = opt_message;
   }
-
   return this.postShortUrl_(params);
 };
 
@@ -115,7 +111,9 @@ PermalinkShareService.prototype.sendShortUrl = function (shortUrl, email, opt_me
 PermalinkShareService.prototype.postShortUrl_ = function (params) {
   // Override default behavior of $http.post method (sending data in json format)
   return this.$http_.post(this.gmfShortenerCreateUrl_, $.param(params), {
-    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   });
 };
 
@@ -142,7 +140,5 @@ export const URL_PATH_MAX_LEN = 2048;
  * @hidden
  */
 const myModule = angular.module('gmfShareService', []);
-
 myModule.service('gmfShareService', PermalinkShareService);
-
 export default myModule;

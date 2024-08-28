@@ -22,7 +22,6 @@
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
-
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
@@ -34,7 +33,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name]);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -56,8 +54,6 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

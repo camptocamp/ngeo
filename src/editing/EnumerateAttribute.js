@@ -31,7 +31,6 @@ export class EditingEnumerateAttributeService {
    *
    * @param {angular.IHttpService} $http Angular $http service.
    * @param {string} gmfLayersUrl URL to the GeoMapFish layers service.
-   * @ngInject
    * @ngdoc service
    * @ngname gmfEnumerateAttribute
    */
@@ -72,12 +71,11 @@ export class EditingEnumerateAttributeService {
     return this.promises_[promiseId];
   }
 }
-
+EditingEnumerateAttributeService.$inject = ['$http', 'gmfLayersUrl'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfEnumerateAttribute', []);
 myModule.service('gmfEnumerateAttribute', EditingEnumerateAttributeService);
-
 export default myModule;

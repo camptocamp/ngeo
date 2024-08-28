@@ -232,7 +232,6 @@ module.run(
  * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!function(!JQuery, !angular.IAttributes): string} gmfDisplayquerywindowTemplateUrl Template function.
  * @return {string} Template URL.
- * @ngInject
  * @hidden
  */
 function gmfDisplayquerywindowTemplateUrl($element, $attrs, ngeoModuleComponentTemplateUrl) {
@@ -465,7 +464,6 @@ For example:
  *      </example>
  *
  * @htmlAttribute {import("ol/Map.js").default} ngeo-misc-map The map.
- * @ngInject
  * @ngdoc component
  * @ngname ngeoControl
  */

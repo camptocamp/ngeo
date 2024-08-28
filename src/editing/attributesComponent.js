@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', 'ngeoEventHelper'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -35,18 +36,18 @@ const myModule = angular.module('ngeoAttributes', [
   ngeoMiscDatetimepickerComponent.name,
   ngeoMiscEventHelper.name,
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/editing/attributescomponent', require('./attributescomponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoAttributesTemplateUrl',
   /**
@@ -63,10 +64,10 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoAttributesTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+ngeoAttributesTemplateUrl.$inject = ['$attrs', 'ngeoAttributesTemplateUrl'];
 function ngeoAttributesTemplateUrl($attrs, ngeoAttributesTemplateUrl) {
   return ngeoAttributesTemplateUrl($attrs);
 }
@@ -101,7 +102,6 @@ const editingAttributeComponent = {
   },
   templateUrl: ngeoAttributesTemplateUrl,
 };
-
 myModule.component('ngeoAttributes', editingAttributeComponent);
 
 /**
@@ -109,7 +109,6 @@ myModule.component('ngeoAttributes', editingAttributeComponent);
  * @param {import('ngeo/misc/EventHelper').EventHelper} ngeoEventHelper Ngeo event helper service
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoAttributesController
  */
@@ -182,7 +181,6 @@ Controller.prototype.$onInit = function () {
   this.attributes.forEach((attribute) => {
     this.sanitize_(attribute);
   });
-
   this.ngeoEventHelper_.addListenerKey(
     uid,
     listen(this.feature, 'propertychange', this.handleFeaturePropertyChange_, this),
@@ -251,7 +249,5 @@ Controller.prototype.handleFeaturePropertyChange_ = function (evt) {
     this.scope_.$apply();
   }
 };
-
 myModule.controller('ngeoAttributesController', Controller);
-
 export default myModule;

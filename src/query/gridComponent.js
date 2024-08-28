@@ -1,3 +1,13 @@
+QueryGridController.$inject = [
+  '$scope',
+  'ngeoQueryResult',
+  'ngeoMapQuerent',
+  '$timeout',
+  'ngeoQueryOptions',
+  'gmfCsvFilename',
+  '$element',
+  'gmfDisplayQueryGridOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,22 +30,16 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import downloadCsvService from 'ngeo/download/Csv';
-
 import ngeoGridComponent from 'ngeo/grid/component';
-
 import ngeoGridConfig, {getRowUid} from 'ngeo/grid/Config';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
-
 import olCollection from 'ol/Collection';
 import * as olExtent from 'ol/extent';
 import olMap from 'ol/Map';
 import {buildStyle} from 'ngeo/options';
 import panels from 'gmfapi/store/panels';
-
 import 'bootstrap/js/src/dropdown';
 
 /**
@@ -52,7 +56,6 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfQueryGridComponent', [ngeoGridComponent.name, ngeoQueryMapQuerent.name]);
-
 myModule.value(
   'gmfDisplayquerygridTemplateUrl',
   /**
@@ -65,16 +68,17 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/query/gridComponent';
   },
 );
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -82,10 +86,10 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfDisplayquerygridTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfDisplayquerygridTemplateUrl.$inject = ['$element', '$attrs', 'gmfDisplayquerygridTemplateUrl'];
 function gmfDisplayquerygridTemplateUrl($element, $attrs, gmfDisplayquerygridTemplateUrl) {
   return gmfDisplayquerygridTemplateUrl($element, $attrs);
 }
@@ -125,7 +129,6 @@ const queryGridComponent = {
   },
   templateUrl: gmfDisplayquerygridTemplateUrl,
 };
-
 myModule.component('gmfDisplayquerygrid', queryGridComponent);
 
 /**
@@ -141,7 +144,6 @@ myModule.component('gmfDisplayquerygrid', queryGridComponent);
  * @param {import('gmf/options').gmfDisplayQueryGridOptions} gmfDisplayQueryGridOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfDisplayquerygridController
  */
@@ -278,9 +280,11 @@ export function QueryGridController(
       if (ngeoQueryResult.pending) {
         this.active = true;
         this.pending = true;
-        panels.openFooterPanel('queryresult', {state: true, noError: true});
+        panels.openFooterPanel('queryresult', {
+          state: true,
+          noError: true,
+        });
       }
-
       if (newQueryResult !== oldQueryResult) {
         this.updateData_();
       }
@@ -308,17 +312,13 @@ QueryGridController.prototype.$onInit = function () {
   if (!this.getMapFn) {
     throw new Error('Missing getMapFn');
   }
-
   const featuresOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   featuresOverlay.setFeatures(this.features_);
-
   featuresOverlay.setStyle(buildStyle(this.options.featuresStyle));
-
   const highlightFeaturesOverlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   highlightFeaturesOverlay.setFeatures(this.highlightFeatures_);
   const highlightFeatureStyle = buildStyle(this.options.selectedFeatureStyle);
   highlightFeaturesOverlay.setStyle(highlightFeatureStyle);
-
   const mapFn = this.getMapFn;
   if (mapFn) {
     const map = mapFn();
@@ -337,7 +337,6 @@ QueryGridController.prototype.$onInit = function () {
 QueryGridController.prototype.getGridSources = function () {
   return this.loadedGridSources.map((sourceLabel) => this.gridSources[sourceLabel]);
 };
-
 QueryGridController.prototype.updateData_ = function () {
   // close if there are no results
   if (
@@ -349,12 +348,13 @@ QueryGridController.prototype.updateData_ = function () {
     if (oldActive) {
       // don't close if there are pending queries
       this.active = this.ngeoQueryResult.pending;
-      panels.openFooterPanel('queryresult', {state: this.active});
+      panels.openFooterPanel('queryresult', {
+        state: this.active,
+      });
       this.pending = this.ngeoQueryResult.pending;
     }
     return;
   }
-
   this.sumOfAvailableResults = 0;
   this.sumOfFeatures = 0;
 
@@ -371,9 +371,10 @@ QueryGridController.prototype.updateData_ = function () {
     }
     countedSources.push(source.label);
   });
-
   this.active = true;
-  panels.openFooterPanel('queryresult', {state: true});
+  panels.openFooterPanel('queryresult', {
+    state: true,
+  });
   this.pending = false;
   let sources = this.ngeoQueryResult.sources;
   // merge sources if requested
@@ -393,11 +394,13 @@ QueryGridController.prototype.updateData_ = function () {
       }
     }
   });
-
   if (this.loadedGridSources.length === 0) {
     // if no grids were created, do not show
     this.active = false;
-    panels.openFooterPanel('queryresult', {state: false, noError: true});
+    panels.openFooterPanel('queryresult', {
+      state: false,
+      noError: true,
+    });
     return;
   }
 
@@ -460,21 +463,17 @@ QueryGridController.prototype.getMergedSources_ = function (sources) {
   const allSources = [];
   /** @type {Object<string, import('ngeo/statemanager/WfsPermalink').QueryResultSource>} */
   const mergedSources = {};
-
   sources.forEach((source) => {
     // check if this source can be merged
     const mergedSource = this.getMergedSource_(source, mergedSources);
-
     if (mergedSource === null) {
       // this source should not be merged, add as is
       allSources.push(source);
     }
   });
-
   for (const mergedSourceId in mergedSources) {
     allSources.push(mergedSources[mergedSourceId]);
   }
-
   return allSources;
 };
 
@@ -491,7 +490,6 @@ QueryGridController.prototype.getMergedSources_ = function (sources) {
  */
 QueryGridController.prototype.getMergedSource_ = function (source, mergedSources) {
   let mergeSourceId = null;
-
   for (const currentMergeSourceId in this.options.mergeTabs || {}) {
     const sourceLabels = this.options.mergeTabs[currentMergeSourceId];
     const containsSource = sourceLabels.some((sourceLabel) => sourceLabel == source.label);
@@ -500,7 +498,6 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
       break;
     }
   }
-
   if (mergeSourceId === null) {
     // this source should not be merged
     return null;
@@ -522,7 +519,8 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
       features: [],
       id: mergeSourceId,
       label: mergeSourceId,
-      limit: 0, //the sum of the obtained results of the query is computed later
+      limit: 0,
+      //the sum of the obtained results of the query is computed later
       pending: false,
       tooManyResults: false,
       mergeComposants: [source.label],
@@ -550,7 +548,6 @@ QueryGridController.prototype.getMergedSource_ = function (source, mergedSources
     }
     mergeSource.limit += source.limit;
   }
-
   return mergeSource;
 };
 
@@ -576,12 +573,10 @@ QueryGridController.prototype.collectData_ = function (source) {
       if (!featureGeometriesNames.includes(featureGeometryName)) {
         featureGeometriesNames.push(featureGeometryName);
       }
-
       allProperties.push(properties);
       featuresForSource[getRowUid(properties)] = feature;
     }
   });
-
   this.cleanProperties_(allProperties, featureGeometriesNames);
   if (allProperties.length > 0) {
     const gridCreated = this.makeGrid_(allProperties, source);
@@ -605,7 +600,6 @@ QueryGridController.prototype.cleanProperties_ = function (allProperties, featur
     delete properties.boundedBy;
     delete properties.ngeo_feature_type_;
   });
-
   if (this.options.removeEmptyColumns === true) {
     this.removeEmptyColumnsFn_(allProperties);
   }
@@ -689,12 +683,11 @@ QueryGridController.prototype.getGridConfiguration_ = function (data) {
   const columnDefs = [];
   columns.forEach((column) => {
     columnDefs.push(
-      /** @type {import('ngeo/download/Csv').GridColumnDef} */ ({
+      /** @type {import('ngeo/download/Csv').GridColumnDef} */ {
         name: column,
-      }),
+      },
     );
   });
-
   if (columnDefs.length > 0) {
     return new ngeoGridConfig(data, columnDefs);
   } else {
@@ -722,7 +715,10 @@ QueryGridController.prototype.getActiveGridSource = function () {
  */
 QueryGridController.prototype.clear = function () {
   this.active = false;
-  panels.openFooterPanel('queryresult', {state: false, noError: true});
+  panels.openFooterPanel('queryresult', {
+    state: false,
+    noError: true,
+  });
   this.pending = false;
   this.gridSources = {};
   this.loadedGridSources = [];
@@ -745,12 +741,10 @@ QueryGridController.prototype.clear = function () {
 QueryGridController.prototype.selectTab = function (gridSource) {
   const source = gridSource.source;
   this.selectedTab = source.label;
-
   if (this.unregisterSelectWatcher_) {
     this.unregisterSelectWatcher_();
     this.unregisterSelectWatcher_ = null;
   }
-
   if (gridSource.configuration !== undefined) {
     this.unregisterSelectWatcher_ = this.$scope_.$watchCollection(
       () => gridSource.configuration.selectedRows,
@@ -762,10 +756,8 @@ QueryGridController.prototype.selectTab = function (gridSource) {
     );
   }
   this.updateFeatures_(gridSource);
-
   this.reflowGrid_();
 };
-
 QueryGridController.prototype.reflowGrid_ = function () {
   // This is a "work-around" to make sure that the grid is rendered correctly.
   // When a pane is activated by setting `this.selectedTab`, the class `active`
@@ -787,7 +779,6 @@ QueryGridController.prototype.onSelectionChanged_ = function () {
   if (this.selectedTab === null) {
     return;
   }
-
   const gridSource = this.gridSources[`${this.selectedTab}`];
   this.updateFeatures_(gridSource);
 };
@@ -798,15 +789,12 @@ QueryGridController.prototype.onSelectionChanged_ = function () {
 QueryGridController.prototype.updateFeatures_ = function (gridSource) {
   this.features_.clear();
   this.highlightFeatures_.clear();
-
   if (!gridSource.configuration) {
     return;
   }
-
   const sourceLabel = `${gridSource.source.label}`;
   const featuresForSource = this.featuresForSources_[sourceLabel];
   const selectedRows = gridSource.configuration.selectedRows;
-
   for (const rowId in featuresForSource) {
     const feature = featuresForSource[rowId];
     if (rowId in selectedRows) {
@@ -896,7 +884,10 @@ QueryGridController.prototype.zoomToSelection = function () {
     if (!size) {
       throw new Error('Missing size');
     }
-    this.map_.getView().fit(extent, {size, maxZoom: this.options.maxRecenterZoom});
+    this.map_.getView().fit(extent, {
+      size,
+      maxZoom: this.options.maxRecenterZoom,
+    });
   }
 };
 
@@ -911,11 +902,8 @@ QueryGridController.prototype.downloadCsv = function () {
       throw new Error('Missing columnDefs');
     }
     const selectedRows = source.configuration.getSelectedRows();
-
     this.ngeoCsvDownload_.startDownload(selectedRows, columnDefs, this.filename_);
   }
 };
-
 myModule.controller('GmfDisplayquerygridController', QueryGridController);
-
 export default myModule;

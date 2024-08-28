@@ -1,3 +1,4 @@
+MainController.$inject = ['$timeout', 'gmfThemes', 'gmfXSDAttributes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import angular from 'angular';
 import './xsdattributes.css';
 import gmfThemeThemes from 'gmf/theme/Themes';
-
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
 import {getGeometryAttribute} from 'ngeo/format/XSDAttribute';
@@ -44,7 +44,6 @@ const myModule = angular.module('gmfapp', [
  * @param {import('gmf/editing/XSDAttributes').EditingXSDAttributeService} gmfXSDAttributes
  *    The gmf XSDAttributes service.
  * @class
- * @ngInject
  */
 function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   /**
@@ -75,9 +74,7 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
   // TMP - The list of layer names to use. We'll keep this until we can use
   //       those that are editable.
   const layerNames = ['line', 'point', 'polygon'];
-
   gmfThemes.loadThemes();
-
   gmfThemes.getThemesObject().then((themes) => {
     if (!themes) {
       return;
@@ -91,10 +88,10 @@ function MainController($timeout, gmfThemes, gmfXSDAttributes) {
       });
     });
     flatNodes.forEach((node) => {
-      const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (node);
+      const groupNode = /** @type {import('gmf/themes').GmfGroup} */ node;
       // Get an array of all layers
       if (groupNode.children === undefined && layerNames.includes(node.name)) {
-        this.layers.push(/** @type {import('gmf/themes').GmfLayer} */ (node));
+        this.layers.push(/** @type {import('gmf/themes').GmfLayer} */ node);
       }
     });
   });
@@ -150,7 +147,7 @@ MainController.prototype.getGeomType = function () {
  */
 MainController.prototype.getDistinctFlatNodes_ = function (node, nodes) {
   let i;
-  const children = /** @type {import('gmf/themes').GmfGroup} */ (node).children;
+  const children = /** @type {import('gmf/themes').GmfGroup} */ node.children;
   if (children !== undefined) {
     for (i = 0; i < children.length; i++) {
       this.getDistinctFlatNodes_(children[i], nodes);
@@ -168,8 +165,6 @@ MainController.prototype.getDistinctFlatNodes_ = function (node, nodes) {
     nodes.push(node);
   }
 };
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

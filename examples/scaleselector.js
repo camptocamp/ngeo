@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import './scaleselector.css';
 import angular from 'angular';
 import ngeoScaleSelector from 'ngeo/map/scaleselector';
-
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
@@ -36,7 +36,6 @@ const myModule = angular.module('app', ['gettext', ngeoScaleSelector.name, gmfMa
 /**
  * @class
  * @param {angular.IScope} $scope Controller scope.
- * @ngInject
  */
 function MainController($scope) {
   /**
@@ -55,12 +54,10 @@ function MainController($scope) {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
 myModule.constant('ngeoScaleSelectorOptions', {
   values: [600000000, 300000000, 150000000, 70000000, 40000000],
   dropup: true,
 });
 options(myModule);
-
 export default myModule;

@@ -1,3 +1,4 @@
+Controller.$inject = ['$element', 'gettextCatalog'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -53,7 +54,6 @@ function dateTimeComponent() {
     },
   };
 }
-
 myModule.directive('ngeoDatetimepicker', dateTimeComponent);
 
 /**
@@ -61,7 +61,6 @@ myModule.directive('ngeoDatetimepicker', dateTimeComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatetimepickerController
  */
@@ -100,7 +99,5 @@ Controller.prototype.$onInit = function () {
   }
   this.element_.datetimepicker(this.options);
 };
-
 myModule.controller('ngeoDateTimePickerController', Controller);
-
 export default myModule;

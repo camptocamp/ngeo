@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -22,7 +23,6 @@
 import './mobilegeolocation.css';
 import angular from 'angular';
 import olMap from 'ol/Map';
-
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
 import olSourceOSM from 'ol/source/OSM';
@@ -37,7 +37,6 @@ const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, gmfMap
 /**
  * @param {angular.IScope} $scope Scope.
  * @class
- * @ngInject
  */
 function MainController($scope) {
   /**
@@ -54,28 +53,33 @@ function MainController($scope) {
       zoom: 4,
     }),
   });
-
   ngeoMapFeatureOverlayMgr.init(this.map);
 }
-
 appmodule.controller('MainController', MainController);
-
 appmodule.constant('ngeoGeolocationOptions', {
   positionFeatureStyle: {
     circle: {
       radius: 6,
-      fill: {color: 'rgba(230, 100, 100, 1)'},
-      stroke: {color: 'rgba(230, 40, 40, 1)', width: 2},
+      fill: {
+        color: 'rgba(230, 100, 100, 1)',
+      },
+      stroke: {
+        color: 'rgba(230, 40, 40, 1)',
+        width: 2,
+      },
     },
   },
   accuracyFeatureStyle: {
-    fill: {color: 'rgba(100, 100, 230, 0.3)'},
-    stroke: {color: 'rgba(40, 40, 230, 1)', width: 2},
+    fill: {
+      color: 'rgba(100, 100, 230, 0.3)',
+    },
+    stroke: {
+      color: 'rgba(40, 40, 230, 1)',
+      width: 2,
+    },
   },
   zoom: 17,
   autoRotate: true,
 });
-
 options(appmodule);
-
 export default appmodule;

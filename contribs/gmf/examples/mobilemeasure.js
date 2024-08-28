@@ -1,3 +1,4 @@
+MainController.$inject = ['gmfPermalink'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,9 +23,7 @@
 import angular from 'angular';
 import './mobilemeasure.css';
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
-
 import gmfMobileMeasureAreaComponent from 'gmf/mobile/measure/areaComponent';
 import gmfMobileMeasureLengthComponent from 'gmf/mobile/measure/lengthComponent';
 import gmfMobileMeasurePointComponent from 'gmf/mobile/measure/pointComponent';
@@ -56,7 +55,6 @@ const myModule = angular.module('gmfapp', [
 /**
  * @param {import('gmf/permalink/Permalink').PermalinkService} gmfPermalink The gmf permalink service.
  * @class
- * @ngInject
  */
 function MainController(gmfPermalink) {
   const center = gmfPermalink.getMapCenter() || [537635, 152640];
@@ -78,7 +76,6 @@ function MainController(gmfPermalink) {
       zoom: zoom,
     }),
   });
-
   this.map.addControl(
     new olControlScaleLine({
       // See: https://www.w3.org/TR/CSS21/syndata.html#length-units
@@ -101,9 +98,7 @@ function MainController(gmfPermalink) {
    */
   this.measurePointActive = false;
 }
-
 myModule.controller('MainController', MainController);
-
 const sketchStyle = {
   fill: {
     color: 'rgba(255, 255, 255, 0.2)',
@@ -129,8 +124,15 @@ myModule.constant('gmfMobileMeasurePointOptions', {
   decimals: 2,
   format: '{x}, {y}',
   rasterLayers: [
-    {name: 'aster', unit: 'm', decimals: 2},
-    {name: 'srtm', unit: 'm'},
+    {
+      name: 'aster',
+      unit: 'm',
+      decimals: 2,
+    },
+    {
+      name: 'srtm',
+      unit: 'm',
+    },
   ],
 });
 myModule.constant('gmfMobileMeasureLengthOptions', {
@@ -140,5 +142,4 @@ myModule.constant('gmfMobileMeasureAreaOptions', {
   sketchStyle: sketchStyle,
 });
 options(myModule);
-
 export default myModule;

@@ -1,3 +1,4 @@
+MainController.$inject = ['$http', '$q', '$scope', 'gmfThemes', 'gmfXSDAttributes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,7 +22,6 @@
 
 import angular from 'angular';
 import './objecteditinghub.css';
-
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 import gmfObjecteditingManager, {ObjecteditingParam} from 'gmf/objectediting/Manager';
 import gmfThemeThemes from 'gmf/theme/Themes';
@@ -48,7 +48,6 @@ const myModule = angular.module('gmfapp', [
  * @param {import('gmf/editing/XSDAttributes').EditingXSDAttributeService} gmfXSDAttributes
  *    The gmf XSDAttributes service.
  * @class
- * @ngInject
  */
 function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
   /**
@@ -139,12 +138,10 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
    * @type {string|undefined}
    */
   this.selectedGeomType = undefined;
-
   $scope.$watch(
     () => this.selectedGmfLayerNode,
     (newVal, oldVal) => {
       this.selectedFeature = null;
-
       if (newVal) {
         this.getFeatures_(newVal).then(this.handleGetFeatures_.bind(this, newVal));
         this.getGeometryType_(newVal).then(this.handleGetGeometryType_.bind(this, newVal));
@@ -156,18 +153,14 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
    * @type {string}
    */
   this.themeName = 'ObjectEditing';
-
   this.gmfThemes_.loadThemes();
-
   this.gmfThemes_.getOgcServersObject().then((ogcServers) => {
     // (1) Set OGC servers
     this.gmfServers_ = ogcServers;
-
     this.gmfThemes_.getThemesObject().then((themes) => {
       if (!themes) {
         return;
       }
-
       let i, ii;
 
       // (2) Find OE theme
@@ -179,7 +172,6 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
           break;
         }
       }
-
       if (!theme) {
         return;
       }
@@ -206,7 +198,7 @@ function MainController($http, $q, $scope, gmfThemes, gmfXSDAttributes) {
       for (i = 0, ii = groupNode.children.length; i < ii; i++) {
         if (groupNode.children[i].metadata.identifierAttributeField) {
           gmfLayerNodes.push(
-            /** @type {import('gmf/themes').GmfLayerWMS} */ (/** @type {any} */ (groupNode.children[i])),
+            /** @type {import('gmf/themes').GmfLayerWMS} */ /** @type {any} */ groupNode.children[i],
           );
         }
       }
@@ -229,7 +221,6 @@ MainController.prototype.runEditor = function () {
   if (!this.selectedFeature) {
     throw new Error('Missing selectedFeature');
   }
-
   const geomType = this.selectedGeomType;
   const feature = this.selectedFeature;
   const layer = this.selectedGmfLayerNode.id;
@@ -246,7 +237,6 @@ MainController.prototype.runEditor = function () {
   params[ObjecteditingParam.LAYER] = layer;
   params[ObjecteditingParam.THEME] = this.themeName;
   params[ObjecteditingParam.PROPERTY] = property;
-
   const url = MainController.appendParams(this.selectedUrl.url, params);
   window.open(url);
 };
@@ -257,15 +247,12 @@ MainController.prototype.runEditor = function () {
  */
 MainController.prototype.getFeatures_ = function (gmfLayerNode) {
   this.getFeaturesDeferred_ = this.q_.defer();
-
   const features = this.getFeaturesFromCache_(gmfLayerNode);
-
   if (features) {
     this.getFeaturesDeferred_.resolve();
   } else {
     this.issueGetFeatures_(gmfLayerNode);
   }
-
   return this.getFeaturesDeferred_.promise;
 };
 
@@ -276,23 +263,20 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
   if (!this.gmfServer_) {
     throw new Error('Missing gmfServer');
   }
-
   const id = gmfLayerNode.id;
-
   const url = MainController.appendParams(this.gmfServer_.urlWfs, {
     'SERVICE': 'WFS',
     'REQUEST': 'GetFeature',
     'VERSION': '1.1.0',
     'TYPENAME': gmfLayerNode.layers,
   });
-
   this.http_.get(url).then((response) => {
     if (!this.getFeaturesDeferred_) {
       throw new Error('Missing getFeaturesDeferred');
     }
-    const features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-      new olFormatWFS().readFeatures(response.data)
-    );
+    const features =
+      /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+      new olFormatWFS().readFeatures(response.data);
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
   });
@@ -302,9 +286,9 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
  * @param {import('gmf/themes').GmfLayerWMS} gmfLayerNode Layer node.
  */
 MainController.prototype.handleGetFeatures_ = function (gmfLayerNode) {
-  this.features = /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */ (
-    this.getFeaturesFromCache_(gmfLayerNode)
-  );
+  this.features =
+    /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+    this.getFeaturesFromCache_(gmfLayerNode);
   this.selectedFeature = this.features[0];
 };
 
@@ -324,15 +308,12 @@ MainController.prototype.getFeaturesFromCache_ = function (gmfLayerNode) {
  */
 MainController.prototype.getGeometryType_ = function (gmfLayerNode) {
   this.getGeometryTypeDeferred_ = this.q_.defer();
-
   const geomType = this.getGeometryTypeFromCache_(gmfLayerNode);
-
   if (geomType) {
     this.getGeometryTypeDeferred_.resolve();
   } else {
     this.issueGetAttributesRequest_(gmfLayerNode);
   }
-
   return this.getGeometryTypeDeferred_.promise;
 };
 
@@ -402,8 +383,6 @@ MainController.appendParams = function (uri, params) {
   uri = uri.includes('?') ? `${uri}&` : `${uri}?`;
   return uri + qs;
 };
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

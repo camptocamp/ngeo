@@ -33,7 +33,6 @@ import MaskLayer from './Mask';
  * @type {!angular.IModule}
  */
 const myModule = angular.module('ngeoOffline', [ngeoMessageModalComponent.name]);
-
 myModule.value(
   'ngeoOfflineTemplateUrl',
   /**
@@ -46,16 +45,17 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'ngeo/offline/component.html';
   },
 );
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/offline/component.html', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/offline/component.html', require('./component.html'));
+    },
+  ],
 );
 
 /**
@@ -63,8 +63,8 @@ myModule.run(
  * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!function(!JQuery, !angular.IAttributes): string} ngeoOfflineTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  */
+ngeoOfflineTemplateUrl.$inject = ['$element', '$attrs', 'ngeoOfflineTemplateUrl'];
 function ngeoOfflineTemplateUrl($element, $attrs, ngeoOfflineTemplateUrl) {
   return ngeoOfflineTemplateUrl($element, $attrs);
 }
@@ -101,10 +101,8 @@ const component = {
   controller: 'ngeoOfflineController',
   templateUrl: ngeoOfflineTemplateUrl,
 };
-
 myModule.component('ngeoOffline', component);
-
-export const Controller = class {
+export class Controller {
   /**
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import('ngeo/offline/ServiceManager').default} ngeoOfflineServiceManager
@@ -113,7 +111,6 @@ export const Controller = class {
    * ngeo offline configuration service.
    * @param {import('ngeo/offline/Mode').default} ngeoOfflineMode Offline mode manager.
    * @param {import('ngeo/offline/NetworkStatus').default} ngeoNetworkStatus ngeo network status service.
-   * @ngInject
    * @ngdoc controller
    * @ngname ngeoOfflineController
    */
@@ -186,7 +183,6 @@ export const Controller = class {
      * @private
      */
     this.overlayCollection_ = new olCollection();
-
     this.featuresOverlay_.setFeatures(this.overlayCollection_);
 
     /**
@@ -315,24 +311,29 @@ export const Controller = class {
       this.$timeout_(() => {}, 0); // FIXME: force redraw
     };
   }
-
   $onInit() {
     this.offlineMode.registerComponent(this);
     this.ngeoOfflineConfiguration_.on(
-      /** @type {import('ol/Observable').EventTypes} */ ('progress'),
-      /** @type {function(?): ?} */ (this.progressCallback_),
+      /** @type {import('ol/Observable').EventTypes} */ 'progress',
+      /** @type {function(?): ?} */ this.progressCallback_,
     );
     this.maskMargin = this.maskMargin || 100;
     this.minZoom = this.minZoom || 10;
     this.maxZoom = this.maxZoom || 15;
     // @ts-ignore: extentInMeters does not exists...
-    this.maskLayer_ = new MaskLayer({extentInMeters: this.extentSize}, {margin: this.maskMargin});
+    this.maskLayer_ = new MaskLayer(
+      {
+        extentInMeters: this.extentSize,
+      },
+      {
+        margin: this.maskMargin,
+      },
+    );
   }
-
   $onDestroy() {
     this.ngeoOfflineConfiguration_.un(
-      /** @type {import('ol/Observable').EventTypes} */ ('progress'),
-      /** @type {function(?): ?} */ (this.progressCallback_),
+      /** @type {import('ol/Observable').EventTypes} */ 'progress',
+      /** @type {function(?): ?} */ this.progressCallback_,
     );
   }
 
@@ -364,10 +365,8 @@ export const Controller = class {
   toggleViewExtentSelection(finished) {
     this.menuDisplayed = false;
     this.selectingExtent = !this.selectingExtent;
-
     this.map.removeLayer(this.maskLayer_);
     this.removeZoomConstraints_();
-
     if (this.selectingExtent && !this.map.getLayers().getArray().includes(this.maskLayer_)) {
       this.addZoomConstraints_();
       this.map.addLayer(this.maskLayer_);
@@ -437,7 +436,9 @@ export const Controller = class {
       if (size === undefined) {
         throw new Error('Missing size');
       }
-      this.map.getView().fit(extent, {size});
+      this.map.getView().fit(extent, {
+        size,
+      });
       this.menuDisplayed = false;
       this.displayExtent_();
       this.offlineMode.enable();
@@ -487,7 +488,6 @@ export const Controller = class {
     if (this.networkStatus.isDisconnected()) {
       this.menuDisplayed = false;
     }
-
     const reloadIfInOfflineMode = () => {
       if (this.offlineMode.isEnabled()) {
         this.deactivateOfflineMode();
@@ -515,10 +515,8 @@ export const Controller = class {
   addZoomConstraints_() {
     const view = this.map.getView();
     const zoom = view.getZoom() || 0;
-
     this.originalMinZoom = view.getMinZoom();
     this.originalMaxZoom = view.getMaxZoom();
-
     if (zoom < this.minZoom) {
       view.setZoom(this.minZoom);
     } else if (zoom > this.maxZoom) {
@@ -561,15 +559,19 @@ export const Controller = class {
     const halfLength = Math.ceil(this.extentSize || this.getExtentSize_()) / 2;
     return this.maskLayer_.createExtent(center, halfLength);
   }
-
   getExtentSize_() {
     const mapSize = this.map.getSize() || [150, 150];
     const maskSizePixel = DEVICE_PIXEL_RATIO * Math.min(mapSize[0], mapSize[1]) - this.maskMargin * 2;
     const maskSizeMeter = (maskSizePixel * (this.map.getView().getResolution() || 1)) / DEVICE_PIXEL_RATIO;
     return maskSizeMeter;
   }
-};
-
+}
+Controller.$inject = [
+  '$timeout',
+  'ngeoOfflineServiceManager',
+  'ngeoOfflineConfiguration',
+  'ngeoOfflineMode',
+  'ngeoNetworkStatus',
+];
 myModule.controller('ngeoOfflineController', Controller);
-
 export default myModule;

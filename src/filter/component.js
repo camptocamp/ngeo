@@ -22,11 +22,8 @@
 import angular from 'angular';
 import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
 import ngeoFilterCondition from 'ngeo/filter/Condition';
-
 import ngeoFilterRuleComponent from 'ngeo/filter/ruleComponent';
-
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
-
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry';
 import {getUid as olUtilGetUid} from 'ol/util';
@@ -49,18 +46,18 @@ const myModule = angular.module('ngeoFilter', [
   ngeoFilterRuleComponent.name,
   ngeoQueryMapQuerent.name,
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/filter', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/filter', require('./component.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoFilterTemplateUrl',
   /**
@@ -77,14 +74,13 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoFilterTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+ngeoFilterTemplateUrl.$inject = ['$attrs', 'ngeoFilterTemplateUrl'];
 function ngeoFilterTemplateUrl($attrs, ngeoFilterTemplateUrl) {
   return ngeoFilterTemplateUrl($attrs);
 }
-
 myModule.component('ngeoFilter', {
   bindings: {
     'aRuleIsActive': '=',
@@ -112,7 +108,6 @@ export class FilterController {
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import('ngeo/query/MapQuerent').MapQuerent} ngeoMapQuerent The ngeo map querent service.
    * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
-   * @ngInject
    * @ngdoc controller
    * @ngname NgeoFilterController
    */
@@ -242,9 +237,7 @@ export class FilterController {
     if (!this.datasource) {
       throw new Error('Missing datasource');
     }
-
     this.scope_.$watch(() => this.aRuleIsActive, this.handleARuleIsActiveChange_.bind(this));
-
     this.scope_.$watch(
       () => this.datasource.filterRules,
       () => {
@@ -358,7 +351,6 @@ export class FilterController {
     if (!filterRules.length) {
       return;
     }
-
     const dataSource = this.datasource;
     const limit = 1000;
     const map = this.map;
@@ -371,7 +363,6 @@ export class FilterController {
     if (!filter) {
       throw new Error('Missing filter');
     }
-
     this.ngeoMapQuerent_.issue({
       dataSources: [dataSource],
       filter: filter,
@@ -458,7 +449,6 @@ export class FilterController {
       () => rule.active,
       this.handleRuleActiveChange_.bind(this),
     );
-
     if (rule instanceof ngeoRuleGeometry) {
       this.featureOverlay.addFeature(rule.feature);
     }
@@ -476,7 +466,6 @@ export class FilterController {
     console.assert(unlistener);
     unlistener();
     delete this.ruleUnlisteners_[uid];
-
     if (rule instanceof ngeoRuleGeometry) {
       this.featureOverlay.removeFeature(rule.feature);
     }
@@ -529,7 +518,6 @@ export class FilterController {
     }
   }
 }
-
+FilterController.$inject = ['gettextCatalog', '$scope', '$timeout', 'ngeoMapQuerent', 'ngeoRuleHelper'];
 myModule.controller('ngeoFilterController', FilterController);
-
 export default myModule;

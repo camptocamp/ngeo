@@ -1,3 +1,4 @@
+Controller.$inject = ['$scope', 'gmfObjectEditingQuery'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -52,7 +53,6 @@ const myModule = angular.module('gmfObjecteditingGetWMSFeatureComponent', [gmfOb
  *     gmf-objecteditinggetwmsfeature-layerinfo Queryable layer info.
  * @htmlAttribute {import('ol/Map').default} gmf-objecteditinggetwmsfeature-map The map.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfObjecteditinggetwmsfeature
  */
@@ -68,7 +68,6 @@ function objectEditingGetWMSFeatureComponent() {
     bindToController: true,
   };
 }
-
 myModule.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureComponent);
 
 /**
@@ -77,7 +76,6 @@ myModule.directive('gmfObjecteditinggetwmsfeature', objectEditingGetWMSFeatureCo
  *     query service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfObjecteditinggetwmsfeatureController
  */
@@ -88,7 +86,6 @@ export function Controller($scope, gmfObjectEditingQuery) {
    * @type {boolean}
    */
   this.active = false;
-
   $scope.$watch(() => this.active, this.handleActiveChange_.bind(this));
 
   /**
@@ -154,7 +151,5 @@ Controller.prototype.handleMapClick_ = function (evt) {
     });
   }
 };
-
 myModule.controller('gmfObjecteditinggetwmsfeatureController', Controller);
-
 export default myModule;

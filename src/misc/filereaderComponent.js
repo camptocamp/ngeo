@@ -1,3 +1,4 @@
+filereaderComponent.$inject = ['$window'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -45,7 +46,6 @@ const myModule = angular.module('ngeoFilereader', []);
  * @htmlAttribute {boolean} [ngeo]-filereader-supported Whether the FileReader API is supported.
  * @param {angular.IWindowService} $window The Angular $window service.
  * @returns {angular.IDirective} Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoFilereader
  * @private
@@ -81,7 +81,7 @@ function filereaderComponent($window) {
            * @param {ProgressEvent} evt Event.
            */
           function (evt) {
-            const target = /** @type {FileReader} */ (evt.target);
+            const target = /** @type {FileReader} */ evt.target;
             scope.$apply(() => {
               // @ts-ignore: scope ...
               scope.fileContent = target.result;
@@ -93,11 +93,11 @@ function filereaderComponent($window) {
         }
         fileReader.readAsText(files[0]);
       };
-      element.on({change: ce});
+      element.on({
+        change: ce,
+      });
     },
   };
 }
-
 myModule.directive('ngeoFilereader', filereaderComponent);
-
 export default myModule;

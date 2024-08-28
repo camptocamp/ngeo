@@ -22,7 +22,6 @@
 import angular from 'angular';
 
 /**
- * @ngInject
  * @param {angular.IHttpService} $http Angular HTTP service.
  * @returns {angular.IDirective} The Directive Definition Object.
  * @ngdoc directive
@@ -52,13 +51,12 @@ const loaderSpinner = function ($http) {
       },
   };
 };
-
+loaderSpinner.$inject = ['$http'];
+loaderSpinner.$inject = ['$http'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfLoaderSpinner', []);
-
 myModule.directive('gmfLoaderSpinner', loaderSpinner);
-
 export default myModule;

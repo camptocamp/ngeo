@@ -1,3 +1,5 @@
+Controller.$inject = ['$scope', 'ngeoTime', 'gettextCatalog'];
+datePickerComponent.$inject = ['ngeoDatePickerTemplateUrl', '$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,7 +23,6 @@
 
 import angular from 'angular';
 import ngeoMiscTime from 'ngeo/misc/Time';
-
 import 'angular-ui-date';
 import 'ngeo/sass/jquery-ui.scss';
 
@@ -36,7 +37,6 @@ import 'jquery-ui/ui/i18n/datepicker-it';
  * @hidden
  */
 const myModule = angular.module('ngeoDatePicker', [ngeoMiscTime.name, 'ui.date']);
-
 myModule.value(
   'ngeoDatePickerTemplateUrl',
   /**
@@ -49,16 +49,17 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'ngeo/misc/datepickerComponent';
   },
 );
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/misc/datepickerComponent', require('./datepickerComponent.html'));
+    },
+  ],
 );
 
 /**
@@ -69,7 +70,6 @@ myModule.run(
  *    Template for the directive.
  * @param {angular.ITimeoutService} $timeout angular timeout service
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDatePicker
  */
@@ -88,10 +88,8 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
         throw new Error('Missing ctrl');
       }
       ctrl.init();
-
       const lang = ctrl.gettextCatalog_.getCurrentLanguage();
       $.datepicker.setDefaults($.datepicker.regional[lang]);
-
       ctrl.sdateOptions = angular.extend({}, ctrl.sdateOptions, {
         'minDate': ctrl.initialMinDate,
         'maxDate': ctrl.initialMaxDate,
@@ -105,7 +103,6 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
             }
           },
       });
-
       ctrl.edateOptions = angular.extend({}, ctrl.edateOptions, {
         'minDate': ctrl.initialMinDate,
         'maxDate': ctrl.initialMaxDate,
@@ -119,14 +116,12 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
             }
           },
       });
-
       angular.element('body').on('hidden.bs.popover', () => {
         const dp = angular.element('#ui-datepicker-div');
         if (dp && dp.css('display') === 'block') {
           $(element[0]).find('input[name$="date"]').datepicker('hide');
         }
       });
-
       $timeout(() => {
         angular.element('#ui-datepicker-div').on('click', (e) => {
           e.stopPropagation();
@@ -135,7 +130,6 @@ function datePickerComponent(ngeoDatePickerTemplateUrl, $timeout) {
     },
   };
 }
-
 myModule.directive('ngeoDatePicker', datePickerComponent);
 
 /**
@@ -146,7 +140,6 @@ myModule.directive('ngeoDatePicker', datePickerComponent);
  * @param {angular.gettext.gettextCatalog} gettextCatalog service.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoDatePickerController
  */
@@ -229,14 +222,12 @@ export function Controller($scope, ngeoTime, gettextCatalog) {
    * @type {?Date}
    */
   this.edate = null;
-
   $scope.$watchGroup(['datepickerCtrl.sdate', 'datepickerCtrl.edate'], (newDates, oldDates) => {
     if (!this.onDateSelected) {
       throw new Error('Missing onDateSelected');
     }
     const sDate = newDates[0];
     const eDate = newDates[1];
-
     if (angular.isDate(sDate) && (!this.isModeRange || angular.isDate(eDate))) {
       const start = this.ngeoTime_.getTime(sDate);
       const end = this.ngeoTime_.getTime(eDate);
@@ -265,7 +256,6 @@ Controller.prototype.init = function () {
   this.initialMinDate = this.ngeoTime_.createDate(initialOptions_.minDate);
   this.initialMaxDate = this.ngeoTime_.createDate(initialOptions_.maxDate);
   this.isModeRange = this.time.mode === 'range';
-
   if (this.isModeRange) {
     if (!Array.isArray(initialOptions_.values)) {
       throw new Error('Value should be an array');
@@ -279,7 +269,5 @@ Controller.prototype.init = function () {
     this.sdate = this.ngeoTime_.createDate(initialOptions_.values);
   }
 };
-
 myModule.controller('ngeoDatePickerController', Controller);
-
 export default myModule;

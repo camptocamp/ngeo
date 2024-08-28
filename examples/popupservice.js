@@ -1,3 +1,4 @@
+MainController.$inject = ['$sce', 'ngeoCreatePopup'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -30,7 +31,6 @@ const myModule = angular.module('app', ['gettext', ngeoMessagePopup.name]);
 /**
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {import('ngeo/message/Popup').PopupFactory} ngeoCreatePopup Popup service.
- * @ngInject
  * @class
  */
 function MainController($sce, ngeoCreatePopup) {
@@ -130,7 +130,5 @@ MainController.prototype.openPopupWithUrl = function () {
     width: '400px',
   });
 };
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

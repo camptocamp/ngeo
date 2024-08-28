@@ -35,7 +35,6 @@ export class DatasourceWFSAlias {
    *     source helper service.
    * @ngdoc service
    * @ngname gmfWFSAliases
-   * @ngInject
    */
   constructor(gmfDataSourcesHelper) {
     // === Injected properties ===
@@ -64,12 +63,11 @@ export class DatasourceWFSAlias {
     }
   }
 }
-
+DatasourceWFSAlias.$inject = ['gmfDataSourcesHelper'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfDatasourceWFSAliases', [gmfDatasourceHelper.name]);
 myModule.service('gmfWFSAliases', DatasourceWFSAlias);
-
 export default myModule;

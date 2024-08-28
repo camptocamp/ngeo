@@ -42,7 +42,6 @@ export class DataSource {
    *
    * @ngdoc service
    * @ngname ngeoDataSources
-   * @ngInject
    */
   constructor() {
     /**
@@ -62,7 +61,6 @@ export class DataSource {
      * @private
      */
     this.listenerKeys_ = [];
-
     listen(this.collection_, 'add', this.handleDataSourcesAdd_, this);
   }
 
@@ -75,18 +73,14 @@ export class DataSource {
     if (this.map_ === map) {
       return;
     }
-
     if (this.map_) {
       this.unbindMap_(this.map_);
     }
-
     this.map_ = map;
-
     if (map) {
       this.bindMap_(map);
     }
   }
-
   get collection() {
     return this.collection_;
   }
@@ -164,14 +158,11 @@ export class DataSource {
     if (!dataSource.supportsDynamicInRange) {
       return;
     }
-
     const maxResolution = dataSource.maxResolution;
     const minResolution = dataSource.minResolution;
-
     const inMinRange = minResolution === null || minResolution === undefined || resolution >= minResolution;
     const inMaxRange = maxResolution === null || maxResolution === undefined || resolution <= maxResolution;
     const inRange = inMinRange && inMaxRange;
-
     dataSource.inRange = inRange;
   }
 
@@ -195,7 +186,7 @@ export class DataSource {
     }
   }
 }
-
+DataSource.$inject = [];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -203,5 +194,4 @@ export class DataSource {
 const myModule = angular.module('ngeoDataSources', []);
 // DataSources with the DataSources type.
 myModule.service('ngeoDataSources', DataSource);
-
 export default myModule;

@@ -86,7 +86,6 @@ const messageModalComponent = {
     'closable': '<ngeoModalClosable',
   },
 };
-
 myModule.component('ngeoModal', messageModalComponent);
 
 /**
@@ -94,7 +93,6 @@ myModule.component('ngeoModal', messageModalComponent);
  */
 export class Controller {
   /**
-   * @ngInject
    * @param {angular.IScope} $scope Scope.
    * @param {JQuery} $element Element.
    */
@@ -137,23 +135,17 @@ export class Controller {
      */
     this.ngModel = null;
   }
-
   $onInit() {
     this.closable = this.closable !== false;
-
     this.resizable = !!this.resizable;
-
     this.draggableHandle = this.draggableHandle || '.ui-draggable-handle';
   }
-
   $postLink() {
     this.modal_ = this.$element_.children();
-
     if (!this.closable) {
       this.modal_.attr('data-keyboard', 'false');
       this.modal_.attr('data-backdrop', 'static');
     }
-
     const dialog = this.modal_.find('.modal-dialog');
     dialog.draggable({
       handle: this.draggableHandle,
@@ -161,7 +153,6 @@ export class Controller {
     if (this.resizable) {
       dialog.resizable();
     }
-
     if (!this.ngModel) {
       throw new Error('Missing model');
     }
@@ -174,7 +165,6 @@ export class Controller {
       }
       this.modal_.modal(this.ngModel.$viewValue ? 'show' : 'hide');
     };
-
     this.modal_.on('shown.bs.modal hidden.bs.modal', (e) => {
       if (!this.ngModel) {
         throw new Error('Missing model');
@@ -184,7 +174,6 @@ export class Controller {
       this.ngModel.$setViewValue(type == 'shown');
     });
   }
-
   $onDestroy() {
     if (!this.modal_) {
       throw new Error('Missing modal');
@@ -199,7 +188,6 @@ export class Controller {
     }
   }
 }
-
+Controller.$inject = ['$scope', '$element'];
 myModule.controller('ngeoModalController', Controller);
-
 export default myModule;

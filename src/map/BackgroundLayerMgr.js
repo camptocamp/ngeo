@@ -89,7 +89,6 @@ const BACKGROUNDLAYERGROUP_NAME = 'background';
 export class MapBackgroundLayerManager extends olObservable {
   /**
    * @param {import('ngeo/map/LayerHelper').LayerHelper} ngeoLayerHelper Themes service.
-   * @ngInject
    */
   constructor(ngeoLayerHelper) {
     super();
@@ -139,9 +138,7 @@ export class MapBackgroundLayerManager extends olObservable {
       layer.setZIndex(ZIndex);
       this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
     }
-
     const bgGroup = this.ngeoLayerHelper_.getGroupFromMap(map, BACKGROUNDLAYERGROUP_NAME);
-
     if (previous !== null) {
       console.assert(mapUid in this.mapUids_);
       if (layer !== null) {
@@ -160,7 +157,6 @@ export class MapBackgroundLayerManager extends olObservable {
       previous: previous,
     });
     this.dispatchEvent(event);
-
     return previous;
   }
 
@@ -195,7 +191,6 @@ export class MapBackgroundLayerManager extends olObservable {
     const ZIndex = -100;
     layer.setZIndex(ZIndex);
     this.ngeoLayerHelper_.setZIndexToFirstLevelChildren(layer, ZIndex);
-
     const index = bgGroup.getLayers().getArray().indexOf(layer);
     if (index === -1) {
       bgGroup.getLayers().push(layer);
@@ -214,7 +209,6 @@ export class MapBackgroundLayerManager extends olObservable {
         // Handle the first level of layers of the base background layer.
         layers = baseBgLayer.getLayers().getArray();
       }
-
       layers.forEach((layer) => {
         if (layer instanceof olLayerLayer) {
           let hasUpdates = false;
@@ -242,12 +236,11 @@ export class MapBackgroundLayerManager extends olObservable {
     }
   }
 }
-
+MapBackgroundLayerManager.$inject = ['ngeoLayerHelper'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('ngeoBackgroundLayerMgr', [ngeoLayerHelper.name]);
 myModule.service('ngeoBackgroundLayerMgr', MapBackgroundLayerManager);
-
 export default myModule;

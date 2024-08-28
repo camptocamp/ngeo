@@ -1,3 +1,12 @@
+WidgetController.$inject = ['gmfElevationOptions'];
+Controller.$inject = [
+  '$scope',
+  '$filter',
+  'ngeoDebounce',
+  'gmfRaster',
+  'gettextCatalog',
+  'gmfElevationOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,12 +30,9 @@
 
 import angular from 'angular';
 import gmfRasterRasterService from 'gmf/raster/RasterService';
-
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
-
 import {listen, unlistenByKey} from 'ol/events';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
-
 import 'bootstrap/js/src/dropdown';
 
 /**
@@ -34,18 +40,18 @@ import 'bootstrap/js/src/dropdown';
  * @hidden
  */
 const myModule = angular.module('gmfRasterComponent', [gmfRasterRasterService.name, ngeoMiscDebounce.name]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/raster/widgetComponent', require('./widgetComponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfElevationwidgetTemplateUrl',
   /**
@@ -63,10 +69,10 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfElevationwidgetTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfElevationwidgetTemplateUrl.$inject = ['$attrs', 'gmfElevationwidgetTemplateUrl'];
 function gmfElevationwidgetTemplateUrl($attrs, gmfElevationwidgetTemplateUrl) {
   return gmfElevationwidgetTemplateUrl($attrs);
 }
@@ -142,7 +148,6 @@ function rasterComponent() {
     },
   };
 }
-
 myModule.directive('gmfElevation', rasterComponent);
 
 /**
@@ -155,7 +160,6 @@ myModule.directive('gmfElevation', rasterComponent);
  * @param {import('gmf/options').gmfElevationOptions} gmfElevationOptions The options
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname gmfElevationController
  */
@@ -164,7 +168,6 @@ export function Controller($scope, $filter, ngeoDebounce, gmfRaster, gettextCata
    * @type {import('gmf/options').gmfElevationOptions}
    */
   this.options = gmfElevationOptions;
-
   this.filter_ = $filter;
   this.ngeoDebounce_ = ngeoDebounce;
   this.gmfRaster_ = gmfRaster;
@@ -320,7 +323,6 @@ Controller.prototype.getRasterSuccess_ = function (resp) {
   }
   this.loading = false;
 };
-
 Controller.prototype.getRasterError_ = function () {
   console.error('Error on getting the raster.');
   this.clear_();
@@ -333,7 +335,6 @@ Controller.prototype.clear_ = function () {
   this.elevation = null;
   this.loading = false;
 };
-
 myModule.controller('GmfElevationController', Controller);
 
 /**
@@ -364,7 +365,6 @@ myModule.component('gmfElevationwidget', rasterWidgetComponent);
 /**
  * @class
  * @hidden
- * @nginject
  * @ngdoc controller
  * @param {import('gmf/options').gmfElevationOptions} gmfElevationOptions The options.
  */
@@ -390,7 +390,5 @@ export function WidgetController(gmfElevationOptions) {
    */
   this.selectedElevationLayer = this.show ? this.options.layers[0] : '';
 }
-
 myModule.controller('gmfElevationwidgetController', WidgetController);
-
 export default myModule;

@@ -181,7 +181,6 @@ module.exports = function (config) {
         babelrc: false,
         comments: false,
         presets: [babelPresetEnv],
-        plugins: [require.resolve('babel-plugin-angularjs-annotate')],
       },
     },
   };

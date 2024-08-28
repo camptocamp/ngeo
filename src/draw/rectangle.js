@@ -33,7 +33,6 @@ const myModule = angular.module('ngeoDrawrectangle', []);
 
 /**
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawrectangle
  */
@@ -51,7 +50,6 @@ function drawRectangleComponent() {
       if (!drawFeatureCtrl) {
         throw new Error('Missing drawFeatureCtrl');
       }
-
       const drawRectangle = new olInteractionDraw({
         type: 'LineString',
         geometryFunction: (coordinates, geometry) => {
@@ -71,14 +69,11 @@ function drawRectangleComponent() {
         },
         maxPoints: 2,
       });
-
       if (drawFeatureCtrl.uid) {
         drawRectangle.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-rectangle`);
       }
-
       drawFeatureCtrl.registerInteraction(drawRectangle);
       drawFeatureCtrl.drawRectangle = drawRectangle;
-
       listen(
         drawRectangle,
         'drawend',
@@ -89,7 +84,5 @@ function drawRectangleComponent() {
     },
   };
 }
-
 myModule.directive('ngeoDrawrectangle', drawRectangleComponent);
-
 export default myModule;

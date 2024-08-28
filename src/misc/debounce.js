@@ -1,3 +1,4 @@
+factory.$inject = ['$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -75,7 +76,6 @@ export function debounce(func, wait, invokeApply, $timeout) {
  * @template {function(?): void} Targs
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @returns {import('ngeo/misc/debounce').miscDebounce<T>} The debounce function.
- * @ngInject
  * @private
  * @hidden
  */
@@ -86,7 +86,5 @@ function factory($timeout) {
     return deb(func, wait, invokeApply, $timeout);
   };
 }
-
 myModule.factory('ngeoDebounce', factory);
-
 export default myModule;

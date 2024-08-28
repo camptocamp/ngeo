@@ -1,3 +1,4 @@
+MainController.$inject = ['gmfThemes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -22,9 +23,7 @@
 import angular from 'angular';
 import './search.css';
 import gmfMapComponent from 'gmf/map/component';
-
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import gmfSearchModule from 'gmf/search/module';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMessageNotification from 'ngeo/message/Notification';
@@ -52,11 +51,9 @@ const myModule = angular.module('gmfapp', [
 /**
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes Themes service.
  * @class
- * @ngInject
  */
 function MainController(gmfThemes) {
   gmfThemes.loadThemes();
-
   ngeoMapFeatureOverlayMgr.init(this.map);
 
   /**
@@ -97,9 +94,7 @@ function MainController(gmfThemes) {
     });
   };
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('gmfSearchGroups', []);
 myModule.constant('gmfSearchOptions', {
   colorChooser: true,
@@ -107,13 +102,23 @@ myModule.constant('gmfSearchOptions', {
   placeholder: 'Search for « Laus » for example…',
   styles: {
     osm: {
-      fill: {color: [255, 255, 255, 0.6]},
-      circle: {
-        fill: {color: [255, 255, 255, 0.6]},
-        radius: 5,
-        stroke: {color: [255, 0, 0, 1], width: 2},
+      fill: {
+        color: [255, 255, 255, 0.6],
       },
-      stroke: {color: [255, 0, 0, 1], width: 2},
+      circle: {
+        fill: {
+          color: [255, 255, 255, 0.6],
+        },
+        radius: 5,
+        stroke: {
+          color: [255, 0, 0, 1],
+          width: 2,
+        },
+      },
+      stroke: {
+        color: [255, 0, 0, 1],
+        width: 2,
+      },
     },
   },
   datasources: [
@@ -123,15 +128,14 @@ myModule.constant('gmfSearchOptions', {
       groupActions: [],
       labelKey: 'label',
       projection: EPSG2056,
-      bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<unknown>} */ ({
+      bloodhoundOptions: /** @type {Bloodhound.BloodhoundOptions<unknown>} */ {
         remote: {
           rateLimitWait: 250,
         },
-      }),
+      },
       url: SEARCH,
     },
   ],
 });
 options(myModule);
-
 export default myModule;

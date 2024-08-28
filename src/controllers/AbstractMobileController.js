@@ -28,7 +28,6 @@ import gmfMobileNavigationModule from 'gmf/mobile/navigation/module';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import user from 'gmfapi/store/user';
-
 import 'gmf/controllers/vars_mobile.scss';
 import 'gmf/controllers/mobile.scss';
 
@@ -42,7 +41,6 @@ export class AbstractMobileController extends AbstractAppController {
   /**
    * @param {angular.IScope} $scope Scope.
    * @param {angular.auto.IInjectorService} $injector Main injector.
-   * @ngInject
    */
   constructor($scope, $injector) {
     super($scope, $injector, true);
@@ -99,16 +97,12 @@ export class AbstractMobileController extends AbstractAppController {
      * @type {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr}
      */
     const ngeoToolActivateMgr = $injector.get('ngeoToolActivateMgr');
-
     const measureAreaActivate = new ngeoMiscToolActivate(this, 'measureAreaActive');
     ngeoToolActivateMgr.registerTool('mapTools', measureAreaActivate, false);
-
     const measurePointActivate = new ngeoMiscToolActivate(this, 'measurePointActive');
     ngeoToolActivateMgr.registerTool('mapTools', measurePointActivate, false);
-
     const measureLengthActivate = new ngeoMiscToolActivate(this, 'measureLengthActive');
     ngeoToolActivateMgr.registerTool('mapTools', measureLengthActivate, false);
-
     Object.assign(this.searchListeners, {
       open: () => {
         this.searchOverlayVisible = true;
@@ -117,7 +111,6 @@ export class AbstractMobileController extends AbstractAppController {
         this.searchOverlayVisible = false;
       },
     });
-
     this.manageResize = true;
     this.resizeTransition = 500;
 
@@ -130,7 +123,6 @@ export class AbstractMobileController extends AbstractAppController {
         }
       },
     );
-
     user.getLoginMessage().subscribe({
       next: (message) => {
         if (message) {
@@ -184,14 +176,14 @@ export class AbstractMobileController extends AbstractAppController {
     const navElements = document.getElementsByClassName('gmf-mobile-nav-button');
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let i = 0; i < navElements.length; i++) {
-      const element = /** @type {HTMLElement} */ (navElements[i]);
+      const element = /** @type {HTMLElement} */ navElements[i];
       if (element.dataset && element.dataset.target === target) {
         element.click();
       }
     }
   }
 }
-
+AbstractMobileController.$inject = ['$scope', '$injector'];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -202,9 +194,6 @@ const myModule = angular.module('GmfAbstractMobileControllerModule', [
   gmfMobileNavigationModule.name,
   gmfQueryWindowComponent.name,
 ]);
-
 myModule.controller('AbstractMobileController', AbstractMobileController);
-
 myModule.value('isMobile', true);
-
 export default myModule;

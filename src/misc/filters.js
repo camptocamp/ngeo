@@ -1,3 +1,10 @@
+DurationFilter.$inject = ['gettextCatalog'];
+trustHtmlAutoFilter.$inject = ['$sce', 'ngeoStringToHtmlReplacements'];
+trustHtmlFilter.$inject = ['$sce'];
+NumberCoordinatesFilter.$inject = ['$filter'];
+UnitPrefixFilter.$inject = ['$filter'];
+NumberFilter.$inject = ['$locale'];
+ScalifyFilter.$inject = ['$filter'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -96,7 +103,6 @@ const myModule = angular.module('ngeoAngularFilters', []);
  * @param {angular.IFilterService} $filter Angular filter
  * @returns {function(number): string} A function to format number into a 'scale'
  *     string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoScalify
  */
@@ -117,7 +123,6 @@ export function ScalifyFilter($filter) {
   filterFn.$stateful = true;
   return filterFn;
 }
-
 myModule.filter('ngeoScalify', ScalifyFilter);
 
 /**
@@ -136,7 +141,6 @@ myModule.filter('ngeoScalify', ScalifyFilter);
  *
  * @param {angular.ILocaleService} $locale Angular locale
  * @returns {formatNumber} Function used to format number into a string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumber
  */
@@ -154,7 +158,6 @@ export function NumberFilter($locale) {
     if (opt_precision === undefined) {
       opt_precision = 3;
     }
-
     if (number === Infinity) {
       return '\u221e';
     } else if (number === -Infinity) {
@@ -165,13 +168,11 @@ export function NumberFilter($locale) {
     }
     const sign = number < 0;
     number = Math.abs(number);
-
     const nb_decimal = opt_precision - Math.floor(Math.log(number) / Math.log(10)) - 1;
     const factor = Math.pow(10, nb_decimal);
     number = Math.round(number * factor);
     let decimal = '';
     const unit = Math.floor(number / factor);
-
     if (nb_decimal > 0) {
       let str_number = `${number}`;
       // 0 padding
@@ -183,7 +184,6 @@ export function NumberFilter($locale) {
         decimal = decimal.substring(0, decimal.length - 1);
       }
     }
-
     const groups = [];
     let str_unit = `${unit}`;
     while (str_unit.length > 3) {
@@ -192,12 +192,10 @@ export function NumberFilter($locale) {
       str_unit = str_unit.substring(0, index);
     }
     groups.unshift(str_unit);
-
     return (sign ? '-' : '') + groups.join(groupSep) + (decimal.length === 0 ? '' : decimalSep + decimal);
   };
   return result;
 }
-
 myModule.filter('ngeoNumber', NumberFilter);
 
 /**
@@ -218,7 +216,6 @@ myModule.filter('ngeoNumber', NumberFilter);
  *
  * @param {angular.IFilterService} $filter Angular filter
  * @returns {unitPrefix} Function used to format number into a string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoUnitPrefix
  */
@@ -247,21 +244,18 @@ export function UnitPrefixFilter($filter) {
       divisor = 1024;
       prefix = binaryPrefix;
     }
-
     let index = 0;
     const index_max = prefix.length - 1;
     while (number >= divisor * comparatorFactor && index < index_max) {
       number = number / divisor;
       index++;
     }
-
     const postfix = prefix[index] + opt_unit;
     const space = postfix.length == 0 ? '' : '\u00a0';
     return numberFilter(number, opt_precision) + space + postfix;
   };
   return result;
 }
-
 myModule.filter('ngeoUnitPrefix', UnitPrefixFilter);
 
 /**
@@ -288,7 +282,6 @@ myModule.filter('ngeoUnitPrefix', UnitPrefixFilter);
  *
  * @param {angular.IFilterService} $filter Angular filter
  * @returns {numberCoordinates} A function to format numbers into coordinates string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoNumberCoordinates
  */
@@ -307,14 +300,13 @@ export function NumberCoordinatesFilter($filter) {
     const template = opt_template ? opt_template : '{x} {y}';
     const x = coordinates[0];
     const y = coordinates[1];
-    const fractionDigits = parseInt(/** @type {string} */ (opt_fractionDigits), 10) | 0;
+    const fractionDigits = parseInt(/** @type {string} */ opt_fractionDigits, 10) | 0;
     const x_str = $filter('number')(x, fractionDigits);
     const y_str = $filter('number')(y, fractionDigits);
     return template.replace('{x}', x_str).replace('{y}', y_str);
   };
   return filterFn;
 }
-
 myModule.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
 
 /**
@@ -331,7 +323,6 @@ myModule.filter('ngeoNumberCoordinates', NumberCoordinatesFilter);
  *      <!-- will Become [46° 59' 15.36'' N; 7° 07' 24.24'' E] -->
  *
  * @returns {dmsCoordinates} A function to format numbers into a DMS coordinates string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoDMSCoordinates
  */
@@ -348,9 +339,7 @@ export function DMSCoordinatesFilter() {
     const d = Math.floor(dms / 3600);
     const m = Math.floor((dms / 60) % 60);
     const s = dms % 60;
-    return `${d}\u00b0 ${padNumber(m, 2)}\u2032 ${padNumber(s, 2, fractionDigits)}\u2033 ${hemispheres.charAt(
-      normalizedDegrees < 0 ? 1 : 0,
-    )}`;
+    return `${d}\u00b0 ${padNumber(m, 2)}\u2032 ${padNumber(s, 2, fractionDigits)}\u2033 ${hemispheres.charAt(normalizedDegrees < 0 ? 1 : 0)}`;
   };
 
   /**
@@ -364,19 +353,14 @@ export function DMSCoordinatesFilter() {
    * @returns {string} DMS formatted coordinates.
    */
   const filterFn = function (coordinates, opt_fractionDigits, opt_template) {
-    const fractionDigits = parseInt(/** @type {string} */ (opt_fractionDigits), 10) | 0;
-
+    const fractionDigits = parseInt(/** @type {string} */ opt_fractionDigits, 10) | 0;
     const template = opt_template ? opt_template : '{x} {y}';
-
     const xdms = degreesToStringHDMS(coordinates[0], 'EW', fractionDigits);
     const ydms = degreesToStringHDMS(coordinates[1], 'NS', fractionDigits);
-
     return template.replace('{x}', xdms).replace('{y}', ydms);
   };
-
   return filterFn;
 }
-
 myModule.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
 
 /**
@@ -389,7 +373,6 @@ myModule.filter('ngeoDMSCoordinates', DMSCoordinatesFilter);
  * If you use it, you don't require the "ngSanitize".
  *
  * @returns {function(?):string} The filter function.
- * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
  * @ngname ngeoTrustHtml
@@ -403,7 +386,6 @@ export function trustHtmlFilter($sce) {
     }
   };
 }
-
 myModule.filter('ngeoTrustHtml', trustHtmlFilter);
 
 /**
@@ -418,7 +400,6 @@ myModule.filter('ngeoTrustHtml', trustHtmlFilter);
  * If you use it, you don't require the "ngSanitize".
  *
  * @returns {function(?):string} The filter function.
- * @ngInject
  * @ngdoc filter
  * @param {angular.ISCEService} $sce Angular sce service.
  * @param {import('ngeo/options').ngeoStringToHtmlReplacements} ngeoStringToHtmlReplacements
@@ -447,7 +428,6 @@ export function trustHtmlAutoFilter($sce, ngeoStringToHtmlReplacements) {
     }
   };
 }
-
 myModule.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
 
 /**
@@ -463,7 +443,6 @@ myModule.filter('ngeoTrustHtmlAuto', trustHtmlAutoFilter);
  *
  * @param {angular.gettext.gettextCatalog} gettextCatalog Gettext catalog.
  * @returns {duration} Function used to format a time duration in seconds into a string.
- * @ngInject
  * @ngdoc filter
  * @ngname ngeoDuration
  */
@@ -549,10 +528,8 @@ export function DurationFilter(gettextCatalog) {
     }
     return output;
   };
-
   return result;
 }
-
 myModule.filter('ngeoDuration', DurationFilter);
 
 /**
@@ -570,7 +547,5 @@ export const removeCDATA = function () {
     }
   };
 };
-
 myModule.filter('removeCDATA', removeCDATA);
-
 export default myModule;

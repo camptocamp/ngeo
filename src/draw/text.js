@@ -32,7 +32,6 @@ const myModule = angular.module('ngeoDrawtext', []);
 
 /**
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawtext
  */
@@ -50,18 +49,14 @@ function drawTextComponent() {
       if (!drawFeatureCtrl) {
         throw new Error('Missing drawFeatureCtrl');
       }
-
       const drawText = new olInteractionDraw({
         type: 'Point',
       });
-
       if (drawFeatureCtrl.uid) {
         drawText.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-text`);
       }
-
       drawFeatureCtrl.registerInteraction(drawText);
       drawFeatureCtrl.drawText = drawText;
-
       listen(
         drawText,
         'drawend',
@@ -72,7 +67,5 @@ function drawTextComponent() {
     },
   };
 }
-
 myModule.directive('ngeoDrawtext', drawTextComponent);
-
 export default myModule;

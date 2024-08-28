@@ -1,3 +1,4 @@
+MainController.$inject = ['gmfThemes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -23,13 +24,9 @@ import angular from 'angular';
 import './print.css';
 import './gmf-hidden.inc.css';
 import gmfLayertreeComponent from 'gmf/layertree/component';
-
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfPrintComponent from 'gmf/print/component';
-
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import gmfThemeThemes from 'gmf/theme/Themes';
 import ngeoMapModule from 'ngeo/map/module';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
@@ -55,7 +52,6 @@ const myModule = angular.module('gmfapp', [
 /**
  * @class
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf themes service.
- * @ngInject
  */
 function MainController(gmfThemes) {
   gmfThemes.loadThemes();
@@ -86,19 +82,15 @@ function MainController(gmfThemes) {
    * @type {import('gmf/themes').GmfTheme|undefined}
    */
   this.treeSource = undefined;
-
   gmfThemes.getThemesObject().then((themes) => {
     if (themes) {
       this.themes = themes;
       this.treeSource = themes[3];
     }
   });
-
   ngeoMapFeatureOverlayMgr.init(this.map);
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('gmfPrintOptions', {
   fieldsValues: {
     comments: 'Default comments example',
@@ -106,5 +98,4 @@ myModule.constant('gmfPrintOptions', {
   },
 });
 options(myModule);
-
 export default myModule;

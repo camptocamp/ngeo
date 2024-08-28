@@ -22,9 +22,7 @@
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-
 import ngeoMiscControlComponent from 'ngeo/misc/controlComponent';
-
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olControlMousePosition from 'ol/control/MousePosition';
@@ -36,7 +34,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMis
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -61,8 +58,6 @@ function MainController() {
     className: 'mouse-position',
   });
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

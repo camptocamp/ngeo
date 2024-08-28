@@ -1,3 +1,4 @@
+MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -28,7 +29,6 @@ const myModule = angular.module('app', [ngeoMessageDisplaywindowComponent.name])
 
 /**
  * @param {angular.IScope} $scope Scope.
- * @ngInject
  * @class
  */
 function MainController($scope) {
@@ -79,7 +79,6 @@ function MainController($scope) {
    * @type {boolean}
    */
   this.window4IsOpen = false;
-
   const element = document.getElementById('window4Template');
   if (!element) {
     throw new Error('Missing element');
@@ -99,7 +98,5 @@ function MainController($scope) {
    */
   this.windowScope = $scope;
 }
-
 myModule.controller('MainController', MainController);
-
 export default myModule;

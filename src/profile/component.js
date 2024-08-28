@@ -1,3 +1,13 @@
+ProfileController.$inject = [
+  '$scope',
+  '$http',
+  '$element',
+  '$filter',
+  'gettextCatalog',
+  'gmfProfileJsonUrl',
+  'gmfProfileOptions',
+  'ngeoProfileOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -25,15 +35,10 @@ import olFeature from 'ol/Feature';
 import olOverlay from 'ol/Overlay';
 import olGeomLineString from 'ol/geom/LineString';
 import olGeomPoint from 'ol/geom/Point';
-
 import ngeoDownloadCsv from 'ngeo/download/Csv';
-
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent';
-
 import {buildStyle} from 'ngeo/options';
-
 import 'bootstrap/js/src/dropdown';
 import panels from 'gmfapi/store/panels';
 
@@ -69,7 +74,6 @@ import panels from 'gmfapi/store/panels';
  * @hidden
  */
 const myModule = angular.module('gmfProfile', [ngeoProfileElevationComponent.name]);
-
 myModule.value(
   'gmfProfileTemplateUrl',
   /**
@@ -82,16 +86,17 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/profile';
   },
 );
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/profile', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/profile', require('./component.html'));
+    },
+  ],
 );
 
 /**
@@ -99,10 +104,10 @@ myModule.run(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfProfileTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfProfileTemplateUrl.$inject = ['$element', '$attrs', 'gmfProfileTemplateUrl'];
 function gmfProfileTemplateUrl($element, $attrs, gmfProfileTemplateUrl) {
   return gmfProfileTemplateUrl($element, $attrs);
 }
@@ -149,7 +154,6 @@ const profileComponent = {
   },
   templateUrl: gmfProfileTemplateUrl,
 };
-
 myModule.component('gmfProfile', profileComponent);
 
 /**
@@ -163,7 +167,6 @@ myModule.component('gmfProfile', profileComponent);
  * @param {import('ngeo/options').ngeoProfileOptions} ngeoProfileOptions The options.
  * @class
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname GmfProfileController
  */
@@ -337,7 +340,6 @@ export function ProfileController(
       }
     },
   );
-
   this.updateEventsListening_();
 }
 
@@ -347,9 +349,7 @@ export function ProfileController(
 ProfileController.prototype.$onInit = function () {
   this.map_ = this.getMapFn();
   this.nbPoints_ = this.options.numberOfPoints || 100;
-
   this.pointHoverOverlay_.setStyle(buildStyle(this.options.hoverPointStyle));
-
   for (const name in this.ngeoOptions.linesConfiguration) {
     // Keep an array of all layer names.
     this.layersNames_.push(name);
@@ -360,16 +360,14 @@ ProfileController.prototype.$onInit = function () {
       this.ngeoOptions.linesConfiguration[name].zExtractor = this.getZFactory_(name);
     }
   }
-
   this.profileOptions =
-    /** @type {import('ngeo/profile/elevationComponent').ProfileOptions<ProfileElement>} */ ({
+    /** @type {import('ngeo/profile/elevationComponent').ProfileOptions<ProfileElement>} */ {
       linesConfiguration: this.ngeoOptions.linesConfiguration,
       distanceExtractor: this.getDist_,
       hoverCallback: this.hoverCallback_.bind(this),
       outCallback: this.outCallback_.bind(this),
       i18n: this.profileLabels_,
-    });
-
+    };
   const optionsFn = this.getOptionsFn;
   if (optionsFn) {
     const options = optionsFn();
@@ -379,7 +377,6 @@ ProfileController.prototype.$onInit = function () {
     Object.assign(this.profileOptions, options);
   }
 };
-
 ProfileController.prototype.update_ = function () {
   this.isErrored = false;
   if (this.line) {
@@ -393,41 +390,38 @@ ProfileController.prototype.update_ = function () {
   };
   panels.openFooterPanel('profileresult', panelOptions);
 };
-
 ProfileController.prototype.updateEventsListening_ = function () {
   if (this.active && this.map_ !== null) {
     this.pointerMoveKey_ = listen(
       this.map_,
       'pointermove',
-      /** @type {import('ol/events').ListenerFunction} */ (
-        /**
-         * @param {import('ol/MapBrowserEvent').default<MouseEvent>} mapBrowserEvent
-         */
-        (mapBrowserEvent) => {
-          if (!this.map_) {
-            throw new Error('Missing map');
-          }
-          if (mapBrowserEvent.dragging || !this.line) {
-            return;
-          }
-          const coordinate = this.map_.getEventCoordinate(mapBrowserEvent.originalEvent);
-          const closestPoint = this.line.getClosestPoint(coordinate);
-          // compute distance to line in pixels
-          const eventToLine = new olGeomLineString([closestPoint, coordinate]);
-          const resolution = this.map_.getView().getResolution();
-          if (resolution === undefined) {
-            throw new Error('Missing resolution');
-          }
-          const pixelDist = eventToLine.getLength() / resolution;
-
-          if (pixelDist < 16) {
-            this.profileHighlight = this.getDistanceOnALine_(closestPoint);
-          } else {
-            this.profileHighlight = -1;
-          }
-          this.$scope_.$apply();
+      /** @type {import('ol/events').ListenerFunction} */
+      /**
+       * @param {import('ol/MapBrowserEvent').default<MouseEvent>} mapBrowserEvent
+       */
+      (mapBrowserEvent) => {
+        if (!this.map_) {
+          throw new Error('Missing map');
         }
-      ),
+        if (mapBrowserEvent.dragging || !this.line) {
+          return;
+        }
+        const coordinate = this.map_.getEventCoordinate(mapBrowserEvent.originalEvent);
+        const closestPoint = this.line.getClosestPoint(coordinate);
+        // compute distance to line in pixels
+        const eventToLine = new olGeomLineString([closestPoint, coordinate]);
+        const resolution = this.map_.getView().getResolution();
+        if (resolution === undefined) {
+          throw new Error('Missing resolution');
+        }
+        const pixelDist = eventToLine.getLength() / resolution;
+        if (pixelDist < 16) {
+          this.profileHighlight = this.getDistanceOnALine_(closestPoint);
+        } else {
+          this.profileHighlight = -1;
+        }
+        this.$scope_.$apply();
+      },
     );
   } else {
     if (this.pointerMoveKey_) {
@@ -482,10 +476,9 @@ ProfileController.prototype.getDistanceOnALine_ = function (pointOnLine) {
  * @param {string} yUnits Y units label.
  */
 ProfileController.prototype.hoverCallback_ = function (pointObject, dist, xUnits, elevationsRef, yUnits) {
-  const point = /** @type {Point} */ (pointObject);
+  const point = /** @type {Point} */ pointObject;
   // Update information point.
   const coordinate = [point.x, point.y];
-
   this.currentPoint.elevations = elevationsRef;
   this.currentPoint.distance = dist;
   this.currentPoint.xUnits = xUnits;
@@ -499,7 +492,6 @@ ProfileController.prototype.hoverCallback_ = function (pointObject, dist, xUnits
   this.measureTooltip_.setPosition(coordinate);
   this.snappedPoint_.setGeometry(geom);
 };
-
 ProfileController.prototype.outCallback_ = function () {
   // Reset information point.
   delete this.currentPoint.coordinate;
@@ -641,20 +633,16 @@ ProfileController.prototype.getJsonProfile_ = function () {
   if (!this.line) {
     throw new Error('Missing line');
   }
-
   this.isLoading = true;
-
   const geom = {
     'type': 'LineString',
     'coordinates': this.line.getCoordinates(),
   };
-
   const params = {
     'layers': this.layersNames_.join(','),
     'geom': JSON.stringify(geom),
     'nbPoints': this.nbPoints_,
   };
-
   this.$http_({
     url: this.gmfProfileJsonUrl_,
     method: 'POST',
@@ -699,38 +687,39 @@ ProfileController.prototype.downloadCsv = function () {
   let hasDistance = false;
   const firstPoint = this.profileData[0];
   if ('dist' in firstPoint) {
-    headers.push({name: 'distance'});
+    headers.push({
+      name: 'distance',
+    });
     hasDistance = true;
   }
   /** @type {string[]} */
   const layers = [];
   for (const layer in firstPoint.values) {
-    headers.push({'name': layer});
+    headers.push({
+      'name': layer,
+    });
     layers.push(layer);
   }
-  headers.push({name: 'x'});
-  headers.push({name: 'y'});
-
+  headers.push({
+    name: 'x',
+  });
+  headers.push({
+    name: 'y',
+  });
   const rows = this.profileData.map((point) => {
     /** @type {Object<string, unknown>} */
     const row = {};
     if (hasDistance) {
       row.distance = point.dist;
     }
-
     layers.forEach((layer) => {
       row[layer] = point.values[layer];
     });
-
     row.x = point.x;
     row.y = point.y;
-
     return row;
   });
-
   this.ngeoCsvDownload_.startDownload(rows, headers, 'profile.csv');
 };
-
 myModule.controller('GmfProfileController', ProfileController);
-
 export default myModule;

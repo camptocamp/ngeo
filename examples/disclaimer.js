@@ -1,3 +1,4 @@
+MainController.$inject = ['ngeoDisclaimer'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -23,7 +24,6 @@ import './disclaimer.css';
 import 'bootstrap/js/src/tooltip';
 import angular from 'angular';
 import ngeoMessageDisclaimer from 'ngeo/message/Disclaimer';
-
 import {MessageType} from 'ngeo/message/Message';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -38,7 +38,6 @@ const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMes
 /**
  * @param {import('ngeo/message/Disclaimer').MessageDisclaimerService} ngeoDisclaimer Ngeo disclaimer
  *    service.
- * @ngInject
  * @class
  */
 function MainController(ngeoDisclaimer) {
@@ -145,22 +144,18 @@ MainController.prototype.closeAll = function () {
     msg: this.successMsg_,
     type: MessageType.SUCCESS,
   });
-
   this.disclaimer.close({
     msg: this.infoMsg_,
     type: MessageType.INFORMATION,
   });
-
   this.disclaimer.close({
     msg: this.warningMsg_,
     type: MessageType.WARNING,
   });
-
   this.disclaimer.close({
     msg: this.errorMsg_,
     type: MessageType.ERROR,
   });
-
   this.inMapMsgs_.forEach((message) => {
     this.disclaimer.close({
       msg: message,
@@ -168,8 +163,6 @@ MainController.prototype.closeAll = function () {
     });
   });
 };
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

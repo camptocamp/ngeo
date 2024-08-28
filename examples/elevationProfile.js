@@ -1,3 +1,4 @@
+MainController.$inject = ['$http', '$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -23,7 +24,6 @@ import './elevationProfile.css';
 import angular from 'angular';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import {MAPSERVER_PROXY} from './url';
-
 import olFeature from 'ol/Feature';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -70,14 +70,12 @@ const typedFunctionsFactory = function (key, opt_childKey) {
  * @class
  * @param {angular.IHttpService} $http The $http angular service.
  * @param {angular.IScope} $scope The $scope angular service.
- * @ngInject
  */
 function MainController($http, $scope) {
   /**
    * @type {angular.IScope}
    */
   this.scope_ = $scope;
-
   const source = new olSourceVector();
   const source2 = new olSourceImageWMS({
     url: MAPSERVER_PROXY,
@@ -105,17 +103,13 @@ function MainController($http, $scope) {
       projection: EPSG2056,
     }),
   });
-
   const map = this.map;
-
   const vectorLayer = new olLayerVector({
     source: new olSourceVector(),
   });
-
   this.snappedPoint_ = new olFeature();
-  /** @type {olSourceVector<import('ol/geom/Geometry').default>} */ (vectorLayer.getSource()).addFeature(
-    this.snappedPoint_,
-  );
+  /** @type {olSourceVector<import('ol/geom/Geometry').default>} */
+  vectorLayer.getSource().addFeature(this.snappedPoint_);
 
   // Use vectorLayer.setMap(map) rather than map.addLayer(vectorLayer). This
   // makes the vector layer "unmanaged", meaning that it is always on top.
@@ -125,19 +119,27 @@ function MainController($http, $scope) {
    * @type {Object[]}
    */
   this.profilePoisData = [
-    {sort: 1, dist: 1000, title: 'First POI', id: 12345},
-    {sort: 2, dist: 3000, title: 'Second POI', id: 12346},
+    {
+      sort: 1,
+      dist: 1000,
+      title: 'First POI',
+      id: 12345,
+    },
+    {
+      sort: 2,
+      dist: 3000,
+      title: 'Second POI',
+      id: 12346,
+    },
   ];
 
   /**
    * @type {Object|undefined}
    */
   this.profileData = undefined;
-
   $http.get('data/profile.json').then((resp) => {
     const data = resp.data.profile;
     this.profileData = data;
-
     let i;
     const len = data.length;
     const lineString = new olGeomLineString([], 'XYM');
@@ -146,33 +148,31 @@ function MainController($http, $scope) {
       lineString.appendCoordinate([p.x, p.y, p.dist]);
     }
     source.addFeature(new olFeature(lineString));
-
     const size = this.map.getSize();
     if (size === undefined) {
       throw new Error('Missing size');
     }
-    map.getView().fit(source.getExtent(), {size});
+    map.getView().fit(source.getExtent(), {
+      size,
+    });
   });
-
   map.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('pointermove'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('ol/MapBrowserEvent').default<MouseEvent>} evt
-       */ (evt) => {
-        if (evt.dragging) {
-          return;
-        }
-        const coordinate = map.getEventCoordinate(evt.originalEvent);
-        const geometry = source.getFeatures()[0].getGeometry();
-        if (!geometry) {
-          throw new Error('Missing geometry');
-        }
-        this.snapToGeometry(coordinate, geometry);
+    /** @type {import('ol/Observable').EventTypes} */ 'pointermove',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('ol/MapBrowserEvent').default<MouseEvent>} evt
+     */ (evt) => {
+      if (evt.dragging) {
+        return;
       }
-    ),
+      const coordinate = map.getEventCoordinate(evt.originalEvent);
+      const geometry = source.getFeatures()[0].getGeometry();
+      if (!geometry) {
+        throw new Error('Missing geometry');
+      }
+      this.snapToGeometry(coordinate, geometry);
+    },
   );
-
   const distanceExtractor = typedFunctionsFactory('dist');
 
   /** @type {function(Object): number} */
@@ -216,7 +216,6 @@ function MainController($http, $scope) {
     // @ts-ignore
     this.snappedPoint_.setGeometry(new olGeomPoint([point.x, point.y]));
   };
-
   const outCallback = () => {
     this.point = null;
     this.snappedPoint_.setGeometry(undefined);
@@ -261,7 +260,6 @@ MainController.prototype.snapToGeometry = function (coordinate, geometry) {
     throw new Error('Missing resolution');
   }
   const pixelDist = dist / resolution;
-
   if (pixelDist < 8) {
     this.profileHighlight = closestPoint[2];
   } else {
@@ -269,9 +267,7 @@ MainController.prototype.snapToGeometry = function (coordinate, geometry) {
   }
   this.scope_.$apply();
 };
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('ngeoProfileOptions', {
   linesConfiguration: {
     'line1': {
@@ -280,7 +276,5 @@ myModule.constant('ngeoProfileOptions', {
     },
   },
 });
-
 options(myModule);
-
 export default myModule;

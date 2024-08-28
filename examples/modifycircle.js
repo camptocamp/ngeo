@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
-
 import ngeoInteractionModifyCircle from 'ngeo/interaction/ModifyCircle';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -41,7 +40,6 @@ const appmodule = angular.module('app', ['gettext', gmfMapComponent.name]);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -58,16 +56,13 @@ function MainController() {
       zoom: 4,
     }),
   });
-
   const map = this.map;
-
   const circle = new olGeomCircle([-10691093, 4966327], 465000);
 
   /**
    * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.features = new olCollection();
-
   const circleFeature = new olFeature({
     geometry: fromCircle(circle),
     color: '#000000',
@@ -75,10 +70,8 @@ function MainController() {
     opacity: '0.5',
     stroke: '2',
   });
-
   circleFeature.set(ngeoFormatFeatureProperties.IS_CIRCLE, true);
   this.features.push(circleFeature);
-
   const vectorSource = new olSourceVector({
     features: this.features,
   });
@@ -94,17 +87,14 @@ function MainController() {
    * @type {import('ngeo/interaction/ModifyCircle').default}
    */
   this.interaction = new ngeoInteractionModifyCircle(
-    /** @type {import('ol/interaction/Modify').Options} */ ({
+    /** @type {import('ol/interaction/Modify').Options} */ {
       features: this.features,
-    }),
+    },
   );
-
   const interaction = this.interaction;
   interaction.setActive(true);
   map.addInteraction(interaction);
 }
-
 appmodule.controller('MainController', MainController);
 options(appmodule);
-
 export default module;

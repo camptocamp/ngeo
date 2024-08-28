@@ -22,7 +22,6 @@
 import angular from 'angular';
 import './contextualdata.css';
 import gmfContextualdataModule from 'gmf/contextualdata/module';
-
 import gmfMapComponent from 'gmf/map/component';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 import ngeoMapModule from 'ngeo/map/module';
@@ -45,12 +44,10 @@ const myModule = angular.module('gmfapp', [
   ngeoMiscFilters.name,
   ngeoMapModule.name,
 ]);
-
 myModule.value('gmfContextualdatacontentTemplateUrl', 'partials/contextualdata.html');
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -83,12 +80,9 @@ MainController.prototype.onRasterData = function (coordinate, data) {
     elelvation_diff: data.srtm - data.aster,
   };
 };
-
 myModule.controller('MainController', MainController);
 myModule.constant('gmfContextualDataOptions', {
   projections: ['EPSG:2056', 'EPSG:21781', 'EPSG:4326'],
 });
-
 options(myModule);
-
 export default MainController;

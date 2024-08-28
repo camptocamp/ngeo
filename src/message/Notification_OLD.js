@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import 'bootstrap/js/src/alert';
-
 import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message';
 import {getUid as olUtilGetUid} from 'ol/util';
 
@@ -49,7 +48,6 @@ export class MessageNotification extends ngeoMessageMessage {
    * properly.
    *
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
-   * @ngInject
    */
   constructor($timeout) {
     super();
@@ -59,7 +57,6 @@ export class MessageNotification extends ngeoMessageMessage {
      * @private
      */
     this.timeout_ = $timeout;
-
     const container = angular.element('<div class="ngeo-notification"></div>');
     angular.element(document.body).append(container);
 
@@ -106,7 +103,6 @@ export class MessageNotification extends ngeoMessageMessage {
   showMessage(message) {
     const type = message.type;
     console.assert(typeof type == 'string', 'Type should be set.');
-
     const classNames = ['alert', 'fade', 'show'];
     switch (type) {
       case MessageType.ERROR: // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
@@ -124,24 +120,19 @@ export class MessageNotification extends ngeoMessageMessage {
       default:
         break;
     }
-
     const el = angular.element(`<div class="${classNames.join(' ')}"></div>`);
     let container;
-
     if (message.target) {
       container = angular.element(message.target);
     } else {
       container = this.container_;
     }
-
     container.append(el);
     el.html(message.msg).addClass('show');
-
     const delay = message.delay !== undefined ? message.delay : DEFAULT_DELAY;
-
-    const item = /** @type {CacheItem} */ ({
+    const item = /** @type {CacheItem} */ {
       el,
-    });
+    };
 
     // Keep a reference to the promise, in case we want to manually cancel it
     // before the delay
@@ -150,7 +141,6 @@ export class MessageNotification extends ngeoMessageMessage {
       el.alert('close');
       delete this.cache_[uid];
     }, delay);
-
     this.cache_[uid] = item;
   }
 
@@ -176,7 +166,7 @@ export class MessageNotification extends ngeoMessageMessage {
     delete this.cache_[uid];
   }
 }
-
+MessageNotification.$inject = ['$timeout'];
 /**
  * @typedef {Object} CacheItem
  * @property {JQuery} el
@@ -188,7 +178,5 @@ export class MessageNotification extends ngeoMessageMessage {
  * @hidden
  */
 const myModule = angular.module('ngeoNotification', []);
-
 myModule.service('ngeoNotification', MessageNotification);
-
 export default myModule;

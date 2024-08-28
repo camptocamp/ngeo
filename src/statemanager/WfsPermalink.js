@@ -1,3 +1,10 @@
+WfsPermalinkService.$inject = [
+  '$http',
+  'ngeoPermalinkOgcserverUrl',
+  'ngeoQueryResult',
+  'ngeoWfsPermalinkOptions',
+  'gmfFitOptions',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -113,7 +120,6 @@ import olFormatWFS from 'ol/format/WFS';
  * @param {import('ngeo/options').gmfFitOptions} gmfFitOptions The fit options.
  * @ngdoc service
  * @ngname ngeoWfsPermalink
- * @ngInject
  */
 export function WfsPermalinkService(
   $http,
@@ -133,14 +139,12 @@ export function WfsPermalinkService(
    * @type {number}
    */
   this.maxFeatures_ = options.maxFeatures !== undefined ? options.maxFeatures : 50;
-
   this._gmfFitOptions = gmfFitOptions;
 
   /**
    * @type {Object<string, import('ngeo/options').WfsType>}
    */
   this.wfsTypes_ = {};
-
   console.assert(Array.isArray(options.wfsTypes), 'wfsTypes is not correctly set');
   options.wfsTypes.forEach((wfsType) => {
     this.wfsTypes_[wfsType.featureType] = wfsType;
@@ -193,18 +197,15 @@ WfsPermalinkService.prototype.issue = function (queryData, map, zoomLevel = unde
     'url is not set. to use the wfs permalink service, ' + 'set the value `ngeoWfsPermalinkOptions`',
   );
   this.clearResult_();
-
   const typeName = queryData.wfsType;
   if (!this.wfsTypes_.hasOwnProperty(typeName)) {
     return;
   }
   const wfsType = this.wfsTypes_[typeName];
-
   const filters = this.createFilters_(queryData.filterGroups);
   if (filters === null) {
     return;
   }
-
   this.issueRequest_(wfsType, filters, map, queryData.showFeatures, zoomLevel);
 };
 
@@ -232,10 +233,11 @@ WfsPermalinkService.prototype.issueRequest_ = function (
     filter: filter,
     maxFeatures: this.maxFeatures_,
   });
-
   const featureRequest = new XMLSerializer().serializeToString(featureRequestXml);
   const config = {
-    headers: {'Content-Type': 'text/xml; charset=UTF-8'},
+    headers: {
+      'Content-Type': 'text/xml; charset=UTF-8',
+    },
   };
   this.$http_.post(this.url_, featureRequest, config).then((response) => {
     const features = wfsFormat.readFeatures(response.data);
@@ -249,7 +251,11 @@ WfsPermalinkService.prototype.issueRequest_ = function (
       if (size !== undefined) {
         const defaultMaxZoomLevel = zoomLevel === undefined ? this.pointRecenterZoom_ : zoomLevel;
         const defaultPadding = [50, 50, 50, 50];
-        const fitOptions = {size, maxZoom: defaultMaxZoomLevel, padding: defaultPadding};
+        const fitOptions = {
+          size,
+          maxZoom: defaultMaxZoomLevel,
+          padding: defaultPadding,
+        };
         Object.apply(fitOptions, this._gmfFitOptions);
         map.getView().fit(this.getExtent_(features), fitOptions);
       }
@@ -257,14 +263,13 @@ WfsPermalinkService.prototype.issueRequest_ = function (
 
     // then show if requested
     if (showFeatures) {
-      const resultSource = /** @type {QueryResultSource} */ ({
+      const resultSource = /** @type {QueryResultSource} */ {
         'features': features,
         'id': wfsType.featureType,
         'identifierAttributeField': wfsType.label,
         'label': wfsType.featureType,
         'pending': false,
-      });
-
+      };
       this.result_.sources.push(resultSource);
       this.result_.total = features.length;
     }
@@ -276,18 +281,15 @@ WfsPermalinkService.prototype.issueRequest_ = function (
  * @returns {import('ol/extent').Extent} The extent of all features.
  */
 WfsPermalinkService.prototype.getExtent_ = function (features) {
-  return /** @type {import('ol/extent').Extent} */ /** @type {any[]} */ (features).reduce(
-    (extent, feature) => {
-      if (feature instanceof Feature) {
-        const geometry = feature.getGeometry();
-        if (geometry) {
-          return extendExtent(extent, geometry.getExtent());
-        }
-        return extent;
+  return /** @type {import('ol/extent').Extent} */ /** @type {any[]} */ features.reduce((extent, feature) => {
+    if (feature instanceof Feature) {
+      const geometry = feature.getGeometry();
+      if (geometry) {
+        return extendExtent(extent, geometry.getExtent());
       }
-    },
-    createEmptyExtent(),
-  );
+      return extent;
+    }
+  }, createEmptyExtent());
 };
 
 /**
@@ -381,7 +383,5 @@ WfsPermalinkService.prototype.clearResult_ = function () {
 const myModule = angular.module('ngeoWfsPermalink', [
   // FIXME add dependencies
 ]);
-
 myModule.service('ngeoWfsPermalink', WfsPermalinkService);
-
 export default myModule;

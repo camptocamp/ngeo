@@ -54,18 +54,18 @@ const myModule = angular.module('ngeoRoutingComponent', [
   ngeoRoutingRoutingService.name,
   ngeoRoutingRoutingFeatureComponent.name,
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/routing/routing', require('./routing.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/routing/routing', require('./routing.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoRoutingTemplateUrl',
   /**
@@ -82,10 +82,10 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRoutingTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+ngeoRoutingTemplateUrl.$inject = ['$attrs', 'ngeoRoutingTemplateUrl'];
 function ngeoRoutingTemplateUrl($attrs, ngeoRoutingTemplateUrl) {
   return ngeoRoutingTemplateUrl($attrs);
 }
@@ -106,7 +106,6 @@ export class Controller {
    * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo Debounce
    *    service.
    * @param {import('ngeo/options').ngeoRoutingOptions} ngeoRoutingOptions The options.
-   * @ngInject
    */
   constructor($scope, ngeoRoutingService, ngeoNominatimService, $q, ngeoDebounce, ngeoRoutingOptions) {
     /**
@@ -150,7 +149,6 @@ export class Controller {
      * @type {?import('ngeo/options').RoutingProfile}
      */
     this.selectedRoutingProfile = this.routingProfiles.length > 0 ? this.routingProfiles[0] : null;
-
     $scope.$watch(() => this.selectedRoutingProfile, this.calculateRoute.bind(this));
 
     /**
@@ -248,7 +246,6 @@ export class Controller {
      * @private
      */
     this.draw_ = null;
-
     const debounceDelay = 200; // in milliseconds
 
     /**
@@ -348,7 +345,11 @@ export class Controller {
       parsedRoutes = [].concat(...parsedRoutes_);
     } else if (route.geometry) {
       // otherwise parse (overview) geometry
-      parsedRoutes.push(new olFeature({geometry: format.readGeometry(route.geometry, formatConfig)}));
+      parsedRoutes.push(
+        new olFeature({
+          geometry: format.readGeometry(route.geometry, formatConfig),
+        }),
+      );
     }
     return parsedRoutes;
   }
@@ -361,13 +362,12 @@ export class Controller {
     }
     // remove rendered routes
     this.routeSource_.clear();
-
     const coordFrom = this.getLonLatFromPoint_(this.startFeature_);
     const coordTo = this.getLonLatFromPoint_(this.targetFeature_);
     const vias = this.viaArray
       .filter((via) => via.feature !== null)
       .map((via) => this.getLonLatFromPoint_(via.feature));
-    const route = /** @type {number[][]} */ ([coordFrom].concat(vias, [coordTo]));
+    const route = /** @type {number[][]} */ [coordFrom].concat(vias, [coordTo]);
 
     /**
      * @param {angular.IHttpResponse<import('./RoutingService').Routes>} resp
@@ -386,26 +386,25 @@ export class Controller {
 
       // recenter map on route
       this.map.getView().fit(this.routeSource_.getExtent());
-
       this.routeDistance = resp.data.routes[0].distance;
       this.routeDuration = resp.data.routes[0].duration;
 
       // get first and last coordinate of route
-      const startRoute = /** @type {import('ol/geom/LineString').default} */ (
-        features[0].getGeometry()
-      ).getCoordinateAt(0);
-      const endRoute = /** @type {import('ol/geom/LineString').default} */ (
-        features[features.length - 1].getGeometry()
-      ).getCoordinateAt(1);
+      const startRoute = /** @type {import('ol/geom/LineString').default} */ features[0]
+        .getGeometry()
+        .getCoordinateAt(0);
+      const endRoute = /** @type {import('ol/geom/LineString').default} */ features[features.length - 1]
+        .getGeometry()
+        .getCoordinateAt(1);
 
       // build geometries to connect route to start and end point of query
       const startToRoute = [
-        /** @type {import('ol/geom/Point').default} */ (this.startFeature_.getGeometry()).getCoordinates(),
+        /** @type {import('ol/geom/Point').default} */ this.startFeature_.getGeometry().getCoordinates(),
         startRoute,
       ];
       const routeToEnd = [
         endRoute,
-        /** @type {import('ol/geom/Point').default} */ (this.targetFeature_.getGeometry()).getCoordinates(),
+        /** @type {import('ol/geom/Point').default} */ this.targetFeature_.getGeometry().getCoordinates(),
       ];
       const routeConnections = [
         new olFeature(new olGeomLineString(startToRoute)),
@@ -433,11 +432,9 @@ export class Controller {
     /** @type {import('./RoutingService').Config} */
     const config = {};
     config.options = options;
-
     if (this.selectedRoutingProfile) {
       config.instance = this.selectedRoutingProfile.profile;
     }
-
     this.$q_.when(this.ngeoRoutingService_.getRoute(route, config)).then(onSuccess_, onError_);
   }
 
@@ -457,7 +454,14 @@ export class Controller {
     }
   }
 }
-
+Controller.$inject = [
+  '$scope',
+  'ngeoRoutingService',
+  'ngeoNominatimService',
+  '$q',
+  'ngeoDebounce',
+  'ngeoRoutingOptions',
+];
 myModule.component('ngeoRouting', {
   controller: Controller,
   bindings: {
@@ -465,5 +469,4 @@ myModule.component('ngeoRouting', {
   },
   templateUrl: ngeoRoutingTemplateUrl,
 });
-
 export default myModule;

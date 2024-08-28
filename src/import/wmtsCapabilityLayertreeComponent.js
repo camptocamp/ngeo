@@ -20,11 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
-
 import ngeoMessagePopup from 'ngeo/message/Popup';
-
 import {getUid as olUtilGetUid} from 'ol/util';
 
 /**
@@ -35,21 +32,21 @@ const myModule = angular.module('gmfWmtscapabilitylayertree', [
   gmfDatasourceExternalDataSourcesManager.name,
   ngeoMessagePopup.name,
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    $templateCache.put(
-      'ngeo/import/wmtsCapabilityLayertreeComponent',
-      // @ts-ignore: webpack
-      require('./wmtsCapabilityLayertreeComponent.html'),
-    );
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      $templateCache.put(
+        'ngeo/import/wmtsCapabilityLayertreeComponent',
+        // @ts-ignore: webpack
+        require('./wmtsCapabilityLayertreeComponent.html'),
+      );
+    },
+  ],
 );
-
 myModule.value(
   'gmfWmtscapabilitylayertreTemplateUrl',
   /**
@@ -66,10 +63,10 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} gmfWmtscapabilitylayertreTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfWmtscapabilitylayertreTemplateUrl.$inject = ['$attrs', 'gmfWmtscapabilitylayertreTemplateUrl'];
 function gmfWmtscapabilitylayertreTemplateUrl($attrs, gmfWmtscapabilitylayertreTemplateUrl) {
   return gmfWmtscapabilitylayertreTemplateUrl($attrs);
 }
@@ -81,7 +78,6 @@ export class Controller {
   /**
    * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager
    *     GMF service responsible of managing external data sources.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfWmtscapabilitylayertreeController
    */
@@ -138,7 +134,7 @@ export class Controller {
     return olUtilGetUid(layer);
   }
 }
-
+Controller.$inject = ['gmfExternalDataSourcesManager'];
 myModule.component('gmfWmtscapabilitylayertree', {
   bindings: {
     'capabilities': '<',
@@ -148,5 +144,4 @@ myModule.component('gmfWmtscapabilitylayertree', {
   controller: Controller,
   templateUrl: gmfWmtscapabilitylayertreTemplateUrl,
 });
-
 export default myModule;

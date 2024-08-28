@@ -32,7 +32,6 @@ export class StatemanagerService {
   /**
    * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
    * @param {import('ngeo/options').ngeoUsedKeyRegexp} ngeoUsedKeyRegexp regexp used to identify the used keys.
-   * @ngInject
    */
   constructor(ngeoLocation, ngeoUsedKeyRegexp) {
     /**
@@ -60,7 +59,6 @@ export class StatemanagerService {
      * @private
      */
     this.useLocalStorage_ = false;
-
     this.setUseLocalStorage(false);
 
     // Populate initialState with the application's initial state. The initial
@@ -68,12 +66,10 @@ export class StatemanagerService {
     // is no state in the location URL.
 
     const paramKeys = ngeoLocation.getParamKeys().filter((key) => key != 'debug' && key != 'no_redirect');
-
     if (paramKeys.length === 0) {
       if (this.useLocalStorage_) {
         for (const key in window.localStorage) {
           console.assert(key);
-
           this.usedKeyRegexp.some((keyRegexp) => {
             if (keyRegexp.exec(key)) {
               const value = window.localStorage[key];
@@ -195,12 +191,11 @@ export class StatemanagerService {
     }
   }
 }
-
+StatemanagerService.$inject = ['ngeoLocation', 'ngeoUsedKeyRegexp'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('ngeoStateManager', [ngeoStatemanagerLocation.name]);
 myModule.service('ngeoStateManager', StatemanagerService);
-
 export default myModule;

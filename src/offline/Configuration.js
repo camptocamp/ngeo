@@ -41,9 +41,8 @@ import localforage from 'localforage/src/localforage';
 /**
  * implements {import('ngeo/offline/index').OfflineOnTileDownload}
  */
-export default class extends olObservable {
+export default class _ngInjectAnonymousClass extends olObservable {
   /**
-   * @ngInject
    * @param {!angular.IScope} $rootScope The rootScope provider.
    * @param {!import('ngeo/map/BackgroundLayerMgr').MapBackgroundLayerManager} ngeoBackgroundLayerMgr
    *    Background layer manager.
@@ -51,7 +50,6 @@ export default class extends olObservable {
    */
   constructor($rootScope, ngeoBackgroundLayerMgr, ngeoOfflineGutter) {
     super();
-
     this.localforage_ = this.createLocalforage();
     this.configureLocalforage();
 
@@ -79,7 +77,9 @@ export default class extends olObservable {
      * @type {SerializerDeserializer}
      */
     // @ts-ignore
-    this.serDes_ = new SerializerDeserializer({gutter: ngeoOfflineGutter});
+    this.serDes_ = new SerializerDeserializer({
+      gutter: ngeoOfflineGutter,
+    });
 
     /**
      * @private
@@ -137,7 +137,6 @@ export default class extends olObservable {
   traceGetSetItem(msg, key, promise) {
     return promise;
   }
-
   createLocalforage() {
     if (location.search.includes('localforage=cordova')) {
       console.log('Using cordova localforage');
@@ -151,7 +150,6 @@ export default class extends olObservable {
     }
     return localforage;
   }
-
   configureLocalforage() {
     this.localforage_.config({
       'name': 'ngeoOfflineStorage',
@@ -210,7 +208,7 @@ export default class extends olObservable {
    * @returns {string} A key identifying an offline layer and used during restore.
    */
   getLayerKey(layerItem) {
-    return /** @type {string} */ (layerItem.layer.get('label'));
+    return /** @type {string} */ layerItem.layer.get('label');
   }
 
   /**
@@ -220,7 +218,6 @@ export default class extends olObservable {
    */
   onTileDownloadSuccess(progress, tile) {
     this.dispatchProgress_(progress);
-
     if (tile.response) {
       return this.setItem(normalizeURL(tile.url), tile.response);
     }
@@ -327,7 +324,6 @@ export default class extends olObservable {
         } else if (layer instanceof olLayerVector) {
           layerType = 'vector';
         }
-
         const backgroundLayer = this.ngeoBackgroundLayerMgr_.get(map) === layer;
         layersItems.push({
           backgroundLayer,
@@ -368,7 +364,8 @@ export default class extends olObservable {
           content =
             'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
         }
-        /** @type {HTMLImageElement} */ (imageTile.getImage()).src = content;
+        /** @type {HTMLImageElement} */
+        imageTile.getImage().src = content;
       });
     };
     return tileLoadFunction;
@@ -398,3 +395,4 @@ export default class extends olObservable {
     return 11;
   }
 }
+_ngInjectAnonymousClass.$inject = ['$rootScope', 'ngeoBackgroundLayerMgr', 'ngeoOfflineGutter'];

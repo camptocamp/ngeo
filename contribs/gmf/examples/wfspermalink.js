@@ -23,10 +23,8 @@ import angular from 'angular';
 import './wfspermalink.css';
 import gmfMapModule from 'gmf/map/module';
 import gmfMapComponent from 'gmf/map/component';
-
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
-
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -45,7 +43,6 @@ const myModule = angular.module('gmfapp', [
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -65,20 +62,27 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
-
 myModule.constant('gmfDisplayQueryWindowOptions', {
   featuresStyle: {
-    fill: {color: [255, 170, 0, 0.6]},
-    stroke: {color: [255, 170, 0, 1], width: 2},
+    fill: {
+      color: [255, 170, 0, 0.6],
+    },
+    stroke: {
+      color: [255, 170, 0, 1],
+      width: 2,
+    },
     circle: {
       radius: 5,
-      fill: {color: [255, 170, 0, 0.6]},
-      stroke: {color: [255, 170, 0, 1], width: 2},
+      fill: {
+        color: [255, 170, 0, 0.6],
+      },
+      stroke: {
+        color: [255, 170, 0, 1],
+        width: 2,
+      },
     },
   },
 });
 options(myModule);
-
 export default myModule;

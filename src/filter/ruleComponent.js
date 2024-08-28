@@ -22,17 +22,13 @@
 import angular from 'angular';
 import ngeoMenu from 'ngeo/Menu';
 import ngeoDrawComponent from 'ngeo/draw/component';
-
 import ngeoFilterRuleHelper from 'ngeo/filter/RuleHelper';
-
 import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
 import ngeoGeometryType from 'ngeo/GeometryType';
 import ngeoInteractionModify from 'ngeo/interaction/Modify';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate';
-
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
-
 import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
@@ -69,18 +65,18 @@ const myModule = angular.module('ngeoRule', [
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
 ]);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoRuleTemplateUrl',
   /**
@@ -97,10 +93,10 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoRuleTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+ngeoRuleTemplateUrl.$inject = ['$attrs', 'ngeoRuleTemplateUrl'];
 function ngeoRuleTemplateUrl($attrs, ngeoRuleTemplateUrl) {
   return ngeoRuleTemplateUrl($attrs);
 }
@@ -118,7 +114,6 @@ export class RuleController {
    * @param {import('ngeo/filter/RuleHelper').RuleHelper} ngeoRuleHelper Ngeo rule helper service.
    * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
    *     manager service.
-   * @ngInject
    * @ngdoc controller
    * @ngname NgeoRuleController
    */
@@ -195,7 +190,6 @@ export class RuleController {
      * @type {?import('ngeo/rule/Rule').default}
      */
     this.clone = null;
-
     const operatorType = RuleOperatorType;
     const spatialOperatorType = RuleSpatialOperatorType;
     const temporalOperatorType = RuleTemporalOperatorType;
@@ -362,7 +356,6 @@ export class RuleController {
      * @private
      */
     this.listenerKeys_ = [];
-
     this.initializeInteractions_();
 
     /**
@@ -403,11 +396,8 @@ export class RuleController {
       throw new Error('Missing rule');
     }
     this.clone = this.ngeoRuleHelper_.cloneRule(this.rule);
-
     this.toolActivate_ = new ngeoMiscToolActivate(this.rule, 'active');
-
     this.ngeoToolActivateMgr_.registerTool(this.toolGroup, this.toolActivate_);
-
     this.scope_.$watch(() => {
       if (!this.rule) {
         throw new Error('Missing rule');
@@ -436,7 +426,7 @@ export class RuleController {
             if (!this.clone) {
               throw new Error('Missing clone');
             }
-            const literal = /** @type {string|number} */ (this.clone.literal);
+            const literal = /** @type {string|number} */ this.clone.literal;
             return literal;
           },
           /**
@@ -667,7 +657,7 @@ export class RuleController {
       throw new Error('Missing clone');
     }
     const rule = this.clone;
-    const choices = rule.literal ? /** @type {string[]} */ (rule.literal) : [];
+    const choices = rule.literal ? /** @type {string[]} */ rule.literal : [];
     const idx = choices.indexOf(choice);
     if (idx > -1) {
       choices.splice(idx, 1);
@@ -705,12 +695,10 @@ export class RuleController {
    */
   createDate_(opt_timeDelta) {
     const date = new Date();
-
     if (opt_timeDelta !== undefined) {
       const time = date.getTime() - opt_timeDelta;
       date.setTime(time);
     }
-
     return date.toISOString();
   }
 
@@ -750,7 +738,6 @@ export class RuleController {
     if (!this.featureOverlay) {
       throw new Error('Missing featureOverlay');
     }
-
     if (
       !(this.rule instanceof ngeoRuleGeometry) ||
       !(this.clone instanceof ngeoRuleGeometry) ||
@@ -758,17 +745,13 @@ export class RuleController {
     ) {
       return;
     }
-
     const keys = this.listenerKeys_;
     const uid = ['ngeo-rule-', olUtilGetUid(this)].join('-');
     const toolMgr = this.ngeoToolActivateMgr_;
-
     const ruleFeature = this.rule.feature;
     const cloneFeature = this.clone.feature;
-
     const mapDiv = this.map.getViewport();
     console.assert(mapDiv);
-
     if (active) {
       keys.push(
         listen(this.drawnFeatures, 'add', this.handleFeaturesAdd_, this),
@@ -776,19 +759,14 @@ export class RuleController {
         listen(this.translate_, 'translateend', this.handleTranslateEnd_, this),
         listen(this.rotate_, 'rotateend', this.handleRotateEnd_, this),
       );
-
       this.featureOverlay.removeFeature(ruleFeature);
       this.featureOverlay.addFeature(cloneFeature);
-
       this.registerInteractions_();
-
       toolMgr.registerTool(uid, this.drawToolActivate, false);
       toolMgr.registerTool(uid, this.modifyToolActivate, true);
       toolMgr.registerTool(uid, this.rotateToolActivate, false);
       toolMgr.registerTool(uid, this.translateToolActivate, false);
-
       this.modify_.setActive(true);
-
       if (cloneFeature.getGeometry()) {
         this.ngeoFeatureHelper_.setStyle(cloneFeature, true);
       }
@@ -796,23 +774,17 @@ export class RuleController {
       cloneFeature.setStyle(null);
       keys.forEach(unlistenByKey);
       keys.length = 0;
-
       this.drawActive = false;
-
       toolMgr.unregisterTool(uid, this.drawToolActivate);
       toolMgr.unregisterTool(uid, this.modifyToolActivate);
       toolMgr.unregisterTool(uid, this.rotateToolActivate);
       toolMgr.unregisterTool(uid, this.translateToolActivate);
-
       this.modify_.setActive(false);
-
       this.unregisterInteractions_();
-
       if (this.selectedFeatures.getLength()) {
         this.featureOverlay.removeFeature(cloneFeature);
       }
       this.featureOverlay.addFeature(ruleFeature);
-
       this.selectedFeatures.clear();
     }
   }
@@ -882,7 +854,6 @@ export class RuleController {
           this.ngeoFeatureHelper_.clearNonSpatialProperties(feature);
           feature.setProperties(properties);
           this.ngeoFeatureHelper_.setStyle(feature, true);
-
           this.scope_.$apply();
         }
       });
@@ -917,7 +888,6 @@ export class RuleController {
       // (2) Get feature at pixel
       const pixel = this.map.getEventPixel(evt);
       const coordinate = this.map.getCoordinateFromPixel(pixel);
-
       const feature = this.map.forEachFeatureAtPixel(pixel, (feature) => {
         /** @type {?Feature<import('ol/geom/Geometry').default>} */
         let ret = null;
@@ -939,7 +909,6 @@ export class RuleController {
       if (feature) {
         const type = this.ngeoFeatureHelper_.getType(feature);
         const gettextCatalog = this.gettextCatalog_;
-
         if (
           type == ngeoGeometryType.CIRCLE ||
           type == ngeoGeometryType.LINE_STRING ||
@@ -964,21 +933,16 @@ export class RuleController {
           });
         }
       }
-
       if (actions.length) {
         // (4) Create and show menu
         this.menu_ = new ngeoMenu({
           actions,
         });
-
         this.listenerKeys_.push(listen(this.menu_, 'actionclick', this.handleMenuActionClick_, this));
         this.map.addOverlay(this.menu_);
-
         this.menu_.open(coordinate);
-
         evt.preventDefault();
         evt.stopPropagation();
-
         this.scope_.$apply();
       }
     }
@@ -1005,8 +969,7 @@ export class RuleController {
    * @private
    */
   handleMenuActionClick_(evt) {
-    const action = /** @type {MenuEvent} */ (evt).detail.action;
-
+    const action = /** @type {MenuEvent} */ evt.detail.action;
     switch (action) {
       case 'move':
         this.translate_.setActive(true);
@@ -1040,7 +1003,14 @@ export class RuleController {
     this.scope_.$apply();
   }
 }
-
+RuleController.$inject = [
+  'gettextCatalog',
+  '$scope',
+  '$timeout',
+  'ngeoFeatureHelper',
+  'ngeoRuleHelper',
+  'ngeoToolActivateMgr',
+];
 /**
  * The rule component is bound to a `import('ngeo/rule/Rule').default` object and shows UI
  * components to be able to edit its properties, such as: operator, literal,
@@ -1059,5 +1029,4 @@ myModule.component('ngeoRule', {
   controller: RuleController,
   templateUrl: ngeoRuleTemplateUrl,
 });
-
 export default myModule;

@@ -23,7 +23,6 @@ import './simple.css';
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
 import ngeoMapModule from 'ngeo/map/module';
-
 import olMap from 'ol/Map';
 import olView from 'ol/View';
 import olLayerTile from 'ol/layer/WebGLTile';
@@ -38,7 +37,6 @@ const myModule = angular.module('gmfapp', ['gettext', gmfMapComponent.name, ngeo
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -56,8 +54,6 @@ function MainController() {
     }),
   });
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

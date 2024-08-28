@@ -1,3 +1,4 @@
+GridController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -23,7 +24,6 @@ import angular from 'angular';
 import {isPlatformModifierKeyOnly, isShiftKeyOnly} from 'ngeo/utils';
 import ngeoMiscFilters from 'ngeo/misc/filters';
 import {getRowUid} from 'ngeo/grid/Config';
-
 import 'floatthead';
 import 'angular-float-thead';
 import 'ngeo/sass/font.scss';
@@ -33,18 +33,18 @@ import 'ngeo/sass/font.scss';
  * @hidden
  */
 const myModule = angular.module('ngeoGrid', [ngeoMiscFilters.name, 'floatThead']);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('ngeo/grid', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('ngeo/grid', require('./component.html'));
+    },
+  ],
 );
-
 myModule.value(
   'ngeoGridTemplateUrl',
   /**
@@ -61,10 +61,10 @@ myModule.value(
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(angular.IAttributes): string} ngeoGridTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+ngeoGridTemplateUrl.$inject = ['$attrs', 'ngeoGridTemplateUrl'];
 function ngeoGridTemplateUrl($attrs, ngeoGridTemplateUrl) {
   return ngeoGridTemplateUrl($attrs);
 }
@@ -92,7 +92,6 @@ const gridComponent = {
   },
   templateUrl: ngeoGridTemplateUrl,
 };
-
 myModule.component('ngeoGrid', gridComponent);
 
 /**
@@ -100,7 +99,6 @@ myModule.component('ngeoGrid', gridComponent);
  * @class
  * @private
  * @hidden
- * @ngInject
  * @ngdoc controller
  * @ngname ngeoGridController
  */
@@ -175,7 +173,6 @@ GridController.prototype.sort = function (columnName) {
   }
   this.sortAscending = this.sortedBy === columnName ? !this.sortAscending : true;
   this.sortedBy = columnName;
-
   const asc = this.sortAscending ? 1 : -1;
   this.configuration.data.sort((attributes1, attributes2) => {
     if (!attributes1[columnName]) {
@@ -197,7 +194,6 @@ GridController.prototype.sort = function (columnName) {
 GridController.prototype.clickRow = function (attributes, event) {
   const shiftKey = isShiftKeyOnly(event);
   const platformModifierKey = isPlatformModifierKeyOnly(event);
-
   this.clickRow_(attributes, shiftKey, platformModifierKey);
 };
 
@@ -210,7 +206,6 @@ GridController.prototype.clickRow_ = function (attributes, shiftKey, platformMod
   if (!this.configuration) {
     throw new Error('Missing configuration');
   }
-
   if (shiftKey && !platformModifierKey) {
     this.selectRange_(attributes);
   } else if (!shiftKey && platformModifierKey) {
@@ -238,7 +233,6 @@ GridController.prototype.selectRange_ = function (attributes) {
   }
   const targetUid = getRowUid(attributes);
   const data = this.configuration.data;
-
   if (this.configuration.isRowSelected(attributes)) {
     return;
   }
@@ -250,14 +244,12 @@ GridController.prototype.selectRange_ = function (attributes) {
   for (let i = 0; i < data.length; i++) {
     const currentRow = data[i];
     const currentUid = getRowUid(currentRow);
-
     if (targetUid === currentUid) {
       posClickedRow = i;
     } else if (this.configuration.isRowSelected(currentRow)) {
       posSelectedRows.push(i);
     }
   }
-
   if (posSelectedRows.length == 0) {
     // if no other row is selected, select the clicked one and stop
     this.configuration.selectRow(attributes);
@@ -279,7 +271,6 @@ GridController.prototype.selectRange_ = function (attributes) {
   // then select all rows between the clicked one and the closest
   const rangeStart = posClickedRow < posClosestRow ? posClickedRow : posClosestRow;
   const rangeEnd = posClickedRow > posClosestRow ? posClickedRow : posClosestRow;
-
   for (let l = rangeStart; l <= rangeEnd; l++) {
     this.configuration.selectRow(data[l]);
   }
@@ -294,12 +285,9 @@ GridController.prototype.selectRange_ = function (attributes) {
 GridController.prototype.preventTextSelection = function (event) {
   const shiftKey = isShiftKeyOnly(event);
   const platformModifierKey = isPlatformModifierKeyOnly(event);
-
   if (shiftKey || platformModifierKey) {
     event.preventDefault();
   }
 };
-
 myModule.controller('ngeoGridController', GridController);
-
 export default myModule;

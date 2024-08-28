@@ -1,3 +1,12 @@
+contextualDataComponentContent.$inject = ['gmfContextualdatacontentTemplateUrl'];
+ContextualdataController.$inject = [
+  '$compile',
+  '$timeout',
+  '$scope',
+  'gmfRaster',
+  'gmfContextualDataOptions',
+  'ngeoAutoProjection',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -92,7 +101,6 @@ function contextualDataComponent() {
     },
   };
 }
-
 myModule.directive('gmfContextualdata', contextualDataComponent);
 
 /**
@@ -106,7 +114,6 @@ myModule.directive('gmfContextualdata', contextualDataComponent);
  * @class
  * @hidden
  * @ngdoc controller
- * @ngInject
  */
 export function ContextualdataController(
   $compile,
@@ -180,10 +187,9 @@ export function ContextualdataController(
    * @type {import('ngeo/misc/AutoProjection').AutoProjectionService}
    */
   this.ngeoAutoProjection = ngeoAutoProjection;
-
   document.body.addEventListener('mousedown', (event) => {
     const element = this.overlay_.getElement();
-    const target = /** @type {Node} */ (event.target);
+    const target = /** @type {Node} */ event.target;
     // don't close if the user click the popup itself. this allows the text to be copied.
     if (!element.contains(target)) {
       this.$scope_.$apply(() => {
@@ -201,12 +207,10 @@ ContextualdataController.prototype.init = function () {
     this.options.projections === undefined
       ? [this.map.getView().getProjection()]
       : this.ngeoAutoProjection.getProjectionList(this.options.projections);
-
   this.preparePopover_();
   if (!this.map) {
     throw new Error('Missing map');
   }
-
   const mapDiv = this.map.getTargetElement();
   if (!mapDiv) {
     throw new Error('Missing mapDiv');
@@ -217,8 +221,7 @@ ContextualdataController.prototype.init = function () {
   mapDiv.addEventListener('touchstart', this.handleMapTouchStart_.bind(this));
   mapDiv.addEventListener('touchmove', this.handleMapTouchEnd_.bind(this));
   mapDiv.addEventListener('touchend', this.handleMapTouchEnd_.bind(this));
-
-  this.map.on(/** @type {import('ol/Observable').EventTypes} */ ('pointerdown'), () => {
+  this.map.on(/** @type {import('ol/Observable').EventTypes} */ 'pointerdown', () => {
     this.$scope_.$apply(() => {
       this.hidePopover();
     });
@@ -236,7 +239,6 @@ ContextualdataController.prototype.handleMapTouchStart_ = function (event) {
     }, 500);
   }
 };
-
 ContextualdataController.prototype.handleMapTouchEnd_ = function () {
   if (this.longPressTimeout_) {
     clearTimeout(this.longPressTimeout_);
@@ -279,7 +281,6 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
   }
   const scope = this.$scope_.$new(true);
   this.$compile_(this.content_)(scope);
-
   const mapProjection = this.map.getView().getProjection().getCode();
   this.projections.forEach((proj) => {
     const ref = proj.getCode().replace('EPSG:', '').replace(':', '_');
@@ -291,7 +292,6 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
     // @ts-ignore: scope ...
     scope[`coord_${ref}_northern`] = coord[1];
   });
-
   this.gmfRaster_.getRaster(coordinate, this.gmfContextualDataOptions_.rasterParams).then(
     (resp) => {
       Object.assign(scope, resp);
@@ -304,12 +304,10 @@ ContextualdataController.prototype.setContent_ = function (coordinate) {
     },
   );
 };
-
 ContextualdataController.prototype.preparePopover_ = function () {
   if (!this.map) {
     throw new Error('Missing map');
   }
-
   const container = document.createElement('DIV');
   container.classList.add('popover');
   container.classList.add('bs-popover-bottom');
@@ -322,7 +320,6 @@ ContextualdataController.prototype.preparePopover_ = function () {
   this.content_.setAttribute('gmf-contextualdatacontent', '');
   this.content_.classList.add('popover-body');
   container.appendChild(this.content_);
-
   this.overlay_ = new olOverlay({
     element: container,
     stopEvent: true,
@@ -334,7 +331,6 @@ ContextualdataController.prototype.preparePopover_ = function () {
   });
   this.map.addOverlay(this.overlay_);
 };
-
 ContextualdataController.prototype.showPopover = function () {
   if (!this.overlay_) {
     throw new Error('Missing overlay');
@@ -346,7 +342,6 @@ ContextualdataController.prototype.showPopover = function () {
   element.style.display = 'block';
   this.displayed = true;
 };
-
 ContextualdataController.prototype.hidePopover = function () {
   if (!this.overlay_) {
     throw new Error('Missing overlay');
@@ -358,7 +353,6 @@ ContextualdataController.prototype.hidePopover = function () {
   element.style.display = 'none';
   this.displayed = false;
 };
-
 myModule.controller('GmfContextualdataController', ContextualdataController);
 
 /**
@@ -386,7 +380,6 @@ myModule.controller('GmfContextualdataController', ContextualdataController);
  *
  * @param {string} gmfContextualdatacontentTemplateUrl URL to template.
  * @returns {angular.IDirective} The Directive Definition Object.
- * @ngInject
  * @ngdoc directive
  * @ngname gmfContextualdatacontent
  */
@@ -397,7 +390,5 @@ function contextualDataComponentContent(gmfContextualdatacontentTemplateUrl) {
     templateUrl: gmfContextualdatacontentTemplateUrl,
   };
 }
-
 myModule.directive('gmfContextualdatacontent', contextualDataComponentContent);
-
 export default myModule;

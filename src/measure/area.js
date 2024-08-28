@@ -1,3 +1,4 @@
+measureAreaComponent.$inject = ['$compile', 'gettextCatalog', '$filter', 'ngeoMeasurePrecision'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -38,7 +39,6 @@ const myModule = angular.module('ngeoMeasurearea', [ngeoDrawController.name]);
  * @param {angular.IFilterService} $filter Angular filter
  * @param {import('ngeo/options').ngeoMeasurePrecision} ngeoMeasurePrecision The precision.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawpoint
  */
@@ -56,7 +56,6 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
       if (!drawFeatureCtrl) {
         throw new Error('Missing drawFeatureCtrl');
       }
-
       const helpMsg = gettextCatalog.getString('Click to start drawing polygon');
       const contMsg = gettextCatalog.getString(
         'Click to continue drawing<br>' + 'Double-click or click starting point to finish',
@@ -69,16 +68,12 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
         continueMsg: $compile(`<div translate>${contMsg}</div>`)($scope)[0],
       };
       options.precision = ngeoMeasurePrecision;
-
       const measureArea = new ngeoInteractionMeasureArea($filter('ngeoUnitPrefix'), gettextCatalog, options);
-
       if (drawFeatureCtrl.uid) {
         measureArea.set('ngeo-interaction-draw-uid', `${drawFeatureCtrl.uid}-area`);
       }
-
       drawFeatureCtrl.registerInteraction(measureArea);
       drawFeatureCtrl.measureArea = measureArea;
-
       listen(
         measureArea,
         'measureend',
@@ -89,7 +84,5 @@ function measureAreaComponent($compile, gettextCatalog, $filter, ngeoMeasurePrec
     },
   };
 }
-
 myModule.directive('ngeoMeasurearea', measureAreaComponent);
-
 export default myModule;

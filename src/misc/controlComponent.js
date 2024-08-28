@@ -45,7 +45,6 @@ const myModule = angular.module('ngeoControl', []);
  *
  * @htmlAttribute {import('ol/Map').default} ngeo-control-map The map.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoControl
  */
@@ -58,20 +57,14 @@ function controlComponent() {
      * @param {angular.IAttributes} attrs Attributes.
      */
     link: (scope, element, attrs) => {
-      const control =
-        /** @type {import('ol/control/Control').default} */
-        (scope.$eval(attrs['ngeoControl']));
+      const control = /** @type {import('ol/control/Control').default} */ scope.$eval(attrs['ngeoControl']);
       console.assert(control instanceof olControlControl);
-
-      const map = /** @type {import('ol/Map').default} */ (scope.$eval(attrs['ngeoControlMap']));
+      const map = /** @type {import('ol/Map').default} */ scope.$eval(attrs['ngeoControlMap']);
       console.assert(map instanceof olMap);
-
       control.setTarget(element[0]);
       map.addControl(control);
     },
   };
 }
-
 myModule.directive('ngeoControl', controlComponent);
-
 export default myModule;

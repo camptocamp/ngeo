@@ -29,9 +29,8 @@ import {toDegrees} from 'ol/math';
 /**
  * @hidden
  */
-export const OlcsService = class {
+export class OlcsService {
   /**
-   * @ngInject
    * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo debounce
    *    service.
    * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location
@@ -70,11 +69,9 @@ export const OlcsService = class {
    */
   initialize(manager) {
     this.manager_ = manager;
-
     this.manager_.on('load', () => {
       this.cameraToState_();
     });
-
     if (this.ngeoStateManager_.getInitialBooleanValue('3d_enabled')) {
       this.initialStateToCamera_();
     }
@@ -96,13 +93,11 @@ export const OlcsService = class {
       throw new Error('Missing manager');
     }
     const stateManager = this.ngeoStateManager_;
-
     const lon = stateManager.getInitialNumberValue(Permalink3dParam.LON);
     const lat = stateManager.getInitialNumberValue(Permalink3dParam.LAT);
     const elevation = stateManager.getInitialNumberValue(Permalink3dParam.ELEVATION);
     const heading = stateManager.getInitialNumberValue(Permalink3dParam.HEADING) || 0;
     const pitch = stateManager.getInitialNumberValue(Permalink3dParam.PITCH) || 0;
-
     if (!lon) {
       throw new Error('Missing lon');
     }
@@ -125,7 +120,6 @@ export const OlcsService = class {
     const manager = this.manager_;
     const scene = manager.getOl3d().getCesiumScene();
     const camera = scene.camera;
-
     camera.moveEnd.addEventListener(
       this.ngeoDebounce_(
         () => {
@@ -143,7 +137,6 @@ export const OlcsService = class {
         true,
       ),
     );
-
     this.manager_.on('toggle', (event) => {
       if (!event.target.is3dEnabled()) {
         this.remove3dState_();
@@ -159,8 +152,8 @@ export const OlcsService = class {
       this.ngeoStateManager_.deleteParam(key);
     });
   }
-};
-
+}
+OlcsService.$inject = ['ngeoDebounce', 'ngeoLocation', 'ngeoStateManager'];
 /**
  * @type {angular.IModule}
  * @hidden
@@ -168,5 +161,4 @@ export const OlcsService = class {
 const myModule = angular
   .module(name, [ngeoMiscDebounce.name, ngeoStatemanagerLocation.name, ngeoStatemanagerService.name])
   .service('ngeoOlcsService', OlcsService);
-
 export default myModule;

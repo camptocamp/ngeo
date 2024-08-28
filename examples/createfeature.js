@@ -1,3 +1,4 @@
+MainController.$inject = ['ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -22,11 +23,8 @@
 import './createfeature.css';
 import angular from 'angular';
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
-
 import ngeoGeometryType from 'ngeo/GeometryType';
-
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
-
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import olCollection from 'ol/Collection';
@@ -52,7 +50,6 @@ const myModule = angular.module('app', [
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate
  *    manager service.
  * @class
- * @ngInject
  */
 function MainController(ngeoToolActivateMgr) {
   /**
@@ -74,7 +71,6 @@ function MainController(ngeoToolActivateMgr) {
    * @type {string}
    */
   this.polygonGeomType = ngeoGeometryType.POLYGON;
-
   const vector = new olLayerVector({
     source: new olSourceVector({
       wrapX: false,
@@ -102,7 +98,6 @@ function MainController(ngeoToolActivateMgr) {
    * @type {boolean}
    */
   this.createPointActive = false;
-
   const createPointToolActivate = new ngeoMiscToolActivate(this, 'createPointActive');
   ngeoToolActivateMgr.registerTool('mapTools', createPointToolActivate, false);
 
@@ -110,7 +105,6 @@ function MainController(ngeoToolActivateMgr) {
    * @type {boolean}
    */
   this.createLineStringActive = false;
-
   const createLineStringToolActivate = new ngeoMiscToolActivate(this, 'createLineStringActive');
   ngeoToolActivateMgr.registerTool('mapTools', createLineStringToolActivate, false);
 
@@ -118,7 +112,6 @@ function MainController(ngeoToolActivateMgr) {
    * @type {boolean}
    */
   this.createPolygonActive = false;
-
   const createPolygonToolActivate = new ngeoMiscToolActivate(this, 'createPolygonActive');
   ngeoToolActivateMgr.registerTool('mapTools', createPolygonToolActivate, false);
 
@@ -126,12 +119,9 @@ function MainController(ngeoToolActivateMgr) {
    * @type {boolean}
    */
   this.dummyActive = true;
-
   const dummyToolActivate = new ngeoMiscToolActivate(this, 'dummyActive');
   ngeoToolActivateMgr.registerTool('mapTools', dummyToolActivate, true);
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

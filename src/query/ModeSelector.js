@@ -23,7 +23,6 @@ import angular from 'angular';
 import ngeoQueryAction from 'ngeo/query/Action';
 import ngeoQueryMode from 'ngeo/query/Mode';
 import {isEventUsingCtrlKey} from 'ngeo/utils';
-
 import {listen as olEventsListen} from 'ol/events';
 
 /**
@@ -44,7 +43,6 @@ export class QueryModeSelector {
    * pressed.
    *
    * @param {angular.IScope} $rootScope The root scope.
-   * @ngInject
    */
   constructor($rootScope) {
     // Constants
@@ -222,10 +220,8 @@ export class QueryModeSelector {
     if (this.pending) {
       return;
     }
-
     const key = evt.key;
     let updateScope = false;
-
     if (this.keysAction_.includes(key) && !this.previousAction_) {
       // An 'action' key was pressed and none were already previously
       // pressed. In other words, only the first 'action key' is handled.
@@ -257,7 +253,6 @@ export class QueryModeSelector {
       // after a ctrl+p.)
       updateScope = this.reset_();
     }
-
     if (updateScope) {
       this.rootScope_.$apply();
     }
@@ -275,7 +270,6 @@ export class QueryModeSelector {
     if (!(evt instanceof KeyboardEvent)) {
       return;
     }
-
     let updateScope = false;
 
     // On any 'keyup', if it comes from a 'ctrl' (or 'meta' on mac) release and
@@ -293,7 +287,6 @@ export class QueryModeSelector {
       this.activeActionKey_ = null;
       updateScope = true;
     }
-
     if (updateScope) {
       this.rootScope_.$apply();
     }
@@ -329,12 +322,11 @@ export class QueryModeSelector {
     return true;
   }
 }
-
+QueryModeSelector.$inject = ['$rootScope'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('ngeoQueryModeSelector', []);
 myModule.service('ngeoQueryModeSelector', QueryModeSelector);
-
 export default myModule;

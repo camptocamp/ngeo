@@ -1,3 +1,18 @@
+PermalinkService.$inject = [
+  '$q',
+  '$timeout',
+  '$rootScope',
+  '$injector',
+  'ngeoDebounce',
+  'gettextCatalog',
+  'ngeoEventHelper',
+  'ngeoStateManager',
+  'ngeoLocation',
+  'gmfLayerBeingSwipe',
+  'gmfPermalinkOptions',
+  'gmfDataSourcesManager',
+  'ngeoWMSTime',
+];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,26 +35,19 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import {PermalinkParam} from 'gmf/index';
-
 import gmfLayerBeingSwipe from 'gmf/datasource/LayerBeingSwipe';
-
 import gmfThemeManager, {ThemeEventType} from 'gmf/theme/Manager';
-
 import gmfThemeThemes, {findThemeByName, findGroupByName} from 'gmf/theme/Themes';
 import ngeoPopover from 'ngeo/Popover';
-
 import ngeoDrawFeatures from 'ngeo/draw/features';
 import gmfDataSourcesManager from 'gmf/datasource/Manager';
-
 import ngeoDatasourceGroup from 'ngeo/datasource/Group';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
 import gmfDatasourceOGC from 'gmf/datasource/OGC';
 import {Permalink3dParam} from 'ngeo/olcs/constants';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
-
 import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
@@ -55,7 +63,6 @@ import olGeomPoint from 'ol/geom/Point';
 import olLayerGroup from 'ol/layer/Group';
 import {CollectionEvent} from 'ol/Collection';
 import {buildStyle} from 'ngeo/options';
-
 import user, {loginMessageRequired} from 'gmfapi/store/user';
 
 /**
@@ -281,7 +288,6 @@ const ParamPrefix = {
  * @param {import('gmf/datasource/Manager').DatasourceManager} gmfDataSourcesManager The gmf datasourcemanager
  *    service.
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime The ngeo  wmstime service
- * @ngInject
  * @ngdoc service
  * @ngname gmfPermalink
  */
@@ -382,7 +388,6 @@ export function PermalinkService(
    * @type {?import('ngeo/query/Querent').Querent}
    */
   this.ngeoQuerent_ = $injector.has('ngeoQuerent') ? $injector.get('ngeoQuerent') : null;
-
   if (gmfPermalinkOptions.useLocalStorage === true) {
     // localStorage is deactivated by default
     this.ngeoStateManager_.setUseLocalStorage(true);
@@ -551,7 +556,7 @@ export function PermalinkService(
          * @param {import('ngeo/layertree/Controller').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (ctrl.node);
+          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ ctrl.node;
           if (groupNode.children === undefined) {
             const param = `${ParamPrefix.TREE_ENABLE}${ctrl.node.name}`;
             if ((groupNode.metadata.isChecked === true) !== visible) {
@@ -570,7 +575,7 @@ export function PermalinkService(
          * @param {import('ngeo/layertree/Controller').LayertreeController} ctrl
          */
         (ctrl) => {
-          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (ctrl.node);
+          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ ctrl.node;
           if (groupNode.children === undefined && ctrl.getState() === 'on') {
             gmfLayerNames.push(ctrl.node.name);
           }
@@ -584,9 +589,7 @@ export function PermalinkService(
     /** @type {Object<string, string>} */
     const newState = {};
     const opacity = treeCtrl.layer.getOpacity();
-    const stateName = `${
-      treeCtrl.parent.node.mixed ? ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY
-    }${treeCtrl.node.name}`;
+    const stateName = `${treeCtrl.parent.node.mixed ? ParamPrefix.TREE_OPACITY : ParamPrefix.TREE_GROUP_OPACITY}${treeCtrl.node.name}`;
     newState[stateName] = opacity;
     this.ngeoStateManager_.updateState(newState);
   });
@@ -602,12 +605,10 @@ export function PermalinkService(
       }
       this.addNgeoFeature_(feature);
     });
-
     this.ngeoFeatures_.extend(features);
     listen(this.ngeoFeatures_, 'add', this.handleNgeoFeaturesAdd_, this);
     listen(this.ngeoFeatures_, 'remove', this.handleNgeoFeaturesRemove_, this);
   }
-
   if (this.featureHelper_) {
     this.rootScope_.$on('$localeChangeSuccess', () => {
       features.forEach((feature) => {
@@ -618,7 +619,6 @@ export function PermalinkService(
       });
     });
   }
-
   if (this.gmfThemeManager_) {
     this.rootScope_.$on(ThemeEventType.THEME_NAME_SET, (event, name) => {
       this.setThemeInUrl_(name);
@@ -637,7 +637,6 @@ export function PermalinkService(
    * @type {?angular.IPromise<void>}
    */
   this.setExternalDataSourcesStatePromise_ = null;
-
   if (this.ngeoQuerent_ && this.gmfExternalDataSourcesManager_) {
     // First, load the external data sources that are defined in the url
     this.initExternalDataSources_()
@@ -683,7 +682,6 @@ export function PermalinkService(
       })
       .catch((err) => console.error(err));
   }
-
   this.initLayers_();
 }
 
@@ -737,7 +735,6 @@ PermalinkService.prototype.handleMapSwipeValue_ = function () {
 PermalinkService.prototype.getMapCenter = function () {
   const x = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_X);
   const y = this.ngeoStateManager_.getInitialNumberValue(PermalinkParam.MAP_Y);
-
   if (x !== undefined && y !== undefined && !isNaN(x) && !isNaN(y)) {
     const center = [x, y];
     if (this.sourceProjections_ !== null && this.ngeoAutoProjection_) {
@@ -853,21 +850,17 @@ PermalinkService.prototype.setMapTooltip = function (tooltipText, opt_center) {
   if (!Array.isArray(tooltipPosition)) {
     throw new Error('Wrong tooltipPosition type');
   }
-
   const div = $('<div/>', {
     'class': 'gmf-permalink-tooltip',
     'text': tooltipText,
   })[0];
-
   if (this.mapTooltip_ !== null) {
     this.map_.removeOverlay(this.mapTooltip_);
   }
-
   this.mapTooltip_ = new ngeoPopover({
     element: div,
     position: tooltipPosition,
   });
-
   this.map_.addOverlay(this.mapTooltip_);
 };
 
@@ -901,7 +894,6 @@ PermalinkService.prototype.setDimensions = function (dimensions) {
     }
     dimensions[key.slice(ParamPrefix.DIMENSIONS.length)] = value;
   }
-
   this.rootScope_.$watchCollection(
     () => dimensions,
     (dimensions) => {
@@ -928,12 +920,10 @@ PermalinkService.prototype.setMap = function (map) {
   if (map === this.map_) {
     return;
   }
-
   if (this.map_) {
     this.unregisterMap_();
     this.map_ = null;
   }
-
   if (map) {
     this.map_ = map;
     if (this.gmfObjectEditingManager_) {
@@ -1101,7 +1091,6 @@ PermalinkService.prototype.handleBackgroundLayerManagerChange_ = function () {
   const object = {};
   object[PermalinkParam.BG_LAYER] = layerName;
   this.ngeoStateManager_.updateState(object);
-
   const backgroundLayer = this.ngeoBackgroundLayerMgr_.getOpacityBgLayer(this.map_);
   if (backgroundLayer) {
     const opacity = this.getBackgroundLayerOpacity();
@@ -1143,7 +1132,7 @@ PermalinkService.prototype.refreshFirstLevelGroups = function () {
     throw new Error('Missing gmfTreeManager_.rootCtrl');
   }
   // Get first-level-groups order
-  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (this.gmfTreeManager_.rootCtrl.node);
+  const groupNode = /** @type {import('gmf/themes').GmfGroup} */ this.gmfTreeManager_.rootCtrl.node;
   const groupNodes = groupNode.children;
   const orderedNames = groupNodes ? groupNodes.map((node) => node.name) : [];
 
@@ -1165,9 +1154,9 @@ PermalinkService.prototype.refreshLayerTime = function (treeCtrl, time) {
   /** @type {Object<string, string>} */
   const newState = {};
   const stateName = `${ParamPrefix.TREE_TIME}${treeCtrl.node.name}`;
-  const timenode = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
-    treeCtrl.node
-  );
+  const timenode =
+    /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */
+    treeCtrl.node;
   const timeParam = this.ngeoWMSTime_.formatWMSTimeParam(timenode.time, time);
   newState[stateName] = timeParam;
   this.ngeoStateManager_.updateState(newState);
@@ -1232,7 +1221,6 @@ PermalinkService.prototype.defaultThemeName = function () {
   if (tn) {
     return tn;
   }
-
   const defaultTheme = this.defaultThemeNameFromFunctionalities();
   if (defaultTheme !== null) {
     return defaultTheme;
@@ -1242,7 +1230,6 @@ PermalinkService.prototype.defaultThemeName = function () {
   if (this.defaultTheme_) {
     return this.defaultTheme_;
   }
-
   return null;
 };
 
@@ -1265,11 +1252,9 @@ PermalinkService.prototype.defaultThemeNameFromFunctionalities = function () {
   }
   return null;
 };
-
 PermalinkService.prototype.initLayers_ = function () {
   const initialUri = window.location.href;
   let authenticationRequired = false;
-
   if (!this.gmfThemes_) {
     return;
   }
@@ -1287,9 +1272,7 @@ PermalinkService.prototype.initLayers_ = function () {
         }
         return false;
       });
-
       const themeName = this.defaultThemeName();
-
       if (this.gmfThemeManager_) {
         this.gmfThemeManager_.setThemeName(this.gmfThemeManager_.modeFlush ? themeName : '');
       }
@@ -1316,21 +1299,20 @@ PermalinkService.prototype.initLayers_ = function () {
           }
         });
       }
-
       if (this.gmfTreeManager_) {
         this.gmfTreeManager_.setFirstLevelGroups(firstLevelGroups);
       }
-
       this.$timeout_(() => {
         /**
          * @type {string[]}
          */
         const used_tree_enable = [];
-
         if (!this.gmfTreeManager_ || !this.gmfTreeManager_.rootCtrl) {
           // we don't have any layertree
           if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
-            this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+            this.rootScope_.$broadcast('authenticationrequired', {
+              url: initialUri,
+            });
             user.setLoginMessage(loginMessageRequired);
           }
           return;
@@ -1349,8 +1331,8 @@ PermalinkService.prototype.initLayers_ = function () {
           if (treeCtrl.isRoot) {
             return undefined;
           }
-          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
-          const parentGroupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.parent.node);
+          const groupNode = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.node;
+          const parentGroupNode = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.parent.node;
           const opacity = this.ngeoStateManager_.getInitialNumberValue(
             parentGroupNode.mixed
               ? `${ParamPrefix.TREE_OPACITY}${treeCtrl.node.name}`
@@ -1372,13 +1354,12 @@ PermalinkService.prototype.initLayers_ = function () {
               this.gmfLayerBeingSwipe_.layer = treeCtrl.layer;
             }
           }
-          const timenode = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
-            treeCtrl.node
-          );
+          const timenode =
+            /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */
+            treeCtrl.node;
           if (timenode && timenode.time) {
             this.setNodeTime_(treeCtrl);
           }
-
           if (treeCtrl.parent.node && parentGroupNode.mixed && groupNode.children == undefined) {
             // Layer of a mixed group
             const param = `${ParamPrefix.TREE_ENABLE}${treeCtrl.node.name}`;
@@ -1402,7 +1383,7 @@ PermalinkService.prototype.initLayers_ = function () {
                * @returns {LayertreeVisitorDecision|undefined} the result
                */
               const visitor = (treeCtrl) => {
-                const groupNode = /** @type {import('gmf/themes').GmfGroup} */ (treeCtrl.node);
+                const groupNode = /** @type {import('gmf/themes').GmfGroup} */ treeCtrl.node;
                 if (groupNode.children === undefined) {
                   const enable = groupLayersArray.includes(treeCtrl.node.name);
                   if (enable) {
@@ -1429,14 +1410,15 @@ PermalinkService.prototype.initLayers_ = function () {
             }
           });
         });
-
         for (const key of tree_enable_keys) {
           if (!used_tree_enable.includes(key)) {
             authenticationRequired = true;
           }
         }
         if (authenticationRequired && this.gmfUser && this.gmfUser.roles === null) {
-          this.rootScope_.$broadcast('authenticationrequired', {url: initialUri});
+          this.rootScope_.$broadcast('authenticationrequired', {
+            url: initialUri,
+          });
           user.setLoginMessage(loginMessageRequired);
         }
       }).catch((err) => console.error(err));
@@ -1529,10 +1511,8 @@ PermalinkService.prototype.getWfsPermalinkData_ = function () {
   if (!wfsLayer) {
     return null;
   }
-
   const numGroups = this.ngeoLocation_.getParamAsInt(PermalinkParam.WFS_NGROUPS);
   const paramKeys = this.ngeoLocation_.getParamKeysWithPrefix(ParamPrefix.WFS);
-
   const filterGroups = [];
   let filterGroup;
   if (numGroups === undefined) {
@@ -1551,14 +1531,11 @@ PermalinkService.prototype.getWfsPermalinkData_ = function () {
       }
     }
   }
-
   if (filterGroups.length == 0) {
     return null;
   }
-
   const showFeaturesParam = this.ngeoLocation_.getParam(PermalinkParam.WFS_SHOW_FEATURES);
   const showFeatures = !(showFeaturesParam === '0' || showFeaturesParam === 'false');
-
   return {
     wfsType: wfsLayer,
     showFeatures: showFeatures,
@@ -1578,7 +1555,6 @@ PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
    * @type {import('ngeo/statemanager/WfsPermalink').WfsPermalinkFilter[]}
    */
   const filters = [];
-
   paramKeys.forEach((paramKey) => {
     if (
       paramKey == PermalinkParam.WFS_LAYER ||
@@ -1592,7 +1568,6 @@ PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
     if (!value) {
       return;
     }
-
     const condition = value.split(',');
     const filter = {
       property: paramKey.replace(prefix, ''),
@@ -1600,8 +1575,11 @@ PermalinkService.prototype.createFilterGroup_ = function (prefix, paramKeys) {
     };
     filters.push(filter);
   });
-
-  return filters.length > 0 ? {filters} : null;
+  return filters.length > 0
+    ? {
+        filters,
+      }
+    : null;
 };
 
 // === External Data Sources management ===
@@ -1619,35 +1597,26 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
   }
   const ngeoQuerent = this.ngeoQuerent_;
   const gmfExtDSManager = this.gmfExternalDataSourcesManager_;
-
   const promises = [];
-
   const layerNamesString = this.ngeoStateManager_.getInitialStringValue(
     PermalinkParam.EXTERNAL_DATASOURCES_NAMES,
   );
   const urlsString = this.ngeoStateManager_.getInitialStringValue(PermalinkParam.EXTERNAL_DATASOURCES_URLS);
-
   if (layerNamesString && urlsString) {
     const layerNames = layerNamesString.split(ExtDSSeparator.LIST);
     const urls = urlsString.split(ExtDSSeparator.LIST);
-
     for (let i = 0, ii = urls.length; i < ii; i++) {
       // Stop iterating if we do not have the same number of urls and layer
       // names
       const groupLayerNamesString = layerNames[i];
-
       if (!groupLayerNamesString) {
         break;
       }
-
       const groupLayerNames = groupLayerNamesString.split(ExtDSSeparator.NAMES);
       const url = urls[i];
-
       const serviceType = guessServiceTypeByUrl(url);
-
       const getCapabilitiesDefer = this.q_.defer();
       promises.push(getCapabilitiesDefer.promise);
-
       if (serviceType === Type.WMS) {
         ngeoQuerent.wmsGetCapabilities(url).then(
           (capabilities) => {
@@ -1696,7 +1665,6 @@ PermalinkService.prototype.initExternalDataSources_ = function () {
       }
     }
   }
-
   return this.q_.all(promises).then(
     (responses) => {
       for (const response of responses) {
@@ -1820,7 +1788,6 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
   if (this.setExternalDataSourcesStatePromise_) {
     this.$timeout_.cancel(this.setExternalDataSourcesStatePromise_);
   }
-
   this.setExternalDataSourcesStatePromise_ = this.$timeout_(() => {
     if (!this.gmfExternalDataSourcesManager_) {
       throw new Error('Missing gmfExternalDataSourcesManager');
@@ -1854,9 +1821,8 @@ PermalinkService.prototype.setExternalDataSourcesState_ = function () {
 
       // (2b) layer names
       const wmtsGroupLayerNames = [];
-      for (const wmtsDataSource of /** @type {import('ngeo/datasource/OGC').OGC[]} */ (
-        wmtsGroup.dataSources
-      )) {
+      for (const wmtsDataSource of /** @type {import('ngeo/datasource/OGC').OGC[]} */
+      wmtsGroup.dataSources) {
         if (!wmtsDataSource.wmtsLayer) {
           throw new Error('Missing wmtsDataSource.wmtsLayer');
         }
@@ -1937,13 +1903,10 @@ PermalinkService.prototype.setNodeTime_ = function (treeCtrl) {
   const time = this.ngeoStateManager_.getInitialStringValue(`${ParamPrefix.TREE_TIME}${treeCtrl.node.name}`);
   if (time) {
     const bounds = time.split('/');
-    const node = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ (
-      treeCtrl.node
-    );
+    const node = /** @type {import('gmf/themes').GmfGroup|!import('gmf/themes').GmfLayerWMS} */ treeCtrl.node;
     node.time.minDefValue = bounds[0];
     node.time.maxDefValue = bounds[1];
     const dataSource = this.gmfDataSourcesManager_.getDatasource(olUtilGetUid(treeCtrl.node));
-
     if (dataSource) {
       if (!(dataSource instanceof gmfDatasourceOGC)) {
         throw new Error('Wrong dataSource type');
@@ -1977,19 +1940,17 @@ const myModule = angular.module('gmfPermalink', [
   ngeoMiscEventHelper.name,
   ngeoStatemanagerModule.name,
 ]);
-
 myModule.service('gmfPermalink', PermalinkService);
 
 /** Configure the ngeo state manager */
 (function () {
   const regexp = [];
   for (const key1 in ParamPrefix) {
-    regexp.push(new RegExp(`${/** @type {Object<string, string>} */ (ParamPrefix)[key1]}.*`));
+    regexp.push(new RegExp(`${/** @type {Object<string, string>} */ ParamPrefix[key1]}.*`));
   }
   for (const key2 in PermalinkParam) {
-    regexp.push(new RegExp(/** @type {Object<string, string>} */ (ParamPrefix)[key2]));
+    regexp.push(new RegExp(/** @type {Object<string, string>} */ ParamPrefix[key2]));
   }
   ngeoStatemanagerService.value('ngeoUsedKeyRegexp', regexp);
 })();
-
 export default myModule;

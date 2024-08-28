@@ -1,3 +1,4 @@
+MainController.$inject = ['$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -45,7 +46,6 @@ const mapComponent = {
   },
   template: '<gmf-map gmf-map-map="$ctrl.map"></gmf-map>',
 };
-
 myModule.component('appMap', mapComponent);
 
 /**
@@ -53,7 +53,6 @@ myModule.component('appMap', mapComponent);
  *
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @class
- * @ngInject
  * @private
  * @hidden
  */
@@ -87,8 +86,6 @@ function MainController($timeout) {
     this.open = true;
   }, 0);
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

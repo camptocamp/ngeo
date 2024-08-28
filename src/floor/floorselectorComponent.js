@@ -26,18 +26,18 @@ import angular from 'angular';
  * @hidden
  */
 const myModule = angular.module('gmfFloorSelector', []);
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/floor/floorselectorcomponent', require('./floorselectorcomponent.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/floor/floorselectorcomponent', require('./floorselectorcomponent.html'));
+    },
+  ],
 );
-
 myModule.value(
   'gmfFloorselectorTemplateUrl',
   /**
@@ -54,10 +54,10 @@ myModule.value(
  * @param {!angular.IAttributes} $attrs Attributes.
  * @param {!function(!angular.IAttributes): string} gmfFloorselectorTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfFloorselectorTemplateUrl.$inject = ['$attrs', 'gmfFloorselectorTemplateUrl'];
 function gmfFloorselectorTemplateUrl($attrs, gmfFloorselectorTemplateUrl) {
   return gmfFloorselectorTemplateUrl($attrs);
 }
@@ -70,7 +70,6 @@ export class Controller {
    * @param {angular.IScope} $scope Angular scope.
    * @param {JQuery} $element Element.
    * @param {import('gmf/options').gmfFloors} gmfFloors Floor dimension values and labels.
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfFilterselectorController
    */
@@ -106,11 +105,9 @@ export class Controller {
      * @private
      */
     this.upperBound_;
-
     this.scope = $scope;
     this.element = $element;
   }
-
   $postLink() {
     this.scope.$watch(
       () => {
@@ -120,7 +117,6 @@ export class Controller {
         this.valueChanged_();
       },
     );
-
     this.element[0].addEventListener('wheel', (event) => {
       this.scope.$apply(() => {
         const delta = event.deltaY > 0 ? -1 : 1;
@@ -146,23 +142,19 @@ export class Controller {
       },
     );
     console.assert(this.currentIndex > -1);
-
     const buttonGroup = this.element.find('.btn-group-floors');
-
     const buttonUp = this.element.find('.btn-floor-up');
     const buttonUpOuterHeight = buttonUp.outerHeight(true);
     if (buttonUpOuterHeight === undefined) {
       throw new Error('Missing buttonUp.outerHeight');
     }
     const maxTop = buttonUp.position().top + buttonUpOuterHeight;
-
     const buttonDown = this.element.find('.btn-floor-down');
     const buttonGroupOuterHeight = buttonGroup.outerHeight(true);
     if (buttonGroupOuterHeight === undefined) {
       throw new Error('Missing buttonGroup.outerHeight');
     }
     const minTop = buttonDown.position().top - buttonGroupOuterHeight;
-
     const currentButton = this.element.find(`.btn-floor:nth(${this.currentIndex})`);
     const innerHeight = this.element.innerHeight();
     if (innerHeight === undefined) {
@@ -188,7 +180,7 @@ export class Controller {
     }
   }
 }
-
+Controller.$inject = ['$scope', '$element', 'gmfFloors'];
 /**
  * Provide a floor selector component.
  * Note that it is not limited to floors, but allows selecting a dimension value
@@ -219,7 +211,5 @@ const floorSelectorComponent = {
   controller: Controller,
   templateUrl: gmfFloorselectorTemplateUrl,
 };
-
 myModule.component('gmfFloorselector', floorSelectorComponent);
-
 export default myModule;

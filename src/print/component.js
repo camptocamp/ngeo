@@ -20,9 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import gmfAuthenticationService from 'ngeo/auth/service';
-
 import gmfThemeThemes from 'gmf/theme/Themes';
 import LegendMapFishPrintV3 from 'gmf/print/LegendMapFishPrintV3';
 import MaskLayer from 'ngeo/print/Mask';
@@ -71,7 +69,6 @@ const myModule = angular.module('gmfPrintComponent', [
   ngeoPrintUtils.name,
   ngeoQueryMapQuerent.name,
 ]);
-
 myModule.value(
   'gmfPrintTemplateUrl',
   /**
@@ -84,16 +81,17 @@ myModule.value(
     return templateUrl !== undefined ? templateUrl : 'gmf/print';
   },
 );
-
 myModule.run(
   /**
-   * @ngInject
    * @param {angular.ITemplateCacheService} $templateCache
    */
-  ($templateCache) => {
-    // @ts-ignore: webpack
-    $templateCache.put('gmf/print', require('./component.html'));
-  },
+  [
+    '$templateCache',
+    ($templateCache) => {
+      // @ts-ignore: webpack
+      $templateCache.put('gmf/print', require('./component.html'));
+    },
+  ],
 );
 
 /**
@@ -105,22 +103,18 @@ const PrintStateEnum = {
    * @type {string}
    */
   NOT_IN_USE: 'notInUse',
-
   /**
    * @type {string}
    */
   PRINTING: 'printing',
-
   /**
    * @type {string}
    */
   ERROR_ON_REPORT: 'errorOnReport',
-
   /**
    * @type {string}
    */
   CAPABILITIES_NOT_LOADED: 'capabilitiesNotLoaded',
-
   /**
    * @type {string}
    */
@@ -141,10 +135,10 @@ myModule.value('gmfPrintState', {
  * @param {angular.IAttributes} $attrs Attributes.
  * @param {function(JQuery, angular.IAttributes): string} gmfPrintTemplateUrl Template function.
  * @returns {string} Template URL.
- * @ngInject
  * @private
  * @hidden
  */
+gmfPrintTemplateUrl.$inject = ['$element', '$attrs', 'gmfPrintTemplateUrl'];
 function gmfPrintTemplateUrl($element, $attrs, gmfPrintTemplateUrl) {
   return gmfPrintTemplateUrl($element, $attrs);
 }
@@ -200,7 +194,6 @@ const printComponent = {
   templateUrl: gmfPrintTemplateUrl,
   transclude: true,
 };
-
 myModule.component('gmfPrint', printComponent);
 
 /**
@@ -226,7 +219,6 @@ export class PrintController {
    * @param {import('gmf/datasource/ExternalDataSourcesManager').ExternalDatSourcesManager} gmfExternalDataSourcesManager The manager of external datasources.
    * @param {import('gmf/options').gmfPrintOptions} gmfPrintOptions The options.
    * @param {string} cacheVersion The cache version
-   * @ngInject
    * @ngdoc controller
    * @ngname GmfPrintController
    */
@@ -271,7 +263,9 @@ export class PrintController {
     /**
      * @private
      */
-    this.maskLayer_ = new MaskLayer({name: 'PrintMask'});
+    this.maskLayer_ = new MaskLayer({
+      name: 'PrintMask',
+    });
 
     /**
      * @type {boolean}
@@ -359,7 +353,6 @@ export class PrintController {
      * @type {?import("gmf/print/LegendMapFishPrintV3").default}
      */
     this.legendMapFishPrintV3_ = null;
-
     this.cacheVersion_ = cacheVersion;
 
     /**
@@ -527,7 +520,6 @@ export class PrintController {
     if (!this.map) {
       throw new Error('Missing map');
     }
-
     this.legendMapFishPrintV3_ = new LegendMapFishPrintV3(
       this.gettextCatalog_,
       this.ngeoLayerHelper_,
@@ -535,7 +527,6 @@ export class PrintController {
       this.options.legend,
       this.map,
     );
-
     listen(
       this.map.getView(),
       'change:rotation',
@@ -564,7 +555,6 @@ export class PrintController {
         this.smtpEmail = newValue;
       },
     );
-
     this.$scope_.$watch(
       () => this.active,
       (active) => {
@@ -581,11 +571,9 @@ export class PrintController {
     this.$rootScope_.$on('gmfCancelPrint', () => {
       this.cancel();
     });
-
     this.gmfThemes_.getOgcServersObject().then((ogcServersObject) => {
       this.ogcServers_ = ogcServersObject;
     });
-
     listen(
       this.gmfThemes_,
       'change',
@@ -601,7 +589,6 @@ export class PrintController {
      * @returns {import('ol/size').Size} Size in dots of the map to print.
      */
     const getSizeFn = () => this.paperSize_;
-
     let getRotationFn;
     if (this.options.rotateMask) {
       /**
@@ -609,7 +596,6 @@ export class PrintController {
        */
       getRotationFn = () => -this.rotation;
     }
-
     this.maskLayer_.getSize = getSizeFn;
     this.maskLayer_.getScale = this.getScaleFn.bind(this);
     this.maskLayer_.getRotation = getRotationFn;
@@ -730,14 +716,11 @@ export class PrintController {
     this.formats_ = data.formats || [];
     this.layouts_ = data.layouts;
     this.layout_ = data.layouts[0];
-
     this.layoutInfo.layouts = [];
     this.layouts_.forEach((layout) => {
       this.layoutInfo.layouts.push(layout.name);
     });
-
     this.smtpSupported = data.smtp && data.smtp.enabled;
-
     this.updateFields_();
   }
 
@@ -758,7 +741,6 @@ export class PrintController {
       throw new Error('Missing layout');
     }
     this.layoutInfo.layout = this.layout_.name;
-
     const mapInfo = this.isAttributeInCurrentLayout_('map');
     if (!mapInfo) {
       throw new Error('Missing mapInfo');
@@ -768,30 +750,24 @@ export class PrintController {
       throw new Error('Missing clientInfo');
     }
     this.paperSize_ = [clientInfo.width, clientInfo.height];
-
     this.updateCustomFields_();
-
     const fieldValues = this.options.fieldValues || {};
     this.layoutInfo.legend = this.layoutInfo.attributes.includes('legend')
       ? fieldValues['legend'] !== false
       : undefined;
     this.layoutInfo.scales = clientInfo.scales || [];
     this.layoutInfo.dpis = clientInfo.dpiSuggestions || [];
-
     const mapSize = this.map.getSize();
     const viewResolution = this.map.getView().getResolution();
     this.layoutInfo.scale = this.getOptimalScale_(mapSize, viewResolution);
-
     this.layoutInfo.dpi =
       this.layoutInfo.dpi && this.layoutInfo.dpis.indexOf(this.layoutInfo.dpi) > 0
         ? this.layoutInfo.dpi
         : this.layoutInfo.dpis[0];
-
     this.layoutInfo.formats = {};
     this.formats_.forEach((format) => {
       this.layoutInfo.formats[format] = true;
     });
-
     this.attributesOut = this.layoutInfo.simpleAttributes;
 
     // Force the update of the mask
@@ -812,14 +788,12 @@ export class PrintController {
       this.layoutInfo.simpleAttributes = [];
     }
     this.layoutInfo.attributes = [];
-
     const simpleAttributes = this.layoutInfo.simpleAttributes;
     const previousAttributes = simpleAttributes.splice(0, simpleAttributes.length);
 
     // The attributes without 'clientParams' are the custom layout information (defined by end user).
     this.layout_.attributes.forEach((attribute) => {
       this.layoutInfo.attributes.push(attribute.name);
-
       if (!attribute.clientParams) {
         const name = `${attribute.name}`;
 
@@ -832,7 +806,6 @@ export class PrintController {
           });
           return;
         }
-
         const defaultValue = attribute.default;
         /** @type {string} */
         let value =
@@ -869,7 +842,6 @@ export class PrintController {
             return value;
           }
         });
-
         this.layoutInfo.simpleAttributes.push({
           name,
           type,
@@ -999,7 +971,6 @@ export class PrintController {
     }
     this.requestCanceler_ = this.$q_.defer();
     this.gmfPrintState_.state = PrintStateEnum.PRINTING;
-
     const mapSize = this.map.getSize();
     const viewResolution = this.map.getView().getResolution() || 0;
     const scale = this.layoutInfo.scale || this.getOptimalScale_(mapSize, viewResolution);
@@ -1007,21 +978,17 @@ export class PrintController {
 
     /** @type {Object<string, unknown>} */
     const customAttributes = {};
-
     if (this.layoutInfo.attributes.includes('datasource')) {
       customAttributes.datasource = datasource;
     }
-
     if (this.layoutInfo.simpleAttributes) {
       this.layoutInfo.simpleAttributes.forEach((field) => {
         customAttributes[field.name] = field.value;
       });
     }
-
     if (this.layoutInfo.attributes.includes('username')) {
       customAttributes.username = gmfAuthenticationService.getUsername();
     }
-
     if (this.layoutInfo.legend) {
       const center = this.map.getView().getCenter();
       if (!center) {
@@ -1040,7 +1007,6 @@ export class PrintController {
         customAttributes.legend = legend;
       }
     }
-
     if (typeof this.layoutInfo.dpi != 'number') {
       throw new Error('Wrong layoutInfo.dpi type');
     }
@@ -1072,7 +1038,9 @@ export class PrintController {
               undefined,
               undefined,
               undefined,
-              {opacity: layer.get('opacity')},
+              {
+                opacity: layer.get('opacity'),
+              },
             );
             layer.setZIndex(-200);
           } else {
@@ -1086,7 +1054,6 @@ export class PrintController {
       if (layer instanceof olLayerImage && layer.get('printNativeAngle') === false) {
         print_native_angle = false;
       }
-
       new_ol_layers.push(layer);
     }
     const group = new olLayerGroup({
@@ -1094,9 +1061,7 @@ export class PrintController {
     });
     group.set('printNativeAngle', print_native_angle);
     map.setLayerGroup(group);
-
     const email = this.smtpSupported && this.smtpEmail && this.smtpEnabled ? this.smtpEmail : undefined;
-
     const spec = this.ngeoPrint_.createSpec(
       map,
       scale,
@@ -1116,13 +1081,12 @@ export class PrintController {
     if (layers.length > 0) {
       spec.attributes.map.layers.unshift(layers[0]);
     }
-
     this.ngeoPrint_
       .createReport(
         spec,
-        /** @type {angular.IRequestShortcutConfig} */ ({
+        /** @type {angular.IRequestShortcutConfig} */ {
           timeout: this.requestCanceler_.promise,
-        }),
+        },
       )
       .then(this.handleCreateReportSuccess_.bind(this), this.handleCreateReportError_.bind(this));
 
@@ -1144,11 +1108,9 @@ export class PrintController {
     if (this.statusTimeoutPromise_ !== null) {
       this.$timeout_.cancel(this.statusTimeoutPromise_);
     }
-
     if (this.curRef_.length > 0) {
       this.ngeoPrint_.cancel(this.curRef_);
     }
-
     this.resetPrintStates_();
   }
 
@@ -1334,7 +1296,6 @@ export class PrintController {
       const mapSize = this.map.getSize() || [0, 0];
       this.layoutInfo.scale = opt_scale;
       const res = this.ngeoPrintUtils_.getOptimalResolution(mapSize, this.paperSize_, opt_scale);
-
       const view = this.map.getView();
       const contrainRes = view.getConstraints().resolution(res, 1, mapSize, undefined);
       view.setResolution(contrainRes);
@@ -1362,7 +1323,7 @@ export class PrintController {
    *     state. False otherwise.
    */
   isState(stateEnumKey) {
-    return this.gmfPrintState_.state === /** @type {Object<string, string>} */ (PrintStateEnum)[stateEnumKey];
+    return this.gmfPrintState_.state === /** @type {Object<string, string>} */ PrintStateEnum[stateEnumKey];
   }
 
   /**
@@ -1372,7 +1333,24 @@ export class PrintController {
     this.smtpMessage = false;
   }
 }
-
+PrintController.$inject = [
+  '$element',
+  '$rootScope',
+  '$scope',
+  '$timeout',
+  '$q',
+  'gettextCatalog',
+  'ngeoLayerHelper',
+  'ngeoPrintUtils',
+  'ngeoCreatePrint',
+  'gmfPrintUrl',
+  'ngeoQueryResult',
+  '$filter',
+  'gmfPrintState',
+  'gmfThemes',
+  'gmfExternalDataSourcesManager',
+  'gmfPrintOptions',
+  'cacheVersion',
+];
 myModule.controller('GmfPrintController', PrintController);
-
 export default myModule;

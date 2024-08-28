@@ -1,3 +1,4 @@
+MainController.$inject = ['ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -22,10 +23,8 @@
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
-
 import {interactionDecoration} from 'ngeo/misc/decorate';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
@@ -52,7 +51,6 @@ const myModule = angular.module('app', [
 /**
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr ToolActivate manager.
  * @class
- * @ngInject
  */
 function MainController(ngeoToolActivateMgr) {
   /**
@@ -69,7 +67,6 @@ function MainController(ngeoToolActivateMgr) {
       zoom: 4,
     }),
   });
-
   const map = this.map;
 
   // initialize the feature overlay manager with the map
@@ -82,7 +79,6 @@ function MainController(ngeoToolActivateMgr) {
    * @type {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>}
    */
   const features = new olCollection();
-
   const overlay = ngeoMapFeatureOverlayMgr.getFeatureOverlay();
   overlay.setFeatures(features);
   overlay.setStyle(
@@ -110,20 +106,18 @@ function MainController(ngeoToolActivateMgr) {
     throw new Error('Missing content');
   }
   this.map.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('singleclick'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('ol/MapBrowserEvent').default<unknown>} evt
-       */
-      (evt) => {
-        if (this.mapClickIsEnabled) {
-          const c = olCoordinate.toStringXY(evt.coordinate);
-          content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
-        }
+    /** @type {import('ol/Observable').EventTypes} */ 'singleclick',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('ol/MapBrowserEvent').default<unknown>} evt
+     */
+    (evt) => {
+      if (this.mapClickIsEnabled) {
+        const c = olCoordinate.toStringXY(evt.coordinate);
+        content.innerHTML = `<p>You clicked here: <code>${c}</code></p>`;
       }
-    ),
+    },
   );
-
   const mapClickTool = new ngeoMiscToolActivate(this, 'mapClickIsEnabled');
   ngeoToolActivateMgr.registerTool('mapTools', mapClickTool, true);
 
@@ -132,15 +126,14 @@ function MainController(ngeoToolActivateMgr) {
    * @type {import('ol/interaction/Draw').default}
    */
   this.drawPoint = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ {
       type: 'Point',
       features: features,
-    }),
+    },
   );
   this.drawPoint.setActive(false);
   interactionDecoration(this.drawPoint);
   map.addInteraction(this.drawPoint);
-
   const drawPointTool = new ngeoMiscToolActivate(this.drawPoint, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPointTool);
 
@@ -149,15 +142,14 @@ function MainController(ngeoToolActivateMgr) {
    * @type {import('ol/interaction/Draw').default}
    */
   this.drawLine = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ {
       type: 'LineString',
       features: features,
-    }),
+    },
   );
   this.drawLine.setActive(false);
   interactionDecoration(this.drawLine);
   map.addInteraction(this.drawLine);
-
   const drawLineTool = new ngeoMiscToolActivate(this.drawLine, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawLineTool);
 
@@ -166,20 +158,17 @@ function MainController(ngeoToolActivateMgr) {
    * @type {import('ol/interaction/Draw').default}
    */
   this.drawPolygon = new olInteractionDraw(
-    /** @type {import('ol/interaction/Draw').Options} */ ({
+    /** @type {import('ol/interaction/Draw').Options} */ {
       type: 'Polygon',
       features: features,
-    }),
+    },
   );
   this.drawPolygon.setActive(false);
   interactionDecoration(this.drawPolygon);
   map.addInteraction(this.drawPolygon);
-
   const drawPolygonTool = new ngeoMiscToolActivate(this.drawPolygon, 'active');
   ngeoToolActivateMgr.registerTool('mapTools', drawPolygonTool);
 }
-
 myModule.controller('MainController', MainController);
 options(myModule);
-
 export default myModule;

@@ -1,3 +1,4 @@
+EditingXSDAttributeService.$inject = ['$http', 'gmfLayersUrl'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -29,7 +30,6 @@ import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute';
  * @class
  * @param {angular.IHttpService} $http Angular http service.
  * @param {string} gmfLayersUrl URL to the GeoMapFish layers service.
- * @ngInject
  * @hidden
  */
 export function EditingXSDAttributeService($http, gmfLayersUrl) {
@@ -67,5 +67,4 @@ EditingXSDAttributeService.prototype.getAttributes = function (id) {
  */
 const myModule = angular.module('gmfXSDAttributes', []);
 myModule.service('gmfXSDAttributes', EditingXSDAttributeService);
-
 export default myModule;

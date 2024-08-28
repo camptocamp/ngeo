@@ -1,3 +1,4 @@
+ObjecteditingManagerService.$inject = ['$q', 'gmfEditFeature', 'ngeoLocation'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -59,7 +60,6 @@ export const ObjecteditingParam = {
  * @param {import('gmf/editing/EditFeature').EditingEditFeature} gmfEditFeature Gmf edit feature service.
  * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo location service.
  * @class
- * @ngInject
  * @hidden
  */
 export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
@@ -97,13 +97,11 @@ export function ObjecteditingManagerService($q, gmfEditFeature, ngeoLocation) {
 ObjecteditingManagerService.prototype.getFeature = function () {
   if (!this.getFeatureDefered_) {
     this.getFeatureDefered_ = this.q_.defer();
-
     const geomType = this.ngeoLocation_.getParam(ObjecteditingParam.GEOM_TYPE);
     const id = this.ngeoLocation_.getParam(ObjecteditingParam.ID);
     const layer = this.ngeoLocation_.getParam(ObjecteditingParam.LAYER);
     const property = this.ngeoLocation_.getParam(ObjecteditingParam.PROPERTY);
     const theme = this.ngeoLocation_.getParam(ObjecteditingParam.THEME);
-
     if (geomType && id && layer && property && theme) {
       this.gmfEditFeature_
         .getFeaturesWithComparisonFilters(
@@ -121,7 +119,6 @@ ObjecteditingManagerService.prototype.getFeature = function () {
       this.getFeatureDefered_.resolve(null);
     }
   }
-
   return this.getFeatureDefered_.promise;
 };
 
@@ -151,7 +148,6 @@ ObjecteditingManagerService.prototype.getLayerNodeId = function () {
  */
 ObjecteditingManagerService.prototype.handleGetFeatures_ = function (key, value, features) {
   let feature;
-
   if (features.length) {
     feature = features[0];
   } else {
@@ -161,7 +157,6 @@ ObjecteditingManagerService.prototype.handleGetFeatures_ = function (key, value,
     featureProperties.geometry = null;
     feature = new olFeature(featureProperties);
   }
-
   if (!this.getFeatureDefered_) {
     throw new Error('Missing getFeatureDefered');
   }
@@ -177,5 +172,4 @@ const myModule = angular.module('gmfObjectEditingManager', [
   ngeoStatemanagerLocation.name,
 ]);
 myModule.service('gmfObjectEditingManager', ObjecteditingManagerService);
-
 export default myModule;

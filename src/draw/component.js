@@ -20,7 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-
 import ngeoDrawController from 'ngeo/draw/Controller';
 import ngeoDrawPoint from 'ngeo/draw/point';
 import ngeoDrawRectangle from 'ngeo/draw/rectangle';
@@ -116,7 +115,6 @@ const myModule = angular.module('ngeoDrawfeature', [
  *      property. Used to find those draw interactions later on from the
  *      map, using the property set.
  * @returns {angular.IDirective} The directive specs.
- * @ngInject
  * @ngdoc directive
  * @ngname ngeoDrawfeature
  */
@@ -133,7 +131,5 @@ function drawComponent() {
     },
   };
 }
-
 myModule.directive('ngeoDrawfeature', drawComponent);
-
 export default myModule;

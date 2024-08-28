@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
-
 import olCollection from 'ol/Collection';
 import olFeature from 'ol/Feature';
 import olMap from 'ol/Map';
@@ -47,7 +46,6 @@ const appmodule = angular.module('app', ['ngeo']);
 
 /**
  * @class
- * @ngInject
  */
 function MainController() {
   /**
@@ -64,9 +62,7 @@ function MainController() {
       zoom: 4,
     }),
   });
-
   const map = this.map;
-
   const polygon = new olGeomPolygon([
     [
       [-9e6, 4e6],
@@ -80,13 +76,11 @@ function MainController() {
    * @type {import('ol/Collection').default<olFeature<import('ol/geom/Geometry').default>>}
    */
   this.features = new olCollection();
-
   this.features.push(
     new olFeature({
       geometry: polygon,
     }),
   );
-
   const vectorSource = new olSourceVector({
     features: this.features,
   });
@@ -131,9 +125,7 @@ function MainController() {
         }),
       }),
     });
-
     styles.GeometryCollection = styles.Polygon.concat(styles.Point);
-
     return (
       /**
        * @param {olFeature<import('ol/geom/Geometry').default>|import('ol/render/Feature').default} feature
@@ -153,33 +145,28 @@ function MainController() {
    * @type {import('ngeo/interaction/Rotate').default}
    */
   this.interaction = new ngeoInteractionRotate(
-    /** @type {import('ol/interaction/Modify').Options} */ ({
+    /** @type {import('ol/interaction/Modify').Options} */ {
       features: this.features,
       layers: [vectorLayer],
       style: style,
-    }),
+    },
   );
-
   const interaction = this.interaction;
   interaction.setActive(false);
   map.addInteraction(interaction);
-
   map.on(
-    /** @type {import('ol/Observable').EventTypes} */ ('singleclick'),
-    /** @type {function(?): ?} */ (
-      /**
-       * @param {import('ol/MapBrowserEvent').default<unknown>} evt
-       */ (evt) => {
-        const feature = this.map.forEachFeatureAtPixel(evt.pixel, (feature) => feature);
-        if (feature) {
-          this.interaction.setActive(true);
-        }
+    /** @type {import('ol/Observable').EventTypes} */ 'singleclick',
+    /** @type {function(?): ?} */
+    /**
+     * @param {import('ol/MapBrowserEvent').default<unknown>} evt
+     */ (evt) => {
+      const feature = this.map.forEachFeatureAtPixel(evt.pixel, (feature) => feature);
+      if (feature) {
+        this.interaction.setActive(true);
       }
-    ),
+    },
   );
 }
-
 appmodule.controller('MainController', MainController);
 options(appmodule);
-
 export default myModule;

@@ -40,7 +40,6 @@ export class SavedFilter {
    * Otherwise, they are kept in this service for the duration of the visit.
    *
    * @param {angular.IScope} $rootScope Angular rootScope.
-   * @ngInject
    * @ngdoc service
    * @ngname gmfSavedFilters
    */
@@ -79,7 +78,6 @@ export class SavedFilter {
      * @private
      */
     this.useLocalStorage_ = true;
-
     try {
       if ('localStorage' in window) {
         window.localStorage['test'] = '';
@@ -97,14 +95,12 @@ export class SavedFilter {
      * @private
      */
     this.items_ = [];
-
     this.rootScope_.$watchCollection(
       () => this.items,
       () => {
         this.rePopulateCurrentDataSourceItems_();
       },
     );
-
     if (this.useLocalStorage_) {
       this.loadItemsFromLocalStorage_();
     }
@@ -166,7 +162,6 @@ export class SavedFilter {
         break;
       }
     }
-
     return idx;
   }
 
@@ -227,13 +222,12 @@ export class SavedFilter {
     }
   }
 }
-
+SavedFilter.$inject = ['$rootScope'];
 /**
  * @type {angular.IModule}
  * @hidden
  */
 const myModule = angular.module('gmfSavedFilters', []);
-
 myModule.service('gmfSavedFilters', SavedFilter);
 
 /**
@@ -278,5 +272,4 @@ SavedFilterItem.prototype.directedRules;
  * @type {string}
  */
 SavedFilterItem.prototype.name;
-
 export default myModule;

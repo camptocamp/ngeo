@@ -1,3 +1,4 @@
+LayerHelper.$inject = ['$q', '$http', 'ngeoTilesPreloadingLimit'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -48,7 +49,6 @@ import {ServerType} from 'ngeo/datasource/OGC';
  * @class
  * @ngdoc service
  * @ngname ngeoLayerHelper
- * @ngInject
  * @hidden
  */
 export function LayerHelper($q, $http, ngeoTilesPreloadingLimit) {
@@ -167,7 +167,6 @@ LayerHelper.prototype.createBasicWMSLayer = function (
     // OpenLayers expects 'qgis' instead of 'qgisserver'
     olServerType = opt_serverType.replace(ServerType.QGISSERVER, 'qgis');
   }
-
   const options = Object.assign({}, opt_customSourceOptions, {
     url: sourceURL,
     params: params,
@@ -186,7 +185,6 @@ LayerHelper.prototype.createBasicWMSLayer = function (
   if (opt_params) {
     source.updateParams(opt_params);
   }
-
   if (!(opt_params && opt_params.STYLES)) {
     params.STYLES = '';
     let i = sourceLayersName.split(',').length;
@@ -195,8 +193,9 @@ LayerHelper.prototype.createBasicWMSLayer = function (
       i--;
     }
   }
-
-  const layerOptions = Object.assign({}, opt_customLayerOptions, {source});
+  const layerOptions = Object.assign({}, opt_customLayerOptions, {
+    source,
+  });
   return new olLayerImage(layerOptions);
 };
 
@@ -212,7 +211,6 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
   if (url === undefined) {
     throw new Error('Missing url');
   }
-
   const layerNames = dataSource.getWMSLayerNames().join(',');
   const serverType = dataSource.ogcServerType;
   const imageType = dataSource.ogcImageType;
@@ -236,7 +234,6 @@ LayerHelper.prototype.createBasicWMSLayerFromDataSource = function (dataSource, 
 
   // (4) Set the datasource id property
   layer.set(DATASOURCE_ID, dataSource.id);
-
   return layer;
 };
 
@@ -291,43 +288,45 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
     className: 'canvas3d',
   });
   const $q = this.$q_;
-
-  return this.$http_.get(capabilitiesURL, {cache: true}).then((response) => {
-    let result;
-    if (response.data) {
-      result = parser.read(response.data);
-    }
-    if (result) {
-      const options = Object.assign(
-        {},
-        opt_customOptions,
-        optionsFromCapabilities(result, {
-          matrixSet: opt_matrixSet,
-          crossOrigin: 'anonymous',
-          layer: layerName,
-        }),
-      );
-      const source = new olSourceWMTS(/** @type {import('ol/source/WMTS').Options} */ (options));
-      if (opt_dimensions && !isEmpty(opt_dimensions)) {
-        source.updateDimensions(opt_dimensions);
+  return this.$http_
+    .get(capabilitiesURL, {
+      cache: true,
+    })
+    .then((response) => {
+      let result;
+      if (response.data) {
+        result = parser.read(response.data);
       }
-      layer.setSource(source);
+      if (result) {
+        const options = Object.assign(
+          {},
+          opt_customOptions,
+          optionsFromCapabilities(result, {
+            matrixSet: opt_matrixSet,
+            crossOrigin: 'anonymous',
+            layer: layerName,
+          }),
+        );
+        const source = new olSourceWMTS(/** @type {import('ol/source/WMTS').Options} */ options);
+        if (opt_dimensions && !isEmpty(opt_dimensions)) {
+          source.updateDimensions(opt_dimensions);
+        }
+        layer.setSource(source);
 
-      // Add styles from capabilities as param of the layer
-      const layers = result.Contents.Layer;
-      const l = layers.find((elt) => elt.Identifier == layerName);
-      if (!l) {
-        return $q.reject(`Layer ${layerName} not available in WMTS capabilities from ${capabilitiesURL}`);
+        // Add styles from capabilities as param of the layer
+        const layers = result.Contents.Layer;
+        const l = layers.find((elt) => elt.Identifier == layerName);
+        if (!l) {
+          return $q.reject(`Layer ${layerName} not available in WMTS capabilities from ${capabilitiesURL}`);
+        }
+        layer.set('capabilitiesStyles', l.Style);
+        if (opt_opacity !== undefined) {
+          layer.setOpacity(opt_opacity);
+        }
+        return $q.resolve(layer);
       }
-      layer.set('capabilitiesStyles', l.Style);
-      if (opt_opacity !== undefined) {
-        layer.setOpacity(opt_opacity);
-      }
-
-      return $q.resolve(layer);
-    }
-    return $q.reject(`Failed to get WMTS capabilities from ${capabilitiesURL}`);
-  });
+      return $q.reject(`Failed to get WMTS capabilities from ${capabilitiesURL}`);
+    });
 };
 
 /**
@@ -349,14 +348,11 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
     layer: layerCap.Identifier,
     className: 'canvas3d',
   });
-
   console.assert(options);
-  const source = new olSourceWMTS(/** @type {import('ol/source/WMTS').Options} */ (options));
-
+  const source = new olSourceWMTS(/** @type {import('ol/source/WMTS').Options} */ options);
   if (opt_dimensions && !isEmpty(opt_dimensions)) {
     source.updateDimensions(opt_dimensions);
   }
-
   const result = new olLayerTile({
     preload: Infinity,
     source: source,
@@ -443,7 +439,7 @@ LayerHelper.prototype.getGroupFromMap = function (map, groupName) {
   let group;
   groups.getArray().some((existingGroup) => {
     if (existingGroup.get(GROUP_KEY) === groupName) {
-      group = /** @type {import('ol/layer/Group').default} */ (existingGroup);
+      group = /** @type {import('ol/layer/Group').default} */ existingGroup;
       return true;
     } else {
       return false;
@@ -466,9 +462,9 @@ LayerHelper.prototype.getGroupFromMap = function (map, groupName) {
  */
 LayerHelper.prototype.getFlatLayers = function (layer) {
   if (layer instanceof olLayerGroup) {
-    const sublayers = /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>[]} */ (
-      layer.getLayers().getArray()
-    );
+    const sublayers =
+      /** @type {import('ol/layer/Layer').default<import('ol/source/Source').default>[]} */
+      layer.getLayers().getArray();
     const hasGroupLayer = sublayers.some((sublayer) => sublayer instanceof olLayerGroup);
     if (!hasGroupLayer) {
       return sublayers.slice();
@@ -531,7 +527,6 @@ LayerHelper.prototype.getLayerByNodeName = function (nodeName, layers) {
     }
     return !!found;
   });
-
   return found;
 };
 
@@ -643,7 +638,6 @@ LayerHelper.prototype.isLayerVisible = function (layer, map) {
   if (!layer.getVisible()) {
     return false;
   }
-
   const currentResolution = map.getView().getResolution();
   if (currentResolution === undefined) {
     throw new Error('Missing resolution');
@@ -659,9 +653,9 @@ LayerHelper.prototype.isLayerVisible = function (layer, map) {
 LayerHelper.prototype.refreshWMSLayer = function (layer) {
   const source_ = layer.getSource();
   console.assert(source_ instanceof olSourceImageWMS || source_ instanceof olSourceTileWMS);
-  const source = /** @type {import('ol/source/ImageWMS').default|import('ol/source/TileWMS').default} */ (
-    source_
-  );
+  const source =
+    /** @type {import('ol/source/ImageWMS').default|import('ol/source/TileWMS').default} */
+    source_;
   const params = source.getParams();
   params[REFRESH_PARAM] = Math.random();
   source.updateParams(params);
@@ -702,9 +696,14 @@ LayerHelper.prototype.updateWMSLayerState = function (layer, names, opt_time) {
       throw new Error('Wrong source type');
     }
     if (opt_time) {
-      source.updateParams({'LAYERS': names, 'TIME': opt_time});
+      source.updateParams({
+        'LAYERS': names,
+        'TIME': opt_time,
+      });
     } else {
-      source.updateParams({'LAYERS': names});
+      source.updateParams({
+        'LAYERS': names,
+      });
     }
   }
 };
@@ -715,7 +714,7 @@ LayerHelper.prototype.updateWMSLayerState = function (layer, names, opt_time) {
  *     the data source ids this layer is composed of.
  */
 LayerHelper.prototype.getQuerySourceIds = function (layer) {
-  return /** @type {number[]|undefined} */ (layer.get('querySourceIds'));
+  return /** @type {number[]|undefined} */ layer.get('querySourceIds');
 };
 
 /**
@@ -724,5 +723,4 @@ LayerHelper.prototype.getQuerySourceIds = function (layer) {
  */
 const myModule = angular.module('ngeoLayerHelper', []);
 myModule.service('ngeoLayerHelper', LayerHelper);
-
 export default myModule;

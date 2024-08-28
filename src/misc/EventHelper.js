@@ -28,7 +28,6 @@ import {unlistenByKey} from 'ol/events';
  * @class
  * @ngdoc service
  * @ngname ngeoEventHelper
- * @ngInject
  * @hidden
  */
 export function EventHelper() {
@@ -49,7 +48,7 @@ EventHelper.prototype.addListenerKey = function (uid, key) {
   if (!this.listenerKeys_[uid]) {
     this.initListenerKey_(uid);
   }
-  this.listenerKeys_[uid].push(/** @type {import('ol/events').EventsKey} */ (key));
+  this.listenerKeys_[uid].push(/** @type {import('ol/events').EventsKey} */ key);
 };
 
 /**
@@ -87,5 +86,4 @@ EventHelper.prototype.initListenerKey_ = function (uid) {
  */
 const myModule = angular.module('ngeoEventHelper', []);
 myModule.service('ngeoEventHelper', EventHelper);
-
 export default myModule;
