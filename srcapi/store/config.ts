@@ -1334,7 +1334,7 @@ export type gmfLayerTreeOptions = {
 
 export type gmfShareOptions = {
   /**
-   * Enhable email.
+   * Enable email.
    */
   enableEmail?: boolean;
 };

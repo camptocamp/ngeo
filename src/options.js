@@ -892,7 +892,7 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * @typedef {Object} gmfShareOptions
- * @property {boolean} [enableEmail=true] Enhable email.
+ * @property {boolean} [enableEmail=true] Enable email.
  */
 
 /**
