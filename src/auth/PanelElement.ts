@@ -21,8 +21,7 @@
 
 import {html, TemplateResult, CSSResult, css, unsafeCSS} from 'lit';
 import {customElement, property, state} from 'lit/decorators.js';
-import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
-import loadingSvg from 'gmf/icons/spinner';
+import {litIcon as svgSpinner} from 'gmf/icons/spinner_svg';
 import i18next from 'i18next';
 import {PasswordValidator} from './FormElement';
 import './FormElement';
@@ -62,7 +61,7 @@ export default class GmfAuthPanel extends ToolPanelElement {
     const spinnerTemplate = this.postLoading
       ? html`
           <div>
-            <i class="fa fa-spin svg-spinner">${unsafeSVG(loadingSvg)}</i>
+            <i class="fa fa-spin svg-spinner">${svgSpinner()}</i>
             ${i18next.t('Loading themes, please wait...')}
           </div>
         `

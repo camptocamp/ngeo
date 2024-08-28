@@ -19,12 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import svgSwipe from 'gmf/icons/swipe_svg';
-
-export default `<div class="ngeo-swipe-line-draggable">
-  <button class="ngeo-swipe-close btn prime btn-sm" ng-click="$ctrl.deactivate()">
-    <i class="fas fa-times"></i>
-  </button>
-  <div class="ngeo-swipe-line"></div>
-  <div class="ngeo-swipe-arrow">${svgSwipe}</div>
-</div>`;
+export default `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 13" width="1em" height="1em">
+      <path
+        d="M6.458 9.63c-1.521.01-2.925-1.246-3.072-2.758-.156-1.27.533-2.603 1.689-3.162.984-.506 2.248-.454 3.16.184.962.642 1.542 1.84 1.371 2.998-.14 1.121-.921 2.14-1.986 2.53-.369.143-.765.217-1.162.209m-.024-1.102c.997.052 1.949-.748 2.075-1.736.123-.849-.344-1.756-1.124-2.12-.811-.395-1.892-.181-2.453.538-.607.722-.619 1.88.011 2.592.366.433.921.715 1.491.726"
+      /></svg>`;

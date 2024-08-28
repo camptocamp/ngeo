@@ -19,6 +19,8 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import svgSpinner from 'gmf/icons/spinner_svg';
+
 export default `<div class="gmf-print">
   <div
     ng-show="$ctrl.isState('CAPABILITIES_NOT_LOADED') !== true && $ctrl.isState('ERROR_ON_GETCAPABILITIES') !== true"
@@ -175,106 +177,7 @@ export default `<div class="gmf-print">
     <div class="gmf-print-actions form-group pull-right">
       <span ng-show="$ctrl.isState('PRINTING')">
         <i class="fa custom-spinner-generic fa-spin"
-          ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1rem" height="1rem">
-            <circle
-              cx="256"
-              cy="48"
-              r="48"
-              style="
-                opacity: 1;
-                fill-opacity: 1;
-                stroke: #000;
-                stroke-width: 0;
-                stroke-miterlimit: 4;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-            />
-            <circle
-              cx="109.17"
-              cy="108.313"
-              r="43"
-              style="
-                opacity: 1;
-                fill-opacity: 1;
-                stroke: #000;
-                stroke-width: 0;
-                stroke-miterlimit: 4;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-            />
-            <circle
-              cx="46.537"
-              cy="257.328"
-              r="38"
-              style="
-                opacity: 1;
-                fill-opacity: 1;
-                stroke: #000;
-                stroke-width: 0;
-                stroke-miterlimit: 4;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-            />
-            <circle
-              cx="108.028"
-              cy="403.972"
-              r="33"
-              style="
-                opacity: 1;
-                fill-opacity: 1;
-                stroke: #000;
-                stroke-width: 0;
-                stroke-miterlimit: 4;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-            />
-            <circle
-              cx="255.794"
-              cy="463.935"
-              r="28"
-              style="
-                opacity: 1;
-                fill-opacity: 1;
-                stroke: #000;
-                stroke-width: 0;
-                stroke-miterlimit: 4;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-            />
-            <circle
-              cx="402.894"
-              cy="402.936"
-              r="23"
-              style="
-                opacity: 1;
-                fill-opacity: 1;
-                stroke: #000;
-                stroke-width: 0;
-                stroke-miterlimit: 4;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-            />
-            <circle
-              cx="463.623"
-              cy="256.106"
-              r="18"
-              style="
-                opacity: 1;
-                fill-opacity: 1;
-                stroke: #000;
-                stroke-width: 0;
-                stroke-miterlimit: 4;
-                stroke-dasharray: none;
-                stroke-opacity: 1;
-              "
-            /></svg
-        ></i>
+          >${svgSpinner('1rem')}</i>
       </span>
 
       <a

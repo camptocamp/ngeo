@@ -19,6 +19,13 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import svgSpinner from 'gmf/icons/spinner_svg';
+import svgDot from 'gmf/icons/dot_svg';
+import svgLayers from 'gmf/icons/layers_svg';
+import svgStackIndeterminate from 'gmf/icons/stack-indeterminate_svg';
+import svgSwipe from 'gmf/icons/swipe_svg';
+import svgSearchGo from 'gmf/icons/search-go_svg';
+
 export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoot">
   <a
     href
@@ -69,137 +76,26 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="::!layertreeCtrl.node.children && !gmfLayertreeCtrl.getLegendIconURL(layertreeCtrl)"
     class="gmf-layertree-layer-icon gmf-layertree-no-layer-icon"
-    ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 13" width="1em" height="1em">
-      <path
-        d="M6.458 9.63c-1.521.01-2.925-1.246-3.072-2.758-.156-1.27.533-2.603 1.689-3.162.984-.506 2.248-.454 3.16.184.962.642 1.542 1.84 1.371 2.998-.14 1.121-.921 2.14-1.986 2.53-.369.143-.765.217-1.162.209m-.024-1.102c.997.052 1.949-.748 2.075-1.736.123-.849-.344-1.756-1.124-2.12-.811-.395-1.892-.181-2.453.538-.607.722-.619 1.88.011 2.592.366.433.921.715 1.491.726"
-      /></svg
-  ></a>
+    >${svgDot}</a>
 
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && layertreeCtrl.layer.loading"
     class="fa fa-fw custom-spinner-generic fa-spin"
-    ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1rem" height="1rem">
-      <circle
-        cx="256"
-        cy="48"
-        r="48"
-        style="
-          opacity: 1;
-          fill-opacity: 1;
-          stroke: #000;
-          stroke-width: 0;
-          stroke-miterlimit: 4;
-          stroke-dasharray: none;
-          stroke-opacity: 1;
-        "
-      />
-      <circle
-        cx="109.17"
-        cy="108.313"
-        r="43"
-        style="
-          opacity: 1;
-          fill-opacity: 1;
-          stroke: #000;
-          stroke-width: 0;
-          stroke-miterlimit: 4;
-          stroke-dasharray: none;
-          stroke-opacity: 1;
-        "
-      />
-      <circle
-        cx="46.537"
-        cy="257.328"
-        r="38"
-        style="
-          opacity: 1;
-          fill-opacity: 1;
-          stroke: #000;
-          stroke-width: 0;
-          stroke-miterlimit: 4;
-          stroke-dasharray: none;
-          stroke-opacity: 1;
-        "
-      />
-      <circle
-        cx="108.028"
-        cy="403.972"
-        r="33"
-        style="
-          opacity: 1;
-          fill-opacity: 1;
-          stroke: #000;
-          stroke-width: 0;
-          stroke-miterlimit: 4;
-          stroke-dasharray: none;
-          stroke-opacity: 1;
-        "
-      />
-      <circle
-        cx="255.794"
-        cy="463.935"
-        r="28"
-        style="
-          opacity: 1;
-          fill-opacity: 1;
-          stroke: #000;
-          stroke-width: 0;
-          stroke-miterlimit: 4;
-          stroke-dasharray: none;
-          stroke-opacity: 1;
-        "
-      />
-      <circle
-        cx="402.894"
-        cy="402.936"
-        r="23"
-        style="
-          opacity: 1;
-          fill-opacity: 1;
-          stroke: #000;
-          stroke-width: 0;
-          stroke-miterlimit: 4;
-          stroke-dasharray: none;
-          stroke-opacity: 1;
-        "
-      />
-      <circle
-        cx="463.623"
-        cy="256.106"
-        r="18"
-        style="
-          opacity: 1;
-          fill-opacity: 1;
-          stroke: #000;
-          stroke-width: 0;
-          stroke-miterlimit: 4;
-          stroke-dasharray: none;
-          stroke-opacity: 1;
-        "
-      /></svg
-  ></a>
+    >${svgSpinner('1rem')}</a>
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && !layertreeCtrl.layer.loading"
     class="gmf-layertree-state gmf-not-intermediate"
-    ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="1em" height="1em">
-      <path
-        d="M19.984 6.256 10 1.264.016 6.256 10 11.248zM10 2.921l6.67 3.335L10 9.591 3.33 6.256zM17.984 9l2 .999L10 14.992.016 10l2-1L10 12.992Zm0 3.743 2 1L10 18.736.016 13.744l2-1L10 16.736Z"
-      /></svg
-  ></a>
+    >${svgLayers}</a>
   <a
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && !layertreeCtrl.layer.loading"
     class="gmf-layertree-state gmf-intermediate"
-    ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 13" width="1em" height="1em">
-      <path
-        d="m6.513.614-6.5 3.25 6.5 3.25 6.5-3.25zm0 1.078 4.342 2.172-4.342 2.172L2.17 3.864zm5.198 6.396 1.302.65-6.5 3.25-6.5-3.25 1.302-.65 5.198 2.6ZM1.315 5.65l-1.302.651 2.114 1.057 1.3-.65Zm10.396 0L9.599 6.708l1.302.651 2.112-1.058ZM8.127 7.443l-1.614.807-1.136-.568-1.302.65 2.438 1.22 2.437-1.22-1.3-.65Z"
-      /></svg
-  ></a>
+    >${svgStackIndeterminate}</a>
 
   <a
     href
@@ -210,21 +106,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     {{layertreeCtrl.node.name | translate}}
     <i
       ng-if="gmfLayertreeCtrl.gmfLayerBeingSwipe.layer && gmfLayertreeCtrl.gmfLayerBeingSwipe.layer === layertreeCtrl.layer"
-      ><svg
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden="true"
-        class="svg-inline--fa fa-sort fa-w-10"
-        data-icon="sort"
-        data-prefix="fas"
-        viewBox="0 0 16 16"
-        width="1em"
-        height="1em"
-      >
-        <path
-          d="M9.286 12.783V3.217c0-.86 1.041-1.29 1.648-.683l4.783 4.783a.96.96 0 0 1 0 1.362l-4.783 4.787c-.607.607-1.648.177-1.648-.683M5.066 2.534.283 7.317a.96.96 0 0 0 0 1.362l4.783 4.787c.607.607 1.648.177 1.648-.683V3.217c0-.86-1.041-1.29-1.648-.683"
-          style="fill: currentColor; stroke-width: 0.04019091"
-        /></svg
-    ></i>
+      >${svgSwipe}</i>
 
     <i
       class="gmf-layertree-zoom"
@@ -233,11 +115,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
       data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
       ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
       ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"
-      ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="1em" height="1em">
-        <path
-          d="M5.111 0q-1.04.002-1.99.407a5.1 5.1 0 0 0-1.625 1.089c-.458.457-.82.994-1.09 1.626A5.05 5.05 0 0 0 0 5.112C0 5.802.138 6.468.407 7.1a5.1 5.1 0 0 0 1.089 1.627c.457.457.994.82 1.626 1.089a5.05 5.05 0 0 0 1.99.406c1.064 0 2.022-.3 2.889-.9l2.497 2.483a.86.86 0 0 0 .654.276q.377 0 .653-.276a.9.9 0 0 0 .276-.653.88.88 0 0 0-.261-.654L9.322 8.001c.324-.468.563-.956.712-1.481-.003-.034-.015-.07-.015-.102 0-.104.037-.211.058-.32h-.334c-.417 0-.941-.247-1.205-.551-.065-.075-.135-.154-.189-.247a3.1 3.1 0 0 1-.944 2.105q-.953.956-2.294.959c-.895 0-1.657-.322-2.294-.959s-.958-1.399-.958-2.294.321-1.657.958-2.294 1.399-.959 2.294-.958q1.341.002 2.294.958c.315.315.567.653.726 1.03.024-.378.18-.769.407-1.03a1.8 1.8 0 0 1 .857-.508 5 5 0 0 0-.668-.813A5.1 5.1 0 0 0 7.1.406 5.05 5.05 0 0 0 5.111 0M15 4.182q0 .21-.143.353l-2.524 2.524q-.152.143-.353.143-.198 0-.35-.143l-.29-.291q-.147-.148-.147-.353t.147-.353l1.136-1.136h-2.73q-.2 0-.327-.145-.126-.146-.126-.351v-.496q0-.206.126-.351.126-.146.328-.146h2.729l-1.136-1.14q-.147-.139-.147-.348 0-.21.147-.35l.29-.29q.148-.147.35-.147.205 0 .353.147l2.524 2.524q.143.136.143.349"
-        /></svg
-    ></i>
+      ><${svgSearchGo}</i>
 
     <span
       ngeo-popover
@@ -344,21 +222,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
 
           <li ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
             <i
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-                class="svg-inline--fa fa-sort fa-w-10"
-                data-icon="sort"
-                data-prefix="fas"
-                viewBox="0 0 16 16"
-                width="1em"
-                height="1em"
-              >
-                <path
-                  d="M9.286 12.783V3.217c0-.86 1.041-1.29 1.648-.683l4.783 4.783a.96.96 0 0 1 0 1.362l-4.783 4.787c-.607.607-1.648.177-1.648-.683M5.066 2.534.283 7.317a.96.96 0 0 0 0 1.362l4.783 4.787c.607.607 1.648.177 1.648-.683V3.217c0-.86-1.041-1.29-1.648-.683"
-                  style="fill: currentColor; stroke-width: 0.04019091"
-                /></svg
-            ></i>
+              >${svgSwipe}</i>
             <a
               ng-click="::gmfLayertreeCtrl.toggleSwipeLayer(layertreeCtrl); popoverCtrl.dismissPopover()"
               href=""

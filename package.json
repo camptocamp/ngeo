@@ -49,6 +49,7 @@
     "ngeo/test": "./test/spec",
     "gmf/test": "./contribs/gmf/test/spec",
     "ngeo": "./src",
+    "gmf": "./src",
     "api": "./api/src",
     "lib": "./lib",
     "jsts": "jsts/org/locationtech/jts",
