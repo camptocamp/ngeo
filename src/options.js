@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2023 Camptocamp SA
+// Copyright (c) 2020-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -892,7 +892,7 @@ export function buildStyle(styleDescriptor) {
 
 /**
  * @typedef {Object} gmfShareOptions
- * @property {boolean} [enableEmail=true] Enhable email.
+ * @property {boolean} [enableEmail=true] Enable email.
  */
 
 /**
