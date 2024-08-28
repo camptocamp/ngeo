@@ -20,9 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import i18next from 'i18next';
-import {LitElement, unsafeCSS, css, CSSResult} from 'lit';
+import {LitElement, css, CSSResult} from 'lit';
 import configuration, {Configuration} from 'gmfapi/store/config';
 import {Subscription} from 'rxjs';
+import cssReset from 'gmfapi/css/reset.css';
+import cssBootstrap from 'gmfapi/css/bootstrap-custom.css';
+import cssFontawesome from 'gmfapi/css/fontawesome.css';
 
 /**
  * This is a base element.
@@ -67,15 +70,9 @@ export default class GmfBaseElement extends LitElement {
   // bootstrap/font-awesome
 
   /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-  static resetStyle: CSSResult = css`
-    ${unsafeCSS(require('!!raw-loader!gmf/css/reset.css').default)}
-  `;
-  static bootstrapStyle: CSSResult = css`
-    ${unsafeCSS(require('!!raw-loader!ngeo/bootstrap-custom.css').default)}
-  `;
-  static fontawesomeStyle: CSSResult = css`
-    ${unsafeCSS(require('!!raw-loader!@fortawesome/fontawesome-free/css/all.min.css').default)}
-  `;
+  static resetStyle: CSSResult = cssReset;
+  static bootstrapStyle: CSSResult = cssBootstrap;
+  static fontawesomeStyle: CSSResult = cssFontawesome;
   /* eslint-enable @typescript-eslint/no-unsafe-member-access */
 
   // Make some Bootstrap values configurable

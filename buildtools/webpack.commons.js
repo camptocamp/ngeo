@@ -223,9 +223,6 @@ module.exports = function (config) {
           if (file.endsWith('node_modules/@fortawesome/fontawesome-free/css/all.min.css')) {
             return false;
           }
-          if (file.endsWith('src/bootstrap-custom.css')) {
-            return false;
-          }
           if (file.endsWith('/src/css/reset.css')) {
             return false;
           }
