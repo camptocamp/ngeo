@@ -29,7 +29,7 @@ import {toDegrees} from 'ol/math';
 /**
  * @hidden
  */
-export const OlcsService = class _ngInjectAnonymousClass {
+export class OlcsService {
   /**
    * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce ngeo debounce
    *    service.
@@ -152,8 +152,8 @@ export const OlcsService = class _ngInjectAnonymousClass {
       this.ngeoStateManager_.deleteParam(key);
     });
   }
-};
-_ngInjectAnonymousClass.$inject = ['ngeoDebounce', 'ngeoLocation', 'ngeoStateManager'];
+}
+OlcsService.$inject = ['ngeoDebounce', 'ngeoLocation', 'ngeoStateManager'];
 /**
  * @type {angular.IModule}
  * @hidden

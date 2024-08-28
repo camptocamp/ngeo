@@ -312,7 +312,7 @@ Controller.prototype.getRasterSuccess_ = function (resp) {
     const separator =
       postfix.length > 0 ? (options.hasOwnProperty('separator') ? options.separator : '\u00a0') : '';
     const args = Array.prototype.concat([value], custom_args);
-    const elevation = /** @type {string} */ this.filter_(filter)(...args);
+    const elevation = /** @type {string} */ (this.filter_(filter)(...args));
     if (typeof elevation != 'string') {
       throw new Error('Wrong elevation type');
     }

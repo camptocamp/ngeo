@@ -102,7 +102,7 @@ const component = {
   templateUrl: ngeoOfflineTemplateUrl,
 };
 myModule.component('ngeoOffline', component);
-export const Controller = class _ngInjectAnonymousClass {
+export class Controller {
   /**
    * @param {angular.ITimeoutService} $timeout Angular timeout service.
    * @param {import('ngeo/offline/ServiceManager').default} ngeoOfflineServiceManager
@@ -565,8 +565,8 @@ export const Controller = class _ngInjectAnonymousClass {
     const maskSizeMeter = (maskSizePixel * (this.map.getView().getResolution() || 1)) / DEVICE_PIXEL_RATIO;
     return maskSizeMeter;
   }
-};
-_ngInjectAnonymousClass.$inject = [
+}
+Controller.$inject = [
   '$timeout',
   'ngeoOfflineServiceManager',
   'ngeoOfflineConfiguration',

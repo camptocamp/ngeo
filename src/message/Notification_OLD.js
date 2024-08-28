@@ -105,20 +105,16 @@ export class MessageNotification extends ngeoMessageMessage {
     console.assert(typeof type == 'string', 'Type should be set.');
     const classNames = ['alert', 'fade', 'show'];
     switch (type) {
-      case MessageType.ERROR:
-        // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
+      case MessageType.ERROR: // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
         classNames.push('alert-danger');
         break;
-      case MessageType.INFORMATION:
-        // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
+      case MessageType.INFORMATION: // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
         classNames.push('alert-info');
         break;
-      case MessageType.SUCCESS:
-        // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
+      case MessageType.SUCCESS: // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
         classNames.push('alert-success');
         break;
-      case MessageType.WARNING:
-        // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
+      case MessageType.WARNING: // eslint-disable-line @typescript-eslint/no-unsafe-enum-comparison
         classNames.push('alert-warning');
         break;
       default:
