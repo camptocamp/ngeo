@@ -32,28 +32,6 @@ module.exports = {
     filename: '[name].js',
     library: '[name]',
   },
-  module: {
-    rules: [
-      {
-        test: /.*\.js$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            babelrc: false,
-            comments: false,
-            presets: [
-              [
-                require.resolve('@babel/preset-env'),
-                {
-                  targets: require('./webpack.share').browsers,
-                },
-              ],
-            ],
-          },
-        },
-      },
-    ],
-  },
   plugins: [
     new webpack.DllPlugin({
       path: path.resolve(__dirname, '../dist/vendor-manifest.json'),

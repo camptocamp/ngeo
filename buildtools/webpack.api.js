@@ -30,28 +30,6 @@ module.exports = (env, argv) => {
   return {
     entry: './api/index.js',
     devtool: 'source-map',
-    module: {
-      rules: [
-        {
-          test: /\.js$/,
-          use: {
-            loader: 'babel-loader',
-            options: {
-              babelrc: false,
-              comments: false,
-              presets: [
-                [
-                  '@babel/preset-env',
-                  {
-                    targets: require('./webpack.share').browsers,
-                  },
-                ],
-              ],
-            },
-          },
-        },
-      ],
-    },
     output: {
       filename: 'api.js',
       path: dest,
