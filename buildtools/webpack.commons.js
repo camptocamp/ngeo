@@ -47,15 +47,6 @@ module.exports = function (config) {
     $: 'jquery',
   });
 
-  const babelPresetEnv = [
-    require.resolve('@babel/preset-env'),
-    {
-      targets: config.browsers || require('./webpack.share').browsers,
-      debug: true,
-      loose: true,
-    },
-  ];
-
   // Expose corejs-typeahead as window.Bloodhound
   const typeaheadRule = {
     test: require.resolve('corejs-typeahead'),
@@ -90,6 +81,11 @@ module.exports = function (config) {
     },
   };
 
+  const tsRule = {
+    test: /\.tsx?$/,
+    use: 'ts-loader',
+  };
+
   const cssRule = {
     test: /\.css$/,
     use: [{loader: 'style-loader'}, {loader: 'css-loader'}],
@@ -106,72 +102,6 @@ module.exports = function (config) {
       loader: 'ejs-loader',
       options: {
         esModule: false,
-      },
-    },
-  };
-
-  // Collect every ts(x) files.
-  const tsRule = {
-    test: /\.tsx?$/,
-    use: {
-      loader: 'babel-loader',
-      options: {
-        babelrc: false,
-        comments: false,
-        assumptions: {
-          setPublicClassFields: true,
-        },
-        presets: [babelPresetEnv],
-        plugins: [
-          [
-            require.resolve('@babel/plugin-transform-typescript'),
-            // TODO remove allowDeclareFields with Babel 8
-            {allowDeclareFields: true},
-          ],
-          [require.resolve('@babel/plugin-proposal-decorators'), {decoratorsBeforeExport: true}],
-        ],
-      },
-    },
-  };
-
-  const files = {};
-  const ngeoRule = {
-    // Collect every .js file in ngeo/src/, ngeo/api/ and ngeo/contrib/.
-    test: (file) => {
-      const result = /\/(ngeo)\/(src|api|contribs)\/.*\.js$/.test(file);
-      files[file] = files[file] || {};
-      files[file]['ngeo'] = result;
-      return result;
-    },
-    use: {
-      loader: 'babel-loader',
-      options: {
-        babelrc: false,
-        comments: false,
-        presets: [babelPresetEnv],
-      },
-    },
-  };
-  const otherRule = {
-    // Collect every .js file in the node_modules folder except ones that the folder's name
-    // starts with "angular" or "mapillary".
-    test: (file) => {
-      const js = file.endsWith('.js');
-      const nodeModules = file.includes('/node_modules/');
-      const ngeo = file.includes('/node_modules/ngeo');
-      const angular = file.includes('/node_modules/angular/');
-      const mapillary = file.includes('/node_modules/mapillary-js/');
-      const result = js && nodeModules && !ngeo && !angular && !mapillary;
-      files[file] = files[file] || {};
-      files[file]['other'] = result;
-      return result;
-    },
-    use: {
-      loader: 'babel-loader',
-      options: {
-        babelrc: false,
-        comments: false,
-        presets: [babelPresetEnv],
       },
     },
   };
@@ -197,17 +127,7 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [
-        typeaheadRule,
-        jqueryRule,
-        gmfapiExpose,
-        cssRule,
-        sassRule,
-        htmlRule,
-        tsRule,
-        ngeoRule,
-        otherRule,
-      ],
+      rules: [typeaheadRule, jqueryRule, gmfapiExpose, cssRule, sassRule, htmlRule, tsRule],
     },
     plugins: plugins,
     resolve: {
