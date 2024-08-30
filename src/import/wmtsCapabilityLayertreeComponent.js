@@ -23,6 +23,7 @@ import angular from 'angular';
 import gmfDatasourceExternalDataSourcesManager from 'gmf/datasource/ExternalDataSourcesManager';
 import ngeoMessagePopup from 'ngeo/message/Popup';
 import {getUid as olUtilGetUid} from 'ol/util';
+import htmlTemplate from './wmtsCapabilityLayertreeComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -42,7 +43,7 @@ myModule.run(
       $templateCache.put(
         'ngeo/import/wmtsCapabilityLayertreeComponent',
         // @ts-ignore: webpack
-        require('./wmtsCapabilityLayertreeComponent.html'),
+        htmlTemplate,
       );
     },
   ],

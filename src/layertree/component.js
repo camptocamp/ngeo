@@ -64,6 +64,7 @@ import olSourceWMTS from 'ol/source/WMTS';
 import LayerBase from 'ol/layer/Base';
 import {getUid} from 'ol/util';
 import 'bootstrap/js/src/collapse';
+import htmlTemplate from './component.html';
 
 /**
  * Static function to create a popup with an iframe.
@@ -114,7 +115,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/layertree', require('./component.html'));
+      $templateCache.put('gmf/layertree', htmlTemplate);
     },
   ],
 );

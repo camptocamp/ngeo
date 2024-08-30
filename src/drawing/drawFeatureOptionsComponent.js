@@ -33,6 +33,7 @@ import OLInteractionSnap from 'ol/interaction/Snap';
 import OLMapBrowserEvent from 'ol/MapBrowserEvent';
 import OLSourceVector from 'ol/source/Vector';
 import {unlistenByKeys as ngeoEventsUnlistenByKeys} from 'ngeo/events';
+import htmlTemplate from './drawFeatureOptionsComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -49,7 +50,7 @@ myModule.run(
       $templateCache.put(
         'gmf/drawing/drawFeatureOptionsComponent',
         // @ts-ignore: webpack
-        require('./drawFeatureOptionsComponent.html'),
+        htmlTemplate,
       );
     },
   ],

@@ -42,12 +42,14 @@
   },
   "bin": {
     "compile-catalog": "buildtools/compile-catalog.js",
-    "check-example": "buildtools/check-example.js"
+    "check-example": "buildtools/check-example.js",
+    "svg-viewbox": "buildtools/svg-viewbox-cmd.js"
   },
   "browser": {
     "ngeo/test": "./test/spec",
     "gmf/test": "./contribs/gmf/test/spec",
     "ngeo": "./src",
+    "gmf": "./src",
     "api": "./api/src",
     "lib": "./lib",
     "jsts": "jsts/org/locationtech/jts",
@@ -186,7 +188,6 @@
     "proj4": "2.11.0",
     "puppeteer": "23.2.0",
     "qruri": "0.0.4",
-    "raw-loader": "4.0.2",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "regenerator-runtime": "0.14.1",
@@ -199,7 +200,6 @@
     "start-server-and-test": "2.0.5",
     "strip-bom": "5.0.0",
     "style-loader": "2.0.0",
-    "svg-inline-loader": "0.8.2",
     "svgo": "3.3.2",
     "svgo-loader": "3.0.3",
     "terser": "5.31.3",

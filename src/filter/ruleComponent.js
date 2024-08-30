@@ -44,7 +44,7 @@ import olStyleFill from 'ol/style/Fill';
 import {CollectionEvent} from 'ol/Collection';
 import Feature from 'ol/Feature';
 import 'ngeo/sass/font.scss';
-
+import htmlTemplate from './rulecomponent.html';
 /**
  * @typedef {Object} MenuEventTarget
  * @property {string} action
@@ -73,7 +73,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/filter/rulecomponent', require('./rulecomponent.html'));
+      $templateCache.put('ngeo/filter/rulecomponent', htmlTemplate);
     },
   ],
 );

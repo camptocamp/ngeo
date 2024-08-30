@@ -18,6 +18,7 @@
     "types": ["cypress", "node", "cypress-real-events"],
     "paths": {
       "ngeo/*": ["src/*"],
+      "gmf/*": ["src/*"],
       "gmfapi/*": ["srcapi/*"],
       "api/*": ["api/src/*"],
       "lib/*": ["lib/*"],

@@ -41,6 +41,7 @@ import olMap from 'ol/Map';
 import {buildStyle} from 'ngeo/options';
 import panels from 'gmfapi/store/panels';
 import 'bootstrap/js/src/dropdown';
+import htmlTemplate from './gridComponent.html';
 
 /**
  * Configuration for a grid tab.
@@ -76,7 +77,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/query/gridComponent', require('./gridComponent.html'));
+      $templateCache.put('gmf/query/gridComponent', htmlTemplate);
     },
   ],
 );

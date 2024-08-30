@@ -23,6 +23,7 @@ import angular from 'angular';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import {getUid as olUtilGetUid} from 'ol/util';
+import htmlTemplate from './datasourceGroupTreeComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -42,7 +43,7 @@ myModule.run(
       $templateCache.put(
         'gmf/layertree/datasourceGroupTreeComponent',
         // @ts-ignore: webpack
-        require('./datasourceGroupTreeComponent.html'),
+        htmlTemplate,
       );
     },
   ],

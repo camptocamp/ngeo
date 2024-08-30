@@ -26,6 +26,7 @@ import {listen, unlistenByKey} from 'ol/events';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import ngeoMiscColorpickerComponent from 'ngeo/misc/colorpickerComponent';
 import ngeoMiscFeatureHelper, {ArrowDirections, ArrowPositions} from 'ngeo/misc/FeatureHelper';
+import htmlTemplate from './featureStyleComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -43,7 +44,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/drawing/featureStyleComponent', require('./featureStyleComponent.html'));
+      $templateCache.put('gmf/drawing/featureStyleComponent', htmlTemplate);
     },
   ],
 );

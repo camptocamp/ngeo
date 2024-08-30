@@ -21,6 +21,7 @@ colorPickerComponent.$inject = ['ngeoColorpickerTemplateUrl'];
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
+import htmlTemplate from './colorpickerComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -47,7 +48,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('ngeo/misc/colorpickerComponent', require('./colorpickerComponent.html'));
+      $templateCache.put('ngeo/misc/colorpickerComponent', htmlTemplate);
     },
   ],
 );

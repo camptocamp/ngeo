@@ -54,6 +54,7 @@ import {CollectionEvent} from 'ol/Collection';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import Feature from 'ol/Feature';
 import 'bootstrap/js/src/dropdown';
+import htmlTemplate from './drawFeatureComponent.html';
 
 /**
  * @type {angular.IModule}
@@ -76,7 +77,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/drawing/drawFeatureComponent', require('./drawFeatureComponent.html'));
+      $templateCache.put('gmf/drawing/drawFeatureComponent', htmlTemplate);
     },
   ],
 );

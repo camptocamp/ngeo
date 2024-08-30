@@ -29,6 +29,7 @@ import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import {getUid as olUtilGetUid} from 'ol/util';
+import htmlTemplate from './toolsComponent.html';
 
 /**
  * @typedef {Object} ObjectEditingQueryableLayerInfo
@@ -64,7 +65,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/objectediting/toolsComponent', require('./toolsComponent.html'));
+      $templateCache.put('gmf/objectediting/toolsComponent', htmlTemplate);
     },
   ],
 );

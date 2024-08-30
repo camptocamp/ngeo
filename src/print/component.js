@@ -38,6 +38,7 @@ import olView from 'ol/View';
 import {toDegrees, toRadians, clamp} from 'ol/math';
 import MapBrowserEvent from 'ol/MapBrowserEvent';
 import 'bootstrap/js/src/dropdown';
+import htmlTemplate from './component.html';
 
 /**
  * Fields that can come from a print v3 server and can be used in the partial
@@ -89,7 +90,7 @@ myModule.run(
     '$templateCache',
     ($templateCache) => {
       // @ts-ignore: webpack
-      $templateCache.put('gmf/print', require('./component.html'));
+      $templateCache.put('gmf/print', htmlTemplate);
     },
   ],
 );
