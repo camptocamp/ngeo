@@ -21,6 +21,8 @@ MainController.$inject = ['ngeoTime'];
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import './datepicker.css';
+import './common_styles.scss';
+
 import angular from 'angular';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
 import ngeoMiscTime from 'ngeo/misc/Time';

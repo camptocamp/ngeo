@@ -20,8 +20,10 @@ MainController.$inject = ['$scope', 'ngeoFeatureHelper'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
+import './common_styles.scss';
 import './featurestyle.css';
+
+import angular from 'angular';
 import gmfDrawingFeatureStyleComponent from 'gmf/drawing/featureStyleComponent';
 import gmfMapComponent from 'gmf/map/component';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';

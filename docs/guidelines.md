@@ -391,20 +391,21 @@ We choose units that don't depend on parent tags and are relative.
 
 ### CSS variable
 
-Note: Not supported by IE
-
 Now it's possible to configure some variable in the CSS to make the variable,
-they should be defined and used like that (with backward compatilility for IE):
+they should be defined and used like that:
 
 - In the `src/sass/vars_only.scss` file:
   `$my-variable: ... !default;`.
+- In a `scss` file importing `vars_only.scss`, if you want to redefine the default (import after definition):
+  `$my-variable: ... !default;`.
+  `@import ngeo/sass/vars_only.scss`.
 - In the `sass/vars.scss` file, in the `:root` section:
   `--my-variable: #{$my-variable};`.
 - In your scss file:
   `the-css-property: $my-css-variable;`,
   `the-css-property: var(--my-css-variable);`.
 
-All collors calculated from `brand-primary` and `brand-secoundary` should be exposed as variable, and they should also be calculates in the `src/controllers/calculateCssVars.js` file.
+All colors calculated from `brand-primary` and `brand-secoundary` should be exposed as variable, and they should also be calculates in the `src/controllers/calculateCssVars.js` file.
 
 ## Property renaming
 

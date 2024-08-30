@@ -37,7 +37,6 @@ import olCollection from 'ol/Collection';
 import {isEmpty} from 'ol/obj';
 import {buildStyle} from 'ngeo/options';
 import 'jquery-ui/ui/widgets/resizable';
-import 'ngeo/sass/jquery-ui.scss';
 import 'angular-animate';
 import 'angular-touch';
 import 'bootstrap/js/src/collapse';

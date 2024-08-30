@@ -21,6 +21,10 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@import './vars_desktop_alt.scss';
+@import 'gmf/controllers/desktop.scss';
+@import '~mapillary-js/dist/mapillary.css';
+
 html {
   body {
     padding: 0;
@@ -57,7 +61,7 @@ header {
 
 div .ngeo-displaywindow {
   $displaywindow-min-height: 15rem;
-  left: $app-margin + $left-panel-width + $displaywindow-min-height / 2;
+  left: calc($app-margin + $left-panel-width + $displaywindow-min-height / 2);
   right: initial;
   top: $topbar-height + $app-margin + 3 * $map-tools-size;
 }

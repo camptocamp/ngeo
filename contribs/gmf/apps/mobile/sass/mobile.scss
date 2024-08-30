@@ -21,6 +21,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@import './vars_mobile.scss';
+@import 'gmf/controllers/mobile.scss';
+
 gmf-displayquerywindow {
   position: inherit;
 

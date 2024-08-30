@@ -22,8 +22,6 @@
 import angular from 'angular';
 import gmfFloorFloorSelectorComponent from 'gmf/floor/floorselectorComponent';
 
-import './floor.scss';
-
 /**
  * @type {!angular.IModule}
  */

@@ -27,7 +27,7 @@
  */
 
 import './sass/desktop.scss';
-import './sass/vars_desktop.scss';
+
 import angular from 'angular';
 import {isEventUsingCtrlKey} from 'ngeo/utils';
 import gmfControllersAbstractDesktopController, {

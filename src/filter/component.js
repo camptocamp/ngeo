@@ -28,7 +28,6 @@ import ngeoFormatAttributeType from 'ngeo/format/AttributeType';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry';
 import {getUid as olUtilGetUid} from 'ol/util';
 import {remove as removeFromArray} from 'ol/array';
-import 'ngeo/sass/font.scss';
 import panels from 'gmfapi/store/panels';
 import htmlTemplate from './component.html';
 /**

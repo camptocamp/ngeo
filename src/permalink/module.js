@@ -24,8 +24,6 @@ import gmfPermalinkPermalink from 'gmf/permalink/Permalink';
 import gmfPermalinkShareService from 'gmf/permalink/ShareService';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
 
-import './share.scss';
-
 /**
  * @type {angular.IModule}
  */

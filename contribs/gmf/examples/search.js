@@ -20,8 +20,11 @@ MainController.$inject = ['gmfThemes'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
+import './common_styles.scss';
 import './search.css';
+import 'ngeo/search/search.scss';
+
+import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import gmfSearchModule from 'gmf/search/module';

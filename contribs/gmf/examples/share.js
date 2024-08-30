@@ -19,8 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
+import './common_styles.scss';
 import './share.css';
+
+import angular from 'angular';
 import gmfPermalinkShareComponent from 'gmf/permalink/shareComponent';
 import ngeoMessageModalComponent from 'ngeo/message/modalComponent';
 import options from './options';

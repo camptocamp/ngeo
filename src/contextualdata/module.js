@@ -22,8 +22,6 @@
 import angular from 'angular';
 import gmfContextualdataComponent from 'gmf/contextualdata/component';
 
-import './contextualdata.scss';
-
 /**
  * @type {angular.IModule}
  */

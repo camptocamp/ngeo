@@ -26,8 +26,8 @@ import ngeoMiscFilters from 'ngeo/misc/filters';
 import {getRowUid} from 'ngeo/grid/Config';
 import 'floatthead';
 import 'angular-float-thead';
-import 'ngeo/sass/font.scss';
 import htmlTemplate from './component.html';
+
 /**
  * @type {angular.IModule}
  * @hidden

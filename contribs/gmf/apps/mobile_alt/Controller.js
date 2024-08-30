@@ -26,7 +26,6 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import './sass/vars_mobile_alt.scss';
 import './sass/mobile_alt.scss';
 
 import angular from 'angular';

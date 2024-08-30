@@ -20,7 +20,9 @@ MainController.$inject = ['$http', '$scope'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import './common_styles.scss';
 import './elevationProfile.css';
+
 import angular from 'angular';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import {MAPSERVER_PROXY} from './url';

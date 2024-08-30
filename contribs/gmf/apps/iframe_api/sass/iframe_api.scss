@@ -21,4 +21,5 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-$fa-font-path: '~@fortawesome/fontawesome-free/webfonts';
+@import 'gmf/controllers/vars_desktop.scss';
+@import 'gmf/controllers/iframe_api.scss';

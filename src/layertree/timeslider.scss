@@ -33,9 +33,9 @@
   }
 
   .ui-slider-handle {
-    top: -(($gmf-input-range-thumb-height / 2) - $gmf-input-range-track-height / 2);
+    top: calc(($gmf-input-range-thumb-height * -1) / 2 - $gmf-input-range-track-height / 2);
     cursor: $gmf-input-range-cursor;
-    margin-left: -$gmf-input-range-thumb-width / 2;
+    margin-left: calc(($gmf-input-range-thumb-width * -1) / 2);
     box-shadow: $gmf-input-range-thumb-box-shadow;
     border: $gmf-input-range-thumb-border;
     height: $gmf-input-range-thumb-height;

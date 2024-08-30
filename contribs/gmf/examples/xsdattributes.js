@@ -20,14 +20,15 @@ MainController.$inject = ['$timeout', 'gmfThemes', 'gmfXSDAttributes'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
+import './common_styles.scss';
 import './xsdattributes.css';
+
+import angular from 'angular';
 import gmfThemeThemes from 'gmf/theme/Themes';
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
 import {getGeometryAttribute} from 'ngeo/format/XSDAttribute';
 import olFeature from 'ol/Feature';
-import 'jquery-datetimepicker/jquery.datetimepicker.css';
 import options from './options';
 
 /** @type {angular.IModule} **/

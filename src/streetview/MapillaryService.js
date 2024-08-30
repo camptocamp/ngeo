@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import {StreetviewService} from './Service';
-import 'mapillary-js/dist/mapillary.css';
 import {buffer} from 'ol/extent';
 const MLY_METADATA_ENDPOINT = 'https://graph.mapillary.com';
 

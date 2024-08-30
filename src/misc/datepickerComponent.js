@@ -24,7 +24,6 @@ datePickerComponent.$inject = ['ngeoDatePickerTemplateUrl', '$timeout'];
 import angular from 'angular';
 import ngeoMiscTime from 'ngeo/misc/Time';
 import 'angular-ui-date';
-import 'ngeo/sass/jquery-ui.scss';
 import htmlTemplate from './datepickerComponent.html';
 
 // FIXME: import the locales in the applications

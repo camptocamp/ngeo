@@ -26,7 +26,6 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import './sass/vars_mobile.scss';
 import './sass/mobile.scss';
 
 import angular from 'angular';

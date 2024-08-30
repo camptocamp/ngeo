@@ -24,8 +24,6 @@ import gmfImportImportdatasourceComponent from 'gmf/import/importdatasourceCompo
 import gmfImportWmsCapabilityLayertreeComponent from 'gmf/import/wmsCapabilityLayertreeComponent';
 import gmfImportWmtsCapabilityLayertreeComponent from 'gmf/import/wmtsCapabilityLayertreeComponent';
 
-import './import.scss';
-
 /**
  * @type {angular.IModule}
  */

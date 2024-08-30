@@ -21,6 +21,8 @@ MeasuretoolsController.$inject = ['$scope', '$compile', '$sce', '$filter', 'gett
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import './measure.css';
+import './common_styles.scss';
+
 import angular from 'angular';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';
 import ngeoInteractionMeasureAzimut from 'ngeo/interaction/MeasureAzimut';

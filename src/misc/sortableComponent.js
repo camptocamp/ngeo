@@ -22,7 +22,6 @@ sortableComponent.$inject = ['$timeout'];
 
 import angular from 'angular';
 import 'jquery-ui/ui/widgets/sortable';
-import 'ngeo/sass/jquery-ui.scss';
 import 'jquery-ui-touch-punch';
 
 /**

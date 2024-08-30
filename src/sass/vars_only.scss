@@ -42,10 +42,10 @@ $map-tools-color: black !default;
 $onhover-color: darken($nav-bg, $standard-variation) !default;
 $onhover-color-darken: darken($onhover-color, $standard-variation) !default;
 $main-bg-color: #e2e3df !default; // gray light
-$main-bg-color-lighten: lighten($main-bg-color, $standard-variation / 2) !default;
+$main-bg-color-lighten: lighten($main-bg-color, calc($standard-variation / 2)) !default;
 $main-bg-color-09: rgba($main-bg-color, 0.9) !default;
 $main-bg-color-08: rgba($main-bg-color, 0.8) !default;
-$search-width: 6 * $map-tools-size !default;
+$search-width: calc(6 * $map-tools-size) !default;
 $border-radius-base: 0 !default;
 $nav-width: 20rem !default;
 $input-border-focus: darken($brand-primary, $standard-variation) !default;

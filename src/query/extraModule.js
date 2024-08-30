@@ -23,9 +23,6 @@ import angular from 'angular';
 import gmfQueryGridComponent from 'gmf/query/gridComponent';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 
-import './grid.scss';
-import './window.scss';
-
 /**
  * @type {angular.IModule}
  */

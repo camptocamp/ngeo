@@ -24,8 +24,6 @@ import ngeoPrintService from 'ngeo/print/Service';
 import ngeoPrintUtils from 'ngeo/print/Utils';
 import gmfPrintComponent from 'gmf/print/component';
 
-import './print.scss';
-
 /**
  * @type {angular.IModule}
  */
