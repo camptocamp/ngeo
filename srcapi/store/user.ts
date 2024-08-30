@@ -92,6 +92,10 @@ export interface User {
    * The two-factor authentication secret on first login
    */
   two_factor_totp_secret: string;
+  /**
+   * The server-side login type (oidc or local)
+   */
+  login_type?: string;
 }
 
 export enum UserState {
@@ -203,15 +207,17 @@ export class UserModel {
    */
   getEmptyUserProperties(): User {
     return {
-      email: null,
-      is_intranet: null,
-      functionalities: null,
-      is_password_changed: null,
-      roles: null,
-      username: null,
-      otp_key: null,
-      otp_uri: null,
-      two_factor_totp_secret: null,
+      ...{
+        email: null,
+        is_intranet: null,
+        functionalities: null,
+        is_password_changed: null,
+        roles: null,
+        username: null,
+        otp_key: null,
+        otp_uri: null,
+        two_factor_totp_secret: null,
+      },
     };
   }
 

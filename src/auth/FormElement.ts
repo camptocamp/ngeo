@@ -53,11 +53,15 @@ export default class GmfAuthForm extends GmfBaseElement {
   @state() private allowPasswordReset = false;
   @state() private changingPassword = false;
   @state() private userMustChangeItsPassword = false;
+  @state() private openIdConnectUrl = '';
   @state() private error = false;
   @state() private otpImage = '';
   @state() private gmfUser: User = null;
   @state() private customCSS_ = '';
   private changingPasswordUsername_ = '';
+  private initialApplicationUrl = window.location.href;
+  private currentApplicationUrl = window.location.href;
+  private openIdConnectBaseUrl = '';
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -73,12 +77,20 @@ export default class GmfAuthForm extends GmfBaseElement {
           }
         },
       }),
+
       user.getLoginMessage().subscribe({
         next: (message: string) => {
           this.loginInfoMessage = message;
+          this._updateOpenIdConnectUrl();
         },
       }),
     );
+
+    window.addEventListener('popstate', () => {
+      this.currentApplicationUrl = window.location.href;
+      this._updateOpenIdConnectUrl();
+    });
+    this._updateOpenIdConnectUrl();
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const loginField = document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement;
@@ -97,11 +109,20 @@ export default class GmfAuthForm extends GmfBaseElement {
     });
   }
 
+  _updateOpenIdConnectUrl(): void {
+    const applicationUrl = this.loginInfoMessage ? this.currentApplicationUrl : this.initialApplicationUrl;
+    const params = new URLSearchParams({
+      came_from: applicationUrl,
+    });
+    this.openIdConnectUrl = `${this.openIdConnectBaseUrl}?${params.toString()}`;
+  }
+
   // override default initConfig
   initConfig(configuration: Configuration): void {
     this.twoFactorAuth = configuration.gmfTwoFactorAuth;
     this.allowPasswordChange = configuration.gmfAuthenticationConfig.allowPasswordChange;
     this.allowPasswordReset = configuration.gmfAuthenticationConfig.allowPasswordReset;
+    this.openIdConnectBaseUrl = configuration.gmfOidcLoginUrl;
     if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.authentication !== undefined) {
       this.customCSS_ = configuration.gmfCustomCSS.authentication;
     }
@@ -167,7 +188,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                       </div>
                       <div class="form-group">
                         <input
-                          ?hidden="${!this.allowPasswordChange}"
+                          ?hidden="${!(this.allowPasswordChange && this.gmfUser.login_type !== 'oidc')}"
                           type="button"
                           class="form-control btn btn-default"
                           value=${i18next.t('Change password')}
@@ -195,53 +216,57 @@ export default class GmfAuthForm extends GmfBaseElement {
           `
         : ''}
       ${this.gmfUser.username === null && !this.changingPassword
-        ? html`
-            <div>
-              <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
-                <div class="form-group">
-                  <slot name="gmf-auth-login"></slot>
-                </div>
-                <div class="form-group">
-                  <slot name="gmf-auth-password"></slot>
-                </div>
-                ${this.twoFactorAuth
-                  ? html`
-                      <div class="form-group">
-                        ${i18next.t('The following field should be kept empty on first login:')}
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="otp"
-                          autocomplete="one-time-code"
-                          placeholder=${i18next.t('Authentication code')}
-                        />
-                      </div>
-                    `
-                  : ''}
-                <div class="form-group">
-                  <input type="submit" class="form-control btn prime" value=${i18next.t('Connect')} />
-                </div>
-                ${this.isLoading
-                  ? html`
-                      <div class="login-spinner">
-                        <i class="fa fa-spin">${svgSpinner()}</i>
-                      </div>
-                    `
-                  : ''}
-                <div ?hidden="${!this.allowPasswordReset}" class="form-group">
-                  <a @click=${(evt: Event) => this.resetPassword(evt)} href=""
-                    >${i18next.t('Password forgotten?')}</a
-                  >
-                </div>
-              </form>
+        ? this.gmfUser.login_type === 'oidc'
+          ? html`<a class="btn prime form-control" role="button" href="${this.openIdConnectUrl}"
+              >${i18next.t('Connect')}</a
+            >`
+          : html`
+              <div>
+                <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
+                  <div class="form-group">
+                    <slot name="gmf-auth-login"></slot>
+                  </div>
+                  <div class="form-group">
+                    <slot name="gmf-auth-password"></slot>
+                  </div>
+                  ${this.twoFactorAuth
+                    ? html`
+                        <div class="form-group">
+                          ${i18next.t('The following field should be kept empty on first login:')}
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="otp"
+                            autocomplete="one-time-code"
+                            placeholder=${i18next.t('Authentication code')}
+                          />
+                        </div>
+                      `
+                    : ''}
+                  <div class="form-group">
+                    <input type="submit" class="form-control btn prime" value=${i18next.t('Connect')} />
+                  </div>
+                  ${this.isLoading
+                    ? html`
+                        <div class="login-spinner">
+                          <i class="fa fa-spin">${svgSpinner()}</i>
+                        </div>
+                      `
+                    : ''}
+                  <div ?hidden="${!this.allowPasswordReset}" class="form-group">
+                    <a @click=${(evt: Event) => this.resetPassword(evt)} href=""
+                      >${i18next.t('Password forgotten?')}</a
+                    >
+                  </div>
+                </form>
 
-              ${this.resetPasswordShown
-                ? html` <div class="alert alert-info">
-                    ${i18next.t('A new password has just been sent to you by e-mail.')}
-                  </div>`
-                : ''}
-            </div>
-          `
+                ${this.resetPasswordShown
+                  ? html` <div class="alert alert-info">
+                      ${i18next.t('A new password has just been sent to you by e-mail.')}
+                    </div>`
+                  : ''}
+              </div>
+            `
         : ''}
       ${this.changingPassword
         ? html`

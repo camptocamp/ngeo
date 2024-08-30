@@ -78,6 +78,19 @@ const login = user.getEmptyUserProperties();
 login.username = 'George';
 WithUser.args.user = login;
 
+export const EmptyOidc: any = Template.bind({});
+EmptyOidc.args = {...defaultProperties};
+const loginEmptyOidc = user.getEmptyUserProperties();
+loginEmptyOidc.login_type = 'oidc';
+EmptyOidc.args.user = loginEmptyOidc;
+
+export const WithUserOidc: any = Template.bind({});
+WithUserOidc.args = {...defaultProperties};
+const loginOidc = user.getEmptyUserProperties();
+loginOidc.login_type = 'oidc';
+loginOidc.username = 'George OIDC';
+WithUserOidc.args.user = loginOidc;
+
 /**
  * @returns The HTML of the story
  */
