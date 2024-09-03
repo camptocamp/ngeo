@@ -81,6 +81,11 @@ module.exports = function (config) {
     },
   };
 
+  const jsRule = {
+    test: /\.js$/,
+    use: ['magic-comments-loader'],
+  };
+
   const tsRule = {
     test: /\.tsx?$/,
     use: 'ts-loader',
@@ -96,6 +101,11 @@ module.exports = function (config) {
     use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'sass-loader'}],
   };
 
+  const resourcesRule = {
+    test: /\.(jpeg|png|ico|eot|ttf|woff|woff2|svg|json)$/,
+    type: 'asset/resource',
+  };
+
   const htmlRule = {
     test: /\.html$/,
     use: {
@@ -108,7 +118,10 @@ module.exports = function (config) {
 
   const plugins = [
     providePlugin,
-    new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /node_modules\/moment\/src\/lib\/locale$/,
+    }),
   ];
   if (config.nodll != true) {
     plugins.push(dllPlugin);
@@ -127,13 +140,22 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [typeaheadRule, jqueryRule, gmfapiExpose, cssRule, sassRule, htmlRule, tsRule],
+      rules: [
+        typeaheadRule,
+        jqueryRule,
+        gmfapiExpose,
+        cssRule,
+        sassRule,
+        resourcesRule,
+        htmlRule,
+        tsRule,
+        jsRule,
+      ],
     },
     plugins: plugins,
     resolve: {
       modules: ['../node_modules', '../node_modules/d3/node_modules'],
-      extensions: ['.ts', '.tsx', '.js'],
-      mainFields: ['geoblocks_src', 'module', 'jsnext:main', 'main'],
+      extensions: ['.ts', '.tsx', '.js', '.mjs'],
       alias: {
         'ngeo/test': path.resolve(__dirname, '../test/spec'),
         'gmf/test': path.resolve(__dirname, '../contribs/gmf/test/spec'),
@@ -145,7 +167,6 @@ module.exports = function (config) {
         jsts: 'jsts/org/locationtech/jts',
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-        'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.js',
         // required to make it working with types
         'typeahead': 'corejs-typeahead',
       },

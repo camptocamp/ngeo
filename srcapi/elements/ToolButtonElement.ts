@@ -21,7 +21,7 @@
 
 import BaseElement from 'gmfapi/elements/BaseElement';
 import {css, html, TemplateResult} from 'lit';
-import {state, property, customElement} from 'lit/decorators';
+import {state, property, customElement} from 'lit/decorators.js';
 import {Subscription} from 'rxjs';
 import panels from 'gmfapi/store/panels';
 import $ from 'jquery';

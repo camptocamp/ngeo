@@ -70,7 +70,7 @@ export default class MapillaryService extends StreetviewService {
      */
     this.mapillaryElement = document.getElementById('mly');
     this.mapillaryElement.hidden = true;
-    import(/* webpackChunkName: "mapillary" */ 'mapillary-js/src/Mapillary').then((Mapillary) => {
+    import(/* webpackChunkName: "mapillary" */ 'mapillary-js').then((Mapillary) => {
       this.Mapillary = Mapillary;
       this.mly = new Mapillary.Viewer({
         accessToken: this.accessToken_,

@@ -40,7 +40,6 @@ module.exports = (env, argv) => {
       minimizer: [
         new TerserPlugin({
           parallel: true,
-          sourceMap: true,
           terserOptions: {
             compress: false,
           },

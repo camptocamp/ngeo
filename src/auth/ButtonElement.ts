@@ -20,12 +20,12 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import {TemplateResult, html} from 'lit';
-import {customElement} from 'lit/decorators';
+import {customElement} from 'lit/decorators.js';
 import ToolButtonElement from 'gmfapi/elements/ToolButtonElement';
 import i18next from 'i18next';
 import 'bootstrap/js/src/tooltip';
 import user, {User} from 'gmfapi/store/user';
-import {state} from 'lit/decorators';
+import {state} from 'lit/decorators.js';
 
 @customElement('gmf-auth-button')
 export class ToolButtonAuth extends ToolButtonElement {
