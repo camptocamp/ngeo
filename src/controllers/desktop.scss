@@ -25,18 +25,26 @@
  * Entry point for all styles required for the desktop application.
  */
 
-@import '~gmf/sass/gmf-font.scss';
-@import '~gmf/sass/base.scss';
-@import '~gmf/sass/map.scss';
-@import '~gmf/sass/input-range.scss';
-@import '~gmf/sass/popover.scss';
-@import '~gmf/sass/datepicker.scss';
-@import '~gmf/sass/filters.scss';
-@import '~gmf/sass/fullscreenpopup.scss';
-@import '~gmf/sass/loading-mask.scss';
-@import '~gmf/sass/swipe.scss';
+@import './vars_desktop.scss';
 
-@import '~gmf/layertree/desktop.scss';
+@import '~ol/ol.css';
+@import 'gmf/css/reset.css';
+@import 'gmf/sass/gmf-font.scss';
+@import '~bootstrap/scss/bootstrap.scss';
+@import 'gmf/sass/base.scss';
+@import 'gmf/sass/map.scss';
+@import 'gmf/sass/input-range.scss';
+@import 'gmf/sass/fullscreenpopup.scss';
+@import 'gmf/sass/loading-mask.scss';
+@import 'ngeo/sass/components.scss';
+
+@import 'gmf/sass/popover.scss';
+@import 'gmf/sass/datepicker.scss';
+@import 'gmf/sass/filters.scss';
+@import 'gmf/sass/fullscreenpopup.scss';
+@import 'gmf/sass/loading-mask.scss';
+@import 'gmf/sass/swipe.scss';
+@import 'gmf/layertree/desktop.scss';
 
 html,
 body {
@@ -228,7 +236,7 @@ gmf-elevationwidget {
       left: 50%;
       $width: 2.5rem;
       width: $width;
-      margin-left: -($width / 2);
+      margin-left: calc(($width / 2) * -1);
       border-bottom: none;
       border: $border;
       border-color: $border-color;
@@ -436,7 +444,7 @@ gmf-backgroundlayerselector {
   color: var(--color-light);
   padding-bottom: $app-margin;
   margin-bottom: $app-margin;
-  margin-top: $grid-gutter-width / 2;
+  margin-top: calc($grid-gutter-width / 2);
   border-bottom: 0.06rem solid;
   border-bottom-color: $color-light;
   border-bottom-color: var(--color-light);

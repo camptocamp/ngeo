@@ -24,9 +24,7 @@ import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import 'jquery-ui/ui/widgets/slider';
-import 'ngeo/sass/jquery-ui.scss';
 import 'angular-ui-slider';
-import './timeslider.scss';
 import htmlTemplate from './timesliderComponent.html';
 
 /**

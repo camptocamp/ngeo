@@ -23,10 +23,10 @@
 
 @import '~gmf/sass/vars.scss';
 
-$displayquerywindow-tablet-width: 9 * $map-tools-size;
+$displayquerywindow-tablet-width: calc(9 * $map-tools-size);
 $displayquerywindow-detailed-header-height: 3.12rem;
 $displayquerywindow-detailed-details-line-height: 1.25rem;
-$displayquerywindow-detailed-details-height: 9 * $displayquerywindow-detailed-details-line-height;
+$displayquerywindow-detailed-details-height: calc(9 * $displayquerywindow-detailed-details-line-height);
 
 div.gmf-displayquerywindow {
   pointer-events: none;
@@ -53,7 +53,7 @@ div.ngeo-displaywindow {
   left: initial;
   bottom: $app-margin;
   width: $displayquerywindow-tablet-width;
-  margin-left: -$displayquerywindow-tablet-width / 2;
+  margin-left: calc(($displayquerywindow-tablet-width * -1) / 2);
   position: fixed;
   z-index: $above-all;
   .collapse-button {
@@ -66,7 +66,7 @@ div.ngeo-displaywindow {
     border-radius: $border-radius-base $border-radius-base 0 0;
     line-height: 0.5;
     height: $map-tools-size;
-    width: $map-tools-size + $map-tools-size * 2/3;
+    width: calc($map-tools-size + $map-tools-size * 2 / 3);
   }
   .collapse-button-up::after {
     content: fa-content($fa-var-chevron-up);
@@ -250,7 +250,7 @@ div.ngeo-displaywindow {
     .animation-container {
       height: $map-tools-size * 2;
       &.animation-container-detailed {
-        height: (
+        height: calc(
             $displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 +
               $app-margin * 3
           ) + $map-tools-size;

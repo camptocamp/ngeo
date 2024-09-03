@@ -41,7 +41,6 @@ import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 import {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap';
 import DateFormatter from 'ngeo/misc/php-date-formatter';
 import 'jquery-datetimepicker/jquery.datetimepicker';
-import 'jquery-datetimepicker/jquery.datetimepicker.css';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
 import {deleteCondition} from 'ngeo/utils';

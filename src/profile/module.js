@@ -24,8 +24,6 @@ import ngeoProfileElevationComponent from 'ngeo/profile/elevationComponent';
 import gmfProfileComponent from 'gmf/profile/component';
 import gmfProfileDrawLineComponent from 'gmf/profile/drawLineComponent';
 
-import './profile.scss';
-
 /**
  * @type {angular.IModule}
  */

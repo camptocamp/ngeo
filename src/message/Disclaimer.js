@@ -23,7 +23,6 @@ import angular from 'angular';
 import 'bootstrap/js/src/alert';
 import ngeoMessagePopup, {MessagePopup} from 'ngeo/message/Popup';
 import ngeoMessageMessage, {MessageType} from 'ngeo/message/Message_OLD'; // TODO: Use new ts file when convert done
-import 'ngeo/sass/font.scss';
 
 /**
  * A message to display by the disclaimer service.

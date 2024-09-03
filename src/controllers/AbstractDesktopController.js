@@ -52,8 +52,6 @@ import olStyleText from 'ol/style/Text';
 import 'gmfapi/index';
 import panels from 'gmfapi/store/panels';
 import user from 'gmfapi/store/user';
-import 'gmf/controllers/vars_desktop.scss';
-import 'gmf/controllers/desktop.scss';
 
 /**
  * Desktop application abstract controller.

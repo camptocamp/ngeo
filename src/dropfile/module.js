@@ -21,7 +21,6 @@
 
 import angular from 'angular';
 import gmfFileDropZone from 'gmf/dropfile/component';
-import './dropfile.scss';
 
 /**
  * @type {angular.IModule}

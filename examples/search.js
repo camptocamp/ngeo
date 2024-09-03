@@ -20,9 +20,12 @@ SearchController.$inject = ['$element', '$rootScope', '$compile', 'ngeoSearchCre
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import './common_styles.scss';
+import './search.css';
+import 'ngeo/search/search.scss';
+
 import angular from 'angular';
 import {SEARCH} from './url';
-import './search.css';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import {proj as EPSG2056} from 'ngeo/proj/EPSG_2056';

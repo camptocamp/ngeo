@@ -20,8 +20,10 @@ MainController.$inject = ['$scope', 'ngeoFeatureHelper', 'ngeoFeatures', 'ngeoTo
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
+import './common_styles.scss';
 import './drawfeature.css';
+
+import angular from 'angular';
 import 'bootstrap/js/src/tooltip';
 import gmfMapComponent from 'gmf/map/component';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';

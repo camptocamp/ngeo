@@ -19,14 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'gmf/sass/vars.scss';
 import 'jquery';
 import 'angular';
 import 'angular-gettext';
 import 'bootstrap';
-
-import 'ol/ol.css';
-import 'bootstrap/dist/css/bootstrap.css';
 
 /*
  * Auto redirect to https to prevent CORS exceptions

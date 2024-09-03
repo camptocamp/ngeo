@@ -26,8 +26,7 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import 'gmf/controllers/iframe_api.scss';
-import 'gmf/controllers/vars_desktop.scss';
+import './sass/iframe_api.scss';
 
 import angular from 'angular';
 import gmfControllersAbstractAPIController, {

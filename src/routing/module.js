@@ -22,8 +22,6 @@
 import angular from 'angular';
 import ngeoRoutingRoutingComponent from 'ngeo/routing/RoutingComponent';
 
-import './routing.scss';
-
 /**
  * @type {angular.IModule}
  */

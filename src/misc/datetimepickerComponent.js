@@ -23,7 +23,6 @@ Controller.$inject = ['$element', 'gettextCatalog'];
 import angular from 'angular';
 import DateFormatter from 'ngeo/misc/php-date-formatter';
 import 'jquery-datetimepicker/jquery.datetimepicker';
-import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 /**
  * @type {angular.IModule}

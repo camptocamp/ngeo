@@ -27,7 +27,7 @@
  */
 
 import './sass/desktop_alt.scss';
-import './sass/vars_desktop_alt.scss';
+
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {
   AbstractDesktopController,

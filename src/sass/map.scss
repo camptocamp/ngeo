@@ -21,7 +21,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-@import '~gmf/sass/vars.scss';
+@import 'gmf/sass/vars.scss';
 
 /**
  * Styles for the map and OL3 controls.
@@ -119,7 +119,7 @@ button[ngeo-geolocation] {
 
     &::before {
       // same as fa-fw
-      width: (18em / 14);
+      width: calc(18em / 14);
       content: '';
       text-align: center;
     }
@@ -146,7 +146,7 @@ button[ngeo-geolocation] {
 
     span.gmf-backgroundlayerselector-opacity-check {
       &::after {
-        width: (18em / 14);
+        width: calc(18em / 14);
         font-family: 'Font Awesome 5 Free';
         font-weight: 900;
         content: fa-content($fa-var-check);

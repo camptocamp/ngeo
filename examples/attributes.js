@@ -20,6 +20,8 @@ MainController.$inject = ['$http', '$timeout', '$scope'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import './common_styles.scss';
+
 import angular from 'angular';
 import ngeoFormatXSDAttribute from 'ngeo/format/XSDAttribute';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';

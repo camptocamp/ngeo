@@ -21,6 +21,9 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+@import './vars_oeedit.scss';
+@import 'gmf/controllers/desktop.scss';
+
 header {
   .logo {
     background-image: url('../image/logo.png');

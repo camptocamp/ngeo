@@ -20,8 +20,10 @@ MainController.$inject = ['gmfObjectEditingManager', 'gmfThemes', 'gmfTreeManage
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import angular from 'angular';
+import './common_styles.scss';
 import './objectediting.css';
+
+import angular from 'angular';
 import gmfLayertreeComponent from 'gmf/layertree/component';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 import gmfMapComponent from 'gmf/map/component';

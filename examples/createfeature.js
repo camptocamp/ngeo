@@ -20,7 +20,9 @@ MainController.$inject = ['ngeoToolActivateMgr'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import './common_styles.scss';
 import './createfeature.css';
+
 import angular from 'angular';
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
 import ngeoGeometryType from 'ngeo/GeometryType';

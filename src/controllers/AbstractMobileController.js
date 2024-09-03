@@ -28,8 +28,6 @@ import gmfMobileNavigationModule from 'gmf/mobile/navigation/module';
 import gmfQueryWindowComponent from 'gmf/query/windowComponent';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import user from 'gmfapi/store/user';
-import 'gmf/controllers/vars_mobile.scss';
-import 'gmf/controllers/mobile.scss';
 
 /**
  * Mobile application abstract controller.

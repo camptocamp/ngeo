@@ -25,19 +25,23 @@
  * Entry point for all styles required for the mobile application.
  */
 
-@import '~gmf/controllers/vars_mobile.scss';
+@import './vars_mobile.scss';
 
-@import '~gmf/sass/gmf-font.scss';
-@import '~gmf/sass/base.scss';
-@import '~gmf/sass/map.scss';
-@import '~gmf/sass/input-range.scss';
-@import '~gmf/sass/fullscreenpopup.scss';
-@import '~gmf/sass/iphone.scss';
-@import '~gmf/sass/loading-mask.scss';
-@import '~gmf/controllers/mobile-nav.scss';
-@import '~gmf/search/mobile.scss';
+@import '~ol/ol.css';
+@import 'gmf/css/reset.css';
+@import 'gmf/sass/gmf-font.scss';
+@import '~bootstrap/scss/bootstrap.scss';
+@import 'gmf/sass/base.scss';
+@import 'gmf/sass/map.scss';
+@import 'gmf/sass/input-range.scss';
+@import 'gmf/sass/fullscreenpopup.scss';
+@import 'gmf/sass/loading-mask.scss';
+@import 'ngeo/sass/components.scss';
 
-@import '~gmf/layertree/mobile.scss';
+@import 'gmf/sass/iphone.scss';
+@import 'gmf/controllers/mobile-nav.scss';
+@import 'gmf/search/mobile.scss';
+@import 'gmf/layertree/mobile.scss';
 
 /**
  * Mobile specific css only !

@@ -43,8 +43,8 @@ import olStyleText from 'ol/style/Text';
 import olStyleFill from 'ol/style/Fill';
 import {CollectionEvent} from 'ol/Collection';
 import Feature from 'ol/Feature';
-import 'ngeo/sass/font.scss';
 import htmlTemplate from './rulecomponent.html';
+
 /**
  * @typedef {Object} MenuEventTarget
  * @property {string} action

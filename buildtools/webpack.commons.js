@@ -21,8 +21,6 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const SassPlugin = require('./webpack.plugin.js');
-const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const {PromiseTask} = require('event-hooks-webpack-plugin/lib/tasks');
 
 const devMode = process.env.NODE_ENV !== 'production';
@@ -94,16 +92,12 @@ module.exports = function (config) {
 
   const cssRule = {
     test: /\.css$/,
-    use: ['./buildtools/webpack.scss-loader', 'extract-loader', 'css-loader'],
+    use: [{loader: 'style-loader'}, {loader: 'css-loader'}],
   };
 
   const sassRule = {
-    test: /\.scss$/,
-    use: [
-      {
-        loader: './buildtools/webpack.scss-loader',
-      },
-    ],
+    test: /\.s[ac]ss$/i,
+    use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'sass-loader'}],
   };
 
   const htmlRule = {
@@ -115,32 +109,6 @@ module.exports = function (config) {
       },
     },
   };
-
-  /**
-   * @param firsts
-   * @param lasts
-   */
-  function get_comp(firsts, lasts) {
-    return (f1, f2) => {
-      for (const pattern of firsts) {
-        if (f1.indexOf(pattern) >= 0) {
-          return -1;
-        }
-        if (f2.indexOf(pattern) >= 0) {
-          return 1;
-        }
-      }
-      for (const pattern of lasts) {
-        if (f1.indexOf(pattern) >= 0) {
-          return 1;
-        }
-        if (f2.indexOf(pattern) >= 0) {
-          return -1;
-        }
-      }
-      return 0;
-    };
-  }
 
   // Collect every ts(x) files.
   const tsRule = {
@@ -210,75 +178,11 @@ module.exports = function (config) {
 
   const plugins = [
     providePlugin,
-    new SassPlugin({
-      filename: devMode ? '[name].css' : '[name].[hash:6].css',
-      assetname: '[name].[hash:6].[ext]',
-      // tempfile: '/tmp/t.scss',
-      blacklistedChunks: ['commons'],
-      filesOrder: (chunk, chunksFiles) => {
-        let files = chunksFiles.commons
-          ? chunksFiles[chunk.name].concat(chunksFiles.commons)
-          : chunksFiles[chunk.name];
-        files = files.filter((file) => {
-          if (file.endsWith('node_modules/@fortawesome/fontawesome-free/css/all.min.css')) {
-            return false;
-          }
-          if (file.endsWith('/src/css/reset.css')) {
-            return false;
-          }
-          return true;
-        });
-        files.sort(
-          get_comp(
-            config.first_scss ||
-              config.fist_scss || [
-                // ngeo default apps
-                '/apps/desktop/sass/vars_desktop.scss',
-                '/apps/desktop_alt/sass/vars_desktop_alt.scss',
-                '/apps/iframe_api/sass/vars_iframe_api.scss',
-                '/apps/mobile/sass/vars_mobile.scss',
-                '/apps/mobile_alt/sass/vars_mobile_alt.scss',
-                '/apps/oeedit/sass/vars_oeedit.scss',
-                // GeoMapFish project sass vars files
-                '/apps/sass/vars_',
-                '/controllers/vars_',
-                // For the examples
-                'examples/vars.scss',
-                // For the tests
-                'sass/vars.scss',
-              ],
-            config.last_scss || [
-              // project and ngeo default apps other sass files
-              '/apps/',
-              '/controllers/',
-            ],
-          ),
-        );
-        console.log();
-        console.log('SCSS files order:');
-        for (const file of files) {
-          console.log(file);
-        }
-        console.log();
-        return files;
-      },
-    }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /node_modules\/moment\/src\/lib\/locale$/),
   ];
   if (config.nodll != true) {
     plugins.push(dllPlugin);
   }
-
-  plugins.push(
-    new EventHooksPlugin({
-      afterCompile: new PromiseTask(async () => {
-        console.log('Babel compilations rules');
-        for (const file in files) {
-          console.log(file + ': ' + JSON.stringify(files[file]));
-        }
-      }),
-    }),
-  );
 
   plugins.push(
     new webpack.IgnorePlugin({
@@ -322,7 +226,7 @@ module.exports = function (config) {
         olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
         'mapillary-js/src/Mapillary': 'mapillary-js/dist/mapillary.js',
-        // required to bake it working with types
+        // required to make it working with types
         'typeahead': 'corejs-typeahead',
       },
     },

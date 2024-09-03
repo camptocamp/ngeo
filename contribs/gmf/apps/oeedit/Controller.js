@@ -26,7 +26,6 @@
  * by the HTML page and the controller to provide the configuration.
  */
 
-import './sass/vars_oeedit.scss';
 import './sass/oeedit.scss';
 import angular from 'angular';
 import gmfControllersAbstractDesktopController, {

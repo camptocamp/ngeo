@@ -20,10 +20,8 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import angular from 'angular';
-import 'ngeo/sass/font.scss';
 import 'jquery-ui/ui/widgets/resizable';
 import 'jquery-ui/ui/widgets/draggable';
-import 'ngeo/sass/jquery-ui.scss';
 import 'angular-sanitize';
 import htmlTemplate from './displaywindowComponent.html';
 
