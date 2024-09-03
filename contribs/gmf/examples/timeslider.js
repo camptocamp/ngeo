@@ -20,9 +20,7 @@ MainController.$inject = ['$scope', 'ngeoWMSTime'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'ngeo/layertree/timeslider.scss';
-import './common_styles.scss';
-import './timeslider.css';
+import './timeslider.scss';
 
 import angular from 'angular';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';

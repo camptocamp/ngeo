@@ -20,10 +20,7 @@ MainController.$inject = ['gmfTreeManager', 'gmfThemes', 'gmfThemeManager', 'nge
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'ngeo/layertree/common.scss';
-import 'ngeo/layertree/timeslider.scss';
-import './common_styles.scss';
-import './layertree.css';
+import './layertree.scss';
 
 import angular from 'angular';
 import gmfDisclaimerModule from 'gmf/disclaimer/module';

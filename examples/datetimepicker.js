@@ -19,9 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
 import './datetimepicker.scss';
-import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 import angular from 'angular';
 import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent';

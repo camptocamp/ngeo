@@ -19,8 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './wfspermalink.css';
+import './wfspermalink.scss';
 
 import angular from 'angular';
 import gmfMapModule from 'gmf/map/module';

@@ -1,0 +1,18 @@
+@import './common_styles.scss';
+
+ngeo-streetview {
+  display: block;
+  height: 40rem;
+  width: 60rem;
+}
+ngeo-streetview,
+#map {
+  border: 1px solid #666666;
+  float: left;
+  margin: 0.5rem;
+}
+
+.desc {
+  clear: both;
+  margin: 1rem;
+}

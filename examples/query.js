@@ -21,12 +21,10 @@ QueryresultController.$inject = ['ngeoQueryResult'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
+import './query.scss';
 
 import angular from 'angular';
 import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url';
-import './base.css';
-import './query.css';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import gmfDatasourceOGC from 'gmf/datasource/OGC';

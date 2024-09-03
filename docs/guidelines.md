@@ -389,7 +389,13 @@ We choose units that don't depend on parent tags and are relative.
 - `vw`: `1 vw` is 1/100th of the width of the viewport.
 - `vh`: `1 vh` is 1/100th of the height of the viewport.
 
-### CSS variable
+### CSS and SCSS rule priorities
+
+If you have the same specificity for two rule, but one in a `css` file, and one in a `scss` file,
+and you load both rule into a same `scss` file, then the rule in the `scss` will always
+have the priority.
+
+### CSS and SCSS variable
 
 Now it's possible to configure some variable in the CSS to make the variable,
 they should be defined and used like that:

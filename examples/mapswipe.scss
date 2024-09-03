@@ -1,0 +1,47 @@
+@import './common_styles.scss';
+
+#map,
+ngeo-mapswipe {
+  width: 600px;
+  height: 400px;
+}
+ngeo-mapswipe {
+  position: absolute;
+}
+
+.ngeo-swipe-close i {
+  background-color: red;
+  color: white;
+  width: 20px;
+  height: 20px;
+  padding-top: 3px;
+  margin-left: -12px;
+}
+
+.ngeo-swipe-line-draggable {
+  position: absolute;
+  left: calc(50% - 16px);
+  width: 32px;
+  height: 100%;
+  z-index: 1;
+  cursor: pointer;
+}
+.ngeo-swipe-line {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  margin-left: -2px;
+  height: 100%;
+  background-color: #f00;
+}
+
+.ngeo-swipe-arrow {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  margin-top: -16px;
+  padding: 0 2px;
+  background-color: #f00;
+  color: #fff;
+}

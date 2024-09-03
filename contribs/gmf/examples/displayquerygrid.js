@@ -21,9 +21,7 @@ QueryresultController.$inject = ['ngeoQueryResult'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './displayquerygrid.css';
-import './gmf-hidden.inc.css';
+import './displayquerygrid.scss';
 
 import angular from 'angular';
 import gmfDatasourceManager from 'gmf/datasource/Manager';

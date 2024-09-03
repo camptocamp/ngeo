@@ -20,8 +20,7 @@ MeasuretoolsController.$inject = ['$scope', '$compile', '$sce', '$filter', 'gett
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './measure.css';
-import './common_styles.scss';
+import './measure.scss';
 
 import angular from 'angular';
 import ngeoInteractionMeasureArea from 'ngeo/interaction/MeasureArea';

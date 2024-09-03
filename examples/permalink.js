@@ -21,11 +21,10 @@ MapComponentController.$inject = ['ngeoLocation', 'ngeoDebounce'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
+import './permalink.scss';
 
 import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
-import './permalink.css';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
