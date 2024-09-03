@@ -1,4 +1,3 @@
-SearchController.$inject = ['ngeoCreateLocationSearchBloodhound'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -50,6 +49,8 @@ const locationSearchComponent = {
     'ngeo-search-listeners="$ctrl.listeners">',
 };
 appmodule.component('appLocationSearch', locationSearchComponent);
+
+SearchController.$inject = ['ngeoCreateLocationSearchBloodhound'];
 
 /**
  * @class

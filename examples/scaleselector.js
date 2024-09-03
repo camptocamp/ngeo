@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -33,6 +32,8 @@ import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoScaleSelector.name, gmfMapComponent.name]);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @class

@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -34,6 +33,8 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 /** @type {angular.IModule} **/
 const appmodule = angular.module('app', ['gettext', ngeoGeolocation.name, gmfMapComponent.name]);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @param {angular.IScope} $scope Scope.

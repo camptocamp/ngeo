@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -38,6 +37,8 @@ import {MAPSERVER_PROXY} from './url';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMiscSortableComponent.name]);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @param {angular.IScope} $scope Scope.

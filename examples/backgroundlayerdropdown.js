@@ -1,5 +1,3 @@
-MainController.$inject = ['$scope'];
-BackgroundlayerController.$inject = ['$http', 'ngeoBackgroundLayerMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -72,6 +70,8 @@ const backgroundlayerComponent = {
 };
 myModule.component('appBackgroundlayer', backgroundlayerComponent);
 
+BackgroundlayerController.$inject = ['$http', 'ngeoBackgroundLayerMgr'];
+
 /**
  * @class
  * @param {angular.IHttpService} $http Angular http service.
@@ -131,6 +131,8 @@ BackgroundlayerController.prototype.createLayer_ = function (layerName) {
   });
 };
 myModule.controller('AppBackgroundlayerController', BackgroundlayerController);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @class

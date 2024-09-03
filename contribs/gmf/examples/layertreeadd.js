@@ -1,4 +1,3 @@
-MainController.$inject = ['gmfTreeManager', 'gmfThemes', 'gmfThemeManager', 'ngeoLocation'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -53,6 +52,8 @@ const myModule = angular.module('gmfapp', [
   gmfDisclaimerModule.name,
   ngeoMapModule.name,
 ]);
+
+MainController.$inject = ['gmfTreeManager', 'gmfThemes', 'gmfThemeManager', 'ngeoLocation'];
 
 /**
  * @class

@@ -1,4 +1,3 @@
-MeasuretoolsController.$inject = ['$scope', '$compile', '$sce', '$filter', 'gettextCatalog'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -80,6 +79,8 @@ const measuretoolsComponent = {
   templateUrl: 'partials/measuretools',
 };
 myModule.component('appMeasuretools', measuretoolsComponent);
+
+MeasuretoolsController.$inject = ['$scope', '$compile', '$sce', '$filter', 'gettextCatalog'];
 
 /**
  * @param {angular.IScope} $scope Angular scope.

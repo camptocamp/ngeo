@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2018-2024 Camptocamp SA
@@ -27,6 +26,8 @@ import ngeoMessageDisplaywindowComponent from 'ngeo/message/displaywindowCompone
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', [ngeoMessageDisplaywindowComponent.name]);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @param {angular.IScope} $scope Scope.

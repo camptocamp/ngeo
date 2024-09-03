@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope', 'ngeoFeatures', 'ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -42,6 +41,8 @@ const myModule = angular.module('app', [
   gmfMapComponent.name,
   ngeoMiscToolActivateMgr.name,
 ]);
+
+MainController.$inject = ['$scope', 'ngeoFeatures', 'ngeoToolActivateMgr'];
 
 /**
  * @param {angular.IScope} $scope Angular scope.

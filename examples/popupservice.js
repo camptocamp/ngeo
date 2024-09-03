@@ -1,4 +1,3 @@
-MainController.$inject = ['$sce', 'ngeoCreatePopup'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -28,6 +27,8 @@ import ngeoMessagePopup from 'ngeo/message/Popup';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMessagePopup.name]);
+
+MainController.$inject = ['$sce', 'ngeoCreatePopup'];
 
 /**
  * @param {angular.ISCEService} $sce Angular sce service.

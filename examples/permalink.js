@@ -1,5 +1,3 @@
-DrawComponentController.$inject = ['$scope', 'ngeoLocation'];
-MapComponentController.$inject = ['ngeoLocation', 'ngeoDebounce'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -65,6 +63,8 @@ const mapComponent = {
   template: '<gmf-map gmf-map-map=ctrl.map></gmf-map>',
 };
 myModule.component('appMap', mapComponent);
+
+MapComponentController.$inject = ['ngeoLocation', 'ngeoDebounce'];
 
 /**
  * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
@@ -150,6 +150,8 @@ const drawComponent = {
     '<button ng-click="ctrl.clearLayer()">Clear layer</button>',
 };
 myModule.component('appDraw', drawComponent);
+
+DrawComponentController.$inject = ['$scope', 'ngeoLocation'];
 
 /**
  * @param {angular.IScope} $scope Scope.

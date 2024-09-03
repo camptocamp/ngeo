@@ -1,4 +1,3 @@
-MainController.$inject = ['$timeout', 'gmfThemes', 'gmfXSDAttributes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -37,6 +36,8 @@ const myModule = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoEditingAttributesComponent.name,
 ]);
+
+MainController.$inject = ['$timeout', 'gmfThemes', 'gmfXSDAttributes'];
 
 /**
  * @param {angular.ITimeoutService} $timeout Angular timeout service.

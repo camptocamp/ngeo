@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -50,6 +49,8 @@ const myModule = angular.module('gmfapp', [
   gmfProfileModule.name,
   ngeoMapModule.name, // for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @param {angular.IScope} $scope Angular scope.

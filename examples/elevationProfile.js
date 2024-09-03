@@ -1,4 +1,3 @@
-MainController.$inject = ['$http', '$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -66,6 +65,8 @@ const typedFunctionsFactory = function (key, opt_childKey) {
     }
   );
 };
+
+MainController.$inject = ['$http', '$scope'];
 
 /**
  * @class

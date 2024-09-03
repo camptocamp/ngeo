@@ -1,4 +1,3 @@
-SearchController.$inject = ['$element', '$rootScope', '$compile', 'ngeoSearchCreateGeoJSONBloodhound'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -55,6 +54,8 @@ const searchComponent = {
     'ngeo-search-listeners="$ctrl.listeners">',
 };
 myModule.component('appSearch', searchComponent);
+
+SearchController.$inject = ['$element', '$rootScope', '$compile', 'ngeoSearchCreateGeoJSONBloodhound'];
 
 /**
  * @class

@@ -1,4 +1,3 @@
-MainController.$inject = ['ngeoDisclaimer'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -35,6 +34,8 @@ import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMessageDisclaimer.name]);
+
+MainController.$inject = ['ngeoDisclaimer'];
 
 /**
  * @param {import('ngeo/message/Disclaimer').MessageDisclaimerService} ngeoDisclaimer Ngeo disclaimer

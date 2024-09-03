@@ -1,5 +1,3 @@
-MainController.$inject = ['ngeoDataSources', 'ngeoToolActivateMgr', 'ngeoQueryModeSelector'];
-QueryresultController.$inject = ['ngeoQueryResult'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -82,6 +80,8 @@ const queryresultComponent = {
 };
 myModule.component('appQueryresult', queryresultComponent);
 
+QueryresultController.$inject = ['ngeoQueryResult'];
+
 /**
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult The ngeo query service.
  * @class
@@ -93,6 +93,8 @@ function QueryresultController(ngeoQueryResult) {
   this.result = ngeoQueryResult;
 }
 myModule.controller('AppQueryresultController', QueryresultController);
+
+MainController.$inject = ['ngeoDataSources', 'ngeoToolActivateMgr', 'ngeoQueryModeSelector'];
 
 /**
  * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.

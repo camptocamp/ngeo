@@ -1,4 +1,3 @@
-MainController.$inject = ['$http', 'gmfThemes', 'gmfThemeManager'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -29,6 +28,8 @@ import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
+
+MainController.$inject = ['$http', 'gmfThemes', 'gmfThemeManager'];
 
 /**
  * @class

@@ -1,5 +1,3 @@
-MainController.$inject = ['gmfThemes', 'gmfDataSourcesManager', 'gmfThemeManager', 'defaultTheme'];
-QueryresultController.$inject = ['ngeoQueryResult'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -75,6 +73,8 @@ const queryresultComponent = {
 };
 myModule.component('gmfappQueryresult', queryresultComponent);
 
+QueryresultController.$inject = ['ngeoQueryResult'];
+
 /**
  * Demo, NOT USED.
  *
@@ -88,6 +88,8 @@ function QueryresultController(ngeoQueryResult) {
   this.result = ngeoQueryResult;
 }
 myModule.controller('gmfappQueryresultController', QueryresultController);
+
+MainController.$inject = ['gmfThemes', 'gmfDataSourcesManager', 'gmfThemeManager', 'defaultTheme'];
 
 /**
  * @class

@@ -1,4 +1,3 @@
-MainController.$inject = ['$timeout', 'ngeoCreatePrint', 'ngeoPrintUtils'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -76,6 +75,8 @@ const PRINT_DPI_ = 72;
  * @type {import('ol/size').Size}
  */
 const PRINT_PAPER_SIZE_ = [555, 675];
+
+MainController.$inject = ['$timeout', 'ngeoCreatePrint', 'ngeoPrintUtils'];
 
 /**
  * @class

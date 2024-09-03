@@ -1,4 +1,3 @@
-MainController.$inject = ['ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2021-2024 Camptocamp SA
@@ -45,6 +44,8 @@ const myModule = angular.module('app', [
   ngeoStreetviewModule.name,
   ngeoMiscToolActivateMgr.name,
 ]);
+
+MainController.$inject = ['ngeoToolActivateMgr'];
 
 /**
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr

@@ -1,4 +1,3 @@
-MainController.$inject = ['$http', '$q', '$scope', 'gmfThemes', 'gmfXSDAttributes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -40,6 +39,8 @@ const myModule = angular.module('gmfapp', [
   gmfObjecteditingManager.name,
   gmfThemeThemes.name,
 ]);
+
+MainController.$inject = ['$http', '$q', '$scope', 'gmfThemes', 'gmfXSDAttributes'];
 
 /**
  * @param {angular.IHttpService} $http Angular $http service.

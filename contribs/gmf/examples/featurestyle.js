@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope', 'ngeoFeatureHelper'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -55,6 +54,8 @@ const myModule = angular.module('gmfapp', [
   ngeoMiscFeatureHelper.name,
   ngeoMapModule.name,
 ]);
+
+MainController.$inject = ['$scope', 'ngeoFeatureHelper'];
 
 /**
  * @class

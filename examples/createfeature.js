@@ -1,4 +1,3 @@
-MainController.$inject = ['ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -46,6 +45,8 @@ const myModule = angular.module('app', [
   ngeoMiscToolActivateMgr.name,
   ngeoEditingCreatefeatureComponent.name,
 ]);
+
+MainController.$inject = ['ngeoToolActivateMgr'];
 
 /**
  * @param {import('ngeo/misc/ToolActivateMgr').ToolActivateMgr} ngeoToolActivateMgr Ngeo ToolActivate

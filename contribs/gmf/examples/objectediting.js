@@ -1,4 +1,3 @@
-MainController.$inject = ['gmfObjectEditingManager', 'gmfThemes', 'gmfTreeManager', 'ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -58,6 +57,8 @@ const myModule = angular.module('gmfapp', [
   ngeoMiscToolActivateMgr.name,
   ngeoMapModule.name,
 ]);
+
+MainController.$inject = ['gmfObjectEditingManager', 'gmfThemes', 'gmfTreeManager', 'ngeoToolActivateMgr'];
 
 /**
  * @param {import('gmf/objectediting/Manager').ObjecteditingManagerService} gmfObjectEditingManager The gmf

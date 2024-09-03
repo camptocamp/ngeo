@@ -1,4 +1,3 @@
-MainController.$inject = ['$http', '$timeout', '$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -30,6 +29,8 @@ import ngeoMapModule from 'ngeo/map/module';
 
 /** @type {angular.IModule} */
 const myModule = angular.module('app', ['gettext', ngeoMapModule.name, ngeoEditingAttributesComponent.name]);
+
+MainController.$inject = ['$http', '$timeout', '$scope'];
 
 /**
  * @param {angular.IHttpService} $http Angular http service.

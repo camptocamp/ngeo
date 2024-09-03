@@ -1,4 +1,3 @@
-MainController.$inject = ['ngeoTime'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -29,6 +28,8 @@ import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC'
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscTime.name]);
+
+MainController.$inject = ['ngeoTime'];
 
 /**
  * @class
