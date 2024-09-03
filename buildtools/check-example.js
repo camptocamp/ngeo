@@ -61,10 +61,13 @@ const OSMImage = fileMock('osm.png', 'image/png');
 const ASITVDCapabilities = fileMock('asitvd.capabilities.xml', 'text/xml');
 const SgxCapabilities = fileMock('sgx.capabilities.xml', 'text/xml');
 let browser;
+let browserClosed = false;
 
-process.on('unhandledRejection', async (error) => {
-  console.log(`UnhandledRejection: ${error.message}.`);
-  await browser.close();
+process.on('unhandledRejection', async (reason, promise) => {
+  console.log('UnhandledRejection: ', promise, 'reason:', reason);
+  if (browser && !browserClosed) {
+    await browser.close();
+  }
   process.exit(2);
 });
 
