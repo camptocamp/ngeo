@@ -21,7 +21,7 @@
 
 import {TemplateResult, html, css, CSSResult, unsafeCSS} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
-import {customElement, state} from 'lit/decorators';
+import {customElement, state} from 'lit/decorators.js';
 import GmfBaseElement from 'gmfapi/elements/BaseElement';
 
 import OlGeomLineString from 'ol/geom/LineString';

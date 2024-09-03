@@ -57,8 +57,7 @@ plugins.push(
     patterns: [
       {
         from: 'examples/data/*',
-        to: 'data',
-        flatten: true,
+        to: 'data/[name][ext]',
       },
     ],
   }),

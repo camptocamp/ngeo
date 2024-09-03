@@ -23,7 +23,7 @@
 
 import ToolButtonElement, {ToolButtonDefault} from 'gmfapi/elements/ToolButtonElement';
 import {css, html, TemplateResult} from 'lit';
-import {property, customElement} from 'lit/decorators';
+import {property, customElement} from 'lit/decorators.js';
 import './DesktopElement';
 import ToolPanelElement from 'gmfapi/elements/ToolPanelElement';
 import panels from 'gmfapi/store/panels';

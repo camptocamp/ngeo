@@ -22,6 +22,7 @@ export default [
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:wc/recommended',
         'plugin:lit/recommended',
+        'plugin:storybook/recommended',
     ),
     {
         plugins: {
