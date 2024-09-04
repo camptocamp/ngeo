@@ -71,15 +71,13 @@ body {
 .panel {
   display: block;
   width: 60rem;
+  float: left;
+  margin: 0.5rem;
 }
 gmf-map {
   width: 71rem;
   height: 40rem;
   display: block;
-  margin: 0.5rem;
-}
-.panel {
-  float: left;
   margin: 0.5rem;
 }
 gmf-filterselector {
@@ -268,13 +266,6 @@ a.gmf-wmscapabilitylayertreenode-expand-node.fa[aria-expanded='true']::before {
 }
 
 .gmf-wmscapabilitylayertreenode-description-toggle {
-  /* display: none; */
   display: block;
   text-align: right;
 }
-
-/*
-.gmf-wmscapabilitylayertreenode-description:hover .gmf-wmscapabilitylayertreenode-description-toggle {
-  display: block;
-}
-*/
