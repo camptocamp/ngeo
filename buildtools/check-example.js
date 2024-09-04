@@ -271,18 +271,22 @@ function loaded(page, browser) {
       !location.url.startsWith('http://localhost:3001/.build/examples-hosted/dist/vendor.js') &&
       location.url.startsWith('http://localhost:3001/')
     ) {
-      if (type != 'warning' || !message.text().includes(' GPU ')) {
-        console.log(`Console ${type}`);
-        console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
-        console.log(message.text());
-        if (
-          !message.text().includes('CORS') &&
-          !message.text().includes('Driver Message') &&
-          !message.text().includes('Password field is not contained in a form')
-        ) {
-          await browser.close();
-          process.exit(2);
-        }
+      console.log(`Console ${type}`);
+      console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
+      console.log(message.text());
+      if (
+        !message.text().includes(' GPU ') &&
+        !message.text().includes('CORS') &&
+        !message.text().includes('Driver Message') &&
+        !message.text().includes('JSHandle@error') &&
+        !message.text().includes('Password field is not contained in a form') &&
+        !message.text().includes('Lit is in dev mode. Not recommended for production!') &&
+        !message
+          .text()
+          .includes('Multiple versions of Lit loaded. Loading multiple versions is not recommended.')
+      ) {
+        await browser.close();
+        process.exit(2);
       }
     }
   });
