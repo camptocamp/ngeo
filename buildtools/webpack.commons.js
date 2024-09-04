@@ -82,13 +82,24 @@ module.exports = function (config) {
   };
 
   const jsRule = {
-    test: /\.js$/,
-    use: ['magic-comments-loader'],
+    test: /MapillaryService\.js$/,
+    use: [
+      {
+        loader: 'magic-comments-loader',
+      },
+    ],
   };
 
   const tsRule = {
     test: /\.tsx?$/,
-    use: 'ts-loader',
+    use: [
+      {
+        loader: 'ts-loader',
+      },
+      {
+        loader: 'minify-html-literals-loader',
+      },
+    ],
   };
 
   const cssRule = {
