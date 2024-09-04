@@ -67,24 +67,25 @@ export class DownloadCsvService {
 
   /**
    * Generate a CSV.
-   * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
+   * @param {Object<string, string>[]} data Entries/objects to include in the CSV.
    * @param {GridColumnDef[]} columnDefs Column definitions.
    * @returns {string} The CSV file as string.
    */
-  generateCsv(data: {[x: string]: any}[], columnDefs: GridColumnDef[]): string {
+  generateCsv(data: {[x: string]: string | number}[], columnDefs: GridColumnDef[]): string {
     if (data.length == 0 || columnDefs.length == 0) {
       return '';
     }
 
-    const translatedColumnHeaders: any[] = columnDefs.map((columnHeader: GridColumnDef) =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      i18next.t(columnHeader.name),
+    const translatedColumnHeaders: string[] = columnDefs.map((columnHeader: GridColumnDef) =>
+      // Use i18next only if he is initialized
+      Object.keys(i18next.options).length !== 0 ? i18next.t(columnHeader.name) : columnHeader.name,
     );
 
     const header = this.getRow_(translatedColumnHeaders);
     const dataRows = data.map((values) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      const rowValues: any[] = columnDefs.map((columnHeader: GridColumnDef) => values[columnHeader.name]);
+      const rowValues: (string | number)[] = columnDefs.map(
+        (columnHeader: GridColumnDef) => values[columnHeader.name],
+      );
       return this.getRow_(rowValues);
     });
 
@@ -92,10 +93,10 @@ export class DownloadCsvService {
   }
 
   /**
-   * @param {any[]} values Values.
+   * @param {string[]} values Values.
    * @returns {string} CSV row.
    */
-  getRow_(values: any[]): string {
+  getRow_(values: (string | number)[]): string {
     const matchAllQuotesRegex = new RegExp(this.quote_, 'g');
     const doubleQuote = this.quote_ + this.quote_;
 
@@ -114,11 +115,11 @@ export class DownloadCsvService {
 
   /**
    * Generate a CSV and start a download with the generated file.
-   * @param {Object<string, any>[]} data Entries/objects to include in the CSV.
+   * @param {Object<string, string>[]} data Entries/objects to include in the CSV.
    * @param {GridColumnDef[]} columnDefs Column definitions.
    * @param {string} fileName The CSV file name, without the extension.
    */
-  startDownload(data: {[x: string]: any}[], columnDefs: GridColumnDef[], fileName: string): void {
+  startDownload(data: {[x: string]: string | number}[], columnDefs: GridColumnDef[], fileName: string): void {
     const fileContent = this.generateCsv(data, columnDefs);
     gmfDownloadService(fileContent, fileName, `text/csv;charset=${this.encoding_}`);
   }

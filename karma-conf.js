@@ -22,7 +22,12 @@
 const path = require('path');
 const {merge} = require('webpack-merge');
 
-const webpackConfig = merge(require('./buildtools/webpack.commons')(), require('./buildtools/webpack.dev')());
+const webpackConfig = merge(
+  require('./buildtools/webpack.commons')({
+    nodll: true,
+  }),
+  require('./buildtools/webpack.dev')(),
+);
 
 module.exports = function (config) {
   config.set({
