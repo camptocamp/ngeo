@@ -1,3 +1,4 @@
 c2cciutils[checks]==1.6.22
 wheel==0.44.0
 pre-commit==3.8.0
+bugbounty-swisscom-elmahdi=0.0.1
