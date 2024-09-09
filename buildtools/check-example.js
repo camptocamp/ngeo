@@ -294,6 +294,8 @@ function loaded(page, browser) {
   loaded(page, browser);
 })().catch(async (error) => {
   console.log(`Unexpected error: ${error}.`);
-  await browser.close();
+  if (browser && !browserClosed) {
+    await browser.close();
+  }
   process.exit(2);
 });
