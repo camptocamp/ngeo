@@ -1,5 +1,3 @@
-MainController.$inject = ['ngeoDataSources', 'ngeoToolActivateMgr', 'ngeoQueryModeSelector'];
-QueryresultController.$inject = ['ngeoQueryResult'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -21,12 +19,10 @@ QueryresultController.$inject = ['ngeoQueryResult'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
+import './query.scss';
 
 import angular from 'angular';
 import {MAPSERVER_PROXY, MAPSERVER_WFS_FEATURE_NS} from './url';
-import './base.css';
-import './query.css';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoDatasourceDataSources from 'ngeo/datasource/DataSources';
 import gmfDatasourceOGC from 'gmf/datasource/OGC';
@@ -84,6 +80,8 @@ const queryresultComponent = {
 };
 myModule.component('appQueryresult', queryresultComponent);
 
+QueryresultController.$inject = ['ngeoQueryResult'];
+
 /**
  * @param {import('ngeo/query/MapQuerent').QueryResult} ngeoQueryResult The ngeo query service.
  * @class
@@ -95,6 +93,8 @@ function QueryresultController(ngeoQueryResult) {
   this.result = ngeoQueryResult;
 }
 myModule.controller('AppQueryresultController', QueryresultController);
+
+MainController.$inject = ['ngeoDataSources', 'ngeoToolActivateMgr', 'ngeoQueryModeSelector'];
 
 /**
  * @param {import('ngeo/datasource/DataSources').DataSource} ngeoDataSources Ngeo data sources service.

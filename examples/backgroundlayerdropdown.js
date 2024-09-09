@@ -1,5 +1,3 @@
-MainController.$inject = ['$scope'];
-BackgroundlayerController.$inject = ['$http', 'ngeoBackgroundLayerMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -21,8 +19,7 @@ BackgroundlayerController.$inject = ['$http', 'ngeoBackgroundLayerMgr'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './backgroundlayerdropdown.css';
+import './backgroundlayerdropdown.scss';
 
 import angular from 'angular';
 import ngeoSourceAsitVD from 'ngeo/source/AsitVD';
@@ -72,6 +69,8 @@ const backgroundlayerComponent = {
   controller: 'AppBackgroundlayerController',
 };
 myModule.component('appBackgroundlayer', backgroundlayerComponent);
+
+BackgroundlayerController.$inject = ['$http', 'ngeoBackgroundLayerMgr'];
 
 /**
  * @class
@@ -132,6 +131,8 @@ BackgroundlayerController.prototype.createLayer_ = function (layerName) {
   });
 };
 myModule.controller('AppBackgroundlayerController', BackgroundlayerController);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @class

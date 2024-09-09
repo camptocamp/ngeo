@@ -1,4 +1,3 @@
-MainController.$inject = ['gmfThemes'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,9 +19,7 @@ MainController.$inject = ['gmfThemes'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './print.css';
-import './gmf-hidden.inc.css';
+import './print.scss';
 
 import angular from 'angular';
 import gmfLayertreeComponent from 'gmf/layertree/component';
@@ -50,6 +47,8 @@ const myModule = angular.module('gmfapp', [
   gmfThemeThemes.name,
   ngeoMapModule.name, //for ngeo.map.FeatureOverlay, perhaps remove me
 ]);
+
+MainController.$inject = ['gmfThemes'];
 
 /**
  * @class

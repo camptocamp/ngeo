@@ -1,4 +1,3 @@
-MainController.$inject = ['gmfTreeManager', 'gmfThemes', 'gmfThemeManager', 'ngeoLocation'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,10 +19,7 @@ MainController.$inject = ['gmfTreeManager', 'gmfThemes', 'gmfThemeManager', 'nge
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'ngeo/layertree/common.scss';
-import 'ngeo/layertree/timeslider.scss';
-import './common_styles.scss';
-import './layertree.css';
+import './layertree.scss';
 
 import angular from 'angular';
 import gmfDisclaimerModule from 'gmf/disclaimer/module';
@@ -58,6 +54,8 @@ const myModule = angular.module('gmfapp', [
   ngeoMapModule.name,
   gmfDisclaimerModule.name,
 ]);
+
+MainController.$inject = ['gmfTreeManager', 'gmfThemes', 'gmfThemeManager', 'ngeoLocation'];
 
 /**
  * @class

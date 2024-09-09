@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope', 'ngeoFeatures', 'ngeoToolActivateMgr'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['$scope', 'ngeoFeatures', 'ngeoToolActivateMgr'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './drawfeature.css';
+import './drawfeature.scss';
 
 import angular from 'angular';
 import ngeoDrawModule from 'ngeo/draw/module';
@@ -43,6 +41,8 @@ const myModule = angular.module('app', [
   gmfMapComponent.name,
   ngeoMiscToolActivateMgr.name,
 ]);
+
+MainController.$inject = ['$scope', 'ngeoFeatures', 'ngeoToolActivateMgr'];
 
 /**
  * @param {angular.IScope} $scope Angular scope.

@@ -1,4 +1,3 @@
-MainController.$inject = ['$sce', 'ngeoCreatePopup'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['$sce', 'ngeoCreatePopup'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './popupservice.css';
+import './popupservice.scss';
 
 import 'bootstrap/js/src/tooltip';
 import angular from 'angular';
@@ -29,6 +27,8 @@ import ngeoMessagePopup from 'ngeo/message/Popup';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMessagePopup.name]);
+
+MainController.$inject = ['$sce', 'ngeoCreatePopup'];
 
 /**
  * @param {angular.ISCEService} $sce Angular sce service.

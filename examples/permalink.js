@@ -1,5 +1,3 @@
-DrawComponentController.$inject = ['$scope', 'ngeoLocation'];
-MapComponentController.$inject = ['ngeoLocation', 'ngeoDebounce'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -21,11 +19,10 @@ MapComponentController.$inject = ['ngeoLocation', 'ngeoDebounce'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
+import './permalink.scss';
 
 import angular from 'angular';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
-import './permalink.css';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
@@ -66,6 +63,8 @@ const mapComponent = {
   template: '<gmf-map gmf-map-map=ctrl.map></gmf-map>',
 };
 myModule.component('appMap', mapComponent);
+
+MapComponentController.$inject = ['ngeoLocation', 'ngeoDebounce'];
 
 /**
  * @param {import('ngeo/statemanager/Location').StatemanagerLocation} ngeoLocation ngeo Location service.
@@ -151,6 +150,8 @@ const drawComponent = {
     '<button ng-click="ctrl.clearLayer()">Clear layer</button>',
 };
 myModule.component('appDraw', drawComponent);
+
+DrawComponentController.$inject = ['$scope', 'ngeoLocation'];
 
 /**
  * @param {angular.IScope} $scope Scope.

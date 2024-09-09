@@ -1,4 +1,3 @@
-MainController.$inject = ['gmfPermalink'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['gmfPermalink'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './mobilemeasure.css';
+import './mobilemeasure.scss';
 
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
@@ -53,6 +51,8 @@ const myModule = angular.module('gmfapp', [
   ngeoMiscBtnComponent.name,
   ngeoMapModule.name,
 ]);
+
+MainController.$inject = ['gmfPermalink'];
 
 /**
  * @param {import('gmf/permalink/Permalink').PermalinkService} gmfPermalink The gmf permalink service.

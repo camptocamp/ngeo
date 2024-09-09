@@ -1,4 +1,3 @@
-MainController.$inject = ['ngeoTime'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['ngeoTime'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './datepicker.css';
-import './common_styles.scss';
+import './datepicker.scss';
 
 import angular from 'angular';
 import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
@@ -30,6 +28,8 @@ import {TimePropertyWidgetEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC'
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', ngeoMiscDatepickerComponent.name, ngeoMiscTime.name]);
+
+MainController.$inject = ['ngeoTime'];
 
 /**
  * @class

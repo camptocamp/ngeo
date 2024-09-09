@@ -19,10 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'ngeo/layertree/common.scss';
-import 'ngeo/layertree/timeslider.scss';
-import './common_styles.scss';
-import './importdatasource.css';
+import './importdatasource.scss';
 
 // Todo - use the 'Filter' theme instead if the 'Edit' theme
 import angular from 'angular';

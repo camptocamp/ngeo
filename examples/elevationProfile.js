@@ -1,4 +1,3 @@
-MainController.$inject = ['$http', '$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['$http', '$scope'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './elevationProfile.css';
+import './elevationProfile.scss';
 
 import angular from 'angular';
 import EPSG2056 from 'ngeo/proj/EPSG_2056';
@@ -67,6 +65,8 @@ const typedFunctionsFactory = function (key, opt_childKey) {
     }
   );
 };
+
+MainController.$inject = ['$http', '$scope'];
 
 /**
  * @class

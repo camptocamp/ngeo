@@ -1,4 +1,3 @@
-SearchController.$inject = ['ngeoCreateLocationSearchBloodhound'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,9 +19,7 @@ SearchController.$inject = ['ngeoCreateLocationSearchBloodhound'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './locationsearch.css';
-import 'ngeo/search/search.scss';
+import './locationsearch.scss';
 
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';
@@ -52,6 +49,8 @@ const locationSearchComponent = {
     'ngeo-search-listeners="$ctrl.listeners">',
 };
 appmodule.component('appLocationSearch', locationSearchComponent);
+
+SearchController.$inject = ['ngeoCreateLocationSearchBloodhound'];
 
 /**
  * @class

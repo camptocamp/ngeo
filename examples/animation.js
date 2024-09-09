@@ -1,4 +1,3 @@
-MainController.$inject = ['$timeout'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2014-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['$timeout'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './animation.css';
+import './animation.scss';
 
 import angular from 'angular';
 import olMap from 'ol/Map';
@@ -49,6 +47,8 @@ const mapComponent = {
   template: '<gmf-map gmf-map-map="$ctrl.map"></gmf-map>',
 };
 myModule.component('appMap', mapComponent);
+
+MainController.$inject = ['$timeout'];
 
 /**
  * The application's main controller.

@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope', 'ngeoWMSTime'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,9 +19,7 @@ MainController.$inject = ['$scope', 'ngeoWMSTime'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'ngeo/layertree/timeslider.scss';
-import './common_styles.scss';
-import './timeslider.css';
+import './timeslider.scss';
 
 import angular from 'angular';
 import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
@@ -36,6 +33,8 @@ const myModule = angular.module('gmfapp', [
   gmfLayertreeTimeSliderComponent.name,
   ngeoMiscWMSTime.name,
 ]);
+
+MainController.$inject = ['$scope', 'ngeoWMSTime'];
 
 /**
  * @class

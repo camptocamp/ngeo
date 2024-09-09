@@ -1,0 +1,25 @@
+@import './common_styles.scss';
+@import './base.css';
+
+#map,
+.app-query {
+  float: left;
+}
+
+.app-query {
+  margin: 1rem;
+}
+
+#desc {
+  clear: both;
+}
+
+ngeo-query-panel {
+  display: block;
+  margin: 1rem 0 0 0;
+}
+
+ngeo-query-panel .ngeo-query-panel-actions,
+ngeo-query-panel .ngeo-query-panel-help {
+  margin: 1rem 0 0 0;
+}

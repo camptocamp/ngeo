@@ -1,4 +1,3 @@
-MainController.$inject = ['$scope'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -37,6 +36,8 @@ import olSourceVector from 'ol/source/Vector';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMiscFilereaderComponent.name]);
+
+MainController.$inject = ['$scope'];
 
 /**
  * @class

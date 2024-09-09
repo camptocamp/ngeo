@@ -22,9 +22,7 @@
 /**
  * This example shows the ngeo routing directive.
  */
-import './common_styles.scss';
-import 'ngeo/routing/routing.scss';
-import './routing.css';
+import './routing.scss';
 
 import angular from 'angular';
 import gmfMapComponent from 'gmf/map/component';

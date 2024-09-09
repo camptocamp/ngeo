@@ -1,4 +1,3 @@
-MainController.$inject = ['ngeoDisclaimer'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['ngeoDisclaimer'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './disclaimer.css';
+import './disclaimer.scss';
 
 import 'bootstrap/js/src/tooltip';
 import angular from 'angular';
@@ -36,6 +34,8 @@ import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('app', ['gettext', gmfMapComponent.name, ngeoMessageDisclaimer.name]);
+
+MainController.$inject = ['ngeoDisclaimer'];
 
 /**
  * @param {import('ngeo/message/Disclaimer').MessageDisclaimerService} ngeoDisclaimer Ngeo disclaimer

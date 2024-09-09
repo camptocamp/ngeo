@@ -1,4 +1,3 @@
-MainController.$inject = ['$http', 'gmfThemes', 'gmfThemeManager'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2016-2024 Camptocamp SA
@@ -20,8 +19,7 @@ MainController.$inject = ['$http', 'gmfThemes', 'gmfThemeManager'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import './common_styles.scss';
-import './themeselector.css';
+import './themeselector.scss';
 
 import angular from 'angular';
 import gmfThemeModule from 'gmf/theme/module';
@@ -30,6 +28,8 @@ import options from './options';
 
 /** @type {angular.IModule} **/
 const myModule = angular.module('gmfapp', ['gettext', gmfLayertreeTreeManager.name, gmfThemeModule.name]);
+
+MainController.$inject = ['$http', 'gmfThemes', 'gmfThemeManager'];
 
 /**
  * @class
