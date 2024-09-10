@@ -63,7 +63,7 @@
     "@eslint/eslintrc": "3.1.0",
     "@eslint/js": "9.9.1",
     "@fortawesome/fontawesome-free": "5.15.4",
-    "@lit/reactive-element": "1.6.3",
+    "@lit/reactive-element": "2.0.4",
     "@popperjs/core": "2.11.8",
     "@sentry/browser": "7.119.0",
     "@sentry/tracing": "7.114.0",
