@@ -1,4 +1,3 @@
-AbstractAppController.$inject = ['$scope', '$injector', 'mobile'];
 // The MIT License (MIT)
 //
 // Copyright (c) 2015-2024 Camptocamp SA
@@ -63,6 +62,7 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import storeMap from 'gmfapi/store/map';
 import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
 
+AbstractAppController.$inject = ['$scope', '$injector', 'mobile'];
 /**
  * Application abstract controller.
  *
@@ -659,7 +659,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   if ($injector.has('sentryOptions')) {
     const options = $injector.get('sentryOptions');
     if (options.dsn) {
-      options.integrations = [Integrations.browserTracingIntegration()];
+      options.integrations = [Sentry.browserTracingIntegration()];
       const tags = options.tags || [];
       delete options.tags;
       Object.assign(options, {
