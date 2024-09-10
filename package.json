@@ -167,7 +167,7 @@
     "karma-webpack": "5.0.1",
     "lit": "3.2.0",
     "lit-element": "4.1.0",
-    "lit-html": "2.8.0",
+    "lit-html": "3.2.0",
     "loader-utils": "3.3.1",
     "loc-i18next": "0.1.6",
     "localforage": "1.10.0",
