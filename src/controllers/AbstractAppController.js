@@ -48,7 +48,6 @@ import gmfMapComponent from 'gmf/map/component';
 import {ThemeEventType} from 'gmf/theme/Manager';
 import {getBrowserLanguage} from 'ngeo/utils';
 import * as Sentry from '@sentry/browser';
-import {Integrations} from '@sentry/tracing';
 import createProjections from 'ngeo/proj/utils';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -660,7 +659,7 @@ export function AbstractAppController($scope, $injector, mobile) {
   if ($injector.has('sentryOptions')) {
     const options = $injector.get('sentryOptions');
     if (options.dsn) {
-      options.integrations = [new Integrations.BrowserTracing()];
+      options.integrations = [Integrations.browserTracingIntegration()];
       const tags = options.tags || [];
       delete options.tags;
       Object.assign(options, {
