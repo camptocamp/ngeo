@@ -22,3 +22,5 @@
 /pyproject.toml
 /requirements.txt
 /cypress
+**.spec.ts
+/tsconfig*.json
