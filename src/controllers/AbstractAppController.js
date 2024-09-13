@@ -289,9 +289,9 @@ export function AbstractAppController($scope, $injector, mobile) {
   this.hasEditableLayers = false;
 
   /**
-   * @this {AbstractAppController}
+   * Check editable layers
    */
-  this.updateHasEditableLayers_ = function () {
+  this.updateHasEditableLayers_ = () => {
     this.gmfThemes.hasEditableLayers().then((hasEditableLayers) => {
       this.hasEditableLayers = hasEditableLayers;
     });

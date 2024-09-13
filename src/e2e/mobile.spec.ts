@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -463,7 +462,8 @@ if (Cypress.browser.isHeaded) {
           cy.wrap(btn)
             .click({force: true})
             .then((btn) => {
-              expect(btn).to.not.be.visible; // eslint-disable-line @typescript-eslint/no-unused-expressions
+              // eslint-disable-next-line @typescript-eslint/no-unused-expressions, @typescript-eslint/unbound-method
+              expect(btn).to.not.be.visible;
 
               // Check the placeholder
               cy.get('.tt-input').should('have.attr', 'placeholder', 'Search…');

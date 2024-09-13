@@ -1,0 +1,31 @@
+{
+  "_description_": "Tsconfig to use lint on every ts files",
+  "extends": "./tsconfig.json",
+  "include": [
+    "*.js",
+    "*.ts",
+    "src/**/*.js",
+    "src/**/*.ts",
+    "srcapi/**/*.js",
+    "srcapi/**/*.ts",
+    "utils/**/*.js",
+    "utils/**/*.ts",
+    "buildtools/**/*.js",
+    "buildtools/**/*.ts",
+    "cypress/**/*.js",
+    "cypress/**/*.ts",
+    "test/spec/**/*.js",
+    "test/spec/**/*.ts",
+    "examples/*.js",
+    "examples/*.ts",
+    "api/src/**/*.js",
+    "api/src/**/*.ts",
+    "contribs/gmf/apps/**/*.js",
+    "contribs/gmf/apps/**/*.ts",
+    "contribs/gmf/test/spec/**/*.js",
+    "contribs/gmf/test/spec/**/*.ts",
+    "contribs/gmf/examples/*.js",
+    "contribs/gmf/examples/*.ts"
+  ],
+  "exclude": []
+}

@@ -14,6 +14,7 @@
 /contribs/gmf/apps/build/
 /contribs/gmf/examples/https.js
 /dist/
+/distlib/
 /test/check-example/*.html.png
 /examples/dist
 /contribs/dist

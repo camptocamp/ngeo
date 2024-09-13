@@ -24,7 +24,7 @@
 const {merge} = require('webpack-merge');
 
 module.exports = (env, args) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const nodeEnv = args.mode || 'production';
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   process.env['NODE_ENV'] = nodeEnv;
@@ -60,7 +60,6 @@ module.exports = (env, args) => {
       config = merge(config, require('./buildtools/webpack.gmfapps'));
       break;
     case 'dist':
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       config = merge(config, require(`./buildtools/webpack.dist`));
       break;
     default:
