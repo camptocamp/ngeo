@@ -37,6 +37,7 @@ repos:
             |examples/measure\.js
             |src/bootstrap-custom\.css\.map
             |buildtools/sgx\.capabilities\.xml
+            |package-lock\.json
           )$
         args:
           - --ignore-words=.github/spell-ignore-words.txt
