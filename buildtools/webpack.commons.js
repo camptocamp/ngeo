@@ -109,7 +109,11 @@ module.exports = function (config) {
 
   const sassRule = {
     test: /\.s[ac]ss$/i,
-    use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'sass-loader'}],
+    use: [
+      {loader: 'style-loader'},
+      {loader: 'css-loader'},
+      {loader: 'sass-loader', options: {warnRuleAsWarning: false}},
+    ],
   };
 
   const resourcesRule = {
