@@ -1,5 +1,4 @@
 *.pyc
-/package-lock.json
 /apidoc/
 /api/dist/api.*
 /.transifexrc
@@ -14,6 +13,7 @@
 /contribs/gmf/apps/build/
 /contribs/gmf/examples/https.js
 /dist/
+/distlib/
 /test/check-example/*.html.png
 /examples/dist
 /contribs/dist

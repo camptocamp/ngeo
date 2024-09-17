@@ -1,10 +1,13 @@
 {
+  "_description_": "Tsconfig base for publishing TS/JS as ES6*/",
   "compilerOptions": {
-    /* Basic Options */
-    "target": "ES2020",
-    "module": "commonjs",
-    "lib": ["es2020", "dom"],
+    "outDir": "distlib",
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "lib": ["es2023", "dom"],
     "esModuleInterop": true,
+    "declaration": true,
     "allowJs": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
@@ -14,6 +17,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "experimentalDecorators": true,
+    "useDefineForClassFields": false,
     "baseUrl": "./",
     "paths": {
       "ngeo/*": ["src/*"],
@@ -25,21 +29,10 @@
       "mapillary-js/*": ["node_modules/mapillary-js/dist/mapillary.d.ts"],
       "moment": ["node_modules/moment/moment.d.ts"],
       "jsts/*": ["node_modules/@types/jsts/index.d.ts"],
-      "localforage/*": ["node_modules/localforage/*"],
-      "resize-observer-polyfill": ["node_modules/resize-observer-polyfill/src/index.d.ts"]
+      "localforage/*": ["node_modules/localforage/*"]
     }
   },
-  "include": [
-    "cypress/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.ts",
-    "lib/**/*.js",
-    "api/src/**/*.js",
-    "contribs/gmf/apps/**/*.js",
-    "test/spec/**/*.js",
-    "contribs/gmf/test/spec/**/*.js",
-    "examples/*.js",
-    "contribs/gmf/examples/*.js"
-  ],
+  "include": ["src/**/*.js", "src/**/*.ts", "srcapi/**/*.ts", "lib/**/*.js", "api/src/**/*.js"],
+  "exclude": ["./**/*.spec.ts", "./**/*.spec.js"],
   "files": ["types/dom.d.ts", "types/custom.d.ts"]
 }

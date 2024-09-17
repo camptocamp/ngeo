@@ -22,8 +22,6 @@
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events';
 import RenderEvent from 'ol/render/Event';
-import {getRenderPixel} from 'ol/render.js';
-import ResizeObserver from 'resize-observer-polyfill';
 import 'jquery-ui/ui/widgets/draggable';
 import htmlTemplate from './swipe.html';
 /**
