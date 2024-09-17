@@ -254,7 +254,7 @@ export class Controller {
       if (this.file) {
         this.hasError = false;
         // update the label
-        $(fileInput).next('.custom-file-label').html(this.fileNameAndSize);
+        $(fileInput).next('.custom-file-label').text(this.fileNameAndSize);
       }
       this.scope_.$apply();
     });
