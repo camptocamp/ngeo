@@ -177,11 +177,12 @@ Controller.prototype.init = function (element) {
     if (!datatarget) {
       throw new Error('Missing datatarget');
     }
-    const slideIn = $(datatarget);
-    if (slideIn.length != 1) {
+    const slideInFound = $.find(datatarget);
+    if (slideInFound.length != 1) {
       throw new Error('Wrong slideIn');
     }
 
+    const slideIn = $(slideInFound);
     // slide the "new" element in
     slideIn.addClass(CLASS_NAMES.ACTIVE);
 
