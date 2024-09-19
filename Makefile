@@ -117,7 +117,7 @@ check-examples-checker: $(CHECK_EXAMPLE_CHECKER)
 check-examples: $(BUILD_EXAMPLES_CHECK_TIMESTAMP_FILES)
 
 .PHONY: lint
-lint: .build/eslint.timestamp .build/eslint-ts.timestamp eclint lint-extra
+lint: .build/eslint.timestamp .build/eslint-ts.timestamp lint-extra
 
 .PHONY: lint-extra
 lint-extra:
@@ -126,10 +126,6 @@ lint-extra:
 
 .PHONY: eslint
 eslint: .build/eslint.timestamp .build/eslint-ts.timestamp
-
-.PHONY: eclint
-eclint: .build/node_modules.timestamp
-	npm run eclint
 
 .PHONY: test
 test: .build/node_modules.timestamp .build/build-dll.timestamp

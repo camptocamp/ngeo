@@ -47,8 +47,10 @@ module.exports = function (config) {
     $: 'jquery',
   });
 
+  const rules = [];
+
   // Expose corejs-typeahead as window.Bloodhound
-  const typeaheadRule = {
+  rules.push({
     test: require.resolve('corejs-typeahead'),
     use: {
       loader: 'expose-loader',
@@ -56,9 +58,9 @@ module.exports = function (config) {
         exposes: 'Bloodhound',
       },
     },
-  };
+  });
 
-  const jqueryRule = {
+  rules.push({
     test: require.resolve('jquery'),
     use: {
       loader: 'expose-loader',
@@ -66,9 +68,9 @@ module.exports = function (config) {
         exposes: '$',
       },
     },
-  };
+  });
 
-  const gmfapiExpose = {
+  rules.push({
     test: path.resolve(__dirname, '../srcapi/index.ts'),
     use: {
       loader: 'expose-loader',
@@ -79,49 +81,28 @@ module.exports = function (config) {
         },
       },
     },
-  };
+  });
 
-  const jsRule = {
-    test: /MapillaryService\.js$/,
-    use: [
-      {
-        loader: 'magic-comments-loader',
-      },
-    ],
-  };
-
-  const tsRule = {
-    test: /\.tsx?$/,
-    use: [
-      {
-        loader: 'ts-loader',
-      },
-      {
-        loader: 'minify-html-literals-loader',
-      },
-    ],
-  };
-
-  const cssRule = {
+  rules.push({
     test: /\.css$/,
     use: [{loader: 'style-loader'}, {loader: 'css-loader'}],
-  };
+  });
 
-  const sassRule = {
+  rules.push({
     test: /\.s[ac]ss$/i,
     use: [
       {loader: 'style-loader'},
       {loader: 'css-loader'},
       {loader: 'sass-loader', options: {warnRuleAsWarning: false}},
     ],
-  };
+  });
 
-  const resourcesRule = {
+  rules.push({
     test: /\.(jpeg|png|ico|eot|ttf|woff|woff2|svg|json)$/,
     type: 'asset/resource',
-  };
+  });
 
-  const htmlRule = {
+  rules.push({
     test: /\.html$/,
     use: {
       loader: 'ejs-loader',
@@ -129,7 +110,30 @@ module.exports = function (config) {
         esModule: false,
       },
     },
-  };
+  });
+
+  if (config.noTs != true) {
+    rules.push({
+      test: /\.tsx?$/,
+      use: [
+        {
+          loader: 'ts-loader',
+        },
+        {
+          loader: 'minify-html-literals-loader',
+        },
+      ],
+    });
+  }
+
+  rules.push({
+    test: /MapillaryService\.js$/,
+    use: [
+      {
+        loader: 'magic-comments-loader',
+      },
+    ],
+  });
 
   const plugins = [
     providePlugin,
@@ -155,17 +159,7 @@ module.exports = function (config) {
       path: path.resolve(__dirname, '../dist/'),
     },
     module: {
-      rules: [
-        typeaheadRule,
-        jqueryRule,
-        gmfapiExpose,
-        cssRule,
-        sassRule,
-        resourcesRule,
-        htmlRule,
-        tsRule,
-        jsRule,
-      ],
+      rules: rules,
     },
     plugins: plugins,
     resolve: {
