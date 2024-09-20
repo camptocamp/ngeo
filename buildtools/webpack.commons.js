@@ -176,11 +176,7 @@ module.exports = function (config) {
         api: path.resolve(__dirname, '../api/src'),
         lib: path.resolve(__dirname, '../lib'),
         gmf: path.resolve(__dirname, '../src'),
-        jsts: 'jsts/org/locationtech/jts',
-        olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-        // required to make it working with types
-        'typeahead': 'corejs-typeahead',
       },
     },
     optimization: {

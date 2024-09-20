@@ -35,7 +35,7 @@ import {DefaultsOptions as OlInteractionDefaultsOptions} from 'ol/interaction/de
 import {Options as OlControlZoomOptions} from 'ol/control/Zoom';
 import OlFeature from 'ol/Feature';
 import OlGeomGeometry from 'ol/geom/Geometry';
-import 'typeahead';
+import 'corejs-typeahead';
 import {InitOptions} from 'i18next';
 
 /**
