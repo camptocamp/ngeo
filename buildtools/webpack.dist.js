@@ -19,10 +19,26 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const plugins = [];
+const entry = {};
+
+for (const name of ['desktop', 'mobile', 'iframe_api']) {
+  const folder = `contribs/gmf/apps/${name}`;
+  entry[name] = `./${folder}/Controller.js`;
+  plugins.push(
+    new HtmlWebpackPlugin({
+      template: `${folder}/index.html.ejs`,
+      inject: false,
+      filename: `${name}.html`,
+      chunks: [name],
+    }),
+  );
+}
+
 module.exports = {
-  entry: {
-    desktop: './contribs/gmf/apps/desktop_alt/Controller.js',
-    mobile: './contribs/gmf/apps/mobile_alt/Controller.js',
-    iframe_api: './contribs/gmf/apps/iframe_api/Controller.js',
-  },
+  entry: entry,
+  plugins: plugins,
 };

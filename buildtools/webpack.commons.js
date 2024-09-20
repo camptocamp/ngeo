@@ -21,7 +21,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const {PromiseTask} = require('event-hooks-webpack-plugin/lib/tasks');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -85,13 +85,13 @@ module.exports = function (config) {
 
   rules.push({
     test: /\.css$/,
-    use: [{loader: 'style-loader'}, {loader: 'css-loader'}],
+    use: [{loader: MiniCssExtractPlugin.loader}, {loader: 'css-loader'}],
   });
 
   rules.push({
     test: /\.s[ac]ss$/i,
     use: [
-      {loader: 'style-loader'},
+      {loader: MiniCssExtractPlugin.loader},
       {loader: 'css-loader'},
       {loader: 'sass-loader', options: {warnRuleAsWarning: false}},
     ],
@@ -140,6 +140,9 @@ module.exports = function (config) {
     new webpack.IgnorePlugin({
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /node_modules\/moment\/src\/lib\/locale$/,
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name]-[contenthash:6].css',
     }),
   ];
   if (config.nodll != true) {

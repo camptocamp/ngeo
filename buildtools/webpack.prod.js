@@ -27,7 +27,7 @@ module.exports = function () {
     mode: 'production',
     devtool: 'source-map',
     output: {
-      filename: '[name].[chunkhash:6].js',
+      filename: '[name]-[chunkhash:6].js',
       assetModuleFilename: '[name]-[contenthash:6][ext]',
     },
     plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
