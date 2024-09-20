@@ -59,9 +59,9 @@
     "jquery-ui/datepicker": "jquery-ui/ui/widgets/datepicker"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "5.15.4",
     "@sentry/browser": "8.33.0",
     "@trevoreyre/autocomplete-js": "3.0.3",
+    "@fortawesome/fontawesome-free": "6.6.0",
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
     "angular-dynamic-locale": "0.1.38",
