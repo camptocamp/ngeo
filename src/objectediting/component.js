@@ -67,8 +67,8 @@ import olStyleStyle from 'ol/style/Style';
 import {CollectionEvent} from 'ol/Collection';
 
 // @ts-ignore: not supported import
-import {OL3Parser} from 'jsts/io';
-import 'jsts/monkey';
+import {OL3Parser} from 'jsts/org/locationtech/jts/io';
+import 'jsts/org/locationtech/jts/monkey';
 import htmlTemplate from './component.html';
 
 /**

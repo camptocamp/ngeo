@@ -1,4 +1,5 @@
 import type {StorybookConfig} from '@storybook/web-components-webpack5';
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.@(ts|tsx)'],
@@ -27,6 +28,7 @@ const config: StorybookConfig = {
     const mergedConfig = {
       ...config,
       module: {...config.module, rules: projectConfig.module.rules},
+      plugins: [...config.plugins, new MiniCssExtractPlugin()],
       resolve: {
         ...config.resolve,
         alias: {

@@ -21,7 +21,7 @@
 
 const path = require('path');
 const webpack = require('webpack');
-const {PromiseTask} = require('event-hooks-webpack-plugin/lib/tasks');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -85,13 +85,13 @@ module.exports = function (config) {
 
   rules.push({
     test: /\.css$/,
-    use: [{loader: 'style-loader'}, {loader: 'css-loader'}],
+    use: [{loader: MiniCssExtractPlugin.loader}, {loader: 'css-loader'}],
   });
 
   rules.push({
     test: /\.s[ac]ss$/i,
     use: [
-      {loader: 'style-loader'},
+      {loader: MiniCssExtractPlugin.loader},
       {loader: 'css-loader'},
       {loader: 'sass-loader', options: {warnRuleAsWarning: false}},
     ],
@@ -141,6 +141,9 @@ module.exports = function (config) {
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /node_modules\/moment\/src\/lib\/locale$/,
     }),
+    new MiniCssExtractPlugin({
+      filename: '[name]-[contenthash:6].css',
+    }),
   ];
   if (config.nodll != true) {
     plugins.push(dllPlugin);
@@ -173,11 +176,7 @@ module.exports = function (config) {
         api: path.resolve(__dirname, '../api/src'),
         lib: path.resolve(__dirname, '../lib'),
         gmf: path.resolve(__dirname, '../src'),
-        jsts: 'jsts/org/locationtech/jts',
-        olcs: 'ol-cesium/src/olcs',
         'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
-        // required to make it working with types
-        'typeahead': 'corejs-typeahead',
       },
     },
     optimization: {

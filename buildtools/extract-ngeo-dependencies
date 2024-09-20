@@ -51,12 +51,13 @@ all_required_js = {a for a in all_required_js if not a.startswith("./")}
 all_required_js = {a for a in all_required_js if not a.startswith("ngeo/")}
 all_required_js = {a for a in all_required_js if not a.startswith("gmf/")}
 all_required_js = {a for a in all_required_js if not a.startswith("gmfapi/")}
-all_required_js = {a for a in all_required_js if not a.startswith("goog/")}
 all_required_js = {a for a in all_required_js if not a.startswith("olcs/")}
 all_required_js = {a for a in all_required_js if not a.startswith("jsts/")}
 all_required_js = {a for a in all_required_js if not a.startswith("mapillary-js/")}
 all_required_js = {
-    a for a in all_required_js if a not in ("corejs-typeahead", "angular-float-thead", "moment")
+    a
+    for a in all_required_js
+    if a not in ("corejs-typeahead", "angular-float-thead", "moment", "mapillary-js", "jsts", "olsc")
 }
 all_required_js = {a for a in all_required_js if not a.endswith(".css")}
 for js in sorted(all_required_js):

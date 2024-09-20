@@ -24,3 +24,10 @@
 /cypress
 **.spec.ts
 /tsconfig*.json
+/apidocs
+/cypress.config.ts
+/eslint.config.mjs
+/locales/
+/svgo.js
+/typedoc.json
+/webpack.config.js

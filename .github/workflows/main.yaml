@@ -164,12 +164,6 @@ jobs:
       - run: npm run doc -- srcapi/store/config.ts --json dist/typedoc.json
       - run: npm run doc
       - run: npm run build-api
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
-      - run: npm run dist
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
-      - run: npm run dist-spinner
 
       - uses: actions/upload-artifact@v4
         with:
