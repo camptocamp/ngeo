@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import create from 'ngeo/proj/utils';
+import {createProjection} from 'ngeo/proj/utils';
 
 export const code = 'EPSG:21781';
 
@@ -37,8 +37,7 @@ const def = [
 ];
 const extent = [420000, 30000, 900000, 350000];
 
-const projections = {};
-projections[code] = {'definition': def, 'extent': extent};
-export const proj = create(projections);
+const projection = {'definition': def, 'extent': extent};
+export const proj = createProjection(code, projection);
 
 export default code;
