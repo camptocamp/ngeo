@@ -25,7 +25,7 @@ import angular from 'angular';
 import {SEARCH} from './url';
 import gmfMapComponent from 'gmf/map/component';
 import options from './options';
-import {proj as EPSG2056} from 'ngeo/proj/EPSG_2056';
+import EPSG2056 from 'ngeo/proj/EPSG_2056';
 import ngeoSearchModule from 'ngeo/search/module';
 import olMap from 'ol/Map';
 import olView from 'ol/View';
@@ -121,7 +121,7 @@ function SearchController($element, $rootScope, $compile, ngeoSearchCreateGeoJSO
             window.alert(feature.get('label'));
             event.stopPropagation();
           };
-          const html = `<p>${feature.get('label')}<button ng-click="click($event)">i</button></p>`;
+          const html = `<p><span>${feature.get('label')}</span><button ng-click="click($event)">i</button></p>`;
           return $compile(html)(scope).html();
         },
       },
@@ -195,7 +195,12 @@ SearchController.prototype.createVectorLayer_ = function () {
  */
 SearchController.prototype.createAndInitBloodhound_ = function (ngeoSearchCreateGeoJSONBloodhound) {
   const url = SEARCH;
-  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(url, undefined, olProj.get('EPSG:3857'), EPSG2056);
+  const bloodhound = ngeoSearchCreateGeoJSONBloodhound(
+    url,
+    undefined,
+    olProj.get('EPSG:3857'),
+    olProj.get(EPSG2056),
+  );
   bloodhound.initialize();
   return bloodhound;
 };
