@@ -60,14 +60,9 @@ function fileMock(name, contentType) {
 const OSMImage = fileMock('osm.png', 'image/png');
 const ASITVDCapabilities = fileMock('asitvd.capabilities.xml', 'text/xml');
 const SgxCapabilities = fileMock('sgx.capabilities.xml', 'text/xml');
-let browser;
-let browserClosed = false;
 
 process.on('unhandledRejection', async (reason, promise) => {
   console.log('UnhandledRejection: ', promise, 'reason:', reason);
-  if (browser && !browserClosed) {
-    await browser.close();
-  }
   process.exit(2);
 });
 
@@ -88,7 +83,6 @@ function loaded(page, browser) {
         console.log(`The page take more than 60s. to load (${(new Date() - start) / 1000}).`);
         console.log('Pending requests:');
         requestsURL.forEach((request) => console.log(request));
-        await browser.close();
         process.exit(2);
       } else {
         timeout = undefined;
@@ -105,25 +99,30 @@ function loaded(page, browser) {
             .then(
               async () => {
                 console.log(`Screenshot saved at: ${screenshotPath}`);
-                await browser.close();
+                process.exit();
               },
               async (e) => {
                 console.log(`Screenshot error: ${e}`);
-                await browser.close();
                 process.exit(2);
               },
             );
         }, 1000);
       } else {
-        await browser.close();
+        process.exit();
       }
     }
   }, 500);
 }
 (async () => {
-  browser = await puppeteer.launch({
+  const browser = await puppeteer.launch({
     args: ['--no-sandbox', '--disable-web-security', '--single-process'],
     headless: true,
+    // Don't store the user data
+    userDataDir: '/dev/null',
+  });
+  process.on('exit', (code) => {
+    console.log('Closing browser');
+    browser.close();
   });
   const page = await browser.newPage();
 
@@ -132,13 +131,11 @@ function loaded(page, browser) {
   page.on('pageerror', async (e) => {
     console.log('Page error');
     console.log(e);
-    await browser.close();
     process.exit(2);
   });
   page.on('dialog', async (e) => {
     console.log('Unexpected alert message');
     console.log(e);
-    await browser.close();
     process.exit(2);
   });
   page.on('request', (request) => {
@@ -259,7 +256,6 @@ function loaded(page, browser) {
       !url.startsWith('https://maps.googleapis.com/')
     ) {
       console.log(`Request failed on: ${url}`);
-      await browser.close();
       process.exit(2);
     }
     loaded(page, browser);
@@ -285,21 +281,13 @@ function loaded(page, browser) {
           .text()
           .includes('Multiple versions of Lit loaded. Loading multiple versions is not recommended.')
       ) {
-        await browser.close();
         process.exit(2);
       }
     }
   });
   await page.goto(page_url).catch(async (error) => {
     console.log(`Page load error: ${error}.`);
-    await browser.close();
     process.exit(2);
   });
   loaded(page, browser);
-})().catch(async (error) => {
-  console.log(`Unexpected error: ${error}.`);
-  if (browser && !browserClosed) {
-    await browser.close();
-  }
-  process.exit(2);
-});
+})();
