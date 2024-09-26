@@ -35,11 +35,9 @@ import gmfControllersAbstractDesktopController, {
 import appBase from '../appmodule';
 import gmfImportModule from 'gmf/import/module';
 import gmfFloorModule from 'gmf/floor/module';
-import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoStreetviewModule from 'ngeo/streetview/module';
 import ngeoRoutingModule from 'ngeo/routing/module';
 import ngeoStatemanagerWfsPermalink from 'ngeo/statemanager/WfsPermalink';
-import panels from 'gmfapi/store/panels';
 
 /**
  * @private
@@ -54,20 +52,6 @@ class Controller extends AbstractDesktopController {
     if (this.dimensions.FLOOR == undefined) {
       this.dimensions.FLOOR = '*';
     }
-
-    /**
-     * @type {boolean}
-     */
-    this.drawLidarprofilePanelActive = false;
-    const drawLidarprofilePanelActive = new ngeoMiscToolActivate(this, 'drawLidarprofilePanelActive');
-    this.ngeoToolActivateMgr.registerTool('mapTools', drawLidarprofilePanelActive, false);
-    const $timeout = $injector.get('$timeout');
-    panels.getActiveToolPanel().subscribe({
-      next: (panel) => {
-        this.drawLidarprofilePanelActive = panel === 'lidar';
-        $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular digest
-      },
-    });
   }
 
   /**

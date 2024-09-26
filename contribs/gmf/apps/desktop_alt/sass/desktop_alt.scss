@@ -63,7 +63,7 @@ div .ngeo-displaywindow {
   $displaywindow-min-height: 15rem;
   left: calc($app-margin + $left-panel-width + $displaywindow-min-height / 2);
   right: initial;
-  top: $topbar-height + $app-margin + 3 * $map-tools-size;
+  top: calc($topbar-height + $app-margin + 3 * $map-tools-size);
 }
 
 .offset-info-icon {
