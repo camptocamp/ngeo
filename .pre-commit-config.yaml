@@ -126,7 +126,7 @@ repos:
     #         - eslint-plugin-lit@1.7.2
     #         - eslint-plugin-wc@1.4.0
   - repo: https://github.com/sbrunner/hooks
-    rev: 1.0.0
+    rev: 1.1.0
     hooks:
       - id: copyright
       - id: workflows-require-timeout
@@ -136,6 +136,6 @@ repos:
       - id: jsonschema-validator
         files: ^ci/config\.yaml$
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 37.428.3
+    rev: 37.440.7
     hooks:
       - id: renovate-config-validator
