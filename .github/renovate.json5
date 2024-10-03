@@ -101,5 +101,11 @@
       matchBaseBranches: ['/^[0-9]+\\.[0-9]+$/'],
       minimumReleaseAge: '7 days',
     },
+    /** Disable cheerio update on stabilization branches, patch release contains braking changes */
+    {
+      matchBaseBranches: ['/^[0-9]+\\.[0-9]+$/'],
+      matchDepNames: ['cheerio'],
+      enabled: false,
+    },
   ],
 }
