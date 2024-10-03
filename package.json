@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.4",
-    "@sentry/browser": "8.32.0",
+    "@sentry/browser": "8.33.0",
     "@trevoreyre/autocomplete-js": "3.0.3",
     "angular": "1.8.3",
     "angular-animate": "1.8.3",
