@@ -405,12 +405,12 @@ export class AbstractDesktopController extends AbstractAPIController {
       .appendTo($resizableEastHandle)
       .append(
         $('<span>', {
-          'class': `fa fa-angles-left ${dataPanelCls}-collapse-btn`,
+          'class': `fa-solid fa-angles-left ${dataPanelCls}-collapse-btn`,
         }),
       )
       .append(
         $('<span>', {
-          'class': `fa fa-angles-right ${dataPanelCls}-expand-btn`,
+          'class': `fa-solid fa-angles-right ${dataPanelCls}-expand-btn`,
         }),
       );
     $scope.$watch(
@@ -499,7 +499,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       .appendTo($resizableToolsHandle)
       .append(
         $('<span>', {
-          'class': `fa fa-angles-right ${toolsPanelCls}-collapse-btn`,
+          'class': `fa-solid fa-angles-right ${toolsPanelCls}-collapse-btn`,
         }),
       );
 

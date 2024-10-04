@@ -716,7 +716,7 @@ Controller.prototype.handleMapContextMenu_ = function (evt) {
       }
       actions = actions.concat([
         {
-          cls: 'fa fa-trash',
+          cls: 'fa-solid fa-trash',
           label: vertexInfo ? gettextCatalog.getString('Delete vertex') : gettextCatalog.getString('Delete'),
           name: 'delete',
         },

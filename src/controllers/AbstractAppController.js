@@ -777,7 +777,7 @@ AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
  */
 export function getLocationIcon() {
   const arrow = document.createElement('span');
-  arrow.className = 'fa fa-location-crosshairs-arrow';
+  arrow.className = 'fa-solid fa-location-crosshairs-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
   const arrowWrapper = document.createElement('span');
   arrowWrapper.appendChild(arrow);

@@ -23,7 +23,7 @@ import svgSpinner from 'gmf/icons/spinner_svg';
 
 export default `<div class="gmf-profile-container panel" ng-show="ctrl.active">
   <div class="spinner-profile" ng-show="ctrl.isLoading">
-    <i class="fa fa-spin"
+    <i class="fa-solid fa-spin"
       >${svgSpinner('3rem')}</i>
   </div>
 
@@ -37,7 +37,7 @@ export default `<div class="gmf-profile-container panel" ng-show="ctrl.active">
 
   <ul class="gmf-profile-legend" ng-if="!ctrl.isErrored && !ctrl.isLoading">
     <li ng-repeat="name in ::ctrl.getLayersNames()">
-      <i class="fa fa-minus" ng-style="ctrl.getStyle(name)"></i>
+      <i class="fa-solid fa-minus" ng-style="ctrl.getStyle(name)"></i>
       {{name | translate}}
       <span ng-if="ctrl.currentPoint.elevations[name] != null">
         {{ctrl.currentPoint.elevations[name]}}&nbsp;{{ctrl.currentPoint.yUnits}}
@@ -59,7 +59,7 @@ export default `<div class="gmf-profile-container panel" ng-show="ctrl.active">
     <ul class="dropdown-menu dropdown-menu-right" role="menu">
       <li>
         <a href="" ng-click="::ctrl.downloadCsv()">
-          <i class="fa fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a
+          <i class="fa-solid fa-table"></i>&nbsp;{{'Download CSV' | translate}}</a
         >
       </li>
     </ul>

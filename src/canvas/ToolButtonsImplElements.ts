@@ -42,7 +42,7 @@ export class ToolButtonPrint extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Print')}"
       >
-        <span class="fa fa-print"></span>
+        <span class="fa-solid fa-print"></span>
       </button>
     `;
   }
@@ -63,7 +63,7 @@ export class ToolButtonDraw extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Draw and Measure')}"
       >
-        <span class="fa fa-paintbrush"></span>
+        <span class="fa-solid fa-paintbrush"></span>
       </button>
     `;
   }
@@ -118,7 +118,7 @@ export class ToolButtonEditing extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Editing')}"
       >
-        <span class="fa fa-pen-to-square"></span>
+        <span class="fa-solid fa-pen-to-square"></span>
       </button>
     `;
   }
@@ -139,7 +139,7 @@ export class ToolButtonProfile extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Elevation profile')}"
       >
-        <span class="fa fa-chart-area"></span>
+        <span class="fa-solid fa-chart-area"></span>
       </button>
     `;
   }
@@ -160,7 +160,7 @@ export class ToolButtonGooglestreetview extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Google Street View')}"
       >
-        <span class="fa fa-street-view"></span>
+        <span class="fa-solid fa-street-view"></span>
       </button>
     `;
   }
@@ -181,7 +181,7 @@ export class ToolButtonMapillary extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Mapillary')}"
       >
-        <span class="fa fa-street-view"></span>
+        <span class="fa-solid fa-street-view"></span>
       </button>
     `;
   }
@@ -203,8 +203,8 @@ export class ToolButtonSelect extends ToolButtonElement {
         data-original-title="${i18next.t('Selection')}"
       >
         <span>
-          <i class="fa fa-arrow-pointer"></i>
-          <i class="fa fa-info fa-xs offset-info-icon"></i>
+          <i class="fa-solid fa-arrow-pointer"></i>
+          <i class="fa-solid fa-info fa-xs offset-info-icon"></i>
         </span>
       </button>
     `;
@@ -226,7 +226,7 @@ export class ToolButtonImport extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Import Layer')}"
       >
-        <span class="fa fa-upload"></span>
+        <span class="fa-solid fa-upload"></span>
       </button>
     `;
   }
@@ -247,7 +247,7 @@ export class ToolButtonRouting extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Routing')}"
       >
-        <span class="fa fa-signs-post"></span>
+        <span class="fa-solid fa-signs-post"></span>
       </button>
     `;
   }

@@ -61,7 +61,7 @@ export default class GmfAuthPanel extends ToolPanelElement {
     const spinnerTemplate = this.postLoading
       ? html`
           <div>
-            <i class="fa fa-spin svg-spinner">${svgSpinner()}</i>
+            <i class="fa-solid fa-spin svg-spinner">${svgSpinner()}</i>
             ${i18next.t('Loading themes, please wait...')}
           </div>
         `

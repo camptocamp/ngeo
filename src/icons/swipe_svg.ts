@@ -22,7 +22,7 @@
 export default `<svg
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
-        class="svg-inline--fa fa-sort fa-w-10"
+        class="svg-inline--fa-solid fa-sort fa-w-10"
         data-icon="sort"
         data-prefix="fas"
         viewBox="0 0 16 16"

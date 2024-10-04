@@ -40,7 +40,7 @@ export default `<div
   >
     <span class="gmf-elevationwidget-value">
       {{ctrl.elevationValue}}
-      <span ng-show="ctrl.elevationLoading" class="fa fa-spin custom-spinner-generic"
+      <span ng-show="ctrl.elevationLoading" class="fa-solid fa-spin custom-spinner-generic"
         >${svgSpinner('1rem')}</span>
       <span ng-show="!ctrl.elevationValue && !ctrl.elevationLoading" translate>Raster</span> </span
     ><span class="caret" ng-if="::ctrl.options.layers.length > 1"></span>
@@ -49,7 +49,7 @@ export default `<div
     <li class="dropdown-header" translate>Data source</li>
     <li ng-repeat="elevationItem in ::ctrl.options.layers">
       <a href ng-click="ctrl.selectedElevationLayer = elevationItem">
-        <span class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
+        <span class="fa-solid fa-fw" ng-class="{'fa-check': ctrl.selectedElevationLayer === elevationItem}"></span>
         {{elevationItem | translate}}
       </a>
     </li>

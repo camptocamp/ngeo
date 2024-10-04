@@ -26,7 +26,7 @@
             <a href
                class="btn btn-block prime dropdown-toggle"
                data-toggle="dropdown">
-              <span class="fa fa-grid"></span>
+              <span class="fa-solid fa-grid"></span>
               <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
                 <span translate>Theme:</span>
                 <b ng-if="mainCtrl.gmfThemeManager.isLoading()" translate>Loading...</b>
@@ -54,15 +54,15 @@
           <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
-              <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-xmark' : 'fa-user'"></span>
+              <span class="fa-solid fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-xmark' : 'fa-user'"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
-              <span class="fa fa-print"></span>
+              <span class="fa-solid fa-print"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw and Measure'|translate}}">
-              <span class="fa fa-paintbrush"></span>
+              <span class="fa-solid fa-paintbrush"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
@@ -73,29 +73,29 @@
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
               ng-show="mainCtrl.hasEditableLayers">
-              <span class="fa fa-pen-to-square"></span>
+              <span class="fa-solid fa-pen-to-square"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
-              <span class="fa fa-chart-area"></span>
+              <span class="fa-solid fa-chart-area"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.queryPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Selection'|translate}}">
               <span>
-                <i class="fa fa-arrow-pointer"></i>
-                <i class="fa fa-info fa-xs offset-info-icon"></i>
+                <i class="fa-solid fa-arrow-pointer"></i>
+                <i class="fa-solid fa-info fa-xs offset-info-icon"></i>
               </span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.importDataSourceActive"
                     data-toggle="tooltip" data-placement="left" data-original-title="{{'Import Layer'|translate}}">
-              <span class="fa fa-upload"></span>
+              <span class="fa-solid fa-upload"></span>
             </button>
           </div>
           <br/>
           <br/>
           <span data-toggle="tooltip" data-placement="left" data-original-title="{{'Share this map'|translate}}">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.modalShareShown">
-              <span class="fa fa-share-nodes"></span>
+              <span class="fa-solid fa-share-nodes"></span>
             </button>
           </span>
         </div>

@@ -54,7 +54,7 @@
       </gmf-search>
       <button class="gmf-mobile-nav-trigger gmf-mobile-nav-right-trigger"
         ng-click="mainCtrl.toggleRightNavVisibility()">
-        <i class="fa fa-wrench"></i>
+        <i class="fa-solid fa-wrench"></i>
       </button>
       <div class="overlay"
         ng-swipe-disable-mouse
@@ -83,7 +83,7 @@
       <div class="gmf-app-map-messages">
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
         <div class="alert alert-info alert-dismissible fade show d-none d-md-block" role="alert" ng-if="::mainCtrl.redirectUrl !== ''">
-          <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-xmark"></span></button>
+          <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa-solid fa-xmark"></span></button>
           <span translate
             translate-params-url="::mainCtrl.redirectUrl">
             You're using the mobile application. Check out the <a href="{{url}}">standard application</a>.</span>
@@ -147,7 +147,7 @@
               ng-click="mainCtrl.hideNav()"
               class="gmf-mobile-nav-button"
               ng-model="mainCtrl.measurePointActive">
-              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
+              <span class="fa-solid fa-fw" ng-class="{'fa-check': mainCtrl.measurePointActive}"></span>
               {{'Coordinate' | translate}}
             </a>
           </li>
@@ -156,7 +156,7 @@
               ng-click="mainCtrl.hideNav()"
               class="gmf-mobile-nav-button"
               ng-model="mainCtrl.measureLengthActive">
-              <span class="fa fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
+              <span class="fa-solid fa-fw" ng-class="{'fa-check': mainCtrl.measureLengthActive}"></span>
               {{'Length' | translate}}
             </a>
           </li>

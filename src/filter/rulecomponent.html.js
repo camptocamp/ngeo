@@ -210,7 +210,7 @@ export default `<div class="dropdown">
     ng-disabled="$ctrl.rule.active"
     href
   >
-    <span class="fa fa-xmark"></span>
+    <span class="fa-solid fa-xmark"></span>
   </a>
 
   <div ng-switch="::$ctrl.rule.type">

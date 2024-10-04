@@ -31,19 +31,19 @@ export default `<ul>
         ngeo-popover-dismiss=".content"
         ngeo-popover-placement="left"
       >
-        <span ngeo-popover-anchor class="fa fa-gear gmf-wmscapabilitylayertreenode-actions"> </span>
+        <span ngeo-popover-anchor class="fa-solid fa-gear gmf-wmscapabilitylayertreenode-actions"> </span>
 
         <div class="gmf-wmscapabilitylayertreenode-popover-content" ngeo-popover-content>
           <ul>
             <li ng-if="::(layer.Name !== undefined)">
-              <i class="fa fa-plus fa-fw"></i>
+              <i class="fa-solid fa-plus fa-fw"></i>
               <a href="" ng-click="$ctrl.createAndAddDataSource(layer); popoverCtrl.dismissPopover()">
                 <span translate>Add layer</span>
               </a>
             </li>
 
             <li ng-if="::(layer.Abstract !== undefined)">
-              <i class="fa fa-table-list fa-fw"></i>
+              <i class="fa-solid fa-table-list fa-fw"></i>
               <a
                 aria-expanded="false"
                 data-toggle="collapse"
@@ -67,11 +67,11 @@ export default `<ul>
 
       <span
         ng-if="::(layer.Layer !== undefined && layer.Layer.length)"
-        class="fa fa-fw gmf-wmscapabilitylayertreenode-group"
+        class="fa-solid fa-fw gmf-wmscapabilitylayertreenode-group"
         >${svgLayers}</span>
 
       <a
-        class="fa fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw"
+        class="fa-solid fa-circle-thin gmf-wmscapabilitylayertreenode-no-icon fa-fw"
         ng-if="::(layer.Layer === undefined || layer.Layer.length === 0)"
       ></a>
 

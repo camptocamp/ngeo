@@ -30,7 +30,7 @@ export default `<div class="gmf-layertree-group gmf-layertree-depth-1 {{$ctrl.gr
   >
   </a>
 
-  <a class="fa fa-fw gmf-layertree-state" href ng-click="$ctrl.toggle()"
+  <a class="fa-solid fa-fw gmf-layertree-state" href ng-click="$ctrl.toggle()"
     >${svgLayers}</a>
 
   <a class="gmf-layertree-name" href ng-click="$ctrl.toggle()">
@@ -39,7 +39,7 @@ export default `<div class="gmf-layertree-group gmf-layertree-depth-1 {{$ctrl.gr
 
   <span class="gmf-layertree-right-buttons">
     <a href="" ng-click="$ctrl.remove()">
-      <span class="fa fa-trash"></span>
+      <span class="fa-solid fa-trash"></span>
     </a>
   </span>
 </div>
@@ -63,18 +63,18 @@ export default `<div class="gmf-layertree-group gmf-layertree-depth-1 {{$ctrl.gr
 
       <span class="gmf-layertree-right-buttons">
         <a href="" ng-click="$ctrl.removeDataSource(dataSource)">
-          <span class="fa fa-trash"></span>
+          <span class="fa-solid fa-trash"></span>
         </a>
         <a class="gmf-layertree-node-menu-btn" href="" ng-if="ctrl.getLegendUrl(dataSource.legend)">
-          <span class="fa fa-gear"></span>
+          <span class="fa-solid fa-gear"></span>
         </a>
         <span ngeo-popover ng-if="$ctrl.getLegendUrl(dataSource.legend)" ngeo-popover-dismiss=".content">
-          <span ngeo-popover-anchor class="extra-actions fa fa-gear" id="popup-id-{{dataSource.id}}"> </span>
+          <span ngeo-popover-anchor class="extra-actions fa-solid fa-gear" id="popup-id-{{dataSource.id}}"> </span>
 
           <div ngeo-popover-content>
             <ul>
               <li ng-if="$ctrl.getLegendUrl(dataSource.legend)">
-                <i class="fa fa-table-list fa-fw"></i>
+                <i class="fa-solid fa-table-list fa-fw"></i>
                 <a
                   ng-click="$ctrl.toggleNodeLegend(dataSource.id + 'legend'); popoverCtrl.dismissPopover()"
                   href=""

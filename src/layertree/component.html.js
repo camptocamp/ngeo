@@ -32,7 +32,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     ng-if="gmfLayertreeCtrl.nodesCount() > 0 || !gmfLayertreeCtrl.gmfExternalDataSourcesManager.isEmpty()"
     ng-click="gmfLayertreeCtrl.removeAllNodes()"
   >
-    <span class="fa fa-trash"></span> {{'Clear all' | translate}}
+    <span class="fa-solid fa-trash"></span> {{'Clear all' | translate}}
   </a>
 </div>
 <div
@@ -44,7 +44,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     class="ngeo-sortable-handle"
     ng-show="layertreeCtrl.depth === 1 && layertreeCtrl.parent.children.length > 1"
   >
-    <i class="gmf-layertree-sortable-handle-icon fa fa-ellipsis-vertical"></i>
+    <i class="gmf-layertree-sortable-handle-icon fa-solid fa-ellipsis-vertical"></i>
   </div>
 
   <a
@@ -82,7 +82,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     href
     ng-click="::gmfLayertreeCtrl.toggleActive(layertreeCtrl)"
     ng-if="layertreeCtrl.node.children && layertreeCtrl.layer.loading"
-    class="fa fa-fw custom-spinner-generic fa-spin"
+    class="fa-solid fa-fw custom-spinner-generic fa-spin"
     >${svgSpinner('1rem')}</a>
   <a
     href
@@ -150,7 +150,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     </span>
 
     <span
-      class="fa fa-pen-to-square"
+      class="fa-solid fa-pen-to-square"
       data-toggle="tooltip"
       data-placement="right"
       title="{{'Currently editing this layer'|translate}}"
@@ -172,7 +172,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
 
   <span class="gmf-layertree-right-buttons">
     <a href="" ng-if="::layertreeCtrl.depth == 1" ng-click="gmfLayertreeCtrl.removeNode(layertreeCtrl.node)">
-      <span class="fa fa-trash"></span>
+      <span class="fa-solid fa-trash"></span>
     </a>
 
     <a
@@ -181,7 +181,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
       ng-if="::gmfLayertreeCtrl.supportsCustomization(layertreeCtrl)"
       ng-click="::gmfLayertreeCtrl.toggleNodeMenu('#gmf-layertree-node-menu-' + layertreeCtrl.uid)"
     >
-      <span class="fa fa-gear"></span>
+      <span class="fa-solid fa-gear"></span>
     </a>
 
     <span
@@ -190,13 +190,13 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
       ngeo-popover-dismiss=".content"
       ng-click="::gmfLayertreeCtrl.tagPopup(layertreeCtrl.node)"
     >
-      <span ngeo-popover-anchor class="extra-actions fa fa-gear" id="popup-id-{{layertreeCtrl.node.ol_uid}}">
+      <span ngeo-popover-anchor class="extra-actions fa-solid fa-gear" id="popup-id-{{layertreeCtrl.node.ol_uid}}">
       </span>
 
       <div ngeo-popover-content>
         <ul>
           <li ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
-            <i class="fa fa-droplet fa-fw"></i>
+            <i class="fa-solid fa-droplet fa-fw"></i>
             <span>{{'Opacity'|translate}}</span>
             <input
               class="input-action"
@@ -211,7 +211,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
           <li
             ng-if="::gmfLayertreeCtrl.getLegendsObject(layertreeCtrl) && layertreeCtrl.node.metadata.legend"
           >
-            <i class="fa fa-table-list fa-fw"></i>
+            <i class="fa-solid fa-table-list fa-fw"></i>
             <a
               ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend'); popoverCtrl.dismissPopover()"
               href=""
@@ -233,7 +233,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
           </li>
 
           <li ng-if="gmfLayertreeCtrl.isFiltrable(layertreeCtrl)">
-            <i class="fa fa-filter fa-fw"></i>
+            <i class="fa-solid fa-filter fa-fw"></i>
             <a ng-click="gmfLayertreeCtrl.toggleFiltrableDataSource(layertreeCtrl.getDataSource())" href="">
               {{'Filter'|translate}}
             </a>
@@ -285,7 +285,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
   </div>
 
   <div ng-if="::gmfLayertreeCtrl.supportsOpacityChange(layertreeCtrl)">
-    <i class="fa fa-droplet fa-fw"></i>
+    <i class="fa-solid fa-droplet fa-fw"></i>
     <span>{{'Opacity'|translate}}</span>
     <input
       class="input-action"
@@ -303,7 +303,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     ng-click="::gmfLayertreeCtrl.toggleNodeLegend('#gmf-layertree-node-' + layertreeCtrl.uid + '-legend')"
     href=""
   >
-    <span class="fa fa-table-list"> </span>
+    <span class="fa-solid fa-table-list"> </span>
     {{'Show/hide legend'|translate}}
   </a>
 </div>

@@ -139,11 +139,11 @@ export default `<ngeo-drawfeature
             ngeo-exportfeatures-features="efCtrl.features"
             class="btn btn-link btn-sm dropdown-toggle"
           >
-            <span class="fa fa-file-export"></span>
+            <span class="fa-solid fa-file-export"></span>
             {{'Export' | translate}}
           </button>
           <button ng-click="efCtrl.clearFeatures()" class="btn btn-link btn-sm">
-            <span class="fa fa-trash"></span>
+            <span class="fa-solid fa-trash"></span>
             {{'Delete All' | translate}}
           </button>
         </div>
@@ -164,7 +164,7 @@ export default `<ngeo-drawfeature
 
   <div ng-switch-default>
     <button ng-click="efCtrl.selectedFeature = null;" class="btn btn-link btn-sm">
-      <span class="fa fa-arrow-left"></span>
+      <span class="fa-solid fa-arrow-left"></span>
       {{'List' | translate}}
     </button>
     <div class="ngeo-drawfeature-actionbuttons">
@@ -177,11 +177,11 @@ export default `<ngeo-drawfeature
         ngeo-exportfeatures-features="efCtrl.selectedFeatures"
         class="btn btn-link btn-sm dropdown-toggle"
       >
-        <span class="fa fa-file-export"></span>
+        <span class="fa-solid fa-file-export"></span>
         {{'Export' | translate}}
       </button>
       <button ng-click="efCtrl.removeFeature(efCtrl.selectedFeature);" class="btn btn-link btn-sm">
-        <span class="fa fa-trash"></span>
+        <span class="fa-solid fa-trash"></span>
         {{'Delete' | translate}}
       </button>
     </div>

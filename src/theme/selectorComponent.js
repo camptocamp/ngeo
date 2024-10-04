@@ -78,7 +78,7 @@ function gmfThemeSelectorTemplateUrl($attrs, gmfThemeSelectorTemplateUrl) {
  * Example:
  *
  *      <a href class="btn btn-block btn-primary dropdown-toggle" data-toggle="dropdown">
- *          <span class="fa fa-grid"></span>
+ *          <span class="fa-solid fa-grid"></span>
  *          <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
  *            <span translate>Theme:</span>
  *            <b ng-if="!mainCtrl.gmfThemeManager.getThemeName()" translate>Loading..</b>

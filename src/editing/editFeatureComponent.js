@@ -480,7 +480,7 @@ export function Controller(
   this.menuVertex_ = new ngeoMenu({
     actions: [
       {
-        cls: 'fa fa-trash',
+        cls: 'fa-solid fa-trash',
         label: gettextCatalog.getString('Delete vertex'),
         name: 'delete',
       },

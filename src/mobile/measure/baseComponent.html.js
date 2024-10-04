@@ -20,22 +20,22 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 export default `<a class="btn btn-default" ng-if="ctrl.drawing && (!ctrl.valid)" ng-click="ctrl.addPoint()">
-  <span class="fa fa-check"></span>
+  <span class="fa-solid fa-check"></span>
   {{'Set as starting point' | translate}}
 </a>
 <a class="btn btn-default" ng-if="ctrl.dirty" ng-click="ctrl.addPoint()">
-  <span class="fa fa-plus"></span>
+  <span class="fa-solid fa-plus"></span>
   {{'Add new point' | translate}}
 </a>
 <a class="btn btn-default" ng-if="ctrl.drawing && ctrl.valid && !ctrl.dirty" ng-click="ctrl.finish()">
-  <span class="fa fa-check"></span>
+  <span class="fa-solid fa-check"></span>
   {{'Terminate' | translate}}
 </a>
 <a class="btn btn-default" ng-if="ctrl.valid" ng-click="ctrl.clear()">
-  <span class="fa fa-repeat"></span>
+  <span class="fa-solid fa-repeat"></span>
   {{'Clear' | translate}}
 </a>
 <a class="btn btn-default" ng-if="ctrl.active" ng-click="ctrl.deactivate()">
-  <span class="fa fa-xmark"></span>
+  <span class="fa-solid fa-xmark"></span>
   {{'Close' | translate}}
 </a>`;
