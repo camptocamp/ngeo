@@ -116,7 +116,7 @@
         data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
           <span
             class="fa"
-            ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'">
+            ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-filter-circle-dollar' : 'fa-filter'">
           </span>
         </button>
       </gmf-filter-button>
@@ -270,7 +270,7 @@
       <!-- Permalink -->
       <span slot="tool-button-separate">
         <button ngeo-btn class="btn btn-default gmf-app-tools-bar" ng-model="mainCtrl.modalShareShown"  data-toggle="tooltip" data-placement="left" data-original-title="{{'Share this map'|translate}}">
-          <span class="fa fa-share-alt"></span>
+          <span class="fa fa-share-nodes"></span>
         </button>
       </span>
 
@@ -301,7 +301,7 @@
         ngeo-geolocation-map="::mainCtrl.map"
         ngeo-geolocation-loading="mainCtrl.loading"
         ng-if="::mainCtrl.options.geolocalisation">
-        <span class="far fa-dot-circle"></span>
+        <span class="far fa-circle-dot"></span>
       </button>
       <div slot="map" class="gmf-app-map-bottom-controls">
         <div class="gmf-backgroundlayerbutton btn-group dropup">

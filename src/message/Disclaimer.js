@@ -212,7 +212,7 @@ export class MessageDisclaimerService extends ngeoMessageMessage {
       }
       const el = angular.element(`<div role="alert" class="${classNames.join(' ')}"></div>`);
       const button = angular.element(
-        `<button type="button" class="close" data-dismiss="alert" aria-label="${gettextCatalog.getString('Close')}"><span aria-hidden="true" class="fa fa-times"></span></button>`,
+        `<button type="button" class="close" data-dismiss="alert" aria-label="${gettextCatalog.getString('Close')}"><span aria-hidden="true" class="fa fa-xmark"></span></button>`,
       );
       const msg = angular.element('<span />').html(message.msg);
       el.append(button).append(msg);

@@ -39,7 +39,7 @@ export default `<div class="gmf-search">
 <span ng-if="$ctrl.options.colorChooser">
   <span ng-show="$ctrl.displayColorPicker" ngeo-popover ngeo-popover-placement="bottom">
     <button
-      class="gmf-color-button fa fa-tint"
+      class="gmf-color-button fa fa-droplet"
       ngeo-popover-anchor
       data-original-title="{{'Change the color of the search result'|translate}}"
     ></button>

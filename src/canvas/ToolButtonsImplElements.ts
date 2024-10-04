@@ -63,7 +63,7 @@ export class ToolButtonDraw extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Draw and Measure')}"
       >
-        <span class="fa fa-paint-brush"></span>
+        <span class="fa fa-paintbrush"></span>
       </button>
     `;
   }
@@ -97,7 +97,7 @@ export class ToolButtonFilter extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Filter')}"
       >
-        <span class="fa ${this.filter_ ? 'fa-funnel-dollar' : 'fa-filter'}"></span>
+        <span class="fa ${this.filter_ ? 'fa-filter-circle-dollar' : 'fa-filter'}"></span>
       </button>
     `;
   }
@@ -118,7 +118,7 @@ export class ToolButtonEditing extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Editing')}"
       >
-        <span class="fa fa-edit"></span>
+        <span class="fa fa-pen-to-square"></span>
       </button>
     `;
   }
@@ -203,7 +203,7 @@ export class ToolButtonSelect extends ToolButtonElement {
         data-original-title="${i18next.t('Selection')}"
       >
         <span>
-          <i class="fa fa-mouse-pointer"></i>
+          <i class="fa fa-arrow-pointer"></i>
           <i class="fa fa-info fa-xs offset-info-icon"></i>
         </span>
       </button>
@@ -247,7 +247,7 @@ export class ToolButtonRouting extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Routing')}"
       >
-        <span class="fa fa-map-signs"></span>
+        <span class="fa fa-signs-post"></span>
       </button>
     `;
   }

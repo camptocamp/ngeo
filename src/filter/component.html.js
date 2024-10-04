@@ -27,7 +27,7 @@ export default `<div class="dropdown">
     data-toggle="dropdown"
     ng-disabled="$ctrl.aRuleIsActive"
   >
-    <span class="fa fa-cog"></span>
+    <span class="fa fa-gear"></span>
   </button>
   <ul class="dropdown-menu">
     <li ng-repeat="condition in ::$ctrl.conditions">
@@ -62,7 +62,7 @@ export default `<div class="dropdown">
     ng-disabled="$ctrl.aRuleIsActive"
     href
   >
-    <span class="fa fa-times"></span>
+    <span class="fa fa-xmark"></span>
   </a>
   <ngeo-rule
     feature-overlay="::$ctrl.featureOverlay"

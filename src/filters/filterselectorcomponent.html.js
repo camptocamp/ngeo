@@ -79,7 +79,7 @@ export default `<div class="form-group" ng-switch="$ctrl.filtrableDataSources.le
         ng-click="!$ctrl.aRuleIsActive && $ctrl.saveFilterShowModal()"
         ng-disabled="$ctrl.aRuleIsActive"
       >
-        <span class="fa fa-save"></span>
+        <span class="fa fa-floppy-disk"></span>
         <span translate>Save</span>
       </button>
     </div>

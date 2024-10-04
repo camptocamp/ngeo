@@ -54,7 +54,7 @@
           <div ngeo-btn-group class="btn-group-vertical" ngeo-btn-group-active="mainCtrl.toolsActive">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.loginActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Login'|translate}}">
-              <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-times' : 'fa-user'"></span>
+              <span class="fa fa-user" ng-class="mainCtrl.gmfUser.username ? 'fa-user-xmark' : 'fa-user'"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.printPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Print'|translate}}">
@@ -62,18 +62,18 @@
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Draw and Measure'|translate}}">
-              <span class="fa fa-paint-brush"></span>
+              <span class="fa fa-paintbrush"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.filterSelectorActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
               <span
                 class="fa"
-                ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'"></span>
+                ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-filter-circle-dollar' : 'fa-filter'"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.editFeatureActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Editing'|translate}}"
               ng-show="mainCtrl.hasEditableLayers">
-              <span class="fa fa-edit"></span>
+              <span class="fa fa-pen-to-square"></span>
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.drawProfilePanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Profile'|translate}}">
@@ -82,7 +82,7 @@
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.queryPanelActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Selection'|translate}}">
               <span>
-                <i class="fa fa-mouse-pointer"></i>
+                <i class="fa fa-arrow-pointer"></i>
                 <i class="fa fa-info fa-xs offset-info-icon"></i>
               </span>
             </button>
@@ -95,7 +95,7 @@
           <br/>
           <span data-toggle="tooltip" data-placement="left" data-original-title="{{'Share this map'|translate}}">
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.modalShareShown">
-              <span class="fa fa-share-alt"></span>
+              <span class="fa fa-share-nodes"></span>
             </button>
           </span>
         </div>
@@ -254,7 +254,7 @@
             ngeo-geolocation-map="::mainCtrl.map"
             ngeo-geolocation-loading="mainCtrl.loading"
             ng-if="::mainCtrl.options.geolocalisation">
-            <span class="far fa-dot-circle"></span>
+            <span class="far fa-circle-dot"></span>
         </button>
         <div class="gmf-app-map-bottom-controls">
           <div class="gmf-backgroundlayerbutton btn-group dropup">
@@ -298,7 +298,7 @@
         <!--infobar-->
         <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.options.showInfobar}">
           <button class="btn fa gmf-app-map-info" ng-click="mainCtrl.options.showInfobar = !mainCtrl.options.showInfobar"
-                  ng-class="{'fa-angle-double-up': !mainCtrl.options.showInfobar, 'fa-angle-double-down': mainCtrl.options.showInfobar}"></button>
+                  ng-class="{'fa-angles-up': !mainCtrl.options.showInfobar, 'fa-angles-down': mainCtrl.options.showInfobar}"></button>
 
           <div ngeo-scaleselector ngeo-scaleselector-map="mainCtrl.map"></div>
           <div id="scaleline"></div>

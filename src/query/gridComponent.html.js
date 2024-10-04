@@ -81,7 +81,7 @@ export default `<div class="gmf-displayquerygrid panel" ng-show="ctrl.active">
                 title="{{'Zoom to selection' | translate}}"
                 ng-click="ctrl.zoomToSelection()"
               >
-                <i class="fa fa-search-plus"></i> <span translate>Zoom to</span>
+                <i class="fa fa-magnifying-glass-plus"></i> <span translate>Zoom to</span>
               </button>
             </li>
 

@@ -20,6 +20,6 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 export default `<a class="btn btn-default" ng-if="ctrl.active" ng-click="ctrl.deactivate()">
-  <span class="fa fa-times"></span>
+  <span class="fa fa-xmark"></span>
   {{'Close' | translate}}
 </a>`;

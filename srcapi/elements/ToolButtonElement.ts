@@ -167,7 +167,7 @@ export default class ToolButtonElement extends BaseElement {
  * ```js
  *    <gmf-tool-button slot="tool-button" panelName="my-panel">
  *      <span>
- *        <i class="fa fa-mouse-pointer"></i>
+ *        <i class="fa fa-arrow-pointer"></i>
  *      </span>
  *    </gmf-tool-button>
  * ```

@@ -21,7 +21,7 @@
 
 export default `<div class="ngeo-displaywindow" ng-show="$ctrl.open" title="">
   <div class="windowcontainer" ng-style="$ctrl.style">
-    <button type="button" class="btn fa-times close" ng-click="$ctrl.close()"></button>
+    <button type="button" class="btn fa-xmark close" ng-click="$ctrl.close()"></button>
 
     <div class="animation-container">
       <div class="slide-animation">

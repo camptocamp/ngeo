@@ -54,7 +54,7 @@ export class ToolButtonAuth extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Login')}"
       >
-        <span class="fa fa-user ${this.login_ ? 'fa-user-times' : 'fa-user'}"></span>
+        <span class="fa fa-user ${this.login_ ? 'fa-user-xmark' : 'fa-user'}"></span>
       </button>
     `;
   }

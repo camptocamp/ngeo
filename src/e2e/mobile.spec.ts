@@ -907,7 +907,7 @@ if (Cypress.browser.isHeaded) {
         });
 
         // Close the window query result
-        cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-times').click();
+        cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-xmark').click();
         cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('not.be.visible');
       });
 
@@ -928,7 +928,7 @@ if (Cypress.browser.isHeaded) {
         });
 
         // Close the window query result
-        cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-times').click();
+        cy.get('.gmf-displayquerywindow > .windowcontainer > .fa-xmark').click();
         cy.get('.gmf-displayquerywindow > .windowcontainer > .animation-container').should('not.be.visible');
       });
 

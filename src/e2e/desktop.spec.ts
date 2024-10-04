@@ -44,7 +44,7 @@ if (Cypress.browser.isHeaded) {
         cy.get('[ngeo-geolocation=""]').should('be.visible');
         cy.get('.gmf-backgroundlayerbutton > .btn').should('be.visible');
         cy.get('.gmf-app-map-info').should('be.visible');
-        cy.get('.gmf-app-map-info').should('have.class', 'fa-angle-double-up');
+        cy.get('.gmf-app-map-info').should('have.class', 'fa-angles-up');
 
         // Check panels elements
         cy.get('.gmf-app-data-panel').should('be.visible');
@@ -54,7 +54,7 @@ if (Cypress.browser.isHeaded) {
 
       it('Check the map info bar', () => {
         cy.get('.gmf-app-map-info').click();
-        cy.get('.gmf-app-map-info').should('have.class', 'fa-angle-double-down');
+        cy.get('.gmf-app-map-info').should('have.class', 'fa-angles-down');
         cy.get('.gmf-app-footer').should('have.class', 'gmf-app-active');
 
         cy.get('.ol-scale-line-inner').should('have.text', '2 km');
@@ -104,7 +104,7 @@ if (Cypress.browser.isHeaded) {
 
         // Close the info bar
         cy.get('.gmf-app-map-info').click();
-        cy.get('.gmf-app-map-info').should('have.class', 'fa-angle-double-up');
+        cy.get('.gmf-app-map-info').should('have.class', 'fa-angles-up');
         cy.get('.gmf-app-footer').should('not.have.class', 'gmf-app-active');
       });
     });

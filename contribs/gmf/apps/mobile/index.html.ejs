@@ -75,7 +75,7 @@
         ngeo-geolocation-map="::mainCtrl.map"
         ngeo-geolocation-loading="mainCtrl.loading"
         ng-if="::mainCtrl.options.geolocalisation">
-        <span class="far fa-dot-circle"></span>
+        <span class="far fa-circle-dot"></span>
       </button>
       <ngeo-displaywindow
         content="mainCtrl.displaywindowContent"
@@ -89,7 +89,7 @@
       <div class="gmf-app-map-messages">
         <gmf-disclaimer gmf-disclaimer-map="::mainCtrl.map"></gmf-disclaimer>
         <div class="alert alert-info alert-dismissible fade show d-none d-md-block" role="alert" ng-if="::mainCtrl.redirectUrl !== ''">
-          <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-times"></span></button>
+          <button type="button" class="close" data-dismiss="alert" aria-label="{{'Close' | translate }}"><span aria-hidden="true" class="fa fa-xmark"></span></button>
           <span translate
             translate-params-url="::mainCtrl.redirectUrl">
             You're using the mobile application. Check out the <a href="{{url}}">standard application</a>.</span>

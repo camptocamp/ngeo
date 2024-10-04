@@ -65,7 +65,7 @@ export default `<div class="ngeo-routing">
       <span class="fa fa-trash"></span> <span translate>Clear</span>
     </button>
     <button type="button" class="btn prime" ng-click="$ctrl.reverseRoute()">
-      <span class="fa fa-exchange-alt"></span> <span translate>Reverse</span>
+      <span class="fa fa-arrow-right-arrow-left-alt"></span> <span translate>Reverse</span>
     </button>
     <button type="button" class="btn prime" ng-click="$ctrl.addVia()">
       <span class="fa fa-plus"></span> <span translate>Add via</span>

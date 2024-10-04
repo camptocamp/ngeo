@@ -34,7 +34,7 @@ export default `<div class="btn-group" role="group" aria-label="">
     ng-model="oetCtrl.drawActive"
     title="{{'Add a point to the geometry' | translate}}"
   >
-    <span class="fa fa-plus-square gmf-icon-oe-draw"> </span>
+    <span class="fa fa-square-plus gmf-icon-oe-draw"> </span>
   </a>
   <a
     href
@@ -50,7 +50,7 @@ export default `<div class="btn-group" role="group" aria-label="">
     ng-model="oetCtrl.drawActive"
     title="{{'Add a linestring to the geometry' | translate}}"
   >
-    <span class="fa fa-plus-square gmf-icon-oe-draw"> </span>
+    <span class="fa fa-square-plus gmf-icon-oe-draw"> </span>
   </a>
   <a
     href
@@ -66,7 +66,7 @@ export default `<div class="btn-group" role="group" aria-label="">
     ng-model="oetCtrl.drawActive"
     title="{{'Add a polygon to the geometry' | translate}}"
   >
-    <span class="fa fa-plus-square gmf-icon-oe-draw"> </span>
+    <span class="fa fa-square-plus gmf-icon-oe-draw"> </span>
   </a>
 
   <a
@@ -82,7 +82,7 @@ export default `<div class="btn-group" role="group" aria-label="">
     ng-model="oetCtrl.eraseActive"
     title="{{'Erase geometry' | translate}}"
   >
-    <span class="fa fa-minus-square gmf-icon-oe-erase"> </span>
+    <span class="fa fa-square-minus gmf-icon-oe-erase"> </span>
   </a>
 
   <a
@@ -132,6 +132,6 @@ export default `<div class="btn-group" role="group" aria-label="">
     ng-model="oetCtrl.deleteFromActive"
     title="{{'Cut from external WMS feature' | translate}}"
   >
-    <span class="fa fa-cut gmf-icon-oe-deletefrom"> </span>
+    <span class="fa fa-scissors gmf-icon-oe-deletefrom"> </span>
   </a>
 </div>`;

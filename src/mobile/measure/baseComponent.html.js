@@ -36,6 +36,6 @@ export default `<a class="btn btn-default" ng-if="ctrl.drawing && (!ctrl.valid)"
   {{'Clear' | translate}}
 </a>
 <a class="btn btn-default" ng-if="ctrl.active" ng-click="ctrl.deactivate()">
-  <span class="fa fa-times"></span>
+  <span class="fa fa-xmark"></span>
   {{'Close' | translate}}
 </a>`;

@@ -52,7 +52,7 @@
             </button>
             <button ngeo-btn class="btn btn-default" ng-model="mainCtrl.oeEditActive"
               data-toggle="tooltip" data-placement="left" data-original-title="{{'Object Editing'|translate}}">
-              <span class="fa fa-edit"></span>
+              <span class="fa fa-pen-to-square"></span>
             </button>
           </div>
         </div>
@@ -124,7 +124,7 @@
         <!--infobar-->
         <div class="gmf-app-footer" ng-class="{'gmf-app-active': mainCtrl.options.showInfobar}">
           <button class="btn fa gmf-app-map-info" ng-click="mainCtrl.options.showInfobar = !mainCtrl.options.showInfobar"
-                  ng-class="{'fa-angle-double-up': !mainCtrl.options.showInfobar, 'fa-angle-double-down': mainCtrl.options.showInfobar}"></button>
+                  ng-class="{'fa-angles-up': !mainCtrl.options.showInfobar, 'fa-angles-down': mainCtrl.options.showInfobar}"></button>
 
           <div ngeo-scaleselector ngeo-scaleselector-map="mainCtrl.map"></div>
           <div id="scaleline"></div>

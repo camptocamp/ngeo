@@ -28,7 +28,7 @@ export default `<ul>
         ngeo-popover-dismiss=".content"
         ngeo-popover-placement="left"
       >
-        <span ngeo-popover-anchor class="fa fa-cog gmf-wmscapabilitylayertreenode-actions"> </span>
+        <span ngeo-popover-anchor class="fa fa-gear gmf-wmscapabilitylayertreenode-actions"> </span>
 
         <div class="gmf-wmscapabilitylayertreenode-popover-content" ngeo-popover-content>
           <ul>
@@ -40,7 +40,7 @@ export default `<ul>
             </li>
 
             <li ng-if="::(layer.Abstract !== undefined)">
-              <i class="fa fa-th-list fa-fw"></i>
+              <i class="fa fa-table-list fa-fw"></i>
               <a
                 aria-expanded="false"
                 data-toggle="collapse"

@@ -41,7 +41,7 @@ export default `<div class="modal-header ui-draggable-handle">
       />
       <p class="help-block" translate>Copy this link to share it.</p>
       <p class="text-danger" ng-if="$ctrl.showLengthWarning">
-        <span class="fa fa-exclamation-triangle"></span>
+        <span class="fa fa-triangle-exclamation"></span>
         <!-- prettier-ignore -->
         {{'You have a lot of drawn elements in this map. The above link may not be correctly supported by some browsers.' | translate}}
       </p>
@@ -68,7 +68,7 @@ export default `<div class="modal-header ui-draggable-handle">
             class="text-danger"
             ng-show="gmfShareForm.inputEmail.$error.email || gmfShareForm.inputEmail.$error.required"
           >
-            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <i class="fa fa-triangle-exclamation" aria-hidden="true"></i>
             {{'Invalid email.' | translate}}</span
           >
         </span>
