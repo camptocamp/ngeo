@@ -916,7 +916,7 @@ export class RuleController {
           type == ngeoGeometryType.RECTANGLE
         ) {
           actions.push({
-            cls: 'fas fa-arrows-up-down-left-right-alt',
+            cls: 'fa-solid fa-arrows-up-down-left-right-alt',
             label: gettextCatalog.getString('Move'),
             name: 'move',
           });
@@ -927,7 +927,7 @@ export class RuleController {
           type == ngeoGeometryType.RECTANGLE
         ) {
           actions.push({
-            cls: 'fas fa-arrow-rotate-left fa-flip-horizontal',
+            cls: 'fa-solid fa-arrow-rotate-left fa-flip-horizontal',
             label: gettextCatalog.getString('Rotate'),
             name: 'rotate',
           });

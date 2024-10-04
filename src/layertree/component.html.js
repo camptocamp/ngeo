@@ -124,7 +124,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     >
       <span
         ngeo-popover-anchor
-        class="far fa-clock"
+        class="fa-regular fa-clock"
         ng-click="$event.preventDefault(); $event.stopPropagation()"
         data-toggle="tooltip"
         data-placement="top"
@@ -159,7 +159,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     </span>
 
     <span
-      class="fas fa-magnet"
+      class="fa-solid fa-magnet"
       ng-if="layertreeCtrl.node.metadata.snappingConfig"
       ng-class="gmfLayertreeCtrl.isSnappingActivated(layertreeCtrl) ? 'on' : 'off'"
       ng-click="gmfLayertreeCtrl.toggleSnapping(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
