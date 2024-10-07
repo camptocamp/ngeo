@@ -204,7 +204,7 @@ export class ToolButtonSelect extends ToolButtonElement {
       >
         <span>
           <i class="fa-solid fa-arrow-pointer"></i>
-          <i class="fa-solid fa-info fa-xs offset-info-icon"></i>
+          <i class="fa-solid fa-info fa-sm offset-info-icon"></i>
         </span>
       </button>
     `;
