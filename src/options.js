@@ -154,12 +154,6 @@ export function buildStyle(styleDescriptor) {
  */
 
 /**
- * URL of the test page to detect online/offline.
- *
- * @typedef {string} ngeoOfflineTestUrl
- */
-
-/**
  * URL to the WFS server.
  *
  * @typedef {string} ngeoPermalinkOgcserverUrl

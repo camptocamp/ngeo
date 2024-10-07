@@ -9,7 +9,7 @@ make serve-ngeo
 Use the _ONE_EXAMPLE_ environment variable to build (and rebuild on each change) only one example.
 
 ```
-ONE_EXAMPLE=offline make serve-ngeo
+ONE_EXAMPLE=simple make serve-ngeo
 ```
 
 The ngeo examples are now available on your https://localhost:3000/examples/.

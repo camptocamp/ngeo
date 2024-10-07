@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021 Camptocamp SA
+// Copyright (c) 2021-2024 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -30,9 +30,9 @@ describe('Test store config', () => {
       },
     });
 
-    configuration.setConfig({ngeoOfflineTestUrl: 'test'} as Configuration);
-    expect(config.ngeoOfflineTestUrl).to.equal('test');
-    configuration.setConfig({ngeoOfflineTestUrl: 'test2'} as Configuration);
-    expect(config.ngeoOfflineTestUrl).to.equal('test2');
+    configuration.setConfig({authenticationBaseUrl: 'test'} as Configuration);
+    expect(config.authenticationBaseUrl).to.equal('test');
+    configuration.setConfig({authenticationBaseUrl: 'test2'} as Configuration);
+    expect(config.authenticationBaseUrl).to.equal('test2');
   });
 });
