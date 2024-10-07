@@ -142,7 +142,7 @@ if (Cypress.browser.isHeaded) {
 
         // Open opacity setting of the 'Layers' group
         cy.get(
-          'div.gmf-layertree-node-596 > .gmf-layertree-right-buttons > .gmf-layertree-node-menu-btn > .fa',
+          'div.gmf-layertree-node-596 > .gmf-layertree-right-buttons > .gmf-layertree-node-menu-btn > .fa-solid',
         ).click();
 
         // Set the opacity to 0.4 and check the value
@@ -531,7 +531,7 @@ if (Cypress.browser.isHeaded) {
         cy.get('.gmf-mobile-nav-left-trigger')
           .click()
           .then(() => {
-            cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa').click();
+            cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa-solid').click();
             cy.get('.overlay').click();
           });
 
@@ -543,7 +543,7 @@ if (Cypress.browser.isHeaded) {
         cy.get('.gmf-mobile-nav-left-trigger')
           .click()
           .then(() => {
-            cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa').click();
+            cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa-solid').click();
             cy.get('.overlay').click();
           });
 
@@ -556,7 +556,7 @@ if (Cypress.browser.isHeaded) {
         cy.get('.gmf-mobile-nav-left-trigger')
           .click()
           .then(() => {
-            cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa').click();
+            cy.get('div.gmf-layertree-node-68 > .gmf-layertree-right-buttons > a > .fa-solid').click();
             cy.get('.overlay').click();
           });
       });
@@ -978,7 +978,7 @@ if (Cypress.browser.isHeaded) {
         cy.loadPage(false, 'https://localhost:3000/contribs/gmf/apps/mobile.html?lang=en');
 
         cy.get('gmf-disclaimer').should('be.visible');
-        cy.get('gmf-disclaimer .fa').click();
+        cy.get('gmf-disclaimer .fa-solid').click();
         cy.get('gmf-disclaimer').should('not.be.visible');
       });
     });

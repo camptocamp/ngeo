@@ -10471,7 +10471,7 @@ export default css`
   }
 
   @font-face {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     font-display: block;
     font-weight: 900;
     src:
@@ -10480,7 +10480,7 @@ export default css`
   }
 
   @font-face {
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 6 Free';
     font-display: block;
     font-weight: 400;
     src:

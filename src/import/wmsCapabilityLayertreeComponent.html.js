@@ -59,7 +59,7 @@ export default `<ul>
 
       <a
         aria-expanded="{{ layer._expanded }}"
-        class="fa gmf-wmscapabilitylayertreenode-expand-node fa-fw"
+        class="fa-solid gmf-wmscapabilitylayertreenode-expand-node fa-fw"
         data-toggle="collapse"
         href="#gmf-wmscapabilitylayertreenode-children-{{::$ctrl.getUid(layer)}}"
         ng-if="::(layer.Layer !== undefined && layer.Layer.length)"

@@ -81,7 +81,7 @@ export default `<div class="modal-header ui-draggable-handle">
         ></textarea>
       </div>
       <span class="text-default" ng-if="!$ctrl.isFinishedState">
-        <i class="fa custom-spinner-generic fa-spin"
+        <i class="fa-solid custom-spinner-generic fa-spin"
           >${svgSpinner('1rem')}</i>
       </span>
       <span class="text-success" ng-if="$ctrl.successfullySent">

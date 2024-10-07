@@ -52,7 +52,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
     data-toggle="collapse"
     href="#gmf-layertree-layer-group-{{::layertreeCtrl.uid}}"
     aria-expanded="{{::layertreeCtrl.node.metadata.isExpanded}}"
-    class="fa gmf-layertree-expand-node fa-fw"
+    class="fa-solid gmf-layertree-expand-node fa-fw"
   >
   </a>
 

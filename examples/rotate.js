@@ -121,7 +121,7 @@ function MainController() {
       image: new olStyleCircle(),
       text: new olStyleText({
         text: '\uf01e',
-        font: '900 18px "Font Awesome 5 Free"',
+        font: '900 18px "Font Awesome 6 Free"',
         fill: new olStyleFill({
           color: '#ffffff',
         }),

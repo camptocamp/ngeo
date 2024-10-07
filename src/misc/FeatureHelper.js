@@ -366,7 +366,7 @@ FeatureHelper.prototype.getArrowLineStyles_ = function (feature, arrowDirection,
           fill: new olStyleFill({
             color: color,
           }),
-          font: '900 20px "Font Awesome 5 Free"',
+          font: '900 20px "Font Awesome 6 Free"',
           stroke: new olStyleStroke({
             width: 1,
             color: color,

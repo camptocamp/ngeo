@@ -674,7 +674,7 @@ export default class GmfDesktopCanvas extends BaseElement {
             <!--infobar-->
             <div class="gmf-app-footer ${classMap({'gmf-app-active': !!this.showInfobar_})}">
               <button
-                class="btn fa gmf-app-map-info ${this.showInfobar_ ? 'fa-angles-down' : 'fa-angles-up'}"
+                class="btn fa-solid gmf-app-map-info ${this.showInfobar_ ? 'fa-angles-down' : 'fa-angles-up'}"
                 @click=${() => this.toggleShowInfobar_()}
               ></button>
               <slot name="infobar-left"></slot>

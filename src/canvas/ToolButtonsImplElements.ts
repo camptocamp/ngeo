@@ -97,7 +97,7 @@ export class ToolButtonFilter extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Filter')}"
       >
-        <span class="fa ${this.filter_ ? 'fa-filter-circle-dollar' : 'fa-filter'}"></span>
+        <span class="fa-solid ${this.filter_ ? 'fa-filter-circle-dollar' : 'fa-filter'}"></span>
       </button>
     `;
   }

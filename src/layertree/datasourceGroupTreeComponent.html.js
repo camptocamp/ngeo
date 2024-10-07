@@ -26,7 +26,7 @@ export default `<div class="gmf-layertree-group gmf-layertree-depth-1 {{$ctrl.gr
     data-toggle="collapse"
     href="#gmf-layertree-layer-group-{{::$ctrl.getGroupUid()}}"
     aria-expanded="true"
-    class="fa gmf-layertree-expand-node fa-fw"
+    class="fa-solid gmf-layertree-expand-node fa-fw"
   >
   </a>
 

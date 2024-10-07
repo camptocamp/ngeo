@@ -100,7 +100,7 @@ button[ngeo-geolocation] {
   border-color: var(--border-color);
   color: $map-tools-color;
   color: var(--map-tools-color);
-  .fa {
+  .fa-solid {
     font-size: $icon-font-size;
   }
 }
@@ -133,7 +133,7 @@ button[ngeo-geolocation] {
     &.gmf-backgroundlayerselector-active,
     &.gmf-theme-selector-active {
       &::before {
-        font-family: 'Font Awesome 5 Free';
+        font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         content: fa-content($fa-var-check);
       }
@@ -147,7 +147,7 @@ button[ngeo-geolocation] {
     span.gmf-backgroundlayerselector-opacity-check {
       &::after {
         width: calc(18em / 14);
-        font-family: 'Font Awesome 5 Free';
+        font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         content: fa-content($fa-var-check);
         text-align: center;

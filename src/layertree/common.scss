@@ -68,7 +68,7 @@
       text-decoration: none;
     }
 
-    &.gmf-layertree-expand-node.fa {
+    &.gmf-layertree-expand-node.fa-solid {
       color: $color-light;
       color: var(--color-light);
       display: inline-block;
@@ -167,7 +167,7 @@
       &::after {
         content: fa-content($fa-var-info);
         display: inline;
-        font-family: 'Font Awesome 5 Free';
+        font-family: 'Font Awesome 6 Free';
         font-weight: 900;
       }
     }

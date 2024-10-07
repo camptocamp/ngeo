@@ -66,7 +66,7 @@ function MainController(ngeoToolActivateMgr) {
       fill: new olStyleFill({
         color: '#279B61',
       }),
-      font: '900 30px "Font Awesome 5 Free"',
+      font: '900 30px "Font Awesome 6 Free"',
       offsetY: -15,
       stroke: new olStyleStroke({
         color: '#ffffff',
