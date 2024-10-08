@@ -107,9 +107,7 @@
   "_optionalDependenciesComment_": "Dep. for plugins",
   "optionalDependencies": {
     "jsts": "2.11.3",
-    "localforage": "1.10.0",
-    "mapillary-js": "4.1.2",
-    "ol-cesium": "2.14.0"
+    "mapillary-js": "4.1.2"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "2.0.2",

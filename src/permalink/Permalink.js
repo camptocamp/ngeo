@@ -45,7 +45,6 @@ import gmfDataSourcesManager from 'gmf/datasource/Manager';
 import ngeoDatasourceGroup from 'ngeo/datasource/Group';
 import {guessServiceTypeByUrl, Type} from 'ngeo/datasource/OGC';
 import gmfDatasourceOGC from 'gmf/datasource/OGC';
-import {Permalink3dParam} from 'ngeo/olcs/constants';
 import ngeoFormatFeatureHash from 'ngeo/format/FeatureHash';
 import ngeoFormatFeatureProperties from 'ngeo/format/FeatureProperties';
 import {LAYER_NODE_NAME_KEY} from 'ngeo/map/LayerHelper';
@@ -969,16 +968,13 @@ PermalinkService.prototype.registerMap_ = function (map, oeFeature) {
     }
     view.fit(geom.getExtent(), options);
   } else {
-    const enabled3d = this.ngeoStateManager_.getInitialBooleanValue(Permalink3dParam.ENABLED);
-    if (!enabled3d) {
-      zoom = this.getMapZoom();
-      if (zoom !== undefined) {
-        view.setZoom(zoom);
-      }
-      center = this.getMapCenter();
-      if (center) {
-        view.setCenter([...center]);
-      }
+    zoom = this.getMapZoom();
+    if (zoom !== undefined) {
+      view.setZoom(zoom);
+    }
+    center = this.getMapCenter();
+    if (center) {
+      view.setCenter([...center]);
     }
   }
 

@@ -251,11 +251,6 @@ export function buildStyle(styleDescriptor: StyleLike): OlStyleStyleStyleLike {
 }
 
 /**
- * URL of the test page to detect online/offline.
- */
-export type ngeoOfflineTestUrl = string;
-
-/**
  * URL to the WFS server.
  */
 export type ngeoPermalinkOgcserverUrl = string;
@@ -1405,7 +1400,6 @@ export type gmfDatasourceOptions = {
  */
 export type Configuration = {
   authenticationBaseUrl: authenticationBaseUrl;
-  ngeoOfflineTestUrl: ngeoOfflineTestUrl;
   ngeoPermalinkOgcserverUrl: ngeoPermalinkOgcserverUrl;
   ngeoNominatimSearchDefaultParams: ngeoNominatimSearchDefaultParams;
   ngeoQueryOptions: ngeoQueryOptions;
