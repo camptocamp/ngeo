@@ -23,7 +23,7 @@ import svgSwipe from 'gmf/icons/swipe_svg';
 
 export default `<div class="ngeo-swipe-line-draggable">
   <button class="ngeo-swipe-close btn prime btn-sm" ng-click="$ctrl.deactivate()">
-    <i class="fas fa-times"></i>
+    <i class="fa-solid fa-xmark"></i>
   </button>
   <div class="ngeo-swipe-line"></div>
   <div class="ngeo-swipe-arrow">${svgSwipe}</div>

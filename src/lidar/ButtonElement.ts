@@ -44,7 +44,7 @@ export class ToolButtonLidar extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('LIDAR profile')}"
       >
-        <span class="fa fa-chart-line"></span>
+        <span class="fa-solid fa-chart-line"></span>
       </button>
     `;
   }

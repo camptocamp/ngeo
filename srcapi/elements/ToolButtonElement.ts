@@ -51,7 +51,7 @@ import 'bootstrap/js/src/tooltip';
  *            data-placement="left"
  *            data-original-title="${i18next.t('Title')}"
  *          >
- *            <span class="fa fa-my-icon"></span>
+ *            <span class="fa-solid fa-my-icon"></span>
  *          </button>
  *        `;
  *      }
@@ -160,14 +160,14 @@ export default class ToolButtonElement extends BaseElement {
  *
  * Example with an icon classes:
  * ```js
- *    <gmf-tool-button slot="tool-button" iconClasses="fa fa-print" panelName="my-panel"></gmf-tool-button>
+ *    <gmf-tool-button slot="tool-button" iconClasses="fa-solid fa-print" panelName="my-panel"></gmf-tool-button>
  * ```
  *
  * Example with a slot:
  * ```js
  *    <gmf-tool-button slot="tool-button" panelName="my-panel">
  *      <span>
- *        <i class="fa fa-mouse-pointer"></i>
+ *        <i class="fa-solid fa-arrow-pointer"></i>
  *      </span>
  *    </gmf-tool-button>
  * ```

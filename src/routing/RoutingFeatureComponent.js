@@ -182,7 +182,7 @@ export class Controller {
               fill: new olStyleFill({
                 color: this.fillColor || '#000000',
               }),
-              font: '900 24px "Font Awesome 5 Free"',
+              font: '900 24px "Font Awesome 6 Free"',
               stroke: new olStyleStroke({
                 width: 3,
                 color: this.strokeColor || '#000000',

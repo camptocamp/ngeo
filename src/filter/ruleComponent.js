@@ -324,7 +324,7 @@ export class RuleController {
       style: new olStyleStyle({
         text: new olStyleText({
           text: '\uf01e',
-          font: '900 18px "Font Awesome 5 Free"',
+          font: '900 18px "Font Awesome 6 Free"',
           fill: new olStyleFill({
             color: '#7a7a7a',
           }),
@@ -342,7 +342,7 @@ export class RuleController {
       style: new olStyleStyle({
         text: new olStyleText({
           text: '\uf0b2',
-          font: '900 18px "Font Awesome 5 Free"',
+          font: '900 18px "Font Awesome 6 Free"',
           fill: new olStyleFill({
             color: '#7a7a7a',
           }),
@@ -916,7 +916,7 @@ export class RuleController {
           type == ngeoGeometryType.RECTANGLE
         ) {
           actions.push({
-            cls: 'fas fa-arrows-alt',
+            cls: 'fa-solid fa-arrows-up-down-left-right-alt',
             label: gettextCatalog.getString('Move'),
             name: 'move',
           });
@@ -927,7 +927,7 @@ export class RuleController {
           type == ngeoGeometryType.RECTANGLE
         ) {
           actions.push({
-            cls: 'fas fa-undo fa-flip-horizontal',
+            cls: 'fa-solid fa-arrow-rotate-left fa-flip-horizontal',
             label: gettextCatalog.getString('Rotate'),
             name: 'rotate',
           });

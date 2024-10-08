@@ -32,11 +32,11 @@ export default `<div role="group" class="btn-group-floors btn-group-vertical">
 </div>
 <button
   type="button"
-  class="btn btn-floor btn-floor-up increment fa fa-2x fa-angle-up"
+  class="btn btn-floor btn-floor-up increment fa-solid fa-2x fa-angle-up"
   ng-click="$ctrl.move(+1)"
 ></button>
 <button
   type="button"
-  class="btn btn-floor btn-floor-down decrement fa fa-2x fa-angle-down"
+  class="btn btn-floor btn-floor-down decrement fa-solid fa-2x fa-angle-down"
   ng-click="$ctrl.move(-1)"
 ></button>`;

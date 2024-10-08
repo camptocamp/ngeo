@@ -27,7 +27,7 @@ export default `<div class="btn-group dropup">
     <li class="dropdown-header" translate>Coordinate systems</li>
     <li ng-repeat="projitem in ::ctrl.projections">
       <a href ng-click="ctrl.setProjection(projitem)">
-        <span class="fa fa-fw" ng-class="{'fa-check': ctrl.projection == projitem}"></span>
+        <span class="fa-solid fa-fw" ng-class="{'fa-check': ctrl.projection == projitem}"></span>
         {{::projitem.label}}
       </a>
     </li>

@@ -222,7 +222,7 @@ export class AbstractDesktopController extends AbstractAPIController {
         fill: new olStyleFill({
           color: '#279B61',
         }),
-        font: '900 30px "Font Awesome 5 Free"',
+        font: '900 30px "Font Awesome 6 Free"',
         offsetY: -15,
         stroke: new olStyleStroke({
           color: '#ffffff',
@@ -405,12 +405,12 @@ export class AbstractDesktopController extends AbstractAPIController {
       .appendTo($resizableEastHandle)
       .append(
         $('<span>', {
-          'class': `fa fa-angle-double-left ${dataPanelCls}-collapse-btn`,
+          'class': `fa-solid fa-angles-left ${dataPanelCls}-collapse-btn`,
         }),
       )
       .append(
         $('<span>', {
-          'class': `fa fa-angle-double-right ${dataPanelCls}-expand-btn`,
+          'class': `fa-solid fa-angles-right ${dataPanelCls}-expand-btn`,
         }),
       );
     $scope.$watch(
@@ -499,7 +499,7 @@ export class AbstractDesktopController extends AbstractAPIController {
       .appendTo($resizableToolsHandle)
       .append(
         $('<span>', {
-          'class': `fa fa-angle-double-right ${toolsPanelCls}-collapse-btn`,
+          'class': `fa-solid fa-angles-right ${toolsPanelCls}-collapse-btn`,
         }),
       );
 

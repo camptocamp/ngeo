@@ -81,7 +81,7 @@ export default `<div class="gmf-displayquerygrid panel" ng-show="ctrl.active">
                 title="{{'Zoom to selection' | translate}}"
                 ng-click="ctrl.zoomToSelection()"
               >
-                <i class="fa fa-search-plus"></i> <span translate>Zoom to</span>
+                <i class="fa-solid fa-magnifying-glass-plus"></i> <span translate>Zoom to</span>
               </button>
             </li>
 
@@ -91,7 +91,7 @@ export default `<div class="gmf-displayquerygrid panel" ng-show="ctrl.active">
                 title="{{'Export selection as CSV' | translate}}"
                 ng-click="ctrl.downloadCsv()"
               >
-                <i class="fa fa-download"></i> <span translate>Export as CSV</span>
+                <i class="fa-solid fa-download"></i> <span translate>Export as CSV</span>
               </button>
             </li>
 
@@ -125,7 +125,7 @@ export default `<div class="gmf-displayquerygrid panel" ng-show="ctrl.active">
     </div>
 
     <div ng-show="ctrl.pending" class="spinner-grid">
-      <i class="fa fa-spin"
+      <i class="fa-solid fa-spin"
         >${svgSpinner('3rem')}</i>
     </div>
   </div>

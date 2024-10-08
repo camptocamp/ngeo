@@ -37,10 +37,10 @@ export default `<div ng-switch="efsCtrl.selectedEditableTreeCtrl">
       <div class="col-sm-12">
         <span translate>Currently editing: </span>
         <b>{{ efsCtrl.selectedEditableTreeCtrl.node.name | translate }}</b>
-        <span class="fa fa-edit"></span>
+        <span class="fa-solid fa-pen-to-square"></span>
         <br />
         <button ng-click="efsCtrl.stopEditing()" class="btn btn-link btn-sm pull-right">
-          <span class="fa fa-times"></span>
+          <span class="fa-solid fa-xmark"></span>
           {{'Stop editing' | translate}}
         </button>
       </div>

@@ -13,7 +13,7 @@
   </head>
   <body ng-keydown="mainCtrl.onKeydown($event)" tabindex="0">
   <div ng-show="mainCtrl.loading" class="loading-mask">
-    <i class="fa custom-spinner-loading fa-spin spinner-loading-mask"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em"><circle cx="256" cy="48" r="48" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="109.17" cy="108.313" r="43" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="46.537" cy="257.328" r="38" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="108.028" cy="403.972" r="33" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="255.794" cy="463.935" r="28" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="402.894" cy="402.936" r="23" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="463.623" cy="256.106" r="18" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/></svg></i>
+    <i class="fa-solid custom-spinner-loading fa-spin spinner-loading-mask"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="1em" height="1em"><circle cx="256" cy="48" r="48" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="109.17" cy="108.313" r="43" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="46.537" cy="257.328" r="38" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="108.028" cy="403.972" r="33" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="255.794" cy="463.935" r="28" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="402.894" cy="402.936" r="23" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/><circle cx="463.623" cy="256.106" r="18" style="opacity:1;fill-opacity:1;stroke:#000;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"/></svg></i>
   </div>
     <gmf-desktop-canvas>
       <div slot="header" class="logo">
@@ -28,7 +28,6 @@
           <a href
              class="btn btn-block prime dropdown-toggle"
              data-toggle="dropdown">
-            <span class="fa fa-grid"></span>
             <span ng-if="mainCtrl.gmfThemeManager.modeFlush">
               <span translate>Theme:</span>
               <b ng-if="mainCtrl.gmfThemeManager.isLoading()" translate>Loading...</b>
@@ -116,7 +115,7 @@
         data-toggle="tooltip" data-placement="left" data-original-title="{{'Filter'|translate}}">
           <span
             class="fa"
-            ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-funnel-dollar' : 'fa-filter'">
+            ng-class="mainCtrl.gmfDataSourceBeingFiltered.dataSource && mainCtrl.gmfDataSourceBeingFiltered.dataSource.filterRules ? 'fa-filter-circle-dollar' : 'fa-filter'">
           </span>
         </button>
       </gmf-filter-button>
@@ -270,7 +269,7 @@
       <!-- Permalink -->
       <span slot="tool-button-separate">
         <button ngeo-btn class="btn btn-default gmf-app-tools-bar" ng-model="mainCtrl.modalShareShown"  data-toggle="tooltip" data-placement="left" data-original-title="{{'Share this map'|translate}}">
-          <span class="fa fa-share-alt"></span>
+          <span class="fa-solid fa-share-nodes"></span>
         </button>
       </span>
 
@@ -301,7 +300,7 @@
         ngeo-geolocation-map="::mainCtrl.map"
         ngeo-geolocation-loading="mainCtrl.loading"
         ng-if="::mainCtrl.options.geolocalisation">
-        <span class="far fa-dot-circle"></span>
+        <span class="fa-regular fa-circle-dot"></span>
       </button>
       <div slot="map" class="gmf-app-map-bottom-controls">
         <div class="gmf-backgroundlayerbutton btn-group dropup">

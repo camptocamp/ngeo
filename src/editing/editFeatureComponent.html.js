@@ -102,7 +102,7 @@ export default `<div>
           ng-show="efCtrl.featureId"
           title="{{'Delete this feature' | translate}}"
         >
-          <span class="fa fa-trash"></span>
+          <span class="fa-solid fa-trash"></span>
           {{'Delete' | translate}}
         </button>
       </form>

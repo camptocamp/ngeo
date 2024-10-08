@@ -27,14 +27,14 @@ export default `<div class="dropdown">
     data-toggle="dropdown"
     ng-disabled="$ctrl.aRuleIsActive"
   >
-    <span class="fa fa-cog"></span>
+    <span class="fa-solid fa-gear"></span>
   </button>
   <ul class="dropdown-menu">
     <li ng-repeat="condition in ::$ctrl.conditions">
       <a href ng-click="$ctrl.setCondition(condition)">
         <span
           ng-class="{'ngeo-filter-condition-criteria-active': condition.value == $ctrl.datasource.filterCondition}"
-          class="fa fa-check ngeo-filter-condition-criteria"
+          class="fa-solid fa-check ngeo-filter-condition-criteria"
         >
         </span>
         <span>{{::condition.text | translate}}</span>
@@ -62,7 +62,7 @@ export default `<div class="dropdown">
     ng-disabled="$ctrl.aRuleIsActive"
     href
   >
-    <span class="fa fa-times"></span>
+    <span class="fa-solid fa-xmark"></span>
   </a>
   <ngeo-rule
     feature-overlay="::$ctrl.featureOverlay"
@@ -108,7 +108,7 @@ export default `<div class="dropdown">
   ng-click="$ctrl.apply()"
   ng-disabled="$ctrl.datasource.visible === false"
 >
-  <span class="fa fa-check"></span>
+  <span class="fa-solid fa-check"></span>
   <span translate>Apply filter</span>
 </button>
 
@@ -118,6 +118,6 @@ export default `<div class="dropdown">
   ng-click="$ctrl.getData()"
   ng-disabled="$ctrl.datasource.visible === false"
 >
-  <span class="fa fa-chevron-right"></span>
+  <span class="fa-solid fa-chevron-right"></span>
   <span translate>Get data</span>
 </button>`;

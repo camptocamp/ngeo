@@ -176,7 +176,7 @@ export default `<div class="gmf-print">
 
     <div class="gmf-print-actions form-group pull-right">
       <span ng-show="$ctrl.isState('PRINTING')">
-        <i class="fa custom-spinner-generic fa-spin"
+        <i class="fa-solid custom-spinner-generic fa-spin"
           >${svgSpinner('1rem')}</i>
       </span>
 

@@ -11,7 +11,7 @@
     focusable="false"
     data-prefix="fas"
     data-icon="sort"
-    class="svg-inline--fa fa-sort fa-w-10"
+    class="svg-inline--fa-solid fa-sort fa-w-10"
     role="img"
     viewBox="0 0 16 16"
     version="1.1"

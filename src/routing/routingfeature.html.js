@@ -28,7 +28,7 @@ export default `<div class="ngeo-routing-feature">
     >
     </ngeo-nominatim-input>
     <div class="input-group-addon btn" ng-click="$ctrl.set()">
-      <span class="fa fa-map-marker"></span>
+      <span class="fa-solid fa-location-pin"></span>
     </div>
   </div>
 </div>`;

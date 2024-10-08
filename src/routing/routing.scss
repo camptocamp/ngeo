@@ -25,7 +25,7 @@
   color: darkred;
 }
 
-.ngeo-routing-start .fa-map-marker {
+.ngeo-routing-start .fa-location-pin {
   color: #6be62e;
   text-shadow:
     -1px 0 #4cb01e,
@@ -34,7 +34,7 @@
     0 -1px #4cb01e;
 }
 
-.ngeo-routing-destination .fa-map-marker {
+.ngeo-routing-destination .fa-location-pin {
   color: #ff3e13;
   text-shadow:
     -1px 0 #cd3412,
@@ -43,7 +43,7 @@
     0 -1px #cd3412;
 }
 
-.ngeo-routing-vias .fa-map-marker {
+.ngeo-routing-vias .fa-location-pin {
   color: #767676;
   text-shadow:
     -1px 0 #000000,

@@ -249,7 +249,7 @@ export default class GmfAuthForm extends GmfBaseElement {
                   ${this.isLoading
                     ? html`
                         <div class="login-spinner">
-                          <i class="fa fa-spin">${svgSpinner()}</i>
+                          <i class="fa-solid fa-spin">${svgSpinner()}</i>
                         </div>
                       `
                     : ''}

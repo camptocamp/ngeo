@@ -85,7 +85,7 @@ gmf-search {
       content: fa-content($fa-var-times);
       color: $map-tools-color;
       color: var(--map-tools-color);
-      font-family: 'Font Awesome 5 Free';
+      font-family: 'Font Awesome 6 Free';
       font-weight: 900;
       right: 0;
     }
@@ -191,7 +191,7 @@ gmf-search {
     span.twitter-typeahead {
       &::before {
         content: fa-content($fa-var-search);
-        font-family: 'Font Awesome 5 Free';
+        font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         color: $color;
         color: var(--color);

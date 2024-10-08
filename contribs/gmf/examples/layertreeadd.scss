@@ -127,13 +127,13 @@ gmf-layertree .indeterminate {
 #selections {
   margin-bottom: 20px;
 }
-gmf-layertree a.gmf-layertree-expand-node.fa {
+gmf-layertree a.gmf-layertree-expand-node.fa-solid {
   display: inline-block;
 }
-gmf-layertree a.gmf-layertree-expand-node.fa::before {
+gmf-layertree a.gmf-layertree-expand-node.fa-solid::before {
   content: '\f054';
 }
-gmf-layertree a.gmf-layertree-expand-node.fa[aria-expanded='true']::before {
+gmf-layertree a.gmf-layertree-expand-node.fa-solid[aria-expanded='true']::before {
   content: '\f078';
 }
 

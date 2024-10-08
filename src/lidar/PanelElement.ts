@@ -182,7 +182,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
                         data-placement="left"
                         data-original-title="${i18next.t('Reset profile')}"
                       >
-                        <span class="fa fa-sync"></span>
+                        <span class="fa-solid fa-arrows-rotate"></span>
                       </button>
                     </div>
                     <hr />
@@ -202,7 +202,7 @@ export default class GmfLidarPanel extends ToolPanelElement {
                       data-placement="left"
                       data-original-title="${i18next.t('Clear measure')}"
                     >
-                      <span class="fa fa-eraser"></span>
+                      <span class="fa-solid fa-eraser"></span>
                     </button>
                   `
                 : ``}

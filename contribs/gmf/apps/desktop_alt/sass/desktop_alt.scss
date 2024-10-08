@@ -66,8 +66,9 @@ div .ngeo-displaywindow {
   top: calc($topbar-height + $app-margin + 3 * $map-tools-size);
 }
 
-.offset-info-icon {
+.fa-info.offset-info-icon {
   position: absolute;
+  line-height: normal;
 }
 
 .pointer-events-none {

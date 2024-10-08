@@ -22,7 +22,7 @@
 import svgSpinner from 'gmf/icons/spinner_svg';
 
 export default `<div class="spinner-window" ng-if="ctrl.isLoading">
-  <i class="fa fa-spin"
+  <i class="fa-solid fa-spin"
     >${svgSpinner('3rem')}</i>
 </div>
 
@@ -48,7 +48,7 @@ export default `<div class="spinner-window" ng-if="ctrl.isLoading">
     ng-swipe-left="ctrl.next()"
     ng-swipe-right="ctrl.previous()"
   >
-    <button type="button" class="btn fa-times close" ng-click="ctrl.close()"></button>
+    <button type="button" class="btn fa-xmark close" ng-click="ctrl.close()"></button>
 
     <div
       class="animation-container"
@@ -100,13 +100,13 @@ export default `<div class="spinner-window" ng-if="ctrl.isLoading">
             data-toggle="dropdown"
             aria-expanded="false"
           >
-            <span class="fa fa-filter"></span>
+            <span class="fa-solid fa-filter"></span>
           </button>
 
           <ul class="dropdown-menu dropdown-menu-right" role="menu">
             <li>
               <a href="#" ng-click="ctrl.setSelectedSource(null)">
-                <i class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedSource === null}"> </i>
+                <i class="fa-solid fa-fw" ng-class="{'fa-check': ctrl.selectedSource === null}"> </i>
                 <span>{{'All layers' | translate}} ({{ctrl.ngeoQueryResult.total}})</span>
               </a>
             </li>
@@ -119,7 +119,7 @@ export default `<div class="spinner-window" ng-if="ctrl.isLoading">
               ng-class="{'disabled': source.features.length <= 0}"
             >
               <a href="#" ng-click="ctrl.setSelectedSource(source)">
-                <i class="fa fa-fw" ng-class="{'fa-check': ctrl.selectedSource === source}"> </i>
+                <i class="fa-solid fa-fw" ng-class="{'fa-check': ctrl.selectedSource === source}"> </i>
                 <span>{{source.label | translate}} ({{source.features.length}})</span>
               </a>
             </li>
@@ -133,7 +133,7 @@ export default `<div class="spinner-window" ng-if="ctrl.isLoading">
             data-toggle="dropdown"
             aria-expanded="false"
           >
-            <span class="fa fa-download"></span>
+            <span class="fa-solid fa-download"></span>
           </button>
 
           <ul class="dropdown-menu dropdown-menu-right" role="menu">

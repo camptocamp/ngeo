@@ -86,7 +86,7 @@ export default `<div class="form-group">
 </div>
 
 <div ng-if="$ctrl.isLoading">
-  <i class="fa custom-spinner-importkml fa-spin"
+  <i class="fa-solid custom-spinner-importkml fa-spin"
     >${svgSpinner('1em')}</i>
 </div>
 

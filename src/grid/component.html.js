@@ -32,14 +32,14 @@ export default `<div class="ngeo-grid-table-container">
           ng-click="$ctrl.sort(columnDefs.name)"
           ng-bind-html="columnDefs.name | ngeoTrustHtml | translate"
         >
-          <i ng-show="$ctrl.sortedBy !== columnDefs.name" class="fa fa-fw"></i>
+          <i ng-show="$ctrl.sortedBy !== columnDefs.name" class="fa-solid fa-fw"></i>
           <i
             ng-show="$ctrl.sortedBy === columnDefs.name && $ctrl.sortAscending === true"
-            class="fa fa-caret-up"
+            class="fa-solid fa-caret-up"
           ></i>
           <i
             ng-show="$ctrl.sortedBy === columnDefs.name && $ctrl.sortAscending === false"
-            class="fa fa-caret-down"
+            class="fa-solid fa-caret-down"
           ></i>
         </th>
       </tr>

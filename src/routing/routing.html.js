@@ -44,7 +44,7 @@ export default `<div class="ngeo-routing">
         </ngeo-routing-feature>
       </div>
       <button type="button" class="btn prime delete-via" ng-click="$ctrl.deleteVia(index)">
-        <span class="fa fa-trash"></span>
+        <span class="fa-solid fa-trash"></span>
       </button>
     </div>
   </div>
@@ -62,13 +62,13 @@ export default `<div class="ngeo-routing">
 
   <div class="form-group fill">
     <button type="button" class="btn prime" ng-click="$ctrl.clearRoute()">
-      <span class="fa fa-trash"></span> <span translate>Clear</span>
+      <span class="fa-solid fa-trash"></span> <span translate>Clear</span>
     </button>
     <button type="button" class="btn prime" ng-click="$ctrl.reverseRoute()">
-      <span class="fa fa-exchange-alt"></span> <span translate>Reverse</span>
+      <span class="fa-solid fa-arrow-right-arrow-left"></span> <span translate>Reverse</span>
     </button>
     <button type="button" class="btn prime" ng-click="$ctrl.addVia()">
-      <span class="fa fa-plus"></span> <span translate>Add via</span>
+      <span class="fa-solid fa-plus"></span> <span translate>Add via</span>
     </button>
   </div>
 
