@@ -18,7 +18,7 @@
     "distlib": "tsc --pretty",
     "distlib-images": "copyfiles --verbose src/**/*.svg src/*.svg src/**/*.png src/*.png distlib",
     "distlib-css": "copyfiles --verbose src/**/*.css src/*.css src/**/*.scss src/*.scss distlib",
-    "distlib-css-bundle": "cp dist/desktop-*.css distlib/src/controllers/desktop.css && cp dist/mobile-*.css distlib/src/controllers/mobile.css && cp dist/iframe_api-*.css distlib/src/controllers/iframe_api.css",
+    "distlib-css-bundle": "cp dist/desktop-*.css distlib/src/controllers/ && cp dist/mobile-*.css distlib/src/controllers/ && cp dist/iframe_api-*.css distlib/src/controllers/",
     "prepare": "npm run dist && npm run dist-spinner && npm run distlib && npm run distlib-images && npm run distlib-css && npm run distlib-css-bundle",
     "typecheck": "tsc --project tsconfig-all.json --noEmit",
     "doc": "typedoc",
