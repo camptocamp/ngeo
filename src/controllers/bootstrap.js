@@ -26,9 +26,6 @@ import config from 'gmfapi/store/config';
 import 'ngeo/auth/index';
 import 'ngeo/lidar/index';
 
-// eslint-disable-next-line no-undef
-__webpack_public_path__ = new URL('./', document.currentScript.src).toString();
-
 /**
  * @param {string} scriptUrl The script URL
  */
