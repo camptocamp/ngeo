@@ -254,9 +254,7 @@ VectorEncoder.prototype.encodeVectorStyle_ = function (
   const fillStyle = style.getFill();
   const strokeStyle = style.getStroke();
   if (styleType === PrintStyleType.POLYGON) {
-    if (fillStyle !== null) {
-      symbolizers.push(this.encodeVectorStylePolygon_(fillStyle, strokeStyle));
-    }
+    symbolizers.push(this.encodeVectorStylePolygon_(fillStyle, strokeStyle));
   } else if (styleType === PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
       symbolizers.push(this.encodeVectorStyleLine_(strokeStyle));
@@ -377,7 +375,11 @@ VectorEncoder.prototype.encodeVectorStylePolygon_ = function (fillStyle, strokeS
   const symbolizer = /** @type {import('ngeo/print/mapfish-print-v3').MapFishPrintSymbolizerPolygon} */ ({
     type: 'polygon',
   });
-  this.encodeVectorStyleFill_(symbolizer, fillStyle);
+  if (fillStyle !== null) {
+    this.encodeVectorStyleFill_(symbolizer, fillStyle);
+  } else {
+    symbolizer.fillOpacity = 0;
+  }
   if (strokeStyle !== null) {
     this.encodeVectorStyleStroke_(symbolizer, strokeStyle);
   }
