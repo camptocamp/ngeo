@@ -71,7 +71,7 @@ module.exports = function (config) {
   });
 
   rules.push({
-    test: path.resolve(__dirname, '../srcapi/index.ts'),
+    test: /\/srcapi\/index.[tj]s$/,
     use: {
       loader: 'expose-loader',
       options: {
