@@ -668,7 +668,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
   const firstLevelGroupsFullState = {};
 
   // Save state of each child
-  this.rootCtrl.children.map((treeCtrl) => {
+  this.rootCtrl.children.forEach((treeCtrl) => {
     const name = treeCtrl.node.name;
     firstLevelGroupsFullState[name] = this.getFirstLevelGroupFullState_(treeCtrl);
   });
@@ -677,7 +677,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
   /** @type {import('gmf/themes').GmfGroup[]} */
   const nodesToRestore = [];
   // Iterate on the root to keep the same order in the tree as before.
-  this.root.children.map((node) => {
+  this.root.children.forEach((node) => {
     const name = node.name;
 
     // Find the right firstlevelgroup in the new theme.
@@ -693,7 +693,7 @@ LayertreeTreeManager.prototype.refreshFirstLevelGroups_ = function (themes) {
   // Wait that Angular has created the layetree, then restore state and update permalink.
   this.$timeout_(() => {
     // Restore state of each child
-    this.rootCtrl.children.map((treeCtrl) => {
+    this.rootCtrl.children.forEach((treeCtrl) => {
       const name = treeCtrl.node.name;
       this.setFirstLevelGroupFullState_(treeCtrl, firstLevelGroupsFullState[name]);
     });
@@ -717,7 +717,7 @@ LayertreeTreeManager.prototype.getFirstLevelGroupFullState_ = function (treeCtrl
    */
   const children = {};
   // Get the state of the treeCtrl children recursively.
-  treeCtrl.children.map((child) => {
+  treeCtrl.children.forEach((child) => {
     children[child.node.name] = this.getFirstLevelGroupFullState_(child);
   });
   let isChecked, isExpanded, isLegendExpanded;
@@ -786,7 +786,7 @@ LayertreeTreeManager.prototype.setFirstLevelGroupFullState_ = function (treeCtrl
   }
 
   // Set the state of the treeCtrl children recursively.
-  treeCtrl.children.map((child) => {
+  treeCtrl.children.forEach((child) => {
     this.setFirstLevelGroupFullState_(child, fullState.children[child.node.name]);
   });
 };
