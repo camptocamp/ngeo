@@ -61,31 +61,31 @@ import Search from 'api/Search';
 
 /**
  * @typedef {Object} MarkerOptions
- * @property {[number, number]} [position]
- * @property {string} [icon]
+ * @property {[number, number]} [position] coordinates of the marker.
+ * @property {string} [icon] image path for the marker.
  */
 
 /**
  * @typedef {Object} MapOptions
- * @property {string} div
- * @property {import('ol/coordinate').Coordinate} center
- * @property {number} [zoom=10]
- * @property {boolean} [showCoords=true]
- * @property {boolean} [addMiniMap=false]
- * @property {boolean} [miniMapExpanded=true]
- * @property {boolean} [addLayerSwitcher=false]
- * @property {boolean} [searchDiv]
- * @property {string[]} [layers]
- * @property {string[]} [backgroundLayers]
+ * @property {string} div target to render the map into.
+ * @property {import('ol/coordinate').Coordinate} center coordinater of the map's center.
+ * @property {number} [zoom=10] initial zoom.
+ * @property {boolean} [showCoords=true] show coordinates or not.
+ * @property {boolean} [addMiniMap=false] with mini map or not.
+ * @property {boolean} [miniMapExpanded=true] allow mini map expand or not.
+ * @property {boolean} [addLayerSwitcher=false] with or without layer switcher.
+ * @property {boolean} [searchDiv] div containing the search element.
+ * @property {string[]} [layers] layers on the map.
+ * @property {string[]} [backgroundLayers] backgrounds on the map.
  */
 
 /**
  * Attr is ['title', 'description'] by default
  *
  * @typedef {Object} CustomLayer
- * @property {string[]} [attr]
- * @property {function(): void} [success]
- * @property {function(): void} [error]
+ * @property {string[]} [attr] attributes of the layer.
+ * @property {function(): void} [success] success callback.
+ * @property {function(): void} [error] error callback.
  */
 
 /**
