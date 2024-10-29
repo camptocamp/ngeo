@@ -19,7 +19,7 @@ env:
 jobs:
   not-failed-backport:
     name: Test that's not a failed backport
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
@@ -28,7 +28,7 @@ jobs:
 
   main:
     name: Continuous integration
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 50
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
@@ -223,7 +223,7 @@ jobs:
 
   gh-pages:
     name: Github Pages
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     concurrency: gh-pages-push
     needs:
