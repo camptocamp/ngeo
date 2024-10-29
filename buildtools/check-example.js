@@ -24,9 +24,9 @@
 'use strict';
 
 const path = require('path');
+const URL = require('url');
 const fs = require('fs');
 const puppeteer = require('puppeteer');
-const parse = require('url-parse');
 
 const arg = process.argv[2];
 if (!arg) {
@@ -174,7 +174,7 @@ function loaded(page, browser) {
     } else if (url == 'https://sgx.geodatenzentrum.de/wmts_basemapde/1.0.0/WMTSCapabilities.xml') {
       request.respond(SgxCapabilities);
     } else if (
-      parse(url).host == parse(page_url).host ||
+      URL.parse(url).host === URL.parse(page_url).host ||
       url.startsWith('http://localhost:') ||
       url.startsWith('https://geomapfish-demo') ||
       url.startsWith('https://wmts.geo.admin.ch/') ||
