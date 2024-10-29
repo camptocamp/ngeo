@@ -36,11 +36,6 @@ jobs:
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
 
     steps:
-      - name: GitHub event
-        run: echo ${GITHUB_EVENT} | python3 -m json.tool
-        env:
-          GITHUB_EVENT: ${{ toJson(github) }}
-      - run: '! ls BACKPORT_TODO'
       - run: /opt/google/chrome/chrome --version
 
       - name: Get sha
@@ -57,6 +52,8 @@ jobs:
           fetch-depth: 0
           ref: ${{ steps.sha.outputs.sha }}
         if: github.event_name == 'pull_request_target'
+
+      - run: '! ls BACKPORT_TODO'
 
       - uses: actions/setup-node@v4
         with:
@@ -92,6 +89,8 @@ jobs:
         if: failure()
       - name: Print environment information
         run: c2cciutils-env
+        env:
+          GITHUB_EVENT: ${{ toJson(github) }}
 
       - run: |
           sudo rm /etc/apt/sources.list.d/*.list
