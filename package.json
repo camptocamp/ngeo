@@ -191,7 +191,7 @@
     "sass": "1.79.4",
     "sass-loader": "16.0.2",
     "simple-html-tokenizer": "0.5.11",
-    "sinon": "18.0.1",
+    "sinon": "19.0.2",
     "start-server-and-test": "2.0.8",
     "storybook": "8.3.4",
     "strip-bom": "5.0.0",
