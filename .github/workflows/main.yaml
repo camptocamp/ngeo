@@ -34,7 +34,7 @@ jobs:
 
     env:
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
-      REGENERATE_EXAMPLES: true
+      REGENERATE_EXAMPLES: 'false'
 
     steps:
       - name: GitHub event
