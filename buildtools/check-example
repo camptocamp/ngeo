@@ -84,9 +84,16 @@ def main():
         stdout=subprocess.PIPE,
     )
     result = float(result.stdout.decode().splitlines()[-1].split()[1])
-    if result > 0.01:
-        print(f"{result} > 0.01 => {diff}")
-        sys.exit(1)
+    if os.environ.get("REGENERATE_EXAMPLES") == "true":
+        if result > 0:
+            shutil.copyfile(current, old_ref)
+            print(f"::error file={old_ref}:: Regenerate the ref image: {old_ref}")
+        else:
+            os.remove(old_ref)
+    else:
+        if result > 0.01:
+            print(f"{result} > 0.01 => {diff}")
+            sys.exit(1)
 
 
 if __name__ == "__main__":

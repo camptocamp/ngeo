@@ -19,7 +19,7 @@ env:
 jobs:
   not-failed-backport:
     name: Test that's not a failed backport
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
@@ -28,12 +28,13 @@ jobs:
 
   main:
     name: Continuous integration
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 50
     if: "!startsWith(github.event.head_commit.message, '[skip ci] ')"
 
     env:
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
+      REGENERATE_EXAMPLES: 'false'
 
     steps:
       - run: /opt/google/chrome/chrome --version
@@ -114,7 +115,10 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
         if: github.event_name != 'pull_request_target'
       - run: make check-examples-checker
-        if: github.event_name != 'pull_request_target'
+        if: |
+          github.event_name != 'pull_request_target'
+          && env.REGENERATE_EXAMPLES == 'false'
+
         # Cypress tests
       - run: make serve-gmf-apps &
         if: github.event_name != 'pull_request_target'
@@ -132,6 +136,11 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
       - run: make check-examples
         if: github.event_name != 'pull_request_target'
+      - run: |
+          rm examples/error-ref.png
+          find . ! -name *-ref.png -type f -exec rm {} \;
+        if: env.REGENERATE_EXAMPLES == 'true'
+      - run: '[ ${REGENERATE_EXAMPLES} == false ]'
       - uses: actions/upload-artifact@v4
         with:
           name: Examples
@@ -222,7 +231,7 @@ jobs:
 
   gh-pages:
     name: Github Pages
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     concurrency: gh-pages-push
     needs:

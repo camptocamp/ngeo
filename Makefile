@@ -303,7 +303,8 @@ contribs/dist: .build/build-dll.timestamp
 	mkdir -p $(dir $@)
 	CI=true LANGUAGE=en_US buildtools/retry node buildtools/check-example.js \
 		.build/examples-hosted/error.html
-	! buildtools/check-example .build/examples-hosted/error.html.png examples/error-ref.png
+	# Only if REGENERATE_EXAMPLES is not true
+	! ( [ ${REGENERATE_EXAMPLES} != true ] && buildtools/check-example .build/examples-hosted/error.html.png examples/error-ref.png )
 	touch $@
 
 # Add --generate as argument to buildtools/check-example to regenerate the reference images
