@@ -19,7 +19,6 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = function () {
@@ -30,15 +29,11 @@ module.exports = function () {
       filename: '[name]-[chunkhash:6].js',
       assetModuleFilename: '[name]-[contenthash:6][ext]',
     },
-    plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
     optimization: {
       minimizer: [
         new TerserPlugin({
           exclude: /.*mapillary\.js$/,
           parallel: true,
-          terserOptions: {
-            compress: false,
-          },
         }),
       ],
     },
