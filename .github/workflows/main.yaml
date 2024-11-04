@@ -14,7 +14,7 @@ on:
 env:
   HAS_SECRETS: ${{ secrets.HAS_SECRETS }}
   MAIN_BRANCH: master
-  CI: true
+  CI: 'true'
 
 jobs:
   not-failed-backport:
@@ -140,7 +140,7 @@ jobs:
           rm examples/error-ref.png
           find . ! -name *-ref.png -type f -exec rm {} \;
         if: env.REGENERATE_EXAMPLES == 'true'
-      - run: '[ ${REGENERATE_EXAMPLES} == false ]'
+      - run: "[ ${REGENERATE_EXAMPLES} == 'false' ]"
       - uses: actions/upload-artifact@v4
         with:
           name: Examples
