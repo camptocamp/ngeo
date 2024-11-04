@@ -115,7 +115,7 @@ function loaded(page, browser) {
 }
 (async () => {
   const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-web-security', '--single-process'],
+    args: ['--no-sandbox', '--disable-web-security', '--single-process', '--enable-unsafe-swiftshader'],
     headless: true,
     // Don't store the user data
     userDataDir: '/dev/null',
