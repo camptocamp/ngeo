@@ -10,6 +10,7 @@ EditingSnappingService.$inject = [
   'gmfTreeManager',
   'ngeoFeatures',
   'gmfSnappingOptions',
+  'gmfDataSourcesManager',
 ];
 // The MIT License (MIT)
 //
@@ -86,6 +87,7 @@ export class CustomSnap extends olInteractionSnap {
  * @param {import('ol/Collection').default<import('ol/Feature').default<import('ol/geom/Geometry').default>>} ngeoFeatures Collection
  *    of features.
  * @param {import('gmf/options.js').gmfSnappingOptions} gmfSnappingOptions The options.
+ * @param {import('gmf/datasource/Manager').DatasourceManager} gmfDataSourcesManager The GMF data sources manager.
  * @ngdoc service
  * @ngname gmfSnapping
  */
@@ -101,6 +103,7 @@ export function EditingSnappingService(
   gmfTreeManager,
   ngeoFeatures,
   gmfSnappingOptions,
+  gmfDataSourcesManager,
 ) {
   // === Injected services ===
 
@@ -143,6 +146,11 @@ export function EditingSnappingService(
    * @type {import('gmf/options.js').gmfSnappingOptions}
    */
   this.gmfSnappingOptions_ = gmfSnappingOptions;
+
+  /**
+   * @type {import('gmf/datasource/Manager').DatasourceManager}
+   */
+  this.gmfDataSourcesManager_ = gmfDataSourcesManager;
 
   /**
    * @type {import("gmf/theme/Themes.js").ThemesService}
@@ -629,7 +637,7 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
   if (!this.map_) {
     throw new Error('Missing map');
   }
-
+  const dataSource = this.gmfDataSourcesManager_.getDatasource(parseInt(item.treeCtrl.node.ol_uid));
   // If a previous request is still running, cancel it.
   if (item.requestDeferred) {
     item.requestDeferred.resolve();
@@ -637,6 +645,10 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
   const map = this.map_;
   const view = map.getView();
   const size = map.getSize();
+  const resolution = view.getResolution();
+  const currentFeatureTypesNames = dataSource.getInRangeWFSLayerNames(resolution, true);
+  const geometryName = dataSource.geometryName(currentFeatureTypesNames[0]);
+  const outputFormat = dataSource.wfsOutputFormat;
   if (!size) {
     throw new Error('Missing size');
   }
@@ -648,9 +660,9 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
     featureNS: item.featureNS,
     featurePrefix: item.featurePrefix,
     featureTypes: featureTypes,
-    outputFormat: 'GML3',
+    outputFormat: outputFormat | 'GML3',
     bbox: extent,
-    geometryName: DEFAULT_GEOMETRY_NAME,
+    geometryName: geometryName | DEFAULT_GEOMETRY_NAME,
     maxFeatures: item.maxFeatures,
   };
   const wfsFormat = new olFormatWFS();
