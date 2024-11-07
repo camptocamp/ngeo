@@ -659,9 +659,13 @@ EditingSnappingService.prototype.loadItemFeatures_ = function (item) {
   const featureRequest = xmlSerializer.serializeToString(featureRequestXml);
   const url = item.wfsConfig.url;
   item.requestDeferred = this.q_.defer();
+  const headers = {
+    'Content-Type': 'text/xml',
+  };
   this.http_
     .post(url, featureRequest, {
       timeout: item.requestDeferred.promise,
+      headers: headers,
     })
     .then((response) => {
       // (1) Unset requestDeferred
