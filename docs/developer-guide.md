@@ -149,6 +149,8 @@ Update the `.github/workflows/main.yaml`:
 +      MAIN_BRANCH: 'x.y'
 ```
 
+In the GitHub project settings deactivate the 'Status' Rule.
+
 Commit and push the changes:
 
 ```bash
@@ -156,6 +158,8 @@ git add .github/workflows/main.yaml
 git commit -m "Update the branch"
 git push origin x.y
 ```
+
+In the GitHub project settings reactivate the 'Status' Rule.
 
 Back on master:
 
@@ -194,22 +198,30 @@ Update the `SECURITY.md`:
 Note: when you do the release you should define date or the version x.y to
 now + 18 months for a standard release, and now + 36 months for an LTS release.
 
-Update the `.github/workflows/audit.yaml`, in the branch matrix:
-
-```diff
-+          - 'x.y+1'
-```
-
 Create the label `backport x.y`.
-
-Protect the branch x.y.
 
 Commit and push the changes:
 
 ```bash
-git add package.json Makefile SECURITY.md .github/workflows/audit.yaml
-git commit -m "Start the version x.y+1"
-git push origin master
+NEXT_VERSION=x.y+1
+git add package.json Makefile SECURITY.md
+git checkout -b "start-${NEXT_VERSION}"
+git commit -m "Start the version ${NEXT_VERSION}"
+git push origin "start-${NEXT_VERSION}"
+```
+
+Create a pull request from the new branch.
+
+Login to transifex:
+
+```bash
+echo "[https://www.transifex.com]" > ~/.transifexrc
+echo "api_hostname  = https://api.transifex.com" >> ~/.transifexrc
+echo "rest_hostname = https://rest.api.transifex.com" >> ~/.transifexrc
+echo "hostname = https://www.transifex.com" >> ~/.transifexrc
+echo "username = $(gopass show gs/ci/transifex/rw/username)" >> ~/.transifexrc
+echo "password = $(gopass show gs/ci/transifex/rw/password)" >> ~/.transifexrc
+echo "token = $(gopass show gs/ci/transifex/rw/token)" >> ~/.transifexrc
 ```
 
 Create the new localization resource:
