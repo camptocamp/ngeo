@@ -37,7 +37,16 @@ export default class MapillaryService extends StreetviewService {
    * @param {number} bufferSize The size to add to the bbox buffer.
    * @param {string} organizationId The id of the organization to get images from.
    */
-  constructor($scope, $timeout, $http, map, handlePanoramaPositionChange, accessToken, bufferSize, organizationId) {
+  constructor(
+    $scope,
+    $timeout,
+    $http,
+    map,
+    handlePanoramaPositionChange,
+    accessToken,
+    bufferSize,
+    organizationId,
+  ) {
     super($scope, map, handlePanoramaPositionChange);
 
     /**
@@ -80,7 +89,6 @@ export default class MapillaryService extends StreetviewService {
     this.mapillaryElement = document.getElementById('mly');
     this.mapillaryElement.hidden = true;
     import(/* webpackChunkName: "mapillary" */ 'mapillary-js').then((Mapillary) => {
-
       const viewerOptions = {
         accessToken: this.accessToken_,
         container: 'mly',
@@ -90,18 +98,18 @@ export default class MapillaryService extends StreetviewService {
             visible: false,
           },
         },
-      }
+      };
 
       if (this.organizationId) {
         const queryCreator = new MapillaryGraphQueryCreator(this.organizationId);
 
         const dataProvider = new Mapillary.GraphDataProvider(
-            {
-            accessToken: this.accessToken_
-            },
-            undefined,
-            undefined,
-            queryCreator
+          {
+            accessToken: this.accessToken_,
+          },
+          undefined,
+          undefined,
+          queryCreator,
         );
         viewerOptions.dataProvider = dataProvider;
       }
@@ -195,15 +203,15 @@ export default class MapillaryService extends StreetviewService {
   searchImage_(bbox) {
     const baseUrl = `${MLY_METADATA_ENDPOINT}/images`;
     const params = new URLSearchParams([
-        ['access_token', this.accessToken_],
-        ['fields', 'id'],
-        ['bbox', bbox],
-        ['limit', '1'],
-    ])
+      ['access_token', this.accessToken_],
+      ['fields', 'id'],
+      ['bbox', bbox],
+      ['limit', '1'],
+    ]);
     if (this.organizationId) {
-        params.append('organization_id', this.organizationId)
+      params.append('organization_id', this.organizationId);
     }
-    const path = `${baseUrl}?${params.toString()}`
+    const path = `${baseUrl}?${params.toString()}`;
     return this.$http_.get(path).then(
       /**
        * @param {any} response object.
