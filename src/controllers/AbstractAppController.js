@@ -61,6 +61,7 @@ import gmfAuthenticationService from 'ngeo/auth/service';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 import storeMap from 'gmfapi/store/map';
 import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
+import {debounce} from 'gmf/misc/debounce2';
 
 AbstractAppController.$inject = ['$scope', '$injector', 'mobile'];
 /**
@@ -127,14 +128,15 @@ export function AbstractAppController($scope, $injector, mobile) {
     return newCenter;
   };
 
-  // Fix the center on the WMTS grid on animation end
-  const originalViewSetHint = view.setHint;
-  view.setHint = (hint, value) => {
-    originalViewSetHint.call(view, hint, value);
-    if (hint === ViewHint.ANIMATING && value === -1) {
-      view.setCenter(view.getCenter());
-    }
-  };
+  /**
+   * Base OL view.setHint function.
+   * Keep it to be able to reset its normal behavior if wanted.
+   * @private
+   */
+  this.originalViewSetHint = view.setHint;
+  // Be sure the center is aligned with the grid (anti-blur effect).
+  this.fixCenterOnGrid(view);
+
   const map = new olMap(
     Object.assign(
       {
@@ -699,6 +701,26 @@ function getLayerByLabels(layers, labels) {
   }
   return null;
 }
+
+/**
+ * Fix the center on the WMTS grid on animation end.
+ * This could help to have a not blurred map, but without
+ * timeout (and with map.view.constrainResolution to true), the map
+ * could "jump around" slightly on zooming in/out quickly.
+ * @param {import ('ol/View').View} view an ol view.
+ * @private
+ */
+AbstractAppController.prototype.fixCenterOnGrid = function (view) {
+  const debounceSetCenter = debounce((view, hint, value) => {
+    if (hint === ViewHint.ANIMATING && value === -1) {
+      view.setCenter(view.getCenter());
+    }
+  }, 50);
+  view.setHint = (hint, value) => {
+    this.originalViewSetHint.call(view, hint, value);
+    debounceSetCenter(view, hint, value);
+  };
+};
 
 /**
  * @param {string} lang Language code.
