@@ -35,7 +35,7 @@ export default class MapillaryService extends StreetviewService {
    * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void} handlePanoramaPositionChange Position change handler.
    * @param {string} accessToken The key to access the mapillary api.
    * @param {number} bufferSize The size to add to the bbox buffer.
-   * @param {string} organizationId The id of the organization to get images from.
+   * @param {string} [organizationId] The id of the organization to get images from.
    */
   constructor(
     $scope,
