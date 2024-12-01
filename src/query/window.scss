@@ -253,7 +253,8 @@ div.ngeo-displaywindow {
         height: calc(
             $displayquerywindow-detailed-header-height + $displayquerywindow-detailed-details-height / 2 +
               $app-margin * 3
-          ) + $map-tools-size;
+          ) +
+          $map-tools-size;
       }
     }
     .results {
