@@ -33,7 +33,7 @@ export default {
         'directedFilterAttributes': ['name', 'type', 'timestamp'],
         'disclaimer':
           "\u00a9 Les contributeurs d\u2019<a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
-        'ogcServer': 'Main PNG',
+        'ogcServer': 'MapServer',
         'thumbnail':
           'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
         'wmsLayers': 'buildings_query',
@@ -4200,7 +4200,7 @@ export default {
         'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+Jpeg&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': true,
     },
-    'Main PNG': {
+    'MapServer': {
       'attributes': {
         'accommodation': {
           'access': {
@@ -6784,9 +6784,9 @@ export default {
       'namespace': 'http://mapserver.gis.umn.edu/mapserver',
       'type': 'mapserver',
       'url':
-        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'urlWfs':
-        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
+        'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin',
       'wfsSupport': true,
     },
     'Main no WFS': {
@@ -7750,7 +7750,7 @@ export default {
               },
               'minResolutionHint': 0.53,
               'name': 'osm_scale',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'type': 'WMS',
             },
             {
@@ -7773,7 +7773,7 @@ export default {
               },
               'minResolutionHint': 0.0,
               'name': 'osm_open',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'type': 'WMS',
             },
             {
@@ -7793,7 +7793,7 @@ export default {
               'metadata': {},
               'minResolutionHint': 0.0,
               'name': 'Layer with very very very very very long name',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'type': 'WMS',
             },
             {
@@ -7824,7 +7824,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_r_s',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -7856,7 +7856,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_v_s',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -7888,7 +7888,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_v_dp',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -7926,7 +7926,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_r_dp',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -7958,7 +7958,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_r_year_mounth',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -7990,7 +7990,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_d_year_mounth',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -8022,7 +8022,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_r_mounth_year',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [1, 0, 0, 0],
                     'maxDefValue': null,
@@ -8054,7 +8054,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_v_mounth_year',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [1, 0, 0, 0],
                     'maxDefValue': null,
@@ -8086,7 +8086,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'long wms-t layer name name name name name name name',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [1, 0, 0, 0],
                     'maxDefValue': null,
@@ -8118,7 +8118,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_r_dp_default',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': '2017-06-01T00:00:00Z',
@@ -8150,7 +8150,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_r_s_default',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': '2017-06-01T00:00:00Z',
@@ -8182,7 +8182,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_v_dp_default',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -8214,7 +8214,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_v_s_default',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'time': {
                     'interval': [0, 1, 0, 0],
                     'maxDefValue': null,
@@ -8258,7 +8258,7 @@ export default {
                   },
                   'minResolutionHint': 0.0,
                   'name': 'osm_time_r_dp_two_layers',
-                  'ogcServer': 'Main PNG',
+                  'ogcServer': 'MapServer',
                   'type': 'WMS',
                 },
               ],
@@ -8292,7 +8292,7 @@ export default {
               },
               'minResolutionHint': 0.0,
               'name': 'two_layers',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'type': 'WMS',
             },
             {
@@ -8577,7 +8577,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Layers',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -8785,7 +8785,7 @@ export default {
           },
           'mixed': false,
           'name': 'Layers-exclusive',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -8827,7 +8827,7 @@ export default {
           },
           'mixed': false,
           'name': 'Group',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -9104,7 +9104,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'OSM functions',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
           'time': {
             'interval': [0, 1, 0, 0],
             'maxDefValue': null,
@@ -9329,7 +9329,7 @@ export default {
               },
               'minResolutionHint': 0.0,
               'name': 'osm_open',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'type': 'WMS',
             },
             {
@@ -9368,7 +9368,7 @@ export default {
                 'directedFilterAttributes': ['name', 'type', 'timestamp'],
                 'disclaimer':
                   "\u00a9 Les contributeurs d\u2019<a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
-                'ogcServer': 'Main PNG',
+                'ogcServer': 'MapServer',
                 'thumbnail':
                   'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
                 'wmsLayers': 'buildings_query',
@@ -9400,7 +9400,7 @@ export default {
               },
               'minResolutionHint': 0.0,
               'name': 'osm_time_r_dp_2',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'time': {
                 'interval': [0, 1, 0, 0],
                 'maxDefValue': null,
@@ -9482,7 +9482,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Filters',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -9512,7 +9512,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Floor slider',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -9814,7 +9814,7 @@ export default {
           },
           'mixed': false,
           'name': 'Edit',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -9885,7 +9885,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Snapping',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -9961,7 +9961,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Snapping tollerance',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -10015,7 +10015,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Snapping no edge',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
         {
           'children': [
@@ -10069,7 +10069,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Snapping no vertex',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10117,7 +10117,7 @@ export default {
           },
           'mixed': false,
           'name': 'Administration',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10163,7 +10163,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Enseignement',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10200,7 +10200,7 @@ export default {
               },
               'minResolutionHint': 0.0,
               'name': 'bus_stop',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'type': 'WMS',
             },
             {
@@ -10269,7 +10269,7 @@ export default {
               },
               'minResolutionHint': 0.0,
               'name': 'osm_open',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'type': 'WMS',
             },
             {
@@ -10308,7 +10308,7 @@ export default {
                 'directedFilterAttributes': ['name', 'type', 'timestamp'],
                 'disclaimer':
                   "\u00a9 Les contributeurs d\u2019<a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>",
-                'ogcServer': 'Main PNG',
+                'ogcServer': 'MapServer',
                 'thumbnail':
                   'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/img/cadastre.jpeg',
                 'wmsLayers': 'buildings_query',
@@ -10340,7 +10340,7 @@ export default {
               },
               'minResolutionHint': 0.0,
               'name': 'osm_time_r_dp_2',
-              'ogcServer': 'Main PNG',
+              'ogcServer': 'MapServer',
               'time': {
                 'interval': [0, 1, 0, 0],
                 'maxDefValue': null,
@@ -10422,7 +10422,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Filters',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10469,7 +10469,7 @@ export default {
           },
           'mixed': false,
           'name': 'fuel',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10771,7 +10771,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'ObjectEditing',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10843,7 +10843,7 @@ export default {
           },
           'mixed': false,
           'name': 'Patrimoine',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10914,7 +10914,7 @@ export default {
           },
           'mixed': false,
           'name': 'Paysage',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
@@ -10986,7 +10986,7 @@ export default {
           'metadata': {},
           'mixed': false,
           'name': 'Gestion des eaux',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {
@@ -11086,7 +11086,7 @@ export default {
           },
           'mixed': false,
           'name': 'Transport',
-          'ogcServer': 'Main PNG',
+          'ogcServer': 'MapServer',
         },
       ],
       'functionalities': {},
