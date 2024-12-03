@@ -126,7 +126,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
             {
               'name': 'post_office',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
+                'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
               ],
             },
           ],
@@ -159,7 +159,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
             {
               'name': 'post_office',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
+                'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
               ],
             },
           ],
@@ -222,13 +222,13 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
                 {
                   'name': 'sustenance',
                   'icons': [
-                    'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=sustenance&SCALE=25000',
+                    'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=sustenance&SCALE=25000',
                   ],
                 },
                 {
                   'name': 'entertainment',
                   'icons': [
-                    'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=entertainment&SCALE=25000',
+                    'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=entertainment&SCALE=25000',
                   ],
                 },
               ],
@@ -251,7 +251,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
         {
           'name': 'fuel',
           'icons': [
-            'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=Main+PNG&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=fuel&SCALE=25000',
+            'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=fuel&SCALE=25000',
           ],
         },
       ],

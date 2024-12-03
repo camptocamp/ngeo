@@ -55,7 +55,7 @@ function MainController($scope) {
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
       params: {
-        'ogcserver': 'Main PNG',
+        'ogcserver': 'MapServer',
         'LAYERS': 'post_office',
       },
       serverType: 'mapserver',
@@ -66,7 +66,7 @@ function MainController($scope) {
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
       params: {
-        'ogcserver': 'Main PNG',
+        'ogcserver': 'MapServer',
         'LAYERS': 'entertainment',
       },
       serverType: 'mapserver',
@@ -77,7 +77,7 @@ function MainController($scope) {
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
       params: {
-        'ogcserver': 'Main PNG',
+        'ogcserver': 'MapServer',
         'LAYERS': 'sustenance',
       },
       serverType: 'mapserver',
@@ -102,7 +102,7 @@ function MainController($scope) {
     source: new olSourceWMS({
       url: MAPSERVER_PROXY,
       params: {
-        'ogcserver': 'Main PNG',
+        'ogcserver': 'MapServer',
         'LAYERS': 'osm_scale',
       },
       serverType: 'mapserver',
