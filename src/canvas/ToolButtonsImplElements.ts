@@ -19,7 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import {TemplateResult, html} from 'lit';
+import {TemplateResult, html, css} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import ToolButtonElement from 'gmfapi/elements/ToolButtonElement';
 import i18next from 'i18next';
@@ -248,6 +248,37 @@ export class ToolButtonRouting extends ToolButtonElement {
         data-original-title="${i18next.t('Routing')}"
       >
         <span class="fa-solid fa-signs-post"></span>
+      </button>
+    `;
+  }
+}
+
+@customElement('gmf-selection-button')
+export class ToolButtonSelection extends ToolButtonElement {
+  static styles = [
+    ...ToolButtonElement.styles,
+    css`
+      .offset-info-icon {
+        position: absolute;
+        line-height: normal;
+      }
+    `,
+  ];
+  constructor() {
+    super('selection');
+  }
+
+  render(): TemplateResult {
+    return html`
+      <button
+        @click=${() => this.click_()}
+        class="btn btn-default ${this.active_ ? 'active' : ''}"
+        data-toggle="tooltip"
+        data-placement="left"
+        data-original-title="${i18next.t('Selection')}"
+      >
+        <i class="fa-solid fa-arrow-pointer"></i>
+        <i class="fa-solid fa-info fa-sm offset-info-icon"></i>
       </button>
     `;
   }
