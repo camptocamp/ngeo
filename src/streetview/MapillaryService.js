@@ -91,7 +91,7 @@ export default class MapillaryService extends StreetviewService {
      * @param {import('mapillary-js/src/viewer/events/ViewerImageEvent').ViewerImageEvent} evt
      */
     this.mapillaryEventHandler_ = (evt) => {
-      const coordinates = evt.image.computedLngLat;
+      const coordinates = evt.image.originalLngLat;
       const newCoordinates = this.fromLonLat_([coordinates.lng, coordinates.lat]);
       super.panoramaPositionChange(newCoordinates);
       this.mly.resize();
