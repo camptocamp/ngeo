@@ -317,6 +317,7 @@ class StreetviewController {
     }
     const accessToken = this.options.key;
     const bufferSize = this.options.bufferSize;
+    const organizationId = this.options.organizationId;
     //wait for the mly div to be there before making the service which needs it
     this.timeout_(() => {
       const mapillaryService = new MapillaryService(
@@ -327,6 +328,7 @@ class StreetviewController {
         this.handlePanoramaPositionChange_,
         accessToken,
         bufferSize,
+        organizationId,
       );
       this.scope_.$watch(
         () => this.panelWidth,
