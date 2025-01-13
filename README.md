@@ -32,6 +32,12 @@ GeoMapFish-specific web services. The `gmf` contrib examples are also available
 - [make](https://www.gnu.org/software/make/) – GNU Make.
 - [node](https://www.nodejs.org/) – nodejs JS runtime environment.
 - [npm](https://www.npmjs.com/) – npm package manager.
+- [python](https://www.python.org/) – 3.x installed on the system (be careful with pyenv)
+
+On my Ubuntu 24.04, I had to set the following environment variables to make it work:
+
+- `NODE_GYP_FORCE_PYTHON=/usr/bin/python`
+- `PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig/:/usr/share/pkgconfig/`
 
 ### Go further
 
