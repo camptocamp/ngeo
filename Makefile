@@ -332,7 +332,7 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
-	npm install --omit=optional --legacy-peer-deps
+	NODE_GYP_FORCE_PYTHON=/usr/bin/python npm install --omit=optional --legacy-peer-deps
 	# Installed from peer dependency from ol-layerswitcher and that breaks our types
 	rm -rf ./node_modules/@types/openlayers
 	mkdir -p $(dir $@)
