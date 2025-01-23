@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Camptocamp SA
+// Copyright (c) 2015-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -799,8 +799,9 @@ AbstractAppController.prototype.setDefaultBackground_ = function (theme) {
  */
 export function getLocationIcon() {
   const arrow = document.createElement('span');
-  arrow.className = 'fa-solid fa-location-crosshairs-arrow';
+  arrow.className = 'fa-solid fa-location-arrow';
   arrow.style.transform = 'rotate(-0.82rad)';
+  arrow.style.fontSize = '1.3em';
   const arrowWrapper = document.createElement('span');
   arrowWrapper.appendChild(arrow);
   return arrowWrapper;
