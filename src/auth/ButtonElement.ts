@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2024 Camptocamp SA
+// Copyright (c) 2021-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -54,7 +54,7 @@ export class ToolButtonAuth extends ToolButtonElement {
         data-placement="left"
         data-original-title="${i18next.t('Login')}"
       >
-        <span class="fa-solid fa-user ${this.login_ ? 'fa-user-xmark' : 'fa-user'}"></span>
+        <span class="fa-solid ${this.login_ ? 'fa-user-xmark' : 'fa-user'}"></span>
       </button>
     `;
   }
