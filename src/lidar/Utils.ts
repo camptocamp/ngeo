@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2024 Camptocamp SA
+// Copyright (c) 2018-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -312,8 +312,7 @@ export default class {
     // Draw the image of the profile into the context of the new canvas.
     const img_id = 'lidare_profile_for_export_uid';
     exportImage.id = img_id;
-    const buffer = Buffer.from(svgStr);
-    exportImage.src = `data:image/svg+xml;base64, ${buffer.toString('base64')}`;
+    exportImage.src = `data:image/svg+xml;base64,${btoa(svgStr)}`;
     exportImage.style.setProperty('display', 'none');
     const body = document.getElementsByTagName('body')[0];
     // The image must be loaded to be drawn.
