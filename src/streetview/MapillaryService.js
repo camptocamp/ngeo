@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2022 Camptocamp SA
+// Copyright (c) 2021-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -96,7 +96,7 @@ export default class MapillaryService extends StreetviewService {
      * @param {import('mapillary-js/src/viewer/events/ViewerImageEvent').ViewerImageEvent} evt
      */
     this.mapillaryEventHandler_ = (evt) => {
-      const coordinates = evt.image.computedLngLat;
+      const coordinates = evt.image.originalLngLat;
       const newCoordinates = this.fromLonLat_([coordinates.lng, coordinates.lat]);
       super.panoramaPositionChange(newCoordinates);
       this.mly.resize();
