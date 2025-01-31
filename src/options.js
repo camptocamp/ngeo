@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Camptocamp SA
+// Copyright (c) 2020-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -671,6 +671,7 @@ export function buildStyle(styleDescriptor) {
  * @property {boolean} allowPasswordReset Whether to show the password forgotten link. Default to true.
  * @property {boolean} allowPasswordChange Whether to show the change password button. Default to true.
  *    You can also specify a `PasswordValidator` object to add constraint on user's new password.
+ * @property {string} [oidcUserInformationUrl] The URL of the OIDC server to allows the user to get his profile information.
  */
 
 /**
