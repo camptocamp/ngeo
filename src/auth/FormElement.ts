@@ -51,6 +51,7 @@ export default class GmfAuthForm extends GmfBaseElement {
   @state() private twoFactorAuth = false;
   @state() private allowPasswordChange = false;
   @state() private allowPasswordReset = false;
+  @state() private oidcUserInformationUrl = '';
   @state() private changingPassword = false;
   @state() private userMustChangeItsPassword = false;
   @state() private openIdConnectUrl = '';
@@ -122,6 +123,7 @@ export default class GmfAuthForm extends GmfBaseElement {
     this.twoFactorAuth = configuration.gmfTwoFactorAuth;
     this.allowPasswordChange = configuration.gmfAuthenticationConfig.allowPasswordChange;
     this.allowPasswordReset = configuration.gmfAuthenticationConfig.allowPasswordReset;
+    this.oidcUserInformationUrl = configuration.gmfAuthenticationConfig.oidcUserInformationUrl;
     this.openIdConnectBaseUrl = configuration.gmfOidcLoginUrl;
     if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.authentication !== undefined) {
       this.customCSS_ = configuration.gmfCustomCSS.authentication;
@@ -181,6 +183,17 @@ export default class GmfAuthForm extends GmfBaseElement {
                 <strong>${this.gmfUser.username}</strong>.
               </div>
 
+              ${this.oidcUserInformationUrl
+                ? html`
+                    <div class="form-group">
+                      <span
+                        ><a href="${this.oidcUserInformationUrl}" target="_blank"
+                          >${i18next.t('User information on the OIDC service')}</a
+                        ></span
+                      >
+                    </div>
+                  `
+                : html``}
               ${!this.changingPassword
                 ? html`
                     <form name="logoutForm" role="form" @submit=${(evt: Event) => this.logout(evt)}>

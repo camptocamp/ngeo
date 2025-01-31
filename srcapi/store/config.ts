@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Camptocamp SA
+// Copyright (c) 2020-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -979,6 +979,10 @@ export type gmfAuthenticationConfig = {
    * You can also specify a `PasswordValidator` object to add constraint on user's new password.
    */
   allowPasswordChange: boolean;
+  /**
+   * The URL of the OIDC server to allows the user to get his profile information.
+   */
+  oidcUserInformationUrl?: string;
 };
 
 /**
