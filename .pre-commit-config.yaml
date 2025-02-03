@@ -19,7 +19,7 @@ repos:
       - id: trailing-whitespace
       - id: mixed-line-ending
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.3.0
+    rev: v2.4.1
     hooks:
       - id: codespell
         exclude: |-
@@ -51,7 +51,7 @@ repos:
             |examples/svg\.html
           )$
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3.0.3
+    rev: 3.2.0
     hooks:
       - id: editorconfig-checker
         args:
@@ -70,7 +70,7 @@ repos:
     hooks:
       - id: git-check
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.30.0
+    rev: 0.31.1
     hooks:
       - id: check-github-workflows
       - id: check-renovate
@@ -126,7 +126,7 @@ repos:
     #         - eslint-plugin-lit@1.7.2
     #         - eslint-plugin-wc@1.4.0
   - repo: https://github.com/sbrunner/hooks
-    rev: 1.1.2
+    rev: 1.2.1
     hooks:
       - id: copyright
       - id: workflows-require-timeout
