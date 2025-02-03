@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,7 +23,7 @@ import menu from 'ngeo/Menu';
 import ngeoCustomEvent from 'ngeo/CustomEvent';
 
 /**
- * An OpenLayers overlay for features extended from ngeo/Menu.js. Additionally highlightes the chosen feature on menu mouseOver
+ * An OpenLayers overlay for features extended from ngeo/Menu.js. Additionally highlights the chosen feature on menu mouseOver
  *
  * @hidden
  */

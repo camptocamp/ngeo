@@ -1,7 +1,7 @@
 EditingEditFeature.$inject = ['$http', 'gmfLayersUrl'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -28,7 +28,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri';
  * @typedef {Object} ComparisonFilter
  * @property {string} property The type of operator for the comparison filter.
  * @property {string} operator The name of the property for the comparison filter.
- * @property {string} value The value for the comparison filter that must match the combinaison of
+ * @property {string} value The value for the comparison filter that must match the combination of
  * the operator and property.
  */
 
