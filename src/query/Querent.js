@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -573,7 +573,7 @@ export class Querent {
     /** @type {angular.IPromise<QuerentResult>[]} */
     const promises = [];
 
-    // The 'limit' option is mandatory in the querent service
+    // The 'limit' option is mandatory in this query service
     const maxFeatures = options.limit;
     const map = options.map;
     const view = map.getView();
@@ -596,7 +596,7 @@ export class Querent {
       bbox = options.extent;
     }
 
-    // (2) Launch one request per combinaison of data sources
+    // (2) Launch one request per combination of data sources
     const wfsFormat = new olFormatWFS();
     const xmlSerializer = new XMLSerializer();
     let hasAtLeastOneQueryIconPosition = false;
@@ -893,7 +893,7 @@ export class Querent {
       throw new Error('Missing coordinate');
     }
 
-    // (2) Launch one request per combinaison of data sources
+    // (2) Launch one request per combination of data sources
     for (const dataSources of combinedDataSources) {
       let url;
       /** @type {string[]} */
