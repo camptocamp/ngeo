@@ -1,7 +1,7 @@
 Controller.$inject = ['$scope', '$element', 'gettextCatalog', 'ngeoGeolocationOptions'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Camptocamp SA
+// Copyright (c) 2015-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -260,7 +260,9 @@ Controller.prototype.toggleTracking = function () {
       throw new Error('Missing center');
     }
     const diff = Math.abs(currentPosition[0] - center[0]) + Math.abs(currentPosition[1] - center[1]);
-    if (diff < 2) {
+    // In pixels
+    const diff_px = diff / view.getResolution();
+    if (diff_px < 2) {
       this.untrack_();
     } else {
       // immediately recenter to the latest position to avoid a delay if the GPS device is slow to respond.
