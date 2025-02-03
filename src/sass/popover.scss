@@ -30,7 +30,7 @@ $popover-action-max-width: calc(($popover-max-width / $popover-nb-col) * 4);
 
 .popover {
   border-radius: 0;
-  z-index: $above-content-index;
+  z-index: $search-index;
   .popover-body {
     ul {
       margin-bottom: 0;
