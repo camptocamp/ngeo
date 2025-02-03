@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2024 Camptocamp SA
+// Copyright (c) 2021-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -69,11 +69,9 @@ export default class GmfBaseElement extends LitElement {
 
   // bootstrap/font-awesome
 
-  /* eslint-disable @typescript-eslint/no-unsafe-member-access */
   static resetStyle: CSSResult = cssReset;
   static bootstrapStyle: CSSResult = cssBootstrap;
   static fontawesomeStyle: CSSResult = cssFontawesome;
-  /* eslint-enable @typescript-eslint/no-unsafe-member-access */
 
   // Make some Bootstrap values configurable
   static bootstrapVarStyle: CSSResult = css`
@@ -172,7 +170,6 @@ export default class GmfBaseElement extends LitElement {
 
   /**
    * Init the config and allows to override it in the inherited class.
-   *
    * @param {Configuration} configuration The configuration object.
    * @abstract
    * @protected

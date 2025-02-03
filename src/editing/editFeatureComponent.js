@@ -15,7 +15,7 @@ Controller.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -40,7 +40,6 @@ import gmfEditingSnapping from 'gmf/editing/Snapping';
 import gmfEditingXSDAttributes from 'gmf/editing/XSDAttributes';
 import {getLayer as syncLayertreeMapGetLayer} from 'gmf/layertree/SyncLayertreeMap';
 import DateFormatter from 'ngeo/misc/php-date-formatter';
-import 'jquery-datetimepicker/jquery.datetimepicker';
 import ngeoEditingAttributesComponent from 'ngeo/editing/attributesComponent';
 import ngeoEditingCreatefeatureComponent from 'ngeo/editing/createfeatureComponent';
 import {deleteCondition} from 'ngeo/utils';
