@@ -131,28 +131,28 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
       - run: make check-examples
         if: github.event_name != 'pull_request_target'
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Examples
           path: examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: GMF Examples
           path: contribs/gmf/examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Apps
           path: contribs/gmf/apps
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Examples hosted
           path: .build/examples-hosted
@@ -171,7 +171,7 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run dist-spinner
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: Npm logs
           path: /home/runner/.npm/_logs
@@ -219,7 +219,7 @@ jobs:
           cp -ar .build/storybook gh-pages/storybook
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: gh-pages
           path: gh-pages
