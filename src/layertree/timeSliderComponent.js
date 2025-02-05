@@ -1,7 +1,7 @@
 Controller.$inject = ['ngeoWMSTime', 'ngeoDebounce'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,10 +20,10 @@ Controller.$inject = ['ngeoWMSTime', 'ngeoDebounce'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// jquery-ui/ui/widgets/slider must be imported by your main controller.
 import angular from 'angular';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
-import 'jquery-ui/ui/widgets/slider';
 import 'angular-ui-slider';
 import htmlTemplate from './timesliderComponent.html';
 

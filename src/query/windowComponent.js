@@ -8,7 +8,7 @@ QueryWindowController.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -27,6 +27,7 @@ QueryWindowController.$inject = [
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// jquery-ui/ui/widgets/resizable must be imported by your main controller.
 import angular from 'angular';
 import downloadCsvService from 'ngeo/download/Csv';
 import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
@@ -36,7 +37,6 @@ import ngeoQueryMapQuerent from 'ngeo/query/MapQuerent';
 import olCollection from 'ol/Collection';
 import {isEmpty} from 'ol/obj';
 import {buildStyle} from 'ngeo/options';
-import 'jquery-ui/ui/widgets/resizable';
 import 'angular-animate';
 import 'angular-touch';
 import 'bootstrap/js/src/collapse';
