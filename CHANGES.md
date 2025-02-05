@@ -14,6 +14,7 @@ can be compiled with any modern bundler.
 - Update webpack to version 5
 - Let the users choose the version of peerDependencies
 - Remove not used offline and ol-cesium related code.
+- Move jquery and jquery-ui import out of components.
 
 # 2.8
 

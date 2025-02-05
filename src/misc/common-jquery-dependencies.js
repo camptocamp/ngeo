@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2025 Camptocamp SA
+// Copyright (c) 2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,15 +19,14 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import 'ngeo/misc/common-jquery-dependencies';
-import 'angular';
-import 'angular-gettext';
-import 'bootstrap';
-/*
- * Auto redirect to https to prevent CORS exceptions
- */
-if (window.location.protocol === 'http:' && window.location.hostname !== 'localhost') {
-  const restOfUrl = window.location.href.substr(5);
-  /** @type {Location} */
-  window.location.href = `https:${restOfUrl}`;
-}
+import 'jquery';
+import 'jquery-ui/ui/widgets/slider';
+import 'jquery-ui/ui/widgets/draggable';
+import 'jquery-ui/ui/widgets/resizable';
+import 'jquery-ui/ui/widgets/sortable';
+import 'jquery-ui-touch-punch';
+import 'jquery-datetimepicker/jquery.datetimepicker';
+import 'jquery-ui/ui/i18n/datepicker-fr';
+import 'jquery-ui/ui/i18n/datepicker-en-GB';
+import 'jquery-ui/ui/i18n/datepicker-de';
+import 'jquery-ui/ui/i18n/datepicker-it';

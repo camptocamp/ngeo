@@ -2,7 +2,7 @@ Controller.$inject = ['$scope', 'ngeoTime', 'gettextCatalog'];
 datePickerComponent.$inject = ['ngeoDatePickerTemplateUrl', '$timeout'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -25,12 +25,6 @@ import angular from 'angular';
 import ngeoMiscTime from 'ngeo/misc/Time';
 import 'angular-ui-date';
 import htmlTemplate from './datepickerComponent.html';
-
-// FIXME: import the locales in the applications
-import 'jquery-ui/ui/i18n/datepicker-fr';
-import 'jquery-ui/ui/i18n/datepicker-en-GB';
-import 'jquery-ui/ui/i18n/datepicker-de';
-import 'jquery-ui/ui/i18n/datepicker-it';
 
 /**
  * @type {angular.IModule}
