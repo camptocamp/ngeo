@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2024 Camptocamp SA
+// Copyright (c) 2019-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,10 +19,10 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// jquery-ui/ui/widgets/draggable must be imported by your main controller.
 import angular from 'angular';
 import {listen, unlistenByKey} from 'ol/events';
 import RenderEvent from 'ol/render/Event';
-import 'jquery-ui/ui/widgets/draggable';
 import htmlTemplate from './swipe.html';
 /**
  * @type {angular.IModule}
