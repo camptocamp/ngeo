@@ -1,7 +1,7 @@
 sortableComponent.$inject = ['$timeout'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Camptocamp SA
+// Copyright (c) 2015-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,9 +20,9 @@ sortableComponent.$inject = ['$timeout'];
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// jquery-ui/ui/widgets/sortable must be imported by your main controller.
+// jquery-ui-touch-punch must be imported by your main controller.
 import angular from 'angular';
-import 'jquery-ui/ui/widgets/sortable';
-import 'jquery-ui-touch-punch';
 
 /**
  * @typedef {Object} miscSortableOptions

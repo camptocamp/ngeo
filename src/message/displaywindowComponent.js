@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -19,9 +19,9 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+// jquery-ui/ui/widgets/resizable must be imported by your main controller.
+// jquery-ui/ui/widgets/draggable must be imported by your main controller.
 import angular from 'angular';
-import 'jquery-ui/ui/widgets/resizable';
-import 'jquery-ui/ui/widgets/draggable';
 import 'angular-sanitize';
 import htmlTemplate from './displaywindowComponent.html';
 
