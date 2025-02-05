@@ -46,7 +46,7 @@ import olSourceImageWMS from 'ol/source/ImageWMS';
 /**
  * @typedef {Object} QuerentResultItem
  * @property {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} features
- * @property {number} limit
+ * @property {number} featuresCount
  * @property {boolean} [tooManyFeatures]
  * @property {number} [totalFeatureCount]
  * @property {string []} [requestPartners] All datasources requested in the same request
@@ -403,8 +403,9 @@ export class Querent {
         'version': '1.0.0',
       });
     }
-    const limit = formatWFS.readFeatures(response.data).length;
-    const tooManyFeatures = totalFeatureCount > limit;
+    const featuresCount = formatWFS.readFeatures(response.data).length;
+    const tooManyFeatures =
+      totalFeatureCount > 0 ? totalFeatureCount > featuresCount : maxFeatures <= featuresCount;
     /** @type {string[]} */
     const datasourceNames = [];
     for (const dataSource of dataSources) {
@@ -418,13 +419,13 @@ export class Querent {
       this.setUniqueIds_(features, dataSource.id);
       hash[dataSourceId] = {
         features,
-        limit,
+        featuresCount: featuresCount,
         tooManyFeatures,
         totalFeatureCount,
       };
     }
     Object.values(hash).forEach(function (value, index) {
-      value.limit = limit;
+      value.featuresCount = featuresCount;
       value.tooManyFeatures = tooManyFeatures;
       value.requestPartners = datasourceNames;
     });
@@ -456,7 +457,7 @@ export class Querent {
         this.setUniqueIds_(features, dataSource.id);
         hash[dataSourceId] = {
           features,
-          limit,
+          featuresCount: limit,
           tooManyFeatures,
           totalFeatureCount,
         };
@@ -468,7 +469,7 @@ export class Querent {
         this.setUniqueIds_(features, dataSource.id);
         hash[dataSourceId] = {
           features,
-          limit,
+          featuresCount: limit,
         };
       }
     }
@@ -740,7 +741,6 @@ export class Querent {
       //     If we do not need to count features first, then proceed with
       //     an normal WFS GetFeature request.
 
-      options.queryCountFirst = false;
       const canceler = this.registerCanceler_();
       /** @type {angular.IPromise<QuerentResult>} */
       const countPromise = new Promise((resolve, reject) => {
@@ -877,7 +877,7 @@ export class Querent {
     const promises = [];
 
     // The 'limit' option is mandatory in the querent service
-    const FEATURE_COUNT = options.limit;
+    const limit = options.limit;
     const map = options.map;
     const view = map.getView();
     const resolution = view.getResolution();
@@ -987,7 +987,7 @@ export class Querent {
       // (4) Build query url, then launch
       const wmsGetFeatureInfoUrl = wmsSource.getFeatureInfoUrl(coordinate, resolution, projCode, {
         // Without extern, quoting is necessary
-        'FEATURE_COUNT': FEATURE_COUNT,
+        'FEATURE_COUNT': limit,
         'INFO_FORMAT': INFO_FORMAT,
       });
       if (!wmsGetFeatureInfoUrl) {
@@ -1001,7 +1001,7 @@ export class Querent {
           })
           .then(
             /** @type {function(angular.IHttpResponse<Document|Element|string>|number): QuerentResult} */
-            this.handleQueryResult_.bind(this, dataSources, FEATURE_COUNT, false),
+            this.handleQueryResult_.bind(this, dataSources, limit, false),
           ),
       );
     }
