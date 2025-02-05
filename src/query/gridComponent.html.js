@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2024 Camptocamp SA
+// Copyright (c) 2024-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -62,9 +62,12 @@ export default `<div class="gmf-displayquerygrid panel" ng-show="ctrl.active">
       >
         <div class="col-md-5 my-auto">
           <span ng-if="ctrl.hasOneWithTooManyResults_()" class="gmf-query-grid-too-many text-warning"
-            >{{'Only' | translate}} {{ctrl.sumOfFeatures}} {{'of' | translate}} {{ctrl.sumOfAvailableResults}}
+            ><span ng-if="ctrl.sumOfAvailableResults >= 0">{{'Only' | translate}} {{ctrl.sumOfFeatures}} {{'of' | translate}} {{ctrl.sumOfAvailableResults}}
             {{'results displayed, as the maximum number is reached. Please refine your query.' | translate
             }}</span
+          ><span ng-if="ctrl.sumOfAvailableResults < 0">{{'One of the query returns the maximum of results, probably not all the  results are displayed. Please refine your query.' | translate}}
+          </span
+          ></span
           >
         </div>
         <div class="col-md-7" class="pull-right">

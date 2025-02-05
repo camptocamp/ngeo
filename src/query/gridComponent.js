@@ -10,7 +10,7 @@ QueryGridController.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -368,7 +368,12 @@ QueryGridController.prototype.updateData_ = function () {
       this.sumOfFeatures += source.features.length;
     }
     if (!source.requestPartners || !source.requestPartners.some((label) => countedSources.includes(label))) {
-      this.sumOfAvailableResults += source.totalFeatureCount;
+      if (source.totalFeatureCount < 0 || this.sumOfAvailableResults < 0) {
+        // At least one query without any count => we can't display the total count
+        this.sumOfAvailableResults = -1;
+      } else {
+        this.sumOfAvailableResults += source.totalFeatureCount;
+      }
     }
     countedSources.push(source.label);
   });

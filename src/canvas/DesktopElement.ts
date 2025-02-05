@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022-2024 Camptocamp SA
+// Copyright (c) 2022-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -100,6 +100,8 @@ export default class GmfDesktopCanvas extends BaseElement {
   private minDatapanelWidth_ = 320;
   // Minimum tool panel width in px
   private minToolpanelWidth_ = 280;
+  // Store the tools panel size
+  private toolsPanelWidth_: {[id: string]: string} = {};
 
   static styles = [
     ...BaseElement.styles,
@@ -402,7 +404,10 @@ export default class GmfDesktopCanvas extends BaseElement {
       panels.getActiveToolPanel().subscribe({
         next: (panel: string) => {
           const styles = getComputedStyle(document.documentElement);
-          let width = styles.getPropertyValue(`--right-panel-width-${panel}`);
+          let width = this.toolsPanelWidth_[panel];
+          if (!width) {
+            width = styles.getPropertyValue(`--right-panel-width-${panel}`);
+          }
           if (!width) {
             width = styles.getPropertyValue(`--right-panel-width`);
           }
@@ -589,6 +594,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
         const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
         document.documentElement.style.setProperty(`--current-right-panel-width`, newRightWidth);
+        this.toolsPanelWidth_[this.toolPanel_] = newRightWidth;
       }
 
       return event;
