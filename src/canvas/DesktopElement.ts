@@ -100,6 +100,8 @@ export default class GmfDesktopCanvas extends BaseElement {
   private minDatapanelWidth_ = 320;
   // Minimum tool panel width in px
   private minToolpanelWidth_ = 280;
+  // Store the tools panel size
+  private toolsPanelWidth_: {[id: string]: string} = {};
 
   static styles = [
     ...BaseElement.styles,
@@ -405,11 +407,18 @@ export default class GmfDesktopCanvas extends BaseElement {
       panels.getActiveToolPanel().subscribe({
         next: (panel: string) => {
           const styles = getComputedStyle(document.documentElement);
-          let width = styles.getPropertyValue(`--right-panel-width-${panel}`);
+          // Get the current width of the selected tool panel
+          let width = this.toolsPanelWidth_[panel];
           if (!width) {
+            // Get the default value for the selected tool panel
+            width = styles.getPropertyValue(`--right-panel-width-${panel}`);
+          }
+          if (!width) {
+            // Get the default value for all tool panel
             width = styles.getPropertyValue(`--right-panel-width`);
           }
           if (!width) {
+            // Use an hardcoded default value
             width = '17.5rem';
           }
           document.documentElement.style.setProperty('--current-right-panel-width', width);
@@ -592,6 +601,7 @@ export default class GmfDesktopCanvas extends BaseElement {
         panelResizeEvent.separator.style.left = `${panelResizeEvent.offsetLeft + deltaX}px`;
         const newRightWidth = `${panelResizeEvent.rightWidth - deltaX}px`;
         document.documentElement.style.setProperty(`--current-right-panel-width`, newRightWidth);
+        this.toolsPanelWidth_[this.toolPanel_] = newRightWidth;
       }
 
       return event;
