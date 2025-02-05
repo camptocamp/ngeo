@@ -7,7 +7,7 @@ WfsPermalinkService.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -42,8 +42,7 @@ import olFormatWFS from 'ol/format/WFS';
  * @property {Feature<import('ol/geom/Geometry').default>[]} features The matching features for this source.
  * @property {number|string} id Identifier (can be not unique).
  * @property {string} label Label.
- * @property {number} [limit] The maximum number of features that can be returned for a query with this
- *    source.
+ * @property {number} [featuresCount] The total number of features that corresponds to the query.
  * @property {boolean} pending Is the request for this source still ongoing?
  * @property {boolean} [tooManyResults] If the last query for this source would return more features than the
  *    configured limit.
