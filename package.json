@@ -183,7 +183,7 @@
     "magic-comments-loader": "2.1.4",
     "mini-css-extract-plugin": "2.9.2",
     "minify-html-literals-loader": "1.1.1",
-    "neat-csv": "6.0.1",
+    "neat-csv": "7.0.0",
     "parse-absolute-css-unit": "1.0.2",
     "puppeteer": "23.11.1",
     "sass": "1.83.4",
