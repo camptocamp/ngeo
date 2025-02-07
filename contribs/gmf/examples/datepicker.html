@@ -8,16 +8,28 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <p id="desc">
-      This example shows how to use the <code>ngeo-date-picker</code> directive with the gmf WMS time service
-      in order to format the date for WMS.
+      This example shows how to use the <code>ngeo-datetimepicker</code> directive with the gmf WMS time
+      service in order to format the date for WMS.
     </p>
     <ul>
       <li>
-        Select a period with a datepicker
-        <ngeo-date-picker
-          time="ctrl.wmsTimeRangeMode"
-          on-date-selected="ctrl.onDateRangeSelected(time)"
-        ></ngeo-date-picker>
+        <p>Select a period with a datepicker</p>
+        <p>
+          From:
+          <input
+            ng-model="ctrl.onDateStartSelected"
+            ng-model-options="{getterSetter: true}"
+            ngeo-datetimepicker
+            ngeo-datetimepicker-options="{timepicker: false, format: 'Y-m-d', minDateTime: ctrl.wmsTimeRangeMode.minValue, maxDateTime: ctrl.wmsTimeRangeMode.maxValue}"
+          />
+          To:
+          <input
+            ng-model="ctrl.onDateEndSelected"
+            ng-model-options="{getterSetter: true}"
+            ngeo-datetimepicker
+            ngeo-datetimepicker-options="{timepicker: false, format: 'Y-m-d', minDateTime: ctrl.wmsTimeRangeMode.minValue, maxDateTime: ctrl.wmsTimeRangeMode.maxValue}"
+          />
+        </p>
       </li>
 
       <li style="margin-top: 50px">
@@ -28,11 +40,16 @@
       </li>
 
       <li>
-        Select a single date with a datepicker
-        <ngeo-date-picker
-          time="ctrl.wmsTimeValueMode"
-          on-date-selected="ctrl.onDateSelected(time)"
-        ></ngeo-date-picker>
+        <p>Select a single date with a datepicker</p>
+        <p>
+          Date:
+          <input
+            ng-model="ctrl.onDateSelected"
+            ng-model-options="{getterSetter: true}"
+            ngeo-datetimepicker
+            ngeo-datetimepicker-options="{timepicker: false, format: 'Y-m-d', minDateTime: ctrl.wmsTimeValueMode.minValue, maxDateTime: ctrl.wmsTimeValueMode.maxValue}"
+          />
+        </p>
       </li>
 
       <li style="margin-top: 50px">
