@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -176,7 +176,6 @@ module.exports = function (config) {
         api: path.resolve(__dirname, '../api/src'),
         lib: path.resolve(__dirname, '../lib'),
         gmf: path.resolve(__dirname, '../src'),
-        'jquery-ui/datepicker': 'jquery-ui/ui/widgets/datepicker', // For angular-ui-date
       },
     },
     optimization: {

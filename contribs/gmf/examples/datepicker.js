@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +22,7 @@
 import './datepicker.scss';
 
 import angular from 'angular';
-import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
+import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 import options from './options';
@@ -33,7 +33,7 @@ import options from './options';
  */
 const myModule = angular.module('gmfapp', [
   'gettext',
-  ngeoMiscDatepickerComponent.name,
+  ngeoMiscDatetimepickerComponent.name,
   ngeoMiscWMSTime.name,
 ]);
 
@@ -76,6 +76,21 @@ function MainController(ngeoWMSTime) {
   /**
    * @type {string}
    */
+  this.dateValue = '2014-01-01';
+
+  /**
+   * @type {string}
+   */
+  this.dateStart = '2006-01-01';
+
+  /**
+   * @type {string}
+   */
+  this.dateEnd = '2013-12-31';
+
+  /**
+   * @type {string}
+   */
   this.value = '';
 
   /**
@@ -84,20 +99,66 @@ function MainController(ngeoWMSTime) {
   this.rangeValue = '';
 
   /**
-   * @param {import('ngeo/datasource/OGC').TimeRange} date
-   * @this {MainController}
+   * @param {string} startTime
+   * @param {string} [opt_endTime]
+   * @returns {import('ngeo/ datasource/ OGC').TimeRange}
    */
-  this.onDateSelected = function (date) {
-    this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
+  this.getStartEnd = function (startTime, opt_endTime) {
+    const time = {start: +new Date(startTime)};
+    if (opt_endTime) {
+      time.end = +new Date(opt_endTime);
+    }
+    return time;
   };
 
   /**
-   * @param {import('ngeo/datasource/OGC').TimeRange} date
+   * @param {string} date
    * @this {MainController}
    */
-  this.onDateRangeSelected = function (date) {
-    this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
+  this.onDateSelected = function (date) {
+    if (!date) {
+      return this.dateValue;
+    }
+    this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, this.getStartEnd(date));
+    this.dateValue = date;
+    return this.dateValue;
   };
+
+  /**
+   * @param {string} date
+   * @this {MainController}
+   */
+  this.onDateStartSelected = function (date) {
+    if (!date) {
+      return this.dateStart;
+    }
+    this.dateStart = date;
+    this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(
+      this.wmsTimeRangeMode,
+      this.getStartEnd(this.dateStart, this.dateEnd),
+    );
+    return this.dateStart;
+  };
+
+  /**
+   * @param {string} date
+   * @this {MainController}
+   */
+  this.onDateEndSelected = function (date) {
+    if (!date) {
+      return this.dateEnd;
+    }
+    this.dateEnd = date;
+    this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(
+      this.wmsTimeRangeMode,
+      this.getStartEnd(this.dateStart, this.dateEnd),
+    );
+    return this.dateEnd;
+  };
+
+  this.onDateSelected(this.dateValue);
+  this.onDateStartSelected(this.dateStart);
+  this.onDateEndSelected(this.dateEnd);
 }
 myModule.controller('MainController', MainController);
 options(myModule);
