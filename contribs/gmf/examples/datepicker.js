@@ -22,7 +22,7 @@
 import './datepicker.scss';
 
 import angular from 'angular';
-import ngeoMiscDatetimepickerComponent from 'ngeo/misc/datetimepickerComponent';
+import 'gmf/datepicker/datepicker';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 import options from './options';
@@ -31,19 +31,28 @@ import options from './options';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('gmfapp', [
-  'gettext',
-  ngeoMiscDatetimepickerComponent.name,
-  ngeoMiscWMSTime.name,
-]);
+const myModule = angular.module('gmfapp', ['gettext', ngeoMiscWMSTime.name]);
 
-MainController.$inject = ['ngeoWMSTime'];
+MainController.$inject = ['$rootScope', 'ngeoWMSTime'];
 
 /**
  * @class
+ * @param {angular.IScope} $rootScope Angular rootScope.
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
  */
-function MainController(ngeoWMSTime) {
+function MainController($rootScope, ngeoWMSTime) {
+  /**
+   * Allow not-angularjs to run a digest loop.
+   */
+  window['runAngularDigestLoop'] = () => {
+    this.rootScope_.$digest();
+  };
+
+  /**
+   * @type {angular.IScope}
+   */
+  this.rootScope_ = $rootScope;
+
   /**
    * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
@@ -76,21 +85,6 @@ function MainController(ngeoWMSTime) {
   /**
    * @type {string}
    */
-  this.dateValue = '2014-01-01';
-
-  /**
-   * @type {string}
-   */
-  this.dateStart = '2006-01-01';
-
-  /**
-   * @type {string}
-   */
-  this.dateEnd = '2013-12-31';
-
-  /**
-   * @type {string}
-   */
   this.value = '';
 
   /**
@@ -99,66 +93,20 @@ function MainController(ngeoWMSTime) {
   this.rangeValue = '';
 
   /**
-   * @param {string} startTime
-   * @param {string} [opt_endTime]
-   * @returns {import('ngeo/ datasource/ OGC').TimeRange}
+   * @param {import('ngeo/datasource/OGC').TimeRange} date
+   * @this {MainController}
    */
-  this.getStartEnd = function (startTime, opt_endTime) {
-    const time = {start: +new Date(startTime)};
-    if (opt_endTime) {
-      time.end = +new Date(opt_endTime);
-    }
-    return time;
+  this.onDateSelected = (date) => {
+    this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
   };
 
   /**
-   * @param {string} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date
    * @this {MainController}
    */
-  this.onDateSelected = function (date) {
-    if (!date) {
-      return this.dateValue;
-    }
-    this.value = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, this.getStartEnd(date));
-    this.dateValue = date;
-    return this.dateValue;
+  this.onDateRangeSelected = (date) => {
+    this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
   };
-
-  /**
-   * @param {string} date
-   * @this {MainController}
-   */
-  this.onDateStartSelected = function (date) {
-    if (!date) {
-      return this.dateStart;
-    }
-    this.dateStart = date;
-    this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(
-      this.wmsTimeRangeMode,
-      this.getStartEnd(this.dateStart, this.dateEnd),
-    );
-    return this.dateStart;
-  };
-
-  /**
-   * @param {string} date
-   * @this {MainController}
-   */
-  this.onDateEndSelected = function (date) {
-    if (!date) {
-      return this.dateEnd;
-    }
-    this.dateEnd = date;
-    this.rangeValue = this.ngeoWMSTime_.formatWMSTimeParam(
-      this.wmsTimeRangeMode,
-      this.getStartEnd(this.dateStart, this.dateEnd),
-    );
-    return this.dateEnd;
-  };
-
-  this.onDateSelected(this.dateValue);
-  this.onDateStartSelected(this.dateStart);
-  this.onDateEndSelected(this.dateEnd);
 }
 myModule.controller('MainController', MainController);
 options(myModule);

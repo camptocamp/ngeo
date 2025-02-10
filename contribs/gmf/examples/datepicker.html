@@ -8,28 +8,14 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <p id="desc">
-      This example shows how to use the <code>ngeo-datetimepicker</code> directive with the gmf WMS time
-      service in order to format the date for WMS.
+      This example shows how to use the <code>gmf-datepicker</code> directive with the gmf WMS time service in
+      order to format the date for WMS.
     </p>
     <ul>
       <li>
         <p>Select a period with a datepicker</p>
-        <p>
-          From:
-          <input
-            ng-model="ctrl.onDateStartSelected"
-            ng-model-options="{getterSetter: true}"
-            ngeo-datetimepicker
-            ngeo-datetimepicker-options="{timepicker: false, format: 'Y-m-d', minDateTime: ctrl.wmsTimeRangeMode.minValue, maxDateTime: ctrl.wmsTimeRangeMode.maxValue}"
-          />
-          To:
-          <input
-            ng-model="ctrl.onDateEndSelected"
-            ng-model-options="{getterSetter: true}"
-            ngeo-datetimepicker
-            ngeo-datetimepicker-options="{timepicker: false, format: 'Y-m-d', minDateTime: ctrl.wmsTimeRangeMode.minValue, maxDateTime: ctrl.wmsTimeRangeMode.maxValue}"
-          />
-        </p>
+        <gmf-datepicker ng-prop-time="ctrl.wmsTimeRangeMode" ng-prop-onchange_cb="ctrl.onDateRangeSelected">
+        </gmf-datepicker>
       </li>
 
       <li style="margin-top: 50px">
@@ -41,15 +27,8 @@
 
       <li>
         <p>Select a single date with a datepicker</p>
-        <p>
-          Date:
-          <input
-            ng-model="ctrl.onDateSelected"
-            ng-model-options="{getterSetter: true}"
-            ngeo-datetimepicker
-            ngeo-datetimepicker-options="{timepicker: false, format: 'Y-m-d', minDateTime: ctrl.wmsTimeValueMode.minValue, maxDateTime: ctrl.wmsTimeValueMode.maxValue}"
-          />
-        </p>
+        <gmf-datepicker ng-prop-time="ctrl.wmsTimeValueMode" ng-prop-onchange_cb="ctrl.onDateSelected">
+        </gmf-datepicker>
       </li>
 
       <li style="margin-top: 50px">

@@ -43,6 +43,7 @@ import olStyleFill from 'ol/style/Fill';
 import {CollectionEvent} from 'ol/Collection';
 import Feature from 'ol/Feature';
 import htmlTemplate from './rulecomponent.html';
+import 'gmf/datepicker/datepicker';
 
 /**
  * @typedef {Object} MenuEventTarget
