@@ -15,7 +15,7 @@ Controller.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -350,6 +350,21 @@ export function Controller(
   $element.on('shown.bs.collapse', () => {
     this.scope_.$apply();
   });
+
+  /**
+   * Update the `timeRangeValue` property of the data source bound to the
+   * given tree controller and the state of the permalink using the given time.
+   *
+   * LayertreeController.prototype.updateTimeData - description
+   *
+   * @param {import('ngeo/datasource/OGC').TimeRange} time The start
+   * @param {import('ngeo/layertree/Controller').LayertreeController} layertreeCtrl ngeo layertree controller
+   * and optionally the end datetime (for time range selection) selected by user
+   */
+  this.updateTimeData = (time, layertreeCtrl) => {
+    this.updateWMSTimeLayerState(layertreeCtrl, time);
+    this.gmfPermalink_.refreshLayerTime(layertreeCtrl, time);
+  };
 }
 
 /**
@@ -525,21 +540,6 @@ Controller.prototype.toggleActive = function (treeCtrl) {
  */
 Controller.prototype.getNodeState = function (treeCtrl) {
   return treeCtrl.getState();
-};
-
-/**
- * Update the `timeRangeValue` property of the data source bound to the
- * given tree controller and the state of the permalink using the given time.
- *
- * LayertreeController.prototype.updateTimeData - description
- *
- * @param {import('ngeo/layertree/Controller').LayertreeController} layertreeCtrl ngeo layertree controller
- * @param {import('ngeo/datasource/OGC').TimeRange} time The start
- * and optionally the end datetime (for time range selection) selected by user
- */
-Controller.prototype.updateTimeData = function (layertreeCtrl, time) {
-  this.updateWMSTimeLayerState(layertreeCtrl, time);
-  this.gmfPermalink_.refreshLayerTime(layertreeCtrl, time);
 };
 
 /**
