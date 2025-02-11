@@ -7,14 +7,14 @@
     <meta name="mobile-web-app-capable" content="yes" />
   </head>
   <body ng-controller="MainController as ctrl">
-    <p id="desc">This example shows how to use the <code>gmf-time-slider</code> directive.</p>
+    <p id="desc">This example shows how to use the <code>gmf-timeslider</code> component.</p>
     <ul>
       <li>Select a period with a timeslider</li>
       <li>
-        <gmf-time-slider
-          gmf-time-slider-time="ctrl.wmsTimeRangeMode"
-          gmf-time-slider-on-date-selected="ctrl.onDateRangeSelected(time)"
-        ></gmf-time-slider>
+        <gmf-timeslider
+          ng-prop-time="ctrl.wmsTimeRangeMode"
+          ng-prop-onchange_cb="ctrl.onDateRangeSelected"
+        ></gmf-timeslider>
       </li>
 
       <li style="margin-top: 50px">
@@ -26,10 +26,10 @@
 
       <li style="margin-top: 50px">Select a single date with a timeslider</li>
       <li>
-        <gmf-time-slider
-          gmf-time-slider-time="ctrl.wmsTimeValueMode"
-          gmf-time-slider-on-date-selected="ctrl.onDateSelected(time)"
-        ></gmf-time-slider>
+        <gmf-timeslider
+          ng-prop-time="ctrl.wmsTimeValueMode"
+          ng-prop-onchange_cb="ctrl.onDateSelected"
+        ></gmf-timeslider>
       </li>
 
       <li style="margin-top: 50px">

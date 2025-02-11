@@ -55,6 +55,8 @@ import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
+import 'gmf/time-input/timeslider';
+import 'gmf/time-input/datepicker';
 import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerLayer from 'ol/layer/Layer';
 import {isEmpty} from 'ol/obj';

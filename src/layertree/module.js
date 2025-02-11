@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -24,14 +24,12 @@ import gmfLayertreeNode from 'gmf/layertree/layertreeNode';
 import gmfLayertreeComponent from 'gmf/layertree/component';
 import gmfLayertreeDatasourceGroupTreeComponent from 'gmf/layertree/datasourceGroupTreeComponent';
 import gmfLayertreeSyncLayertreeMap from 'gmf/layertree/SyncLayertreeMap';
-import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
 import gmfLayertreeTreeManager from 'gmf/layertree/TreeManager';
 
 /**
  * Also related to the map but not included in the module:
  *  - ngeo.layertree.Controller (already required by ngeo.layertree.component)
  * ./common.scss
- * ./timeslider.scss
  * @type {angular.IModule}
  */
 export default angular.module('ngeoLayertreeModule', [
@@ -39,6 +37,5 @@ export default angular.module('ngeoLayertreeModule', [
   gmfLayertreeComponent.name,
   gmfLayertreeDatasourceGroupTreeComponent.name,
   gmfLayertreeSyncLayertreeMap.name,
-  gmfLayertreeTimeSliderComponent.name,
   gmfLayertreeTreeManager.name,
 ]);

@@ -1,15 +1,19 @@
-import {html, LitElement, TemplateResult} from 'lit';
-import i18next from 'i18next';
-import {customElement, property, state} from 'lit/decorators.js';
+import {LitElement} from 'lit';
+import {property, state} from 'lit/decorators.js';
 import {TimePropertyModeEnum, TimeProperty, TimeRange} from 'ngeo/datasource/OGC';
 
-@customElement('gmf-datepicker')
-export default class GmfBaseElement extends LitElement {
+/**
+ * Base class for OGC time based input component (slider, datepicker)
+ */
+export default class GmfTimeInput extends LitElement {
   @property({type: Object}) time?: TimeProperty = undefined;
   @property({type: Object}) args?: unknown = undefined;
   @property({type: Object}) onchangeCb?: (time: TimeRange, args?: unknown) => void = undefined;
-  @state() private dateStart?: number;
-  @state() private dateEnd?: number;
+  @state() protected dateStart?: number;
+  @state() protected dateEnd?: number;
+  // Min and max as number are for sliders
+  @state() protected dateMin?: number;
+  @state() protected dateMax?: number;
 
   /**
    * Lit updated - set time on "time" property change.
@@ -19,8 +23,10 @@ export default class GmfBaseElement extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('time') && this.time) {
       this.getCorrectTimeObject();
-      this.dateStart = +new Date(this.time.minValue);
-      this.dateEnd = +new Date(this.time.maxValue);
+      this.dateStart = +new Date(this.time.minDefValue ?? this.time.minValue);
+      this.dateEnd = +new Date(this.time.maxDefValue ?? this.time.maxValue);
+      this.dateMin = +new Date(this.time.minValue);
+      this.dateMax = +new Date(this.time.maxValue);
       this.updateTime(this.dateStart, this.dateEnd);
     }
   }
@@ -28,21 +34,23 @@ export default class GmfBaseElement extends LitElement {
   /**
    * Update start time on input change.
    * @param event input event.
-   * @private
+   * @protected
    */
-  private onDateStartSelected(event: InputEvent): void {
+  protected onDateStartSelected(event: InputEvent): void {
     const target: HTMLInputElement = event.target as HTMLInputElement;
     this.updateTime(+new Date(target.value));
+    this.callCb();
   }
 
   /**
    * Update end time on input change.
    * @param event input event.
-   * @private
+   * @protected
    */
-  private onDateEndSelected(event: InputEvent): void {
+  protected onDateEndSelected(event: InputEvent): void {
     const target: HTMLInputElement = event.target as HTMLInputElement;
     this.updateTime(this.dateStart, +new Date(target.value));
+    this.callCb();
   }
 
   /**
@@ -51,16 +59,26 @@ export default class GmfBaseElement extends LitElement {
    * then demand angularjs to digest (via window.runAngularDigestLoop).
    * @param dateStart start timestamp.
    * @param dateEnd optional end timestamp.
-   * @private
+   * @protected
    */
-  private updateTime(dateStart: number, dateEnd?: number): void {
+  protected updateTime(dateStart: number, dateEnd?: number): void {
     this.dateStart = dateStart;
+    if (dateEnd) {
+      this.dateEnd = dateEnd;
+    }
+  }
+
+  /**
+   * Call the provided callback with the new time and properties args and
+   * then demand angularjs to digest (via window.runAngularDigestLoop).
+   * @protected
+   */
+  protected callCb(): void {
     const time: TimeRange = {
-      start: dateStart,
+      start: this.dateStart,
     };
     if (this.isTimeRange()) {
-      this.dateEnd = dateEnd;
-      time.end = dateEnd;
+      time.end = this.dateEnd;
     }
     if (!this.onchangeCb) {
       return;
@@ -73,9 +91,9 @@ export default class GmfBaseElement extends LitElement {
 
   /**
    * Get correct input time object form provided time object.
-   * @private
+   * @protected
    */
-  private getCorrectTimeObject(): void {
+  protected getCorrectTimeObject(): void {
     if (this.time.minValue) {
       this.time.minValue = this.asIsoDateString(this.time.minValue);
     }
@@ -93,55 +111,17 @@ export default class GmfBaseElement extends LitElement {
   /**
    * @param dateTxt a string date like '2006-12-01T00:00:00Z'
    * @returns a string iso date like '2006-12-01'.
-   * @private
+   * @protected
    */
-  private asIsoDateString(dateTxt: string): string {
+  protected asIsoDateString(dateTxt: string): string {
     return new Date(dateTxt).toISOString().slice(0, 10);
   }
 
   /**
    * @returns true if the "time range" mode must be displayed.
-   * @private
+   * @protected
    */
-  private isTimeRange(): boolean {
+  protected isTimeRange(): boolean {
     return this.time.mode === TimePropertyModeEnum.RANGE;
-  }
-
-  /**
-   * Lit rendering.
-   * @returns the html template.
-   */
-  render(): TemplateResult {
-    if (!this.time) {
-      return html``;
-    }
-    const startText = this.isTimeRange() ? 'From:' : 'Date:';
-    const datepickerStart = html`
-      <span>${i18next.t(startText)}</span>
-      <input
-        type="date"
-        .min=${this.time.minValue}
-        .max=${this.time.maxValue}
-        .value=${this.time.minDefValue ?? this.time.minValue}
-        @change="${(e: InputEvent) => this.onDateStartSelected(e)}"
-      />
-    `;
-    let datepickerEnd = null;
-    if (this.isTimeRange()) {
-      datepickerEnd = html`
-        <span>${i18next.t('To:')}</span>
-        <input
-          type="date"
-          .min=${this.time.minValue}
-          .max=${this.time.maxValue}
-          .value=${this.time.maxDefValue ?? this.time.minValue}
-          @change="${(e: InputEvent) => this.onDateEndSelected(e)}"
-        />
-      `;
-    }
-    return html` <div>
-      <span>${datepickerStart}</span>
-      ${datepickerEnd ? html`<span>${datepickerEnd}</span>` : html``}
-    </div>`;
   }
 }
