@@ -16,6 +16,7 @@ can be compiled with any modern bundler.
 - Remove not used offline and ol-cesium related code.
 - Move jquery and jquery-ui import out of components.
 - Remove ngeo-date-picker, replace it by gmf-datepicker
+- Remove gmf-date-slider, replace it by gmf-timeslider
 
 # 2.8
 

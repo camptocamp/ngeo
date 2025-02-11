@@ -1,10 +1,18 @@
-import {html, TemplateResult} from 'lit';
+import {css, CSSResult, html, TemplateResult, unsafeCSS} from 'lit';
 import i18next from 'i18next';
 import {customElement} from 'lit/decorators.js';
 import GmfTimeInput from 'gmf/time-input/time-input';
 
 @customElement('gmf-datepicker')
 export default class GmfDatepicker extends GmfTimeInput {
+  static styles: CSSResult[] = [
+    css`
+      input[type='date'] {
+        font-size: 80%;
+      }
+    `,
+  ];
+
   /**
    * Lit rendering.
    * @returns the html template for datepicker(s).
@@ -37,9 +45,12 @@ export default class GmfDatepicker extends GmfTimeInput {
         />
       `;
     }
-    return html` <div>
-      <span>${datepickerStart}</span>
-      ${datepickerEnd ? html`<span>${datepickerEnd}</span>` : html``}
-    </div>`;
+    return html` <style>
+        ${unsafeCSS(GmfDatepicker.styles)}
+      </style>
+      <div>
+        <span>${datepickerStart}</span>
+        ${datepickerEnd ? html`<span>${datepickerEnd}</span>` : html``}
+      </div>`;
   }
 }

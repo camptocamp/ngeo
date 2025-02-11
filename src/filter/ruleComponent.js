@@ -383,6 +383,18 @@ export class RuleController {
      * @type {import('ol/events').EventsKey[]}
      */
     this.listenerKeys_ = [];
+
+    /**
+     * onDateRangeSelected with bound context.
+     * @type {RuleController.onDateRangeSelected}
+     */
+    this.onDateRangeSelectedBind = this.onDateRangeSelected.bind(this);
+
+    /**
+     * onDateSelected with bound context.
+     * @type {RuleController.onDateSelected}
+     */
+    this.onDateSelectedBind = this.onDateSelected.bind(this);
   }
 
   /**
