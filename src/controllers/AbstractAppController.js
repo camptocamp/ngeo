@@ -206,7 +206,7 @@ export function AbstractAppController($scope, $injector, mobile) {
    * Allow not-angularjs to run a digest loop.
    */
   window['runAngularDigestLoop'] = () => {
-    this.$scope.$digest();
+    this.$scope.$root.$digest();
   };
 
   /**

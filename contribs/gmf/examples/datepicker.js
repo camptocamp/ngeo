@@ -22,36 +22,28 @@
 import './datepicker.scss';
 
 import angular from 'angular';
-import 'gmf/datepicker/datepicker';
+import 'gmf/time-input/datepicker';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 import options from './options';
 
-/**
- * @type {angular.IModule}
- * @hidden
- */
+/** @type {angular.IModule} **/
 const myModule = angular.module('gmfapp', ['gettext', ngeoMiscWMSTime.name]);
 
-MainController.$inject = ['$rootScope', 'ngeoWMSTime'];
+MainController.$inject = ['$scope', 'ngeoWMSTime'];
 
 /**
  * @class
- * @param {angular.IScope} $rootScope Angular rootScope.
+ * @param {angular.IScope} $scope Angular rootScope.
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
  */
-function MainController($rootScope, ngeoWMSTime) {
+function MainController($scope, ngeoWMSTime) {
   /**
    * Allow not-angularjs to run a digest loop.
    */
-  window['runAngularDigestLoop'] = () => {
-    this.rootScope_.$digest();
+  window.runAngularDigestLoop = () => {
+    $scope.$digest();
   };
-
-  /**
-   * @type {angular.IScope}
-   */
-  this.rootScope_ = $rootScope;
 
   /**
    * @type {import('ngeo/misc/WMSTime').WMSTime}
@@ -93,7 +85,7 @@ function MainController($rootScope, ngeoWMSTime) {
   this.rangeValue = '';
 
   /**
-   * @param {import('ngeo/datasource/OGC').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date selected date.
    * @this {MainController}
    */
   this.onDateSelected = (date) => {
@@ -101,7 +93,7 @@ function MainController($rootScope, ngeoWMSTime) {
   };
 
   /**
-   * @param {import('ngeo/datasource/OGC').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date selected date.
    * @this {MainController}
    */
   this.onDateRangeSelected = (date) => {
