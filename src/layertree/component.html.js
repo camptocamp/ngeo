@@ -137,7 +137,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
           ng-if="::layertreeCtrl.node.time.widget === 'datepicker'"
           ng-prop-time="layertreeCtrl.node.time"
           ng-prop-args="layertreeCtrl"
-          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeData"
+          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeDataBind"
         >
         </gmf-datepicker>
 
@@ -145,7 +145,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
           ng-if="::layertreeCtrl.node.time.widget === 'slider'"
           ng-prop-time="layertreeCtrl.node.time"
           ng-prop-args="layertreeCtrl"
-          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeData"
+          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeDataBind"
         >
         </gmf-timeslider>
       </div>

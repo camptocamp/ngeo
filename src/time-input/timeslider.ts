@@ -199,6 +199,7 @@ export default class GmfTimeslider extends GmfTimeInput {
   /**
    * Get the right date representation based on the resolution.
    * @param date The date (timestamp) to format.
+   * @returns the date in a local format.
    * @private
    */
   private getLocalDate(date: number): string {

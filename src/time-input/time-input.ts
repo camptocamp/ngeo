@@ -84,8 +84,10 @@ export default class GmfTimeInput extends LitElement {
       return;
     }
     this.onchangeCb(time, this.args);
-    if ((window as any)['runAngularDigestLoop']) {
-      (window as any)['runAngularDigestLoop']();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if ((window as any).runAngularDigestLoop) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+      (window as any).runAngularDigestLoop();
     }
   }
 
