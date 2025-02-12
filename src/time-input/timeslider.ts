@@ -1,4 +1,4 @@
-import {customElement} from 'lit/decorators.js';
+import {customElement, state} from 'lit/decorators.js';
 import GmfTimeInput from 'gmf/time-input/time-input';
 import {css, CSSResult, html, TemplateResult, unsafeCSS} from 'lit';
 import {debounce} from 'ngeo/misc/debounce2';
@@ -6,12 +6,15 @@ import {TimePropertyResolutionEnum} from 'gmf/datasource/OGC';
 
 @customElement('gmf-timeslider')
 export default class GmfTimeslider extends GmfTimeInput {
+  @state() protected sliderStart?: number;
+  @state() protected sliderEnd?: number;
   private isInitialRendering = true;
-  private onSliderRelease = debounce(() => {
+  private datesSteps: number[];
+  private readonly onSliderRelease = debounce(() => {
     this.callCb();
   }, 300);
 
-  static styles: CSSResult[] = [
+  static readonly styles: CSSResult[] = [
     css`
       .container {
         position: relative;
@@ -108,7 +111,7 @@ export default class GmfTimeslider extends GmfTimeInput {
    * @returns the html template for timeslider(s).
    */
   render(): TemplateResult {
-    if (!this.time) {
+    if (!this.timeProp || !this.datesSteps) {
       return html``;
     }
     // On initial rendering, the colouring must be applied once the value are
@@ -121,10 +124,10 @@ export default class GmfTimeslider extends GmfTimeInput {
       <input
         class="slider-start"
         type="range"
-        .min=${this.dateMin}
-        .max=${this.dateMax}
-        .value=${this.dateStart}
-        step=${this.getInterval()}
+        .min="0"
+        .max=${this.datesSteps.length - 1}
+        .value=${this.sliderStart}
+        step="1"
         @input="${(e: InputEvent) => this.onDateStartMoved(e)}"
       />
     `;
@@ -136,10 +139,10 @@ export default class GmfTimeslider extends GmfTimeInput {
         <input
           class="slider-end"
           type="range"
-          .min=${this.dateMin}
-          .max=${this.dateMax}
-          .value=${this.dateEnd}
-          step=${this.getInterval()}
+          .min="0"
+          .max=${this.datesSteps.length - 1}
+          .value=${this.sliderEnd}
+          step="1"
           @input="${(e: InputEvent) => this.onDateEndMoved(e)}"
         />
       `;
@@ -155,6 +158,38 @@ export default class GmfTimeslider extends GmfTimeInput {
   }
 
   /**
+   * Set up the start date and the end date based on the time attribute.
+   * Set up also the slider min and max and possible matching dates.
+   * @protected
+   * @override
+   */
+  protected setupMinMaxDefaultValues(): void {
+    this.datesSteps = this.computeDatesSteps();
+    const dateStart = +new Date(this.timeProp.minDefValue ?? this.timeProp.minValue);
+    const dateEnd = +new Date(this.timeProp.maxDefValue ?? this.timeProp.maxValue);
+    const dateStartInSteps = this.findNearestValue(dateStart, this.datesSteps);
+    const dateEndInSteps = this.findNearestValue(dateEnd, this.datesSteps);
+    this.sliderStart = this.datesSteps.indexOf(dateStartInSteps);
+    this.sliderEnd = this.datesSteps.indexOf(dateEndInSteps);
+    this.updateTime(dateStart, dateEnd);
+    this.onSliderRelease();
+  }
+
+  /**
+   * In an array of number, find the nearest matching value.
+   * The values must be sorted (smallest first).
+   * @param value the base value to find the nearest value.
+   * @param values the sorted possible values.
+   * @returns The nearest value in the values array.
+   * @private
+   */
+  private findNearestValue(value: number, values: number[]): number {
+    return values.reduce((prev, curr) => {
+      return Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev;
+    }, 0);
+  }
+
+  /**
    * Update start time on input change.
    * @param event input event.
    * @protected
@@ -162,7 +197,9 @@ export default class GmfTimeslider extends GmfTimeInput {
    */
   protected onDateStartSelected(event: InputEvent): void {
     const target: HTMLInputElement = event.target as HTMLInputElement;
-    this.updateTime(parseInt(target.value));
+    const value = parseInt(target.value);
+    this.sliderStart = value;
+    this.updateTime(this.datesSteps[value]);
     this.onSliderRelease();
   }
 
@@ -174,7 +211,9 @@ export default class GmfTimeslider extends GmfTimeInput {
    */
   protected onDateEndSelected(event: InputEvent): void {
     const target: HTMLInputElement = event.target as HTMLInputElement;
-    this.updateTime(this.dateStart, parseInt(target.value));
+    const value = parseInt(target.value);
+    this.sliderEnd = value;
+    this.updateTime(this.datesSteps[this.sliderStart], this.datesSteps[value]);
     this.onSliderRelease();
   }
 
@@ -206,50 +245,155 @@ export default class GmfTimeslider extends GmfTimeInput {
     const option: Intl.DateTimeFormatOptions = {
       year: 'numeric',
     };
-    if (this.time.resolution === TimePropertyResolutionEnum.SECOND) {
+    if (this.timeProp.resolution === TimePropertyResolutionEnum.SECOND) {
       option.hour = 'numeric';
       option.day = 'numeric';
       option.month = 'numeric';
     }
-    if (this.time.resolution === TimePropertyResolutionEnum.DAY) {
+    if (this.timeProp.resolution === TimePropertyResolutionEnum.DAY) {
       option.day = 'numeric';
       option.month = 'numeric';
-    } else if (this.time.resolution === TimePropertyResolutionEnum.MONTH) {
+    } else if (this.timeProp.resolution === TimePropertyResolutionEnum.MONTH) {
       option.month = 'numeric';
     }
     return new Date(date).toLocaleDateString(undefined, option);
   }
 
   /**
-   * @returns the input "step" based on the wanted interval and the min/max.
+   * @returns all possible date in an array, based on the wanted values OR
+   * on the wanted interval and the min/max dates. Max values: 10000.
    * @private
    */
-  private getInterval(): number {
-    if (!this.time.interval || this.time.interval.length !== 4) {
-      return 1;
+  private computeDatesSteps(): number[] {
+    // If predefined values, returns them as date.
+    if (this.timeProp.values) {
+      return this.computeDatesStepsFromValues();
     }
-    const secondsInterval = this.time.interval[0];
+    const dateMin = +new Date(this.timeProp.minValue);
+    const dateMax = +new Date(this.timeProp.maxValue);
+    // No timeProp.interval ? returns min max and notify the error.
+    if (!this.timeProp.interval && this.time.interval.length !== 4) {
+      console.error('No valid time interval provided.');
+      return [dateMin, dateMax];
+    }
+    // Compute date steps from time.interval
+    const secondsInterval = this.timeProp.interval[3];
     if (secondsInterval > 0) {
-      return secondsInterval * 1000;
+      return this.computeDatesStepsForSeconds(dateMin, dateMax, secondsInterval);
     }
-    const dayInterval = this.time.interval[1];
-    const daySeconds = 1000 * 60 * 60 * 24;
+    const dayInterval = this.timeProp.interval[2];
     if (dayInterval > 0) {
-      return dayInterval * daySeconds;
+      return this.computeDatesStepsForDays(dateMin, dateMax, dayInterval);
     }
-    const timestampDiff = this.dateMax - this.dateMin;
-    const monthInterval = this.time.interval[2];
+    const monthInterval = this.timeProp.interval[1];
     if (monthInterval > 0) {
-      const nbMonth = this.getMonthDiff(new Date(this.dateMin), new Date(this.dateMax));
-      return Math.floor(timestampDiff / (nbMonth >= 0 ? nbMonth : 1) / monthInterval);
+      return this.computeDatesStepsForMonth(dateMin, dateMax, monthInterval);
     }
-    const yearInterval = this.time.interval[3];
-    const nbYears = this.getYearDiff(new Date(this.dateMin), new Date(this.dateMax));
-    return Math.floor(timestampDiff / (nbYears >= 0 ? nbYears : 1) / yearInterval);
+    const yearInterval = this.timeProp.interval[0];
+    return this.computeDatesStepsForYear(dateMin, dateMax, yearInterval);
   }
 
   /**
-   * @returns the amount of months between two dates.
+   * @param length the length of wanted array.
+   * @returns An array with repeated null values, the times of the provided
+   * length (limited to 10000).
+   * @private
+   */
+  private getLimitedArray = (length: number): null[] => {
+    return Array(Math.min(length, 10000)).fill(null) as null[];
+  };
+
+  /**
+   * @returns the timestamp of the time.values.
+   * @private
+   */
+  private computeDatesStepsFromValues(): number[] {
+    return this.timeProp.values.map((value) => +new Date(value));
+  }
+
+  /**
+   * @param dateMin The minimal date.
+   * @param dateMax The maximal date
+   * @param interval the wanted interval
+   * @returns All the seconds timestamps between the provided dates and regarding the wanted interval.
+   * @private
+   */
+  private computeDatesStepsForSeconds(dateMin: number, dateMax: number, interval: number): number[] {
+    const oneSecond = 1000;
+    const dateDiff = dateMax - dateMin;
+    const steps = Math.ceil(dateDiff / (oneSecond * interval));
+    const datesSteps = this.getLimitedArray(steps).map((_, index) => {
+      const date = new Date(dateMin);
+      date.setSeconds(date.getSeconds() + oneSecond * index);
+      return +date;
+    });
+    datesSteps.push(+new Date(this.timeProp.maxValue));
+    return datesSteps;
+  }
+
+  /**
+   * @param dateMin The minimal date.
+   * @param dateMax The maximal date
+   * @param interval the wanted interval
+   * @returns All the days timestamps between the provided dates and regarding the wanted interval.
+   * @private
+   */
+  private computeDatesStepsForDays(dateMin: number, dateMax: number, interval: number): number[] {
+    const oneSecond = 1000;
+    const oneDay = oneSecond * 60 * 60 * 24;
+    const dateDiff = dateMax - dateMin;
+    const steps = Math.ceil(dateDiff / (oneDay * interval));
+    const datesSteps = this.getLimitedArray(steps).map((_, index) => {
+      const date = new Date(dateMin);
+      date.setDate(date.getDate() + index);
+      return +date;
+    });
+    datesSteps.push(+new Date(this.timeProp.maxValue));
+    return datesSteps;
+  }
+
+  /**
+   * @param dateMin The minimal date.
+   * @param dateMax The maximal date
+   * @param interval the wanted interval
+   * @returns All the month timestamp between the provided dates and regarding the wanted interval.
+   * @private
+   */
+  private computeDatesStepsForMonth(dateMin: number, dateMax: number, interval: number): number[] {
+    let nbMonth = this.getMonthDiff(new Date(dateMin), new Date(dateMax));
+    nbMonth = nbMonth > 0 ? nbMonth : 1;
+    nbMonth = Math.ceil(nbMonth / interval);
+    const datesSteps = this.getLimitedArray(nbMonth).map((_, index) => {
+      const date = new Date(dateMin);
+      date.setMonth(date.getMonth() + index);
+      return +date;
+    });
+    datesSteps.push(+new Date(this.timeProp.maxValue));
+    return datesSteps;
+  }
+
+  /**
+   * @param dateMin The minimal date.
+   * @param dateMax The maximal date
+   * @param interval the wanted interval
+   * @returns All the years timestamp between the provided dates and regarding the wanted interval.
+   * @private
+   */
+  private computeDatesStepsForYear(dateMin: number, dateMax: number, interval: number): number[] {
+    let nbYear = this.getYearDiff(new Date(dateMin), new Date(dateMax));
+    nbYear = nbYear > 0 ? nbYear : 1;
+    nbYear = Math.ceil(nbYear / interval);
+    const datesSteps = this.getLimitedArray(nbYear).map((_, index) => {
+      const date = new Date(dateMin);
+      date.setFullYear(date.getFullYear() + index);
+      return +date;
+    });
+    datesSteps.push(+new Date(this.timeProp.maxValue));
+    return datesSteps;
+  }
+
+  /**
+   * @returns The amount of months between two dates.
    * @param date1 min date.
    * @param date2 max date.
    * @private
@@ -262,7 +406,7 @@ export default class GmfTimeslider extends GmfTimeInput {
   }
 
   /**
-   * @returns the amount of years between two dates.
+   * @returns The amount of years between two dates.
    * @param date1 min date.
    * @param date2 max date.
    * @private
@@ -294,12 +438,12 @@ export default class GmfTimeslider extends GmfTimeInput {
         sliderEnd.value = `${parseInt(sliderStart.value) + minGap}`;
       }
     }
-    this.fillColor();
     if (isStart) {
       this.onDateStartSelected(event);
     } else {
       this.onDateEndSelected(event);
     }
+    this.fillColor();
   }
 
   /**
@@ -307,10 +451,10 @@ export default class GmfTimeslider extends GmfTimeInput {
    * @private
    */
   private fillColor() {
-    //  var(--color-light);
     const sliderTrack: HTMLInputElement = this.shadowRoot.querySelector('.slider-track');
-    const percent1 = ((this.dateStart - this.dateMin) / (this.dateMax - this.dateMin)) * 100;
-    const percent2 = ((this.dateEnd - this.dateMin) / (this.dateMax - this.dateMin)) * 100;
+    const nbSteps = this.datesSteps.length - 1;
+    const percent1 = (this.sliderStart / nbSteps) * 100;
+    const percent2 = (this.sliderEnd / nbSteps) * 100;
     sliderTrack.style.background = `linear-gradient(to right, var(--brand-secondary) ${percent1}% , var(--brand-primary) ${percent1}% , var(--brand-primary) ${percent2}%, var(--brand-secondary) ${percent2}%)`;
   }
 }

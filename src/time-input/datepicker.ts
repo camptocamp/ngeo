@@ -18,7 +18,7 @@ export default class GmfDatepicker extends GmfTimeInput {
    * @returns the html template for datepicker(s).
    */
   render(): TemplateResult {
-    if (!this.time) {
+    if (!this.timeProp) {
       return html``;
     }
     const startText = this.isTimeRange() ? 'From:' : 'Date:';
@@ -26,9 +26,9 @@ export default class GmfDatepicker extends GmfTimeInput {
       <span>${i18next.t(startText)}</span>
       <input
         type="date"
-        .min=${this.time.minValue}
-        .max=${this.time.maxValue}
-        .value=${this.time.minDefValue ?? this.time.minValue}
+        .min=${this.timeProp.minValue}
+        .max=${this.timeProp.maxValue}
+        .value=${this.timeProp.minDefValue ?? this.timeProp.minValue}
         @change="${(e: InputEvent) => this.onDateStartSelected(e)}"
       />
     `;
@@ -38,9 +38,9 @@ export default class GmfDatepicker extends GmfTimeInput {
         <span>${i18next.t('To:')}</span>
         <input
           type="date"
-          .min=${this.time.minValue}
-          .max=${this.time.maxValue}
-          .value=${this.time.maxDefValue ?? this.time.maxValue}
+          .min=${this.timeProp.minValue}
+          .max=${this.timeProp.maxValue}
+          .value=${this.timeProp.maxDefValue ?? this.timeProp.maxValue}
           @change="${(e: InputEvent) => this.onDateEndSelected(e)}"
         />
       `;
