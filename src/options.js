@@ -357,6 +357,7 @@ export function buildStyle(styleDescriptor) {
  * @property {string} viewer The viewer to use (google or mapillary)
  * @property {string} key ClientId for Mapillary
  * @property {number} [bufferSize] Buffer size in pixels for Mapillary bbox
+ * @property {string} [organizationId] The id of the Mapillary organization to get images from.
  */
 
 /**

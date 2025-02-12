@@ -19,6 +19,7 @@
 // IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 import {StreetviewService} from './Service';
+import MapillaryGraphQueryCreator from './MapillaryGraphQueryCreator';
 import {buffer} from 'ol/extent';
 const MLY_METADATA_ENDPOINT = 'https://graph.mapillary.com';
 
@@ -34,8 +35,18 @@ export default class MapillaryService extends StreetviewService {
    * @param {(newCoordinates: import('ol/coordinate').Coordinate | null) => void} handlePanoramaPositionChange Position change handler.
    * @param {string} accessToken The key to access the mapillary api.
    * @param {number} bufferSize The size to add to the bbox buffer.
+   * @param {string} [organizationId] The id of the organization to get images from.
    */
-  constructor($scope, $timeout, $http, map, handlePanoramaPositionChange, accessToken, bufferSize) {
+  constructor(
+    $scope,
+    $timeout,
+    $http,
+    map,
+    handlePanoramaPositionChange,
+    accessToken,
+    bufferSize,
+    organizationId,
+  ) {
     super($scope, map, handlePanoramaPositionChange);
 
     /**
@@ -66,13 +77,19 @@ export default class MapillaryService extends StreetviewService {
     this.bufferSizePx_ = bufferSize || 10;
 
     /**
+     * The organization to get images from (filter images by organisation_id).
+     *
+     * @private
+     */
+    this.organizationId = organizationId;
+
+    /**
      * Container of the mapillary viewer.
      */
     this.mapillaryElement = document.getElementById('mly');
     this.mapillaryElement.hidden = true;
     import(/* webpackChunkName: "mapillary" */ 'mapillary-js').then((Mapillary) => {
-      this.Mapillary = Mapillary;
-      this.mly = new Mapillary.Viewer({
+      const viewerOptions = {
         accessToken: this.accessToken_,
         container: 'mly',
         component: {
@@ -81,7 +98,25 @@ export default class MapillaryService extends StreetviewService {
             visible: false,
           },
         },
-      });
+      };
+
+      if (this.organizationId) {
+        const queryCreator = new MapillaryGraphQueryCreator(this.organizationId);
+
+        const dataProvider = new Mapillary.GraphDataProvider(
+          {
+            accessToken: this.accessToken_,
+          },
+          undefined,
+          undefined,
+          queryCreator,
+        );
+        viewerOptions.dataProvider = dataProvider;
+      }
+
+      this.Mapillary = Mapillary;
+      this.mly = new Mapillary.Viewer(viewerOptions);
+
       window.addEventListener('resize', () => {
         this.resize();
       });
@@ -167,7 +202,16 @@ export default class MapillaryService extends StreetviewService {
    */
   searchImage_(bbox) {
     const baseUrl = `${MLY_METADATA_ENDPOINT}/images`;
-    const path = `${baseUrl}?access_token=${this.accessToken_}&fields=id&bbox=${bbox}&limit=1`;
+    const params = new URLSearchParams([
+      ['access_token', this.accessToken_],
+      ['fields', 'id'],
+      ['bbox', bbox],
+      ['limit', '1'],
+    ]);
+    if (this.organizationId) {
+      params.append('organization_id', this.organizationId);
+    }
+    const path = `${baseUrl}?${params.toString()}`;
     return this.$http_.get(path).then(
       /**
        * @param {any} response object.
