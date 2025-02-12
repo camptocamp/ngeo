@@ -9,11 +9,9 @@ export default class GmfTimeInput extends LitElement {
   @property({type: Object}) time?: TimeProperty = undefined;
   @property({type: Object}) args?: unknown = undefined;
   @property({type: Object}) onchangeCb?: (time: TimeRange, args?: unknown) => void = undefined;
+  @state() protected timeProp?: TimeProperty;
   @state() protected dateStart?: number;
   @state() protected dateEnd?: number;
-  // Min and max as number are for sliders
-  @state() protected dateMin?: number;
-  @state() protected dateMax?: number;
 
   /**
    * Lit updated - set time on "time" property change.
@@ -23,12 +21,19 @@ export default class GmfTimeInput extends LitElement {
     super.updated(changedProperties);
     if (changedProperties.has('time') && this.time) {
       this.getCorrectTimeObject();
-      this.dateStart = +new Date(this.time.minDefValue ?? this.time.minValue);
-      this.dateEnd = +new Date(this.time.maxDefValue ?? this.time.maxValue);
-      this.dateMin = +new Date(this.time.minValue);
-      this.dateMax = +new Date(this.time.maxValue);
-      this.updateTime(this.dateStart, this.dateEnd);
+      this.setupMinMaxDefaultValues();
     }
+  }
+
+  /**
+   * Set up the start and the end date based on the time attribute.
+   * @protected
+   */
+  protected setupMinMaxDefaultValues(): void {
+    this.dateStart = +new Date(this.timeProp.minDefValue ?? this.timeProp.minValue);
+    this.dateEnd = +new Date(this.timeProp.maxDefValue ?? this.timeProp.maxValue);
+    this.updateTime(this.dateStart, this.dateEnd);
+    this.callCb();
   }
 
   /**
@@ -96,17 +101,18 @@ export default class GmfTimeInput extends LitElement {
    * @protected
    */
   protected getCorrectTimeObject(): void {
+    this.timeProp = {...this.time};
     if (this.time.minValue) {
-      this.time.minValue = this.asIsoDateString(this.time.minValue);
+      this.timeProp.minValue = this.asIsoDateString(this.time.minValue);
     }
     if (this.time.maxValue) {
-      this.time.maxValue = this.asIsoDateString(this.time.maxValue);
+      this.timeProp.maxValue = this.asIsoDateString(this.time.maxValue);
     }
-    if (this.time.minDefValue) {
-      this.time.minDefValue = this.asIsoDateString(this.time.minDefValue);
+    if (this.timeProp.minDefValue) {
+      this.timeProp.minDefValue = this.asIsoDateString(this.time.minDefValue);
     }
     if (this.time.maxDefValue) {
-      this.time.maxDefValue = this.asIsoDateString(this.time.maxDefValue);
+      this.timeProp.maxDefValue = this.asIsoDateString(this.time.maxDefValue);
     }
   }
 
@@ -124,6 +130,6 @@ export default class GmfTimeInput extends LitElement {
    * @protected
    */
   protected isTimeRange(): boolean {
-    return this.time.mode === TimePropertyModeEnum.RANGE;
+    return this.timeProp.mode === TimePropertyModeEnum.RANGE;
   }
 }
