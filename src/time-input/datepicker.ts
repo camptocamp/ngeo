@@ -25,9 +25,10 @@ export default class GmfDatepicker extends GmfTimeInput {
     const datepickerStart = html`
       <span>${i18next.t(startText)}</span>
       <input
+        class="datepicker-start"
         type="date"
         .min=${this.timeProp.minValue}
-        .max=${this.timeProp.maxValue}
+        .max=${this.getDateMax()}
         .value=${this.timeProp.minDefValue ?? this.timeProp.minValue}
         @change="${(e: InputEvent) => this.onDateStartSelected(e)}"
       />
@@ -37,8 +38,9 @@ export default class GmfDatepicker extends GmfTimeInput {
       datepickerEnd = html`
         <span>${i18next.t('To:')}</span>
         <input
+          class="datepicker-end"
           type="date"
-          .min=${this.timeProp.minValue}
+          .min=${this.getDateMin()}
           .max=${this.timeProp.maxValue}
           .value=${this.timeProp.maxDefValue ?? this.timeProp.maxValue}
           @change="${(e: InputEvent) => this.onDateEndSelected(e)}"
@@ -52,5 +54,31 @@ export default class GmfDatepicker extends GmfTimeInput {
         <span>${datepickerStart}</span>
         ${datepickerEnd ? html`<span>${datepickerEnd}</span>` : html``}
       </div>`;
+  }
+
+  /**
+   * On range mode, calculate the min date value with the second date-picker's value.
+   * @returns The min selectable date.
+   * @private
+   */
+  private getDateMin(): string {
+    if (!this.isTimeRange()) {
+      return this.timeProp.minValue;
+    }
+    const start: HTMLInputElement = this.shadowRoot.querySelector('.datepicker-start');
+    return start ? start.value : this.timeProp.minValue;
+  }
+
+  /**
+   * On range mode, calculate the max date value with the second date-picker's value.
+   * @returns The max selectable date.
+   * @private
+   */
+  private getDateMax(): string {
+    if (!this.isTimeRange()) {
+      return this.timeProp.maxValue;
+    }
+    const end: HTMLInputElement = this.shadowRoot.querySelector('.datepicker-end');
+    return end ? end.value : this.timeProp.maxValue;
   }
 }
