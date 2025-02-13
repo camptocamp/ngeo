@@ -22,8 +22,9 @@ export default class GmfDatepicker extends GmfTimeInput {
       return html``;
     }
     const startText = this.isTimeRange() ? 'From:' : 'Date:';
+    const i18nextOptions = {nsSeparator: '#'};
     const datepickerStart = html`
-      <span>${i18next.t(startText)}</span>
+      <span>${i18next.t(startText, i18nextOptions)}</span>
       <input
         class="datepicker-start"
         type="date"
@@ -36,7 +37,7 @@ export default class GmfDatepicker extends GmfTimeInput {
     let datepickerEnd = null;
     if (this.isTimeRange()) {
       datepickerEnd = html`
-        <span>${i18next.t('To:')}</span>
+        <span>${i18next.t('To:', i18nextOptions)}</span>
         <input
           class="datepicker-end"
           type="date"
