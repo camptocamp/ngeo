@@ -4,9 +4,28 @@ import {TimePropertyModeEnum, TimeProperty, TimeRange} from 'ngeo/datasource/OGC
 
 /**
  * Base class for OGC time based input component (slider, datepicker)
+ * Time and onchangeCB are mandatory properties.
  */
 export default class GmfTimeInput extends LitElement {
-  @property({type: Object}) time?: TimeProperty = undefined;
+  private _time?: TimeProperty;
+  @property({type: Object})
+  /**
+   * On time set, update the state properties.
+   * Don't do that in lit "updated" to avoid loop.
+   */
+  set time(timeObj: TimeProperty | undefined) {
+    if (this._time === timeObj) {
+      return;
+    }
+    this._time = timeObj;
+    if (timeObj) {
+      this.getCorrectTimeObject();
+      this.setupMinMaxDefaultValues();
+    }
+  }
+  get time(): TimeProperty | undefined {
+    return this._time;
+  }
   @property({type: Object}) args?: unknown = undefined;
   @property({type: Object}) onchangeCb?: (time: TimeRange, args?: unknown) => void = undefined;
   @state() protected timeProp?: TimeProperty;
@@ -14,14 +33,14 @@ export default class GmfTimeInput extends LitElement {
   @state() protected dateEnd?: number;
 
   /**
-   * Lit updated - set time on "time" property change.
+   * Lit updated - once properties are ready, call the callback.
+   * The prop "args" is mandatory.
    * @param changedProperties changed properties.
    */
   updated(changedProperties: Map<string, any>): void {
     super.updated(changedProperties);
-    if (changedProperties.has('time') && this.time) {
-      this.getCorrectTimeObject();
-      this.setupMinMaxDefaultValues();
+    if (this.time && this.onchangeCb) {
+      this.callCb();
     }
   }
 
@@ -33,7 +52,6 @@ export default class GmfTimeInput extends LitElement {
     this.dateStart = +new Date(this.timeProp.minDefValue ?? this.timeProp.minValue);
     this.dateEnd = +new Date(this.timeProp.maxDefValue ?? this.timeProp.maxValue);
     this.updateTime(this.dateStart, this.dateEnd);
-    this.callCb();
   }
 
   /**
