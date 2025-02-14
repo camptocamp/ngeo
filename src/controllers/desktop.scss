@@ -40,7 +40,6 @@
 @import 'ngeo/sass/components.scss';
 
 @import 'gmf/sass/popover.scss';
-@import 'gmf/sass/datepicker.scss';
 @import 'gmf/sass/filters.scss';
 @import 'gmf/sass/fullscreenpopup.scss';
 @import 'gmf/sass/loading-mask.scss';
@@ -1057,11 +1056,6 @@ ngeo-rule {
     a.btn:focus {
       color: $gray-dark;
       color: var(--gray-dark);
-    }
-
-    ngeo-date-picker {
-      display: block;
-      text-align: right;
     }
   }
 

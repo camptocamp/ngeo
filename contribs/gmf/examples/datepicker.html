@@ -8,16 +8,14 @@
   </head>
   <body ng-controller="MainController as ctrl">
     <p id="desc">
-      This example shows how to use the <code>ngeo-date-picker</code> directive with the gmf WMS time service
-      in order to format the date for WMS.
+      This example shows how to use the <code>gmf-datepicker</code> directive with the gmf WMS time service in
+      order to format the date for WMS.
     </p>
     <ul>
       <li>
-        Select a period with a datepicker
-        <ngeo-date-picker
-          time="ctrl.wmsTimeRangeMode"
-          on-date-selected="ctrl.onDateRangeSelected(time)"
-        ></ngeo-date-picker>
+        <p>Select a period with a datepicker</p>
+        <gmf-datepicker ng-prop-time="ctrl.wmsTimeRangeMode" ng-prop-onchange_cb="ctrl.onDateRangeSelected">
+        </gmf-datepicker>
       </li>
 
       <li style="margin-top: 50px">
@@ -28,11 +26,9 @@
       </li>
 
       <li>
-        Select a single date with a datepicker
-        <ngeo-date-picker
-          time="ctrl.wmsTimeValueMode"
-          on-date-selected="ctrl.onDateSelected(time)"
-        ></ngeo-date-picker>
+        <p>Select a single date with a datepicker</p>
+        <gmf-datepicker ng-prop-time="ctrl.wmsTimeValueMode" ng-prop-onchange_cb="ctrl.onDateSelected">
+        </gmf-datepicker>
       </li>
 
       <li style="margin-top: 50px">

@@ -203,6 +203,13 @@ export function AbstractAppController($scope, $injector, mobile) {
   window['map'] = map;
 
   /**
+   * Allow not-angularjs to run a digest loop.
+   */
+  window['runAngularDigestLoop'] = () => {
+    this.$scope.$root.$digest();
+  };
+
+  /**
    * Location service
    *
    * @type {import('ngeo/statemanager/Location').StatemanagerLocation}
