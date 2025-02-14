@@ -79,8 +79,8 @@ jobs:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
           restore-keys: "pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}\npre-commit-"
-      - run: pre-commit run --all-files
-      - run: git diff --exit-code --patch > /tmp/pre-commit.patch || true
+      - run: pre-commit run --all-files --color=always
+      - run: git diff --exit-code --patch > /tmp/pre-commit.patch; git diff --color; git reset --hard || true
         if: failure()
       - uses: actions/upload-artifact@v4
         with:
