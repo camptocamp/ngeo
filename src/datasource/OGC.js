@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -194,15 +194,15 @@ export const WMSInfoFormat = {
  * Time object
  *
  * @typedef {Object} TimeProperty
- * @property {TimePropertyWidgetEnum} widget
- * @property {string} maxValue
- * @property {string} minValue
- * @property {string} [maxDefValue]
- * @property {string} [minDefValue]
- * @property {TimePropertyModeEnum} mode
- * @property {TimePropertyResolutionEnum} [resolution]
- * @property {string[]} [values]
- * @property {number[]} interval
+ * @property {TimePropertyWidgetEnum} widget to select time with.
+ * @property {string} maxValue limit max.
+ * @property {string} minValue limit min.
+ * @property {string} [maxDefValue] default max value.
+ * @property {string} [minDefValue] default min value.
+ * @property {TimePropertyModeEnum} mode like range, unique value, etc.
+ * @property {TimePropertyResolutionEnum} [resolution] Time resolution to apply
+ * @property {string[]} [values] Predefined list of possible values.
+ * @property {number[]} interval as [year, month, day, seconds], to set time with.
  */
 
 /**

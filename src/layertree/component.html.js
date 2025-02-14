@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2024 Camptocamp SA
+// Copyright (c) 2024-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -133,19 +133,21 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
       </span>
 
       <div ngeo-popover-content>
-        <ngeo-date-picker
+        <gmf-datepicker
           ng-if="::layertreeCtrl.node.time.widget === 'datepicker'"
-          time="layertreeCtrl.node.time"
-          on-date-selected="gmfLayertreeCtrl.updateTimeData(layertreeCtrl, time)"
+          ng-prop-time="layertreeCtrl.node.time"
+          ng-prop-args="layertreeCtrl"
+          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeDataBind"
         >
-        </ngeo-date-picker>
+        </gmf-datepicker>
 
-        <gmf-time-slider
+        <gmf-timeslider
           ng-if="::layertreeCtrl.node.time.widget === 'slider'"
-          gmf-time-slider-time="layertreeCtrl.node.time"
-          gmf-time-slider-on-date-selected="gmfLayertreeCtrl.updateTimeData(layertreeCtrl, time)"
+          ng-prop-time="layertreeCtrl.node.time"
+          ng-prop-args="layertreeCtrl"
+          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeDataBind"
         >
-        </gmf-time-slider>
+        </gmf-timeslider>
       </div>
     </span>
 

@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -23,7 +23,6 @@ import angular from 'angular';
 import ngeoMiscAutoProjection from 'ngeo/misc/AutoProjection';
 import ngeoMiscBtnComponent from 'ngeo/misc/btnComponent';
 import ngeoMiscControlComponent from 'ngeo/misc/controlComponent';
-import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
 import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import ngeoMiscEventHelper from 'ngeo/misc/EventHelper';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
@@ -42,7 +41,6 @@ export default angular.module('ngeoMiscExtraModule', [
   ngeoMiscAutoProjection.name,
   ngeoMiscBtnComponent.name,
   ngeoMiscControlComponent.name,
-  ngeoMiscDatepickerComponent.name,
   ngeoMiscDebounce.name,
   ngeoMiscEventHelper.name,
   ngeoMiscFeatureHelper.name,

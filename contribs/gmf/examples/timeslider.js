@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,19 +22,15 @@
 import './timeslider.scss';
 
 import angular from 'angular';
-import gmfLayertreeTimeSliderComponent from 'gmf/layertree/timeSliderComponent';
+import 'gmf/time-input/timeslider';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 import options from './options';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('gmfapp', [
-  'gettext',
-  gmfLayertreeTimeSliderComponent.name,
-  ngeoMiscWMSTime.name,
-]);
+const myModule = angular.module('gmfapp', ['gettext', ngeoMiscWMSTime.name]);
 
-MainController.$inject = ['$scope', 'ngeoWMSTime'];
+MainController.$inject = ['$rootScope', 'ngeoWMSTime'];
 
 /**
  * @class
@@ -42,6 +38,13 @@ MainController.$inject = ['$scope', 'ngeoWMSTime'];
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
  */
 function MainController($scope, ngeoWMSTime) {
+  /**
+   * Allow not-angularjs to run a digest loop.
+   */
+  window.runAngularDigestLoop = () => {
+    $scope.$digest();
+  };
+
   /**
    * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
@@ -82,21 +85,19 @@ function MainController($scope, ngeoWMSTime) {
   this.sliderRangeValue = '';
 
   /**
-   * @param {import('ngeo/datasource/OGC').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date selected date.
    * @this {MainController}
    */
-  this.onDateSelected = function (date) {
+  this.onDateSelected = (date) => {
     this.sliderValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeValueMode, date);
-    $scope.$digest();
   };
 
   /**
-   * @param {import('ngeo/datasource/OGC').TimeRange} date
+   * @param {import('ngeo/datasource/OGC').TimeRange} date selected date.
    * @this {MainController}
    */
-  this.onDateRangeSelected = function (date) {
+  this.onDateRangeSelected = (date) => {
     this.sliderRangeValue = this.ngeoWMSTime_.formatWMSTimeParam(this.wmsTimeRangeMode, date);
-    $scope.$digest();
   };
 }
 myModule.controller('MainController', MainController);

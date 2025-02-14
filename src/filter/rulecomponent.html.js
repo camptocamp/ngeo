@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2024 Camptocamp SA
+// Copyright (c) 2024-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -51,12 +51,12 @@ export default `<div class="dropdown">
       >
         <div ng-switch="$ctrl.clone.operator">
           <div ng-switch-when="..|time_during" ng-switch-when-separator="|">
-            <ngeo-date-picker time="$ctrl.timeRangeMode" on-date-selected="$ctrl.onDateRangeSelected(time)">
-            </ngeo-date-picker>
+            <gmf-datepicker ng-prop-time="$ctrl.timeRangeMode" ng-prop-onchange_cb="$ctrl.onDateRangeSelectedBind">
+            </gmf-datepicker>
           </div>
           <div ng-switch-default>
-            <ngeo-date-picker time="$ctrl.timeValueMode" on-date-selected="$ctrl.onDateSelected(time)">
-            </ngeo-date-picker>
+            <gmf-datepicker ng-prop-time="$ctrl.timeValueMode" ng-prop-onchange_cb="$ctrl.onDateSelectedBind">
+            </gmf-datepicker>
           </div>
         </div>
       </div>

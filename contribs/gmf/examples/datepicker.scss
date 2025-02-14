@@ -1,14 +1,9 @@
 @import './common_styles.scss';
+@import 'jquery-datetimepicker/jquery.datetimepicker.css';
 
 li {
   margin: 20px;
   list-style: none;
-}
-.ngeo-datepicker-end-date {
-  display: inline-block;
-}
-.ngeo-datepicker-start-date {
-  display: inline-block;
 }
 pre {
   display: block;

@@ -26,7 +26,3 @@ import 'jquery-ui/ui/widgets/resizable';
 import 'jquery-ui/ui/widgets/sortable';
 import 'jquery-ui-touch-punch';
 import 'jquery-datetimepicker/jquery.datetimepicker';
-import 'jquery-ui/ui/i18n/datepicker-fr';
-import 'jquery-ui/ui/i18n/datepicker-en-GB';
-import 'jquery-ui/ui/i18n/datepicker-de';
-import 'jquery-ui/ui/i18n/datepicker-it';

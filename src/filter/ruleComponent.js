@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -28,7 +28,6 @@ import ngeoGeometryType from 'ngeo/GeometryType';
 import ngeoInteractionModify from 'ngeo/interaction/Modify';
 import ngeoInteractionRotate from 'ngeo/interaction/Rotate';
 import ngeoInteractionTranslate from 'ngeo/interaction/Translate';
-import ngeoMiscDatepickerComponent from 'ngeo/misc/datepickerComponent';
 import {interactionDecoration as ngeoMiscDecorateInteraction} from 'ngeo/misc/decorate';
 import ngeoMiscFeatureHelper from 'ngeo/misc/FeatureHelper';
 import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
@@ -44,6 +43,7 @@ import olStyleFill from 'ol/style/Fill';
 import {CollectionEvent} from 'ol/Collection';
 import Feature from 'ol/Feature';
 import htmlTemplate from './rulecomponent.html';
+import 'gmf/time-input/datepicker';
 
 /**
  * @typedef {Object} MenuEventTarget
@@ -61,7 +61,6 @@ import htmlTemplate from './rulecomponent.html';
 const myModule = angular.module('ngeoRule', [
   ngeoDrawComponent.name,
   ngeoFilterRuleHelper.name,
-  ngeoMiscDatepickerComponent.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
 ]);
@@ -384,6 +383,18 @@ export class RuleController {
      * @type {import('ol/events').EventsKey[]}
      */
     this.listenerKeys_ = [];
+
+    /**
+     * onDateRangeSelected with bound context.
+     * @type {RuleController.onDateRangeSelected}
+     */
+    this.onDateRangeSelectedBind = this.onDateRangeSelected.bind(this);
+
+    /**
+     * onDateSelected with bound context.
+     * @type {RuleController.onDateSelected}
+     */
+    this.onDateSelectedBind = this.onDateSelected.bind(this);
   }
 
   /**
