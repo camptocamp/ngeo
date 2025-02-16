@@ -4,6 +4,12 @@ import {css, CSSResult, html, TemplateResult, unsafeCSS} from 'lit';
 import {debounce} from 'ngeo/misc/debounce2';
 import {TimePropertyResolutionEnum} from 'gmf/datasource/OGC';
 
+/**
+ * Gives you a timeslider (simple or range) based on OGC time.
+ * Based on GmfTimeInput.
+ * Example:
+ * <gmf-timeslider time="myTimeConfig"></gmf-timeslider>
+ */
 @customElement('gmf-timeslider')
 export default class GmfTimeslider extends GmfTimeInput {
   @state() protected sliderStart?: number;
@@ -11,7 +17,7 @@ export default class GmfTimeslider extends GmfTimeInput {
   private isInitialRendering = true;
   private datesSteps: number[];
   private readonly onSliderRelease = debounce(() => {
-    this.callCb();
+    this.emitChangeEvent();
   }, 300);
 
   static readonly styles: CSSResult[] = [

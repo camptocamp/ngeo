@@ -3,6 +3,12 @@ import i18next from 'i18next';
 import {customElement} from 'lit/decorators.js';
 import GmfTimeInput from 'gmf/time-input/time-input';
 
+/**
+ * Gives you a datepicker (simple or range) based on OGC time.
+ * Based on GmfTimeInput.
+ * Example:
+ * <gmf-datepicker time="myTimeConfig"></gmf-datepicker>
+ */
 @customElement('gmf-datepicker')
 export default class GmfDatepicker extends GmfTimeInput {
   static styles: CSSResult[] = [

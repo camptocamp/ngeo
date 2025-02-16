@@ -34,6 +34,8 @@ import ngeoMiscToolActivate from 'ngeo/misc/ToolActivate';
 import ngeoMiscToolActivateMgr from 'ngeo/misc/ToolActivateMgr';
 import {RuleOperatorType, RuleSpatialOperatorType, RuleTemporalOperatorType} from 'ngeo/rule/Rule';
 import ngeoRuleGeometry from 'ngeo/rule/Geometry';
+import ngeoEventDirective from 'ngeo/misc/customEventDirective';
+import 'gmf/time-input/datepicker';
 import {getUid as olUtilGetUid} from 'ol/util';
 import olCollection from 'ol/Collection';
 import {listen, unlistenByKey} from 'ol/events';
@@ -43,7 +45,6 @@ import olStyleFill from 'ol/style/Fill';
 import {CollectionEvent} from 'ol/Collection';
 import Feature from 'ol/Feature';
 import htmlTemplate from './rulecomponent.html';
-import 'gmf/time-input/datepicker';
 
 /**
  * @typedef {Object} MenuEventTarget
@@ -63,6 +64,7 @@ const myModule = angular.module('ngeoRule', [
   ngeoFilterRuleHelper.name,
   ngeoMiscFeatureHelper.name,
   ngeoMiscToolActivateMgr.name,
+  ngeoEventDirective.name,
 ]);
 myModule.run(
   /**
@@ -383,18 +385,6 @@ export class RuleController {
      * @type {import('ol/events').EventsKey[]}
      */
     this.listenerKeys_ = [];
-
-    /**
-     * onDateRangeSelected with bound context.
-     * @type {RuleController.onDateRangeSelected}
-     */
-    this.onDateRangeSelectedBind = this.onDateRangeSelected.bind(this);
-
-    /**
-     * onDateSelected with bound context.
-     * @type {RuleController.onDateSelected}
-     */
-    this.onDateSelectedBind = this.onDateSelected.bind(this);
   }
 
   /**
