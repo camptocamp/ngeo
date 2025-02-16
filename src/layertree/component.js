@@ -57,6 +57,7 @@ import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import 'gmf/time-input/timeslider';
 import 'gmf/time-input/datepicker';
+import ngeoEventDirective from 'ngeo/misc/customEventDirective';
 import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerLayer from 'ol/layer/Layer';
 import {isEmpty} from 'ol/obj';
@@ -95,6 +96,7 @@ const myModule = angular.module('gmfLayertreeComponent', [
   ngeoLayertreeController.name,
   ngeoMapLayerHelper.name,
   ngeoMiscWMSTime.name,
+  ngeoEventDirective.name,
   gmfLayerBeingSwipe.name,
 ]);
 
@@ -348,12 +350,6 @@ export function Controller(
    */
   this.$timeout_ = $timeout;
 
-  /**
-   * updateTimeData with bound context.
-   * @type {Controller.prototype.updateTimeData}
-   */
-  this.updateTimeDataBind = this.updateTimeData.bind(this);
-
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
     this.scope_.$apply();
@@ -541,11 +537,11 @@ Controller.prototype.getNodeState = function (treeCtrl) {
  *
  * LayertreeController.prototype.updateTimeData - description
  *
- * @param {import('ngeo/datasource/OGC').TimeRange} time The start
  * @param {import('ngeo/layertree/Controller').LayertreeController} layertreeCtrl ngeo layertree controller
+ * @param {import('ngeo/datasource/OGC').TimeRange} time The start
  * and optionally the end datetime (for time range selection) selected by user
  */
-Controller.prototype.updateTimeData = function (time, layertreeCtrl) {
+Controller.prototype.updateTimeData = function (layertreeCtrl, time) {
   this.updateWMSTimeLayerState(layertreeCtrl, time);
   this.gmfPermalink_.refreshLayerTime(layertreeCtrl, time);
 };
