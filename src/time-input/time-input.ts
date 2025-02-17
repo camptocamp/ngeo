@@ -4,7 +4,8 @@ import {TimePropertyModeEnum, TimeProperty, TimeRange} from 'ngeo/datasource/OGC
 
 /**
  * Base class for OGC time based input component (slider, datepicker)
- * Time and onchangeCB are mandatory properties.
+ * The "time" property (config) is mandatory.
+ * Emits a custom event "change" with the selected value.
  */
 export default class GmfTimeInput extends LitElement {
   private _time?: TimeProperty;
@@ -21,28 +22,16 @@ export default class GmfTimeInput extends LitElement {
     if (timeObj) {
       this.getCorrectTimeObject();
       this.setupMinMaxDefaultValues();
+      // Wait a bit that listener are ready.
+      setTimeout(() => this.emitChangeEvent(), 100);
     }
   }
   get time(): TimeProperty | undefined {
     return this._time;
   }
-  @property({type: Object}) args?: unknown = undefined;
-  @property({type: Object}) onchangeCb?: (time: TimeRange, args?: unknown) => void = undefined;
   @state() protected timeProp?: TimeProperty;
   @state() protected dateStart?: number;
   @state() protected dateEnd?: number;
-
-  /**
-   * Lit updated - once properties are ready, call the callback.
-   * The prop "args" is mandatory.
-   * @param changedProperties changed properties.
-   */
-  updated(changedProperties: Map<string, any>): void {
-    super.updated(changedProperties);
-    if (this.time && this.onchangeCb) {
-      this.callCb();
-    }
-  }
 
   /**
    * Set up the start and the end date based on the time attribute.
@@ -62,7 +51,7 @@ export default class GmfTimeInput extends LitElement {
   protected onDateStartSelected(event: InputEvent): void {
     const target: HTMLInputElement = event.target as HTMLInputElement;
     this.updateTime(+new Date(target.value));
-    this.callCb();
+    this.emitChangeEvent();
   }
 
   /**
@@ -73,13 +62,11 @@ export default class GmfTimeInput extends LitElement {
   protected onDateEndSelected(event: InputEvent): void {
     const target: HTMLInputElement = event.target as HTMLInputElement;
     this.updateTime(this.dateStart, +new Date(target.value));
-    this.callCb();
+    this.emitChangeEvent();
   }
 
   /**
-   * On time change, update the displayed time, call the
-   * provided callback with the new time and properties args and
-   * then demand angularjs to digest (via window.runAngularDigestLoop).
+   * Updates the displayed time.
    * @param dateStart start timestamp.
    * @param dateEnd optional end timestamp.
    * @protected
@@ -92,26 +79,22 @@ export default class GmfTimeInput extends LitElement {
   }
 
   /**
-   * Call the provided callback with the new time and properties args and
-   * then demand angularjs to digest (via window.runAngularDigestLoop).
+   * Dispatch a "change" event with the new time value.
    * @protected
    */
-  protected callCb(): void {
+  protected emitChangeEvent(): void {
     const time: TimeRange = {
       start: this.dateStart,
     };
     if (this.isTimeRange()) {
       time.end = this.dateEnd;
     }
-    if (!this.onchangeCb) {
-      return;
-    }
-    this.onchangeCb(time, this.args);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if ((window as any).runAngularDigestLoop) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-      (window as any).runAngularDigestLoop();
-    }
+    const changeEvent = new CustomEvent('change', {
+      bubbles: true,
+      composed: true,
+      detail: time,
+    });
+    this.dispatchEvent(changeEvent);
   }
 
   /**

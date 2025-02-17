@@ -12,8 +12,11 @@
       <li>Select a period with a timeslider</li>
       <li>
         <gmf-timeslider
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="ctrl.onDateRangeSelected(time)"
           ng-prop-time="ctrl.wmsTimeRangeMode"
-          ng-prop-onchange_cb="ctrl.onDateRangeSelected"
         ></gmf-timeslider>
       </li>
 
@@ -27,8 +30,11 @@
       <li style="margin-top: 50px">Select a single date with a timeslider</li>
       <li>
         <gmf-timeslider
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="ctrl.onDateSelected(time)"
           ng-prop-time="ctrl.wmsTimeValueMode"
-          ng-prop-onchange_cb="ctrl.onDateSelected"
         ></gmf-timeslider>
       </li>
 

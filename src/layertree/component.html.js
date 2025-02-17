@@ -135,18 +135,20 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
       <div ngeo-popover-content>
         <gmf-datepicker
           ng-if="::layertreeCtrl.node.time.widget === 'datepicker'"
-          ng-prop-time="layertreeCtrl.node.time"
-          ng-prop-args="layertreeCtrl"
-          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeDataBind"
-        >
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="gmfLayertreeCtrl.updateTimeData(layertreeCtrl, time)"
+          ng-prop-time="layertreeCtrl.node.time">
         </gmf-datepicker>
 
         <gmf-timeslider
           ng-if="::layertreeCtrl.node.time.widget === 'slider'"
-          ng-prop-time="layertreeCtrl.node.time"
-          ng-prop-args="layertreeCtrl"
-          ng-prop-onchange_cb="gmfLayertreeCtrl.updateTimeDataBind"
-        >
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="gmfLayertreeCtrl.updateTimeData(layertreeCtrl, time)"
+          ng-prop-time="layertreeCtrl.node.time">
         </gmf-timeslider>
       </div>
     </span>

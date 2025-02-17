@@ -25,10 +25,11 @@ import angular from 'angular';
 import 'gmf/time-input/datepicker';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
+import ngeoEventDirective from 'ngeo/misc/customEventDirective';
 import options from './options';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('gmfapp', ['gettext', ngeoMiscWMSTime.name]);
+const myModule = angular.module('gmfapp', ['gettext', ngeoMiscWMSTime.name, ngeoEventDirective.name]);
 
 MainController.$inject = ['$scope', 'ngeoWMSTime'];
 
@@ -38,13 +39,6 @@ MainController.$inject = ['$scope', 'ngeoWMSTime'];
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
  */
 function MainController($scope, ngeoWMSTime) {
-  /**
-   * Allow not-angularjs to run a digest loop.
-   */
-  window.runAngularDigestLoop = () => {
-    $scope.$digest();
-  };
-
   /**
    * @type {import('ngeo/misc/WMSTime').WMSTime}
    */
