@@ -51,11 +51,21 @@ export default `<div class="dropdown">
       >
         <div ng-switch="$ctrl.clone.operator">
           <div ng-switch-when="..|time_during" ng-switch-when-separator="|">
-            <gmf-datepicker ng-prop-time="$ctrl.timeRangeMode" ng-prop-onchange_cb="$ctrl.onDateRangeSelectedBind">
+            <gmf-datepicker
+              ngeo-event
+              ngeo-event-on="'change'"
+              ngeo-event-model="time"
+              ngeo-event-cb="$ctrl.onDateRangeSelected(time)"
+              ng-prop-time="$ctrl.timeRangeMode">
             </gmf-datepicker>
           </div>
           <div ng-switch-default>
-            <gmf-datepicker ng-prop-time="$ctrl.timeValueMode" ng-prop-onchange_cb="$ctrl.onDateSelectedBind">
+            <gmf-datepicker
+             ngeo-event
+             ngeo-event-on="'change'"
+             ngeo-event-model="time"
+             ngeo-event-cb="$ctrl.onDateSelected(time)"
+             ng-prop-time="$ctrl.timeValueMode">
             </gmf-datepicker>
           </div>
         </div>

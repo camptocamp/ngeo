@@ -26,9 +26,10 @@ import 'gmf/time-input/timeslider';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {TimePropertyWidgetEnum, TimePropertyResolutionEnum, TimePropertyModeEnum} from 'ngeo/datasource/OGC';
 import options from './options';
+import ngeoEventDirective from 'ngeo/misc/customEventDirective';
 
 /** @type {angular.IModule} **/
-const myModule = angular.module('gmfapp', ['gettext', ngeoMiscWMSTime.name]);
+const myModule = angular.module('gmfapp', ['gettext', ngeoMiscWMSTime.name, ngeoEventDirective.name]);
 
 MainController.$inject = ['$rootScope', 'ngeoWMSTime'];
 
@@ -38,13 +39,6 @@ MainController.$inject = ['$rootScope', 'ngeoWMSTime'];
  * @param {import('ngeo/misc/WMSTime').WMSTime} ngeoWMSTime wmstime service.
  */
 function MainController($scope, ngeoWMSTime) {
-  /**
-   * Allow not-angularjs to run a digest loop.
-   */
-  window.runAngularDigestLoop = () => {
-    $scope.$digest();
-  };
-
   /**
    * @type {import('ngeo/misc/WMSTime').WMSTime}
    */

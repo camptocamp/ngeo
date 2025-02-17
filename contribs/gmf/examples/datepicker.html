@@ -14,7 +14,13 @@
     <ul>
       <li>
         <p>Select a period with a datepicker</p>
-        <gmf-datepicker ng-prop-time="ctrl.wmsTimeRangeMode" ng-prop-onchange_cb="ctrl.onDateRangeSelected">
+        <gmf-datepicker
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="ctrl.onDateRangeSelected(time)"
+          ng-prop-time="ctrl.wmsTimeRangeMode"
+        >
         </gmf-datepicker>
       </li>
 
@@ -27,7 +33,13 @@
 
       <li>
         <p>Select a single date with a datepicker</p>
-        <gmf-datepicker ng-prop-time="ctrl.wmsTimeValueMode" ng-prop-onchange_cb="ctrl.onDateSelected">
+        <gmf-datepicker
+          ngeo-event
+          ngeo-event-on="'change'"
+          ngeo-event-model="time"
+          ngeo-event-cb="ctrl.onDateSelected(time)"
+          ng-prop-time="ctrl.wmsTimeValueMode"
+        >
         </gmf-datepicker>
       </li>
 
