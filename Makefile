@@ -154,7 +154,7 @@ serve-gmf: contribs/dist $(ANGULAR_LOCALES_FILES)
 
 .PHONY: serve-gmf-apps
 serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) locales/en/app.json
-	npm run serve-gmf-apps
+	NODE_OPTIONS=--openssl-legacy-provider npm run serve-gmf-apps
 
 .PHONY: serve-api
 serve-api: .build/node_modules.timestamp
@@ -445,7 +445,7 @@ build-dll: .build/build-dll.timestamp
 
 .build/build-dll.timestamp: .build/python-venv.timestamp .build/node_modules.timestamp
 	$(PY_VENV_BIN)/python3 buildtools/extract-ngeo-dependencies > deps.js && \
-	npm run build-dll
+	NODE_OPTIONS=--openssl-legacy-provider npm run build-dll
 	rm deps.js
 	mkdir -p $(dir $@)
 	touch $@
