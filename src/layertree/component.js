@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2023 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -51,6 +51,7 @@ import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceWMTS from 'ol/source/WMTS';
 import LayerBase from 'ol/layer/Base';
 import {getUid} from 'ol/util';
+import olLayerNotWebGLTile from 'ol/layer/Tile';
 
 import 'bootstrap/js/src/collapse';
 
@@ -640,7 +641,7 @@ Controller.prototype.getLegendsObject = function (treeCtrl) {
 
   const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS') {
-    if (!(layer instanceof olLayerTile)) {
+    if (!(layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile)) {
       throw new Error('Wrong layer');
     }
     const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(layer);
