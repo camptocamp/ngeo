@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -28,6 +28,40 @@ import olGeomPoint from 'ol/geom/Point';
 import olGeomPolygon from 'ol/geom/Polygon';
 import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent';
 import {MAC} from 'ol/has';
+import {getContext} from 'ol/webgl';
+import olLayerTile from 'ol/layer/WebGLTile';
+import olLayerNotWebGLTile from 'ol/layer/Tile';
+
+let isWebGLSupportedCheck;
+/**
+ * @returns true if WebGl is supported, false otherwise.
+ */
+export const isWebGLSupported = () => {
+  if (isWebGLSupportedCheck !== undefined) {
+    return isWebGLSupportedCheck;
+  }
+  const canvas = document.createElement('canvas');
+  isWebGLSupportedCheck = getContext(canvas) instanceof WebGLRenderingContext;
+  if (!isWebGLSupportedCheck) {
+    console.error(
+      'WebGL is not supported on this browser. The portal could be slower and some functions could not work as expected.',
+    );
+  }
+  return isWebGLSupportedCheck;
+};
+
+/**
+ * Return a WebGLTile if WebGL is supported. Otherwise, fallback on not WebGL Tile Layer.
+ * @param {import('ol/layer/WebGLTile').Options} [options] the layer options.
+ * @returns {(import('ol/layer/WebGLTile').default | import('ol/layer/Tile').default)}
+ * @static
+ */
+export const createLayerTileOrWebGLTile = (options) => {
+  if (isWebGLSupported()) {
+    return new olLayerTile(options);
+  }
+  return new olLayerNotWebGLTile(options);
+};
 
 /**
  * Return whether the passed event has the 'ctrl' key (or 'meta' key on Mac) pressed or not.

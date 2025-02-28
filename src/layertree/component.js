@@ -66,6 +66,7 @@ import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceWMTS from 'ol/source/WMTS';
 import LayerBase from 'ol/layer/Base';
 import {getUid} from 'ol/util';
+import olLayerNotWebGLTile from 'ol/layer/Tile';
 import 'bootstrap/js/src/collapse';
 import htmlTemplate from './component.html';
 
@@ -641,7 +642,7 @@ Controller.prototype.getLegendsObject = function (treeCtrl) {
   }
   const layer = treeCtrl.layer;
   if (gmfLayer.type === 'WMTS') {
-    if (!(layer instanceof olLayerTile)) {
+    if (!(layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile)) {
       throw new Error('Wrong layer');
     }
     const wmtsLegendURL = this.layerHelper_.getWMTSLegendURL(layer);

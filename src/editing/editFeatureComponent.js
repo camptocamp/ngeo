@@ -66,6 +66,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON';
 import olInteractionModify from 'ol/interaction/Modify';
 import olLayerImage from 'ol/layer/Image';
 import olLayerTile from 'ol/layer/WebGLTile';
+import olLayerNotWebGLTile from 'ol/layer/Tile';
 import olStyleFill from 'ol/style/Fill';
 import olStyleStyle from 'ol/style/Style';
 import olStyleText from 'ol/style/Text';
@@ -613,7 +614,7 @@ Controller.prototype.$onInit = function () {
 
   // (1.1) Set editable WMS layer
   const layer = syncLayertreeMapGetLayer(this.editableTreeCtrl);
-  if (layer instanceof olLayerImage || layer instanceof olLayerTile) {
+  if (layer instanceof olLayerImage || layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile) {
     this.editableWMSLayer_ = layer;
   }
 

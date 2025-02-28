@@ -2,7 +2,7 @@ PrintService.$inject = ['url', '$http', 'gettextCatalog', 'ngeoLayerHelper'];
 createPrintServiceFactory.$inject = ['$http', 'gettextCatalog', 'ngeoLayerHelper'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Camptocamp SA
+// Copyright (c) 2015-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -27,6 +27,7 @@ import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
 import {stableSort} from 'ol/array';
 import olLayerImage from 'ol/layer/Image';
 import olLayerTile from 'ol/layer/WebGLTile';
+import olLayerNotWebGLTile from 'ol/layer/Tile';
 import olLayerVector from 'ol/layer/Vector';
 import * as olSize from 'ol/size';
 import olSourceImageWMS from 'ol/source/ImageWMS';
@@ -241,7 +242,7 @@ PrintService.prototype.encodeMap_ = function (map, scale, object, destinationPri
 PrintService.prototype.encodeLayer = function (arr, layer, resolution, destinationPrintDpi) {
   if (layer instanceof olLayerImage) {
     this.encodeImageLayer_(arr, layer);
-  } else if (layer instanceof olLayerTile) {
+  } else if (layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile) {
     this.encodeTileLayer_(arr, layer);
   } else if (layer instanceof olLayerVector) {
     this.encodeVectorLayer(arr, layer, resolution, destinationPrintDpi);
@@ -376,7 +377,7 @@ function getAbsoluteUrl_(url) {
  * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
-  if (!(layer instanceof olLayerTile)) {
+  if (!(layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile)) {
     throw new Error('layer not instance of olLayerTile');
   }
   const source = layer.getSource();
@@ -392,7 +393,7 @@ PrintService.prototype.encodeTileLayer_ = function (arr, layer) {
  * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
-  if (!(layer instanceof olLayerTile)) {
+  if (!(layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile)) {
     throw new Error('layer not instance of olLayerTile');
   }
   const source = layer.getSource();
@@ -451,7 +452,7 @@ PrintService.prototype.encodeTileWmtsLayer_ = function (arr, layer) {
  * @param {import('ol/layer/WebGLTile').default<import('ol/source/Tile').default>} layer Layer.
  */
 PrintService.prototype.encodeTileWmsLayer_ = function (arr, layer) {
-  if (!(layer instanceof olLayerTile)) {
+  if (!(layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile)) {
     throw new Error('layer not instance of olLayerTile');
   }
   const source = layer.getSource();
