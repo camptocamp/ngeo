@@ -190,7 +190,7 @@
     "react-dom": "18.2.0",
     "regenerator-runtime": "0.13.11",
     "resize-observer-polyfill": "1.5.1",
-    "rxjs": "7.8.1",
+    "rxjs": "7.8.2",
     "sass": "1.58.3",
     "sass-loader": "10.4.1",
     "simple-html-tokenizer": "0.5.11",
