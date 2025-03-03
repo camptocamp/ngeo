@@ -28,20 +28,34 @@ import olGeomPoint from 'ol/geom/Point';
 import olGeomPolygon from 'ol/geom/Polygon';
 import {getTopLeft, getTopRight, getBottomLeft, getBottomRight} from 'ol/extent';
 import {MAC} from 'ol/has';
-import {getContext} from 'ol/webgl';
+import WebGLHelper from 'ol/webgl/Helper';
 import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerNotWebGLTile from 'ol/layer/Tile';
 
 let isWebGLSupportedCheck;
 /**
+ * Rely on deep OL usage of WebGL to know if WebGL is
+ * supported or not.
  * @returns true if WebGl is supported, false otherwise.
  */
 export const isWebGLSupported = () => {
   if (isWebGLSupportedCheck !== undefined) {
     return isWebGLSupportedCheck;
   }
-  const canvas = document.createElement('canvas');
-  isWebGLSupportedCheck = getContext(canvas) instanceof WebGLRenderingContext;
+  try {
+    const helper = new WebGLHelper();
+    const gl = helper.getGL();
+    if (gl instanceof WebGLRenderingContext) {
+      const vertexShaderSource = gl.createShader(gl.VERTEX_SHADER);
+      helper.compileShader(vertexShaderSource, gl.VERTEX_SHADER);
+      isWebGLSupportedCheck = true;
+    } else {
+      isWebGLSupportedCheck = false;
+    }
+  } catch (e) {
+    isWebGLSupportedCheck = false;
+    console.error(e);
+  }
   if (!isWebGLSupportedCheck) {
     console.error(
       'WebGL is not supported on this browser. The portal could be slower and some functions could not work as expected.'
