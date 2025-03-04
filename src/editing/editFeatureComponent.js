@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2023 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -63,6 +63,7 @@ import olFormatGeoJSON from 'ol/format/GeoJSON';
 import olInteractionModify from 'ol/interaction/Modify';
 import olLayerImage from 'ol/layer/Image';
 import olLayerTile from 'ol/layer/WebGLTile';
+import olLayerNotWebGLTile from 'ol/layer/Tile';
 import olStyleFill from 'ol/style/Fill';
 import olStyleStyle from 'ol/style/Style';
 import olStyleText from 'ol/style/Text';
@@ -612,7 +613,7 @@ Controller.prototype.$onInit = function () {
 
   // (1.1) Set editable WMS layer
   const layer = syncLayertreeMapGetLayer(this.editableTreeCtrl);
-  if (layer instanceof olLayerImage || layer instanceof olLayerTile) {
+  if (layer instanceof olLayerImage || layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile) {
     this.editableWMSLayer_ = layer;
   }
 
