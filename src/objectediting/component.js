@@ -59,6 +59,7 @@ import MultiPolygon from 'ol/geom/MultiPolygon';
 import GeometryCollection from 'ol/geom/GeometryCollection';
 import olLayerImage from 'ol/layer/Image';
 import olLayerTile from 'ol/layer/WebGLTile';
+import olLayerNotWebGLTile from 'ol/layer/Tile';
 import olInteractionModify from 'ol/interaction/Modify';
 import olStyleCircle from 'ol/style/Circle';
 import olStyleFill from 'ol/style/Fill';
@@ -912,7 +913,11 @@ Controller.prototype.registerTreeCtrl_ = function (treeCtrl) {
   // Set editable WMS layer for refresh purpose
   if (nodeLayer.id === this.layerNodeId) {
     const layer = syncLayertreeMapGetLayer(treeCtrl);
-    if (layer instanceof olLayerImage || layer instanceof olLayerTile) {
+    if (
+      layer instanceof olLayerImage ||
+      layer instanceof olLayerTile ||
+      layer instanceof olLayerNotWebGLTile
+    ) {
       this.editableWMSLayer_ = layer;
     }
   }

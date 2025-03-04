@@ -1,7 +1,7 @@
 LayerHelper.$inject = ['$q', '$http', 'ngeoTilesPreloadingLimit'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -25,7 +25,6 @@ import olFormatMVT from 'ol/format/MVT';
 import olFormatWMTSCapabilities from 'ol/format/WMTSCapabilities';
 import olLayerGroup from 'ol/layer/Group';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/WebGLTile';
 import olLayerLayer from 'ol/layer/Layer';
 import olLayerVectorTile from 'ol/layer/VectorTile';
 import {isEmpty} from 'ol/obj';
@@ -36,6 +35,7 @@ import olSourceWMTS, {optionsFromCapabilities} from 'ol/source/WMTS';
 import {appendParams as olUriAppendParams} from 'ol/uri';
 import {stylefunction as olMapboxStyleStylefunction} from 'ol-mapbox-style';
 import {ServerType} from 'ngeo/datasource/OGC';
+import {createLayerTileOrWebGLTile} from 'ngeo/utils';
 
 /**
  * Provides help functions that helps you to create and manage layers.
@@ -281,12 +281,13 @@ LayerHelper.prototype.createWMTSLayerFromCapabilitites = function (
 ) {
   opt_maxResolution = this.fixResolution_(opt_maxResolution);
   const parser = new olFormatWMTSCapabilities();
-  const layer = new olLayerTile({
+  const layerOptions = {
     preload: this.tilesPreloadingLimit_,
     minResolution: opt_minResolution,
     maxResolution: opt_maxResolution,
     className: 'canvas3d',
-  });
+  };
+  const layer = createLayerTileOrWebGLTile(layerOptions);
   const $q = this.$q_;
   return this.$http_
     .get(capabilitiesURL, {
@@ -353,11 +354,12 @@ LayerHelper.prototype.createWMTSLayerFromCapabilititesObj = function (
   if (opt_dimensions && !isEmpty(opt_dimensions)) {
     source.updateDimensions(opt_dimensions);
   }
-  const result = new olLayerTile({
+  const layerOptions = {
     preload: Infinity,
     source: source,
     className: 'canvas3d',
-  });
+  };
+  const result = createLayerTileOrWebGLTile(layerOptions);
   result.set('capabilitiesStyles', layerCap.Style);
   return result;
 };
