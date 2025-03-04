@@ -7,7 +7,7 @@ SyncLayertreeMap.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -33,8 +33,8 @@ import {DATASOURCE_ID, LAYER_NODE_NAME_KEY, NODE_IS_LEAF} from 'ngeo/map/LayerHe
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import {getUid as olUtilGetUid} from 'ol/util';
 import olLayerImage from 'ol/layer/Image';
-import olLayerTile from 'ol/layer/WebGLTile';
 import Group from 'ol/layer/Group';
+import {createLayerTileOrWebGLTile} from 'ngeo/utils';
 
 /**
  * Service to create layer based on a ngeo.layertree.Controller with a
@@ -412,7 +412,7 @@ SyncLayertreeMap.prototype.initGmfLayerInANotMixedGroup_ = function (treeCtrl, m
  *     later).
  */
 SyncLayertreeMap.prototype.createWMTSLayer_ = function (gmfLayerWMTS) {
-  const newLayer = new olLayerTile();
+  const newLayer = createLayerTileOrWebGLTile();
   if (!gmfLayerWMTS.url) {
     throw new Error('Missing gmfLayerWMTS.url');
   }
