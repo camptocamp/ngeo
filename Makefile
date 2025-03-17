@@ -232,7 +232,7 @@ eslint-fix: eslint.config.mjs \
 	mkdir -p $(dir $@)
 	cp -r $< $@
 
-.build/examples-hosted/dist: .build/build-dll.timestamp
+.build/examples-hosted/dist: .build/build-dll.timestamp locales/en/app.json
 	mkdir -p .build/examples-hosted/
 	cp -r dist .build/examples-hosted/
 	touch $@
