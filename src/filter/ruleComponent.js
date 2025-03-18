@@ -917,7 +917,7 @@ export class RuleController {
           type == ngeoGeometryType.RECTANGLE
         ) {
           actions.push({
-            cls: 'fa-solid fa-arrows-up-down-left-right-alt',
+            cls: 'fa-solid fa-arrows-up-down-left-right',
             label: gettextCatalog.getString('Move'),
             name: 'move',
           });
