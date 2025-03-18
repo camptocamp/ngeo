@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2024 Camptocamp SA
+// Copyright (c) 2018-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -253,7 +253,7 @@ VectorEncoder.prototype.encodeVectorStyle_ = function (
   const styleType = PRINT_STYLE_TYPES[geometryType];
   const fillStyle = style.getFill();
   const strokeStyle = style.getStroke();
-  if (styleType === PrintStyleType.POLYGON) {
+  if (styleType === PrintStyleType.POLYGON && (fillStyle || strokeStyle)) {
     symbolizers.push(this.encodeVectorStylePolygon_(fillStyle, strokeStyle));
   } else if (styleType === PrintStyleType.LINE_STRING) {
     if (strokeStyle !== null) {
