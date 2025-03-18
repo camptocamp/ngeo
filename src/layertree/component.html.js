@@ -115,7 +115,7 @@ export default `<div class="gmf-layertree-root-tools" ng-if="layertreeCtrl.isRoo
       data-title="{{'Not visible at current scale. Click to zoom.'|translate}}"
       ng-click="::gmfLayertreeCtrl.zoomToResolution(layertreeCtrl); $event.preventDefault(); $event.stopPropagation();"
       ng-if="gmfLayertreeCtrl.getNodeState(layertreeCtrl) == 'on'"
-      ><${svgSearchGo}</i>
+      >${svgSearchGo}</i>
 
     <span
       ngeo-popover
