@@ -193,7 +193,7 @@ WfsPermalinkService.prototype.clear = function () {
 WfsPermalinkService.prototype.issue = function (queryData, map, zoomLevel = undefined) {
   console.assert(
     this.url_,
-    'url is not set. to use the wfs permalink service, ' + 'set the value `ngeoWfsPermalinkOptions`',
+    'url is not set. to use the wfs permalink service, set the value `ngeoWfsPermalinkOptions`',
   );
   this.clearResult_();
   const typeName = queryData.wfsType;

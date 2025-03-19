@@ -462,7 +462,7 @@ export function Controller(
   this.menu_ = new ngeoMenu({
     actions: [
       {
-        cls: 'fa-solid fa-arrows-up-down-left-right-alt',
+        cls: 'fa-solid fa-arrows-up-down-left-right',
         label: gettextCatalog.getString('Move'),
         name: 'move',
       },
