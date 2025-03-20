@@ -7,7 +7,7 @@ FeatureHelper.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -700,6 +700,68 @@ FeatureHelper.prototype.createEditingStyles = function (feature) {
 
     // (2) Anything else than 'Point' requires the vertex style as well
     styles.push(this.getVertexStyle(true));
+  }
+  return styles;
+};
+
+FeatureHelper.prototype.createNoEditingSelectionStyles = function (feature) {
+  // (1) Style definition depends on geometry type
+  const white = [255, 255, 255, 1];
+  const grey = [128, 128, 128, 0.7];
+  const width = 2;
+  const styles = [];
+  const geom = feature.getGeometry();
+  if (!geom) {
+    throw new Error('Missing geom');
+  }
+  const type = geom.getType();
+  if (type === 'Point' || type === 'MultiPoint') {
+    styles.push(
+      new olStyleStyle({
+        image: new olStyleCircle({
+          radius: width * 4,
+          fill: new olStyleFill({
+            color: grey,
+          }),
+          stroke: new olStyleStroke({
+            color: white,
+            width: width / 2,
+          }),
+        }),
+        zIndex: Infinity,
+      }),
+    );
+  } else {
+    if (type === 'LineString' || type === 'MultiLineString') {
+      styles.push(
+        new olStyleStyle({
+          stroke: new olStyleStroke({
+            color: white,
+            width: width + 2,
+          }),
+        }),
+      );
+      styles.push(
+        new olStyleStyle({
+          stroke: new olStyleStroke({
+            color: grey,
+            width: width,
+          }),
+        }),
+      );
+    } else {
+      styles.push(
+        new olStyleStyle({
+          stroke: new olStyleStroke({
+            color: grey,
+            width: width / 2,
+          }),
+          fill: new olStyleFill({
+            color: [255, 255, 255, 0.5],
+          }),
+        }),
+      );
+    }
   }
   return styles;
 };
