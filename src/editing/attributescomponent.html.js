@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2024 Camptocamp SA
+// Copyright (c) 2024-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,6 +21,11 @@
 
 export default `<fieldset ng-disabled="attrCtrl.disabled">
   <div class="form-group" ng-repeat="attribute in ::attrCtrl.attributes">
+    <div ng-if="attribute.type === 'geometry' && attribute.readonly">
+      <br/>
+      {{ 'The geometries of this layer are cannot be modified.' | translate }}
+      <br/>
+    </div>
     <div ng-if="attribute.type !== 'geometry'">
       <label ng-if="::attribute.type !== 'boolean'" class="col-form-label"
         >{{ ::attribute.name | translate }}

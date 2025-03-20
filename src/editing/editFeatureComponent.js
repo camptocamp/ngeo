@@ -713,10 +713,23 @@ Controller.prototype.$onInit = function () {
   );
 
   // (3) Get attributes
-  this.gmfXSDAttributes_.getAttributes(this.editableNode_.id).then(this.setAttributes_.bind(this));
+  this.gmfXSDAttributes_.getAttributes(this.editableNode_.id).then((attributes) => {
+    this.setAttributes_(attributes);
+    this.setLayerStyle();
+  });
 
   // (4) Toggle
   this.toggle_(true);
+};
+
+/**Set the style on the editable layer */
+Controller.prototype.setLayerStyle = function () {
+  if (!this.vectorLayer) {
+    throw new Error('Missing vectorLayer');
+  }
+  if (this.attributes.find((attribute) => attribute.name === 'geom').readonly) {
+    this.vectorLayer.setStyle(null);
+  }
 };
 
 /**
@@ -1355,7 +1368,9 @@ Controller.prototype.handleFeatureChange_ = function (newFeature, oldFeature) {
       listen(newFeature, 'propertychange', this.handleFeaturePropertyChange_, this),
       listen(geom, 'change', this.handleFeatureGeometryChange_, this),
     );
-    this.registerInteractions_();
+    if (!this.attributes.find((attribute) => attribute.name === 'geom').readonly) {
+      this.registerInteractions_();
+    }
     this.gmfSnapping_.ensureSnapInteractionsOnTop();
 
     // The `ui-date` triggers an unwanted change, i.e. it converts the text
