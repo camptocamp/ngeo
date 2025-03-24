@@ -2,7 +2,7 @@
   "_description_": "Tsconfig base for publishing TS/JS as ES6*/",
   "compilerOptions": {
     "outDir": "distlib",
-    "target": "ES2022",
+    "target": "ES2021",
     "module": "ES2022",
     "moduleResolution": "node",
     "lib": ["es2023", "dom"],
