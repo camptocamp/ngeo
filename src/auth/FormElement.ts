@@ -87,7 +87,7 @@ export default class GmfAuthForm extends GmfBaseElement {
       }),
     );
 
-    window.addEventListener('popstate', () => {
+    window.addEventListener('locationchange', () => {
       this.currentApplicationUrl = window.location.href;
       this._updateOpenIdConnectUrl();
     });
