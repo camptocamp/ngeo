@@ -392,7 +392,8 @@ transifex-send: \
 		$(HOME)/.transifexrc \
 		contribs/gmf/apps/.tx/config \
 		.build/locale/ngeo.pot \
-		.build/locale/apps.pot
+		.build/locale/apps.pot \
+		locales/en/app.json
 	tx push --branch=$(MAJOR_VERSION) --source
 	cd contribs/gmf/apps/; tx push --source
 
