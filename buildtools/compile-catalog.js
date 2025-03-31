@@ -51,7 +51,7 @@ function main(inputs) {
 
 // If running this module directly then call the main function.
 if (require.main === module) {
-  program.argument('<string>');
+  program.arguments('<files...>');
   program.parse(process.argv);
   console.log('Compiling the files: ' + program.args.join(' ')); // eslint-disable-line no-console
   main(program.args);
