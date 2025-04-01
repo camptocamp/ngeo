@@ -108,7 +108,7 @@
     "@chromatic-com/storybook": "3.2.4",
     "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.19.0",
-    "@sentry/types": "8.54.0",
+    "@sentry/types": "9.10.1",
     "@storybook/addon-essentials": "8.5.3",
     "@storybook/addon-links": "8.5.3",
     "@storybook/addon-webpack5-compiler-swc": "3.0.0",
