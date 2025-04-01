@@ -182,7 +182,7 @@
     "minify-html-literals-loader": "1.1.1",
     "neat-csv": "6.0.1",
     "parse-absolute-css-unit": "1.0.2",
-    "puppeteer": "23.11.1",
+    "puppeteer": "24.4.0",
     "sass": "1.83.4",
     "sass-loader": "16.0.5",
     "simple-html-tokenizer": "0.5.11",
