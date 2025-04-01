@@ -150,7 +150,7 @@
     "copyfiles": "2.4.1",
     "css-loader": "7.1.2",
     "cy-mobile-commands": "0.3.0",
-    "cypress": "13.17.0",
+    "cypress": "14.2.1",
     "cypress-browser-permissions": "1.1.0",
     "cypress-real-events": "1.14.0",
     "doctrine": "3.0.0",
