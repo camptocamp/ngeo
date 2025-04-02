@@ -69,4 +69,5 @@
       versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)$',
     },
   ],
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
 }

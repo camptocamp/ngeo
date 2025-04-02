@@ -127,6 +127,7 @@ repos:
     hooks:
       - id: copyright
       - id: workflows-require-timeout
+      - id: canonicalize
   - repo: https://github.com/sbrunner/jsonschema-validator
     rev: 1.0.0
     hooks:
