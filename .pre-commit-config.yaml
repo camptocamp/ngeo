@@ -123,7 +123,7 @@ repos:
     #         - eslint-plugin-lit@1.7.2
     #         - eslint-plugin-wc@1.4.0
   - repo: https://github.com/sbrunner/hooks
-    rev: 1.4.0
+    rev: 1.4.1
     hooks:
       - id: copyright
       - id: workflows-require-timeout
