@@ -11,7 +11,7 @@
     'github>camptocamp/gs-renovate-config-preset:shellcheck.json5#1.0.1',
   ],
   separateMultipleMajor: true,
-  baseBranches: ['master', '2.7', '2.8'],
+  baseBranches: ['master', '2.7', '2.8', '2.9'],
   customManagers: [
     {
       fileMatch: ['^ci/applications\\-versions\\.yaml$'],
