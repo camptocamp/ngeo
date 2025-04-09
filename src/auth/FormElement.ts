@@ -87,7 +87,7 @@ export default class GmfAuthForm extends GmfBaseElement {
       }),
     );
 
-    window.addEventListener('locationchange', () => {
+    window.addEventListener('popstate', () => {
       this.currentApplicationUrl = window.location.href;
       this._updateOpenIdConnectUrl();
     });
@@ -111,7 +111,7 @@ export default class GmfAuthForm extends GmfBaseElement {
   }
 
   _updateOpenIdConnectUrl(): void {
-    const applicationUrl = this.loginInfoMessage ? this.currentApplicationUrl : this.initialApplicationUrl;
+    const applicationUrl = this.loginInfoMessage ? this.initialApplicationUrl : this.currentApplicationUrl;
     const params = new URLSearchParams({
       came_from: applicationUrl,
     });
