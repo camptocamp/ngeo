@@ -178,6 +178,8 @@ jobs:
           fetch-depth: 0
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
+      - run: git rm -rf ${{ github.ref_name }} || true
+        if: env.HAS_SECRETS == 'HAS_SECRETS'
       - uses: actions/download-artifact@v2
         with:
           name: gh-pages
