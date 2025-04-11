@@ -1,7 +1,7 @@
 LocationFactory.$inject = ['$rootScope', '$window'];
 // The MIT License (MIT)
 //
-// Copyright (c) 2014-2024 Camptocamp SA
+// Copyright (c) 2014-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -88,6 +88,7 @@ export function StatemanagerLocation(location, history) {
 function replaceState(history, state) {
   try {
     history.replaceState(null, '', state);
+    window.dispatchEvent(new PopStateEvent('popstate', {state: state}));
   } catch (error) {
     // replaceState fails on some browser if the domain in the state
     // is not the same as location.origin
