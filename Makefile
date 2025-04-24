@@ -74,6 +74,9 @@ else
 endif
 
 
+export NODE_OPTIONS=--openssl-legacy-provider
+
+
 # Disabling Make built-in rules to speed up execution time
 .SUFFIXES:
 
