@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2023 Camptocamp SA
+// Copyright (c) 2015-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -357,7 +357,7 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
     serverType,
     type: 'wms',
     opacity: this.getOpacityOrInherited_(layer),
-    version: params.VERSION,
+    version: params.VERSION || url_url.searchParams.get('VERSION') || undefined,
     useNativeAngle: this.printNativeAngle_,
     styles: params.STYLES ? params.STYLES.split(',') : [''],
   };
