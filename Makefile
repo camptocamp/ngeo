@@ -74,6 +74,9 @@ else
 endif
 
 
+export NODE_OPTIONS=--openssl-legacy-provider
+
+
 # Disabling Make built-in rules to speed up execution time
 .SUFFIXES:
 
@@ -333,7 +336,7 @@ contribs/dist: .build/build-dll.timestamp
 	touch $@
 
 .build/node_modules.timestamp: package.json
-	NODE_GYP_FORCE_PYTHON=/usr/bin/python npm install || npm install --ignore-scripts
+	NODE_GYP_FORCE_PYTHON=/usr/bin/python3 npm install || npm install --ignore-scripts
 	# Installed from peer dependency from ol-layerswitcher and that breaks our types
 	rm -rf ./node_modules/@types/openlayers
 	mkdir -p $(dir $@)
