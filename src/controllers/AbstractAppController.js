@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Camptocamp SA
+// Copyright (c) 2015-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -20,7 +20,7 @@
 // CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import 'jquery';
-import angular from 'angular';
+import angular, {element} from 'angular';
 import 'angular-gettext';
 import 'angular-dynamic-locale';
 import bootstrap from 'gmf/controllers/bootstrap';
@@ -64,7 +64,6 @@ import ngeoMapFeatureOverlayMgr from 'ngeo/map/FeatureOverlayMgr';
 
 import storeMap from 'gmfapi/store/map';
 import user, {UserState, loginMessageRequired} from 'gmfapi/store/user';
-import i18next from 'i18next';
 import {debounce} from 'gmf/misc/debounce2';
 
 /**
@@ -701,6 +700,10 @@ export function AbstractAppController($scope, $injector, mobile) {
       }
     }
   }
+
+  window.angularCompile = (element) => {
+    $compile(angular.element(element).contents())($scope);
+  };
 }
 
 /**
