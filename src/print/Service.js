@@ -335,7 +335,7 @@ PrintService.prototype.encodeWmsLayer_ = function (arr, layer, url, params) {
   delete customParams.STYLES;
 
   let serverType = undefined;
-  if (params.SERVERTYPE !== 'arcgis') {
+  if (['mapserver', 'qgisserver', 'geoserver'].includes(params.SERVERTYPE)) {
     serverType = params.SERVERTYPE;
   }
 
