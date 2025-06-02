@@ -22,6 +22,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const devMode = process.env.NODE_ENV !== 'production';
 
@@ -155,6 +156,8 @@ module.exports = function (config) {
       contextRegExp: /i18next-http-backend\/esm$/,
     }),
   );
+
+  plugins.push(new NodePolyfillPlugin());
 
   return {
     context: path.resolve(__dirname, '../'),
