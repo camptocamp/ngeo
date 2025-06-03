@@ -1,4 +1,5 @@
 {
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
   'extends': [
     'github>camptocamp/gs-renovate-config-preset:base.json5#1.1.2',
     'github>camptocamp/gs-renovate-config-preset:group.json5#1.1.2',
@@ -59,12 +60,6 @@
       automerge: true,
       separateMultipleMajor: true,
     },
-    /** Group Python dependencies */
-    {
-      matchPackageNames: ['python'],
-      groupName: 'python',
-      automerge: true,
-    },
     /** Packages published very recently are not pushed to stabilization branches for security reasons */
     {
       matchBaseBranches: ['/^[0-9]+\\.[0-9]+$/'],
@@ -81,6 +76,12 @@
       matchFileNames: ['.python-version'],
       versioning: 'regex:^(?<major>\\d+)\\.(?<minor>\\d+)$',
     },
+    /** Group Python dependencies */
+    {
+      matchManagers: ['github-actions'],
+      matchDepTypes: ['python-version'],
+      groupName: 'python',
+      automerge: true,
+    },
   ],
-  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
 }
