@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2024 Camptocamp SA
+// Copyright (c) 2021-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -80,6 +80,10 @@ export interface User {
    * The name of the user.
    */
   username: string;
+  /**
+   * The user name to display in the UI.
+   */
+  display_name: string;
   /**
    * The one-time-password Key
    */
@@ -214,6 +218,7 @@ export class UserModel {
         is_password_changed: null,
         roles: null,
         username: null,
+        display_name: null,
         otp_key: null,
         otp_uri: null,
         two_factor_totp_secret: null,
