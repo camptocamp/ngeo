@@ -1,4 +1,4 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/camptocamp/c2cciutils/1.6/c2cciutils/schema-applications.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/camptocamp/c2cciutils/1.7.3/c2cciutils/schema-applications.json
 
 transifex/cli:
   type: tar
