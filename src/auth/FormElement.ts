@@ -180,7 +180,7 @@ export default class GmfAuthForm extends GmfBaseElement {
             <div>
               <div class="form-group">
                 <span>${i18next.t('Logged in as')}</span>
-                <strong>${this.gmfUser.username}</strong>.
+                <strong>${this.gmfUser.display_name || this.gmfUser.username}</strong>.
               </div>
 
               ${this.oidcUserInformationUrl
