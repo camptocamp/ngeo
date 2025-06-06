@@ -95,19 +95,23 @@ export default class GmfAuthForm extends GmfBaseElement {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const loginField = document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement;
+    if (loginField) {
+      loginField.addEventListener('keypress', (event: KeyboardEvent) => {
+        if (event.key == 'Enter') {
+          this.login(event);
+        }
+      });
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const passwordField = document.body.querySelector('input[slot=gmf-auth-password]') as HTMLInputElement;
-
-    loginField.addEventListener('keypress', (event: KeyboardEvent) => {
-      if (event.key == 'Enter') {
-        this.login(event);
-      }
-    });
-    passwordField.addEventListener('keypress', (event: KeyboardEvent) => {
-      if (event.key == 'Enter') {
-        this.login(event);
-      }
-    });
+    if (passwordField) {
+      passwordField.addEventListener('keypress', (event: KeyboardEvent) => {
+        if (event.key == 'Enter') {
+          this.login(event);
+        }
+      });
+    }
   }
 
   _updateOpenIdConnectUrl(): void {
@@ -499,8 +503,10 @@ export default class GmfAuthForm extends GmfBaseElement {
     this.isLoading = true;
     const errors = [];
     const form = this.renderRoot.querySelector('form') as HTMLFormElement;
-    const loginVal = (document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement).value;
-    const pwdVal = (document.body.querySelector('input[slot=gmf-auth-password]') as HTMLInputElement).value;
+    const loginField = document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement;
+    const passwordField = document.body.querySelector('input[slot=gmf-auth-password]') as HTMLInputElement;
+    const loginVal = loginField ? loginField.value : '';
+    const pwdVal = passwordField ? passwordField.value : '';
 
     if (loginVal === '') {
       errors.push(i18next.t('The username is required.'));
@@ -573,7 +579,8 @@ export default class GmfAuthForm extends GmfBaseElement {
 
     this.isLoading = true;
 
-    const login = (document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement).value;
+    const loginField = document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement;
+    const login = loginField ? loginField.value : '';
 
     if (login === '') {
       this.isLoading = false;
@@ -651,13 +658,17 @@ export default class GmfAuthForm extends GmfBaseElement {
    */
   cleanForm_(): void {
     const form = this.renderRoot.querySelector('form') as HTMLFormElement;
+    form.reset();
 
     const loginField = document.body.querySelector('input[slot=gmf-auth-login]') as HTMLInputElement;
+    if (loginField) {
+      loginField.value = '';
+    }
 
     const passwordField = document.body.querySelector('input[slot=gmf-auth-password]') as HTMLInputElement;
-    form.reset();
-    loginField.value = '';
-    passwordField.value = '';
+    if (passwordField) {
+      passwordField.value = '';
+    }
   }
 
   /**
