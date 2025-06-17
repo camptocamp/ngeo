@@ -93,35 +93,6 @@ repos:
             |examples/googlestreetview.html
             |examples/mapillarystreetview.js
           )$
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
-    hooks:
-      - id: black
-  - repo: https://github.com/PyCQA/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
-  - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.1
-    hooks:
-      - id: autoflake
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.20.0
-    hooks:
-      - id: pyupgrade
-        args:
-          - --py39-plus
-    # - repo: https://github.com/pre-commit/mirrors-eslint
-    #   rev: v8.31.0
-    #   hooks:
-    #     - id: eslint
-    #       additional_dependencies:
-    #         - '@typescript-eslint/eslint-plugin@5.48.0'
-    #         - '@typescript-eslint/parser@5.48.0'
-    #         - eslint@8.31.0
-    #         - eslint-plugin-jsdoc@39.6.4
-    #         - eslint-plugin-lit@1.7.2
-    #         - eslint-plugin-wc@1.4.0
   - repo: https://github.com/sbrunner/hooks
     rev: 1.4.1
     hooks:
@@ -141,3 +112,11 @@ repos:
     rev: 40.60.0
     hooks:
       - id: renovate-config-validator
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.8
+    hooks:
+      - id: ruff-format
+  - repo: https://github.com/sbrunner/python-versions-hook
+    rev: 1.0.0
+    hooks:
+      - id: python-versions
