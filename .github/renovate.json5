@@ -10,21 +10,23 @@
     'github>camptocamp/gs-renovate-config-preset:own.json5#1.1.2',
     'github>camptocamp/gs-renovate-config-preset:json-schema.json5#1.1.2',
     'github>camptocamp/gs-renovate-config-preset:shellcheck.json5#1.1.2',
+    'github>camptocamp/gs-renovate-config-preset:python.json5#1.0.1',
+    'github>camptocamp/gs-renovate-config-preset:security.json5#1.0.1',
   ],
   separateMultipleMajor: true,
   baseBranches: ['master', '2.7', '2.8', '2.9'],
   customManagers: [
     {
-      fileMatch: ['^ci/applications\\-versions\\.yaml$'],
       matchStrings: ['(?<depName>[^\\s]+): (?<currentValue>[^\\s]+) # (?<datasource>[^\\s]+)'],
       customType: 'regex',
+      managerFilePatterns: ['/^ci/applications\\-versions\\.yaml$/'],
     },
     {
-      fileMatch: ['^.github/workflows/main\\.yaml$'],
       matchStrings: ["node-version: '(?<currentValue>[^\\s]+).x'"],
       depNameTemplate: 'node',
       datasourceTemplate: 'node',
       customType: 'regex',
+      managerFilePatterns: ['/^.github/workflows/main\\.yaml$/'],
     },
   ],
   packageRules: [
