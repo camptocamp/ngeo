@@ -14,3 +14,10 @@ pull-request-links:
       url: 'https://camptocamp.github.io/ngeo/refs/pull/{pull_request_number}/merge/api/apihelp/apihelp.html'
     - text: API documentation
       url: 'https://camptocamp.github.io/ngeo/refs/pull/{pull_request_number}/merge/apidoc/'
+
+clean:
+  git:
+    - folder: refs/pull/{name}
+      amend: true
+    - folder: refs/heads/{name}
+      amend: true
