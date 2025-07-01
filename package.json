@@ -58,7 +58,7 @@
     "lib": "./lib"
   },
   "dependencies": {
-    "@sentry/browser": "9.24.0",
+    "@sentry/browser": "9.33.0",
     "@trevoreyre/autocomplete-js": "3.0.3",
     "@fortawesome/fontawesome-free": "6.7.2",
     "angular": "1.8.3",
@@ -74,7 +74,7 @@
     "file-saver": "2.0.5",
     "floatthead": "2.2.5",
     "i18next": "24.2.3",
-    "i18next-browser-languagedetector": "8.1.0",
+    "i18next-browser-languagedetector": "8.2.0",
     "i18next-http-backend": "3.0.2",
     "i18next-parser": "9.3.0",
     "jquery": "3.7.1",
@@ -89,7 +89,7 @@
     "moment": "2.30.1",
     "ol-layerswitcher": "4.1.2",
     "ol-mapbox-style": "12.6.1",
-    "proj4": "2.17.0",
+    "proj4": "2.19.5",
     "qruri": "0.0.4",
     "rxjs": "7.8.2",
     "tinycolor2": "1.6.0"
