@@ -592,7 +592,8 @@ export function buildStyle(styleDescriptor) {
  * @typedef {Object} gmfPrintOptions
  * @property {boolean} [scaleInput]
  * @property {OptionsLegendType} [legend] Options used to build the legend.
- * @property {number} [goodnessOfFit]
+ * @property {number} [goodnessOfFit] Sets the part of the label that must sit inside
+ *       the geometry to allow drawing the label. Works only on polygons. GeoTools default is 0.9.
  * @property {string} [defaultLayout]
  * @property {boolean} [rotateMask] True to apply rotation on the mask instead of the map. By default,
  *    the map rotates.
