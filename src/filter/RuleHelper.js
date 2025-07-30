@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -532,11 +532,11 @@ export class RuleHelper {
         endValue = beginValue;
       } else if (operator === rtot.BEGINS) {
         beginValue = moment(literal).format('YYYY-MM-DD');
-        // NOTE: end value is CURRENT + 30 years
-        endValue = moment(literal).add(30, 'years').format('YYYY-MM-DD');
+        // NOTE: end value is CURRENT + 100 years
+        endValue = moment(literal).add(100, 'years').format('YYYY-MM-DD');
       } else if (operator === rtot.ENDS) {
-        // NOTE: begin value is hardcoded to 1970-01-01
-        beginValue = '1970-01-01';
+        // NOTE: begin value is hardcoded to 1800-01-01
+        beginValue = '1800-01-01';
         endValue = moment(literal).format('YYYY-MM-DD');
       }
       if (beginValue && endValue) {
