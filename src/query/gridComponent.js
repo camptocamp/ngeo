@@ -351,6 +351,7 @@ QueryGridController.prototype.updateData_ = function () {
       this.active = this.ngeoQueryResult.pending;
       panels.openFooterPanel('queryresult', {
         state: this.active,
+        noError: true,
       });
       this.pending = this.ngeoQueryResult.pending;
     }
