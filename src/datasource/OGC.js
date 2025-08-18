@@ -922,7 +922,7 @@ export class GmfDatasourceOGC extends ngeoDatasourceDataSource {
    */
   get ogcAttributesWFS() {
     // (1) Collect queryable WFS layer names
-    const wfsLayerNames = []; // that are querayble
+    const wfsLayerNames = []; // that are queryable
     for (const wfsLayer of this.wfsLayers_) {
       if (wfsLayer.queryable) {
         wfsLayerNames.push(wfsLayer.name);

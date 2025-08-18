@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2024 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -131,7 +131,7 @@ export class DatasourceHelper {
       if (createdAttributes) {
         dataSource.setAttributes(createdAttributes);
         getDataSourceAttributesDefer.resolve(createdAttributes);
-      } else {
+      } else if (dataSource.supportsAttributes) {
         // 2) by launching a WFS DescribeFeatureType request, which is
         // only supported if there is one ogcLayer within the data
         // source.
