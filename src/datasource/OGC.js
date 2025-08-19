@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2023 Camptocamp SA
+// Copyright (c) 2017-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -922,7 +922,7 @@ export class GmfDatasourceOGC extends ngeoDatasourceDataSource {
    */
   get ogcAttributesWFS() {
     // (1) Collect queryable WFS layer names
-    const wfsLayerNames = []; // that are querayble
+    const wfsLayerNames = []; // that are queryable
     for (const wfsLayer of this.wfsLayers_) {
       if (wfsLayer.queryable) {
         wfsLayerNames.push(wfsLayer.name);
