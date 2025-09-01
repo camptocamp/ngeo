@@ -58,7 +58,7 @@
     "lib": "./lib"
   },
   "dependencies": {
-    "@sentry/browser": "9.44.0",
+    "@sentry/browser": "9.46.0",
     "@trevoreyre/autocomplete-js": "3.0.3",
     "@fortawesome/fontawesome-free": "6.7.2",
     "angular": "1.8.3",
