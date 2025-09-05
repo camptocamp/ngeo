@@ -1,12 +1,10 @@
 # https://pre-commit.com/hooks.html
 
-ci:
-  autoupdate_schedule: quarterly
-  skip:
-    - copyright
-    - ripsecrets
-
-exclude: ^src/bootstrap-custom\.css\.map$
+exclude: |-
+  (?x)^(
+    src/bootstrap-custom\.css\.map
+    |package-lock\.json
+  )$
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
