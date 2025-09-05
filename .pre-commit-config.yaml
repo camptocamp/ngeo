@@ -1,6 +1,10 @@
 # https://pre-commit.com/hooks.html
 
-exclude: ^src/bootstrap-custom\.css\.map$
+exclude: |-
+  (?x)^(
+    src/bootstrap-custom\.css\.map
+    |package-lock\.json
+  )$
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -30,7 +34,6 @@ repos:
             |examples/measure\.js
             |src/bootstrap-custom\.css\.map
             |buildtools/sgx\.capabilities\.xml
-            |package-lock\.json
           )$
         args:
           - --ignore-words=.github/spell-ignore-words.txt
