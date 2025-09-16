@@ -53,7 +53,7 @@ function main(inputs) {
 if (require.main === module) {
   program.arguments('<files...>');
   program.parse(process.argv);
-  console.log('Compiling the files: ' + program.args.join(' ')); // eslint-disable-line no-console
+  process.stderr.write('Compiling the files: ' + program.args.join(' ') + '\n');
   main(program.args);
 }
 
