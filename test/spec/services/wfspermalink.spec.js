@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -44,7 +44,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       ($provide) => {
         $provide.value(
           'ngeoPermalinkOgcserverUrl',
-          'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy',
+          'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy',
         );
         $provide.value('ngeoWfsPermalinkOptions', {
           wfsTypes: [{featureType: 'fuel'}, {featureType: 'highway'}],
@@ -72,7 +72,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
     let map;
 
     beforeEach(() => {
-      const url = 'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy';
+      const url = 'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy';
       angular.mock.inject((_$httpBackend_) => {
         $httpBackend = _$httpBackend_;
         $httpBackend.when('POST', url).respond(ngeoTestDataMsGMLOutputFuel);
