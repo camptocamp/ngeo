@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -71,7 +71,7 @@ export const setupSyncLayertreeMap = () => {
       .when('GET', 'https://wmts.geo.admin.ch/EPSG/2056/1.0.0/WMTSCapabilities.xml?lang=fr')
       .respond(gmfTestDataThemescapabilities.swisstopo);
     $httpBackend
-      .when('GET', 'https://geomapfish-demo-2-9.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml')
+      .when('GET', 'https://geomapfish-demo-2-10.camptocamp.com/tiles/1.0.0/WMTSCapabilities.xml')
       .respond(gmfTestDataThemescapabilities.demo);
     $httpBackend
       .when('GET', 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml')

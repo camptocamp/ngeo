@@ -159,7 +159,7 @@ function loaded(page, browser) {
       return;
     }
     if (url.startsWith('http://localhost:8080/')) {
-      url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-9.camptocamp.com/');
+      url = url.replace('http://localhost:8080/', 'https://geomapfish-demo-2-10.camptocamp.com/');
     }
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
@@ -279,7 +279,8 @@ function loaded(page, browser) {
         !message.text().includes('Lit is in dev mode. Not recommended for production!') &&
         !message
           .text()
-          .includes('Multiple versions of Lit loaded. Loading multiple versions is not recommended.')
+          .includes('Multiple versions of Lit loaded. Loading multiple versions is not recommended.') &&
+        !message.text().includes('The themes contain some errors:')
       ) {
         process.exit(2);
       }

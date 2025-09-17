@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2024 Camptocamp SA
+// Copyright (c) 2021-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -120,13 +120,13 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
             {
               'name': 'police_stations',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                'https://geomapfish-demo-2-10.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
               ],
             },
             {
               'name': 'post_office',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
+                'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
               ],
             },
           ],
@@ -153,13 +153,13 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
             {
               'name': 'police_stations',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                'https://geomapfish-demo-2-10.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
               ],
             },
             {
               'name': 'post_office',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
+                'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=post_office&SCALE=25000',
               ],
             },
           ],
@@ -186,14 +186,14 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
             {
               'name': 'points',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=points&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&SRCWIDTH=NaN&SRCHEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
+                'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy?ogcserver=QGIS+server&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=points&DPI=254&BBOX=0%2C0&SRS=EPSG%3A3857&SRCWIDTH=NaN&SRCHEIGHT=NaN&ITEMFONTFAMILY=DejaVu%20Sans&ITEMFONTSIZE=8&LAYERFONTFAMILY=DejaVu%20Sans&LAYERFONTSIZE=10',
               ],
               'dpi': 254,
             },
             {
               'name': 'railways',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                'https://geomapfish-demo-2-10.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
               ],
             },
           ],
@@ -222,13 +222,13 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
                 {
                   'name': 'sustenance',
                   'icons': [
-                    'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=sustenance&SCALE=25000',
+                    'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=sustenance&SCALE=25000',
                   ],
                 },
                 {
                   'name': 'entertainment',
                   'icons': [
-                    'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=entertainment&SCALE=25000',
+                    'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=entertainment&SCALE=25000',
                   ],
                 },
               ],
@@ -251,7 +251,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
         {
           'name': 'fuel',
           'icons': [
-            'https://geomapfish-demo-2-9.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=fuel&SCALE=25000',
+            'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy?ogcserver=MapServer&cache_version=cf85fcea5f7a4f6c866fd76a6da3da11&username=admin&FORMAT=image%2Fpng&TRANSPARENT=true&SERVICE=WMS&VERSION=1.1.1&REQUEST=GetLegendGraphic&LAYER=fuel&SCALE=25000',
           ],
         },
       ],
@@ -274,7 +274,7 @@ describe('gmf.print.LegendMapFishPrintV3', () => {
             {
               'name': 'ch.astra.hauptstrassennetz',
               'icons': [
-                'https://geomapfish-demo-2-9.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
+                'https://geomapfish-demo-2-10.camptocamp.com/static/cf85fcea5f7a4f6c866fd76a6da3da11/images/railways.png',
               ],
             },
           ],

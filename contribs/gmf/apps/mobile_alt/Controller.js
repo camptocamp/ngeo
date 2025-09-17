@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015-2024 Camptocamp SA
+// Copyright (c) 2015-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -51,4 +51,5 @@ const appModule = angular.module('Appmobile_alt', [
 
 appModule.controller('AlternativeMobileController', Controller);
 
-export default appModule;
+const appRenovatedModule = angular.module('Appmobile_renovated', [appModule.name]);
+export default appRenovatedModule;

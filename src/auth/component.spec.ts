@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2024 Camptocamp SA
+// Copyright (c) 2021-2025 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -58,7 +58,7 @@ describe('Auth component', () => {
   context('service', () => {
     beforeEach(() => {
       configuration.setConfig({
-        authenticationBaseUrl: 'https://geomapfish-demo-2-9.camptocamp.com/',
+        authenticationBaseUrl: 'https://geomapfish-demo-2-10.camptocamp.com/',
       } as Configuration);
     });
 
