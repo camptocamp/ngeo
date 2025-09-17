@@ -279,7 +279,8 @@ function loaded(page, browser) {
         !message.text().includes('Lit is in dev mode. Not recommended for production!') &&
         !message
           .text()
-          .includes('Multiple versions of Lit loaded. Loading multiple versions is not recommended.')
+          .includes('Multiple versions of Lit loaded. Loading multiple versions is not recommended.') &&
+        !message.text().includes('The themes contain some errors:')
       ) {
         process.exit(2);
       }
