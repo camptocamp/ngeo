@@ -106,7 +106,7 @@ export class ToolButtonFilter extends ToolButtonElement {
 @customElement('gmf-editing-button')
 export class ToolButtonEditing extends ToolButtonElement {
   constructor() {
-    super('editing');
+    super('edit');
   }
 
   render(): TemplateResult {
