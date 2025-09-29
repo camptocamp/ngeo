@@ -168,7 +168,7 @@ export class AbstractDesktopController extends AbstractAPIController {
         this.drawFeatureActive = panel === 'draw';
         this.drawProfilePanelActive = panel === 'profile';
         this.routingPanelActive = panel === 'routing';
-        this.editFeatureActivate = panel === 'edit';
+        this.editFeatureActive = panel === 'editing';
         this.googleStreetViewActive = panel === 'googlestreetview';
         this.mapillaryStreetViewActive = panel === 'mapillary';
         $timeout(() => {}); // this triggered on DOM click, we call $timeout to force Angular digest
