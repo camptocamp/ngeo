@@ -73,5 +73,11 @@
       groupName: 'python',
       automerge: true,
     },
+    /** On the branch 2.7 don't allow to update @types/d3-dispatch */
+    {
+      matchBaseBranches: ['2.7'],
+      matchPackageNames: ['@types/d3-dispatch'],
+      enabled: false,
+    },
   ],
 }
