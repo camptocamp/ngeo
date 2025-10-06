@@ -52,6 +52,7 @@ export default class GmfAuthForm extends GmfBaseElement {
   @state() private allowPasswordChange = false;
   @state() private allowPasswordReset = false;
   @state() private oidcUserInformationUrl = '';
+  @state() private administratorEmail: string | undefined = undefined;
   @state() private changingPassword = false;
   @state() private userMustChangeItsPassword = false;
   @state() private openIdConnectUrl = '';
@@ -128,6 +129,7 @@ export default class GmfAuthForm extends GmfBaseElement {
     this.allowPasswordChange = configuration.gmfAuthenticationConfig.allowPasswordChange;
     this.allowPasswordReset = configuration.gmfAuthenticationConfig.allowPasswordReset;
     this.oidcUserInformationUrl = configuration.gmfAuthenticationConfig.oidcUserInformationUrl;
+    this.administratorEmail = configuration.gmfAuthenticationConfig.administratorEmail;
     this.openIdConnectBaseUrl = configuration.gmfOidcLoginUrl;
     if (configuration.gmfCustomCSS && configuration.gmfCustomCSS.authentication !== undefined) {
       this.customCSS_ = configuration.gmfCustomCSS.authentication;
@@ -280,7 +282,14 @@ export default class GmfAuthForm extends GmfBaseElement {
 
                 ${this.resetPasswordShown
                   ? html` <div class="alert alert-info">
-                      ${i18next.t('A new password has just been sent to you by e-mail.')}
+                      ${this.administratorEmail
+                        ? i18next.t(
+                            "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator at {{email}}.",
+                            {email: this.administratorEmail},
+                          )
+                        : i18next.t(
+                            "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator.",
+                          )}
                     </div>`
                   : ''}
               </div>
