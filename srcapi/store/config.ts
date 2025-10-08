@@ -983,6 +983,10 @@ export type gmfAuthenticationConfig = {
    * The URL of the OIDC server to allows the user to get his profile information.
    */
   oidcUserInformationUrl?: string;
+  /**
+   * The email address of the administrator.
+   */
+  administratorEmail?: string;
 };
 
 /**
