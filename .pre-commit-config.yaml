@@ -54,7 +54,7 @@ repos:
             |examples/svg\.html
           )$
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3.0.3
+    rev: 3.4.0
     hooks:
       - id: editorconfig-checker
         args:
