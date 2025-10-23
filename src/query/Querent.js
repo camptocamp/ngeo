@@ -597,7 +597,7 @@ export class Querent {
       bbox = options.extent;
     }
 
-    // (2) Launch one request per combinaison of data sources
+    // (2) Launch one request per combination of data sources
     const wfsFormat = new olFormatWFS();
     const xmlSerializer = new XMLSerializer();
     let hasAtLeastOneQueryIconPosition = false;
@@ -893,7 +893,7 @@ export class Querent {
       throw new Error('Missing coordinate');
     }
 
-    // (2) Launch one request per combinaison of data sources
+    // (2) Launch one request per combination of data sources
     for (const dataSources of combinedDataSources) {
       let url;
       /** @type {string[]} */

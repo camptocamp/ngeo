@@ -28,7 +28,7 @@ import {appendParams as olUriAppendParams} from 'ol/uri';
  * @typedef {Object} ComparisonFilter
  * @property {string} property The type of operator for the comparison filter.
  * @property {string} operator The name of the property for the comparison filter.
- * @property {string} value The value for the comparison filter that must match the combinaison of
+ * @property {string} value The value for the comparison filter that must match the combination of
  * the operator and property.
  */
 

@@ -23,7 +23,7 @@ import menu from 'ngeo/Menu';
 import ngeoCustomEvent from 'ngeo/CustomEvent';
 
 /**
- * An OpenLayers overlay for features extended from ngeo/Menu.js. Additionally highlightes the chosen feature on menu mouseOver
+ * An OpenLayers overlay for features extended from ngeo/Menu.js. Additionally highlights the chosen feature on menu mouseOver
  *
  * @hidden
  */

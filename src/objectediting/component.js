@@ -1006,7 +1006,7 @@ Controller.prototype.handleSketchFeaturesAdd_ = function (evt) {
  * geometry itself changes but when a new geometry is set to the feature.
  *
  * This happens either when resetting the geometry to null, in which case
- * there's nothing to do here. Otherwise, it happens after the combinaison
+ * there's nothing to do here. Otherwise, it happens after the combination
  * of a sketch geometry with the existing feature geometry. This new geom
  * is pushed in the `geometryChanges_` array.
  */
