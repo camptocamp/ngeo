@@ -63,7 +63,7 @@ export default class {
     } else if (type === 'decimal' || type === 'double') {
       attribute.type = ngeoFormatAttributeType.NUMBER;
       attribute.numType = FormatNumberType.FLOAT;
-    } else if (type === 'integer' || type === 'long') {
+    } else if (type === 'int' || type === 'integer' || type === 'long') {
       attribute.type = ngeoFormatAttributeType.NUMBER;
       attribute.numType = FormatNumberType.INTEGER;
     } else if (type === 'boolean') {
