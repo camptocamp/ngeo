@@ -185,7 +185,13 @@ jobs:
 
       - run: make transifex-send
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
-      - run: git diff
+      - run: git diff --exit-code --patch > /tmp/npm-update.patch; git diff --color
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Apply changes to package.json.patch
+          path: /tmp/npm-update.patch
+          retention-days: 1
+        if: failure()
       - run: buildtools/npm-publish
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
 
