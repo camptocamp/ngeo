@@ -184,7 +184,7 @@
     "parse-absolute-css-unit": "1.0.2",
     "puppeteer": "23.7.0",
     "sass": "1.80.6",
-    "sass-loader": "16.0.5",
+    "sass-loader": "16.0.6",
     "simple-html-tokenizer": "0.5.11",
     "sinon": "19.0.5",
     "start-server-and-test": "2.0.13",
