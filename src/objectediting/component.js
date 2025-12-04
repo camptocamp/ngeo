@@ -721,12 +721,12 @@ Controller.prototype.undoAllChanges_ = function () {
   if (!this.feature) {
     throw new Error('Missing feature');
   }
-  const clone = cloneGeometry(this.geometryChanges_[0]);
-  if (!clone) {
-    throw new Error('Missing clone');
+  // It should not return an error if there is no geometry was added yet on a new feature
+  if (this.geometryChanges_[0]) {
+    const clone = cloneGeometry(this.geometryChanges_[0]);
+    this.feature.setGeometry(clone);
+    this.resetGeometryChanges_();
   }
-  this.feature.setGeometry(clone);
-  this.resetGeometryChanges_();
   this.dirty = false;
   this.setFeatureStyle_();
 };
