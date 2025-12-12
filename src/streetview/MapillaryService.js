@@ -172,7 +172,7 @@ export default class MapillaryService extends StreetviewService {
    */
   searchImage_(bbox) {
     const baseUrl = `${MLY_METADATA_ENDPOINT}/images`;
-    const path = `${baseUrl}?access_token=${this.accessToken_}&fields=id&bbox=${bbox}&limit=1`;
+    const path = `${baseUrl}?access_token=${this.accessToken_}&fields=id&bbox=${bbox}`;
     return this.$http_.get(path).then(
       /**
        * @param {any} response object.
