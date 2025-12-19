@@ -188,7 +188,7 @@
     "simple-html-tokenizer": "0.5.11",
     "sinon": "19.0.5",
     "start-server-and-test": "2.0.13",
-    "storybook": "8.4.1",
+    "storybook": "8.6.15",
     "strip-bom": "5.0.0",
     "svgo": "3.3.2",
     "svgo-loader": "4.0.0",
