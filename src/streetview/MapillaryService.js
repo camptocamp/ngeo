@@ -206,7 +206,6 @@ export default class MapillaryService extends StreetviewService {
       ['access_token', this.accessToken_],
       ['fields', 'id'],
       ['bbox', bbox],
-      ['limit', '1'],
     ]);
     if (this.organizationId) {
       params.append('organization_id', this.organizationId);
