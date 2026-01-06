@@ -22,6 +22,9 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 5
 
+    permissions:
+      contents: read
+
     steps:
       - run: 'false'
         if: github.event.head_commit.message == '[skip ci] Add instructions to finish the backport.'
@@ -34,6 +37,10 @@ jobs:
 
     env:
       PATH: /bin:/usr/bin:/usr/local/bin:/home/runner/.local/bin
+
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: GitHub event
@@ -60,13 +67,13 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 18.x
+          node-version-file: .nvmrc
 
       - uses: camptocamp/initialise-gopass-summon-action@v2
         with:
           ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
           github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-          patterns: npm transifex
+          patterns: transifex
         if: env.HAS_SECRETS == 'HAS_SECRETS'
       - run: gopass show gs/ci/test-mask
         if: env.HAS_SECRETS == 'HAS_SECRETS'
@@ -182,8 +189,6 @@ jobs:
       - run: make transifex-send
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: git diff
-      - run: buildtools/npm-publish
-        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
 
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
@@ -198,6 +203,13 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
           GITHUB_SHA_: ${{ steps.sha.outputs.sha }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24.x
+          registry-url: https://registry.npmjs.org
+      - run: buildtools/npm-publish
+        if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
 
       - name: Notify c2cgeoportal
         run: >
@@ -232,6 +244,9 @@ jobs:
     concurrency: gh-pages-push
     needs:
       - main
+
+    permissions:
+      contents: write
 
     steps:
       - name: GitHub event
