@@ -4,6 +4,6 @@ htmlmin==0.1.12
 Mako==1.2.4
 requests==2.32.5
 polib==1.1.1
-urllib3==2.6.2 # not directly required, pinned by Snyk to avoid a vulnerability
+urllib3==2.6.3 # not directly required, pinned by Snyk to avoid a vulnerability
 certifi>=2022.12.7 # not directly required, pinned by Snyk to avoid a vulnerability
 idna>=3.7 # not directly required, pinned by Snyk to avoid a vulnerability
