@@ -1,13 +1,14 @@
 WfsPermalinkService.$inject = [
   '$http',
-  'ngeoPermalinkOgcserverUrl',
   'ngeoQueryResult',
   'ngeoWfsPermalinkOptions',
   'gmfFitOptions',
+  '$injector',
 ];
+
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2025 Camptocamp SA
+// Copyright (c) 2016-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -112,32 +113,36 @@ import olFormatWFS from 'ol/format/WFS';
  *
  * @class
  * @param {angular.IHttpService} $http Angular $http service.
- * @param {import('ngeo/options').ngeoPermalinkOgcserverUrl} ngeoPermalinkOgcserverUrl URL to the WFS server
  * @param {QueryResult} ngeoQueryResult The ngeo query result service.
  * @param {import('ngeo/options').ngeoWfsPermalinkOptions} ngeoWfsPermalinkOptions The options to
  *     configure the ngeo wfs permalink service with.
  * @param {import('ngeo/options').gmfFitOptions} gmfFitOptions The fit options.
+ * @param {angular.auto.IInjectorService} $injector Injector.
  * @ngdoc service
  * @ngname ngeoWfsPermalink
  */
 export function WfsPermalinkService(
   $http,
-  ngeoPermalinkOgcserverUrl,
   ngeoQueryResult,
   ngeoWfsPermalinkOptions,
   gmfFitOptions,
+  $injector,
 ) {
   const options = ngeoWfsPermalinkOptions;
-
-  /**
-   * @type {import('ngeo/options').ngeoPermalinkOgcserverUrl}
-   */
-  this.url_ = ngeoPermalinkOgcserverUrl;
 
   /**
    * @type {number}
    */
   this.maxFeatures_ = options.maxFeatures !== undefined ? options.maxFeatures : 50;
+
+  /**
+   * @type {angular.auto.IInjectorService}
+   */
+  this.$injector_ = $injector;
+
+  /**
+   * @type {import('ngeo/options').gmfFitOptions}
+   */
   this._gmfFitOptions = gmfFitOptions;
 
   /**
@@ -191,10 +196,6 @@ WfsPermalinkService.prototype.clear = function () {
  * @param {number} [zoomLevel] The level to zoom on when recentering on features.
  */
 WfsPermalinkService.prototype.issue = function (queryData, map, zoomLevel = undefined) {
-  console.assert(
-    this.url_,
-    'url is not set. to use the wfs permalink service, set the value `ngeoWfsPermalinkOptions`',
-  );
   this.clearResult_();
   const typeName = queryData.wfsType;
   if (!this.wfsTypes_.hasOwnProperty(typeName)) {
@@ -238,7 +239,14 @@ WfsPermalinkService.prototype.issueRequest_ = function (
       'Content-Type': 'text/xml; charset=UTF-8',
     },
   };
-  this.$http_.post(this.url_, featureRequest, config).then((response) => {
+  const urlName = wfsType.urlName !== undefined ? wfsType.urlName : 'ngeoPermalinkOgcserverUrl';
+  if (!this.$injector_.has(urlName)) {
+    console.error(
+      `The URL '${urlName}' is not defined in the dynamic variables, You should add it in the vars.yaml.`,
+    );
+    return;
+  }
+  this.$http_.post(this.$injector_.get(urlName), featureRequest, config).then((response) => {
     const features = wfsFormat.readFeatures(response.data);
     if (features.length == 0) {
       return;
