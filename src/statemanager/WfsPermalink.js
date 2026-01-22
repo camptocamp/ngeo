@@ -85,7 +85,18 @@ import olFormatWFS from 'ol/format/WFS';
  *      wfsTypes:
  *        - featureType: <featureType>
  *          label: <attribute used as label>
+ *          featureNS: <feature namespace> (optional, defaults to defaultFeatureNS)
+ *          featurePrefix: <feature prefix> (optional, defaults to defaultFeaturePrefix)
+ *          urlName: <injector name for WFS URL> (optional, defaults to 'ngeoPermalinkOgcserverUrl')
+ *          ogcServer: <OGC server name> (optional, used to apply attribute aliases from the OGC server)
  *        - ...
+ *      defaultFeatureNS: <default feature namespace>
+ *      defaultFeaturePrefix: <default feature prefix>
+ *      maxFeatures: <max features to retrieve> (optional, defaults to 50)
+ *      pointRecenterZoom: <zoom level for point features> (optional)
+ *
+ * For ``featureNS`` and ``featurePrefix`` have a look on the OpenLayers documentation:
+ * https://openlayers.org/en/latest/apidoc/module-ol_format_WFS-WFS.html#writeGetFeature
  *
  * Parameters:
  *
