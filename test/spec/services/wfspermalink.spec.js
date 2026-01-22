@@ -116,6 +116,235 @@ describe('ngeo.statemanager.WfsPermalink', () => {
     });
   });
 
+  describe('#issue with OGC server alias', () => {
+    /** @type {angular.IHttpBackendService} */
+    let $httpBackend;
+    /** @type {import('ol/Map').default} */
+    let map;
+    /** @type {import('gmf/theme/Themes').ThemesService} */
+    let gmfThemes;
+
+    beforeEach(() => {
+      const url = 'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy';
+      angular.mock.inject((_$httpBackend_, _gmfThemes_) => {
+        $httpBackend = _$httpBackend_;
+        gmfThemes = _gmfThemes_;
+        $httpBackend.when('POST', url).respond(ngeoTestDataMsGMLOutputFuel);
+      });
+
+      const projection = olProj.get('EPSG:2056');
+      projection.setExtent([2485869.5728, 1076443.1884, 2837076.5648, 1299941.7864]);
+
+      map = new olMap({
+        layers: [],
+        view: new olView({
+          projection: projection,
+          resolutions: [200, 100, 50, 20, 10, 5, 2.5, 2, 1, 0.5],
+          center: [2537635, 1152640],
+          zoom: 0,
+        }),
+      });
+    });
+
+    afterEach(() => {
+      $httpBackend.verifyNoOutstandingExpectation();
+      $httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('applies property aliases when ogcServer is specified', (done) => {
+      // Mock the ogcServers response with attribute aliases
+      const mockOgcServers = {
+        'test-server': {
+          attributes: {
+            'fuel': {
+              'osm_id': {
+                alias: 'id',
+                namespace: 'test',
+                type: 'string',
+              },
+              'name': {
+                alias: 'station_name',
+                namespace: 'test',
+                type: 'string',
+              },
+            },
+          },
+        },
+      };
+
+      spyOn(gmfThemes, 'getOgcServersObject').and.returnValue(Promise.resolve(mockOgcServers));
+
+      // Update the wfsType to use ogcServer
+      ngeoWfsPermalink.wfsTypes_['fuel'].ogcServer = 'test-server';
+
+      const queryData = {
+        'wfsType': 'fuel',
+        'showFeatures': true,
+        'filterGroups': [
+          {
+            'filters': [{'property': 'osm_id', 'condition': '1420918679'}],
+          },
+        ],
+      };
+
+      ngeoWfsPermalink.issue(queryData, map);
+      $httpBackend.flush();
+
+      // Wait for the promise to resolve
+      setTimeout(() => {
+        const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
+        expect(features.length).toBe(1);
+
+        const feature = features[0];
+        // Check that the original property no longer exists
+        expect(feature.get('osm_id')).toBeUndefined();
+        // Check that the aliased property exists
+        expect(feature.get('id')).toBeDefined();
+
+        ngeoWfsPermalink.clear();
+        done();
+      }, 100);
+    });
+
+    it('handles missing OGC server gracefully', (done) => {
+      // Mock the ogcServers response without the specified server
+      const mockOgcServers = {
+        'other-server': {
+          attributes: {},
+        },
+      };
+
+      spyOn(gmfThemes, 'getOgcServersObject').and.returnValue(Promise.resolve(mockOgcServers));
+      spyOn(console, 'error');
+
+      // Update the wfsType to use a non-existent ogcServer
+      ngeoWfsPermalink.wfsTypes_['fuel'].ogcServer = 'missing-server';
+
+      const queryData = {
+        'wfsType': 'fuel',
+        'showFeatures': true,
+        'filterGroups': [
+          {
+            'filters': [{'property': 'osm_id', 'condition': '1420918679'}],
+          },
+        ],
+      };
+
+      ngeoWfsPermalink.issue(queryData, map);
+      $httpBackend.flush();
+
+      // Wait for the promise to resolve
+      setTimeout(() => {
+        // Features should still be displayed (graceful degradation)
+        const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
+        expect(features.length).toBe(1);
+
+        const feature = features[0];
+        // Original property names should be preserved
+        expect(feature.get('osm_id')).toBeDefined();
+
+        // Error should be logged
+        expect(console.error).toHaveBeenCalledWith(
+          jasmine.stringContaining('OGC server missing-server not found'),
+        );
+
+        ngeoWfsPermalink.clear();
+        done();
+      }, 100);
+    });
+
+    it('handles promise rejection gracefully', (done) => {
+      // Mock the ogcServers promise to reject
+      spyOn(gmfThemes, 'getOgcServersObject').and.returnValue(
+        Promise.reject(new Error('Failed to load OGC servers')),
+      );
+      spyOn(console, 'error');
+
+      // Update the wfsType to use ogcServer
+      ngeoWfsPermalink.wfsTypes_['fuel'].ogcServer = 'test-server';
+
+      const queryData = {
+        'wfsType': 'fuel',
+        'showFeatures': true,
+        'filterGroups': [
+          {
+            'filters': [{'property': 'osm_id', 'condition': '1420918679'}],
+          },
+        ],
+      };
+
+      ngeoWfsPermalink.issue(queryData, map);
+      $httpBackend.flush();
+
+      // Wait for the promise to reject and handle
+      setTimeout(() => {
+        // Features should still be displayed (graceful degradation)
+        const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
+        expect(features.length).toBe(1);
+
+        const feature = features[0];
+        // Original property names should be preserved
+        expect(feature.get('osm_id')).toBeDefined();
+
+        // Error should be logged
+        expect(console.error).toHaveBeenCalledWith(
+          jasmine.stringContaining('Error when getting ogc servers'),
+        );
+
+        ngeoWfsPermalink.clear();
+        done();
+      }, 100);
+    });
+
+    it('does not apply aliases when no attributes are defined for the feature type', (done) => {
+      // Mock the ogcServers response without attributes for the feature type
+      const mockOgcServers = {
+        'test-server': {
+          attributes: {
+            'other-type': {
+              'id': {
+                alias: 'identifier',
+                namespace: 'test',
+                type: 'string',
+              },
+            },
+          },
+        },
+      };
+
+      spyOn(gmfThemes, 'getOgcServersObject').and.returnValue(Promise.resolve(mockOgcServers));
+
+      // Update the wfsType to use ogcServer
+      ngeoWfsPermalink.wfsTypes_['fuel'].ogcServer = 'test-server';
+
+      const queryData = {
+        'wfsType': 'fuel',
+        'showFeatures': true,
+        'filterGroups': [
+          {
+            'filters': [{'property': 'osm_id', 'condition': '1420918679'}],
+          },
+        ],
+      };
+
+      ngeoWfsPermalink.issue(queryData, map);
+      $httpBackend.flush();
+
+      // Wait for the promise to resolve
+      setTimeout(() => {
+        const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
+        expect(features.length).toBe(1);
+
+        const feature = features[0];
+        // Original property names should be preserved (no aliases applied)
+        expect(feature.get('osm_id')).toBeDefined();
+
+        ngeoWfsPermalink.clear();
+        done();
+      }, 100);
+    });
+  });
+
   describe('#createFilters_', () => {
     /**
      * @param {import('ol/format/filter/Filter').default} filter1
