@@ -4,6 +4,7 @@ WfsPermalinkService.$inject = [
   'ngeoWfsPermalinkOptions',
   'gmfFitOptions',
   '$injector',
+  'gmfThemes',
 ];
 
 // The MIT License (MIT)
@@ -118,6 +119,7 @@ import olFormatWFS from 'ol/format/WFS';
  *     configure the ngeo wfs permalink service with.
  * @param {import('ngeo/options').gmfFitOptions} gmfFitOptions The fit options.
  * @param {angular.auto.IInjectorService} $injector Injector.
+ * @param {import("gmf/theme/Themes.js").ThemesService} gmfThemes The gmf Themes service.
  * @ngdoc service
  * @ngname ngeoWfsPermalink
  */
@@ -127,6 +129,7 @@ export function WfsPermalinkService(
   ngeoWfsPermalinkOptions,
   gmfFitOptions,
   $injector,
+  gmfThemes,
 ) {
   const options = ngeoWfsPermalinkOptions;
 
@@ -178,6 +181,11 @@ export function WfsPermalinkService(
    * @type {QueryResult}
    */
   this.result_ = ngeoQueryResult;
+
+  /**
+   * @type {import("gmf/theme/Themes.js").ThemesService}
+   */
+  this._gmfThemes = gmfThemes;
 }
 
 /**
@@ -242,13 +250,13 @@ WfsPermalinkService.prototype.issueRequest_ = function (
   const urlName = wfsType.urlName !== undefined ? wfsType.urlName : 'ngeoPermalinkOgcserverUrl';
   if (!this.$injector_.has(urlName)) {
     console.error(
-      `The URL '${urlName}' is not defined in the dynamic variables, You should add it in the vars.yaml.`,
+      `WFS Permalink: The URL '${urlName}' is not defined in the dynamic variables. You should add it in the vars.yaml.`,
     );
     return;
   }
   this.$http_.post(this.$injector_.get(urlName), featureRequest, config).then((response) => {
     const features = wfsFormat.readFeatures(response.data);
-    if (features.length == 0) {
+    if (features.length === 0) {
       return;
     }
 
@@ -270,15 +278,59 @@ WfsPermalinkService.prototype.issueRequest_ = function (
 
     // then show if requested
     if (showFeatures) {
-      const resultSource = /** @type {QueryResultSource} */ {
-        'features': features,
-        'id': wfsType.featureType,
-        'identifierAttributeField': wfsType.label,
-        'label': wfsType.featureType,
-        'pending': false,
+      const addResult = () => {
+        const resultSource = /** @type {QueryResultSource} */ ({
+          features,
+          id: wfsType.featureType,
+          identifierAttributeField: wfsType.label,
+          label: wfsType.featureType,
+          pending: false,
+        });
+        this.result_.sources.push(resultSource);
+        this.result_.total = features.length;
       };
-      this.result_.sources.push(resultSource);
-      this.result_.total = features.length;
+
+      if (wfsType.ogcServer) {
+        this._gmfThemes
+          .getOgcServersObject()
+          .then((ogcServers) => {
+            const ogcServer = ogcServers[wfsType.ogcServer];
+            if (ogcServer) {
+              features.forEach((feature) => {
+                // Use properties aliases if any
+                const attributes = ogcServer.attributes && ogcServer.attributes[wfsType.featureType];
+                if (attributes) {
+                  const properties = feature.getProperties();
+                  Object.entries(attributes).forEach(([name, attribute]) => {
+                    if (attribute.alias && name !== attribute.alias) {
+                      const newValue = properties[name];
+                      feature.unset(name, /* silent */ true);
+                      feature.set(attribute.alias, newValue, /* silent */ true);
+                    }
+                  });
+                }
+              });
+            } else {
+              console.error(
+                `WFS Permalink: OGC server ${wfsType.ogcServer} not found. ` +
+                  `Features will be displayed with original property names instead of aliases.`,
+              );
+            }
+          })
+          .catch((err) => {
+            console.error(
+              `WFS Permalink: Error when getting ogc servers: ${err}. ` +
+                `Features will be displayed with original property names instead of aliases.`,
+            );
+          })
+          .finally(() => {
+            // Features are displayed even if alias resolution fails (graceful degradation)
+            // This ensures users can still see the features, just with original property names
+            addResult();
+          });
+      } else {
+        addResult();
+      }
     }
   });
 };
