@@ -123,12 +123,15 @@ describe('ngeo.statemanager.WfsPermalink', () => {
     let map;
     /** @type {import('gmf/theme/Themes').ThemesService} */
     let gmfThemes;
+    /** @type {angular.IRootScopeService} */
+    let $rootScope;
 
     beforeEach(() => {
       const url = 'https://geomapfish-demo-2-10.camptocamp.com/mapserv_proxy';
-      angular.mock.inject((_$httpBackend_, _gmfThemes_) => {
+      angular.mock.inject((_$httpBackend_, _gmfThemes_, _$rootScope_) => {
         $httpBackend = _$httpBackend_;
         gmfThemes = _gmfThemes_;
+        $rootScope = _$rootScope_;
         $httpBackend.when('POST', url).respond(ngeoTestDataMsGMLOutputFuel);
       });
 
@@ -190,7 +193,10 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       ngeoWfsPermalink.issue(queryData, map);
       $httpBackend.flush();
 
-      // Wait for the promise to resolve
+      // Use $rootScope.$apply to trigger promise resolution
+      $rootScope.$apply();
+
+      // Give the promise chain time to complete
       setTimeout(() => {
         const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
         expect(features.length).toBe(1);
@@ -203,7 +209,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
         ngeoWfsPermalink.clear();
         done();
-      }, 100);
+      }, 0);
     });
 
     it('handles missing OGC server gracefully', (done) => {
@@ -233,7 +239,10 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       ngeoWfsPermalink.issue(queryData, map);
       $httpBackend.flush();
 
-      // Wait for the promise to resolve
+      // Use $rootScope.$apply to trigger promise resolution
+      $rootScope.$apply();
+
+      // Give the promise chain time to complete
       setTimeout(() => {
         // Features should still be displayed (graceful degradation)
         const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
@@ -250,7 +259,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
         ngeoWfsPermalink.clear();
         done();
-      }, 100);
+      }, 0);
     });
 
     it('handles promise rejection gracefully', (done) => {
@@ -276,7 +285,10 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       ngeoWfsPermalink.issue(queryData, map);
       $httpBackend.flush();
 
-      // Wait for the promise to reject and handle
+      // Use $rootScope.$apply to trigger promise resolution
+      $rootScope.$apply();
+
+      // Give the promise chain time to complete
       setTimeout(() => {
         // Features should still be displayed (graceful degradation)
         const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
@@ -293,7 +305,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
         ngeoWfsPermalink.clear();
         done();
-      }, 100);
+      }, 0);
     });
 
     it('does not apply aliases when no attributes are defined for the feature type', (done) => {
@@ -330,7 +342,10 @@ describe('ngeo.statemanager.WfsPermalink', () => {
       ngeoWfsPermalink.issue(queryData, map);
       $httpBackend.flush();
 
-      // Wait for the promise to resolve
+      // Use $rootScope.$apply to trigger promise resolution
+      $rootScope.$apply();
+
+      // Give the promise chain time to complete
       setTimeout(() => {
         const features = ngeoQueryResult.sources[ngeoQueryResult.sources.length - 1].features;
         expect(features.length).toBe(1);
@@ -341,7 +356,7 @@ describe('ngeo.statemanager.WfsPermalink', () => {
 
         ngeoWfsPermalink.clear();
         done();
-      }, 100);
+      }, 0);
     });
   });
 
