@@ -322,13 +322,21 @@ WfsPermalinkService.prototype.issueRequest_ = function (
                 }
               });
             } else {
-              console.error(`WFS Permalink: OGC server ${wfsType.ogcServer} not found.`);
+              console.error(
+                `WFS Permalink: OGC server ${wfsType.ogcServer} not found. ` +
+                  `Features will be displayed with original property names instead of aliases.`,
+              );
             }
           })
           .catch((err) => {
-            console.error(`WFS Permalink: Error when getting ogc servers: ${err}.`);
+            console.error(
+              `WFS Permalink: Error when getting ogc servers: ${err}. ` +
+                `Features will be displayed with original property names instead of aliases.`,
+            );
           })
           .finally(() => {
+            // Features are displayed even if alias resolution fails (graceful degradation)
+            // This ensures users can still see the features, just with original property names
             addResult();
           });
       } else {
