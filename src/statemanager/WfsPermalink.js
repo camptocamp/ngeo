@@ -98,6 +98,23 @@ import olFormatWFS from 'ol/format/WFS';
  * For ``featureNS`` and ``featurePrefix`` have a look on the OpenLayers documentation:
  * https://openlayers.org/en/latest/apidoc/module-ol_format_WFS-WFS.html#writeGetFeature
  *
+ * Example of configuration with alternate OGC Server:
+ *
+ * vars:
+ *   interfaces_config:
+ *     <interface name>:
+ *       constants:
+ *         ngeoWfsPermalinkOptions:
+ *           wfsTypes:
+ *             - featureType: type_from_another_server
+ *               urlName: myCustomOgcServerUrl
+ *               ogcServer: My OGC Server  # Used to find aliases for attributes
+ *       routes:
+ *         myCustomOgcServerUrl:
+ *           name: mapserverproxy
+ *           params:
+ *             ogcserver: My OGC Server
+ *
  * Parameters:
  *
  * - ``wfs_layer`` tells what layer will be queried
