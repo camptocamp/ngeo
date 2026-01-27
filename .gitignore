@@ -22,4 +22,4 @@
 /cypress/screenshots/
 /cypress/video
 /locales
-/.idea
+/deps.js
