@@ -165,6 +165,11 @@ export function NumberFilter($locale) {
     } else if (number === 0) {
       // 0 will creates infinity values
       return '0';
+    } else if (number === null || number === undefined) {
+      return '';
+    } else if (isNaN(number) || !isFinite(number)) {
+      console.info('ngeoNumber: could not format number ' + number);
+      return '';
     }
     const sign = number < 0;
     number = Math.abs(number);
