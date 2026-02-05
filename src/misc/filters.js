@@ -131,6 +131,7 @@ myModule.filter('ngeoScalify', ScalifyFilter);
  *
  * Arguments:
  * - opt_precision: The used precision, default is 3.
+ * - opt_no_group_sep: If true, omits group separators (e.g., 1234 instead of 1 234). Default is false.
  *
  * Examples:
  *
