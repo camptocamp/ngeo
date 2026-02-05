@@ -137,7 +137,9 @@ myModule.filter('ngeoScalify', ScalifyFilter);
  *      {{1.234 | ngeoNumber}} => 1.23
  *      {{12.34 | ngeoNumber}} => 12.3
  *      {{123.4 | ngeoNumber}} => 123
- *      {{1234 | ngeoNumber}} => 1230
+ *      {{1234 | ngeoNumber}} => 1 230
+ *      {{1234 | ngeoNumber:4}} => 1 234
+ *      {{1234 | ngeoNumber:4:true}} => 1234
  *
  * @param {angular.ILocaleService} $locale Angular locale
  * @returns {formatNumber} Function used to format number into a string.
@@ -150,14 +152,16 @@ export function NumberFilter($locale) {
   /**
    * @param {number} number The number to format.
    * @param {number} [opt_precision] The used precision, default is 3.
+   * @param {number} [opt_no_group_sep] If we don't want group separators.
    * @returns {string} The formatted string.
    */
-  const result = function (number, opt_precision) {
-    const groupSep = formats.GROUP_SEP;
+  const result = function (number, opt_precision, opt_no_group_sep) {
+    const groupSep = opt_no_group_sep ? '' : formats.GROUP_SEP;
     const decimalSep = formats.DECIMAL_SEP;
     if (opt_precision === undefined) {
       opt_precision = 3;
     }
+
     if (number === Infinity) {
       return '\u221e';
     } else if (number === -Infinity) {
@@ -171,13 +175,16 @@ export function NumberFilter($locale) {
       console.info('ngeoNumber: could not format number ' + number);
       return '';
     }
+
     const sign = number < 0;
     number = Math.abs(number);
+
     const nb_decimal = opt_precision - Math.floor(Math.log(number) / Math.log(10)) - 1;
     const factor = Math.pow(10, nb_decimal);
     number = Math.round(number * factor);
     let decimal = '';
     const unit = Math.floor(number / factor);
+
     if (nb_decimal > 0) {
       let str_number = `${number}`;
       // 0 padding
@@ -189,6 +196,7 @@ export function NumberFilter($locale) {
         decimal = decimal.substring(0, decimal.length - 1);
       }
     }
+
     const groups = [];
     let str_unit = `${unit}`;
     while (str_unit.length > 3) {
@@ -197,6 +205,7 @@ export function NumberFilter($locale) {
       str_unit = str_unit.substring(0, index);
     }
     groups.unshift(str_unit);
+
     return (sign ? '-' : '') + groups.join(groupSep) + (decimal.length === 0 ? '' : decimalSep + decimal);
   };
   return result;
