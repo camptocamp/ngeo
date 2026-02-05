@@ -42,9 +42,29 @@ describe('ngeo.misc.AutoProjection', () => {
     result = ngeoAutoProjection.stringToCoordinates(str);
     expect(result).toBeNull();
 
+    str = '2600000,1200000';
+    result = ngeoAutoProjection.stringToCoordinates(str);
+    expect(result).toEqual([2600000, 1200000]);
+
     str = '2600000 1200000';
     result = ngeoAutoProjection.stringToCoordinates(str);
     expect(result).toEqual([2600000, 1200000]);
+
+    str = "2'600'000 1'200'000";
+    result = ngeoAutoProjection.stringToCoordinates(str);
+    expect(result).toEqual([2600000, 1200000]);
+
+    str = '2’600’000 1’200’000';
+    result = ngeoAutoProjection.stringToCoordinates(str);
+    expect(result).toEqual([2600000, 1200000]);
+
+    str = '2600000.123 1200000.123';
+    result = ngeoAutoProjection.stringToCoordinates(str);
+    expect(result).toEqual([2600000.123, 1200000.123]);
+
+    str = '2.600.000 1.200.000';
+    result = ngeoAutoProjection.stringToCoordinates(str);
+    expect(result).toBeNull();
   });
 
   it('Get Projection list from codes', () => {
