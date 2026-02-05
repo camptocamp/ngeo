@@ -35,7 +35,7 @@ import {padNumber} from 'ol/string';
  *
  * Arguments:
  * - opt_precision: The used precision, default is 3.
- * - opt_no_group_sep: If we don't want group separators, default is false.
+ * - opt_no_group_sep: If true, omits group separators (e.g., 1234 instead of 1 234). Default is false.
  *
  * @typedef {function(number, number=, boolean=): string} formatNumber
  */
@@ -153,7 +153,7 @@ export function NumberFilter($locale) {
   /**
    * @param {number} number The number to format.
    * @param {number} [opt_precision] The used precision, default is 3.
-   * @param {boolean} [opt_no_group_sep] If we don't want group separators.
+   * @param {boolean} [opt_no_group_sep] If true, omits group separators (e.g., 1234 instead of 1 234).
    * @returns {string} The formatted string.
    */
   const result = function (number, opt_precision, opt_no_group_sep) {
