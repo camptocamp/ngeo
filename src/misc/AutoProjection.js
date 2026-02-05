@@ -39,11 +39,11 @@ export function AutoProjectionService() {}
  * @returns {?import('ol/coordinate').Coordinate} A coordinate or null if the format is not valid.
  */
 AutoProjectionService.prototype.stringToCoordinates = function (str) {
-  const coords = /([\d.']+)[\s,]+([\d.']+)/.exec(str);
+  const coords = /^([\d.'’]+)[\s,]+([\d.'’]+)$/.exec(str);
   if (coords) {
-    const x = parseFloat(coords[1].replace(/'/g, ''));
-    const y = parseFloat(coords[2].replace(/'/g, ''));
-    if (!isNaN(x) && !isNaN(y)) {
+    const x = parseFloat(coords[1].replace(/['’]/g, ''));
+    const y = parseFloat(coords[2].replace(/['’]/g, ''));
+    if (Number.isFinite(x) && Number.isFinite(y)) {
       return [x, y];
     }
   }
