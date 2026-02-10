@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -39,11 +39,11 @@ export function AutoProjectionService() {}
  * @returns {?import('ol/coordinate').Coordinate} A coordinate or null if the format is not valid.
  */
 AutoProjectionService.prototype.stringToCoordinates = function (str) {
-  const coords = /([\d.']+)[\s,]+([\d.']+)/.exec(str);
+  const coords = /^([\d'’]+(?:\.[\d'’]+)?)[\s,]+([\d'’]+(?:\.[\d'’]+)?)$/.exec(str);
   if (coords) {
-    const x = parseFloat(coords[1].replace(/'/g, ''));
-    const y = parseFloat(coords[2].replace(/'/g, ''));
-    if (!isNaN(x) && !isNaN(y)) {
+    const x = parseFloat(coords[1].replace(/['’]/g, ''));
+    const y = parseFloat(coords[2].replace(/['’]/g, ''));
+    if (Number.isFinite(x) && Number.isFinite(y)) {
       return [x, y];
     }
   }
