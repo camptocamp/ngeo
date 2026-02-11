@@ -8,7 +8,7 @@ QueryWindowController.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2025 Camptocamp SA
+// Copyright (c) 2016-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -130,6 +130,7 @@ const queryWindowComponent = {
   bindings: {
     'draggableContainment': '<?gmfDisplayquerywindowDraggableContainment',
     'desktop': '=gmfDisplayquerywindowDesktop',
+    'map': '<?gmfDisplayquerywindowMap',
   },
   templateUrl: gmfDisplayquerywindowTemplateUrl,
 };
@@ -169,6 +170,11 @@ export function QueryWindowController(
    * @type {boolean}
    */
   this.desktop = false;
+
+  /**
+   * @type {?import('ol/Map').default}
+   */
+  this.map = null;
 
   /**
    * Is the window currently collapsed?
@@ -588,5 +594,26 @@ QueryWindowController.prototype.getCSVHeaderDefinition_ = function (data) {
   );
   return columnDefs;
 };
+
+/**
+ * Zoom to current feature.
+ */
+QueryWindowController.prototype.zoomToCurrentFeature = function () {
+  if (!this.map) {
+    throw new Error('Missing map');
+  }
+  if (this.feature) {
+    const geometry = this.feature.getGeometry();
+    if (!geometry) {
+      throw new Error('Missing geometry');
+    }
+    const size = this.map.getSize();
+    if (!size) {
+      throw new Error('Missing size');
+    }
+    this.map.getView().fit(geometry.getExtent(), {size, maxZoom: this.options.maxRecenterZoom});
+  }
+};
+
 myModule.controller('GmfDisplayquerywindowController', QueryWindowController);
 export default myModule;
