@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2024-2025 Camptocamp SA
+// Copyright (c) 2024-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -147,6 +147,16 @@ export default `<div class="spinner-window" ng-if="ctrl.isLoading">
               </a>
             </li>
           </ul>
+        </div>
+
+        <div ng-show="::ctrl.desktop" class="d-inline">
+          <button
+            class="btn btn-default"
+            title="{{'Zoom to current feature' | translate}}"
+            ng-click="ctrl.zoomToCurrentFeature()"
+          >
+            <i class="fa fa-search-plus"></i>
+          </button>
         </div>
       </div>
 
