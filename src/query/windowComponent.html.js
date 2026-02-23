@@ -148,6 +148,17 @@ export default `<div class="spinner-window" ng-if="ctrl.isLoading">
             </li>
           </ul>
         </div>
+
+        <div ng-show="::ctrl.desktop" class="d-inline">
+          <button
+            type="button"
+            class="zoom-to-current-feature btn btn-default"
+            title="{{'Zoom to current feature' | translate}}"
+            ng-click="ctrl.zoomToCurrentFeature()"
+          >
+            <i class="fa fa-search-plus"></i>
+          </button>
+        </div>
       </div>
 
       <div class="placeholder">
