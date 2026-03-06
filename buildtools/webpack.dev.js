@@ -66,6 +66,18 @@ const svgRule = {
       ],
     },
     {
+      include: /node_modules/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            esModule: false,
+            name: '[name].[ext]',
+          },
+        },
+      ],
+    },
+    {
       use: [
         {
           loader: 'svg-inline-loader',
