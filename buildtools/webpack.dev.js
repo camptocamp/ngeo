@@ -38,7 +38,7 @@ const resourcesRule = {
 
 const svgNodeModulesRule = {
   test: /\.svg$/,
-  include: /node_modules/,
+  include: /node_modules\/.*\/webfonts\//,
   use: [
     {
       loader: 'file-loader',
@@ -52,7 +52,7 @@ const svgNodeModulesRule = {
 
 const svgRule = {
   test: /\.svg$/,
-  exclude: /node_modules/,
+  exclude: /node_modules\/.*\/webfonts\//,
   oneOf: [
     {
       resourceQuery: /url/,
