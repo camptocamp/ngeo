@@ -35,23 +35,8 @@ const resourcesRule = {
   ],
 };
 
-const svgNodeModulesRule = {
-  test: /\.svg$/,
-  include: /node_modules/,
-  use: [
-    {
-      loader: 'file-loader',
-      options: {
-        esModule: false,
-        name: '[name].[hash:6].[ext]',
-      },
-    },
-  ],
-};
-
 const svgRule = {
   test: /\.svg$/,
-  exclude: /node_modules/,
   oneOf: [
     {
       resourceQuery: /url/,
@@ -102,7 +87,7 @@ module.exports = function () {
     },
     plugins: [new webpack.optimize.ModuleConcatenationPlugin()],
     module: {
-      rules: [resourcesRule, svgNodeModulesRule, svgRule],
+      rules: [resourcesRule, svgRule],
     },
     optimization: {
       minimizer: [

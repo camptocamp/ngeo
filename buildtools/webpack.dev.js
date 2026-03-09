@@ -36,23 +36,8 @@ const resourcesRule = {
   ],
 };
 
-const svgNodeModulesRule = {
-  test: /\.svg$/,
-  include: /node_modules/,
-  use: [
-    {
-      loader: 'file-loader',
-      options: {
-        esModule: false,
-        name: '[name].[ext]',
-      },
-    },
-  ],
-};
-
 const svgRule = {
   test: /\.svg$/,
-  exclude: /node_modules/,
   oneOf: [
     {
       resourceQuery: /url/,
@@ -106,7 +91,7 @@ module.exports = function () {
       filename: '[name].js',
     },
     module: {
-      rules: [resourcesRule, svgNodeModulesRule, svgRule],
+      rules: [resourcesRule, svgRule],
     },
   };
 };
