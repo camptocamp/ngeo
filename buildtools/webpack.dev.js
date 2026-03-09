@@ -36,8 +36,23 @@ const resourcesRule = {
   ],
 };
 
+const svgNodeModulesRule = {
+  test: /\.svg$/,
+  include: /node_modules\/.*\/webfonts\//,
+  use: [
+    {
+      loader: 'file-loader',
+      options: {
+        esModule: false,
+        name: '[name].[ext]',
+      },
+    },
+  ],
+};
+
 const svgRule = {
   test: /\.svg$/,
+  exclude: /node_modules\/.*\/webfonts\//,
   oneOf: [
     {
       resourceQuery: /url/,
@@ -91,7 +106,7 @@ module.exports = function () {
       filename: '[name].js',
     },
     module: {
-      rules: [resourcesRule, svgRule],
+      rules: [resourcesRule, svgNodeModulesRule, svgRule],
     },
   };
 };
