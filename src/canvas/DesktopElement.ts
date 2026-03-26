@@ -561,7 +561,7 @@ export default class GmfDesktopCanvas extends BaseElement {
       event.preventDefault();
 
       // Don't move the panel when it is already closed
-      if (!this.showDatapanel_) {
+      if (!this.showDatapanel_ && panelResizeEvent.leftElement.id === 'gmf-app-data-panel') {
         return;
       }
 
