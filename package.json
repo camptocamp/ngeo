@@ -89,7 +89,7 @@
     "moment": "2.30.1",
     "ol-layerswitcher": "4.1.2",
     "ol-mapbox-style": "12.6.1",
-    "proj4": "2.20.3",
+    "proj4": "2.20.4",
     "qruri": "0.0.4",
     "rxjs": "7.8.2",
     "tinycolor2": "1.6.0"
