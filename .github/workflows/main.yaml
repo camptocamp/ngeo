@@ -87,7 +87,7 @@ jobs:
       - run: pre-commit run --all-files --color=always
       - run: git diff --exit-code --patch > /tmp/pre-commit.patch; git diff --color; git reset --hard || true
         if: failure()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Apply pre-commit fix.patch
           path: /tmp/pre-commit.patch
@@ -146,28 +146,28 @@ jobs:
           find . ! -name *-ref.png -type f -exec rm {} \;
         if: env.REGENERATE_EXAMPLES == 'true'
       - run: "[ ${REGENERATE_EXAMPLES} == 'false' ]"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Examples
           path: examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: GMF Examples
           path: contribs/gmf/examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Apps
           path: contribs/gmf/apps
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Examples hosted
           path: .build/examples-hosted
@@ -180,7 +180,7 @@ jobs:
       - run: npm run doc
       - run: npm run build-api
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Npm logs
           path: /home/runner/.npm/_logs
@@ -191,7 +191,7 @@ jobs:
       - run: make transifex-send
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: git diff --exit-code --patch > /tmp/npm-update.patch; git diff --color
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Apply changes to package.json.patch
           path: /tmp/npm-update.patch
@@ -239,7 +239,7 @@ jobs:
           cp -ar .build/storybook gh-pages/storybook
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: gh-pages
           path: gh-pages
@@ -275,7 +275,7 @@ jobs:
 
       - run: git rm -rf ${{ steps.branch.outputs.branch }} || true
         if: env.HAS_SECRETS == 'HAS_SECRETS'
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           name: gh-pages
           path: ${{ steps.branch.outputs.branch }}
