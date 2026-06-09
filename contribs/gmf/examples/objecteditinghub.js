@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2024 Camptocamp SA
+// Copyright (c) 2016-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -276,9 +276,15 @@ MainController.prototype.issueGetFeatures_ = function (gmfLayerNode) {
     if (!this.getFeaturesDeferred_) {
       throw new Error('Missing getFeaturesDeferred');
     }
-    const features =
-      /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
-      new olFormatWFS().readFeatures(response.data);
+    let features = [];
+    try {
+      features =
+        /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
+        new olFormatWFS().readFeatures(response.data);
+    } catch {
+      // Ignore parsing errors (for example WFS exception payloads), keep the
+      // example functional with an empty feature list.
+    }
     this.featuresCache_[id] = features;
     this.getFeaturesDeferred_.resolve();
   });
