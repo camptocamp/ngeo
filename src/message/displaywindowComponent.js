@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2025 Camptocamp SA
+// Copyright (c) 2017-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -22,6 +22,7 @@
 // jquery-ui/ui/widgets/resizable must be imported by your main controller.
 // jquery-ui/ui/widgets/draggable must be imported by your main controller.
 import angular from 'angular';
+import 'angular-gettext';
 import 'angular-sanitize';
 import htmlTemplate from './displaywindowComponent.html';
 
@@ -29,7 +30,7 @@ import htmlTemplate from './displaywindowComponent.html';
  * @type {angular.IModule}
  * @hidden
  */
-const myModule = angular.module('ngeoMessageDisplaywindowComponent', ['ngSanitize']);
+const myModule = angular.module('ngeoMessageDisplaywindowComponent', ['ngSanitize', 'gettext']);
 myModule.run(
   /**
    * @param {angular.ITemplateCacheService} $templateCache
