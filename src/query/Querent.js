@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2025 Camptocamp SA
+// Copyright (c) 2017-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -493,10 +493,16 @@ export class Querent {
     /** @type {import('ol/Feature').default<import('ol/geom/Geometry').default>[]} */
     let readFeatures;
     // Copy the types to be able to set it AND iterate on it.
-    const featureTypes = this.getSetOlFormatTypes_(dataSource, wfs).slice();
-    featureTypes.forEach((type) => {
-      // Assign temporarily a single feature type to read features separately.
-      this.getSetOlFormatTypes_(dataSource, wfs, [type]);
+    const formatTypes = this.getSetOlFormatTypes_(dataSource, wfs).slice();
+    const typeMappings = wfs
+      ? formatTypes.map((type) => ({
+          label: type,
+          parserTypes: [type],
+        }))
+      : this.getWMSReadTypeMappings_(dataSource, formatTypes);
+    typeMappings.forEach((mapping) => {
+      // Assign temporarily one or more parser types to read features separately.
+      this.getSetOlFormatTypes_(dataSource, wfs, mapping.parserTypes);
       if (wfs) {
         if (!dataSource.wfsFormat) {
           throw new Error('Missing wfsFormat');
@@ -514,15 +520,37 @@ export class Querent {
       }
       if (readFeatures.length > 0) {
         readFeatures.forEach((feature) => {
-          feature.set('ngeo_feature_type_', type);
+          feature.set('ngeo_feature_type_', mapping.label);
           features.push(feature);
         });
       }
     });
     // Re-set the value to the datasource.xxxFormat to be able to reuse
     // it later (in another query);
-    this.getSetOlFormatTypes_(dataSource, wfs, featureTypes);
+    this.getSetOlFormatTypes_(dataSource, wfs, formatTypes);
     return features;
+  }
+
+  /**
+   * Build WMS read mappings using query feature types when configured.
+   *
+   * @param {gmfDatasourceOGC} dataSource Data source that contains WMS layers.
+   * @param {string[]} layerNames Layer names configured in the WMS format.
+   * @returns {{label: string, parserTypes: string[]}[]} Read mappings.
+   * @private
+   */
+  getWMSReadTypeMappings_(dataSource, layerNames) {
+    return layerNames.map((layerName) => {
+      let parserTypes = [layerName];
+      const wmsLayer = (dataSource.wmsLayers || []).find((item) => item.name === layerName);
+      if (wmsLayer && Array.isArray(wmsLayer.queryFeatureTypes) && wmsLayer.queryFeatureTypes.length > 0) {
+        parserTypes = wmsLayer.queryFeatureTypes;
+      }
+      return {
+        label: layerName,
+        parserTypes,
+      };
+    });
   }
 
   /**
