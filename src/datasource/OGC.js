@@ -176,6 +176,8 @@ export const WMSInfoFormat = {
  * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
  * @property {boolean|undefined} [getData] If the layer is queryable and this property is set to
  *     false, then the layer won't be used in queries issued. Defaults to `true`.
+ * @property {string[]} [queryFeatureTypes] Feature type names to parse from WMS GetFeatureInfo
+ *     GML responses for this layer.
  */
 
 /**
