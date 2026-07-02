@@ -28,6 +28,7 @@ import olLayerImage from 'ol/layer/Image';
 import olLayerLayer from 'ol/layer/Layer';
 import olLayerVectorTile from 'ol/layer/VectorTile';
 import {isEmpty} from 'ol/obj';
+import DebouncedImageWMS from 'ngeo/source/DebouncedImageWMS';
 import olSourceImageWMS from 'ol/source/ImageWMS';
 import olSourceTileWMS from 'ol/source/TileWMS';
 import olSourceVectorTile from 'ol/source/VectorTile';
@@ -181,7 +182,8 @@ LayerHelper.prototype.createBasicWMSLayer = function (
   ) {
     options.hidpi = false;
   }
-  const source = new olSourceImageWMS(options);
+  const validDebounceDelay = options.debounceDelay && options.debounceDelay >= 0;
+  const source = validDebounceDelay ? new DebouncedImageWMS(options) : new olSourceImageWMS(options);
   if (opt_params) {
     source.updateParams(opt_params);
   }
