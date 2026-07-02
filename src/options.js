@@ -658,6 +658,10 @@ export function buildStyle(styleDescriptor) {
  *
  * @typedef {Object} gmfWMSSourceOptions
  * @property {number} ratio Ratio. 1 means image requests are the size of the map viewport, 2 means twice the width and height of the map viewport, and so on. Must be 1 or higher (non integer value make the layers blurry).
+ * @property {number} [debounceDelay] Delay in milliseconds before sending a WMS GetMap request when the view changes.
+ *   This prevents duplicate requests during animated zoom or pan, especially when the view center is
+ *   snapped to the WMTS grid after animation ends. When set, a `DebouncedImageWMS` source is used
+ *   instead of the standard `ImageWMS`. The default is no debounce (undefined).
  */
 
 /**
