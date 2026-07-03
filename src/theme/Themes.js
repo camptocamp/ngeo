@@ -263,7 +263,7 @@ export class ThemesService extends olEventsEventTarget {
       .then(null, (response) => {
         let message =
           `Unable to build layer "${gmfLayerWMTS.layer}" ` + `from WMTSCapabilities: ${gmfLayerWMTS.url}\n`;
-        message += `OpenLayers error is "${response.message}`;
+        message += `OpenLayers error is "${typeof response === 'string' ? response : response.message}"`;
         console.error(message);
         // Continue even if some layers have failed loading.
         return this.$q_.resolve(undefined);
