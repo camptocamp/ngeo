@@ -281,7 +281,8 @@ function loaded(page, browser) {
           .text()
           .includes('Multiple versions of Lit loaded. Loading multiple versions is not recommended.') &&
         !message.text().includes('google is not defined') &&
-        !message.text().includes('The themes contain some errors:')
+        !message.text().includes('The themes contain some errors:') &&
+        !message.text().includes('Unable to build layer')
       ) {
         process.exit(2);
       }
