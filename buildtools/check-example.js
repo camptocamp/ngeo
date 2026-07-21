@@ -58,6 +58,7 @@ function fileMock(name, contentType) {
 }
 
 const OSMImage = fileMock('osm.png', 'image/png');
+OSMImage.headers['Access-Control-Allow-Origin'] = '*';
 const ASITVDCapabilities = fileMock('asitvd.capabilities.xml', 'text/xml');
 const SgxCapabilities = fileMock('sgx.capabilities.xml', 'text/xml');
 
