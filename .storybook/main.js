@@ -2,6 +2,11 @@
 
 const {merge} = require('webpack-merge');
 
+// Increase sax entity count limit for FontAwesome SVGs with many entities.
+// svgo 2.8.1+ migrated from @trysound/sax to upstream sax which enforces a 10,000 entity limit.
+const sax = require('sax');
+sax.MAX_ENTITY_COUNT = 20000;
+
 module.exports = (env, args) => {
   const storybookConfig = {
     stories: ['../src/**/*.stories.@(ts|tsx)'],
