@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2025 Camptocamp SA
+// Copyright (c) 2017-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -578,7 +578,12 @@ export class DatasourceManager {
       // filtrable.
 
       const queryLayers = meta.queryLayers ? meta.queryLayers.split(',') : null;
-      wmsLayers = gmfLayerWMS.layers.split(',').map((childLayer) => {
+      const queryFeatureTypes =
+        Array.isArray(meta.queryFeatureTypes) && meta.queryFeatureTypes.length > 0
+          ? meta.queryFeatureTypes
+          : null;
+      const wmsLayerNames = gmfLayerWMS.layers.split(',');
+      wmsLayers = wmsLayerNames.map((childLayer) => {
         /** @type {import('ngeo/datasource/OGC').WMSLayer} */
         const item = {
           name: childLayer,
@@ -586,6 +591,9 @@ export class DatasourceManager {
         };
         if (queryLayers && !queryLayers.includes(childLayer)) {
           item.getData = false;
+        }
+        if (queryFeatureTypes) {
+          item.queryFeatureTypes = queryFeatureTypes;
         }
         return item;
       });
