@@ -79,5 +79,11 @@
       matchPackageNames: ['@types/d3-dispatch'],
       enabled: false,
     },
+    /** Disable webpack-dev-server updates on 2.8 branch */
+    {
+      matchBaseBranches: ['2.8'],
+      matchPackageNames: ['webpack-dev-server'],
+      enabled: false,
+    },
   ],
 }
