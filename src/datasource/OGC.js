@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2025 Camptocamp SA
+// Copyright (c) 2017-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -176,6 +176,8 @@ export const WMSInfoFormat = {
  * @property {boolean} [queryable] Whether the the layer is queryable or not. Defaults to `false`.
  * @property {boolean|undefined} [getData] If the layer is queryable and this property is set to
  *     false, then the layer won't be used in queries issued. Defaults to `true`.
+ * @property {string[]} [queryFeatureTypes] Feature type names to parse from WMS GetFeatureInfo
+ *     GML responses for this layer.
  */
 
 /**
