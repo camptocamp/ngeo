@@ -15,7 +15,7 @@ Controller.$inject = [
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2025 Camptocamp SA
+// Copyright (c) 2016-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -67,6 +67,7 @@ import olSourceWMTS from 'ol/source/WMTS';
 import LayerBase from 'ol/layer/Base';
 import {getUid} from 'ol/util';
 import olLayerNotWebGLTile from 'ol/layer/Tile';
+import {listen, unlistenByKey} from 'ol/events';
 import 'bootstrap/js/src/collapse';
 import htmlTemplate from './component.html';
 
@@ -351,6 +352,28 @@ export function Controller(
    */
   this.$timeout_ = $timeout;
 
+  /**
+   * The map scale, updated only after the view resolution has stopped changing for
+   * `legendDebounceDelay` ms to not trigger a `GetLegendGraphic` request for every
+   * intermediate resolution.
+   *
+   * @type {?number}
+   * @private
+   */
+  this.debouncedScale_ = null;
+
+  /**
+   * @type {?number}
+   * @private
+   */
+  this.scaleDebounceTimer_ = null;
+
+  /**
+   * @type {?import('ol/events').EventsKey}
+   * @private
+   */
+  this.resolutionChangeKey_ = null;
+
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
     this.scope_.$apply();
@@ -393,6 +416,36 @@ Controller.prototype.$onInit = function () {
       }
     },
   );
+
+  // Compute the initial scale, then keep it up to date, but only once the view resolution has
+  // stopped changing for a while. This avoids sending a burst of `GetLegendGraphic` requests for
+  // every intermediate resolution during an animated zoom or pan.
+  this.debouncedScale_ = this.computeScale_();
+  const view = this.map.getView();
+  this.resolutionChangeKey_ = listen(view, 'change:resolution', () => {
+    if (this.scaleDebounceTimer_ !== null) {
+      clearTimeout(this.scaleDebounceTimer_);
+    }
+    this.scaleDebounceTimer_ = setTimeout(() => {
+      this.scaleDebounceTimer_ = null;
+      this.debouncedScale_ = this.computeScale_();
+      this.scope_.$applyAsync();
+    }, this.options.legendDebounceDelay || 100);
+  });
+};
+
+/**
+ * Cleans up the resources allocated by this controller.
+ */
+Controller.prototype.$onDestroy = function () {
+  if (this.resolutionChangeKey_ !== null) {
+    unlistenByKey(this.resolutionChangeKey_);
+    this.resolutionChangeKey_ = null;
+  }
+  if (this.scaleDebounceTimer_ !== null) {
+    clearTimeout(this.scaleDebounceTimer_);
+    this.scaleDebounceTimer_ = null;
+  }
 };
 
 /**
@@ -692,6 +745,17 @@ Controller.prototype.getNumberOfLegendsObject = function (treeCtrl) {
  * @returns {number} Scale.
  */
 Controller.prototype.getScale_ = function () {
+  if (this.debouncedScale_ === null) {
+    return this.computeScale_();
+  }
+  return this.debouncedScale_;
+};
+
+/**
+ * @returns {number} Scale.
+ * @private
+ */
+Controller.prototype.computeScale_ = function () {
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {
