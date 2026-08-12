@@ -12,6 +12,7 @@ Controller.$inject = [
   'gmfThemes',
   '$timeout',
   'gmfLayerTreeOptions',
+  'ngeoDebounce',
 ];
 // The MIT License (MIT)
 //
@@ -53,6 +54,7 @@ import {ServerType} from 'ngeo/datasource/OGC';
 import gmfLayertreeNode from 'gmf/layertree/layertreeNode';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import 'gmf/time-input/timeslider';
@@ -97,6 +99,7 @@ const myModule = angular.module('gmfLayertreeComponent', [
   gmfLayertreeNode.name,
   ngeoLayertreeController.name,
   ngeoMapLayerHelper.name,
+  ngeoMiscDebounce.name,
   ngeoMiscWMSTime.name,
   ngeoEventDirective.name,
   gmfLayerBeingSwipe.name,
@@ -238,6 +241,7 @@ myModule.component('gmfLayertree', layertreeComponent);
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('gmf/options').gmfLayerTreeOptions} gmfLayerTreeOptions The options.
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce Ngeo debounce factory.
  * @class
  * @hidden
  * @ngdoc controller
@@ -257,6 +261,7 @@ export function Controller(
   gmfThemes,
   $timeout,
   gmfLayerTreeOptions,
+  ngeoDebounce,
 ) {
   /**
    * @type {import('gmf/options').gmfLayerTreeOptions}
@@ -363,10 +368,10 @@ export function Controller(
   this.debouncedScale_ = null;
 
   /**
-   * @type {?number}
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
    * @private
    */
-  this.scaleDebounceTimer_ = null;
+  this.ngeoDebounce_ = ngeoDebounce;
 
   /**
    * @type {?import('ol/events').EventsKey}
@@ -422,16 +427,14 @@ Controller.prototype.$onInit = function () {
   // every intermediate resolution during an animated zoom or pan.
   this.debouncedScale_ = this.computeScale_();
   const view = this.map.getView();
-  this.resolutionChangeKey_ = listen(view, 'change:resolution', () => {
-    if (this.scaleDebounceTimer_ !== null) {
-      clearTimeout(this.scaleDebounceTimer_);
-    }
-    this.scaleDebounceTimer_ = setTimeout(() => {
-      this.scaleDebounceTimer_ = null;
+  const updateDebouncedScale = this.ngeoDebounce_(
+    () => {
       this.debouncedScale_ = this.computeScale_();
-      this.scope_.$applyAsync();
-    }, this.options.legendDebounceDelay || 100);
-  });
+    },
+    this.options.legendDebounceDelay || 100,
+    true,
+  );
+  this.resolutionChangeKey_ = listen(view, 'change:resolution', updateDebouncedScale);
 };
 
 /**
@@ -441,10 +444,6 @@ Controller.prototype.$onDestroy = function () {
   if (this.resolutionChangeKey_ !== null) {
     unlistenByKey(this.resolutionChangeKey_);
     this.resolutionChangeKey_ = null;
-  }
-  if (this.scaleDebounceTimer_ !== null) {
-    clearTimeout(this.scaleDebounceTimer_);
-    this.scaleDebounceTimer_ = null;
   }
 };
 
