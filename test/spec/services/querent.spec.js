@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2020-2024 Camptocamp SA
+// Copyright (c) 2020-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -56,5 +56,44 @@ describe('ngeo.Querent', () => {
 
     result = ngeoQuerent.makeBboxWithQueryIconPosition_([1, 2, 3, 4, 5], resolution, coordinate);
     expect(result).toBe(null);
+  });
+
+  it('Builds WMS read mappings with queryFeatureTypes', () => {
+    const dataSource = {
+      wmsLayers: [
+        {
+          name: 'cadastre_parcels',
+          queryFeatureTypes: ['cadastre_parcels_polygon', 'cadastre_parcels_label'],
+        },
+      ],
+    };
+
+    const mappings = ngeoQuerent.getWMSReadTypeMappings_(dataSource, ['cadastre_parcels']);
+
+    expect(mappings).toEqual([
+      {
+        label: 'cadastre_parcels',
+        parserTypes: ['cadastre_parcels_polygon', 'cadastre_parcels_label'],
+      },
+    ]);
+  });
+
+  it('Builds WMS read mappings with layer names by default', () => {
+    const dataSource = {
+      wmsLayers: [
+        {
+          name: 'cadastre_buildings',
+        },
+      ],
+    };
+
+    const mappings = ngeoQuerent.getWMSReadTypeMappings_(dataSource, ['cadastre_buildings']);
+
+    expect(mappings).toEqual([
+      {
+        label: 'cadastre_buildings',
+        parserTypes: ['cadastre_buildings'],
+      },
+    ]);
   });
 });
