@@ -422,19 +422,20 @@ Controller.prototype.$onInit = function () {
     },
   );
 
-  // Compute the initial scale, then keep it up to date, but only once the view resolution has
-  // stopped changing for a while. This avoids sending a burst of `GetLegendGraphic` requests for
-  // every intermediate resolution during an animated zoom or pan.
-  this.debouncedScale_ = this.computeScale_();
-  const view = this.map.getView();
-  const updateDebouncedScale = this.ngeoDebounce_(
-    () => {
-      this.debouncedScale_ = this.computeScale_();
-    },
-    this.options.legendDebounceDelay || 100,
-    true,
-  );
-  this.resolutionChangeKey_ = listen(view, 'change:resolution', updateDebouncedScale);
+  // When legendDebounceDelay set, scale is computed only after the view
+  // resolution has stopped changing for that delay.
+  if (this.options.legendDebounceDelay !== undefined) {
+    this.debouncedScale_ = this.computeScale_();
+    const view = this.map.getView();
+    const updateDebouncedScale = this.ngeoDebounce_(
+      () => {
+        this.debouncedScale_ = this.computeScale_();
+      },
+      this.options.legendDebounceDelay,
+      true,
+    );
+    this.resolutionChangeKey_ = listen(view, 'change:resolution', updateDebouncedScale);
+  }
 };
 
 /**

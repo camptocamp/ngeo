@@ -890,7 +890,7 @@ export function buildStyle(styleDescriptor) {
  * @property {layerIcon} layerIcon The legend icon dimensions.
  * @property {number} [legendDebounceDelay] Delay in milliseconds before recomputing the map scale used to
  *    build `GetLegendGraphic` requests when the view resolution changes. This prevents duplicate
- *    `GetLegendGraphic` requests during animated zoom or pan. Default is 100 ms.
+ *    `GetLegendGraphic` requests during animated zoom or pan. The default is no debounce (undefined).
  */
 
 /**
