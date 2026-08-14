@@ -6,6 +6,9 @@ on:
     types:
       - closed
 
+permissions:
+  contents: write
+
 jobs:
   clean:
     runs-on: ubuntu-24.04
