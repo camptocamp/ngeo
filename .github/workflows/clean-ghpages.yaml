@@ -6,12 +6,18 @@ on:
     types:
       - closed
 
+permissions:
+  contents: read
+
 jobs:
   clean:
     runs-on: ubuntu-24.04
     name: Clean GitHub pages
     timeout-minutes: 5
     concurrency: gh-pages-push
+
+    permissions:
+      contents: write
 
     steps:
       - run: env
