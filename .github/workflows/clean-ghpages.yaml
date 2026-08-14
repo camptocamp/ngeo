@@ -7,7 +7,7 @@ on:
       - closed
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   clean:
@@ -15,6 +15,9 @@ jobs:
     name: Clean GitHub pages
     timeout-minutes: 5
     concurrency: gh-pages-push
+
+    permissions:
+      contents: write
 
     steps:
       - run: env

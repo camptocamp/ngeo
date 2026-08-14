@@ -15,8 +15,7 @@ env:
   CI: 'true'
 
 permissions:
-  contents: write
-  packages: write
+  contents: read
 
 jobs:
   not-failed-backport:
@@ -44,6 +43,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
+      packages: write
 
     steps:
       - run: /opt/google/chrome/chrome --version
