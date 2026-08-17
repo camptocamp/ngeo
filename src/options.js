@@ -888,6 +888,9 @@ export function buildStyle(styleDescriptor) {
  *    metadataURLs in a new window. Otherwise open them in a popup.
  * @property {boolean} isExpanded [Experimental] Whether all the layer group is expanded by default.
  * @property {layerIcon} layerIcon The legend icon dimensions.
+ * @property {number} [legendDebounceDelay] Delay in milliseconds before recomputing the map scale used to
+ *    build `GetLegendGraphic` requests when the view resolution changes. This prevents duplicate
+ *    `GetLegendGraphic` requests during animated zoom or pan. The default is no debounce (undefined).
  */
 
 /**

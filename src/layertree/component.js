@@ -12,10 +12,11 @@ Controller.$inject = [
   'gmfThemes',
   '$timeout',
   'gmfLayerTreeOptions',
+  'ngeoDebounce',
 ];
 // The MIT License (MIT)
 //
-// Copyright (c) 2016-2025 Camptocamp SA
+// Copyright (c) 2016-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -53,6 +54,7 @@ import {ServerType} from 'ngeo/datasource/OGC';
 import gmfLayertreeNode from 'gmf/layertree/layertreeNode';
 import ngeoLayertreeController, {LayertreeVisitorDecision} from 'ngeo/layertree/Controller';
 import ngeoMapLayerHelper from 'ngeo/map/LayerHelper';
+import ngeoMiscDebounce from 'ngeo/misc/debounce';
 import ngeoMiscSyncArrays from 'ngeo/misc/syncArrays';
 import ngeoMiscWMSTime from 'ngeo/misc/WMSTime';
 import 'gmf/time-input/timeslider';
@@ -67,6 +69,7 @@ import olSourceWMTS from 'ol/source/WMTS';
 import LayerBase from 'ol/layer/Base';
 import {getUid} from 'ol/util';
 import olLayerNotWebGLTile from 'ol/layer/Tile';
+import {listen, unlistenByKey} from 'ol/events';
 import 'bootstrap/js/src/collapse';
 import htmlTemplate from './component.html';
 
@@ -96,6 +99,7 @@ const myModule = angular.module('gmfLayertreeComponent', [
   gmfLayertreeNode.name,
   ngeoLayertreeController.name,
   ngeoMapLayerHelper.name,
+  ngeoMiscDebounce.name,
   ngeoMiscWMSTime.name,
   ngeoEventDirective.name,
   gmfLayerBeingSwipe.name,
@@ -237,6 +241,7 @@ myModule.component('gmfLayertree', layertreeComponent);
  * @param {import('gmf/theme/Themes').ThemesService} gmfThemes The gmf Themes service.
  * @param {angular.ITimeoutService} $timeout Angular timeout service.
  * @param {import('gmf/options').gmfLayerTreeOptions} gmfLayerTreeOptions The options.
+ * @param {import('ngeo/misc/debounce').miscDebounce<function(): void>} ngeoDebounce Ngeo debounce factory.
  * @class
  * @hidden
  * @ngdoc controller
@@ -256,6 +261,7 @@ export function Controller(
   gmfThemes,
   $timeout,
   gmfLayerTreeOptions,
+  ngeoDebounce,
 ) {
   /**
    * @type {import('gmf/options').gmfLayerTreeOptions}
@@ -351,6 +357,28 @@ export function Controller(
    */
   this.$timeout_ = $timeout;
 
+  /**
+   * The map scale, updated only after the view resolution has stopped changing for
+   * `legendDebounceDelay` ms to not trigger a `GetLegendGraphic` request for every
+   * intermediate resolution.
+   *
+   * @type {?number}
+   * @private
+   */
+  this.debouncedScale_ = null;
+
+  /**
+   * @type {import('ngeo/misc/debounce').miscDebounce<function(): void>}
+   * @private
+   */
+  this.ngeoDebounce_ = ngeoDebounce;
+
+  /**
+   * @type {?import('ol/events').EventsKey}
+   * @private
+   */
+  this.resolutionChangeKey_ = null;
+
   // enter digest cycle on node collapse
   $element.on('shown.bs.collapse', () => {
     this.scope_.$apply();
@@ -393,6 +421,31 @@ Controller.prototype.$onInit = function () {
       }
     },
   );
+
+  // When legendDebounceDelay set, scale is computed only after the view
+  // resolution has stopped changing for that delay.
+  if (this.options.legendDebounceDelay !== undefined) {
+    this.debouncedScale_ = this.computeScale_();
+    const view = this.map.getView();
+    const updateDebouncedScale = this.ngeoDebounce_(
+      () => {
+        this.debouncedScale_ = this.computeScale_();
+      },
+      this.options.legendDebounceDelay,
+      true,
+    );
+    this.resolutionChangeKey_ = listen(view, 'change:resolution', updateDebouncedScale);
+  }
+};
+
+/**
+ * Cleans up the resources allocated by this controller.
+ */
+Controller.prototype.$onDestroy = function () {
+  if (this.resolutionChangeKey_ !== null) {
+    unlistenByKey(this.resolutionChangeKey_);
+    this.resolutionChangeKey_ = null;
+  }
 };
 
 /**
@@ -692,6 +745,17 @@ Controller.prototype.getNumberOfLegendsObject = function (treeCtrl) {
  * @returns {number} Scale.
  */
 Controller.prototype.getScale_ = function () {
+  if (this.debouncedScale_ === null) {
+    return this.computeScale_();
+  }
+  return this.debouncedScale_;
+};
+
+/**
+ * @returns {number} Scale.
+ * @private
+ */
+Controller.prototype.computeScale_ = function () {
   const view = this.map.getView();
   const resolution = view.getResolution();
   if (resolution === undefined) {
