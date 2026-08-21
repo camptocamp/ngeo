@@ -305,15 +305,15 @@ export default class GmfAuthForm extends GmfBaseElement {
                     this.resetPasswordShown
                       ? html` <div class="alert alert-info">
                           ${
-                          this.administratorEmail
-                            ? i18next.t(
-                                "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator at {{email}}.",
-                                {email: this.administratorEmail},
-                              )
-                            : i18next.t(
-                                "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator.",
-                              )
-                        }
+                            this.administratorEmail
+                              ? i18next.t(
+                                  "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator at {{email}}.",
+                                  {email: this.administratorEmail},
+                                )
+                              : i18next.t(
+                                  "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator.",
+                                )
+                          }
                         </div>`
                       : ''
                   }
