@@ -53,11 +53,11 @@ jobs:
         run: echo "sha=$(jq -r .pull_request.head.sha < ${GITHUB_EVENT_PATH})" >> $GITHUB_OUTPUT
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
         if: github.event_name != 'pull_request_target'
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
           ref: ${{ steps.sha.outputs.sha }}
@@ -65,7 +65,7 @@ jobs:
 
       - run: '! ls BACKPORT_TODO'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
 
@@ -78,7 +78,7 @@ jobs:
       - run: gopass show gs/ci/test-mask
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.11'
       - run: python3 -m pip install --requirement=ci/requirements.txt
@@ -216,7 +216,7 @@ jobs:
           GITHUB_SHA_: ${{ steps.sha.outputs.sha }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: 24.x
           registry-url: https://registry.npmjs.org
@@ -265,7 +265,7 @@ jobs:
         run: echo ${GITHUB_EVENT} | python3 -m json.tool
         env:
           GITHUB_EVENT: ${{ toJson(github) }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: gh-pages
           fetch-depth: 0
