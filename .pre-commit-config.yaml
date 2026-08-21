@@ -23,7 +23,7 @@ repos:
       - id: trailing-whitespace
       - id: mixed-line-ending
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.4.1
+    rev: v2.4.3
     hooks:
       - id: codespell
         exclude: |-
@@ -42,8 +42,8 @@ repos:
     hooks:
       - id: prettier
         additional_dependencies:
-          - prettier@3.6.2 # npm
-          - prettier-plugin-sh@0.18.0 # npm
+          - prettier@3.9.6 # npm
+          - prettier-plugin-sh@0.19.0 # npm
           - prettier-plugin-toml@2.0.6 # npm
           - '@prettier/plugin-xml@0.12.0' # npm
         exclude: |-
@@ -54,7 +54,7 @@ repos:
             |examples/svg\.html
           )$
   - repo: https://github.com/editorconfig-checker/editorconfig-checker.python
-    rev: 3.4.0
+    rev: 3.11.1
     hooks:
       - id: editorconfig-checker
         args:
@@ -73,7 +73,7 @@ repos:
     hooks:
       - id: git-check
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.34.0
+    rev: 0.38.0
     hooks:
       - id: check-github-workflows
       - id: check-github-actions
@@ -97,7 +97,7 @@ repos:
             |examples/mapillarystreetview.js
           )$
   - repo: https://github.com/sbrunner/hooks
-    rev: 1.6.1
+    rev: 1.8.0
     hooks:
       - id: copyright
       - id: workflows-require-timeout
@@ -112,14 +112,14 @@ repos:
             |ci/applications\.yaml
           )$
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 41.132.5
+    rev: 41.173.1
     hooks:
       - id: renovate-config-validator
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.13.2
+    rev: v0.16.3
     hooks:
       - id: ruff-format
   - repo: https://github.com/sbrunner/python-versions-hook
-    rev: 1.1.2
+    rev: 1.4.0
     hooks:
       - id: python-versions
