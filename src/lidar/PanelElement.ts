@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2022-2024 Camptocamp SA
+// Copyright (c) 2022-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -153,87 +153,93 @@ export default class GmfLidarPanel extends ToolPanelElement {
           </button>
         </p>
         <p>
-          ${GmfDrawLine.interaction.getActive()
-            ? html`
-                <em class="text-muted small">
-                  ${i18next.t(
-                    'Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the drawing.',
-                  )}
-                </em>
-              `
-            : html``}
+          ${
+            GmfDrawLine.interaction.getActive()
+              ? html`
+                  <em class="text-muted small">
+                    ${i18next.t(
+                      'Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the drawing.',
+                    )}
+                  </em>
+                `
+              : html``
+          }
         </p>
 
-        ${this.ready
-          ? html`
-              ${this.line
-                ? html`
-                    <div>
-                      <button class="btn btn-default" @click=${() => this.csvExport()}>
-                        ${i18next.t('CSV export')}
-                      </button>
-                      <button class="btn btn-default" @click=${() => this.pngExport()}>
-                        ${i18next.t('PNG export')}
-                      </button>
-                      <button
-                        class="btn btn-default"
-                        @click=${() => this.resetPlot()}
-                        data-toggle="tooltip"
-                        data-placement="left"
-                        data-original-title="${i18next.t('Reset profile')}"
-                      >
-                        <span class="fa-solid fa-arrows-rotate"></span>
-                      </button>
-                    </div>
-                    <hr />
-                    <button
-                      class="btn btn-default"
-                      @click=${() => this.setMeasureActive()}
-                      data-toggle="tooltip"
-                      data-placement="left"
-                      data-original-title="${i18next.t('Take measure on the graph')}"
-                    >
-                      ${i18next.t('Take measure')}
-                    </button>
-                    <button
-                      class="btn btn-default"
-                      @click=${() => this.clearMeasure()}
-                      data-toggle="tooltip"
-                      data-placement="left"
-                      data-original-title="${i18next.t('Clear measure')}"
-                    >
-                      <span class="fa-solid fa-eraser"></span>
-                    </button>
-                  `
-                : ``}
+        ${
+          this.ready
+            ? html`
+                ${
+                  this.line
+                    ? html`
+                        <div>
+                          <button class="btn btn-default" @click=${() => this.csvExport()}>
+                            ${i18next.t('CSV export')}
+                          </button>
+                          <button class="btn btn-default" @click=${() => this.pngExport()}>
+                            ${i18next.t('PNG export')}
+                          </button>
+                          <button
+                            class="btn btn-default"
+                            @click=${() => this.resetPlot()}
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            data-original-title="${i18next.t('Reset profile')}"
+                          >
+                            <span class="fa-solid fa-arrows-rotate"></span>
+                          </button>
+                        </div>
+                        <hr />
+                        <button
+                          class="btn btn-default"
+                          @click=${() => this.setMeasureActive()}
+                          data-toggle="tooltip"
+                          data-placement="left"
+                          data-original-title="${i18next.t('Take measure on the graph')}"
+                        >
+                          ${i18next.t('Take measure')}
+                        </button>
+                        <button
+                          class="btn btn-default"
+                          @click=${() => this.clearMeasure()}
+                          data-toggle="tooltip"
+                          data-placement="left"
+                          data-original-title="${i18next.t('Clear measure')}"
+                        >
+                          <span class="fa-solid fa-eraser"></span>
+                        </button>
+                      `
+                    : ``
+                }
 
-              <div>
+                <div>
+                  <hr />
+                  <p>${i18next.t('Material')}</p>
+                  <select id="select-attributes" @change="${() => this.selectPointAttribute()}">
+                    ${Object.entries(this.availablePointAttributes).map(
+                      ([key, value]) => html` <option value="${key}">${value.name}</option> `,
+                    )}
+                  </select>
+                </div>
                 <hr />
-                <p>${i18next.t('Material')}</p>
-                <select id="select-attributes" @change="${() => this.selectPointAttribute()}">
-                  ${Object.entries(this.availablePointAttributes).map(
-                    ([key, value]) => html` <option value="${key}">${value.name}</option> `,
-                  )}
-                </select>
-              </div>
-              <hr />
-              <p>${i18next.t('Classes')}</p>
+                <p>${i18next.t('Classes')}</p>
 
-              ${Object.entries(this.classifications).map(
-                ([key, value]) => html`
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="${value.name}"
-                      .checked="${!!value.visible}"
-                      @click="${() => this.toggleVisibility(value, key)}"
-                    />
-                    <label for="${value.name}">${value.name}</label>
-                  </div>
-                `,
-              )}
-            `
-          : html` <p>${i18next.t('Initializing, please wait...')}</p> `}
+                ${Object.entries(this.classifications).map(
+                  ([key, value]) => html`
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="${value.name}"
+                        .checked="${!!value.visible}"
+                        @click="${() => this.toggleVisibility(value, key)}"
+                      />
+                      <label for="${value.name}">${value.name}</label>
+                    </div>
+                  `,
+                )}
+              `
+            : html` <p>${i18next.t('Initializing, please wait...')}</p> `
+        }
       </div>
     `;
   }
