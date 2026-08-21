@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2021-2025 Camptocamp SA
+// Copyright (c) 2021-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -174,85 +174,218 @@ export default class GmfAuthForm extends GmfBaseElement {
         ${unsafeCSS(this.customCSS_)}
       </style>
 
-      ${this.gmfUser.is_intranet
-        ? html`
-            <div class="form-group">
-              <span>${i18next.t('You are recognized as an intranet user.')}</span>
-            </div>
-          `
-        : ''}
-      ${this.gmfUser.username !== null
-        ? html`
-            <div>
+      ${
+        this.gmfUser.is_intranet
+          ? html`
               <div class="form-group">
-                <span>${i18next.t('Logged in as')}</span>
-                <strong>${this.gmfUser.display_name || this.gmfUser.username}</strong>.
+                <span>${i18next.t('You are recognized as an intranet user.')}</span>
               </div>
+            `
+          : ''
+      }
+      ${
+        this.gmfUser.username !== null
+          ? html`
+              <div>
+                <div class="form-group">
+                  <span>${i18next.t('Logged in as')}</span>
+                  <strong>${this.gmfUser.display_name || this.gmfUser.username}</strong>.
+                </div>
 
-              ${this.oidcUserInformationUrl
-                ? html`
+                ${
+                this.oidcUserInformationUrl
+                  ? html`
+                      <div class="form-group">
+                        <span
+                          ><a href="${this.oidcUserInformationUrl}" target="_blank"
+                            >${i18next.t('User information on the OIDC service')}</a
+                          ></span
+                        >
+                      </div>
+                    `
+                  : html``
+              }
+                ${
+                !this.changingPassword
+                  ? html`
+                      <form name="logoutForm" role="form" @submit=${(evt: Event) => this.logout(evt)}>
+                        <div class="form-group">
+                          <input type="submit" class="form-control btn prime" value=${i18next.t('Logout')} />
+                        </div>
+                        <div class="form-group">
+                          <input
+                            ?hidden="${!(this.allowPasswordChange && this.gmfUser.login_type !== 'oidc')}"
+                            type="button"
+                            class="form-control btn btn-default"
+                            value=${i18next.t('Change password')}
+                            @click=${() => (this.changingPassword = true)}
+                          />
+                        </div>
+                      </form>
+                    `
+                  : ''
+              }
+              </div>
+            `
+          : ''
+      }
+      ${
+        this.loginInfoMessage
+          ? html`
+              <div class="alert alert-warning">
+                <span>${this.loginInfoMessage}</span>
+              </div>
+            `
+          : ''
+      }
+      ${
+        this.disconnectedShown
+          ? html`
+              <div class="alert alert-warning">
+                ${i18next.t('You are not logged in any more. The Interface has been reloaded.')}
+              </div>
+            `
+          : ''
+      }
+      ${
+        this.gmfUser.username === null && !this.changingPassword
+          ? this.gmfUser.login_type === 'oidc'
+            ? html`<a class="btn prime form-control" role="button" href="${this.openIdConnectUrl}"
+                >${i18next.t('Connect')}</a
+              >`
+            : html`
+                <div>
+                  <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
                     <div class="form-group">
-                      <span
-                        ><a href="${this.oidcUserInformationUrl}" target="_blank"
-                          >${i18next.t('User information on the OIDC service')}</a
-                        ></span
+                      <slot name="gmf-auth-login"></slot>
+                    </div>
+                    <div class="form-group">
+                      <slot name="gmf-auth-password"></slot>
+                    </div>
+                    ${
+                    this.twoFactorAuth
+                      ? html`
+                          <div class="form-group">
+                            ${i18next.t('The following field should be kept empty on first login:')}
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="otp"
+                              autocomplete="one-time-code"
+                              placeholder=${i18next.t('Authentication code')}
+                            />
+                          </div>
+                        `
+                      : ''
+                  }
+                    <div class="form-group">
+                      <input type="submit" class="form-control btn prime" value=${i18next.t('Connect')} />
+                    </div>
+                    ${
+                    this.isLoading
+                      ? html`
+                          <div class="login-spinner">
+                            <i class="fa-solid fa-spin">${svgSpinner()}</i>
+                          </div>
+                        `
+                      : ''
+                  }
+                    <div ?hidden="${!this.allowPasswordReset}" class="form-group">
+                      <a @click=${(evt: Event) => this.resetPassword(evt)} href=""
+                        >${i18next.t('Password forgotten?')}</a
                       >
                     </div>
-                  `
-                : html``}
-              ${!this.changingPassword
-                ? html`
-                    <form name="logoutForm" role="form" @submit=${(evt: Event) => this.logout(evt)}>
-                      <div class="form-group">
-                        <input type="submit" class="form-control btn prime" value=${i18next.t('Logout')} />
-                      </div>
-                      <div class="form-group">
-                        <input
-                          ?hidden="${!(this.allowPasswordChange && this.gmfUser.login_type !== 'oidc')}"
-                          type="button"
-                          class="form-control btn btn-default"
-                          value=${i18next.t('Change password')}
-                          @click=${() => (this.changingPassword = true)}
-                        />
-                      </div>
-                    </form>
-                  `
-                : ''}
-            </div>
-          `
-        : ''}
-      ${this.loginInfoMessage
-        ? html`
-            <div class="alert alert-warning">
-              <span>${this.loginInfoMessage}</span>
-            </div>
-          `
-        : ''}
-      ${this.disconnectedShown
-        ? html`
-            <div class="alert alert-warning">
-              ${i18next.t('You are not logged in any more. The Interface has been reloaded.')}
-            </div>
-          `
-        : ''}
-      ${this.gmfUser.username === null && !this.changingPassword
-        ? this.gmfUser.login_type === 'oidc'
-          ? html`<a class="btn prime form-control" role="button" href="${this.openIdConnectUrl}"
-              >${i18next.t('Connect')}</a
-            >`
-          : html`
+                  </form>
+
+                  ${
+                  this.resetPasswordShown
+                    ? html` <div class="alert alert-info">
+                        ${
+                        this.administratorEmail
+                          ? i18next.t(
+                              "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator at {{email}}.",
+                              {email: this.administratorEmail},
+                            )
+                          : i18next.t(
+                              "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator.",
+                            )
+                      }
+                      </div>`
+                    : ''
+                }
+                </div>
+              `
+          : ''
+      }
+      ${
+        this.changingPassword
+          ? html`
               <div>
-                <form name="loginForm" role="form" @submit=${(evt: Event) => this.login(evt)}>
+                ${
+                this.userMustChangeItsPassword
+                  ? html` <div class="alert alert-warning">
+                      ${i18next.t('You must change your password')}
+                    </div>`
+                  : ''
+              }
+
+                <form
+                  name="changePasswordForm"
+                  role="form"
+                  @submit=${(evt: Event) => this.changePassword(evt)}
+                >
                   <div class="form-group">
-                    <slot name="gmf-auth-login"></slot>
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="oldpassword"
+                      autocomplete="current-password"
+                      aria-describedby="password-constraints"
+                      placeholder=${i18next.t('Old password')}
+                    />
                   </div>
                   <div class="form-group">
-                    <slot name="gmf-auth-password"></slot>
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="newpassword"
+                      autocomplete="new-password"
+                      placeholder=${i18next.t('New password')}
+                    />
                   </div>
-                  ${this.twoFactorAuth
+                  <div class="form-group">
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="newpasswordconfirm"
+                      autocomplete="new-password"
+                      placeholder=${i18next.t('Confirm new password')}
+                    />
+                  </div>
+                  ${
+                  this.gmfUser.otp_uri
                     ? html`
                         <div class="form-group">
-                          ${i18next.t('The following field should be kept empty on first login:')}
+                          <label>${i18next.t('Two factor authentication QR code:')}</label>
+                          <div><img class="" src="${this.otpImage}" /></div>
+                        </div>
+                      `
+                    : ''
+                }
+                  ${
+                  this.gmfUser.two_factor_totp_secret
+                    ? html`
+                        <div class="form-group">
+                          <label>${i18next.t('Two factor authentication key:')}</label>
+                          <code>${this.gmfUser.two_factor_totp_secret}</code>
+                        </div>
+                      `
+                    : ''
+                }
+                  ${
+                  this.twoFactorAuth
+                    ? html`
+                        <div class="form-group">
                           <input
                             type="text"
                             class="form-control"
@@ -262,120 +395,29 @@ export default class GmfAuthForm extends GmfBaseElement {
                           />
                         </div>
                       `
-                    : ''}
+                    : ''
+                }
+
                   <div class="form-group">
-                    <input type="submit" class="form-control btn prime" value=${i18next.t('Connect')} />
+                    <input
+                      type="submit"
+                      class="form-control btn prime"
+                      value=${i18next.t('Change password')}
+                    />
                   </div>
-                  ${this.isLoading
-                    ? html`
-                        <div class="login-spinner">
-                          <i class="fa-solid fa-spin">${svgSpinner()}</i>
-                        </div>
-                      `
-                    : ''}
-                  <div ?hidden="${!this.allowPasswordReset}" class="form-group">
-                    <a @click=${(evt: Event) => this.resetPassword(evt)} href=""
-                      >${i18next.t('Password forgotten?')}</a
-                    >
+                  <div class="form-group">
+                    <input
+                      type="button"
+                      class="form-control btn btn-default"
+                      value="Cancel"
+                      @click=${() => this.changePasswordReset()}
+                    />
                   </div>
                 </form>
-
-                ${this.resetPasswordShown
-                  ? html` <div class="alert alert-info">
-                      ${this.administratorEmail
-                        ? i18next.t(
-                            "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator at {{email}}.",
-                            {email: this.administratorEmail},
-                          )
-                        : i18next.t(
-                            "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator.",
-                          )}
-                    </div>`
-                  : ''}
               </div>
             `
-        : ''}
-      ${this.changingPassword
-        ? html`
-            <div>
-              ${this.userMustChangeItsPassword
-                ? html` <div class="alert alert-warning">${i18next.t('You must change your password')}</div>`
-                : ''}
-
-              <form name="changePasswordForm" role="form" @submit=${(evt: Event) => this.changePassword(evt)}>
-                <div class="form-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    name="oldpassword"
-                    autocomplete="current-password"
-                    aria-describedby="password-constraints"
-                    placeholder=${i18next.t('Old password')}
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    name="newpassword"
-                    autocomplete="new-password"
-                    placeholder=${i18next.t('New password')}
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="password"
-                    class="form-control"
-                    name="newpasswordconfirm"
-                    autocomplete="new-password"
-                    placeholder=${i18next.t('Confirm new password')}
-                  />
-                </div>
-                ${this.gmfUser.otp_uri
-                  ? html`
-                      <div class="form-group">
-                        <label>${i18next.t('Two factor authentication QR code:')}</label>
-                        <div><img class="" src="${this.otpImage}" /></div>
-                      </div>
-                    `
-                  : ''}
-                ${this.gmfUser.two_factor_totp_secret
-                  ? html`
-                      <div class="form-group">
-                        <label>${i18next.t('Two factor authentication key:')}</label>
-                        <code>${this.gmfUser.two_factor_totp_secret}</code>
-                      </div>
-                    `
-                  : ''}
-                ${this.twoFactorAuth
-                  ? html`
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          name="otp"
-                          autocomplete="one-time-code"
-                          placeholder=${i18next.t('Authentication code')}
-                        />
-                      </div>
-                    `
-                  : ''}
-
-                <div class="form-group">
-                  <input type="submit" class="form-control btn prime" value=${i18next.t('Change password')} />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="button"
-                    class="form-control btn btn-default"
-                    value="Cancel"
-                    @click=${() => this.changePasswordReset()}
-                  />
-                </div>
-              </form>
-            </div>
-          `
-        : ''}
+          : ''
+      }
 
       <div ?hidden="${!this.error}" class="auth-error help-block"></div>
     `;
