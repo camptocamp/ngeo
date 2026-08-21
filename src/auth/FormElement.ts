@@ -193,38 +193,42 @@ export default class GmfAuthForm extends GmfBaseElement {
                 </div>
 
                 ${
-                this.oidcUserInformationUrl
-                  ? html`
-                      <div class="form-group">
-                        <span
-                          ><a href="${this.oidcUserInformationUrl}" target="_blank"
-                            >${i18next.t('User information on the OIDC service')}</a
-                          ></span
-                        >
-                      </div>
-                    `
-                  : html``
-              }
+                  this.oidcUserInformationUrl
+                    ? html`
+                        <div class="form-group">
+                          <span
+                            ><a href="${this.oidcUserInformationUrl}" target="_blank"
+                              >${i18next.t('User information on the OIDC service')}</a
+                            ></span
+                          >
+                        </div>
+                      `
+                    : html``
+                }
                 ${
-                !this.changingPassword
-                  ? html`
-                      <form name="logoutForm" role="form" @submit=${(evt: Event) => this.logout(evt)}>
-                        <div class="form-group">
-                          <input type="submit" class="form-control btn prime" value=${i18next.t('Logout')} />
-                        </div>
-                        <div class="form-group">
-                          <input
-                            ?hidden="${!(this.allowPasswordChange && this.gmfUser.login_type !== 'oidc')}"
-                            type="button"
-                            class="form-control btn btn-default"
-                            value=${i18next.t('Change password')}
-                            @click=${() => (this.changingPassword = true)}
-                          />
-                        </div>
-                      </form>
-                    `
-                  : ''
-              }
+                  !this.changingPassword
+                    ? html`
+                        <form name="logoutForm" role="form" @submit=${(evt: Event) => this.logout(evt)}>
+                          <div class="form-group">
+                            <input
+                              type="submit"
+                              class="form-control btn prime"
+                              value=${i18next.t('Logout')}
+                            />
+                          </div>
+                          <div class="form-group">
+                            <input
+                              ?hidden="${!(this.allowPasswordChange && this.gmfUser.login_type !== 'oidc')}"
+                              type="button"
+                              class="form-control btn btn-default"
+                              value=${i18next.t('Change password')}
+                              @click=${() => (this.changingPassword = true)}
+                            />
+                          </div>
+                        </form>
+                      `
+                    : ''
+                }
               </div>
             `
           : ''
@@ -263,33 +267,33 @@ export default class GmfAuthForm extends GmfBaseElement {
                       <slot name="gmf-auth-password"></slot>
                     </div>
                     ${
-                    this.twoFactorAuth
-                      ? html`
-                          <div class="form-group">
-                            ${i18next.t('The following field should be kept empty on first login:')}
-                            <input
-                              type="text"
-                              class="form-control"
-                              name="otp"
-                              autocomplete="one-time-code"
-                              placeholder=${i18next.t('Authentication code')}
-                            />
-                          </div>
-                        `
-                      : ''
-                  }
+                      this.twoFactorAuth
+                        ? html`
+                            <div class="form-group">
+                              ${i18next.t('The following field should be kept empty on first login:')}
+                              <input
+                                type="text"
+                                class="form-control"
+                                name="otp"
+                                autocomplete="one-time-code"
+                                placeholder=${i18next.t('Authentication code')}
+                              />
+                            </div>
+                          `
+                        : ''
+                    }
                     <div class="form-group">
                       <input type="submit" class="form-control btn prime" value=${i18next.t('Connect')} />
                     </div>
                     ${
-                    this.isLoading
-                      ? html`
-                          <div class="login-spinner">
-                            <i class="fa-solid fa-spin">${svgSpinner()}</i>
-                          </div>
-                        `
-                      : ''
-                  }
+                      this.isLoading
+                        ? html`
+                            <div class="login-spinner">
+                              <i class="fa-solid fa-spin">${svgSpinner()}</i>
+                            </div>
+                          `
+                        : ''
+                    }
                     <div ?hidden="${!this.allowPasswordReset}" class="form-group">
                       <a @click=${(evt: Event) => this.resetPassword(evt)} href=""
                         >${i18next.t('Password forgotten?')}</a
@@ -298,21 +302,21 @@ export default class GmfAuthForm extends GmfBaseElement {
                   </form>
 
                   ${
-                  this.resetPasswordShown
-                    ? html` <div class="alert alert-info">
-                        ${
-                        this.administratorEmail
-                          ? i18next.t(
-                              "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator at {{email}}.",
-                              {email: this.administratorEmail},
-                            )
-                          : i18next.t(
-                              "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator.",
-                            )
-                      }
-                      </div>`
-                    : ''
-                }
+                    this.resetPasswordShown
+                      ? html` <div class="alert alert-info">
+                          ${
+                          this.administratorEmail
+                            ? i18next.t(
+                                "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator at {{email}}.",
+                                {email: this.administratorEmail},
+                              )
+                            : i18next.t(
+                                "A new password has just been sent to you by e-mail, if you didn't receive it, please ask to the administrator.",
+                              )
+                        }
+                        </div>`
+                      : ''
+                  }
                 </div>
               `
           : ''
@@ -322,12 +326,12 @@ export default class GmfAuthForm extends GmfBaseElement {
           ? html`
               <div>
                 ${
-                this.userMustChangeItsPassword
-                  ? html` <div class="alert alert-warning">
-                      ${i18next.t('You must change your password')}
-                    </div>`
-                  : ''
-              }
+                  this.userMustChangeItsPassword
+                    ? html` <div class="alert alert-warning">
+                        ${i18next.t('You must change your password')}
+                      </div>`
+                    : ''
+                }
 
                 <form
                   name="changePasswordForm"
@@ -363,40 +367,40 @@ export default class GmfAuthForm extends GmfBaseElement {
                     />
                   </div>
                   ${
-                  this.gmfUser.otp_uri
-                    ? html`
-                        <div class="form-group">
-                          <label>${i18next.t('Two factor authentication QR code:')}</label>
-                          <div><img class="" src="${this.otpImage}" /></div>
-                        </div>
-                      `
-                    : ''
-                }
+                    this.gmfUser.otp_uri
+                      ? html`
+                          <div class="form-group">
+                            <label>${i18next.t('Two factor authentication QR code:')}</label>
+                            <div><img class="" src="${this.otpImage}" /></div>
+                          </div>
+                        `
+                      : ''
+                  }
                   ${
-                  this.gmfUser.two_factor_totp_secret
-                    ? html`
-                        <div class="form-group">
-                          <label>${i18next.t('Two factor authentication key:')}</label>
-                          <code>${this.gmfUser.two_factor_totp_secret}</code>
-                        </div>
-                      `
-                    : ''
-                }
+                    this.gmfUser.two_factor_totp_secret
+                      ? html`
+                          <div class="form-group">
+                            <label>${i18next.t('Two factor authentication key:')}</label>
+                            <code>${this.gmfUser.two_factor_totp_secret}</code>
+                          </div>
+                        `
+                      : ''
+                  }
                   ${
-                  this.twoFactorAuth
-                    ? html`
-                        <div class="form-group">
-                          <input
-                            type="text"
-                            class="form-control"
-                            name="otp"
-                            autocomplete="one-time-code"
-                            placeholder=${i18next.t('Authentication code')}
-                          />
-                        </div>
-                      `
-                    : ''
-                }
+                    this.twoFactorAuth
+                      ? html`
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              class="form-control"
+                              name="otp"
+                              autocomplete="one-time-code"
+                              placeholder=${i18next.t('Authentication code')}
+                            />
+                          </div>
+                        `
+                      : ''
+                  }
 
                   <div class="form-group">
                     <input

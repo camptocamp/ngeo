@@ -158,8 +158,8 @@ export default class GmfLidarPanel extends ToolPanelElement {
               ? html`
                   <em class="text-muted small">
                     ${i18next.t(
-                    'Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the drawing.',
-                  )}
+                      'Draw a line on the map to display the corresponding LIDAR profile. Use double-click to finish the drawing.',
+                    )}
                   </em>
                 `
               : html``
@@ -170,73 +170,73 @@ export default class GmfLidarPanel extends ToolPanelElement {
           this.ready
             ? html`
                 ${
-                this.line
-                  ? html`
-                      <div>
-                        <button class="btn btn-default" @click=${() => this.csvExport()}>
-                          ${i18next.t('CSV export')}
-                        </button>
-                        <button class="btn btn-default" @click=${() => this.pngExport()}>
-                          ${i18next.t('PNG export')}
+                  this.line
+                    ? html`
+                        <div>
+                          <button class="btn btn-default" @click=${() => this.csvExport()}>
+                            ${i18next.t('CSV export')}
+                          </button>
+                          <button class="btn btn-default" @click=${() => this.pngExport()}>
+                            ${i18next.t('PNG export')}
+                          </button>
+                          <button
+                            class="btn btn-default"
+                            @click=${() => this.resetPlot()}
+                            data-toggle="tooltip"
+                            data-placement="left"
+                            data-original-title="${i18next.t('Reset profile')}"
+                          >
+                            <span class="fa-solid fa-arrows-rotate"></span>
+                          </button>
+                        </div>
+                        <hr />
+                        <button
+                          class="btn btn-default"
+                          @click=${() => this.setMeasureActive()}
+                          data-toggle="tooltip"
+                          data-placement="left"
+                          data-original-title="${i18next.t('Take measure on the graph')}"
+                        >
+                          ${i18next.t('Take measure')}
                         </button>
                         <button
                           class="btn btn-default"
-                          @click=${() => this.resetPlot()}
+                          @click=${() => this.clearMeasure()}
                           data-toggle="tooltip"
                           data-placement="left"
-                          data-original-title="${i18next.t('Reset profile')}"
+                          data-original-title="${i18next.t('Clear measure')}"
                         >
-                          <span class="fa-solid fa-arrows-rotate"></span>
+                          <span class="fa-solid fa-eraser"></span>
                         </button>
-                      </div>
-                      <hr />
-                      <button
-                        class="btn btn-default"
-                        @click=${() => this.setMeasureActive()}
-                        data-toggle="tooltip"
-                        data-placement="left"
-                        data-original-title="${i18next.t('Take measure on the graph')}"
-                      >
-                        ${i18next.t('Take measure')}
-                      </button>
-                      <button
-                        class="btn btn-default"
-                        @click=${() => this.clearMeasure()}
-                        data-toggle="tooltip"
-                        data-placement="left"
-                        data-original-title="${i18next.t('Clear measure')}"
-                      >
-                        <span class="fa-solid fa-eraser"></span>
-                      </button>
-                    `
-                  : ``
-              }
+                      `
+                    : ``
+                }
 
                 <div>
                   <hr />
                   <p>${i18next.t('Material')}</p>
                   <select id="select-attributes" @change="${() => this.selectPointAttribute()}">
                     ${Object.entries(this.availablePointAttributes).map(
-                    ([key, value]) => html` <option value="${key}">${value.name}</option> `,
-                  )}
+                      ([key, value]) => html` <option value="${key}">${value.name}</option> `,
+                    )}
                   </select>
                 </div>
                 <hr />
                 <p>${i18next.t('Classes')}</p>
 
                 ${Object.entries(this.classifications).map(
-                ([key, value]) => html`
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="${value.name}"
-                      .checked="${!!value.visible}"
-                      @click="${() => this.toggleVisibility(value, key)}"
-                    />
-                    <label for="${value.name}">${value.name}</label>
-                  </div>
-                `,
-              )}
+                  ([key, value]) => html`
+                    <div>
+                      <input
+                        type="checkbox"
+                        id="${value.name}"
+                        .checked="${!!value.visible}"
+                        @click="${() => this.toggleVisibility(value, key)}"
+                      />
+                      <label for="${value.name}">${value.name}</label>
+                    </div>
+                  `,
+                )}
               `
             : html` <p>${i18next.t('Initializing, please wait...')}</p> `
         }
