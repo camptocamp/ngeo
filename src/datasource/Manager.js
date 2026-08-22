@@ -938,11 +938,9 @@ export class DatasourceManager {
    * @hidden
    */
   updateLayerFilter_(layer) {
-    if (!(
-      layer instanceof olLayerImage ||
-      layer instanceof olLayerTile ||
-      layer instanceof olLayerNotWebGLTile
-    )) {
+    if (
+      !(layer instanceof olLayerImage || layer instanceof olLayerTile || layer instanceof olLayerNotWebGLTile)
+    ) {
       return;
     }
     const source = layer.getSource();
