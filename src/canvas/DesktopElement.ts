@@ -672,9 +672,11 @@ export default class GmfDesktopCanvas extends BaseElement {
               @click=${() => this.toggleShowDatapanel_()}
             >
               <span
-                class="${this.showDatapanel_
-                  ? 'fa-solid fa-angles-left gmf-app-data-panel-collapse-btn'
-                  : 'fa-solid fa-angles-right gmf-app-data-panel-expand-btn'}"
+                class="${
+                  this.showDatapanel_
+                    ? 'fa-solid fa-angles-left gmf-app-data-panel-collapse-btn'
+                    : 'fa-solid fa-angles-right gmf-app-data-panel-expand-btn'
+                }"
               ></span>
             </div>
             <div id="gmf-app-data-panel-separator" class="ui-resizable-e"></div>
