@@ -579,7 +579,7 @@ function d3Elevation(
   };
 
   /**
-   * @param {any} pois .
+   * @param {Array<Object>} pois .
    */
   profile.showPois = function (pois: any[]) {
     if (!svg) {

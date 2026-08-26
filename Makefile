@@ -354,7 +354,7 @@ contribs/gmf/build/angular-locale_%.js: package.json
 	touch $@
 
 .build/applications.timestamp: .build/python-venv.timestamp ci/applications.yaml ci/applications-versions.yaml
-	$(PY_VENV_BIN)/c2cciutils-download-applications --applications-file=ci/applications.yaml --versions-file=ci/applications-versions.yaml
+	$(PY_VENV_BIN)/applications-download --applications ci/applications.yaml --versions ci/applications-versions.yaml install --all
 	touch $@
 
 # i18n

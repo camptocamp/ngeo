@@ -1,3 +1,4 @@
+applications-download==1.7.0
 c2cciutils[checks]==1.7.5
-wheel==0.46.2
-pre-commit==4.3.0
+wheel==0.48.0
+pre-commit==4.6.2

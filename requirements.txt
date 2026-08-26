@@ -4,3 +4,4 @@ htmlmin==0.1.12
 Mako==1.4.1
 requests==2.34.2
 polib==1.2.0
+applications-download==1.7.0
