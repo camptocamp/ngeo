@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2018-2024 Camptocamp SA
+// Copyright (c) 2018-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -34,6 +34,7 @@ import Style, {createDefaultStyle} from 'ol/style/Style';
 import View from 'ol/View';
 import VectorSource from 'ol/source/Vector';
 import VectorLayer from 'ol/layer/Vector';
+import LayerGroup from 'ol/layer/Group';
 import SelectInteraction from 'ol/interaction/Select';
 
 import MousePosition from 'ol/control/MousePosition';
@@ -294,10 +295,7 @@ class Map {
           if (resolution === undefined) {
             throw new Error('Missing resolution');
           }
-          const visibleLayers = this.map_
-            .getLayers()
-            .getArray()
-            .filter((layer) => layer.getVisible());
+          const visibleLayers = getVisibleLayers(this.map_.getLayers());
           const visibleLayersName = visibleLayers.map((layer) => layer.get('config.name'));
 
           this.clearSelection();
@@ -599,6 +597,29 @@ function filterByKeys(obj, keys) {
     filtered[key] = obj[key];
   });
   return filtered;
+}
+
+/**
+ * Collect the visible leaf layers, discarding those inside a hidden group.
+ *
+ * @param {import('ol/Collection').default<import('ol/layer/Base').default>} layers The layers.
+ * @returns {import('ol/layer/Base').default[]} The visible layers.
+ * @private
+ * @hidden
+ */
+function getVisibleLayers(layers) {
+  const visibleLayers = [];
+  for (const layer of layers.getArray()) {
+    if (!layer.getVisible()) {
+      continue;
+    }
+    if (layer instanceof LayerGroup) {
+      visibleLayers.push(...getVisibleLayers(layer.getLayers()));
+    } else {
+      visibleLayers.push(layer);
+    }
+  }
+  return visibleLayers;
 }
 
 export default Map;
