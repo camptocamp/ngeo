@@ -173,7 +173,7 @@
     "loc-i18next": "0.1.6",
     "localforage": "1.10.0",
     "mapillary-js": "4.1.2",
-    "moment": "2.29.4",
+    "moment": "2.31.0",
     "neat-csv": "5.2.0",
     "node-sass": "7.0.3",
     "node-sass-importer": "2.0.2",
