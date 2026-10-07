@@ -1,5 +1,5 @@
-MAJOR_VERSION = 2.10
-DEMO_BRANCH ?= prod-2-10
+MAJOR_VERSION = 2.11
+DEMO_BRANCH ?= prod-2-11
 
 ANGULAR_VERSION := $(shell buildtools/get-version angular)
 
@@ -408,9 +408,9 @@ transifex-init: .build/applications.timestamp \
 		.build/locale/ngeo.pot \
 		.build/locale/apps.pot \
 		locales/en/app.json
-	mv /home/sbrunner/workspace/ngeo/locales/en/app.json /home/sbrunner/workspace/ngeo/locales/en/app.json_
-	buildtools/clean-json /home/sbrunner/workspace/ngeo/locales/*/app.json
-	mv /home/sbrunner/workspace/ngeo/locales/en/app.json_ /home/sbrunner/workspace/ngeo/locales/en/app.json
+	mv $(CURDIR)/locales/en/app.json $(CURDIR)/locales/en/app.json_
+	buildtools/clean-json $(CURDIR)/locales/*/app.json
+	mv $(CURDIR)/locales/en/app.json_ $(CURDIR)/locales/en/app.json
 
 	tx push --branch=$(MAJOR_VERSION) --source --force
 	tx push --branch=$(MAJOR_VERSION) --translation --force
