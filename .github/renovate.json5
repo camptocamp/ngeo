@@ -14,7 +14,7 @@
     'github>camptocamp/gs-renovate-config-preset:security.json5#1.13.1',
   ],
   separateMultipleMajor: true,
-  baseBranchPatterns: ['master', '2.8', '2.9'],
+  baseBranchPatterns: ['master', '2.8', '2.9', '2.10'],
   customManagers: [
     {
       matchStrings: ['(?<depName>[^\\s]+): (?<currentValue>[^\\s]+) # (?<datasource>[^\\s]+)'],
