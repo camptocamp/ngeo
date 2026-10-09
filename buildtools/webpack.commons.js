@@ -161,6 +161,7 @@ module.exports = function (config) {
             {allowDeclareFields: true},
           ],
           [require.resolve('@babel/plugin-proposal-decorators'), {decoratorsBeforeExport: true}],
+          require.resolve('@babel/plugin-proposal-class-properties'),
         ],
       },
     },
