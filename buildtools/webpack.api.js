@@ -47,6 +47,10 @@ module.exports = (env, argv) => {
                   },
                 ],
               ],
+              plugins: [
+                require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+                require.resolve('@babel/plugin-proposal-optional-chaining'),
+              ],
             },
           },
         },

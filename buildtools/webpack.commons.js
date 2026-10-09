@@ -162,6 +162,8 @@ module.exports = function (config) {
           ],
           [require.resolve('@babel/plugin-proposal-decorators'), {decoratorsBeforeExport: true}],
           require.resolve('@babel/plugin-proposal-class-properties'),
+          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+          require.resolve('@babel/plugin-proposal-optional-chaining'),
         ],
       },
     },
@@ -182,7 +184,11 @@ module.exports = function (config) {
         babelrc: false,
         comments: false,
         presets: [babelPresetEnv],
-        plugins: [require.resolve('babel-plugin-angularjs-annotate')],
+        plugins: [
+          require.resolve('babel-plugin-angularjs-annotate'),
+          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+          require.resolve('@babel/plugin-proposal-optional-chaining'),
+        ],
       },
     },
   };
@@ -206,6 +212,10 @@ module.exports = function (config) {
         babelrc: false,
         comments: false,
         presets: [babelPresetEnv],
+        plugins: [
+          require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
+          require.resolve('@babel/plugin-proposal-optional-chaining'),
+        ],
       },
     },
   };
