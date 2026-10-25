@@ -2,3 +2,7 @@
 
 checks:
   codespell: false
+  # The Snyk audit is now done by the ghci application (AUDIT-CONFIG), and the
+  # gs/ci/snyk/token secret was removed from the gopass store, so the
+  # c2cciutils-checks snyk check can no longer run here.
+  snyk: false
