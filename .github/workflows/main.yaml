@@ -69,15 +69,6 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - uses: camptocamp/initialise-gopass-summon-action@17703c87720ba3766abc90da60b437783b530d93 # v2.0.1
-        with:
-          ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
-          github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-          patterns: transifex
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
-      - run: gopass show gs/ci/test-mask
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
-
       - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: '3.11'
@@ -192,7 +183,12 @@ jobs:
           retention-days: 5
         if: failure()
 
-      - run: make transifex-send
+      - name: Publish to Transifex
+        run: |
+          make transifex-private-credentials
+          make transifex-send
+        env:
+          TRANSIFEX_TOKEN: ${{ secrets.TRANSIFEX_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: git diff --exit-code --patch > /tmp/npm-update.patch; git diff --color
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
