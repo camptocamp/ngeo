@@ -212,16 +212,11 @@ git push origin "start-${NEXT_VERSION}"
 
 Create a pull request from the new branch.
 
-Login to transifex:
+Login to transifex, with your own API token, generated in the settings of your Transifex account:
 
 ```bash
-echo "[https://www.transifex.com]" > ~/.transifexrc
-echo "api_hostname  = https://api.transifex.com" >> ~/.transifexrc
-echo "rest_hostname = https://rest.api.transifex.com" >> ~/.transifexrc
-echo "hostname = https://www.transifex.com" >> ~/.transifexrc
-echo "username = $(gopass show gs/ci/transifex/rw/username)" >> ~/.transifexrc
-echo "password = $(gopass show gs/ci/transifex/rw/password)" >> ~/.transifexrc
-echo "token = $(gopass show gs/ci/transifex/rw/token)" >> ~/.transifexrc
+export TRANSIFEX_TOKEN=<your Transifex API token>
+make transifex-private-credentials
 ```
 
 Create the new localization resource:
