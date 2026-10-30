@@ -67,15 +67,6 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      - uses: camptocamp/initialise-gopass-summon-action@17703c87720ba3766abc90da60b437783b530d93 # v2.0.1
-        with:
-          ci-gpg-private-key: ${{secrets.CI_GPG_PRIVATE_KEY}}
-          github-gopass-ci-token: ${{secrets.GOPASS_CI_GITHUB_TOKEN}}
-          patterns: transifex
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
-      - run: gopass show gs/ci/test-mask
-        if: env.HAS_SECRETS == 'HAS_SECRETS'
-
       - run: echo "${HOME}/.local/bin" >> ${GITHUB_PATH}
       - run: python3 -m pip install --user --requirement=ci/requirements.txt
 
@@ -184,22 +175,28 @@ jobs:
           retention-days: 5
         if: failure()
 
-      - run: make transifex-send
+      - name: Publish to Transifex
+        run: |
+          make transifex-private-credentials
+          make transifex-send
+        env:
+          TRANSIFEX_TOKEN: ${{ secrets.TRANSIFEX_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: git diff
 
       - name: Publish Storybook to Chromatic to run visual tests
-        run: npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
+        run: npm run chromatic -- --project-token="${CHROMATIC_PROJECT_TOKEN}"
         env:
           NODE_OPTIONS: --openssl-legacy-provider
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
       - name: Publish Storybook to Chromatic to run visual tests
-        run:
-          GITHUB_SHA=${GITHUB_SHA_} npm run chromatic -- --project-token=$(gopass show gs/ci/chromatic/ngeo_token)
+        run: GITHUB_SHA=${GITHUB_SHA_} npm run chromatic -- --project-token="${CHROMATIC_PROJECT_TOKEN}"
           --branch-name=${GITHUB_HEAD_REF}
         env:
           NODE_OPTIONS: --openssl-legacy-provider
           GITHUB_SHA_: ${{ steps.sha.outputs.sha }}
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
 
       - uses: actions/setup-node@v6
