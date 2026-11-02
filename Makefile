@@ -369,6 +369,16 @@ $(HOME)/.transifexrc:
 	echo "password = c2cc2c" >> $@
 	echo "token = 1/dc02578696187cc29e4e6486f8611fdbfe60b235" >> $@
 
+# Overwrite it with the read/write credentials, taken from the TRANSIFEX_TOKEN environment variable
+.PHONY: transifex-private-credentials
+transifex-private-credentials:
+	mkdir --parent $(dir $(HOME)/.transifexrc)
+	echo "[https://www.transifex.com]" > $(HOME)/.transifexrc
+	echo "api_hostname  = https://api.transifex.com" >> $(HOME)/.transifexrc
+	echo "rest_hostname = https://rest.api.transifex.com" >> $(HOME)/.transifexrc
+	echo "hostname = https://www.transifex.com" >> $(HOME)/.transifexrc
+	echo "token = $$TRANSIFEX_TOKEN" >> $(HOME)/.transifexrc
+
 .build/locale/ngeo.pot: lingua.cfg .build/node_modules.timestamp \
 		$(NGEO_PARTIALS_FILES) $(NGEO_JS_FILES)
 	mkdir -p $(dir $@)
