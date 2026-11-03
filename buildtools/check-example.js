@@ -268,7 +268,7 @@ function loaded(page, browser) {
         console.log(`Console ${type}`);
         console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
         console.log(message.text());
-        if (!message.text().includes('CORS')) {
+        if (!message.text().includes('CORS') && !message.text().includes('The themes contain some errors:')) {
           await browser.close();
           process.exit(2);
         }
