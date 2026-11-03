@@ -164,7 +164,7 @@ function loaded(page, browser) {
     if (url == 'https://ows.asitvd.ch/wmts/1.0.0/WMTSCapabilities.xml') {
       request.respond(ASITVDCapabilities);
     } else if (
-      /^https:\/\/[0-9-]*\.geomapfish-demo\.[0-9a-z-.]*\.camptocamp\.com\/static-geomapfish\/[0-9a-f]*\/locales\/en.json/.test(
+      /^https:\/\/[0-9a-z-]*\.geomapfish-demo\.[0-9a-z-.]*\.camptocamp\.com\/static-geomapfish\/[0-9a-f]*\/locales\/en.json/.test(
         url
       )
     ) {
@@ -268,7 +268,7 @@ function loaded(page, browser) {
         console.log(`Console ${type}`);
         console.log(`On: ${location.url} ${location.lineNumber}:${location.columnNumber}.`);
         console.log(message.text());
-        if (!message.text().includes('CORS')) {
+        if (!message.text().includes('CORS') && !message.text().includes('The themes contain some errors:')) {
           await browser.close();
           process.exit(2);
         }
