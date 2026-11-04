@@ -82,7 +82,7 @@ jobs:
       - run: pre-commit run --all-files --color=always
       - run: git diff --exit-code --patch > /tmp/pre-commit.patch; git diff --color; git reset --hard || true
         if: failure()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Apply pre-commit fix.patch
           path: /tmp/pre-commit.patch
@@ -141,28 +141,28 @@ jobs:
           find . ! -name *-ref.png -type f -exec rm {} \;
         if: env.REGENERATE_EXAMPLES == 'true'
       - run: "[ ${REGENERATE_EXAMPLES} == 'false' ]"
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Examples
           path: examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: GMF Examples
           path: contribs/gmf/examples
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Apps
           path: contribs/gmf/apps
           if-no-files-found: ignore
           retention-days: 5
         if: always()
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Examples hosted
           path: .build/examples-hosted
@@ -175,7 +175,7 @@ jobs:
       - run: npm run doc
       - run: npm run build-api
 
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Npm logs
           path: /home/runner/.npm/_logs
@@ -191,7 +191,7 @@ jobs:
           TRANSIFEX_TOKEN: ${{ secrets.TRANSIFEX_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.ref == format('refs/heads/{0}', env.MAIN_BRANCH)
       - run: git diff --exit-code --patch > /tmp/npm-update.patch; git diff --color
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: Apply changes to package.json.patch
           path: /tmp/npm-update.patch
@@ -240,7 +240,7 @@ jobs:
           cp -ar .build/storybook gh-pages/storybook
         if: env.HAS_SECRETS == 'HAS_SECRETS'
 
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gh-pages
           path: gh-pages
@@ -276,7 +276,7 @@ jobs:
 
       - run: git rm -rf ${{ steps.branch.outputs.branch }} || true
         if: env.HAS_SECRETS == 'HAS_SECRETS'
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: gh-pages
           path: ${{ steps.branch.outputs.branch }}
