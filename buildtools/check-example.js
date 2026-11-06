@@ -180,7 +180,10 @@ function loaded(page, browser) {
       url.startsWith('https://wmts.geo.admin.ch/') ||
       url.startsWith('https://wms.geo.admin.ch/')
     ) {
-      if (originalUrl.includes('/tiles/') && originalUrl.endsWith('.png')) {
+      if (
+        originalUrl.includes('/tiles/') &&
+        (originalUrl.endsWith('.png') || originalUrl.endsWith('.jpeg'))
+      ) {
         request.respond(OSMImage);
       } else {
         console.log(originalUrl);
