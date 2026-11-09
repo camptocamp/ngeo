@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2024 Camptocamp SA
+// Copyright (c) 2019-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -28,7 +28,6 @@ import OLGeomLineString from 'ol/geom/LineString';
 import OLGeomPolygon from 'ol/geom/Polygon';
 import {fromExtent as olGeomPolygonFromExtent} from 'ol/geom/Polygon';
 import OLInteractionDraw from 'ol/interaction/Draw';
-import OLInteractionPointer from 'ol/interaction/Pointer';
 import OLInteractionSnap from 'ol/interaction/Snap';
 import OLMapBrowserEvent from 'ol/MapBrowserEvent';
 import OLSourceVector from 'ol/source/Vector';
@@ -197,20 +196,9 @@ export class DrawFeatureOptionsController {
      * @private
      */
     this.snapInteraction_ = new OLInteractionSnap({
-      // @ts-ignore: webpack
-      handleEvent: this.snapInteractionHandleEvent_.bind(this),
       pixelTolerance: 10000,
       source: this.snapSource_,
     });
-
-    /**
-     * Flag used to manually stop drawing after a double
-     * click. See explanations where used.
-     *
-     * @type {boolean}
-     * @private
-     */
-    this.shouldStopDrawing_ = false;
   }
 
   /**
@@ -239,7 +227,6 @@ export class DrawFeatureOptionsController {
     this.map.addInteraction(this.snapInteraction_);
     this.listenerKeys_.push(
       olEventsListen(drawInteraction, 'drawstart', this.handleDrawInteractionDrawStart_, this),
-      olEventsListen(this.map, 'singleclick', this.handleMapSingleClick_, this),
       olEventsListen(this.map, 'dblclick', this.handleMapDoubleClick_, this),
     );
     if (requiresHeight) {
@@ -424,52 +411,19 @@ export class DrawFeatureOptionsController {
   }
 
   /**
-   * Override handler method of the map browser event for the snap
-   * interaction. If the event is 'pointerup', if the following map
-   * browser event is 'dblclick', then we should stop drawing.
-   *
-   * @param {import('ol/MapBrowserEvent').default<unknown>} evt Map browser event.
-   * @returns {boolean} `false` to stop event propagation.
-   * @private
-   */
-  snapInteractionHandleEvent_(evt) {
-    const result = this.snapInteraction_.snapTo(evt.pixel, evt.coordinate, evt.map);
-    if (result) {
-      evt.coordinate = result.vertex.slice(0, 2);
-      evt.pixel = result.vertexPixel;
-
-      // We should stop drawing if a 'dblclick' event comes next
-      if (evt.type === 'pointerup') {
-        this.shouldStopDrawing_ = true;
-      }
-    }
-    return OLInteractionPointer.prototype.handleEvent.call(this.snapInteraction_, evt);
-  }
-
-  /**
-   * If a 'singleclick' event occur on the map after a snap, then we
-   * can continue drawing.
-   *
-   * @param {Event|import('ol/events/Event').default} evt Event.
-   * @private
-   */
-  handleMapSingleClick_(evt) {
-    if (!(evt instanceof OLMapBrowserEvent)) {
-      return;
-    }
-    this.shouldStopDrawing_ = false;
-  }
-
-  /**
-   * If a 'dblclick' event occur on the map after a snap, then we
-   * should stop drawing.
+   * If a 'dblclick' event occurs on the map while the pointer snaps to
+   * the snap feature, i.e. while a length (or radius/height) is defined,
+   * then we should stop drawing.
    *
    * Note: double clicking to end drawing only occurs while measuring
    * length or area, i.e. while drawing a LineString or Polygon. When
    * that happens while snapping, then we need to manually force the
    * drawing to finish and also remove the last point that has been
    * added as a consequence of the snap still being active and causing
-   * an unwanted point to be added.
+   * an unwanted point to be added. Indeed, the double click coordinate
+   * being snapped to the snap feature, the draw interaction is not
+   * able to detect by itself that the double click occurred on the
+   * last drawn point.
    *
    * @param {Event|import('ol/events/Event').default} evt Event.
    * @private
@@ -478,7 +432,8 @@ export class DrawFeatureOptionsController {
     if (!(evt instanceof OLMapBrowserEvent)) {
       return;
     }
-    if (this.shouldStopDrawing_) {
+    const result = this.snapInteraction_.snapTo(evt.pixel, evt.coordinate, evt.map);
+    if (result) {
       this.drawInteraction_.removeLastPoint();
       this.drawInteraction_.finishDrawing();
     }
