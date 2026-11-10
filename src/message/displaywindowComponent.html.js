@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2024 Camptocamp SA
+// Copyright (c) 2024-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -21,7 +21,7 @@
 
 export default `<div class="ngeo-displaywindow" ng-show="$ctrl.open" title="">
   <div class="windowcontainer" ng-style="$ctrl.style">
-    <button type="button" class="btn fa-xmark close" ng-click="$ctrl.close()"></button>
+    <button type="button" class="btn fa-solid fa-xmark close" ng-click="$ctrl.close()"></button>
 
     <div class="animation-container">
       <div class="slide-animation">
