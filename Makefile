@@ -74,7 +74,15 @@ else
 endif
 
 
-export NODE_OPTIONS=--openssl-legacy-provider
+# The OpenSSL legacy provider is required by webpack 4 on Node.js 17 and above,
+# but it is not allowed in NODE_OPTIONS on Node.js 16, the version used on this
+# branch, where webpack 4 works without it
+NODE_JS_MAJOR = $(shell node -p 'parseInt(process.versions.node)' 2>/dev/null)
+ifneq ($(NODE_JS_MAJOR),)
+ifneq ($(NODE_JS_MAJOR),16)
+export NODE_OPTIONS = --openssl-legacy-provider
+endif
+endif
 
 
 # Disabling Make built-in rules to speed up execution time
@@ -157,7 +165,7 @@ serve-gmf: contribs/dist $(ANGULAR_LOCALES_FILES)
 
 .PHONY: serve-gmf-apps
 serve-gmf-apps: .build/build-dll.timestamp $(ANGULAR_LOCALES_FILES) locales/en/app.json
-	NODE_OPTIONS=--openssl-legacy-provider npm run serve-gmf-apps
+	npm run serve-gmf-apps
 
 .PHONY: serve-api
 serve-api: .build/node_modules.timestamp
@@ -458,7 +466,7 @@ build-dll: .build/build-dll.timestamp
 
 .build/build-dll.timestamp: .build/python-venv.timestamp .build/node_modules.timestamp
 	$(PY_VENV_BIN)/python3 buildtools/extract-ngeo-dependencies > deps.js && \
-	NODE_OPTIONS=--openssl-legacy-provider npm run build-dll
+	npm run build-dll
 	rm deps.js
 	mkdir -p $(dir $@)
 	touch $@
