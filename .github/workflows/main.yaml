@@ -109,8 +109,6 @@ jobs:
       - run: make lint
         if: github.event_name != 'pull_request_target'
       - run: make test
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
         if: github.event_name != 'pull_request_target'
       - run: make check-examples-checker
         if: github.event_name != 'pull_request_target'
@@ -118,17 +116,12 @@ jobs:
       - run: make serve-gmf-apps &
         if: github.event_name != 'pull_request_target'
       - run: npm run test-cli
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
         if: github.event_name != 'pull_request_target'
         # Webpack build of ngeo/gmf examples and gmf apps
       - run: make examples-hosted
         env:
           NODE_ENV: production
-          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run build-storybook
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
       - run: make check-examples
         if: github.event_name != 'pull_request_target'
       - uses: actions/upload-artifact@v4
@@ -164,11 +157,7 @@ jobs:
       - run: npm run doc -- srcapi/store/config.ts --json dist/typedoc.json
       - run: npm run doc
       - run: npm run build-api
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run dist
-        env:
-          NODE_OPTIONS: --openssl-legacy-provider
       - run: npm run dist-spinner
 
       - uses: actions/upload-artifact@v4
@@ -191,14 +180,12 @@ jobs:
       - name: Publish Storybook to Chromatic to run visual tests
         run: npm run chromatic -- --project-token="${CHROMATIC_PROJECT_TOKEN}"
         env:
-          NODE_OPTIONS: --openssl-legacy-provider
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name == 'push'
       - name: Publish Storybook to Chromatic to run visual tests
         run: GITHUB_SHA=${GITHUB_SHA_} npm run chromatic -- --project-token="${CHROMATIC_PROJECT_TOKEN}"
           --branch-name=${GITHUB_HEAD_REF}
         env:
-          NODE_OPTIONS: --openssl-legacy-provider
           GITHUB_SHA_: ${{ steps.sha.outputs.sha }}
           CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
         if: env.HAS_SECRETS == 'HAS_SECRETS' && github.event_name != 'push'
