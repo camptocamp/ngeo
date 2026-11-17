@@ -87,11 +87,15 @@
     },
     /** Disable glob updates on 2.8 branch, version 14 requires Node.js 18
         while the c2cgeoportal version 2.8 builder uses Node.js 16,
-        remove this rule when the 2.8 build stack supports Node.js 18 */
+        remove this rule when the 2.8 build stack supports Node.js 18.
+        The `force` is needed because vulnerability alert updates are merged
+        with `force.enabled` and would otherwise override a plain `enabled: false` */
     {
       matchBaseBranches: ['2.8'],
+      force: {
+        enabled: false,
+      },
       matchPackageNames: ['glob'],
-      enabled: false,
     },
   ],
 }
