@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2019-2024 Camptocamp SA
+// Copyright (c) 2019-2026 Camptocamp SA
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -38,6 +38,22 @@ export default class Mask extends Layer {
 
     this.context_.canvas.style.opacity = '0.5';
     this.context_.canvas.style.position = 'absolute';
+
+    // Wrap the canvas in a container element, like the OpenLayers canvas layer
+    // renderers do. Since OpenLayers 10.10.0, the composite map renderer gives
+    // the element returned by a layer to the next one as render target, and a
+    // bare canvas is reused as is (see openlayers/openlayers#17455), which made
+    // the layers rendered after the mask (e.g. the drawings one) be drawn in
+    // this half transparent canvas.
+    /**
+     * @private
+     * @type {HTMLDivElement}
+     */
+    this.container_ = document.createElement('div');
+    this.container_.style.position = 'absolute';
+    this.container_.style.width = '100%';
+    this.container_.style.height = '100%';
+    this.container_.appendChild(this.context_.canvas);
 
     /**
      * @type {function(import('ol/Map').FrameState):number}
@@ -113,6 +129,6 @@ export default class Mask extends Layer {
     this.context_.fillStyle = '#000';
     this.context_.fill();
 
-    return this.context_.canvas;
+    return this.container_;
   }
 }
